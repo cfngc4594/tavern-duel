@@ -1,0 +1,92 @@
+{
+  "build": "37.0.0.255130.254477",
+  "scope": "HiddenOut existing ordinary summon route; no production changes",
+  "crossfade": {
+    "source_method": "AnimationPlaythroughAction.StartAnimation",
+    "token": "0x06016A81",
+    "branch": "IL0037–0057: m_CrossFadeSec > Mathf.Epsilon calls Animation.CrossFade(animName,sec,m_PlayMode); otherwise Animation.Play(animName,m_PlayMode).",
+    "play_mode_is_condition": false,
+    "native_blending_boundary": "No original engine execution. Exact first-clip reference pose, weight normalization and blend math were not recovered by this CIL. A Godot blend remains a compatibility implementation of the explicit CrossFade call.",
+    "calls": [
+      {
+        "fsm_state_index": 1,
+        "clip": "Card_Hidden_GlowOn",
+        "start_nominal": 0.0,
+        "crossfade_sec": 0.30000001192092896,
+        "play_mode_raw": 4,
+        "target_go": "2302479511609491323"
+      },
+      {
+        "fsm_state_index": 2,
+        "clip": "Card_Hiddon_GlowOut",
+        "start_nominal": 0.5,
+        "crossfade_sec": 0.30000001192092896,
+        "play_mode_raw": 4,
+        "target_go": "2302479511609491323"
+      }
+    ]
+  },
+  "lifecycle": {
+    "time_basis": "Nominal sums of source scaled Wait parameters; frame quantization not measured.",
+    "particle_start": 0.5,
+    "out_finished": 0.8499999940395355,
+    "old_actor_cleanup": 2.0999999940395355,
+    "source_chain": [
+      {
+        "method": "ActorSetVisibility.HideActor",
+        "token": "0x06016A66",
+        "proof": "Calls Actor.Hide(m_IgnoreSpells); source FSM Birth SubState has true."
+      },
+      {
+        "method": "Actor.HideImpl",
+        "token": "0x06012842",
+        "proof": "IL000E–0015 deactivates RootObject. IL0072–007B ignoreSpells=true skips HideSpellTable."
+      },
+      {
+        "method": "Spell.OnSpellFinished",
+        "token": "0x0601495F",
+        "proof": "m_finished=true, unblock server/zones, FireFinishedCallbacks. No Hide or Destroy."
+      },
+      {
+        "method": "Card.OnSpellFinished_HandToPlay_SummonOut",
+        "token": "0x06012E51",
+        "proof": "For ordinary route shows new Actor, obtains In spell, binds In callback and activates it. No old Actor Hide or Destroy."
+      },
+      {
+        "method": "Card.OnSpellStateFinished_DestroyActor",
+        "token": "0x06012DCA",
+        "proof": "IL0000–0008 returns unless GetActiveState()==0(None); IL001C–0044 finds Actor ancestor of Out spell then Actor.Destroy."
+      },
+      {
+        "method": "Actor.Destroy",
+        "token": "0x060127EF",
+        "proof": "Releases spells/resources then in play mode calls UnityEngine.Object.Destroy(gameObject). No source delay parameter."
+      }
+    ],
+    "particle_evidence": {
+      "game_object": "5201848174202404731",
+      "particle_system": "8634348910119305083",
+      "burst_at_local_zero": 200,
+      "lifetime_min": 0.8000000715255737,
+      "lifetime_max": 3.0,
+      "looping": false,
+      "rate_over_time": 0.0,
+      "start_delay": 0.0
+    },
+    "invariant": "At out_finished, emitted particles are age .349999994 < minimum source lifetime .8000000715. Hiding the whole Out effect at that callback truncates still-live particles. Preserve effect simulation and visibility until particles naturally die or original None/Actor cleanup; this does not guarantee every particle is visually on-screen or alive until None.",
+    "remaining_boundary": "No original Unity run; actual pixel visibility depends on original material, transforms, camera and sampled RNG."
+  },
+  "source_fsm_component": {
+    "bundle": "essential_base_global-prefab-0.unity3d",
+    "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+    "path_id": 7325558530808233851,
+    "guid": null,
+    "class_name": "PlayMakerFSM"
+  },
+  "source_files": [
+    "card_actor_spell.cil.txt",
+    "../..//v30_work/audio_code_evidence/hand_source_actions.cil.txt",
+    "Card_Hidden_SummonOut.prefab.fsm.json",
+    "../TavernDuel/assets/original_summon_v31/data/particle_modules.json"
+  ]
+}

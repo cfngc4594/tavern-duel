@@ -1,0 +1,3167 @@
+
+TYPE AssetReferenceLibrary 0x02000e33
+
+TYPE DeathSpellController 0x02002436
+
+TYPE AssetReferenceLibrarySource 0x020024f6
+FIELD 0x0400ee26 value__ SIG 0608
+FIELD 0x0400ee27 LuckyDraw SIG 0611c00093d8
+FIELD 0x0400ee28 SeasonalPlayerJourney SIG 0611c00093d8
+
+TYPE SourceExtension 0x02002ac6
+FIELD 0x04011a4d m_id SIG 0608
+FIELD 0x04011a4e m_codeVolume SIG 060c
+FIELD 0x04011a4f m_sourceVolume SIG 060c
+FIELD 0x04011a50 m_defVolume SIG 060c
+FIELD 0x04011a51 m_codePitch SIG 060c
+FIELD 0x04011a52 m_sourcePitch SIG 060c
+FIELD 0x04011a53 m_defPitch SIG 060c
+FIELD 0x04011a54 m_sourceClip SIG 0612896d
+FIELD 0x04011a55 m_paused SIG 0602
+FIELD 0x04011a56 m_ducking SIG 0602
+FIELD 0x04011a57 m_bundleName SIG 060e
+
+TYPE AudioSourceSettings 0x02002adc
+FIELD 0x04011aab m_mixerOutput SIG 06129971
+FIELD 0x04011aac m_bypassEffects SIG 0602
+FIELD 0x04011aad m_loop SIG 0602
+FIELD 0x04011aae m_priority SIG 0608
+FIELD 0x04011aaf m_volume SIG 060c
+FIELD 0x04011ab0 m_pitch SIG 060c
+FIELD 0x04011ab1 m_stereoPan SIG 060c
+FIELD 0x04011ab2 m_spatialBlend SIG 060c
+FIELD 0x04011ab3 m_reverbZoneMix SIG 060c
+FIELD 0x04011ab4 m_rolloffMode SIG 06119975
+FIELD 0x04011ab5 m_dopplerLevel SIG 060c
+FIELD 0x04011ab6 m_minDistance SIG 060c
+FIELD 0x04011ab7 m_maxDistance SIG 060c
+FIELD 0x04011ab8 m_spread SIG 060c
+FIELD 0x04011ab9 m_changeMixerOutput SIG 0602
+FIELD 0x04011aba m_changeBypassEffects SIG 0602
+FIELD 0x04011abb m_changeLoop SIG 0602
+FIELD 0x04011abc m_changePriority SIG 0602
+FIELD 0x04011abd m_changeVolume SIG 0602
+FIELD 0x04011abe m_changePitch SIG 0602
+FIELD 0x04011abf m_changeStereoPan SIG 0602
+FIELD 0x04011ac0 m_changeSpatialBlend SIG 0602
+FIELD 0x04011ac1 m_changeReverbZoneMix SIG 0602
+FIELD 0x04011ac2 m_changeRolloffMode SIG 0602
+FIELD 0x04011ac3 m_changeDopplerLevel SIG 0602
+FIELD 0x04011ac4 m_changeMinDistance SIG 0602
+FIELD 0x04011ac5 m_changeMaxDistance SIG 0602
+FIELD 0x04011ac6 m_changeSpread SIG 0602
+
+TYPE SpellManager 0x02002b1a
+FIELD 0x04011c54 m_spellCache SIG 0612c000ac44
+
+TYPE SpellUtils 0x02002b31
+
+TYPE HutongGames.PlayMaker.Actions.ActivatePlaySoundSpellsAction 0x0200303c
+FIELD 0x040139bb m_SpellObject SIG 061295bd
+FIELD 0x040139bc m_WhichCard SIG 0611c000c348
+
+0x06006f2c AssetReferenceLibrary::TryGetAsset(category,assetId,asset,validateAsset) RVA 0x0 SIG 300104021e000e1012b8c402
+
+0x06006f2d AssetReferenceLibrary::TryGetMapping(map,assetId,mapping) RVA 0x21c8b0 SIG 3001030215124d020e1e000e101e00
+  IL_0000 ldarg.3         
+  IL_0001 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_0007 ldarg.1         
+  IL_0008 ldarg.2         
+  IL_0009 ldloca.s       local(0x0000) 
+  IL_000b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62d7e450>::TryGetValue token(0x0A002A6B)
+  IL_0010 brtrue.s       IL_0029 
+  IL_0012 ldstr          "'" string token(0x7003D023)
+  IL_0017 ldarg.2         
+  IL_0018 ldstr          "' does not exist in provided map" string token(0x700A916F)
+  IL_001d call           System.String::Concat token(0x0A0001B1)
+  IL_0022 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0027 ldc.i4.0        
+  IL_0028 ret             
+  IL_0029 ldarg.3         
+  IL_002a ldloc.0         
+  IL_002b stobj          <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_0030 ldc.i4.1        
+  IL_0031 ret             
+
+0x06006f2e AssetReferenceLibrary::LoadAsset(category,assetId,parent) RVA 0x21c8f0 SIG 30010312808d1e000e1280a5
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.2         
+  IL_0003 ldloca.s       local(0x0000) 
+  IL_0005 ldc.i4.0        
+  IL_0006 callvirt       AssetReferenceLibrary::TryGetAsset<spec> token(0x2B0004F2)
+  IL_000b brtrue.s       IL_004d 
+  IL_000d ldstr          "Asset:'{0}' does not exist in the '{1}' assets list." string token(0x700A91B1)
+  IL_0012 ldarg.2         
+  IL_0013 ldarg.1         
+  IL_0014 box            <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_0019 call           System.String::Format token(0x0A0000D1)
+  IL_001e call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0023 ldarg.0         
+  IL_0024 ldarg.1         
+  IL_0025 ldstr          'FALLBACK' string token(0x700A921B)
+  IL_002a ldloca.s       local(0x0000) 
+  IL_002c ldc.i4.0        
+  IL_002d callvirt       AssetReferenceLibrary::TryGetAsset<spec> token(0x2B0004F2)
+  IL_0032 pop             
+  IL_0033 ldloc.0         
+  IL_0034 brtrue.s       IL_004d 
+  IL_0036 ldstr          ' Unable to find fallback asset for {0}. Please ensure this is set up in the LuckyDrawAssetLibrary' string token(0x700A922D)
+  IL_003b ldarg.1         
+  IL_003c box            <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_0041 call           System.String::Format token(0x0A0000B7)
+  IL_0046 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_004b ldnull          
+  IL_004c ret             
+  IL_004d ldarg.0         
+  IL_004e ldloc.0         
+  IL_004f call           AssetReferenceLibrary::GetDeviceAssetPath token(0x06006F2F)
+  IL_0054 stloc.1         
+  IL_0055 ldloc.1         
+  IL_0056 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_005b brfalse.s      IL_005f 
+  IL_005d ldnull          
+  IL_005e ret             
+  IL_005f call           AssetLoader::Get token(0x06012AFE)
+  IL_0064 ldloc.1         
+  IL_0065 call           AssetReference::op_Implicit token(0x0A0000BB)
+  IL_006a ldc.i4.0        
+  IL_006b callvirt       IAssetLoader::InstantiatePrefab token(0x0A00022F)
+  IL_0070 stloc.2         
+  IL_0071 ldloc.2         
+  IL_0072 ldnull          
+  IL_0073 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0078 brfalse.s      IL_007c 
+  IL_007a ldnull          
+  IL_007b ret             
+  IL_007c ldarg.3         
+  IL_007d ldnull          
+  IL_007e call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0083 brfalse.s      IL_0092 
+  IL_0085 ldloc.2         
+  IL_0086 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_008b ldarg.3         
+  IL_008c ldc.i4.0        
+  IL_008d callvirt       UnityEngine.Transform::SetParent token(0x0A000576)
+  IL_0092 ldloc.2         
+  IL_0093 ret             
+
+0x06006f2f AssetReferenceLibrary::GetDeviceAssetPath(asset) RVA 0x21c990 SIG 20010e12b8c4
+  IL_0000 ldstr          '' string token(0x70000E3C)
+  IL_0005 stloc.0         
+  IL_0006 ldarg.1         
+  IL_0007 brtrue.s       IL_0015 
+  IL_0009 ldstr          'Cannot Get Device Asset Path - Asset is null.' string token(0x700A92F2)
+  IL_000e call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0013 ldloc.0         
+  IL_0014 ret             
+  IL_0015 call           PlatformSettings::get_Screen token(0x06014EA9)
+  IL_001a ldc.i4.2        
+  IL_001b clt             
+  IL_001d ldc.i4.0        
+  IL_001e ceq             
+  IL_0020 stloc.1         
+  IL_0021 ldarg.1         
+  IL_0022 isinst         ResponsiveLibraryAsset token(0x02000E2D)
+  IL_0027 stloc.2         
+  IL_0028 ldloc.2         
+  IL_0029 brfalse.s      IL_0049 
+  IL_002b ldloc.1         
+  IL_002c brtrue.s       IL_003b 
+  IL_002e ldloc.2         
+  IL_002f ldfld          ResponsiveLibraryAsset::m_mobileAsset token(0x04004DDD)
+  IL_0034 ldfld          PlatformAssetID::m_platformAssetID token(0x04004DDB)
+  IL_0039 br.s           IL_0046 
+  IL_003b ldloc.2         
+  IL_003c ldfld          ResponsiveLibraryAsset::m_desktopAsset token(0x04004DDC)
+  IL_0041 ldfld          PlatformAssetID::m_platformAssetID token(0x04004DDB)
+  IL_0046 stloc.0         
+  IL_0047 br.s           IL_005f 
+  IL_0049 ldarg.1         
+  IL_004a isinst         LibraryAsset token(0x02000E30)
+  IL_004f stloc.3         
+  IL_0050 ldloc.3         
+  IL_0051 brfalse.s      IL_005f 
+  IL_0053 ldloc.3         
+  IL_0054 ldfld          LibraryAsset::m_asset token(0x04004DE0)
+  IL_0059 ldfld          PlatformAssetID::m_platformAssetID token(0x04004DDB)
+  IL_005e stloc.0         
+  IL_005f ldloc.0         
+  IL_0060 ret             
+
+0x06006f30 AssetReferenceLibrary::.ctor() RVA 0x353a4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.ScriptableObject::.ctor token(0x0A0000AB)
+  IL_0006 ret             
+
+0x0601164d DeathSpellController::AddPowerSourceAndTargets(taskList) RVA 0x518519 SIG 20010212b0f0
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           DeathSpellController::AddDeadCardsToTargetList token(0x0601164F)
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          SpellController::m_targets token(0x04011C39)
+  IL_000d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63045460>::get_Count token(0x0A0004C0)
+  IL_0012 brtrue.s       IL_0016 
+  IL_0014 ldc.i4.0        
+  IL_0015 ret             
+  IL_0016 ldc.i4.1        
+  IL_0017 ret             
+
+0x0601164e DeathSpellController::OnProcessTaskList() RVA 0x518534 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           DeathSpellController::PickDeathSoundCardIndex token(0x06011651)
+  IL_0006 stloc.0         
+  IL_0007 ldc.i4.0        
+  IL_0008 stloc.1         
+  IL_0009 br.s           IL_002d 
+  IL_000b ldarg.0         
+  IL_000c ldfld          SpellController::m_targets token(0x04011C39)
+  IL_0011 ldloc.1         
+  IL_0012 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63045460>::get_Item token(0x0A0004C1)
+  IL_0017 stloc.2         
+  IL_0018 ldloc.1         
+  IL_0019 ldloc.0         
+  IL_001a beq.s          IL_0023 
+  IL_001c ldloc.2         
+  IL_001d ldc.i4.1        
+  IL_001e callvirt       Card::SuppressDeathSounds token(0x06012D01)
+  IL_0023 ldloc.2         
+  IL_0024 callvirt       Card::ActivateCharacterDeathEffects token(0x06012D53)
+  IL_0029 ldloc.1         
+  IL_002a ldc.i4.1        
+  IL_002b add             
+  IL_002c stloc.1         
+  IL_002d ldloc.1         
+  IL_002e ldarg.0         
+  IL_002f ldfld          SpellController::m_targets token(0x04011C39)
+  IL_0034 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63045460>::get_Count token(0x0A0004C0)
+  IL_0039 blt.s          IL_000b 
+  IL_003b ldarg.0         
+  IL_003c call           SpellController::OnProcessTaskList token(0x060149CE)
+  IL_0041 ret             
+
+0x0601164f DeathSpellController::AddDeadCardsToTargetList(taskList) RVA 0x518584 SIG 20010112b0f0
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          SpellController::m_taskList token(0x04011C3A)
+  IL_0006 callvirt       PowerTaskList::GetTaskList token(0x06005F6E)
+  IL_000b stloc.0         
+  IL_000c ldc.i4.0        
+  IL_000d stloc.1         
+  IL_000e br.s           IL_0068 
+  IL_0010 ldloc.0         
+  IL_0011 ldloc.1         
+  IL_0012 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62f060f0>::get_Item token(0x0A00243F)
+  IL_0017 callvirt       PowerTask::GetPower token(0x06005F27)
+  IL_001c stloc.2         
+  IL_001d ldloc.2         
+  IL_001e callvirt       PowerHistory::get_Type token(0x0600EF06)
+  IL_0023 ldc.i4.4        
+  IL_0024 bne.un.s       IL_0064 
+  IL_0026 ldloc.2         
+  IL_0027 isinst         HistTagChange token(0x02001F69)
+  IL_002c stloc.3         
+  IL_002d ldloc.3         
+  IL_002e call           GameUtils::IsCharacterDeathTagChange token(0x06014CF9)
+  IL_0033 brfalse.s      IL_0064 
+  IL_0035 call           GameState::Get token(0x06005589)
+  IL_003a ldloc.3         
+  IL_003b callvirt       HistTagChange::get_Entity token(0x0600EF69)
+  IL_0040 callvirt       GameState::GetEntity token(0x060055A7)
+  IL_0045 stloc.s        local(0x0004) 
+  IL_0047 ldloc.s        local(0x0004) 
+  IL_0049 callvirt       Entity::GetCard token(0x060137BF)
+  IL_004e stloc.s        local(0x0005) 
+  IL_0050 ldarg.0         
+  IL_0051 ldloc.s        local(0x0004) 
+  IL_0053 ldloc.s        local(0x0005) 
+  IL_0055 call           DeathSpellController::CanAddTarget token(0x06011650)
+  IL_005a brfalse.s      IL_0064 
+  IL_005c ldarg.0         
+  IL_005d ldloc.s        local(0x0005) 
+  IL_005f call           SpellController::AddTarget token(0x060149C0)
+  IL_0064 ldloc.1         
+  IL_0065 ldc.i4.1        
+  IL_0066 add             
+  IL_0067 stloc.1         
+  IL_0068 ldloc.1         
+  IL_0069 ldloc.0         
+  IL_006a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62f060f0>::get_Count token(0x0A0023EC)
+  IL_006f blt.s          IL_0010 
+  IL_0071 ret             
+
+0x06011650 DeathSpellController::CanAddTarget(entity,card) RVA 0x518602 SIG 20020212c000a32012c0009ebc
+  IL_0000 ldarg.2         
+  IL_0001 callvirt       Card::WillSuppressDeathEffects token(0x06012CFE)
+  IL_0006 brfalse.s      IL_000a 
+  IL_0008 ldc.i4.0        
+  IL_0009 ret             
+  IL_000a ldc.i4.1        
+  IL_000b ret             
+
+0x06011651 DeathSpellController::PickDeathSoundCardIndex() RVA 0x518610 SIG 200008
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          SpellController::m_targets token(0x04011C39)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63045460>::get_Count token(0x0A0004C0)
+  IL_000b ldc.i4.1        
+  IL_000c bne.un.s       IL_002d 
+  IL_000e ldarg.0         
+  IL_000f ldfld          SpellController::m_targets token(0x04011C39)
+  IL_0014 ldc.i4.0        
+  IL_0015 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63045460>::get_Item token(0x0A0004C1)
+  IL_001a callvirt       Card::GetEntity token(0x06012CC3)
+  IL_001f stloc.0         
+  IL_0020 ldarg.0         
+  IL_0021 ldloc.0         
+  IL_0022 call           DeathSpellController::CanPlayDeathSound token(0x06011654)
+  IL_0027 brfalse.s      IL_002b 
+  IL_0029 ldc.i4.0        
+  IL_002a ret             
+  IL_002b ldc.i4.m1       
+  IL_002c ret             
+  IL_002d ldarg.0         
+  IL_002e ldfld          SpellController::m_targets token(0x04011C39)
+  IL_0033 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63045460>::get_Count token(0x0A0004C0)
+  IL_0038 ldc.i4.2        
+  IL_0039 bne.un.s       IL_008f 
+  IL_003b ldarg.0         
+  IL_003c ldfld          SpellController::m_targets token(0x04011C39)
+  IL_0041 ldc.i4.0        
+  IL_0042 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63045460>::get_Item token(0x0A0004C1)
+  IL_0047 stloc.1         
+  IL_0048 ldarg.0         
+  IL_0049 ldfld          SpellController::m_targets token(0x04011C39)
+  IL_004e ldc.i4.1        
+  IL_004f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63045460>::get_Item token(0x0A0004C1)
+  IL_0054 ldloc.1         
+  IL_0055 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_005a stloc.2         
+  IL_005b callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0060 stloc.3         
+  IL_0061 ldarg.0         
+  IL_0062 ldloc.2         
+  IL_0063 ldloc.3         
+  IL_0064 call           DeathSpellController::WasAttackedBy token(0x06011652)
+  IL_0069 brfalse.s      IL_0078 
+  IL_006b ldarg.0         
+  IL_006c ldloc.2         
+  IL_006d call           DeathSpellController::CanPlayDeathSound token(0x06011654)
+  IL_0072 brfalse.s      IL_0076 
+  IL_0074 ldc.i4.0        
+  IL_0075 ret             
+  IL_0076 ldc.i4.1        
+  IL_0077 ret             
+  IL_0078 ldarg.0         
+  IL_0079 ldloc.3         
+  IL_007a ldloc.2         
+  IL_007b call           DeathSpellController::WasAttackedBy token(0x06011652)
+  IL_0080 brfalse.s      IL_008f 
+  IL_0082 ldarg.0         
+  IL_0083 ldloc.3         
+  IL_0084 call           DeathSpellController::CanPlayDeathSound token(0x06011654)
+  IL_0089 brfalse.s      IL_008d 
+  IL_008b ldc.i4.1        
+  IL_008c ret             
+  IL_008d ldc.i4.0        
+  IL_008e ret             
+  IL_008f ldarg.0         
+  IL_0090 call           DeathSpellController::PickRandomDeathSoundCardIndex token(0x06011653)
+  IL_0095 ret             
+
+0x06011652 DeathSpellController::WasAttackedBy(defender,attacker) RVA 0x5186b2 SIG 20020212c000a32012c000a320
+  IL_0000 ldarg.2         
+  IL_0001 ldc.i4.s       38 
+  IL_0003 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0008 brtrue.s       IL_000c 
+  IL_000a ldc.i4.0        
+  IL_000b ret             
+  IL_000c ldarg.1         
+  IL_000d ldc.i4.s       36 
+  IL_000f callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0014 brtrue.s       IL_0018 
+  IL_0016 ldc.i4.0        
+  IL_0017 ret             
+  IL_0018 ldarg.1         
+  IL_0019 ldc.i4.s       18 
+  IL_001b callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_0020 ldarg.2         
+  IL_0021 callvirt       EntityBase::GetEntityId token(0x0601392E)
+  IL_0026 beq.s          IL_002a 
+  IL_0028 ldc.i4.0        
+  IL_0029 ret             
+  IL_002a ldc.i4.1        
+  IL_002b ret             
+
+0x06011653 DeathSpellController::PickRandomDeathSoundCardIndex() RVA 0x5186e0 SIG 200008
+  IL_0000 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f9b62ff7680>::.ctor token(0x0A00028F)
+  IL_0005 stloc.0         
+  IL_0006 ldc.i4.0        
+  IL_0007 stloc.1         
+  IL_0008 br.s           IL_0030 
+  IL_000a ldarg.0         
+  IL_000b ldfld          SpellController::m_targets token(0x04011C39)
+  IL_0010 ldloc.1         
+  IL_0011 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63045460>::get_Item token(0x0A0004C1)
+  IL_0016 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_001b stloc.2         
+  IL_001c ldarg.0         
+  IL_001d ldloc.2         
+  IL_001e call           DeathSpellController::CanPlayDeathSound token(0x06011654)
+  IL_0023 brfalse.s      IL_002c 
+  IL_0025 ldloc.0         
+  IL_0026 ldloc.1         
+  IL_0027 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62ff7680>::Add token(0x0A000291)
+  IL_002c ldloc.1         
+  IL_002d ldc.i4.1        
+  IL_002e add             
+  IL_002f stloc.1         
+  IL_0030 ldloc.1         
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          SpellController::m_targets token(0x04011C39)
+  IL_0037 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63045460>::get_Count token(0x0A0004C0)
+  IL_003c blt.s          IL_000a 
+  IL_003e ldloc.0         
+  IL_003f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62ff7680>::get_Count token(0x0A00019C)
+  IL_0044 brtrue.s       IL_0048 
+  IL_0046 ldc.i4.m1       
+  IL_0047 ret             
+  IL_0048 ldloc.0         
+  IL_0049 ldc.i4.0        
+  IL_004a ldloc.0         
+  IL_004b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62ff7680>::get_Count token(0x0A00019C)
+  IL_0050 call           UnityEngine.Random::Range token(0x0A000433)
+  IL_0055 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62ff7680>::get_Item token(0x0A00019D)
+  IL_005a ret             
+
+0x06011654 DeathSpellController::CanPlayDeathSound(entity) RVA 0x518747 SIG 20010212c000a320
+  IL_0000 ldarg.1         
+  IL_0001 ldc.i4         382 
+  IL_0006 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_000b brfalse.s      IL_000f 
+  IL_000d ldc.i4.0        
+  IL_000e ret             
+  IL_000f ldarg.1         
+  IL_0010 ldc.i4         959 
+  IL_0015 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_001a brfalse.s      IL_001e 
+  IL_001c ldc.i4.0        
+  IL_001d ret             
+  IL_001e ldc.i4.1        
+  IL_001f ret             
+
+0x06011655 DeathSpellController::.ctor() RVA 0x518768 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellController::.ctor token(0x060149DB)
+  IL_0006 ret             
+
+0x060147c1 SourceExtension::.ctor() RVA 0x60e88c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         1.0 
+  IL_0006 stfld          SourceExtension::m_codeVolume token(0x04011A4E)
+  IL_000b ldarg.0         
+  IL_000c ldc.r4         1.0 
+  IL_0011 stfld          SourceExtension::m_sourceVolume token(0x04011A4F)
+  IL_0016 ldarg.0         
+  IL_0017 ldc.r4         1.0 
+  IL_001c stfld          SourceExtension::m_defVolume token(0x04011A50)
+  IL_0021 ldarg.0         
+  IL_0022 ldc.r4         1.0 
+  IL_0027 stfld          SourceExtension::m_codePitch token(0x04011A51)
+  IL_002c ldarg.0         
+  IL_002d ldc.r4         1.0 
+  IL_0032 stfld          SourceExtension::m_sourcePitch token(0x04011A52)
+  IL_0037 ldarg.0         
+  IL_0038 ldc.r4         1.0 
+  IL_003d stfld          SourceExtension::m_defPitch token(0x04011A53)
+  IL_0042 ldarg.0         
+  IL_0043 call           System.Object::.ctor token(0x0A000003)
+  IL_0048 ret             
+
+0x06014813 AudioSourceSettings::.ctor() RVA 0x60f338 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          AudioSourceSettings::m_changeMixerOutput token(0x04011AB9)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.1        
+  IL_0009 stfld          AudioSourceSettings::m_changeBypassEffects token(0x04011ABA)
+  IL_000e ldarg.0         
+  IL_000f ldc.i4.1        
+  IL_0010 stfld          AudioSourceSettings::m_changeLoop token(0x04011ABB)
+  IL_0015 ldarg.0         
+  IL_0016 ldc.i4.1        
+  IL_0017 stfld          AudioSourceSettings::m_changePriority token(0x04011ABC)
+  IL_001c ldarg.0         
+  IL_001d ldc.i4.1        
+  IL_001e stfld          AudioSourceSettings::m_changeVolume token(0x04011ABD)
+  IL_0023 ldarg.0         
+  IL_0024 ldc.i4.1        
+  IL_0025 stfld          AudioSourceSettings::m_changePitch token(0x04011ABE)
+  IL_002a ldarg.0         
+  IL_002b ldc.i4.1        
+  IL_002c stfld          AudioSourceSettings::m_changeStereoPan token(0x04011ABF)
+  IL_0031 ldarg.0         
+  IL_0032 ldc.i4.1        
+  IL_0033 stfld          AudioSourceSettings::m_changeSpatialBlend token(0x04011AC0)
+  IL_0038 ldarg.0         
+  IL_0039 ldc.i4.1        
+  IL_003a stfld          AudioSourceSettings::m_changeReverbZoneMix token(0x04011AC1)
+  IL_003f ldarg.0         
+  IL_0040 ldc.i4.1        
+  IL_0041 stfld          AudioSourceSettings::m_changeRolloffMode token(0x04011AC2)
+  IL_0046 ldarg.0         
+  IL_0047 ldc.i4.1        
+  IL_0048 stfld          AudioSourceSettings::m_changeDopplerLevel token(0x04011AC3)
+  IL_004d ldarg.0         
+  IL_004e ldc.i4.1        
+  IL_004f stfld          AudioSourceSettings::m_changeMinDistance token(0x04011AC4)
+  IL_0054 ldarg.0         
+  IL_0055 ldc.i4.1        
+  IL_0056 stfld          AudioSourceSettings::m_changeMaxDistance token(0x04011AC5)
+  IL_005b ldarg.0         
+  IL_005c ldc.i4.1        
+  IL_005d stfld          AudioSourceSettings::m_changeSpread token(0x04011AC6)
+  IL_0062 ldarg.0         
+  IL_0063 call           System.Object::.ctor token(0x0A000003)
+  IL_0068 ldarg.0         
+  IL_0069 call           AudioSourceSettings::LoadDefaults token(0x06014814)
+  IL_006e ret             
+
+0x06014814 AudioSourceSettings::LoadDefaults() RVA 0x60f3b4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          AudioSourceSettings::m_mixerOutput token(0x04011AAB)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 stfld          AudioSourceSettings::m_bypassEffects token(0x04011AAC)
+  IL_000e ldarg.0         
+  IL_000f ldc.i4.0        
+  IL_0010 stfld          AudioSourceSettings::m_loop token(0x04011AAD)
+  IL_0015 ldarg.0         
+  IL_0016 ldc.i4         128 
+  IL_001b stfld          AudioSourceSettings::m_priority token(0x04011AAE)
+  IL_0020 ldarg.0         
+  IL_0021 ldc.r4         1.0 
+  IL_0026 stfld          AudioSourceSettings::m_volume token(0x04011AAF)
+  IL_002b ldarg.0         
+  IL_002c ldc.r4         1.0 
+  IL_0031 stfld          AudioSourceSettings::m_pitch token(0x04011AB0)
+  IL_0036 ldarg.0         
+  IL_0037 ldc.r4         0.0 
+  IL_003c stfld          AudioSourceSettings::m_stereoPan token(0x04011AB1)
+  IL_0041 ldarg.0         
+  IL_0042 ldc.r4         0.0 
+  IL_0047 stfld          AudioSourceSettings::m_spatialBlend token(0x04011AB2)
+  IL_004c ldarg.0         
+  IL_004d ldc.r4         1.0 
+  IL_0052 stfld          AudioSourceSettings::m_reverbZoneMix token(0x04011AB3)
+  IL_0057 ldarg.0         
+  IL_0058 ldc.i4.1        
+  IL_0059 stfld          AudioSourceSettings::m_rolloffMode token(0x04011AB4)
+  IL_005e ldarg.0         
+  IL_005f ldc.r4         1.0 
+  IL_0064 stfld          AudioSourceSettings::m_dopplerLevel token(0x04011AB5)
+  IL_0069 ldarg.0         
+  IL_006a ldc.r4         100.0 
+  IL_006f stfld          AudioSourceSettings::m_minDistance token(0x04011AB6)
+  IL_0074 ldarg.0         
+  IL_0075 ldc.r4         500.0 
+  IL_007a stfld          AudioSourceSettings::m_maxDistance token(0x04011AB7)
+  IL_007f ldarg.0         
+  IL_0080 ldc.r4         0.0 
+  IL_0085 stfld          AudioSourceSettings::m_spread token(0x04011AB8)
+  IL_008a ret             
+
+0x060149fc SpellManager::Get() RVA 0x615b24 SIG 000012c000ac68
+  IL_0000 ldloca.s       local(0x0000) 
+  IL_0002 call           Blizzard.T5.Services.ServiceManager::TryGet<spec> token(0x2B000542)
+  IL_0007 brtrue.s       IL_0012 
+  IL_0009 call           UnityEngine.Application::get_isEditor token(0x0A00024F)
+  IL_000e brtrue.s       IL_0012 
+  IL_0010 ldnull          
+  IL_0011 ret             
+  IL_0012 ldloc.0         
+  IL_0013 ret             
+
+0x060149fd SpellManager::Initialize(serviceLocator) RVA 0x615b44 SIG 200115128109011281a51281a9
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <Initialize>d__2::.ctor token(0x06014A09)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <Initialize>d__2::<>4__this token(0x04011C58)
+  IL_000d dup             
+  IL_000e ldarg.1         
+  IL_000f stfld          <Initialize>d__2::serviceLocator token(0x04011C57)
+  IL_0014 ret             
+
+0x060149fe SpellManager::GetDependencies() RVA 0x573815 SIG 20001d128179
+  IL_0000 ldc.i4.1        
+  IL_0001 newarr         System.Type token(0x0100005E)
+  IL_0006 dup             
+  IL_0007 ldc.i4.0        
+  IL_0008 ldtoken        IAssetLoader token(0x01000058)
+  IL_000d call           System.Type::GetTypeFromHandle token(0x0A00010D)
+  IL_0012 stelem.ref      
+  IL_0013 ret             
+
+0x060149ff SpellManager::Shutdown() RVA 0x615b5a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellManager::Clear token(0x06014A00)
+  IL_0006 ret             
+
+0x06014a00 SpellManager::Clear() RVA 0x615b62 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          SpellManager::m_spellCache token(0x04011C54)
+  IL_0006 callvirt       SpellCache::Clear token(0x060149B0)
+  IL_000b ret             
+
+0x06014a01 SpellManager::GetSpell(spellAssetRef) RVA 0x615b6f SIG 200112c000ac1c0e
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           SpellManager::CreateSpell token(0x06014A06)
+  IL_0007 ret             
+
+0x06014a02 SpellManager::GetSpell(spell) RVA 0x615b78 SIG 200112c000ac1c12c000ac1c
+  IL_0000 ldarg.1         
+  IL_0001 call           UnityEngine.Object::Instantiate<spec> token(0x2B000963)
+  IL_0006 ret             
+
+0x06014a03 SpellManager::ReleaseSpell(spell,reset) RVA 0x615b80 SIG 20020212c000ac1c02
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brtrue.s       IL_0011 
+  IL_0009 ldarg.1         
+  IL_000a callvirt       Spell::get_IsDestroyed token(0x060148FA)
+  IL_000f brfalse.s      IL_0043 
+  IL_0011 ldarg.1         
+  IL_0012 ldnull          
+  IL_0013 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0018 brfalse.s      IL_0041 
+  IL_001a call           GameState::Get token(0x06005589)
+  IL_001f brfalse.s      IL_0041 
+  IL_0021 call           GameState::Get token(0x06005589)
+  IL_0026 callvirt       GameState::IsGameOverNowOrPending token(0x060055FE)
+  IL_002b brtrue.s       IL_0041 
+  IL_002d ldstr          'Spell Pooling' string token(0x703F0FEB)
+  IL_0032 ldstr          'Spell was null and could not be released.' string token(0x703F1007)
+  IL_0037 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_003c call           Error::AddDevWarningNonRepeating token(0x06004E79)
+  IL_0041 ldc.i4.0        
+  IL_0042 ret             
+  IL_0043 ldarg.2         
+  IL_0044 brfalse.s      IL_004c 
+  IL_0046 ldarg.1         
+  IL_0047 callvirt       Spell::ReleaseSpell token(0x06014920)
+  IL_004c ldarg.1         
+  IL_004d call           SpellManager::DestroySpell token(0x06014A07)
+  IL_0052 ldc.i4.1        
+  IL_0053 ret             
+
+0x06014a04 SpellManager::GetSpellTable(prefabPath) RVA 0x615be0 SIG 200112c000acb40e
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          SpellManager::m_spellCache token(0x04011C54)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       SpellCache::GetSpellTable token(0x060149AF)
+  IL_000c ret             
+
+0x06014a05 SpellManager::OnScenePreLoad(previousMode,nextMode,userData) RVA 0x615bee SIG 20030111c0008a2411c0008a241c
+  IL_0000 ldarg.1         
+  IL_0001 ldc.i4.4        
+  IL_0002 bne.un.s       IL_000e 
+  IL_0004 ldarg.2         
+  IL_0005 ldc.i4.4        
+  IL_0006 beq.s          IL_000e 
+  IL_0008 ldarg.0         
+  IL_0009 call           SpellManager::Clear token(0x06014A00)
+  IL_000e ldarg.2         
+  IL_000f ldc.i4.3        
+  IL_0010 bne.un.s       IL_0018 
+  IL_0012 ldarg.0         
+  IL_0013 call           SpellManager::Clear token(0x06014A00)
+  IL_0018 ret             
+
+0x06014a06 SpellManager::CreateSpell(spellAssetRef) RVA 0x615c08 SIG 200112c000ac1c0e
+  IL_0000 ldnull          
+  IL_0001 stloc.0         
+  IL_0002 ldarg.1         
+  IL_0003 call           GameUtils::IsOnVFXDenylist token(0x06014C9E)
+  IL_0008 brfalse.s      IL_0025 
+  IL_000a ldstr          'Spell Manager' string token(0x703F105B)
+  IL_000f ldstr          "Spell spellAssetRef '{0}' was on the VFX Denylist" string token(0x703F1077)
+  IL_0014 ldc.i4.1        
+  IL_0015 newarr         System.Object token(0x01000001)
+  IL_001a dup             
+  IL_001b ldc.i4.0        
+  IL_001c ldarg.1         
+  IL_001d stelem.ref      
+  IL_001e call           Error::AddDevWarning token(0x06004E78)
+  IL_0023 ldnull          
+  IL_0024 ret             
+  IL_0025 call           AssetLoader::Get token(0x06012AFE)
+  IL_002a dup             
+  IL_002b brtrue.s       IL_0031 
+  IL_002d pop             
+  IL_002e ldnull          
+  IL_002f br.s           IL_003d 
+  IL_0031 ldarg.1         
+  IL_0032 call           AssetReference::op_Implicit token(0x0A0000BB)
+  IL_0037 ldc.i4.0        
+  IL_0038 callvirt       IAssetLoader::InstantiatePrefab token(0x0A00022F)
+  IL_003d stloc.1         
+  IL_003e ldloc.1         
+  IL_003f ldnull          
+  IL_0040 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0045 brfalse.s      IL_004e 
+  IL_0047 ldloc.1         
+  IL_0048 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0000A1)
+  IL_004d stloc.0         
+  IL_004e ldloc.0         
+  IL_004f ldnull          
+  IL_0050 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0055 brfalse.s      IL_0072 
+  IL_0057 ldstr          'Spell Manager' string token(0x703F105B)
+  IL_005c ldstr          "Spell could not be found with spellAssetRef '{0}'" string token(0x703F10DB)
+  IL_0061 ldc.i4.1        
+  IL_0062 newarr         System.Object token(0x01000001)
+  IL_0067 dup             
+  IL_0068 ldc.i4.0        
+  IL_0069 ldarg.1         
+  IL_006a stelem.ref      
+  IL_006b call           Error::AddDevWarning token(0x06004E78)
+  IL_0070 ldnull          
+  IL_0071 ret             
+  IL_0072 ldloc.0         
+  IL_0073 ret             
+
+0x06014a07 SpellManager::DestroySpell(spell) RVA 0x615c88 SIG 00010112c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 callvirt       Spell::set_IsDestroyed token(0x060148FB)
+  IL_0007 ldarg.0         
+  IL_0008 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_000d call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_0012 ret             
+
+0x06014a08 SpellManager::.ctor() RVA 0x3159 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ret             
+
+0x06014ab2 SpellUtils::ConvertClassTagToSpellEnum(classTag) RVA 0x617a4c SIG 000111953111c000a968
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 sub             
+  IL_0003 switch         [IL_0032, IL_0034, IL_0036, IL_0038, IL_003a, IL_003c, IL_003e, IL_0040, IL_0042, IL_0045] 
+  IL_0030 br.s           IL_0048 
+  IL_0032 ldc.i4.1        
+  IL_0033 ret             
+  IL_0034 ldc.i4.2        
+  IL_0035 ret             
+  IL_0036 ldc.i4.3        
+  IL_0037 ret             
+  IL_0038 ldc.i4.4        
+  IL_0039 ret             
+  IL_003a ldc.i4.5        
+  IL_003b ret             
+  IL_003c ldc.i4.6        
+  IL_003d ret             
+  IL_003e ldc.i4.7        
+  IL_003f ret             
+  IL_0040 ldc.i4.8        
+  IL_0041 ret             
+  IL_0042 ldc.i4.s       9 
+  IL_0044 ret             
+  IL_0045 ldc.i4.s       10 
+  IL_0047 ret             
+  IL_0048 ldc.i4.0        
+  IL_0049 ret             
+
+0x06014ab3 SpellUtils::ConvertSpellSideToPlayerSide(spell,spellSide) RVA 0x617aa4 SIG 000211b06412c000ac1c1195e1
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_000e brtrue.s       IL_0013 
+  IL_0010 ldnull          
+  IL_0011 br.s           IL_0019 
+  IL_0013 ldloc.0         
+  IL_0014 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0019 stloc.1         
+  IL_001a ldarg.1         
+  IL_001b ldc.i4.1        
+  IL_001c sub             
+  IL_001d switch         [IL_0034, IL_0036, IL_0038, IL_0067] 
+  IL_0032 br.s           IL_0096 
+  IL_0034 ldc.i4.1        
+  IL_0035 ret             
+  IL_0036 ldc.i4.2        
+  IL_0037 ret             
+  IL_0038 ldloc.1         
+  IL_0039 brtrue.s       IL_005b 
+  IL_003b call           Log::get_Gameplay token(0x06014E34)
+  IL_0040 ldstr          'sourceEntity null for spell: {0}' string token(0x703F16DA)
+  IL_0045 ldc.i4.1        
+  IL_0046 newarr         System.Object token(0x01000001)
+  IL_004b dup             
+  IL_004c ldc.i4.0        
+  IL_004d ldarg.0         
+  IL_004e callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_0053 stelem.ref      
+  IL_0054 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0059 ldc.i4.0        
+  IL_005a ret             
+  IL_005b ldloc.1         
+  IL_005c callvirt       Entity::IsControlledByFriendlySidePlayer token(0x060137E1)
+  IL_0061 brfalse.s      IL_0065 
+  IL_0063 ldc.i4.1        
+  IL_0064 ret             
+  IL_0065 ldc.i4.2        
+  IL_0066 ret             
+  IL_0067 ldloc.1         
+  IL_0068 brtrue.s       IL_008a 
+  IL_006a call           Log::get_Gameplay token(0x06014E34)
+  IL_006f ldstr          'sourceEntity null for spell: {0}' string token(0x703F16DA)
+  IL_0074 ldc.i4.1        
+  IL_0075 newarr         System.Object token(0x01000001)
+  IL_007a dup             
+  IL_007b ldc.i4.0        
+  IL_007c ldarg.0         
+  IL_007d callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_0082 stelem.ref      
+  IL_0083 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0088 ldc.i4.0        
+  IL_0089 ret             
+  IL_008a ldloc.1         
+  IL_008b callvirt       Entity::IsControlledByFriendlySidePlayer token(0x060137E1)
+  IL_0090 brfalse.s      IL_0094 
+  IL_0092 ldc.i4.2        
+  IL_0093 ret             
+  IL_0094 ldc.i4.1        
+  IL_0095 ret             
+  IL_0096 ldc.i4.0        
+  IL_0097 ret             
+
+0x06014ab4 SpellUtils::FindZonesFromTag(zoneTag) RVA 0x617b48 SIG 00011512490112b2b41195e5
+  IL_0000 call           ZoneMgr::Get token(0x06006502)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 ldnull          
+  IL_0008 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000d brfalse.s      IL_0011 
+  IL_000f ldnull          
+  IL_0010 ret             
+  IL_0011 ldarg.0         
+  IL_0012 ldc.i4.1        
+  IL_0013 sub             
+  IL_0014 switch         [IL_0047, IL_004e, IL_0055, IL_005c, IL_0078, IL_007f, IL_0086, IL_008d, IL_0063, IL_006a, IL_0071] 
+  IL_0045 br.s           IL_0094 
+  IL_0047 ldloc.0         
+  IL_0048 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B00096C)
+  IL_004d ret             
+  IL_004e ldloc.0         
+  IL_004f callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B00096D)
+  IL_0054 ret             
+  IL_0055 ldloc.0         
+  IL_0056 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B00096E)
+  IL_005b ret             
+  IL_005c ldloc.0         
+  IL_005d callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B00096F)
+  IL_0062 ret             
+  IL_0063 ldloc.0         
+  IL_0064 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000970)
+  IL_0069 ret             
+  IL_006a ldloc.0         
+  IL_006b callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000971)
+  IL_0070 ret             
+  IL_0071 ldloc.0         
+  IL_0072 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000972)
+  IL_0077 ret             
+  IL_0078 ldloc.0         
+  IL_0079 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000973)
+  IL_007e ret             
+  IL_007f ldloc.0         
+  IL_0080 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000974)
+  IL_0085 ret             
+  IL_0086 ldloc.0         
+  IL_0087 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000975)
+  IL_008c ret             
+  IL_008d ldloc.0         
+  IL_008e callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000976)
+  IL_0093 ret             
+  IL_0094 ldstr          'SpellUtils.FindZonesFromTag() - unhandled zoneTag {0}' string token(0x703F171C)
+  IL_0099 ldarg.0         
+  IL_009a box            SpellZoneTag token(0x01000579)
+  IL_009f call           System.String::Format token(0x0A0000B7)
+  IL_00a4 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_00a9 ldnull          
+  IL_00aa ret             
+
+0x06014ab5 SpellUtils::FindZonesFromTag(spell,zoneTag,spellSide) RVA 0x617c00 SIG 00031512490112b2b412c000ac1c1195e51195e1
+  IL_0000 call           ZoneMgr::Get token(0x06006502)
+  IL_0005 ldnull          
+  IL_0006 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000b brfalse.s      IL_000f 
+  IL_000d ldnull          
+  IL_000e ret             
+  IL_000f ldarg.2         
+  IL_0010 brtrue.s       IL_0014 
+  IL_0012 ldnull          
+  IL_0013 ret             
+  IL_0014 ldarg.2         
+  IL_0015 ldc.i4.5        
+  IL_0016 bne.un.s       IL_001f 
+  IL_0018 ldarg.1         
+  IL_0019 call           SpellUtils::FindZonesFromTag token(0x06014AB4)
+  IL_001e ret             
+  IL_001f ldarg.0         
+  IL_0020 ldarg.2         
+  IL_0021 call           SpellUtils::ConvertSpellSideToPlayerSide token(0x06014AB3)
+  IL_0026 stloc.0         
+  IL_0027 ldarg.1         
+  IL_0028 ldc.i4.1        
+  IL_0029 sub             
+  IL_002a switch         [IL_0060, IL_006c, IL_0078, IL_0084, IL_00b4, IL_00c0, IL_00cc, IL_00d8, IL_0090, IL_009c, IL_00a8] 
+  IL_005b br             IL_00e4 
+  IL_0060 call           ZoneMgr::Get token(0x06006502)
+  IL_0065 ldloc.0         
+  IL_0066 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000977)
+  IL_006b ret             
+  IL_006c call           ZoneMgr::Get token(0x06006502)
+  IL_0071 ldloc.0         
+  IL_0072 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000978)
+  IL_0077 ret             
+  IL_0078 call           ZoneMgr::Get token(0x06006502)
+  IL_007d ldloc.0         
+  IL_007e callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000979)
+  IL_0083 ret             
+  IL_0084 call           ZoneMgr::Get token(0x06006502)
+  IL_0089 ldloc.0         
+  IL_008a callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B00097A)
+  IL_008f ret             
+  IL_0090 call           ZoneMgr::Get token(0x06006502)
+  IL_0095 ldloc.0         
+  IL_0096 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B00097B)
+  IL_009b ret             
+  IL_009c call           ZoneMgr::Get token(0x06006502)
+  IL_00a1 ldloc.0         
+  IL_00a2 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B00097C)
+  IL_00a7 ret             
+  IL_00a8 call           ZoneMgr::Get token(0x06006502)
+  IL_00ad ldloc.0         
+  IL_00ae callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B00097D)
+  IL_00b3 ret             
+  IL_00b4 call           ZoneMgr::Get token(0x06006502)
+  IL_00b9 ldloc.0         
+  IL_00ba callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B00097E)
+  IL_00bf ret             
+  IL_00c0 call           ZoneMgr::Get token(0x06006502)
+  IL_00c5 ldloc.0         
+  IL_00c6 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B00097F)
+  IL_00cb ret             
+  IL_00cc call           ZoneMgr::Get token(0x06006502)
+  IL_00d1 ldloc.0         
+  IL_00d2 callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000980)
+  IL_00d7 ret             
+  IL_00d8 call           ZoneMgr::Get token(0x06006502)
+  IL_00dd ldloc.0         
+  IL_00de callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000981)
+  IL_00e3 ret             
+  IL_00e4 ldstr          'SpellUtils.FindZonesFromTag() - Unhandled zoneTag {0}. spellSide={1} playerSide={2}' string token(0x703F1788)
+  IL_00e9 ldarg.1         
+  IL_00ea box            SpellZoneTag token(0x01000579)
+  IL_00ef ldarg.2         
+  IL_00f0 box            SpellPlayerSide token(0x01000578)
+  IL_00f5 ldloc.0         
+  IL_00f6 box            Side token(0x02000C19)
+  IL_00fb call           System.String::Format token(0x0A0000AF)
+  IL_0100 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0105 ldnull          
+  IL_0106 ret             
+
+0x06014ab6 SpellUtils::GetLocationTransform(spell) RVA 0x617d14 SIG 00011280a512c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellUtils::GetLocationObject token(0x06014AB7)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brtrue.s       IL_0017 
+  IL_0010 ldloc.0         
+  IL_0011 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0016 ret             
+  IL_0017 ldnull          
+  IL_0018 ret             
+
+0x06014ab7 SpellUtils::GetLocationObject(spell) RVA 0x617d3c SIG 000112808d12c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       Blizzard.T5.Game.Spells.SpellBase::get_Location token(0x0A004E7F)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldloc.0         
+  IL_0009 ldnull          
+  IL_000a call           SpellUtils::GetSpellLocationObject token(0x06014AB8)
+  IL_000f ret             
+
+0x06014ab8 SpellUtils::GetSpellLocationObject(spell,location,overrideTransformName) RVA 0x617d58 SIG 000312808d12c000ac1c1183190e
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_0005 
+  IL_0003 ldnull          
+  IL_0004 ret             
+  IL_0005 ldnull          
+  IL_0006 stloc.0         
+  IL_0007 ldarg.1         
+  IL_0008 ldc.i4.1        
+  IL_0009 bne.un.s       IL_0017 
+  IL_000b ldarg.0         
+  IL_000c callvirt       Spell::GetSource token(0x0601491A)
+  IL_0011 stloc.0         
+  IL_0012 br             IL_082f 
+  IL_0017 ldarg.1         
+  IL_0018 ldc.i4.2        
+  IL_0019 bne.un.s       IL_0027 
+  IL_001b ldarg.0         
+  IL_001c call           SpellUtils::FindSourceAutoObjectForSpell token(0x06014AD0)
+  IL_0021 stloc.0         
+  IL_0022 br             IL_082f 
+  IL_0027 ldarg.1         
+  IL_0028 ldc.i4.3        
+  IL_0029 bne.un.s       IL_0091 
+  IL_002b ldarg.0         
+  IL_002c callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_0031 dup             
+  IL_0032 dup             
+  IL_0033 brtrue.s       IL_0039 
+  IL_0035 pop             
+  IL_0036 ldnull          
+  IL_0037 br.s           IL_003e 
+  IL_0039 call           Card::GetEntity token(0x06012CC3)
+  IL_003e stloc.2         
+  IL_003f ldloc.2         
+  IL_0040 brfalse.s      IL_004a 
+  IL_0042 ldloc.2         
+  IL_0043 callvirt       EntityBase::IsLettuceAbility token(0x060138D6)
+  IL_0048 brtrue.s       IL_004d 
+  IL_004a ldnull          
+  IL_004b br.s           IL_005f 
+  IL_004d ldloc.2         
+  IL_004e callvirt       Entity::GetLettuceAbilityOwner token(0x0601387A)
+  IL_0053 dup             
+  IL_0054 brtrue.s       IL_005a 
+  IL_0056 pop             
+  IL_0057 ldnull          
+  IL_0058 br.s           IL_005f 
+  IL_005a call           Entity::GetCard token(0x060137BF)
+  IL_005f stloc.3         
+  IL_0060 ldloc.3         
+  IL_0061 ldnull          
+  IL_0062 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0067 brfalse.s      IL_0070 
+  IL_0069 ldloc.3         
+  IL_006a callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_006f stloc.0         
+  IL_0070 call           SpellUtils::FindHeroCard token(0x06014AD4)
+  IL_0075 stloc.s        local(0x0004) 
+  IL_0077 ldloc.s        local(0x0004) 
+  IL_0079 ldnull          
+  IL_007a call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_007f brfalse        IL_082f 
+  IL_0084 ldloc.s        local(0x0004) 
+  IL_0086 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_008b stloc.0         
+  IL_008c br             IL_082f 
+  IL_0091 ldarg.1         
+  IL_0092 ldc.i4.4        
+  IL_0093 bne.un.s       IL_00bb 
+  IL_0095 ldarg.0         
+  IL_0096 callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_009b call           SpellUtils::FindHeroPowerCard token(0x06014AD5)
+  IL_00a0 stloc.s        local(0x0005) 
+  IL_00a2 ldloc.s        local(0x0005) 
+  IL_00a4 ldnull          
+  IL_00a5 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00aa brfalse.s      IL_00ae 
+  IL_00ac ldnull          
+  IL_00ad ret             
+  IL_00ae ldloc.s        local(0x0005) 
+  IL_00b0 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00b5 stloc.0         
+  IL_00b6 br             IL_082f 
+  IL_00bb ldarg.1         
+  IL_00bc ldc.i4.5        
+  IL_00bd bne.un.s       IL_010d 
+  IL_00bf ldarg.0         
+  IL_00c0 callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_00c5 stloc.s        local(0x0006) 
+  IL_00c7 ldloc.s        local(0x0006) 
+  IL_00c9 ldnull          
+  IL_00ca call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00cf brfalse.s      IL_00d3 
+  IL_00d1 ldnull          
+  IL_00d2 ret             
+  IL_00d3 ldloc.s        local(0x0006) 
+  IL_00d5 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_00da callvirt       Entity::GetController token(0x060137DE)
+  IL_00df stloc.s        local(0x0007) 
+  IL_00e1 call           ZoneMgr::Get token(0x06006502)
+  IL_00e6 ldloc.s        local(0x0007) 
+  IL_00e8 callvirt       Player::GetSide token(0x06005D64)
+  IL_00ed callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B000122)
+  IL_00f2 stloc.s        local(0x0008) 
+  IL_00f4 ldloc.s        local(0x0008) 
+  IL_00f6 ldnull          
+  IL_00f7 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00fc brfalse.s      IL_0100 
+  IL_00fe ldnull          
+  IL_00ff ret             
+  IL_0100 ldloc.s        local(0x0008) 
+  IL_0102 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0107 stloc.0         
+  IL_0108 br             IL_082f 
+  IL_010d ldarg.1         
+  IL_010e ldc.i4.s       25 
+  IL_0110 bne.un.s       IL_0160 
+  IL_0112 ldarg.0         
+  IL_0113 callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_0118 stloc.s        local(0x0009) 
+  IL_011a ldloc.s        local(0x0009) 
+  IL_011c ldnull          
+  IL_011d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0122 brfalse.s      IL_0126 
+  IL_0124 ldnull          
+  IL_0125 ret             
+  IL_0126 ldloc.s        local(0x0009) 
+  IL_0128 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_012d callvirt       Entity::GetController token(0x060137DE)
+  IL_0132 stloc.s        local(0x000A) 
+  IL_0134 call           ZoneMgr::Get token(0x06006502)
+  IL_0139 ldloc.s        local(0x000A) 
+  IL_013b callvirt       Player::GetSide token(0x06005D64)
+  IL_0140 callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003FA)
+  IL_0145 stloc.s        local(0x000B) 
+  IL_0147 ldloc.s        local(0x000B) 
+  IL_0149 ldnull          
+  IL_014a call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_014f brfalse.s      IL_0153 
+  IL_0151 ldnull          
+  IL_0152 ret             
+  IL_0153 ldloc.s        local(0x000B) 
+  IL_0155 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_015a stloc.0         
+  IL_015b br             IL_082f 
+  IL_0160 ldarg.1         
+  IL_0161 ldc.i4.s       26 
+  IL_0163 bne.un.s       IL_01b3 
+  IL_0165 ldarg.0         
+  IL_0166 callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_016b stloc.s        local(0x000C) 
+  IL_016d ldloc.s        local(0x000C) 
+  IL_016f ldnull          
+  IL_0170 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0175 brfalse.s      IL_0179 
+  IL_0177 ldnull          
+  IL_0178 ret             
+  IL_0179 ldloc.s        local(0x000C) 
+  IL_017b callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0180 callvirt       Entity::GetController token(0x060137DE)
+  IL_0185 stloc.s        local(0x000D) 
+  IL_0187 call           ZoneMgr::Get token(0x06006502)
+  IL_018c ldloc.s        local(0x000D) 
+  IL_018e callvirt       Player::GetSide token(0x06005D64)
+  IL_0193 callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003D1)
+  IL_0198 stloc.s        local(0x000E) 
+  IL_019a ldloc.s        local(0x000E) 
+  IL_019c ldnull          
+  IL_019d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_01a2 brfalse.s      IL_01a6 
+  IL_01a4 ldnull          
+  IL_01a5 ret             
+  IL_01a6 ldloc.s        local(0x000E) 
+  IL_01a8 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_01ad stloc.0         
+  IL_01ae br             IL_082f 
+  IL_01b3 ldarg.1         
+  IL_01b4 ldc.i4.6        
+  IL_01b5 bne.un.s       IL_01c3 
+  IL_01b7 ldarg.0         
+  IL_01b8 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetVisualTarget token(0x0A004F21)
+  IL_01bd stloc.0         
+  IL_01be br             IL_082f 
+  IL_01c3 ldarg.1         
+  IL_01c4 ldc.i4.7        
+  IL_01c5 bne.un.s       IL_01d3 
+  IL_01c7 ldarg.0         
+  IL_01c8 call           SpellUtils::FindTargetAutoObjectForSpell token(0x06014AD1)
+  IL_01cd stloc.0         
+  IL_01ce br             IL_082f 
+  IL_01d3 ldarg.1         
+  IL_01d4 ldc.i4.8        
+  IL_01d5 bne.un.s       IL_01fd 
+  IL_01d7 ldarg.0         
+  IL_01d8 callvirt       Spell::GetVisualTargetCard token(0x06014931)
+  IL_01dd call           SpellUtils::FindHeroCard token(0x06014AD4)
+  IL_01e2 stloc.s        local(0x000F) 
+  IL_01e4 ldloc.s        local(0x000F) 
+  IL_01e6 ldnull          
+  IL_01e7 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_01ec brfalse.s      IL_01f0 
+  IL_01ee ldnull          
+  IL_01ef ret             
+  IL_01f0 ldloc.s        local(0x000F) 
+  IL_01f2 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_01f7 stloc.0         
+  IL_01f8 br             IL_082f 
+  IL_01fd ldarg.1         
+  IL_01fe ldc.i4.s       9 
+  IL_0200 bne.un.s       IL_0228 
+  IL_0202 ldarg.0         
+  IL_0203 callvirt       Spell::GetVisualTargetCard token(0x06014931)
+  IL_0208 call           SpellUtils::FindHeroPowerCard token(0x06014AD5)
+  IL_020d stloc.s        local(0x0010) 
+  IL_020f ldloc.s        local(0x0010) 
+  IL_0211 ldnull          
+  IL_0212 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0217 brfalse.s      IL_021b 
+  IL_0219 ldnull          
+  IL_021a ret             
+  IL_021b ldloc.s        local(0x0010) 
+  IL_021d callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0222 stloc.0         
+  IL_0223 br             IL_082f 
+  IL_0228 ldarg.1         
+  IL_0229 ldc.i4.s       10 
+  IL_022b bne.un.s       IL_027b 
+  IL_022d ldarg.0         
+  IL_022e callvirt       Spell::GetVisualTargetCard token(0x06014931)
+  IL_0233 stloc.s        local(0x0011) 
+  IL_0235 ldloc.s        local(0x0011) 
+  IL_0237 ldnull          
+  IL_0238 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_023d brfalse.s      IL_0241 
+  IL_023f ldnull          
+  IL_0240 ret             
+  IL_0241 ldloc.s        local(0x0011) 
+  IL_0243 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0248 callvirt       Entity::GetController token(0x060137DE)
+  IL_024d stloc.s        local(0x0012) 
+  IL_024f call           ZoneMgr::Get token(0x06006502)
+  IL_0254 ldloc.s        local(0x0012) 
+  IL_0256 callvirt       Player::GetSide token(0x06005D64)
+  IL_025b callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B000122)
+  IL_0260 stloc.s        local(0x0013) 
+  IL_0262 ldloc.s        local(0x0013) 
+  IL_0264 ldnull          
+  IL_0265 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_026a brfalse.s      IL_026e 
+  IL_026c ldnull          
+  IL_026d ret             
+  IL_026e ldloc.s        local(0x0013) 
+  IL_0270 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0275 stloc.0         
+  IL_0276 br             IL_082f 
+  IL_027b ldarg.1         
+  IL_027c ldc.i4.s       27 
+  IL_027e bne.un.s       IL_02ce 
+  IL_0280 ldarg.0         
+  IL_0281 callvirt       Spell::GetVisualTargetCard token(0x06014931)
+  IL_0286 stloc.s        local(0x0014) 
+  IL_0288 ldloc.s        local(0x0014) 
+  IL_028a ldnull          
+  IL_028b call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0290 brfalse.s      IL_0294 
+  IL_0292 ldnull          
+  IL_0293 ret             
+  IL_0294 ldloc.s        local(0x0014) 
+  IL_0296 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_029b callvirt       Entity::GetController token(0x060137DE)
+  IL_02a0 stloc.s        local(0x0015) 
+  IL_02a2 call           ZoneMgr::Get token(0x06006502)
+  IL_02a7 ldloc.s        local(0x0015) 
+  IL_02a9 callvirt       Player::GetSide token(0x06005D64)
+  IL_02ae callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003FA)
+  IL_02b3 stloc.s        local(0x0016) 
+  IL_02b5 ldloc.s        local(0x0016) 
+  IL_02b7 ldnull          
+  IL_02b8 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_02bd brfalse.s      IL_02c1 
+  IL_02bf ldnull          
+  IL_02c0 ret             
+  IL_02c1 ldloc.s        local(0x0016) 
+  IL_02c3 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_02c8 stloc.0         
+  IL_02c9 br             IL_082f 
+  IL_02ce ldarg.1         
+  IL_02cf ldc.i4.s       28 
+  IL_02d1 bne.un.s       IL_0321 
+  IL_02d3 ldarg.0         
+  IL_02d4 callvirt       Spell::GetVisualTargetCard token(0x06014931)
+  IL_02d9 stloc.s        local(0x0017) 
+  IL_02db ldloc.s        local(0x0017) 
+  IL_02dd ldnull          
+  IL_02de call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_02e3 brfalse.s      IL_02e7 
+  IL_02e5 ldnull          
+  IL_02e6 ret             
+  IL_02e7 ldloc.s        local(0x0017) 
+  IL_02e9 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_02ee callvirt       Entity::GetController token(0x060137DE)
+  IL_02f3 stloc.s        local(0x0018) 
+  IL_02f5 call           ZoneMgr::Get token(0x06006502)
+  IL_02fa ldloc.s        local(0x0018) 
+  IL_02fc callvirt       Player::GetSide token(0x06005D64)
+  IL_0301 callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003D1)
+  IL_0306 stloc.s        local(0x0019) 
+  IL_0308 ldloc.s        local(0x0019) 
+  IL_030a ldnull          
+  IL_030b call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0310 brfalse.s      IL_0314 
+  IL_0312 ldnull          
+  IL_0313 ret             
+  IL_0314 ldloc.s        local(0x0019) 
+  IL_0316 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_031b stloc.0         
+  IL_031c br             IL_082f 
+  IL_0321 ldarg.1         
+  IL_0322 ldc.i4.s       11 
+  IL_0324 bne.un.s       IL_0345 
+  IL_0326 call           Board::Get token(0x06012C1F)
+  IL_032b ldnull          
+  IL_032c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0331 brfalse.s      IL_0335 
+  IL_0333 ldnull          
+  IL_0334 ret             
+  IL_0335 call           Board::Get token(0x06012C1F)
+  IL_033a callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_033f stloc.0         
+  IL_0340 br             IL_082f 
+  IL_0345 ldarg.1         
+  IL_0346 ldc.i4.s       12 
+  IL_0348 bne.un.s       IL_0379 
+  IL_034a ldarg.0         
+  IL_034b call           SpellUtils::FindFriendlyPlayer token(0x06014ABB)
+  IL_0350 stloc.s        local(0x001A) 
+  IL_0352 ldloc.s        local(0x001A) 
+  IL_0354 brtrue.s       IL_0358 
+  IL_0356 ldnull          
+  IL_0357 ret             
+  IL_0358 ldloc.s        local(0x001A) 
+  IL_035a callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_035f stloc.s        local(0x001B) 
+  IL_0361 ldloc.s        local(0x001B) 
+  IL_0363 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0368 brtrue.s       IL_036c 
+  IL_036a ldnull          
+  IL_036b ret             
+  IL_036c ldloc.s        local(0x001B) 
+  IL_036e callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0373 stloc.0         
+  IL_0374 br             IL_082f 
+  IL_0379 ldarg.1         
+  IL_037a ldc.i4.s       13 
+  IL_037c bne.un.s       IL_03ad 
+  IL_037e ldarg.0         
+  IL_037f call           SpellUtils::FindFriendlyPlayer token(0x06014ABB)
+  IL_0384 stloc.s        local(0x001C) 
+  IL_0386 ldloc.s        local(0x001C) 
+  IL_0388 brtrue.s       IL_038c 
+  IL_038a ldnull          
+  IL_038b ret             
+  IL_038c ldloc.s        local(0x001C) 
+  IL_038e callvirt       Entity::GetHeroPowerCard token(0x060137EB)
+  IL_0393 stloc.s        local(0x001D) 
+  IL_0395 ldloc.s        local(0x001D) 
+  IL_0397 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_039c brtrue.s       IL_03a0 
+  IL_039e ldnull          
+  IL_039f ret             
+  IL_03a0 ldloc.s        local(0x001D) 
+  IL_03a2 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_03a7 stloc.0         
+  IL_03a8 br             IL_082f 
+  IL_03ad ldarg.1         
+  IL_03ae ldc.i4.s       14 
+  IL_03b0 bne.un.s       IL_03d2 
+  IL_03b2 ldarg.0         
+  IL_03b3 call           SpellUtils::FindFriendlyPlayZone token(0x06014ABD)
+  IL_03b8 stloc.s        local(0x001E) 
+  IL_03ba ldloc.s        local(0x001E) 
+  IL_03bc call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_03c1 brtrue.s       IL_03c5 
+  IL_03c3 ldnull          
+  IL_03c4 ret             
+  IL_03c5 ldloc.s        local(0x001E) 
+  IL_03c7 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_03cc stloc.0         
+  IL_03cd br             IL_082f 
+  IL_03d2 ldarg.1         
+  IL_03d3 ldc.i4.s       15 
+  IL_03d5 bne.un.s       IL_0406 
+  IL_03d7 ldarg.0         
+  IL_03d8 call           SpellUtils::FindOpponentPlayer token(0x06014ABC)
+  IL_03dd stloc.s        local(0x001F) 
+  IL_03df ldloc.s        local(0x001F) 
+  IL_03e1 brtrue.s       IL_03e5 
+  IL_03e3 ldnull          
+  IL_03e4 ret             
+  IL_03e5 ldloc.s        local(0x001F) 
+  IL_03e7 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_03ec stloc.s        local(0x0020) 
+  IL_03ee ldloc.s        local(0x0020) 
+  IL_03f0 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_03f5 brtrue.s       IL_03f9 
+  IL_03f7 ldnull          
+  IL_03f8 ret             
+  IL_03f9 ldloc.s        local(0x0020) 
+  IL_03fb callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0400 stloc.0         
+  IL_0401 br             IL_082f 
+  IL_0406 ldarg.1         
+  IL_0407 ldc.i4.s       16 
+  IL_0409 bne.un.s       IL_043a 
+  IL_040b ldarg.0         
+  IL_040c call           SpellUtils::FindOpponentPlayer token(0x06014ABC)
+  IL_0411 stloc.s        local(0x0021) 
+  IL_0413 ldloc.s        local(0x0021) 
+  IL_0415 brtrue.s       IL_0419 
+  IL_0417 ldnull          
+  IL_0418 ret             
+  IL_0419 ldloc.s        local(0x0021) 
+  IL_041b callvirt       Entity::GetHeroPowerCard token(0x060137EB)
+  IL_0420 stloc.s        local(0x0022) 
+  IL_0422 ldloc.s        local(0x0022) 
+  IL_0424 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0429 brtrue.s       IL_042d 
+  IL_042b ldnull          
+  IL_042c ret             
+  IL_042d ldloc.s        local(0x0022) 
+  IL_042f callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0434 stloc.0         
+  IL_0435 br             IL_082f 
+  IL_043a ldarg.1         
+  IL_043b ldc.i4.s       17 
+  IL_043d bne.un.s       IL_045f 
+  IL_043f ldarg.0         
+  IL_0440 call           SpellUtils::FindOpponentPlayZone token(0x06014ABE)
+  IL_0445 stloc.s        local(0x0023) 
+  IL_0447 ldloc.s        local(0x0023) 
+  IL_0449 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_044e brtrue.s       IL_0452 
+  IL_0450 ldnull          
+  IL_0451 ret             
+  IL_0452 ldloc.s        local(0x0023) 
+  IL_0454 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0459 stloc.0         
+  IL_045a br             IL_082f 
+  IL_045f ldarg.1         
+  IL_0460 ldc.i4.s       18 
+  IL_0462 bne.un.s       IL_0485 
+  IL_0464 ldarg.0         
+  IL_0465 callvirt       Spell::GetPowerTargetCard token(0x06014909)
+  IL_046a stloc.s        local(0x0024) 
+  IL_046c ldloc.s        local(0x0024) 
+  IL_046e ldnull          
+  IL_046f call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0474 brfalse.s      IL_0478 
+  IL_0476 ldnull          
+  IL_0477 ret             
+  IL_0478 ldloc.s        local(0x0024) 
+  IL_047a callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_047f stloc.0         
+  IL_0480 br             IL_082f 
+  IL_0485 ldarg.1         
+  IL_0486 ldc.i4.s       19 
+  IL_0488 bne.un.s       IL_04c3 
+  IL_048a ldarg.0         
+  IL_048b call           SpellUtils::FindFriendlyPlayer token(0x06014ABB)
+  IL_0490 stloc.s        local(0x0025) 
+  IL_0492 ldloc.s        local(0x0025) 
+  IL_0494 brtrue.s       IL_0498 
+  IL_0496 ldnull          
+  IL_0497 ret             
+  IL_0498 call           ZoneMgr::Get token(0x06006502)
+  IL_049d ldloc.s        local(0x0025) 
+  IL_049f callvirt       Player::GetSide token(0x06005D64)
+  IL_04a4 callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003FA)
+  IL_04a9 stloc.s        local(0x0026) 
+  IL_04ab ldloc.s        local(0x0026) 
+  IL_04ad call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_04b2 brtrue.s       IL_04b6 
+  IL_04b4 ldnull          
+  IL_04b5 ret             
+  IL_04b6 ldloc.s        local(0x0026) 
+  IL_04b8 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_04bd stloc.0         
+  IL_04be br             IL_082f 
+  IL_04c3 ldarg.1         
+  IL_04c4 ldc.i4.s       20 
+  IL_04c6 bne.un.s       IL_0501 
+  IL_04c8 ldarg.0         
+  IL_04c9 call           SpellUtils::FindOpponentPlayer token(0x06014ABC)
+  IL_04ce stloc.s        local(0x0027) 
+  IL_04d0 ldloc.s        local(0x0027) 
+  IL_04d2 brtrue.s       IL_04d6 
+  IL_04d4 ldnull          
+  IL_04d5 ret             
+  IL_04d6 call           ZoneMgr::Get token(0x06006502)
+  IL_04db ldloc.s        local(0x0027) 
+  IL_04dd callvirt       Player::GetSide token(0x06005D64)
+  IL_04e2 callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003FA)
+  IL_04e7 stloc.s        local(0x0028) 
+  IL_04e9 ldloc.s        local(0x0028) 
+  IL_04eb call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_04f0 brtrue.s       IL_04f4 
+  IL_04f2 ldnull          
+  IL_04f3 ret             
+  IL_04f4 ldloc.s        local(0x0028) 
+  IL_04f6 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_04fb stloc.0         
+  IL_04fc br             IL_082f 
+  IL_0501 ldarg.1         
+  IL_0502 ldc.i4.s       21 
+  IL_0504 bne.un.s       IL_053f 
+  IL_0506 ldarg.0         
+  IL_0507 call           SpellUtils::FindFriendlyPlayer token(0x06014ABB)
+  IL_050c stloc.s        local(0x0029) 
+  IL_050e ldloc.s        local(0x0029) 
+  IL_0510 brtrue.s       IL_0514 
+  IL_0512 ldnull          
+  IL_0513 ret             
+  IL_0514 call           ZoneMgr::Get token(0x06006502)
+  IL_0519 ldloc.s        local(0x0029) 
+  IL_051b callvirt       Player::GetSide token(0x06005D64)
+  IL_0520 callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003D1)
+  IL_0525 stloc.s        local(0x002A) 
+  IL_0527 ldloc.s        local(0x002A) 
+  IL_0529 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_052e brtrue.s       IL_0532 
+  IL_0530 ldnull          
+  IL_0531 ret             
+  IL_0532 ldloc.s        local(0x002A) 
+  IL_0534 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0539 stloc.0         
+  IL_053a br             IL_082f 
+  IL_053f ldarg.1         
+  IL_0540 ldc.i4.s       22 
+  IL_0542 bne.un.s       IL_057d 
+  IL_0544 ldarg.0         
+  IL_0545 call           SpellUtils::FindOpponentPlayer token(0x06014ABC)
+  IL_054a stloc.s        local(0x002B) 
+  IL_054c ldloc.s        local(0x002B) 
+  IL_054e brtrue.s       IL_0552 
+  IL_0550 ldnull          
+  IL_0551 ret             
+  IL_0552 call           ZoneMgr::Get token(0x06006502)
+  IL_0557 ldloc.s        local(0x002B) 
+  IL_0559 callvirt       Player::GetSide token(0x06005D64)
+  IL_055e callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003D1)
+  IL_0563 stloc.s        local(0x002C) 
+  IL_0565 ldloc.s        local(0x002C) 
+  IL_0567 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_056c brtrue.s       IL_0570 
+  IL_056e ldnull          
+  IL_056f ret             
+  IL_0570 ldloc.s        local(0x002C) 
+  IL_0572 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0577 stloc.0         
+  IL_0578 br             IL_082f 
+  IL_057d ldarg.1         
+  IL_057e ldc.i4.s       23 
+  IL_0580 bne.un.s       IL_05da 
+  IL_0582 ldarg.0         
+  IL_0583 call           SpellUtils::FindFriendlyPlayer token(0x06014ABB)
+  IL_0588 stloc.s        local(0x002D) 
+  IL_058a ldloc.s        local(0x002D) 
+  IL_058c brtrue.s       IL_0590 
+  IL_058e ldnull          
+  IL_058f ret             
+  IL_0590 ldloc.s        local(0x002D) 
+  IL_0592 callvirt       Entity::GetWeaponCard token(0x060137EC)
+  IL_0597 stloc.s        local(0x002E) 
+  IL_0599 ldloc.s        local(0x002E) 
+  IL_059b call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_05a0 brtrue.s       IL_05cd 
+  IL_05a2 call           ZoneMgr::Get token(0x06006502)
+  IL_05a7 ldloc.s        local(0x002D) 
+  IL_05a9 callvirt       Player::GetSide token(0x06005D64)
+  IL_05ae callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B00040B)
+  IL_05b3 stloc.s        local(0x002F) 
+  IL_05b5 ldloc.s        local(0x002F) 
+  IL_05b7 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_05bc brtrue.s       IL_05c0 
+  IL_05be ldnull          
+  IL_05bf ret             
+  IL_05c0 ldloc.s        local(0x002F) 
+  IL_05c2 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_05c7 stloc.0         
+  IL_05c8 br             IL_082f 
+  IL_05cd ldloc.s        local(0x002E) 
+  IL_05cf callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_05d4 stloc.0         
+  IL_05d5 br             IL_082f 
+  IL_05da ldarg.1         
+  IL_05db ldc.i4.s       24 
+  IL_05dd bne.un.s       IL_0637 
+  IL_05df ldarg.0         
+  IL_05e0 call           SpellUtils::FindOpponentPlayer token(0x06014ABC)
+  IL_05e5 stloc.s        local(0x0030) 
+  IL_05e7 ldloc.s        local(0x0030) 
+  IL_05e9 brtrue.s       IL_05ed 
+  IL_05eb ldnull          
+  IL_05ec ret             
+  IL_05ed ldloc.s        local(0x0030) 
+  IL_05ef callvirt       Entity::GetWeaponCard token(0x060137EC)
+  IL_05f4 stloc.s        local(0x0031) 
+  IL_05f6 ldloc.s        local(0x0031) 
+  IL_05f8 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_05fd brtrue.s       IL_062a 
+  IL_05ff call           ZoneMgr::Get token(0x06006502)
+  IL_0604 ldloc.s        local(0x0030) 
+  IL_0606 callvirt       Player::GetSide token(0x06005D64)
+  IL_060b callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B00040B)
+  IL_0610 stloc.s        local(0x0032) 
+  IL_0612 ldloc.s        local(0x0032) 
+  IL_0614 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0619 brtrue.s       IL_061d 
+  IL_061b ldnull          
+  IL_061c ret             
+  IL_061d ldloc.s        local(0x0032) 
+  IL_061f callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0624 stloc.0         
+  IL_0625 br             IL_082f 
+  IL_062a ldloc.s        local(0x0031) 
+  IL_062c callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0631 stloc.0         
+  IL_0632 br             IL_082f 
+  IL_0637 ldarg.1         
+  IL_0638 ldc.i4.s       29 
+  IL_063a beq.s          IL_0641 
+  IL_063c ldarg.1         
+  IL_063d ldc.i4.s       30 
+  IL_063f bne.un.s       IL_06a6 
+  IL_0641 ldarg.1         
+  IL_0642 ldc.i4.s       29 
+  IL_0644 beq.s          IL_064e 
+  IL_0646 ldarg.0         
+  IL_0647 call           SpellUtils::FindOpponentPlayer token(0x06014ABC)
+  IL_064c br.s           IL_0654 
+  IL_064e ldarg.0         
+  IL_064f call           SpellUtils::FindFriendlyPlayer token(0x06014ABB)
+  IL_0654 stloc.s        local(0x0033) 
+  IL_0656 ldloc.s        local(0x0033) 
+  IL_0658 brtrue.s       IL_065c 
+  IL_065a ldnull          
+  IL_065b ret             
+  IL_065c ldloc.s        local(0x0033) 
+  IL_065e callvirt       Entity::GetHeroBuddyCard token(0x060137ED)
+  IL_0663 stloc.s        local(0x0034) 
+  IL_0665 ldloc.s        local(0x0034) 
+  IL_0667 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_066c brtrue.s       IL_0699 
+  IL_066e call           ZoneMgr::Get token(0x06006502)
+  IL_0673 ldloc.s        local(0x0033) 
+  IL_0675 callvirt       Player::GetSide token(0x06005D64)
+  IL_067a callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B00040C)
+  IL_067f stloc.s        local(0x0035) 
+  IL_0681 ldloc.s        local(0x0035) 
+  IL_0683 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0688 brtrue.s       IL_068c 
+  IL_068a ldnull          
+  IL_068b ret             
+  IL_068c ldloc.s        local(0x0035) 
+  IL_068e callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0693 stloc.0         
+  IL_0694 br             IL_082f 
+  IL_0699 ldloc.s        local(0x0034) 
+  IL_069b callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_06a0 stloc.0         
+  IL_06a1 br             IL_082f 
+  IL_06a6 ldarg.1         
+  IL_06a7 ldc.i4.s       31 
+  IL_06a9 beq.s          IL_06bd 
+  IL_06ab ldarg.1         
+  IL_06ac ldc.i4.s       32 
+  IL_06ae beq.s          IL_06bd 
+  IL_06b0 ldarg.1         
+  IL_06b1 ldc.i4.s       33 
+  IL_06b3 beq.s          IL_06bd 
+  IL_06b5 ldarg.1         
+  IL_06b6 ldc.i4.s       34 
+  IL_06b8 bne.un         IL_0778 
+  IL_06bd ldarg.1         
+  IL_06be ldc.i4.s       31 
+  IL_06c0 beq.s          IL_06cf 
+  IL_06c2 ldarg.1         
+  IL_06c3 ldc.i4.s       32 
+  IL_06c5 beq.s          IL_06cf 
+  IL_06c7 ldarg.0         
+  IL_06c8 call           SpellUtils::FindOpponentPlayer token(0x06014ABC)
+  IL_06cd br.s           IL_06d5 
+  IL_06cf ldarg.0         
+  IL_06d0 call           SpellUtils::FindFriendlyPlayer token(0x06014ABB)
+  IL_06d5 stloc.s        local(0x0036) 
+  IL_06d7 ldloc.s        local(0x0036) 
+  IL_06d9 brtrue.s       IL_06dd 
+  IL_06db ldnull          
+  IL_06dc ret             
+  IL_06dd ldarg.1         
+  IL_06de ldc.i4.s       31 
+  IL_06e0 beq.s          IL_06f0 
+  IL_06e2 ldarg.1         
+  IL_06e3 ldc.i4.s       33 
+  IL_06e5 beq.s          IL_06f0 
+  IL_06e7 ldloc.s        local(0x0036) 
+  IL_06e9 callvirt       Entity::GetQuestRewardFromHeroPowerCard token(0x060137EE)
+  IL_06ee br.s           IL_06f7 
+  IL_06f0 ldloc.s        local(0x0036) 
+  IL_06f2 callvirt       Entity::GetQuestRewardCard token(0x060137EF)
+  IL_06f7 stloc.s        local(0x0037) 
+  IL_06f9 ldloc.s        local(0x0037) 
+  IL_06fb call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0700 brtrue.s       IL_076b 
+  IL_0702 call           ZoneMgr::Get token(0x06006502)
+  IL_0707 ldloc.s        local(0x0036) 
+  IL_0709 callvirt       Player::GetSide token(0x06005D64)
+  IL_070e callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000385)
+  IL_0713 stloc.s        local(0x0038) 
+  IL_0715 ldloc.s        local(0x0038) 
+  IL_0717 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62ccdf40>::get_Count token(0x0A004F22)
+  IL_071c brtrue.s       IL_0720 
+  IL_071e ldnull          
+  IL_071f ret             
+  IL_0720 ldloc.s        local(0x0038) 
+  IL_0722 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62ccdf40>::GetEnumerator token(0x0A0021F4)
+  IL_0727 stloc.s        local(0x0039) 
+  IL_0729 br.s           IL_074f 
+  IL_072b ldloca.s       local(0x0039) 
+  IL_072d call           <dnfile.mdtable.TypeSpecRow object at 0x7f9b62cce0f0>::get_Current token(0x0A0021F5)
+  IL_0732 stloc.s        local(0x003A) 
+  IL_0734 ldloc.s        local(0x003A) 
+  IL_0736 ldfld          ZoneBattlegroundQuestReward::m_isHeroPower token(0x04004617)
+  IL_073b ldarg.1         
+  IL_073c ldc.i4.s       32 
+  IL_073e ceq             
+  IL_0740 bne.un.s       IL_074f 
+  IL_0742 ldloc.s        local(0x003A) 
+  IL_0744 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0749 stloc.0         
+  IL_074a leave          IL_082f 
+  IL_074f ldloca.s       local(0x0039) 
+  IL_0751 call           <dnfile.mdtable.TypeSpecRow object at 0x7f9b62cce0f0>::MoveNext token(0x0A0021F6)
+  IL_0756 brtrue.s       IL_072b 
+  IL_0758 leave          IL_082f 
+  IL_075d ldloca.s       local(0x0039) 
+  IL_075f constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f9b62cce0f0> token(0x1B000947)
+  IL_0765 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_076a endfinally      
+  IL_076b ldloc.s        local(0x0037) 
+  IL_076d callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0772 stloc.0         
+  IL_0773 br             IL_082f 
+  IL_0778 ldarg.1         
+  IL_0779 ldc.i4.s       35 
+  IL_077b blt            IL_082f 
+  IL_0780 ldarg.1         
+  IL_0781 ldc.i4.s       40 
+  IL_0783 bgt            IL_082f 
+  IL_0788 ldarg.1         
+  IL_0789 ldc.i4.s       37 
+  IL_078b ble.s          IL_0795 
+  IL_078d ldarg.0         
+  IL_078e call           SpellUtils::FindOpponentPlayer token(0x06014ABC)
+  IL_0793 br.s           IL_079b 
+  IL_0795 ldarg.0         
+  IL_0796 call           SpellUtils::FindFriendlyPlayer token(0x06014ABB)
+  IL_079b stloc.s        local(0x003B) 
+  IL_079d ldloc.s        local(0x003B) 
+  IL_079f brtrue.s       IL_07a3 
+  IL_07a1 ldnull          
+  IL_07a2 ret             
+  IL_07a3 call           ZoneMgr::Get token(0x06006502)
+  IL_07a8 ldloc.s        local(0x003B) 
+  IL_07aa callvirt       Player::GetSide token(0x06005D64)
+  IL_07af callvirt       ZoneMgr::FindZonesOfType<spec> token(0x2B000388)
+  IL_07b4 stloc.s        local(0x003C) 
+  IL_07b6 ldloc.s        local(0x003C) 
+  IL_07b8 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62cce2a0>::get_Count token(0x0A004F23)
+  IL_07bd brtrue.s       IL_07c1 
+  IL_07bf ldnull          
+  IL_07c0 ret             
+  IL_07c1 ldarg.1         
+  IL_07c2 ldc.i4.s       37 
+  IL_07c4 ble.s          IL_07ca 
+  IL_07c6 ldc.i4.s       37 
+  IL_07c8 br.s           IL_07cc 
+  IL_07ca ldc.i4.s       34 
+  IL_07cc stloc.s        local(0x003D) 
+  IL_07ce ldloc.s        local(0x003C) 
+  IL_07d0 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b62cce2a0>::GetEnumerator token(0x0A0021F7)
+  IL_07d5 stloc.s        local(0x003E) 
+  IL_07d7 br.s           IL_0816 
+  IL_07d9 ldloca.s       local(0x003E) 
+  IL_07db call           <dnfile.mdtable.TypeSpecRow object at 0x7f9b62cce450>::get_Current token(0x0A0021F8)
+  IL_07e0 stloc.s        local(0x003F) 
+  IL_07e2 ldloc.s        local(0x003F) 
+  IL_07e4 ldfld          ZoneBattlegroundTrinket::slot token(0x04004623)
+  IL_07e9 ldarg.1         
+  IL_07ea ldloc.s        local(0x003D) 
+  IL_07ec sub             
+  IL_07ed bne.un.s       IL_0816 
+  IL_07ef ldloc.s        local(0x003F) 
+  IL_07f1 callvirt       Zone::GetFirstCard token(0x06006377)
+  IL_07f6 stloc.s        local(0x0040) 
+  IL_07f8 ldloc.s        local(0x0040) 
+  IL_07fa ldnull          
+  IL_07fb call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0800 brfalse.s      IL_080c 
+  IL_0802 ldloc.s        local(0x0040) 
+  IL_0804 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0809 stloc.0         
+  IL_080a leave.s        IL_082f 
+  IL_080c ldloc.s        local(0x003F) 
+  IL_080e callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0813 stloc.0         
+  IL_0814 leave.s        IL_082f 
+  IL_0816 ldloca.s       local(0x003E) 
+  IL_0818 call           <dnfile.mdtable.TypeSpecRow object at 0x7f9b62cce450>::MoveNext token(0x0A0021F9)
+  IL_081d brtrue.s       IL_07d9 
+  IL_081f leave.s        IL_082f 
+  IL_0821 ldloca.s       local(0x003E) 
+  IL_0823 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f9b62cce450> token(0x1B000949)
+  IL_0829 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_082e endfinally      
+  IL_082f ldloc.0         
+  IL_0830 ldnull          
+  IL_0831 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0836 brfalse.s      IL_083a 
+  IL_0838 ldnull          
+  IL_0839 ret             
+  IL_083a ldarg.2         
+  IL_083b call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0840 brfalse.s      IL_084a 
+  IL_0842 ldarg.0         
+  IL_0843 callvirt       Spell::GetLocationTransformName token(0x0601490E)
+  IL_0848 starg.s        argument(0x0002) 
+  IL_084a ldarg.2         
+  IL_084b call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0850 brtrue.s       IL_0868 
+  IL_0852 ldloc.0         
+  IL_0853 ldarg.2         
+  IL_0854 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindChildBySubstring token(0x0A00221B)
+  IL_0859 stloc.s        local(0x0041) 
+  IL_085b ldloc.s        local(0x0041) 
+  IL_085d ldnull          
+  IL_085e call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0863 brfalse.s      IL_0868 
+  IL_0865 ldloc.s        local(0x0041) 
+  IL_0867 ret             
+  IL_0868 ldloc.0         
+  IL_0869 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0003DA)
+  IL_086e stloc.1         
+  IL_086f ldloc.1         
+  IL_0870 ldnull          
+  IL_0871 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0876 brfalse.s      IL_08b7 
+  IL_0878 ldloc.1         
+  IL_0879 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_087e brfalse.s      IL_08b7 
+  IL_0880 ldloc.1         
+  IL_0881 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0886 stloc.s        local(0x0042) 
+  IL_0888 ldloc.s        local(0x0042) 
+  IL_088a callvirt       EntityBase::GetZone token(0x06013922)
+  IL_088f ldc.i4.6        
+  IL_0890 bne.un.s       IL_08b7 
+  IL_0892 call           ZoneMgr::Get token(0x06006502)
+  IL_0897 ldloc.s        local(0x0042) 
+  IL_0899 callvirt       Entity::GetControllerSide token(0x060137DF)
+  IL_089e callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003A8)
+  IL_08a3 stloc.s        local(0x0043) 
+  IL_08a5 ldloc.s        local(0x0043) 
+  IL_08a7 ldnull          
+  IL_08a8 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_08ad brfalse.s      IL_08b7 
+  IL_08af ldloc.s        local(0x0043) 
+  IL_08b1 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_08b6 stloc.0         
+  IL_08b7 ldloc.0         
+  IL_08b8 ret             
+
+0x06014ab9 SpellUtils::SetPositionFromLocation(spell,setParent) RVA 0x61863c SIG 00020212c000ac1c02
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellUtils::GetLocationTransform token(0x06014AB6)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0012 
+  IL_0010 ldc.i4.0        
+  IL_0011 ret             
+  IL_0012 ldarg.1         
+  IL_0013 brfalse.s      IL_0021 
+  IL_0015 ldarg.0         
+  IL_0016 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_001b ldloc.0         
+  IL_001c callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0021 ldarg.0         
+  IL_0022 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0027 ldloc.0         
+  IL_0028 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_002d callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0032 ldc.i4.1        
+  IL_0033 ret             
+
+0x06014aba SpellUtils::SetOrientationFromFacing(spell) RVA 0x61867c SIG 00010212c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       Spell::GetFacing token(0x0601490F)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 brtrue.s       IL_000c 
+  IL_000a ldc.i4.0        
+  IL_000b ret             
+  IL_000c ldarg.0         
+  IL_000d callvirt       Spell::GetFacingOptions token(0x06014910)
+  IL_0012 stloc.1         
+  IL_0013 ldloc.1         
+  IL_0014 brtrue.s       IL_001c 
+  IL_0016 newobj         SpellFacingOptions::.ctor token(0x0A004F24)
+  IL_001b stloc.1         
+  IL_001c ldloc.0         
+  IL_001d ldc.i4.7        
+  IL_001e bne.un.s       IL_003f 
+  IL_0020 ldarg.0         
+  IL_0021 callvirt       Spell::GetSource token(0x0601491A)
+  IL_0026 stloc.2         
+  IL_0027 ldloc.2         
+  IL_0028 ldnull          
+  IL_0029 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_002e brfalse.s      IL_0032 
+  IL_0030 ldc.i4.0        
+  IL_0031 ret             
+  IL_0032 ldarg.0         
+  IL_0033 ldloc.2         
+  IL_0034 ldloc.1         
+  IL_0035 call           SpellUtils::FaceSameAs token(0x06014AD6)
+  IL_003a br             IL_0213 
+  IL_003f ldloc.0         
+  IL_0040 ldc.i4.8        
+  IL_0041 bne.un.s       IL_0062 
+  IL_0043 ldarg.0         
+  IL_0044 call           SpellUtils::FindSourceAutoObjectForSpell token(0x06014AD0)
+  IL_0049 stloc.3         
+  IL_004a ldloc.3         
+  IL_004b ldnull          
+  IL_004c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0051 brfalse.s      IL_0055 
+  IL_0053 ldc.i4.0        
+  IL_0054 ret             
+  IL_0055 ldarg.0         
+  IL_0056 ldloc.3         
+  IL_0057 ldloc.1         
+  IL_0058 call           SpellUtils::FaceSameAs token(0x06014AD6)
+  IL_005d br             IL_0213 
+  IL_0062 ldloc.0         
+  IL_0063 ldc.i4.1        
+  IL_0064 bne.un.s       IL_008d 
+  IL_0066 ldarg.0         
+  IL_0067 callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_006c call           SpellUtils::FindHeroCard token(0x06014AD4)
+  IL_0071 stloc.s        local(0x0004) 
+  IL_0073 ldloc.s        local(0x0004) 
+  IL_0075 ldnull          
+  IL_0076 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_007b brfalse.s      IL_007f 
+  IL_007d ldc.i4.0        
+  IL_007e ret             
+  IL_007f ldarg.0         
+  IL_0080 ldloc.s        local(0x0004) 
+  IL_0082 ldloc.1         
+  IL_0083 call           SpellUtils::FaceSameAs token(0x06014AD7)
+  IL_0088 br             IL_0213 
+  IL_008d ldloc.0         
+  IL_008e ldc.i4.5        
+  IL_008f bne.un.s       IL_00b3 
+  IL_0091 ldarg.0         
+  IL_0092 callvirt       Spell::GetSource token(0x0601491A)
+  IL_0097 stloc.s        local(0x0005) 
+  IL_0099 ldloc.s        local(0x0005) 
+  IL_009b ldnull          
+  IL_009c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00a1 brfalse.s      IL_00a5 
+  IL_00a3 ldc.i4.0        
+  IL_00a4 ret             
+  IL_00a5 ldarg.0         
+  IL_00a6 ldloc.s        local(0x0005) 
+  IL_00a8 ldloc.1         
+  IL_00a9 call           SpellUtils::FaceTowards token(0x06014ADC)
+  IL_00ae br             IL_0213 
+  IL_00b3 ldloc.0         
+  IL_00b4 ldc.i4.6        
+  IL_00b5 bne.un.s       IL_00d9 
+  IL_00b7 ldarg.0         
+  IL_00b8 call           SpellUtils::FindSourceAutoObjectForSpell token(0x06014AD0)
+  IL_00bd stloc.s        local(0x0006) 
+  IL_00bf ldloc.s        local(0x0006) 
+  IL_00c1 ldnull          
+  IL_00c2 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00c7 brfalse.s      IL_00cb 
+  IL_00c9 ldc.i4.0        
+  IL_00ca ret             
+  IL_00cb ldarg.0         
+  IL_00cc ldloc.s        local(0x0006) 
+  IL_00ce ldloc.1         
+  IL_00cf call           SpellUtils::FaceTowards token(0x06014ADC)
+  IL_00d4 br             IL_0213 
+  IL_00d9 ldloc.0         
+  IL_00da ldc.i4.4        
+  IL_00db bne.un.s       IL_0104 
+  IL_00dd ldarg.0         
+  IL_00de callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_00e3 call           SpellUtils::FindHeroCard token(0x06014AD4)
+  IL_00e8 stloc.s        local(0x0007) 
+  IL_00ea ldloc.s        local(0x0007) 
+  IL_00ec ldnull          
+  IL_00ed call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00f2 brfalse.s      IL_00f6 
+  IL_00f4 ldc.i4.0        
+  IL_00f5 ret             
+  IL_00f6 ldarg.0         
+  IL_00f7 ldloc.s        local(0x0007) 
+  IL_00f9 ldloc.1         
+  IL_00fa call           SpellUtils::FaceTowards token(0x06014ADD)
+  IL_00ff br             IL_0213 
+  IL_0104 ldloc.0         
+  IL_0105 ldc.i4.2        
+  IL_0106 bne.un.s       IL_012a 
+  IL_0108 ldarg.0         
+  IL_0109 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetVisualTarget token(0x0A004F21)
+  IL_010e stloc.s        local(0x0008) 
+  IL_0110 ldloc.s        local(0x0008) 
+  IL_0112 ldnull          
+  IL_0113 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0118 brfalse.s      IL_011c 
+  IL_011a ldc.i4.0        
+  IL_011b ret             
+  IL_011c ldarg.0         
+  IL_011d ldloc.s        local(0x0008) 
+  IL_011f ldloc.1         
+  IL_0120 call           SpellUtils::FaceTowards token(0x06014ADC)
+  IL_0125 br             IL_0213 
+  IL_012a ldloc.0         
+  IL_012b ldc.i4.3        
+  IL_012c bne.un.s       IL_0155 
+  IL_012e ldarg.0         
+  IL_012f call           SpellUtils::FindBestTargetCard token(0x06014AD3)
+  IL_0134 call           SpellUtils::FindHeroCard token(0x06014AD4)
+  IL_0139 stloc.s        local(0x0009) 
+  IL_013b ldloc.s        local(0x0009) 
+  IL_013d ldnull          
+  IL_013e call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0143 brfalse.s      IL_0147 
+  IL_0145 ldc.i4.0        
+  IL_0146 ret             
+  IL_0147 ldarg.0         
+  IL_0148 ldloc.s        local(0x0009) 
+  IL_014a ldloc.1         
+  IL_014b call           SpellUtils::FaceTowards token(0x06014ADD)
+  IL_0150 br             IL_0213 
+  IL_0155 ldloc.0         
+  IL_0156 ldc.i4.s       9 
+  IL_0158 bne.un.s       IL_017c 
+  IL_015a ldarg.0         
+  IL_015b callvirt       Spell::GetPowerTargetCard token(0x06014909)
+  IL_0160 stloc.s        local(0x000A) 
+  IL_0162 ldloc.s        local(0x000A) 
+  IL_0164 ldnull          
+  IL_0165 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_016a brfalse.s      IL_016e 
+  IL_016c ldc.i4.0        
+  IL_016d ret             
+  IL_016e ldarg.0         
+  IL_016f ldloc.s        local(0x000A) 
+  IL_0171 ldloc.1         
+  IL_0172 call           SpellUtils::FaceTowards token(0x06014ADD)
+  IL_0177 br             IL_0213 
+  IL_017c ldloc.0         
+  IL_017d ldc.i4.s       10 
+  IL_017f bne.un.s       IL_01a0 
+  IL_0181 ldarg.0         
+  IL_0182 callvirt       Spell::GetSource token(0x0601491A)
+  IL_0187 stloc.s        local(0x000B) 
+  IL_0189 ldloc.s        local(0x000B) 
+  IL_018b ldnull          
+  IL_018c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0191 brfalse.s      IL_0195 
+  IL_0193 ldc.i4.0        
+  IL_0194 ret             
+  IL_0195 ldarg.0         
+  IL_0196 ldloc.s        local(0x000B) 
+  IL_0198 ldloc.1         
+  IL_0199 call           SpellUtils::FaceOppositeOf token(0x06014AD9)
+  IL_019e br.s           IL_0213 
+  IL_01a0 ldloc.0         
+  IL_01a1 ldc.i4.s       11 
+  IL_01a3 bne.un.s       IL_01c4 
+  IL_01a5 ldarg.0         
+  IL_01a6 call           SpellUtils::FindSourceAutoObjectForSpell token(0x06014AD0)
+  IL_01ab stloc.s        local(0x000C) 
+  IL_01ad ldloc.s        local(0x000C) 
+  IL_01af ldnull          
+  IL_01b0 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_01b5 brfalse.s      IL_01b9 
+  IL_01b7 ldc.i4.0        
+  IL_01b8 ret             
+  IL_01b9 ldarg.0         
+  IL_01ba ldloc.s        local(0x000C) 
+  IL_01bc ldloc.1         
+  IL_01bd call           SpellUtils::FaceOppositeOf token(0x06014AD9)
+  IL_01c2 br.s           IL_0213 
+  IL_01c4 ldloc.0         
+  IL_01c5 ldc.i4.s       12 
+  IL_01c7 bne.un.s       IL_01ed 
+  IL_01c9 ldarg.0         
+  IL_01ca callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_01cf call           SpellUtils::FindHeroCard token(0x06014AD4)
+  IL_01d4 stloc.s        local(0x000D) 
+  IL_01d6 ldloc.s        local(0x000D) 
+  IL_01d8 ldnull          
+  IL_01d9 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_01de brfalse.s      IL_01e2 
+  IL_01e0 ldc.i4.0        
+  IL_01e1 ret             
+  IL_01e2 ldarg.0         
+  IL_01e3 ldloc.s        local(0x000D) 
+  IL_01e5 ldloc.1         
+  IL_01e6 call           SpellUtils::FaceOppositeOf token(0x06014ADA)
+  IL_01eb br.s           IL_0213 
+  IL_01ed ldloc.0         
+  IL_01ee ldc.i4.s       13 
+  IL_01f0 bne.un.s       IL_0211 
+  IL_01f2 ldarg.0         
+  IL_01f3 call           SpellUtils::FindOpponentHeroCard token(0x06014ABF)
+  IL_01f8 stloc.s        local(0x000E) 
+  IL_01fa ldloc.s        local(0x000E) 
+  IL_01fc ldnull          
+  IL_01fd call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0202 brfalse.s      IL_0206 
+  IL_0204 ldc.i4.0        
+  IL_0205 ret             
+  IL_0206 ldarg.0         
+  IL_0207 ldloc.s        local(0x000E) 
+  IL_0209 ldloc.1         
+  IL_020a call           SpellUtils::FaceTowards token(0x06014ADD)
+  IL_020f br.s           IL_0213 
+  IL_0211 ldc.i4.0        
+  IL_0212 ret             
+  IL_0213 ldc.i4.1        
+  IL_0214 ret             
+
+0x06014abb SpellUtils::FindFriendlyPlayer(spell) RVA 0x6188a0 SIG 000112b06012c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000b 
+  IL_0009 ldnull          
+  IL_000a ret             
+  IL_000b ldarg.0         
+  IL_000c callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0019 brfalse.s      IL_001d 
+  IL_001b ldnull          
+  IL_001c ret             
+  IL_001d ldloc.0         
+  IL_001e callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0023 callvirt       Entity::GetController token(0x060137DE)
+  IL_0028 ret             
+
+0x06014abc SpellUtils::FindOpponentPlayer(spell) RVA 0x6188d8 SIG 000112b06012c000ac1c
+  IL_0000 call           GameState::Get token(0x06005589)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brfalse.s      IL_001b 
+  IL_0009 ldarg.0         
+  IL_000a call           SpellUtils::FindFriendlyPlayer token(0x06014ABB)
+  IL_000f stloc.1         
+  IL_0010 ldloc.1         
+  IL_0011 brfalse.s      IL_0032 
+  IL_0013 ldloc.0         
+  IL_0014 ldloc.1         
+  IL_0015 callvirt       GameState::GetFirstOpponentPlayer token(0x060055C1)
+  IL_001a ret             
+  IL_001b ldarg.0         
+  IL_001c call           SpellUtils::FindOpponentHeroCard token(0x06014ABF)
+  IL_0021 stloc.2         
+  IL_0022 ldloc.2         
+  IL_0023 ldnull          
+  IL_0024 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0029 brfalse.s      IL_0032 
+  IL_002b ldloc.2         
+  IL_002c callvirt       Card::GetController token(0x06012CC6)
+  IL_0031 ret             
+  IL_0032 ldnull          
+  IL_0033 ret             
+
+0x06014abd SpellUtils::FindFriendlyPlayZone(spell) RVA 0x618918 SIG 000112b36812c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellUtils::FindFriendlyPlayer token(0x06014ABB)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 brtrue.s       IL_000c 
+  IL_000a ldnull          
+  IL_000b ret             
+  IL_000c call           ZoneMgr::Get token(0x06006502)
+  IL_0011 ldloc.0         
+  IL_0012 callvirt       Player::GetSide token(0x06005D64)
+  IL_0017 callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B000122)
+  IL_001c ret             
+
+0x06014abe SpellUtils::FindOpponentPlayZone(spell) RVA 0x618944 SIG 000112b36812c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellUtils::FindOpponentPlayer token(0x06014ABC)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 brtrue.s       IL_000c 
+  IL_000a ldnull          
+  IL_000b ret             
+  IL_000c call           ZoneMgr::Get token(0x06006502)
+  IL_0011 ldloc.0         
+  IL_0012 callvirt       Player::GetSide token(0x06005D64)
+  IL_0017 callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B000122)
+  IL_001c ret             
+
+0x06014abf SpellUtils::FindOpponentHeroCard(spell) RVA 0x618970 SIG 000112c0009ebc12c000ac1c
+  IL_0000 call           GameState::Get token(0x06005589)
+  IL_0005 brfalse.s      IL_0018 
+  IL_0007 ldarg.0         
+  IL_0008 call           SpellUtils::FindOpponentPlayer token(0x06014ABC)
+  IL_000d stloc.0         
+  IL_000e ldloc.0         
+  IL_000f brfalse.s      IL_003e 
+  IL_0011 ldloc.0         
+  IL_0012 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0017 ret             
+  IL_0018 call           CutsceneBoard::Get token(0x06002D13)
+  IL_001d stloc.1         
+  IL_001e ldloc.1         
+  IL_001f ldnull          
+  IL_0020 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0025 brfalse.s      IL_003e 
+  IL_0027 ldloc.1         
+  IL_0028 callvirt       CutsceneBoard::get_OpponentHeroActor token(0x06002D10)
+  IL_002d stloc.2         
+  IL_002e ldloc.2         
+  IL_002f ldnull          
+  IL_0030 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0035 brfalse.s      IL_003e 
+  IL_0037 ldloc.2         
+  IL_0038 callvirt       Actor::GetCard token(0x060127F4)
+  IL_003d ret             
+  IL_003e ldnull          
+  IL_003f ret             
+
+0x06014ac0 SpellUtils::FindTargetZone(spell) RVA 0x6189bc SIG 000112b2b412c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       Spell::GetTargetCard token(0x06014929)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0012 
+  IL_0010 ldnull          
+  IL_0011 ret             
+  IL_0012 ldloc.0         
+  IL_0013 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0018 stloc.1         
+  IL_0019 call           ZoneMgr::Get token(0x06006502)
+  IL_001e ldloc.1         
+  IL_001f callvirt       ZoneMgr::FindZoneForEntity token(0x06006505)
+  IL_0024 ret             
+
+0x06014ac1 SpellUtils::GetParentActor(spell) RVA 0x6189ed SIG 000112c0009cf812c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B0001E0)
+  IL_000b ret             
+
+0x06014ac2 SpellUtils::GetParentRootObject(spell) RVA 0x6189fc SIG 000112808d12c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellUtils::GetParentActor token(0x06014AC1)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0012 
+  IL_0010 ldnull          
+  IL_0011 ret             
+  IL_0012 ldloc.0         
+  IL_0013 callvirt       Actor::GetRootObject token(0x06012845)
+  IL_0018 ret             
+
+0x06014ac3 SpellUtils::GetParentRootObjectMesh(spell) RVA 0x618a24 SIG 000112808512c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellUtils::GetParentActor token(0x06014AC1)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0012 
+  IL_0010 ldnull          
+  IL_0011 ret             
+  IL_0012 ldloc.0         
+  IL_0013 ldc.i4.0        
+  IL_0014 callvirt       Actor::GetMeshRenderer token(0x06012846)
+  IL_0019 ret             
+
+0x06014ac4 SpellUtils::IsNonMetaTaskListInMetaBlock(taskList) RVA 0x618a4a SIG 00010212b0f0
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       PowerTaskList::DoesBlockHaveEffectTimingMetaData token(0x06005F84)
+  IL_0006 brtrue.s       IL_000a 
+  IL_0008 ldc.i4.0        
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b callvirt       PowerTaskList::HasEffectTimingMetaData token(0x06005F82)
+  IL_0010 brfalse.s      IL_0014 
+  IL_0012 ldc.i4.0        
+  IL_0013 ret             
+  IL_0014 ldc.i4.1        
+  IL_0015 ret             
+
+0x06014ac5 SpellUtils::CanAddPowerTargets(taskList) RVA 0x618a61 SIG 00010212b0f0
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellUtils::IsNonMetaTaskListInMetaBlock token(0x06014AC4)
+  IL_0006 brfalse.s      IL_000a 
+  IL_0008 ldc.i4.0        
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b callvirt       PowerTaskList::HasTasks token(0x06005F6F)
+  IL_0010 brtrue.s       IL_001c 
+  IL_0012 ldarg.0         
+  IL_0013 callvirt       PowerTaskList::IsEndOfBlock token(0x06005F69)
+  IL_0018 brtrue.s       IL_001c 
+  IL_001a ldc.i4.0        
+  IL_001b ret             
+  IL_001c ldc.i4.1        
+  IL_001d ret             
+
+0x06014ac6 SpellUtils::SetCustomSpellParent(spell,c) RVA 0x618a80 SIG 00020112894512809d
+  IL_0000 ldarg.0         
+  IL_0001 brfalse.s      IL_0024 
+  IL_0003 ldarg.0         
+  IL_0004 callvirt       Blizzard.T5.Game.Spells.ISpell::get_GameObject token(0x0A0041D5)
+  IL_0009 ldnull          
+  IL_000a call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000f brtrue.s       IL_0024 
+  IL_0011 ldarg.0         
+  IL_0012 callvirt       Blizzard.T5.Game.Spells.ISpell::get_GameObject token(0x0A0041D5)
+  IL_0017 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_001c ldnull          
+  IL_001d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0022 brfalse.s      IL_0026 
+  IL_0024 leave.s        IL_0061 
+  IL_0026 ldarg.1         
+  IL_0027 ldnull          
+  IL_0028 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_002d brfalse.s      IL_0031 
+  IL_002f leave.s        IL_0061 
+  IL_0031 ldarg.0         
+  IL_0032 callvirt       Blizzard.T5.Game.Spells.ISpell::get_GameObject token(0x0A0041D5)
+  IL_0037 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_003c ldarg.1         
+  IL_003d callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0042 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0047 ldarg.0         
+  IL_0048 callvirt       Blizzard.T5.Game.Spells.ISpell::get_GameObject token(0x0A0041D5)
+  IL_004d callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0052 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0057 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_005c leave.s        IL_0061 
+  IL_005e pop             
+  IL_005f leave.s        IL_0061 
+  IL_0061 ret             
+
+0x06014ac7 SpellUtils::LoadAndSetupSpell(spellPath,owner) RVA 0x618b00 SIG 000212c000ac1c0e12809d
+  IL_0000 call           SpellManager::Get token(0x060149FC)
+  IL_0005 ldarg.0         
+  IL_0006 callvirt       SpellManager::GetSpell token(0x06014A01)
+  IL_000b stloc.0         
+  IL_000c ldloc.0         
+  IL_000d ldnull          
+  IL_000e call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0013 brfalse.s      IL_002b 
+  IL_0015 ldstr          'LoadAndSetupSpell() - "{0}" does not have a Spell component.' string token(0x703F1831)
+  IL_001a ldc.i4.1        
+  IL_001b newarr         System.Object token(0x01000001)
+  IL_0020 dup             
+  IL_0021 ldc.i4.0        
+  IL_0022 ldarg.0         
+  IL_0023 stelem.ref      
+  IL_0024 call           Error::AddDevFatalUnlessWorkarounds token(0x06004E7E)
+  IL_0029 ldnull          
+  IL_002a ret             
+  IL_002b ldarg.1         
+  IL_002c ldnull          
+  IL_002d call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0032 brfalse.s      IL_003b 
+  IL_0034 ldloc.0         
+  IL_0035 ldarg.1         
+  IL_0036 call           SpellUtils::SetupSpell token(0x06014AC8)
+  IL_003b ldloc.0         
+  IL_003c ret             
+
+0x06014ac8 SpellUtils::SetupSpell(spell,c) RVA 0x618b49 SIG 00020112894512809d
+  IL_0000 ldarg.0         
+  IL_0001 brtrue.s       IL_0004 
+  IL_0003 ret             
+  IL_0004 ldarg.1         
+  IL_0005 ldnull          
+  IL_0006 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000b brfalse.s      IL_000e 
+  IL_000d ret             
+  IL_000e ldarg.0         
+  IL_000f ldarg.1         
+  IL_0010 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0015 callvirt       Blizzard.T5.Game.Spells.ISpell::SetSource token(0x0A0041BD)
+  IL_001a ret             
+
+0x06014ac9 SpellUtils::SetupSoundSpell(spell,c) RVA 0x618b65 SIG 00020112c000957012809d
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000a 
+  IL_0009 ret             
+  IL_000a ldarg.1         
+  IL_000b ldnull          
+  IL_000c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0011 brfalse.s      IL_0014 
+  IL_0013 ret             
+  IL_0014 ldarg.0         
+  IL_0015 ldarg.1         
+  IL_0016 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_001b callvirt       Blizzard.T5.Game.Spells.SpellBase::SetSource token(0x0A000574)
+  IL_0020 ldarg.0         
+  IL_0021 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0026 ldarg.1         
+  IL_0027 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_002c callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0031 ldarg.0         
+  IL_0032 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0037 call           TransformUtil::Identity token(0x06014FE9)
+  IL_003c ret             
+
+0x06014aca SpellUtils::ActivateStateIfNecessary(spell,state) RVA 0x618ba3 SIG 00020212c000ac1c118281
+  IL_0000 ldarg.1         
+  IL_0001 ldc.i4.1        
+  IL_0002 bne.un.s       IL_000b 
+  IL_0004 ldarg.0         
+  IL_0005 call           SpellUtils::ActivateBirthIfNecessary token(0x06014ACB)
+  IL_000a ret             
+  IL_000b ldarg.1         
+  IL_000c ldc.i4.5        
+  IL_000d bne.un.s       IL_0016 
+  IL_000f ldarg.0         
+  IL_0010 call           SpellUtils::ActivateDeathIfNecessary token(0x06014ACC)
+  IL_0015 ret             
+  IL_0016 ldarg.1         
+  IL_0017 ldc.i4.4        
+  IL_0018 bne.un.s       IL_0021 
+  IL_001a ldarg.0         
+  IL_001b call           SpellUtils::ActivateCancelIfNecessary token(0x06014ACD)
+  IL_0020 ret             
+  IL_0021 ldarg.0         
+  IL_0022 ldnull          
+  IL_0023 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0028 brfalse.s      IL_003c 
+  IL_002a ldarg.0         
+  IL_002b callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0030 ldarg.1         
+  IL_0031 beq.s          IL_003c 
+  IL_0033 ldarg.0         
+  IL_0034 ldarg.1         
+  IL_0035 callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_003a ldc.i4.1        
+  IL_003b ret             
+  IL_003c ldc.i4.0        
+  IL_003d ret             
+
+0x06014acb SpellUtils::ActivateBirthIfNecessary(spell) RVA 0x618be4 SIG 00010212c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000b 
+  IL_0009 ldc.i4.0        
+  IL_000a ret             
+  IL_000b ldarg.0         
+  IL_000c callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldc.i4.1        
+  IL_0014 bne.un.s       IL_0018 
+  IL_0016 ldc.i4.0        
+  IL_0017 ret             
+  IL_0018 ldloc.0         
+  IL_0019 ldc.i4.2        
+  IL_001a bne.un.s       IL_001e 
+  IL_001c ldc.i4.0        
+  IL_001d ret             
+  IL_001e ldarg.0         
+  IL_001f ldc.i4.1        
+  IL_0020 callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_0025 ldc.i4.1        
+  IL_0026 ret             
+
+0x06014acc SpellUtils::ActivateDeathIfNecessary(spell) RVA 0x618c18 SIG 00010212c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000b 
+  IL_0009 ldc.i4.0        
+  IL_000a ret             
+  IL_000b ldarg.0         
+  IL_000c callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldc.i4.5        
+  IL_0014 bne.un.s       IL_0018 
+  IL_0016 ldc.i4.0        
+  IL_0017 ret             
+  IL_0018 ldloc.0         
+  IL_0019 brtrue.s       IL_001d 
+  IL_001b ldc.i4.0        
+  IL_001c ret             
+  IL_001d ldarg.0         
+  IL_001e ldc.i4.5        
+  IL_001f callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_0024 ldc.i4.1        
+  IL_0025 ret             
+
+0x06014acd SpellUtils::ActivateCancelIfNecessary(spell) RVA 0x618c4c SIG 000102128945
+  IL_0000 ldarg.0         
+  IL_0001 brtrue.s       IL_0005 
+  IL_0003 ldc.i4.0        
+  IL_0004 ret             
+  IL_0005 ldarg.0         
+  IL_0006 callvirt       Blizzard.T5.Game.Spells.ISpell::GetActiveState token(0x0A004223)
+  IL_000b stloc.0         
+  IL_000c ldloc.0         
+  IL_000d ldc.i4.4        
+  IL_000e bne.un.s       IL_0012 
+  IL_0010 ldc.i4.0        
+  IL_0011 ret             
+  IL_0012 ldloc.0         
+  IL_0013 brtrue.s       IL_0017 
+  IL_0015 ldc.i4.0        
+  IL_0016 ret             
+  IL_0017 ldarg.0         
+  IL_0018 ldc.i4.4        
+  IL_0019 callvirt       Blizzard.T5.Game.Spells.ISpell::ActivateState token(0x0A00224C)
+  IL_001e ldc.i4.1        
+  IL_001f ret             
+
+0x06014ace SpellUtils::PurgeSpell(spell) RVA 0x618c78 SIG 00010112c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000a 
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b callvirt       Spell::CanPurge token(0x0601490A)
+  IL_0010 brtrue.s       IL_0013 
+  IL_0012 ret             
+  IL_0013 call           SpellManager::Get token(0x060149FC)
+  IL_0018 dup             
+  IL_0019 brtrue.s       IL_001d 
+  IL_001b pop             
+  IL_001c ret             
+  IL_001d ldarg.0         
+  IL_001e ldc.i4.0        
+  IL_001f call           SpellManager::ReleaseSpell token(0x06014A03)
+  IL_0024 pop             
+  IL_0025 ret             
+
+0x06014acf SpellUtils::PurgeSpells(spells) RVA 0x618ca0 SIG 10010101151249011e00
+  IL_0000 ldarg.0         
+  IL_0001 brtrue.s       IL_0004 
+  IL_0003 ret             
+  IL_0004 ldarg.0         
+  IL_0005 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63056ab0>::get_Count token(0x0A000542)
+  IL_000a brtrue.s       IL_000d 
+  IL_000c ret             
+  IL_000d ldc.i4.0        
+  IL_000e stloc.0         
+  IL_000f br.s           IL_0026 
+  IL_0011 ldarg.0         
+  IL_0012 ldloc.0         
+  IL_0013 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63056ab0>::get_Item token(0x0A002311)
+  IL_0018 box            <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_001d call           SpellUtils::PurgeSpell token(0x06014ACE)
+  IL_0022 ldloc.0         
+  IL_0023 ldc.i4.1        
+  IL_0024 add             
+  IL_0025 stloc.0         
+  IL_0026 ldloc.0         
+  IL_0027 ldarg.0         
+  IL_0028 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63056ab0>::get_Count token(0x0A000542)
+  IL_002d blt.s          IL_0011 
+  IL_002f ret             
+
+0x06014ad0 SpellUtils::FindSourceAutoObjectForSpell(spell) RVA 0x618cdc SIG 000112808d12c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       Spell::GetSource token(0x0601491A)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_000d stloc.1         
+  IL_000e ldloc.1         
+  IL_000f ldnull          
+  IL_0010 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0015 brfalse.s      IL_0019 
+  IL_0017 ldloc.0         
+  IL_0018 ret             
+  IL_0019 ldloc.1         
+  IL_001a callvirt       Card::GetEntity token(0x06012CC3)
+  IL_001f dup             
+  IL_0020 callvirt       EntityBase::GetCardType token(0x060138F5)
+  IL_0025 stloc.2         
+  IL_0026 ldarg.0         
+  IL_0027 callvirt       Spell::GetPowerTaskList token(0x06014905)
+  IL_002c stloc.3         
+  IL_002d ldloc.3         
+  IL_002e brfalse.s      IL_0044 
+  IL_0030 ldloc.3         
+  IL_0031 callvirt       PowerTaskList::GetEffectEntityDef token(0x06005F79)
+  IL_0036 stloc.s        local(0x0004) 
+  IL_0038 ldloc.s        local(0x0004) 
+  IL_003a brfalse.s      IL_0044 
+  IL_003c ldloc.s        local(0x0004) 
+  IL_003e callvirt       EntityBase::GetCardType token(0x060138F5)
+  IL_0043 stloc.2         
+  IL_0044 ldloc.1         
+  IL_0045 ldloc.2         
+  IL_0046 call           SpellUtils::FindAutoObjectForSpell token(0x06014AD2)
+  IL_004b ret             
+
+0x06014ad1 SpellUtils::FindTargetAutoObjectForSpell(spell) RVA 0x618d34 SIG 000112808d12c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetVisualTarget token(0x0A004F21)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0012 
+  IL_0010 ldnull          
+  IL_0011 ret             
+  IL_0012 ldloc.0         
+  IL_0013 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0003DA)
+  IL_0018 stloc.1         
+  IL_0019 ldloc.1         
+  IL_001a ldnull          
+  IL_001b call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0020 brfalse.s      IL_0024 
+  IL_0022 ldloc.0         
+  IL_0023 ret             
+  IL_0024 ldloc.1         
+  IL_0025 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_002a dup             
+  IL_002b callvirt       EntityBase::GetCardType token(0x060138F5)
+  IL_0030 stloc.2         
+  IL_0031 ldloc.1         
+  IL_0032 ldloc.2         
+  IL_0033 call           SpellUtils::FindAutoObjectForSpell token(0x06014AD2)
+  IL_0038 ret             
+
+0x06014ad2 SpellUtils::FindAutoObjectForSpell(entity,card,cardType) RVA 0x618d7c SIG 000312808d12c000a32012c0009ebc11c000a958
+  IL_0000 ldarg.2         
+  IL_0001 ldc.i4.5        
+  IL_0002 bne.un.s       IL_004a 
+  IL_0004 ldarg.0         
+  IL_0005 callvirt       Entity::GetController token(0x060137DE)
+  IL_000a callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_000f stloc.0         
+  IL_0010 ldloc.0         
+  IL_0011 ldnull          
+  IL_0012 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0017 brfalse.s      IL_0020 
+  IL_0019 ldloc.0         
+  IL_001a callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_001f ret             
+  IL_0020 ldarg.0         
+  IL_0021 callvirt       Entity::GetLettuceAbilityOwner token(0x0601387A)
+  IL_0026 dup             
+  IL_0027 brtrue.s       IL_002d 
+  IL_0029 pop             
+  IL_002a ldnull          
+  IL_002b br.s           IL_0032 
+  IL_002d call           Entity::GetCard token(0x060137BF)
+  IL_0032 stloc.1         
+  IL_0033 ldloc.1         
+  IL_0034 ldnull          
+  IL_0035 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_003a brfalse.s      IL_0043 
+  IL_003c ldloc.1         
+  IL_003d callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0042 ret             
+  IL_0043 ldarg.1         
+  IL_0044 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0049 ret             
+  IL_004a ldarg.2         
+  IL_004b ldc.i4.s       10 
+  IL_004d bne.un.s       IL_00a6 
+  IL_004f ldarg.0         
+  IL_0050 callvirt       Entity::GetController token(0x060137DE)
+  IL_0055 stloc.2         
+  IL_0056 ldarg.0         
+  IL_0057 ldc.i4         3919 
+  IL_005c callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0061 brfalse.s      IL_0088 
+  IL_0063 ldloc.2         
+  IL_0064 ldarg.0         
+  IL_0065 ldc.i4         3919 
+  IL_006a callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_006f callvirt       Player::GetHeroPowerCardWithIndex token(0x06005D87)
+  IL_0074 stloc.s        local(0x0004) 
+  IL_0076 ldloc.s        local(0x0004) 
+  IL_0078 ldnull          
+  IL_0079 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_007e brfalse.s      IL_0088 
+  IL_0080 ldloc.s        local(0x0004) 
+  IL_0082 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0087 ret             
+  IL_0088 ldloc.2         
+  IL_0089 callvirt       Entity::GetHeroPowerCard token(0x060137EB)
+  IL_008e stloc.3         
+  IL_008f ldloc.3         
+  IL_0090 ldnull          
+  IL_0091 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0096 brfalse.s      IL_009f 
+  IL_0098 ldarg.1         
+  IL_0099 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_009e ret             
+  IL_009f ldloc.3         
+  IL_00a0 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00a5 ret             
+  IL_00a6 ldarg.2         
+  IL_00a7 ldc.i4.6        
+  IL_00a8 bne.un.s       IL_00db 
+  IL_00aa call           GameState::Get token(0x06005589)
+  IL_00af ldarg.0         
+  IL_00b0 callvirt       EntityBase::GetAttached token(0x0601391A)
+  IL_00b5 callvirt       GameState::GetEntity token(0x060055A7)
+  IL_00ba stloc.s        local(0x0005) 
+  IL_00bc ldloc.s        local(0x0005) 
+  IL_00be brfalse.s      IL_00db 
+  IL_00c0 ldloc.s        local(0x0005) 
+  IL_00c2 callvirt       Entity::GetCard token(0x060137BF)
+  IL_00c7 stloc.s        local(0x0006) 
+  IL_00c9 ldloc.s        local(0x0006) 
+  IL_00cb ldnull          
+  IL_00cc call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00d1 brfalse.s      IL_00db 
+  IL_00d3 ldloc.s        local(0x0006) 
+  IL_00d5 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00da ret             
+  IL_00db ldarg.1         
+  IL_00dc callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00e1 ret             
+
+0x06014ad3 SpellUtils::FindBestTargetCard(spell) RVA 0x618e6c SIG 000112c0009ebc12c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0017 
+  IL_0010 ldarg.0         
+  IL_0011 callvirt       Spell::GetVisualTargetCard token(0x06014931)
+  IL_0016 ret             
+  IL_0017 ldloc.0         
+  IL_0018 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_001d callvirt       Entity::GetController token(0x060137DE)
+  IL_0022 stloc.1         
+  IL_0023 ldloc.1         
+  IL_0024 brtrue.s       IL_002d 
+  IL_0026 ldarg.0         
+  IL_0027 callvirt       Spell::GetVisualTargetCard token(0x06014931)
+  IL_002c ret             
+  IL_002d ldloc.1         
+  IL_002e callvirt       Player::GetSide token(0x06005D64)
+  IL_0033 stloc.2         
+  IL_0034 ldarg.0         
+  IL_0035 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetVisualTargets token(0x0A0041BC)
+  IL_003a stloc.3         
+  IL_003b ldc.i4.0        
+  IL_003c stloc.s        local(0x0004) 
+  IL_003e br.s           IL_0076 
+  IL_0040 ldloc.3         
+  IL_0041 ldloc.s        local(0x0004) 
+  IL_0043 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63015040>::get_Item token(0x0A00045D)
+  IL_0048 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0003DA)
+  IL_004d stloc.s        local(0x0005) 
+  IL_004f ldloc.s        local(0x0005) 
+  IL_0051 ldnull          
+  IL_0052 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0057 brtrue.s       IL_0070 
+  IL_0059 ldloc.s        local(0x0005) 
+  IL_005b callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0060 callvirt       Entity::GetController token(0x060137DE)
+  IL_0065 callvirt       Player::GetSide token(0x06005D64)
+  IL_006a ldloc.2         
+  IL_006b beq.s          IL_0070 
+  IL_006d ldloc.s        local(0x0005) 
+  IL_006f ret             
+  IL_0070 ldloc.s        local(0x0004) 
+  IL_0072 ldc.i4.1        
+  IL_0073 add             
+  IL_0074 stloc.s        local(0x0004) 
+  IL_0076 ldloc.s        local(0x0004) 
+  IL_0078 ldloc.3         
+  IL_0079 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b63015040>::get_Count token(0x0A0002F7)
+  IL_007e blt.s          IL_0040 
+  IL_0080 ldarg.0         
+  IL_0081 callvirt       Spell::GetVisualTargetCard token(0x06014931)
+  IL_0086 ret             
+
+0x06014ad4 SpellUtils::FindHeroCard(card) RVA 0x618f00 SIG 000112c0009ebc12c0009ebc
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000b 
+  IL_0009 ldnull          
+  IL_000a ret             
+  IL_000b ldarg.0         
+  IL_000c callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0011 callvirt       Entity::GetController token(0x060137DE)
+  IL_0016 stloc.0         
+  IL_0017 ldloc.0         
+  IL_0018 brtrue.s       IL_001c 
+  IL_001a ldnull          
+  IL_001b ret             
+  IL_001c ldloc.0         
+  IL_001d callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0022 ret             
+
+0x06014ad5 SpellUtils::FindHeroPowerCard(card) RVA 0x618f30 SIG 000112c0009ebc12c0009ebc
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000b 
+  IL_0009 ldnull          
+  IL_000a ret             
+  IL_000b ldarg.0         
+  IL_000c callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0011 callvirt       Entity::GetController token(0x060137DE)
+  IL_0016 stloc.0         
+  IL_0017 ldloc.0         
+  IL_0018 brtrue.s       IL_001c 
+  IL_001a ldnull          
+  IL_001b ret             
+  IL_001c ldloc.0         
+  IL_001d callvirt       Entity::GetHeroPowerCard token(0x060137EB)
+  IL_0022 ret             
+
+0x06014ad6 SpellUtils::FaceSameAs(source,target,options) RVA 0x618f5f SIG 00030112809d12808d129981
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_000c ldarg.2         
+  IL_000d call           SpellUtils::FaceSameAs token(0x06014AD8)
+  IL_0012 ret             
+
+0x06014ad7 SpellUtils::FaceSameAs(source,target,options) RVA 0x618f73 SIG 00030112809d12809d129981
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_000c ldarg.2         
+  IL_000d call           SpellUtils::FaceSameAs token(0x06014AD8)
+  IL_0012 ret             
+
+0x06014ad8 SpellUtils::FaceSameAs(source,target,options) RVA 0x618f87 SIG 0003011280a51280a5129981
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_000d ldarg.1         
+  IL_000e callvirt       UnityEngine.Transform::get_forward token(0x0A000D8A)
+  IL_0013 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0018 ldarg.2         
+  IL_0019 call           SpellUtils::SetOrientation token(0x06014ADF)
+  IL_001e ret             
+
+0x06014ad9 SpellUtils::FaceOppositeOf(source,target,options) RVA 0x618fa7 SIG 00030112809d12808d129981
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_000c ldarg.2         
+  IL_000d call           SpellUtils::FaceOppositeOf token(0x06014ADB)
+  IL_0012 ret             
+
+0x06014ada SpellUtils::FaceOppositeOf(source,target,options) RVA 0x618fbb SIG 00030112809d12809d129981
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_000c ldarg.2         
+  IL_000d call           SpellUtils::FaceOppositeOf token(0x06014ADB)
+  IL_0012 ret             
+
+0x06014adb SpellUtils::FaceOppositeOf(source,target,options) RVA 0x618fcf SIG 0003011280a51280a5129981
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_000d ldarg.1         
+  IL_000e callvirt       UnityEngine.Transform::get_forward token(0x0A000D8A)
+  IL_0013 call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_0018 ldarg.2         
+  IL_0019 call           SpellUtils::SetOrientation token(0x06014ADF)
+  IL_001e ret             
+
+0x06014adc SpellUtils::FaceTowards(source,target,options) RVA 0x618fef SIG 00030112809d12808d129981
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_000c ldarg.2         
+  IL_000d call           SpellUtils::FaceTowards token(0x06014ADE)
+  IL_0012 ret             
+
+0x06014add SpellUtils::FaceTowards(source,target,options) RVA 0x619003 SIG 00030112809d12809d129981
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_000c ldarg.2         
+  IL_000d call           SpellUtils::FaceTowards token(0x06014ADE)
+  IL_0012 ret             
+
+0x06014ade SpellUtils::FaceTowards(source,target,options) RVA 0x619017 SIG 0003011280a51280a5129981
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_000d ldarg.2         
+  IL_000e call           SpellUtils::SetOrientation token(0x06014ADF)
+  IL_0013 ret             
+
+0x06014adf SpellUtils::SetOrientation(source,sourcePosition,targetPosition,options) RVA 0x61902c SIG 0004011280a5115d115d129981
+  IL_0000 ldarg.3         
+  IL_0001 ldfld          SpellFacingOptions::m_RotateX token(0x0A004F25)
+  IL_0006 brfalse.s      IL_0010 
+  IL_0008 ldarg.3         
+  IL_0009 ldfld          SpellFacingOptions::m_RotateY token(0x0A004F26)
+  IL_000e brtrue.s       IL_003f 
+  IL_0010 ldarg.3         
+  IL_0011 ldfld          SpellFacingOptions::m_RotateX token(0x0A004F25)
+  IL_0016 brfalse.s      IL_0027 
+  IL_0018 ldarga.s       argument(0x0002) 
+  IL_001a ldarg.1         
+  IL_001b ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0020 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0025 br.s           IL_003f 
+  IL_0027 ldarg.3         
+  IL_0028 ldfld          SpellFacingOptions::m_RotateY token(0x0A004F26)
+  IL_002d brfalse.s      IL_003e 
+  IL_002f ldarga.s       argument(0x0002) 
+  IL_0031 ldarg.1         
+  IL_0032 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0037 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_003c br.s           IL_003f 
+  IL_003e ret             
+  IL_003f ldarg.2         
+  IL_0040 ldarg.1         
+  IL_0041 call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_0046 stloc.0         
+  IL_0047 ldloca.s       local(0x0000) 
+  IL_0049 call           UnityEngine.Vector3::get_sqrMagnitude token(0x0A0027BA)
+  IL_004e ldsfld         UnityEngine.Mathf::Epsilon token(0x0A0004BC)
+  IL_0053 ble.un.s       IL_0061 
+  IL_0055 ldarg.0         
+  IL_0056 ldloc.0         
+  IL_0057 call           UnityEngine.Quaternion::LookRotation token(0x0A00057D)
+  IL_005c callvirt       UnityEngine.Transform::set_rotation token(0x0A000B50)
+  IL_0061 ret             
+
+0x06014ae0 SpellUtils::GetAppropriateElementAccordingToRanges(elements,rangeAccessor,desiredValue) RVA 0x61909c SIG 1001031e001d1e0015128105021e0012831d08
+  IL_0000 ldarg.0         
+  IL_0001 ldlen           
+  IL_0002 brtrue.s       IL_000f 
+  IL_0004 ldloca.s       local(0x0005) 
+  IL_0006 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_000c ldloc.s        local(0x0005) 
+  IL_000e ret             
+  IL_000f ldc.i4.m1       
+  IL_0010 stloc.0         
+  IL_0011 ldc.i4         -2147483648 
+  IL_0016 stloc.1         
+  IL_0017 ldc.i4.m1       
+  IL_0018 stloc.2         
+  IL_0019 ldc.i4         2147483647 
+  IL_001e stloc.3         
+  IL_001f ldc.i4.m1       
+  IL_0020 stloc.s        local(0x0004) 
+  IL_0022 ldc.i4.0        
+  IL_0023 stloc.s        local(0x0006) 
+  IL_0025 ldarg.0         
+  IL_0026 ldlen           
+  IL_0027 conv.i4         
+  IL_0028 stloc.s        local(0x0007) 
+  IL_002a br.s           IL_0083 
+  IL_002c ldarg.0         
+  IL_002d ldloc.s        local(0x0006) 
+  IL_002f ldelem         <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_0034 stloc.s        local(0x0008) 
+  IL_0036 ldarg.1         
+  IL_0037 ldloc.s        local(0x0008) 
+  IL_0039 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b629f0140>::Invoke token(0x0A004F27)
+  IL_003e ldfld          ValueRange::m_maxValue token(0x0A004F28)
+  IL_0043 stloc.s        local(0x0009) 
+  IL_0045 ldloc.s        local(0x0009) 
+  IL_0047 ldloc.1         
+  IL_0048 ble.s          IL_0050 
+  IL_004a ldloc.s        local(0x0009) 
+  IL_004c stloc.1         
+  IL_004d ldloc.s        local(0x0006) 
+  IL_004f stloc.0         
+  IL_0050 ldarg.1         
+  IL_0051 ldloc.s        local(0x0008) 
+  IL_0053 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f9b629f0140>::Invoke token(0x0A004F27)
+  IL_0058 ldfld          ValueRange::m_minValue token(0x0A004F29)
+  IL_005d stloc.s        local(0x000A) 
+  IL_005f ldloc.s        local(0x000A) 
+  IL_0061 ldloc.3         
+  IL_0062 bge.s          IL_006a 
+  IL_0064 ldloc.s        local(0x000A) 
+  IL_0066 stloc.3         
+  IL_0067 ldloc.s        local(0x0006) 
+  IL_0069 stloc.2         
+  IL_006a ldloc.s        local(0x0004) 
+  IL_006c ldc.i4.m1       
+  IL_006d bne.un.s       IL_007d 
+  IL_006f ldarg.2         
+  IL_0070 ldloc.s        local(0x000A) 
+  IL_0072 blt.s          IL_007d 
+  IL_0074 ldarg.2         
+  IL_0075 ldloc.s        local(0x0009) 
+  IL_0077 bgt.s          IL_007d 
+  IL_0079 ldloc.s        local(0x0006) 
+  IL_007b stloc.s        local(0x0004) 
+  IL_007d ldloc.s        local(0x0006) 
+  IL_007f ldc.i4.1        
+  IL_0080 add             
+  IL_0081 stloc.s        local(0x0006) 
+  IL_0083 ldloc.s        local(0x0006) 
+  IL_0085 ldloc.s        local(0x0007) 
+  IL_0087 blt.s          IL_002c 
+  IL_0089 ldarg.2         
+  IL_008a ldloc.1         
+  IL_008b ble.s          IL_0099 
+  IL_008d ldloc.0         
+  IL_008e ldc.i4.m1       
+  IL_008f beq.s          IL_0099 
+  IL_0091 ldarg.0         
+  IL_0092 ldloc.0         
+  IL_0093 ldelem         <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_0098 ret             
+  IL_0099 ldarg.2         
+  IL_009a ldloc.3         
+  IL_009b bge.s          IL_00a9 
+  IL_009d ldloc.2         
+  IL_009e ldc.i4.m1       
+  IL_009f beq.s          IL_00a9 
+  IL_00a1 ldarg.0         
+  IL_00a2 ldloc.2         
+  IL_00a3 ldelem         <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_00a8 ret             
+  IL_00a9 ldloc.s        local(0x0004) 
+  IL_00ab ldc.i4.m1       
+  IL_00ac beq.s          IL_00b7 
+  IL_00ae ldarg.0         
+  IL_00af ldloc.s        local(0x0004) 
+  IL_00b1 ldelem         <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_00b6 ret             
+  IL_00b7 ldloca.s       local(0x0005) 
+  IL_00b9 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f9b63054080> token(0x1B000180)
+  IL_00bf ldloc.s        local(0x0005) 
+  IL_00c1 ret             
+
+0x06014ae1 SpellUtils::FlipActorAndReplaceWithCard(actor,card,time) RVA 0x61916a SIG 000312811112c0009cf812c0009ebc0c
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <FlipActorAndReplaceWithCard>d__54::.ctor token(0x06014AE3)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <FlipActorAndReplaceWithCard>d__54::actor token(0x04011CDD)
+  IL_000d dup             
+  IL_000e ldarg.1         
+  IL_000f stfld          <FlipActorAndReplaceWithCard>d__54::card token(0x04011CDC)
+  IL_0014 dup             
+  IL_0015 ldarg.2         
+  IL_0016 stfld          <FlipActorAndReplaceWithCard>d__54::time token(0x04011CDB)
+  IL_001b ret             
+
+0x06014ae2 SpellUtils::FlipActorAndReplaceWithOtherActor(actor,otherActor,time) RVA 0x619187 SIG 000312811112c0009cf812c0009cf80c
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <FlipActorAndReplaceWithOtherActor>d__55::.ctor token(0x06014AE9)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <FlipActorAndReplaceWithOtherActor>d__55::actor token(0x04011CE3)
+  IL_000d dup             
+  IL_000e ldarg.1         
+  IL_000f stfld          <FlipActorAndReplaceWithOtherActor>d__55::otherActor token(0x04011CE2)
+  IL_0014 dup             
+  IL_0015 ldarg.2         
+  IL_0016 stfld          <FlipActorAndReplaceWithOtherActor>d__55::time token(0x04011CE1)
+  IL_001b ret             
+
+0x06016a45 HutongGames.PlayMaker.Actions.ActivatePlaySoundSpellsAction::GetSpellOwner() RVA 0x6981de SIG 200012808d
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ActivatePlaySoundSpellsAction::m_SpellObject token(0x040139BB)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0011 ret             
+
+0x06016a46 HutongGames.PlayMaker.Actions.ActivatePlaySoundSpellsAction::OnEnter() RVA 0x6981f4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SpellAction::OnEnter token(0x06016C90)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          HutongGames.PlayMaker.Actions.ActivatePlaySoundSpellsAction::m_WhichCard token(0x040139BC)
+  IL_000d call           HutongGames.PlayMaker.Actions.SpellAction::GetCard token(0x06016C8B)
+  IL_0012 stloc.0         
+  IL_0013 ldloc.0         
+  IL_0014 ldnull          
+  IL_0015 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001a brfalse.s      IL_0032 
+  IL_001c ldstr          'ActivatePlaySoundSpellsAction.OnEnter() - Card not found!' string token(0x704063DB)
+  IL_0021 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0026 call           Error::AddDevFatal token(0x06004E7D)
+  IL_002b ldarg.0         
+  IL_002c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0031 ret             
+  IL_0032 ldloc.0         
+  IL_0033 ldnull          
+  IL_0034 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0039 brfalse.s      IL_004a 
+  IL_003b ldloc.0         
+  IL_003c ldloc.0         
+  IL_003d ldc.i4.0        
+  IL_003e ldc.i4.1        
+  IL_003f callvirt       Card::GetPlaySoundSpells token(0x06012D2C)
+  IL_0044 callvirt       Card::ActivateSoundSpellList token(0x06012D5A)
+  IL_0049 pop             
+  IL_004a ldarg.0         
+  IL_004b call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0050 ret             
+
+0x06016a47 HutongGames.PlayMaker.Actions.ActivatePlaySoundSpellsAction::.ctor() RVA 0x698144 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SpellAction::.ctor token(0x06016C92)
+  IL_0006 ret             

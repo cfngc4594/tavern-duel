@@ -1,0 +1,103 @@
+				resolvedGuid,
+				requestedAsset.GetLegacyAssetName()
+			});
+		}
+		else
+		{
+			TelemetryManager.Client().SendAssetNotFound(assetType, requestedAsset.guid, resolvedGuid, requestedAsset.GetLegacyAssetName());
+		}
+	}
+
+	private static void SendSharedPrefabHandleOrphanedTelemetry(string asset, string owner)
+	{
+	}
+
+	private static void SendAssetHandleOrphanedTelemetry(string asset, string owner)
+	{
+	}
+
+	public void PopulateDebugStats(AssetManagerDebugStats stats, DataFields requestedFields)
+	{
+		//IL_0007: Unknown result type (might be due to invalid IL or missing references)
+		m_assetManager.PopulateDebugStats(stats, requestedFields);
+	}
+}
+===== END FILE =====
+
+===== BEGIN FILE =====
+{"path":"decompiled/AssetVariantTags.cs","bytes":1413,"sha256":"6e3b109db9f0ea6192a536215f0f342a9094e902c05a3a005eba224a53543aed"}
+===== CONTENT START =====
+namespace Hearthstone;
+
+public static class AssetVariantTags
+{
+	public enum Quality
+	{
+		Normal,
+		Low
+	}
+
+	public enum Platform
+	{
+		Any,
+		Phone
+	}
+
+	public enum Locale
+	{
+		enUS,
+		ruRU,
+		esES,
+		deDE,
+		plPL,
+		ptBR,
+		esMX,
+		frFR,
+		itIT,
+		koKR,
+		jaJP,
+		thTH,
+		zhTW,
+		zhCN,
+		Global
+	}
+
+	public enum Region
+	{
+		All,
+		US,
+		EU,
+		KR,
+		TW,
+		CN
+	}
+
+	public static Locale GetLocaleVariantTagForLocale(global::Locale locale)
+	{
+		return locale switch
+		{
+			global::Locale.enUS => Locale.enUS, 
+			global::Locale.enGB => Locale.enUS, 
+			global::Locale.deDE => Locale.deDE, 
+			global::Locale.frFR => Locale.frFR, 
+			global::Locale.koKR => Locale.koKR, 
+			global::Locale.esES => Locale.esES, 
+			global::Locale.esMX => Locale.esMX, 
+			global::Locale.ruRU => Locale.ruRU, 
+			global::Locale.zhTW => Locale.zhTW, 
+			global::Locale.zhCN => Locale.zhCN, 
+			global::Locale.itIT => Locale.itIT, 
+			global::Locale.ptBR => Locale.ptBR, 
+			global::Locale.plPL => Locale.plPL, 
+			global::Locale.jaJP => Locale.jaJP, 
+			global::Locale.thTH => Locale.thTH, 
+			_ => Locale.Global, 
+		};
+	}
+
+	public static Region GetRegionVariantTagForRegion(global::Region region)
+	{
+		return region switch
+		{
+			global::Region.US => Region.US, 
+			global::Region.EU => Region.EU, 

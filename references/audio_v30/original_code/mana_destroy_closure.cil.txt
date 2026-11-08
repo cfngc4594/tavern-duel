@@ -1,0 +1,122 @@
+
+TYPE <WaitThenDestroy>d__48 0x02000bd6
+FIELD 0x04003f02 <>1__state SIG 0608
+FIELD 0x04003f03 <>t__builder SIG 0611871d
+FIELD 0x04003f04 token SIG 06118731
+FIELD 0x04003f05 <>4__this SIG 0612af4c
+FIELD 0x04003f06 <>u__1 SIG 0611872d
+
+TYPE ManaCrystalType 0x02000bd8
+FIELD 0x04003f08 value__ SIG 0608
+FIELD 0x04003f09 DEFAULT SIG 0611af60
+FIELD 0x04003f0a COIN SIG 0611af60
+FIELD 0x04003f0b CHRONUM SIG 0611af60
+
+TYPE ManaCrystalAssetPaths 0x02000bd9
+FIELD 0x04003f0c m_Type SIG 0611af60
+FIELD 0x04003f0d m_ResourcePath SIG 060e
+FIELD 0x04003f0e m_SoundOnAddPath SIG 060e
+FIELD 0x04003f0f m_SoundOnSpendPath SIG 060e
+FIELD 0x04003f10 m_SoundOnRefreshPath SIG 060e
+FIELD 0x04003f11 m_tempManaCrystalMaterial SIG 061280b9
+FIELD 0x04003f12 m_tempManaCrystalProposedQuadMaterial SIG 061280b9
+FIELD 0x04003f13 m_phoneLargeResource SIG 060e
+FIELD 0x04003f14 m_pcLargeResource SIG 060e
+FIELD 0x04003f15 m_goldSackLargeResource SIG 060e
+
+0x06005b2c <WaitThenDestroy>d__48::MoveNext() RVA 0x1abeac SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitThenDestroy>d__48::<>1__state token(0x04003F02)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <WaitThenDestroy>d__48::<>4__this token(0x04003F05)
+  IL_000d stloc.1         
+  IL_000e ldloc.0         
+  IL_000f brfalse.s      IL_0054 
+  IL_0011 br.s           IL_0077 
+  IL_0013 ldc.i4.8        
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          <WaitThenDestroy>d__48::token token(0x04003F04)
+  IL_001a call           Cysharp.Threading.Tasks.UniTask::Yield token(0x0A002462)
+  IL_001f stloc.3         
+  IL_0020 ldloca.s       local(0x0003) 
+  IL_0022 call           Cysharp.Threading.Tasks.UniTask::GetAwaiter token(0x0A00103B)
+  IL_0027 stloc.2         
+  IL_0028 ldloca.s       local(0x0002) 
+  IL_002a call           Awaiter::get_IsCompleted token(0x0A00103C)
+  IL_002f brtrue.s       IL_0070 
+  IL_0031 ldarg.0         
+  IL_0032 ldc.i4.0        
+  IL_0033 dup             
+  IL_0034 stloc.0         
+  IL_0035 stfld          <WaitThenDestroy>d__48::<>1__state token(0x04003F02)
+  IL_003a ldarg.0         
+  IL_003b ldloc.2         
+  IL_003c stfld          <WaitThenDestroy>d__48::<>u__1 token(0x04003F06)
+  IL_0041 ldarg.0         
+  IL_0042 ldflda         <WaitThenDestroy>d__48::<>t__builder token(0x04003F03)
+  IL_0047 ldloca.s       local(0x0002) 
+  IL_0049 ldarg.0         
+  IL_004a call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::AwaitUnsafeOnCompleted<spec> token(0x2B0003F7)
+  IL_004f leave          IL_00e4 
+  IL_0054 ldarg.0         
+  IL_0055 ldfld          <WaitThenDestroy>d__48::<>u__1 token(0x04003F06)
+  IL_005a stloc.2         
+  IL_005b ldarg.0         
+  IL_005c ldflda         <WaitThenDestroy>d__48::<>u__1 token(0x04003F06)
+  IL_0061 initobj        Awaiter token(0x010001CB)
+  IL_0067 ldarg.0         
+  IL_0068 ldc.i4.m1       
+  IL_0069 dup             
+  IL_006a stloc.0         
+  IL_006b stfld          <WaitThenDestroy>d__48::<>1__state token(0x04003F02)
+  IL_0070 ldloca.s       local(0x0002) 
+  IL_0072 call           Awaiter::GetResult token(0x0A00103E)
+  IL_0077 ldloc.1         
+  IL_0078 ldfld          ManaCrystal::m_playingAnimation token(0x04003EEF)
+  IL_007d brtrue.s       IL_0013 
+  IL_007f ldloc.1         
+  IL_0080 ldfld          ManaCrystal::m_isTemp token(0x04003EF0)
+  IL_0085 brtrue.s       IL_0094 
+  IL_0087 ldloc.1         
+  IL_0088 ldfld          ManaCrystal::gemDestroy token(0x04003EDE)
+  IL_008d callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0000A1)
+  IL_0092 br.s           IL_009f 
+  IL_0094 ldloc.1         
+  IL_0095 ldfld          ManaCrystal::tempGemDestroy token(0x04003EE0)
+  IL_009a callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0000A1)
+  IL_009f dup             
+  IL_00a0 ldloc.1         
+  IL_00a1 ldftn          ManaCrystal::OnGemDestroyedAnimComplete token(0x06005B25)
+  IL_00a7 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f7122e8d3d0>::.ctor token(0x0A0004BF)
+  IL_00ac callvirt       Spell::AddStateFinishedCallback token(0x06014948)
+  IL_00b1 callvirt       Blizzard.T5.Game.Spells.SpellBase::Activate token(0x0A000450)
+  IL_00b6 leave.s        IL_00d1 
+  IL_00b8 stloc.s        local(0x0004) 
+  IL_00ba ldarg.0         
+  IL_00bb ldc.i4.s       -2 
+  IL_00bd stfld          <WaitThenDestroy>d__48::<>1__state token(0x04003F02)
+  IL_00c2 ldarg.0         
+  IL_00c3 ldflda         <WaitThenDestroy>d__48::<>t__builder token(0x04003F03)
+  IL_00c8 ldloc.s        local(0x0004) 
+  IL_00ca call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::SetException token(0x0A00103F)
+  IL_00cf leave.s        IL_00e4 
+  IL_00d1 ldarg.0         
+  IL_00d2 ldc.i4.s       -2 
+  IL_00d4 stfld          <WaitThenDestroy>d__48::<>1__state token(0x04003F02)
+  IL_00d9 ldarg.0         
+  IL_00da ldflda         <WaitThenDestroy>d__48::<>t__builder token(0x04003F03)
+  IL_00df call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::SetResult token(0x0A001040)
+  IL_00e4 ret             
+
+0x06005b2d <WaitThenDestroy>d__48::SetStateMachine(stateMachine) RVA 0x1abfb0 SIG 200101128725
+  IL_0000 ldarg.0         
+  IL_0001 ldflda         <WaitThenDestroy>d__48::<>t__builder token(0x04003F03)
+  IL_0006 ldarg.1         
+  IL_0007 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::SetStateMachine token(0x0A001042)
+  IL_000c ret             
+
+0x06005b2f ManaCrystalAssetPaths::.ctor() RVA 0x3159 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ret             

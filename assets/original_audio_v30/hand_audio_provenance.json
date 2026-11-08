@@ -1,0 +1,3325 @@
+{
+  "schema_version": 1,
+  "notes": [
+    "All links resolved from CardDef prefab PPtrs, component ownership, FSM serialized parameter indices; no name matching.",
+    "Event classifications are stage labels; original entry_events and transitions remain authoritative.",
+    "precast only labels Start subspell Birth, not a proven mapping to user drag; cancel is Cancel. Do not flatten into accepted cast.",
+    "hit on Impact subprefab Death is projectile arrival, not entity death.",
+    "Disabled rows and disabled SuperSpell stages must not play.",
+    "FSM AudioPlayClipAction often overrides an empty source SoundDef; use sound_def_ref.",
+    "CustomType40 nested ranges decoded exactly. Current pool regular/nonlegendary actor uses ELITE0 noDragon and PREMIUM0 isRegular. Dragon? refers to legendary visual framing, not dragon race."
+  ],
+  "rows": [
+    {
+      "state_index": 5,
+      "state_name_resolves_here": true,
+      "requested_sound_ref": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "sound_options": [],
+      "selection": null,
+      "card_id": "__shared__",
+      "event": "hand_summon_out",
+      "carddef_event": "hand_type_1",
+      "prefab": "Card_Hand_Ally_SummonOut.prefab:f447dff79e61341f1adda7916b4ddd85",
+      "prefab_guid": "f447dff79e61341f1adda7916b4ddd85",
+      "route": "root",
+      "stage_enabled": true,
+      "trigger_kind": "AudioPlaythroughAction",
+      "state": "Regular",
+      "entry_events": [
+        "Birth"
+      ],
+      "entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isRegular",
+          "OnOff",
+          "FINISHED",
+          "Regular"
+        ]
+      ],
+      "delay_sec": 0.0,
+      "delay_basis": "local action delay after FSM state entry, not total time from card commit",
+      "enabled": true,
+      "audio_source": {
+        "m_Enabled": 1,
+        "OutputAudioMixerGroup": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_audioClip": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Resource": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_PlayOnAwake": false,
+        "m_Volume": 1.0,
+        "m_Pitch": 1.0,
+        "Loop": false,
+        "Mute": false,
+        "Spatialize": false,
+        "SpatializePostEffects": false,
+        "Priority": 128,
+        "DopplerLevel": 1.0,
+        "MinDistance": 1.0,
+        "MaxDistance": 500.0,
+        "Pan2D": 0.0,
+        "rolloffMode": 0,
+        "BypassEffects": false,
+        "BypassListenerEffects": false,
+        "BypassReverbZones": false,
+        "rolloffCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            },
+            {
+              "time": 1.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "panLevelCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        },
+        "spreadCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "reverbZoneMixCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        }
+      },
+      "audio_source_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -6616724846844248311,
+        "guid": null,
+        "class_name": "AudioSource"
+      },
+      "sound_def": {
+        "m_Enabled": 1,
+        "m_AudioClip": "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64",
+        "m_Category": 1,
+        "m_RandomClips": [],
+        "m_RandomPitchMin": 1.0,
+        "m_RandomPitchMax": 1.0,
+        "m_RandomVolumeMin": 1.0,
+        "m_RandomVolumeMax": 1.0,
+        "m_IgnoreDucking": 0,
+        "m_persistPastGameEnd": 0,
+        "m_InstanceLimited": 0,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      },
+      "sound_def_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -22276866140537079,
+        "guid": null,
+        "class_name": "SoundDef"
+      },
+      "source_gameobject_name": "Card_Hand_Ally_SummonOut",
+      "source_gameobject_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": 5900530254774599433,
+        "guid": "f447dff79e61341f1adda7916b4ddd85",
+        "class_name": "GameObject"
+      },
+      "clips": [
+        "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64"
+      ],
+      "action_params": {
+        "m_GameObject": {
+          "ownerOption": 0,
+          "gameObject": {
+            "useVariable": 0,
+            "name": "",
+            "tooltip": "",
+            "showInInspector": 0,
+            "networkSync": 0,
+            "value": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        },
+        "m_VolumeScale": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "value": 1.0
+        },
+        "m_OneShotClip": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "typeName": "UnityEngine.AudioClip",
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        },
+        "m_Delay": 0.0,
+        "m_OneShotSound": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "typeName": "SoundDef",
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        },
+        "m_FinishedEvent": "",
+        "m_IsMinionSummonVO": false,
+        "m_IsKeywordVO": false,
+        "m_InstanceLimited": false,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      },
+      "state_component_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": 6520964117140668169,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "action_index": 3,
+      "stage_settings": null,
+      "play_globally": null,
+      "stop_on_state_change": null,
+      "row_id": "__shared__|f447dff79e61341f1adda7916b4ddd85|root|CAB-69c88b234dfa427e02d1fcee9337ae34|6520964117140668169|5|3",
+      "audio_source_instance_key": "CAB-69c88b234dfa427e02d1fcee9337ae34:-6616724846844248311",
+      "runtime_eligible": true,
+      "exclusion_reason": null,
+      "condition_satisfied": true,
+      "source_silent": false,
+      "selected_branch": "unconditional",
+      "state_component_enabled": true,
+      "unfiltered_entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "FINISHED",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "Is Diamond?",
+          "FINISHED",
+          "OnOff",
+          "FINISHED",
+          "Regular"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "FINISHED",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isRegular",
+          "OnOff",
+          "FINISHED",
+          "Regular"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "Is Diamond?",
+          "FINISHED",
+          "OnOff",
+          "FINISHED",
+          "Regular"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isRegular",
+          "OnOff",
+          "FINISHED",
+          "Regular"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "Dragon",
+          "Texture Swap - Dragon",
+          "FINISHED",
+          "Is Diamond?",
+          "FINISHED",
+          "OnOff",
+          "FINISHED",
+          "Regular"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "Dragon",
+          "Texture Swap - Dragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isRegular",
+          "OnOff",
+          "FINISHED",
+          "Regular"
+        ]
+      ],
+      "runtime_condition": {
+        "entity": "spellActor else source",
+        "tags": {
+          "114_ELITE": 0,
+          "12_PREMIUM": 0
+        },
+        "scope": "Current nonlegendary regular card pool only",
+        "selected_branches": {
+          "Is Diamond?": {
+            "entity_selector": 5,
+            "entity_selector_meaning": "spellActor entity, fallback source entity",
+            "tag": 12,
+            "tag_name": "PREMIUM",
+            "current_pool_value": 0,
+            "selected_event": "isRegular",
+            "cil": "hand_source_actions.cil.json 0x06016C25/0x06016C26/0x06016C8C"
+          },
+          "Dragon?": {
+            "entity_selector": 5,
+            "entity_selector_meaning": "spellActor entity, fallback source entity",
+            "tag": 114,
+            "tag_name": "ELITE",
+            "current_pool_value": 0,
+            "selected_event": "noDragon",
+            "cil": "hand_source_actions.cil.json 0x06016C25/0x06016C26/0x06016C8C"
+          }
+        }
+      },
+      "cardinality": "One selected Actor hand-spell-table variant (1/22/23) and one presentation branch; never all variants together.",
+      "timing_paths": [
+        {
+          "entry_event": "Birth",
+          "state_path": [
+            "Birth",
+            "BIRTH",
+            "FINISHED",
+            "Dragon?",
+            "noDragon",
+            "Texture Swap - NoDragon",
+            "FINISHED",
+            "Is Diamond?",
+            "isRegular",
+            "OnOff",
+            "FINISHED",
+            "Regular"
+          ],
+          "ready": true,
+          "preceding_waits": [
+            {
+              "state": "BIRTH",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "BIRTH",
+                  "action_index": 0,
+                  "action_class": "SpellInitActorVariables",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 1,
+                  "action_class": "SpellCustomActorVariable",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 2,
+                  "action_class": "SpellStateAction",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 3,
+                  "action_class": "ActorSetVisibility",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Dragon?",
+              "transition_event": "noDragon",
+              "policy": "first_explicit_event",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Dragon?",
+                  "action_index": 0,
+                  "action_class": "SendEventBasedOnEntityTagAction",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Texture Swap - NoDragon",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Texture Swap - NoDragon",
+                  "action_index": 0,
+                  "action_class": "SetMaterialTexture",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "Texture Swap - NoDragon",
+                  "action_index": 1,
+                  "action_class": "SetMaterialTexture",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "Texture Swap - NoDragon",
+                  "action_index": 2,
+                  "action_class": "SetMaterialTexture",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                }
+              ]
+            },
+            {
+              "state": "Is Diamond?",
+              "transition_event": "isRegular",
+              "policy": "first_explicit_event",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Is Diamond?",
+                  "action_index": 0,
+                  "action_class": "SendEventBasedOnEntityTagAction",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "OnOff",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "OnOff",
+                  "action_index": 0,
+                  "action_class": "ActivateGameObject",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "OnOff",
+                  "action_index": 1,
+                  "action_class": "ActivateGameObject",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "OnOff",
+                  "action_index": 2,
+                  "action_class": "ActivateGameObject",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                }
+              ]
+            }
+          ],
+          "action_local_delay_sec": 0.0,
+          "cumulative_delay_min_sec": 0.0,
+          "cumulative_delay_max_sec": 0.0,
+          "cumulative_delay_sec": 0.0,
+          "runtime_event": "hand_summon_out"
+        }
+      ],
+      "all_timing_paths_ready": true,
+      "timing_has_ready_path": true,
+      "subspell_initial_event": "Birth",
+      "preferred_entry_event": "Birth",
+      "primary_timing_paths": [
+        {
+          "entry_event": "Birth",
+          "state_path": [
+            "Birth",
+            "BIRTH",
+            "FINISHED",
+            "Dragon?",
+            "noDragon",
+            "Texture Swap - NoDragon",
+            "FINISHED",
+            "Is Diamond?",
+            "isRegular",
+            "OnOff",
+            "FINISHED",
+            "Regular"
+          ],
+          "ready": true,
+          "preceding_waits": [
+            {
+              "state": "BIRTH",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "BIRTH",
+                  "action_index": 0,
+                  "action_class": "SpellInitActorVariables",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 1,
+                  "action_class": "SpellCustomActorVariable",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 2,
+                  "action_class": "SpellStateAction",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 3,
+                  "action_class": "ActorSetVisibility",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Dragon?",
+              "transition_event": "noDragon",
+              "policy": "first_explicit_event",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Dragon?",
+                  "action_index": 0,
+                  "action_class": "SendEventBasedOnEntityTagAction",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Texture Swap - NoDragon",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Texture Swap - NoDragon",
+                  "action_index": 0,
+                  "action_class": "SetMaterialTexture",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "Texture Swap - NoDragon",
+                  "action_index": 1,
+                  "action_class": "SetMaterialTexture",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "Texture Swap - NoDragon",
+                  "action_index": 2,
+                  "action_class": "SetMaterialTexture",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                }
+              ]
+            },
+            {
+              "state": "Is Diamond?",
+              "transition_event": "isRegular",
+              "policy": "first_explicit_event",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Is Diamond?",
+                  "action_index": 0,
+                  "action_class": "SendEventBasedOnEntityTagAction",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "OnOff",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "OnOff",
+                  "action_index": 0,
+                  "action_class": "ActivateGameObject",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "OnOff",
+                  "action_index": 1,
+                  "action_class": "ActivateGameObject",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "OnOff",
+                  "action_index": 2,
+                  "action_class": "ActivateGameObject",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                }
+              ]
+            }
+          ],
+          "action_local_delay_sec": 0.0,
+          "cumulative_delay_min_sec": 0.0,
+          "cumulative_delay_max_sec": 0.0,
+          "cumulative_delay_sec": 0.0,
+          "runtime_event": "hand_summon_out"
+        }
+      ],
+      "primary_timing": {
+        "entry_event": "Birth",
+        "state_path": [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isRegular",
+          "OnOff",
+          "FINISHED",
+          "Regular"
+        ],
+        "ready": true,
+        "preceding_waits": [
+          {
+            "state": "BIRTH",
+            "transition_event": "FINISHED",
+            "policy": "all_actions_complete",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "BIRTH",
+                "action_index": 0,
+                "action_class": "SpellInitActorVariables",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+              },
+              {
+                "state": "BIRTH",
+                "action_index": 1,
+                "action_class": "SpellCustomActorVariable",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+              },
+              {
+                "state": "BIRTH",
+                "action_index": 2,
+                "action_class": "SpellStateAction",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              },
+              {
+                "state": "BIRTH",
+                "action_index": 3,
+                "action_class": "ActorSetVisibility",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+              }
+            ]
+          },
+          {
+            "state": "Dragon?",
+            "transition_event": "noDragon",
+            "policy": "first_explicit_event",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "Dragon?",
+                "action_index": 0,
+                "action_class": "SendEventBasedOnEntityTagAction",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+              }
+            ]
+          },
+          {
+            "state": "Texture Swap - NoDragon",
+            "transition_event": "FINISHED",
+            "policy": "all_actions_complete",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "Texture Swap - NoDragon",
+                "action_index": 0,
+                "action_class": "SetMaterialTexture",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              },
+              {
+                "state": "Texture Swap - NoDragon",
+                "action_index": 1,
+                "action_class": "SetMaterialTexture",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              },
+              {
+                "state": "Texture Swap - NoDragon",
+                "action_index": 2,
+                "action_class": "SetMaterialTexture",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              }
+            ]
+          },
+          {
+            "state": "Is Diamond?",
+            "transition_event": "isRegular",
+            "policy": "first_explicit_event",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "Is Diamond?",
+                "action_index": 0,
+                "action_class": "SendEventBasedOnEntityTagAction",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+              }
+            ]
+          },
+          {
+            "state": "OnOff",
+            "transition_event": "FINISHED",
+            "policy": "all_actions_complete",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "OnOff",
+                "action_index": 0,
+                "action_class": "ActivateGameObject",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              },
+              {
+                "state": "OnOff",
+                "action_index": 1,
+                "action_class": "ActivateGameObject",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              },
+              {
+                "state": "OnOff",
+                "action_index": 2,
+                "action_class": "ActivateGameObject",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              }
+            ]
+          }
+        ],
+        "action_local_delay_sec": 0.0,
+        "cumulative_delay_min_sec": 0.0,
+        "cumulative_delay_max_sec": 0.0,
+        "cumulative_delay_sec": 0.0,
+        "runtime_event": "hand_summon_out"
+      },
+      "timing_ready": true,
+      "preceding_waits": [
+        {
+          "state": "BIRTH",
+          "transition_event": "FINISHED",
+          "policy": "all_actions_complete",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "BIRTH",
+              "action_index": 0,
+              "action_class": "SpellInitActorVariables",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+            },
+            {
+              "state": "BIRTH",
+              "action_index": 1,
+              "action_class": "SpellCustomActorVariable",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+            },
+            {
+              "state": "BIRTH",
+              "action_index": 2,
+              "action_class": "SpellStateAction",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            },
+            {
+              "state": "BIRTH",
+              "action_index": 3,
+              "action_class": "ActorSetVisibility",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+            }
+          ]
+        },
+        {
+          "state": "Dragon?",
+          "transition_event": "noDragon",
+          "policy": "first_explicit_event",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "Dragon?",
+              "action_index": 0,
+              "action_class": "SendEventBasedOnEntityTagAction",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+            }
+          ]
+        },
+        {
+          "state": "Texture Swap - NoDragon",
+          "transition_event": "FINISHED",
+          "policy": "all_actions_complete",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "Texture Swap - NoDragon",
+              "action_index": 0,
+              "action_class": "SetMaterialTexture",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            },
+            {
+              "state": "Texture Swap - NoDragon",
+              "action_index": 1,
+              "action_class": "SetMaterialTexture",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            },
+            {
+              "state": "Texture Swap - NoDragon",
+              "action_index": 2,
+              "action_class": "SetMaterialTexture",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            }
+          ]
+        },
+        {
+          "state": "Is Diamond?",
+          "transition_event": "isRegular",
+          "policy": "first_explicit_event",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "Is Diamond?",
+              "action_index": 0,
+              "action_class": "SendEventBasedOnEntityTagAction",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+            }
+          ]
+        },
+        {
+          "state": "OnOff",
+          "transition_event": "FINISHED",
+          "policy": "all_actions_complete",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "OnOff",
+              "action_index": 0,
+              "action_class": "ActivateGameObject",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            },
+            {
+              "state": "OnOff",
+              "action_index": 1,
+              "action_class": "ActivateGameObject",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            },
+            {
+              "state": "OnOff",
+              "action_index": 2,
+              "action_class": "ActivateGameObject",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            }
+          ]
+        }
+      ],
+      "exported_clips": [
+        {
+          "requested_clip": "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64",
+          "base_guid": "354df9da769581b43b2b6d626be06b64",
+          "resolved_guid": "354df9da769581b43b2b6d626be06b64",
+          "locale": "global",
+          "bundle": "essential_base_global-audio-0.unity3d",
+          "audio_clip_path_id": -6465388765202202740,
+          "audio_clip": {
+            "m_Name": "FX_MinionSummon_Cast",
+            "m_LoadType": 1,
+            "m_Channels": 1,
+            "m_Frequency": 44100,
+            "m_BitsPerSample": 16,
+            "m_Length": 1.590566873550415,
+            "m_IsTrackerFormat": false,
+            "m_Ambisonic": false,
+            "m_SubsoundIndex": 0,
+            "m_PreloadAudioData": true,
+            "m_LoadInBackground": false,
+            "m_Legacy3D": false,
+            "m_Resource": {
+              "m_Source": "archive:/CAB-c491983cea83897756f11fa097177509/CAB-c491983cea83897756f11fa097177509.resource",
+              "m_Offset": 6719296,
+              "m_Size": 14560
+            },
+            "m_CompressionFormat": 1
+          },
+          "original_encoded_sha256": "73c86411e51cc869ff67a6a319ea7decad0bb1da5912bb3ad760775b2c8a0c36",
+          "original_encoded_bytes": 14560,
+          "export_path": "res://assets/original_audio_v30/clips/global_FX_MinionSummon_Cast_354df9da.wav",
+          "export_sha256": "1f3055b18252f95baf8080bef3dba26c25e1a7fa6a71b4423f5e0c0e00e2fc34",
+          "export_bytes": 140332,
+          "processing": "Original Unity AudioClip FSB decoded to full-length PCM WAV using UnityPy 1.25.4/fmod_toolkit 0.1.3; no trim, gain, pitch, mix or resample.",
+          "sample_rate": 44100,
+          "channels": 1,
+          "sample_width": 2,
+          "sample_frames": 70144,
+          "duration_sec": 1.5905668934240362
+        }
+      ]
+    },
+    {
+      "state_index": 6,
+      "state_name_resolves_here": true,
+      "requested_sound_ref": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "sound_options": [],
+      "selection": null,
+      "card_id": "__shared__",
+      "event": "hand_summon_out",
+      "carddef_event": "hand_type_1",
+      "prefab": "Card_Hand_Ally_SummonOut.prefab:f447dff79e61341f1adda7916b4ddd85",
+      "prefab_guid": "f447dff79e61341f1adda7916b4ddd85",
+      "route": "root",
+      "stage_enabled": true,
+      "trigger_kind": "AudioPlaythroughAction",
+      "state": "State 2",
+      "entry_events": [],
+      "entry_paths": [],
+      "delay_sec": 0.0,
+      "delay_basis": "local action delay after FSM state entry, not total time from card commit",
+      "enabled": true,
+      "audio_source": {
+        "m_Enabled": 1,
+        "OutputAudioMixerGroup": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_audioClip": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Resource": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_PlayOnAwake": false,
+        "m_Volume": 1.0,
+        "m_Pitch": 1.0,
+        "Loop": false,
+        "Mute": false,
+        "Spatialize": false,
+        "SpatializePostEffects": false,
+        "Priority": 128,
+        "DopplerLevel": 1.0,
+        "MinDistance": 1.0,
+        "MaxDistance": 500.0,
+        "Pan2D": 0.0,
+        "rolloffMode": 0,
+        "BypassEffects": false,
+        "BypassListenerEffects": false,
+        "BypassReverbZones": false,
+        "rolloffCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            },
+            {
+              "time": 1.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "panLevelCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        },
+        "spreadCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "reverbZoneMixCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        }
+      },
+      "audio_source_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -6616724846844248311,
+        "guid": null,
+        "class_name": "AudioSource"
+      },
+      "sound_def": {
+        "m_Enabled": 1,
+        "m_AudioClip": "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64",
+        "m_Category": 1,
+        "m_RandomClips": [],
+        "m_RandomPitchMin": 1.0,
+        "m_RandomPitchMax": 1.0,
+        "m_RandomVolumeMin": 1.0,
+        "m_RandomVolumeMax": 1.0,
+        "m_IgnoreDucking": 0,
+        "m_persistPastGameEnd": 0,
+        "m_InstanceLimited": 0,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      },
+      "sound_def_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -22276866140537079,
+        "guid": null,
+        "class_name": "SoundDef"
+      },
+      "source_gameobject_name": "Card_Hand_Ally_SummonOut",
+      "source_gameobject_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": 5900530254774599433,
+        "guid": "f447dff79e61341f1adda7916b4ddd85",
+        "class_name": "GameObject"
+      },
+      "clips": [
+        "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64"
+      ],
+      "action_params": {
+        "m_GameObject": {
+          "ownerOption": 0,
+          "gameObject": {
+            "useVariable": 0,
+            "name": "",
+            "tooltip": "",
+            "showInInspector": 0,
+            "networkSync": 0,
+            "value": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        },
+        "m_VolumeScale": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "value": 1.0
+        },
+        "m_OneShotClip": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "typeName": "UnityEngine.AudioClip",
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        },
+        "m_Delay": 0.0,
+        "m_OneShotSound": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "typeName": "SoundDef",
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        },
+        "m_FinishedEvent": "",
+        "m_IsMinionSummonVO": false,
+        "m_IsKeywordVO": false,
+        "m_InstanceLimited": false,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      },
+      "state_component_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": 6520964117140668169,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "action_index": 3,
+      "stage_settings": null,
+      "play_globally": null,
+      "stop_on_state_change": null,
+      "row_id": "__shared__|f447dff79e61341f1adda7916b4ddd85|root|CAB-69c88b234dfa427e02d1fcee9337ae34|6520964117140668169|6|3",
+      "audio_source_instance_key": "CAB-69c88b234dfa427e02d1fcee9337ae34:-6616724846844248311",
+      "runtime_eligible": false,
+      "exclusion_reason": "presentation_branch_not_current_pool",
+      "condition_satisfied": false,
+      "source_silent": false,
+      "selected_branch": "unconditional",
+      "state_component_enabled": true,
+      "unfiltered_entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "FINISHED",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isDiamond",
+          "OnOff 2",
+          "FINISHED",
+          "State 2"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isDiamond",
+          "OnOff 2",
+          "FINISHED",
+          "State 2"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "Dragon",
+          "Texture Swap - Dragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isDiamond",
+          "OnOff 2",
+          "FINISHED",
+          "State 2"
+        ]
+      ],
+      "runtime_condition": {
+        "entity": "spellActor else source",
+        "tags": {
+          "114_ELITE": 0,
+          "12_PREMIUM": 0
+        },
+        "scope": "Current nonlegendary regular card pool only",
+        "selected_branches": {
+          "Is Diamond?": {
+            "entity_selector": 5,
+            "entity_selector_meaning": "spellActor entity, fallback source entity",
+            "tag": 12,
+            "tag_name": "PREMIUM",
+            "current_pool_value": 0,
+            "selected_event": "isRegular",
+            "cil": "hand_source_actions.cil.json 0x06016C25/0x06016C26/0x06016C8C"
+          },
+          "Dragon?": {
+            "entity_selector": 5,
+            "entity_selector_meaning": "spellActor entity, fallback source entity",
+            "tag": 114,
+            "tag_name": "ELITE",
+            "current_pool_value": 0,
+            "selected_event": "noDragon",
+            "cil": "hand_source_actions.cil.json 0x06016C25/0x06016C26/0x06016C8C"
+          }
+        }
+      },
+      "cardinality": "One selected Actor hand-spell-table variant (1/22/23) and one presentation branch; never all variants together.",
+      "timing_paths": [],
+      "all_timing_paths_ready": false,
+      "timing_has_ready_path": false,
+      "subspell_initial_event": "Birth",
+      "preferred_entry_event": null,
+      "primary_timing_paths": [],
+      "primary_timing": null,
+      "timing_ready": false,
+      "preceding_waits": [],
+      "exported_clips": [
+        {
+          "requested_clip": "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64",
+          "base_guid": "354df9da769581b43b2b6d626be06b64",
+          "resolved_guid": "354df9da769581b43b2b6d626be06b64",
+          "locale": "global",
+          "bundle": "essential_base_global-audio-0.unity3d",
+          "audio_clip_path_id": -6465388765202202740,
+          "audio_clip": {
+            "m_Name": "FX_MinionSummon_Cast",
+            "m_LoadType": 1,
+            "m_Channels": 1,
+            "m_Frequency": 44100,
+            "m_BitsPerSample": 16,
+            "m_Length": 1.590566873550415,
+            "m_IsTrackerFormat": false,
+            "m_Ambisonic": false,
+            "m_SubsoundIndex": 0,
+            "m_PreloadAudioData": true,
+            "m_LoadInBackground": false,
+            "m_Legacy3D": false,
+            "m_Resource": {
+              "m_Source": "archive:/CAB-c491983cea83897756f11fa097177509/CAB-c491983cea83897756f11fa097177509.resource",
+              "m_Offset": 6719296,
+              "m_Size": 14560
+            },
+            "m_CompressionFormat": 1
+          },
+          "original_encoded_sha256": "73c86411e51cc869ff67a6a319ea7decad0bb1da5912bb3ad760775b2c8a0c36",
+          "original_encoded_bytes": 14560,
+          "export_path": "res://assets/original_audio_v30/clips/global_FX_MinionSummon_Cast_354df9da.wav",
+          "export_sha256": "1f3055b18252f95baf8080bef3dba26c25e1a7fa6a71b4423f5e0c0e00e2fc34",
+          "export_bytes": 140332,
+          "processing": "Original Unity AudioClip FSB decoded to full-length PCM WAV using UnityPy 1.25.4/fmod_toolkit 0.1.3; no trim, gain, pitch, mix or resample.",
+          "sample_rate": 44100,
+          "channels": 1,
+          "sample_width": 2,
+          "sample_frames": 70144,
+          "duration_sec": 1.5905668934240362
+        }
+      ]
+    },
+    {
+      "state_index": 10,
+      "state_name_resolves_here": true,
+      "requested_sound_ref": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "sound_options": [],
+      "selection": null,
+      "card_id": "__shared__",
+      "event": "hand_summon_out",
+      "carddef_event": "hand_type_1",
+      "prefab": "Card_Hand_Ally_SummonOut.prefab:f447dff79e61341f1adda7916b4ddd85",
+      "prefab_guid": "f447dff79e61341f1adda7916b4ddd85",
+      "route": "root",
+      "stage_enabled": true,
+      "trigger_kind": "AudioPlaythroughAction",
+      "state": "Premium",
+      "entry_events": [],
+      "entry_paths": [],
+      "delay_sec": 0.0,
+      "delay_basis": "local action delay after FSM state entry, not total time from card commit",
+      "enabled": true,
+      "audio_source": {
+        "m_Enabled": 1,
+        "OutputAudioMixerGroup": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_audioClip": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Resource": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_PlayOnAwake": false,
+        "m_Volume": 1.0,
+        "m_Pitch": 1.0,
+        "Loop": false,
+        "Mute": false,
+        "Spatialize": false,
+        "SpatializePostEffects": false,
+        "Priority": 128,
+        "DopplerLevel": 1.0,
+        "MinDistance": 1.0,
+        "MaxDistance": 500.0,
+        "Pan2D": 0.0,
+        "rolloffMode": 0,
+        "BypassEffects": false,
+        "BypassListenerEffects": false,
+        "BypassReverbZones": false,
+        "rolloffCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            },
+            {
+              "time": 1.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "panLevelCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        },
+        "spreadCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "reverbZoneMixCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        }
+      },
+      "audio_source_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -6616724846844248311,
+        "guid": null,
+        "class_name": "AudioSource"
+      },
+      "sound_def": {
+        "m_Enabled": 1,
+        "m_AudioClip": "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64",
+        "m_Category": 1,
+        "m_RandomClips": [],
+        "m_RandomPitchMin": 1.0,
+        "m_RandomPitchMax": 1.0,
+        "m_RandomVolumeMin": 1.0,
+        "m_RandomVolumeMax": 1.0,
+        "m_IgnoreDucking": 0,
+        "m_persistPastGameEnd": 0,
+        "m_InstanceLimited": 0,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      },
+      "sound_def_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -22276866140537079,
+        "guid": null,
+        "class_name": "SoundDef"
+      },
+      "source_gameobject_name": "Card_Hand_Ally_SummonOut",
+      "source_gameobject_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": 5900530254774599433,
+        "guid": "f447dff79e61341f1adda7916b4ddd85",
+        "class_name": "GameObject"
+      },
+      "clips": [
+        "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64"
+      ],
+      "action_params": {
+        "m_GameObject": {
+          "ownerOption": 0,
+          "gameObject": {
+            "useVariable": 0,
+            "name": "",
+            "tooltip": "",
+            "showInInspector": 0,
+            "networkSync": 0,
+            "value": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        },
+        "m_VolumeScale": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "value": 1.0
+        },
+        "m_OneShotClip": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "typeName": "UnityEngine.AudioClip",
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        },
+        "m_Delay": 0.0,
+        "m_OneShotSound": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "typeName": "SoundDef",
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        },
+        "m_FinishedEvent": "",
+        "m_IsMinionSummonVO": false,
+        "m_IsKeywordVO": false,
+        "m_InstanceLimited": false,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      },
+      "state_component_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": 6520964117140668169,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "action_index": 3,
+      "stage_settings": null,
+      "play_globally": null,
+      "stop_on_state_change": null,
+      "row_id": "__shared__|f447dff79e61341f1adda7916b4ddd85|root|CAB-69c88b234dfa427e02d1fcee9337ae34|6520964117140668169|10|3",
+      "audio_source_instance_key": "CAB-69c88b234dfa427e02d1fcee9337ae34:-6616724846844248311",
+      "runtime_eligible": false,
+      "exclusion_reason": "presentation_branch_not_current_pool",
+      "condition_satisfied": false,
+      "source_silent": false,
+      "selected_branch": "unconditional",
+      "state_component_enabled": true,
+      "unfiltered_entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "FINISHED",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isPremium",
+          "OnOff 3",
+          "FINISHED",
+          "Premium"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isPremium",
+          "OnOff 3",
+          "FINISHED",
+          "Premium"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "Dragon",
+          "Texture Swap - Dragon",
+          "FINISHED",
+          "Is Diamond?",
+          "isPremium",
+          "OnOff 3",
+          "FINISHED",
+          "Premium"
+        ]
+      ],
+      "runtime_condition": {
+        "entity": "spellActor else source",
+        "tags": {
+          "114_ELITE": 0,
+          "12_PREMIUM": 0
+        },
+        "scope": "Current nonlegendary regular card pool only",
+        "selected_branches": {
+          "Is Diamond?": {
+            "entity_selector": 5,
+            "entity_selector_meaning": "spellActor entity, fallback source entity",
+            "tag": 12,
+            "tag_name": "PREMIUM",
+            "current_pool_value": 0,
+            "selected_event": "isRegular",
+            "cil": "hand_source_actions.cil.json 0x06016C25/0x06016C26/0x06016C8C"
+          },
+          "Dragon?": {
+            "entity_selector": 5,
+            "entity_selector_meaning": "spellActor entity, fallback source entity",
+            "tag": 114,
+            "tag_name": "ELITE",
+            "current_pool_value": 0,
+            "selected_event": "noDragon",
+            "cil": "hand_source_actions.cil.json 0x06016C25/0x06016C26/0x06016C8C"
+          }
+        }
+      },
+      "cardinality": "One selected Actor hand-spell-table variant (1/22/23) and one presentation branch; never all variants together.",
+      "timing_paths": [],
+      "all_timing_paths_ready": false,
+      "timing_has_ready_path": false,
+      "subspell_initial_event": "Birth",
+      "preferred_entry_event": null,
+      "primary_timing_paths": [],
+      "primary_timing": null,
+      "timing_ready": false,
+      "preceding_waits": [],
+      "exported_clips": [
+        {
+          "requested_clip": "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64",
+          "base_guid": "354df9da769581b43b2b6d626be06b64",
+          "resolved_guid": "354df9da769581b43b2b6d626be06b64",
+          "locale": "global",
+          "bundle": "essential_base_global-audio-0.unity3d",
+          "audio_clip_path_id": -6465388765202202740,
+          "audio_clip": {
+            "m_Name": "FX_MinionSummon_Cast",
+            "m_LoadType": 1,
+            "m_Channels": 1,
+            "m_Frequency": 44100,
+            "m_BitsPerSample": 16,
+            "m_Length": 1.590566873550415,
+            "m_IsTrackerFormat": false,
+            "m_Ambisonic": false,
+            "m_SubsoundIndex": 0,
+            "m_PreloadAudioData": true,
+            "m_LoadInBackground": false,
+            "m_Legacy3D": false,
+            "m_Resource": {
+              "m_Source": "archive:/CAB-c491983cea83897756f11fa097177509/CAB-c491983cea83897756f11fa097177509.resource",
+              "m_Offset": 6719296,
+              "m_Size": 14560
+            },
+            "m_CompressionFormat": 1
+          },
+          "original_encoded_sha256": "73c86411e51cc869ff67a6a319ea7decad0bb1da5912bb3ad760775b2c8a0c36",
+          "original_encoded_bytes": 14560,
+          "export_path": "res://assets/original_audio_v30/clips/global_FX_MinionSummon_Cast_354df9da.wav",
+          "export_sha256": "1f3055b18252f95baf8080bef3dba26c25e1a7fa6a71b4423f5e0c0e00e2fc34",
+          "export_bytes": 140332,
+          "processing": "Original Unity AudioClip FSB decoded to full-length PCM WAV using UnityPy 1.25.4/fmod_toolkit 0.1.3; no trim, gain, pitch, mix or resample.",
+          "sample_rate": 44100,
+          "channels": 1,
+          "sample_width": 2,
+          "sample_frames": 70144,
+          "duration_sec": 1.5905668934240362
+        }
+      ]
+    },
+    {
+      "state_index": 7,
+      "state_name_resolves_here": true,
+      "requested_sound_ref": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "sound_options": [],
+      "selection": null,
+      "card_id": "__shared__",
+      "event": "hand_summon_out",
+      "carddef_event": "hand_type_23",
+      "prefab": "Card_Hand_Ally_SummonOut_Large_PM.prefab:63559754071884703af9071e7c579d38",
+      "prefab_guid": "63559754071884703af9071e7c579d38",
+      "route": "root",
+      "stage_enabled": true,
+      "trigger_kind": "AudioPlayAction",
+      "state": "State 1",
+      "entry_events": [
+        "Birth"
+      ],
+      "entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "State 1"
+        ]
+      ],
+      "delay_sec": 0.0,
+      "delay_basis": "local action delay after FSM state entry, not total time from card commit",
+      "enabled": true,
+      "audio_source": {
+        "m_Enabled": 1,
+        "OutputAudioMixerGroup": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_audioClip": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Resource": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_PlayOnAwake": false,
+        "m_Volume": 1.0,
+        "m_Pitch": 1.0,
+        "Loop": false,
+        "Mute": false,
+        "Spatialize": false,
+        "SpatializePostEffects": false,
+        "Priority": 128,
+        "DopplerLevel": 1.0,
+        "MinDistance": 1.0,
+        "MaxDistance": 500.0,
+        "Pan2D": 0.0,
+        "rolloffMode": 0,
+        "BypassEffects": false,
+        "BypassListenerEffects": false,
+        "BypassReverbZones": false,
+        "rolloffCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            },
+            {
+              "time": 1.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "panLevelCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        },
+        "spreadCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "reverbZoneMixCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        }
+      },
+      "audio_source_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": 7825213968293808211,
+        "guid": null,
+        "class_name": "AudioSource"
+      },
+      "sound_def": {
+        "m_Enabled": 1,
+        "m_AudioClip": "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64",
+        "m_Category": 1,
+        "m_RandomClips": [],
+        "m_RandomPitchMin": 1.0,
+        "m_RandomPitchMax": 1.0,
+        "m_RandomVolumeMin": 1.0,
+        "m_RandomVolumeMax": 1.0,
+        "m_IgnoreDucking": 0,
+        "m_persistPastGameEnd": 0,
+        "m_InstanceLimited": 0,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      },
+      "sound_def_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -439125036594182061,
+        "guid": null,
+        "class_name": "SoundDef"
+      },
+      "source_gameobject_name": "Card_Hand_Ally_SummonOut_Large_PM",
+      "source_gameobject_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": 6984486464726419539,
+        "guid": "63559754071884703af9071e7c579d38",
+        "class_name": "GameObject"
+      },
+      "clips": [
+        "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64"
+      ],
+      "action_params": {
+        "m_GameObject": {
+          "ownerOption": 0,
+          "gameObject": {
+            "useVariable": 0,
+            "name": "",
+            "tooltip": "",
+            "showInInspector": 0,
+            "networkSync": 0,
+            "value": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        },
+        "m_VolumeScale": {
+          "value": 1.0,
+          "useVariable": 0
+        },
+        "m_Delay": 0.0,
+        "m_OneShotSound": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "typeName": "",
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        },
+        "m_FinishedEvent": ""
+      },
+      "state_component_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -8944992473620625325,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "action_index": 6,
+      "stage_settings": null,
+      "play_globally": null,
+      "stop_on_state_change": null,
+      "row_id": "__shared__|63559754071884703af9071e7c579d38|root|CAB-69c88b234dfa427e02d1fcee9337ae34|-8944992473620625325|7|6",
+      "audio_source_instance_key": "CAB-69c88b234dfa427e02d1fcee9337ae34:7825213968293808211",
+      "runtime_eligible": true,
+      "exclusion_reason": null,
+      "condition_satisfied": true,
+      "source_silent": false,
+      "selected_branch": "unconditional",
+      "state_component_enabled": true,
+      "unfiltered_entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "FINISHED",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "State 1"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "State 1"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "Dragon",
+          "Texture Swap - Dragon",
+          "FINISHED",
+          "State 1"
+        ]
+      ],
+      "runtime_condition": {
+        "entity": "spellActor else source",
+        "tags": {
+          "114_ELITE": 0,
+          "12_PREMIUM": 0
+        },
+        "scope": "Current nonlegendary regular card pool only",
+        "selected_branches": {
+          "Dragon?": {
+            "entity_selector": 5,
+            "entity_selector_meaning": "spellActor entity, fallback source entity",
+            "tag": 114,
+            "tag_name": "ELITE",
+            "current_pool_value": 0,
+            "selected_event": "noDragon",
+            "cil": "hand_source_actions.cil.json 0x06016C25/0x06016C26/0x06016C8C"
+          }
+        }
+      },
+      "cardinality": "One selected Actor hand-spell-table variant (1/22/23) and one presentation branch; never all variants together.",
+      "timing_paths": [
+        {
+          "entry_event": "Birth",
+          "state_path": [
+            "Birth",
+            "BIRTH",
+            "FINISHED",
+            "Dragon?",
+            "noDragon",
+            "Texture Swap - NoDragon",
+            "FINISHED",
+            "State 1"
+          ],
+          "ready": true,
+          "preceding_waits": [
+            {
+              "state": "BIRTH",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "BIRTH",
+                  "action_index": 0,
+                  "action_class": "SpellInitActorVariables",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 1,
+                  "action_class": "SpellCustomActorVariable",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 2,
+                  "action_class": "SpellStateAction",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 3,
+                  "action_class": "ActorSetVisibility",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Dragon?",
+              "transition_event": "noDragon",
+              "policy": "first_explicit_event",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Dragon?",
+                  "action_index": 0,
+                  "action_class": "SendEventBasedOnEntityTagAction",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Texture Swap - NoDragon",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Texture Swap - NoDragon",
+                  "action_index": 0,
+                  "action_class": "SetMaterialTexture",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                }
+              ]
+            }
+          ],
+          "action_local_delay_sec": 0.0,
+          "cumulative_delay_min_sec": 0.0,
+          "cumulative_delay_max_sec": 0.0,
+          "cumulative_delay_sec": 0.0,
+          "runtime_event": "hand_summon_out"
+        }
+      ],
+      "all_timing_paths_ready": true,
+      "timing_has_ready_path": true,
+      "subspell_initial_event": "Birth",
+      "preferred_entry_event": "Birth",
+      "primary_timing_paths": [
+        {
+          "entry_event": "Birth",
+          "state_path": [
+            "Birth",
+            "BIRTH",
+            "FINISHED",
+            "Dragon?",
+            "noDragon",
+            "Texture Swap - NoDragon",
+            "FINISHED",
+            "State 1"
+          ],
+          "ready": true,
+          "preceding_waits": [
+            {
+              "state": "BIRTH",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "BIRTH",
+                  "action_index": 0,
+                  "action_class": "SpellInitActorVariables",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 1,
+                  "action_class": "SpellCustomActorVariable",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 2,
+                  "action_class": "SpellStateAction",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 3,
+                  "action_class": "ActorSetVisibility",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Dragon?",
+              "transition_event": "noDragon",
+              "policy": "first_explicit_event",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Dragon?",
+                  "action_index": 0,
+                  "action_class": "SendEventBasedOnEntityTagAction",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Texture Swap - NoDragon",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Texture Swap - NoDragon",
+                  "action_index": 0,
+                  "action_class": "SetMaterialTexture",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                }
+              ]
+            }
+          ],
+          "action_local_delay_sec": 0.0,
+          "cumulative_delay_min_sec": 0.0,
+          "cumulative_delay_max_sec": 0.0,
+          "cumulative_delay_sec": 0.0,
+          "runtime_event": "hand_summon_out"
+        }
+      ],
+      "primary_timing": {
+        "entry_event": "Birth",
+        "state_path": [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "State 1"
+        ],
+        "ready": true,
+        "preceding_waits": [
+          {
+            "state": "BIRTH",
+            "transition_event": "FINISHED",
+            "policy": "all_actions_complete",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "BIRTH",
+                "action_index": 0,
+                "action_class": "SpellInitActorVariables",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+              },
+              {
+                "state": "BIRTH",
+                "action_index": 1,
+                "action_class": "SpellCustomActorVariable",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+              },
+              {
+                "state": "BIRTH",
+                "action_index": 2,
+                "action_class": "SpellStateAction",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              },
+              {
+                "state": "BIRTH",
+                "action_index": 3,
+                "action_class": "ActorSetVisibility",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+              }
+            ]
+          },
+          {
+            "state": "Dragon?",
+            "transition_event": "noDragon",
+            "policy": "first_explicit_event",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "Dragon?",
+                "action_index": 0,
+                "action_class": "SendEventBasedOnEntityTagAction",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+              }
+            ]
+          },
+          {
+            "state": "Texture Swap - NoDragon",
+            "transition_event": "FINISHED",
+            "policy": "all_actions_complete",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "Texture Swap - NoDragon",
+                "action_index": 0,
+                "action_class": "SetMaterialTexture",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              }
+            ]
+          }
+        ],
+        "action_local_delay_sec": 0.0,
+        "cumulative_delay_min_sec": 0.0,
+        "cumulative_delay_max_sec": 0.0,
+        "cumulative_delay_sec": 0.0,
+        "runtime_event": "hand_summon_out"
+      },
+      "timing_ready": true,
+      "preceding_waits": [
+        {
+          "state": "BIRTH",
+          "transition_event": "FINISHED",
+          "policy": "all_actions_complete",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "BIRTH",
+              "action_index": 0,
+              "action_class": "SpellInitActorVariables",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+            },
+            {
+              "state": "BIRTH",
+              "action_index": 1,
+              "action_class": "SpellCustomActorVariable",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+            },
+            {
+              "state": "BIRTH",
+              "action_index": 2,
+              "action_class": "SpellStateAction",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            },
+            {
+              "state": "BIRTH",
+              "action_index": 3,
+              "action_class": "ActorSetVisibility",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+            }
+          ]
+        },
+        {
+          "state": "Dragon?",
+          "transition_event": "noDragon",
+          "policy": "first_explicit_event",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "Dragon?",
+              "action_index": 0,
+              "action_class": "SendEventBasedOnEntityTagAction",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+            }
+          ]
+        },
+        {
+          "state": "Texture Swap - NoDragon",
+          "transition_event": "FINISHED",
+          "policy": "all_actions_complete",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "Texture Swap - NoDragon",
+              "action_index": 0,
+              "action_class": "SetMaterialTexture",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            }
+          ]
+        }
+      ],
+      "exported_clips": [
+        {
+          "requested_clip": "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64",
+          "base_guid": "354df9da769581b43b2b6d626be06b64",
+          "resolved_guid": "354df9da769581b43b2b6d626be06b64",
+          "locale": "global",
+          "bundle": "essential_base_global-audio-0.unity3d",
+          "audio_clip_path_id": -6465388765202202740,
+          "audio_clip": {
+            "m_Name": "FX_MinionSummon_Cast",
+            "m_LoadType": 1,
+            "m_Channels": 1,
+            "m_Frequency": 44100,
+            "m_BitsPerSample": 16,
+            "m_Length": 1.590566873550415,
+            "m_IsTrackerFormat": false,
+            "m_Ambisonic": false,
+            "m_SubsoundIndex": 0,
+            "m_PreloadAudioData": true,
+            "m_LoadInBackground": false,
+            "m_Legacy3D": false,
+            "m_Resource": {
+              "m_Source": "archive:/CAB-c491983cea83897756f11fa097177509/CAB-c491983cea83897756f11fa097177509.resource",
+              "m_Offset": 6719296,
+              "m_Size": 14560
+            },
+            "m_CompressionFormat": 1
+          },
+          "original_encoded_sha256": "73c86411e51cc869ff67a6a319ea7decad0bb1da5912bb3ad760775b2c8a0c36",
+          "original_encoded_bytes": 14560,
+          "export_path": "res://assets/original_audio_v30/clips/global_FX_MinionSummon_Cast_354df9da.wav",
+          "export_sha256": "1f3055b18252f95baf8080bef3dba26c25e1a7fa6a71b4423f5e0c0e00e2fc34",
+          "export_bytes": 140332,
+          "processing": "Original Unity AudioClip FSB decoded to full-length PCM WAV using UnityPy 1.25.4/fmod_toolkit 0.1.3; no trim, gain, pitch, mix or resample.",
+          "sample_rate": 44100,
+          "channels": 1,
+          "sample_width": 2,
+          "sample_frames": 70144,
+          "duration_sec": 1.5905668934240362
+        }
+      ]
+    },
+    {
+      "state_index": 7,
+      "state_name_resolves_here": true,
+      "requested_sound_ref": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "sound_options": [],
+      "selection": null,
+      "card_id": "__shared__",
+      "event": "hand_summon_out",
+      "carddef_event": "hand_type_22",
+      "prefab": "Card_Hand_Ally_SummonOut_Medium_PM.prefab:7106ac4b00cca44a6a998fd151491481",
+      "prefab_guid": "7106ac4b00cca44a6a998fd151491481",
+      "route": "root",
+      "stage_enabled": true,
+      "trigger_kind": "AudioPlayAction",
+      "state": "State 1",
+      "entry_events": [
+        "Birth"
+      ],
+      "entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "State 1"
+        ]
+      ],
+      "delay_sec": 0.0,
+      "delay_basis": "local action delay after FSM state entry, not total time from card commit",
+      "enabled": true,
+      "audio_source": {
+        "m_Enabled": 1,
+        "OutputAudioMixerGroup": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_audioClip": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Resource": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_PlayOnAwake": false,
+        "m_Volume": 1.0,
+        "m_Pitch": 1.0,
+        "Loop": false,
+        "Mute": false,
+        "Spatialize": false,
+        "SpatializePostEffects": false,
+        "Priority": 128,
+        "DopplerLevel": 1.0,
+        "MinDistance": 1.0,
+        "MaxDistance": 500.0,
+        "Pan2D": 0.0,
+        "rolloffMode": 0,
+        "BypassEffects": false,
+        "BypassListenerEffects": false,
+        "BypassReverbZones": false,
+        "rolloffCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            },
+            {
+              "time": 1.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "panLevelCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        },
+        "spreadCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        },
+        "reverbZoneMixCustomCurve": {
+          "m_Curve": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "inSlope": 0.0,
+              "outSlope": 0.0,
+              "weightedMode": 0,
+              "inWeight": 0.3333333432674408,
+              "outWeight": 0.3333333432674408
+            }
+          ],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 0
+        }
+      },
+      "audio_source_ref": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-0.unity3d",
+        "cab": "CAB-865f43f611eb20762339650558784e7a",
+        "path_id": 7420181815329596870,
+        "guid": null,
+        "class_name": "AudioSource"
+      },
+      "sound_def": {
+        "m_Enabled": 1,
+        "m_AudioClip": "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64",
+        "m_Category": 1,
+        "m_RandomClips": [],
+        "m_RandomPitchMin": 1.0,
+        "m_RandomPitchMax": 1.0,
+        "m_RandomVolumeMin": 1.0,
+        "m_RandomVolumeMax": 1.0,
+        "m_IgnoreDucking": 0,
+        "m_persistPastGameEnd": 0,
+        "m_InstanceLimited": 0,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      },
+      "sound_def_ref": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-0.unity3d",
+        "cab": "CAB-865f43f611eb20762339650558784e7a",
+        "path_id": -698895497729759802,
+        "guid": null,
+        "class_name": "SoundDef"
+      },
+      "source_gameobject_name": "Card_Hand_Ally_SummonOut_Medium_PM",
+      "source_gameobject_ref": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-0.unity3d",
+        "cab": "CAB-865f43f611eb20762339650558784e7a",
+        "path_id": -7917689932185229882,
+        "guid": "7106ac4b00cca44a6a998fd151491481",
+        "class_name": "GameObject"
+      },
+      "clips": [
+        "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64"
+      ],
+      "action_params": {
+        "m_GameObject": {
+          "ownerOption": 0,
+          "gameObject": {
+            "useVariable": 0,
+            "name": "",
+            "tooltip": "",
+            "showInInspector": 0,
+            "networkSync": 0,
+            "value": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        },
+        "m_VolumeScale": {
+          "value": 1.0,
+          "useVariable": 0
+        },
+        "m_Delay": 0.0,
+        "m_OneShotSound": {
+          "useVariable": 0,
+          "name": "",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "typeName": "SoundDef",
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        },
+        "m_FinishedEvent": ""
+      },
+      "state_component_ref": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-0.unity3d",
+        "cab": "CAB-865f43f611eb20762339650558784e7a",
+        "path_id": 8385085178671179206,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "action_index": 5,
+      "stage_settings": null,
+      "play_globally": null,
+      "stop_on_state_change": null,
+      "row_id": "__shared__|7106ac4b00cca44a6a998fd151491481|root|CAB-865f43f611eb20762339650558784e7a|8385085178671179206|7|5",
+      "audio_source_instance_key": "CAB-865f43f611eb20762339650558784e7a:7420181815329596870",
+      "runtime_eligible": true,
+      "exclusion_reason": null,
+      "condition_satisfied": true,
+      "source_silent": false,
+      "selected_branch": "unconditional",
+      "state_component_enabled": true,
+      "unfiltered_entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "FINISHED",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "State 1"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "State 1"
+        ],
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "Dragon",
+          "Texture Swap - Dragon",
+          "FINISHED",
+          "State 1"
+        ]
+      ],
+      "runtime_condition": {
+        "entity": "spellActor else source",
+        "tags": {
+          "114_ELITE": 0,
+          "12_PREMIUM": 0
+        },
+        "scope": "Current nonlegendary regular card pool only",
+        "selected_branches": {
+          "Dragon?": {
+            "entity_selector": 5,
+            "entity_selector_meaning": "spellActor entity, fallback source entity",
+            "tag": 114,
+            "tag_name": "ELITE",
+            "current_pool_value": 0,
+            "selected_event": "noDragon",
+            "cil": "hand_source_actions.cil.json 0x06016C25/0x06016C26/0x06016C8C"
+          }
+        }
+      },
+      "cardinality": "One selected Actor hand-spell-table variant (1/22/23) and one presentation branch; never all variants together.",
+      "timing_paths": [
+        {
+          "entry_event": "Birth",
+          "state_path": [
+            "Birth",
+            "BIRTH",
+            "FINISHED",
+            "Dragon?",
+            "noDragon",
+            "Texture Swap - NoDragon",
+            "FINISHED",
+            "State 1"
+          ],
+          "ready": true,
+          "preceding_waits": [
+            {
+              "state": "BIRTH",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "BIRTH",
+                  "action_index": 0,
+                  "action_class": "SpellStateAction",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 1,
+                  "action_class": "SpellInitActorVariables",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 2,
+                  "action_class": "SpellCustomActorVariable",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 3,
+                  "action_class": "ActorSetVisibility",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Dragon?",
+              "transition_event": "noDragon",
+              "policy": "first_explicit_event",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Dragon?",
+                  "action_index": 0,
+                  "action_class": "SendEventBasedOnEntityTagAction",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Texture Swap - NoDragon",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Texture Swap - NoDragon",
+                  "action_index": 0,
+                  "action_class": "SetMaterialTexture",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                }
+              ]
+            }
+          ],
+          "action_local_delay_sec": 0.0,
+          "cumulative_delay_min_sec": 0.0,
+          "cumulative_delay_max_sec": 0.0,
+          "cumulative_delay_sec": 0.0,
+          "runtime_event": "hand_summon_out"
+        }
+      ],
+      "all_timing_paths_ready": true,
+      "timing_has_ready_path": true,
+      "subspell_initial_event": "Birth",
+      "preferred_entry_event": "Birth",
+      "primary_timing_paths": [
+        {
+          "entry_event": "Birth",
+          "state_path": [
+            "Birth",
+            "BIRTH",
+            "FINISHED",
+            "Dragon?",
+            "noDragon",
+            "Texture Swap - NoDragon",
+            "FINISHED",
+            "State 1"
+          ],
+          "ready": true,
+          "preceding_waits": [
+            {
+              "state": "BIRTH",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "BIRTH",
+                  "action_index": 0,
+                  "action_class": "SpellStateAction",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 1,
+                  "action_class": "SpellInitActorVariables",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 2,
+                  "action_class": "SpellCustomActorVariable",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                },
+                {
+                  "state": "BIRTH",
+                  "action_index": 3,
+                  "action_class": "ActorSetVisibility",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Dragon?",
+              "transition_event": "noDragon",
+              "policy": "first_explicit_event",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Dragon?",
+                  "action_index": 0,
+                  "action_class": "SendEventBasedOnEntityTagAction",
+                  "kind": "immediate_finish",
+                  "min_sec": 0,
+                  "max_sec": 0,
+                  "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+                }
+              ]
+            },
+            {
+              "state": "Texture Swap - NoDragon",
+              "transition_event": "FINISHED",
+              "policy": "all_actions_complete",
+              "ready": true,
+              "min_sec": 0,
+              "max_sec": 0,
+              "actions": [
+                {
+                  "state": "Texture Swap - NoDragon",
+                  "action_index": 0,
+                  "action_class": "SetMaterialTexture",
+                  "kind": "fixed",
+                  "min_sec": 0,
+                  "max_sec": 0
+                }
+              ]
+            }
+          ],
+          "action_local_delay_sec": 0.0,
+          "cumulative_delay_min_sec": 0.0,
+          "cumulative_delay_max_sec": 0.0,
+          "cumulative_delay_sec": 0.0,
+          "runtime_event": "hand_summon_out"
+        }
+      ],
+      "primary_timing": {
+        "entry_event": "Birth",
+        "state_path": [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "Dragon?",
+          "noDragon",
+          "Texture Swap - NoDragon",
+          "FINISHED",
+          "State 1"
+        ],
+        "ready": true,
+        "preceding_waits": [
+          {
+            "state": "BIRTH",
+            "transition_event": "FINISHED",
+            "policy": "all_actions_complete",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "BIRTH",
+                "action_index": 0,
+                "action_class": "SpellStateAction",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              },
+              {
+                "state": "BIRTH",
+                "action_index": 1,
+                "action_class": "SpellInitActorVariables",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+              },
+              {
+                "state": "BIRTH",
+                "action_index": 2,
+                "action_class": "SpellCustomActorVariable",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+              },
+              {
+                "state": "BIRTH",
+                "action_index": 3,
+                "action_class": "ActorSetVisibility",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+              }
+            ]
+          },
+          {
+            "state": "Dragon?",
+            "transition_event": "noDragon",
+            "policy": "first_explicit_event",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "Dragon?",
+                "action_index": 0,
+                "action_class": "SendEventBasedOnEntityTagAction",
+                "kind": "immediate_finish",
+                "min_sec": 0,
+                "max_sec": 0,
+                "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+              }
+            ]
+          },
+          {
+            "state": "Texture Swap - NoDragon",
+            "transition_event": "FINISHED",
+            "policy": "all_actions_complete",
+            "ready": true,
+            "min_sec": 0,
+            "max_sec": 0,
+            "actions": [
+              {
+                "state": "Texture Swap - NoDragon",
+                "action_index": 0,
+                "action_class": "SetMaterialTexture",
+                "kind": "fixed",
+                "min_sec": 0,
+                "max_sec": 0
+              }
+            ]
+          }
+        ],
+        "action_local_delay_sec": 0.0,
+        "cumulative_delay_min_sec": 0.0,
+        "cumulative_delay_max_sec": 0.0,
+        "cumulative_delay_sec": 0.0,
+        "runtime_event": "hand_summon_out"
+      },
+      "timing_ready": true,
+      "preceding_waits": [
+        {
+          "state": "BIRTH",
+          "transition_event": "FINISHED",
+          "policy": "all_actions_complete",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "BIRTH",
+              "action_index": 0,
+              "action_class": "SpellStateAction",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            },
+            {
+              "state": "BIRTH",
+              "action_index": 1,
+              "action_class": "SpellInitActorVariables",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "actor_animation_timing.cil.json; 0x06016A80 / 0x06016D0A"
+            },
+            {
+              "state": "BIRTH",
+              "action_index": 2,
+              "action_class": "SpellCustomActorVariable",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+            },
+            {
+              "state": "BIRTH",
+              "action_index": 3,
+              "action_class": "ActorSetVisibility",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+            }
+          ]
+        },
+        {
+          "state": "Dragon?",
+          "transition_event": "noDragon",
+          "policy": "first_explicit_event",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "Dragon?",
+              "action_index": 0,
+              "action_class": "SendEventBasedOnEntityTagAction",
+              "kind": "immediate_finish",
+              "min_sec": 0,
+              "max_sec": 0,
+              "cil": "hand_source_actions.cil.json; 0x06016A63/0x06016CCE/0x06016C25"
+            }
+          ]
+        },
+        {
+          "state": "Texture Swap - NoDragon",
+          "transition_event": "FINISHED",
+          "policy": "all_actions_complete",
+          "ready": true,
+          "min_sec": 0,
+          "max_sec": 0,
+          "actions": [
+            {
+              "state": "Texture Swap - NoDragon",
+              "action_index": 0,
+              "action_class": "SetMaterialTexture",
+              "kind": "fixed",
+              "min_sec": 0,
+              "max_sec": 0
+            }
+          ]
+        }
+      ],
+      "exported_clips": [
+        {
+          "requested_clip": "FX_MinionSummon_Cast.wav:354df9da769581b43b2b6d626be06b64",
+          "base_guid": "354df9da769581b43b2b6d626be06b64",
+          "resolved_guid": "354df9da769581b43b2b6d626be06b64",
+          "locale": "global",
+          "bundle": "essential_base_global-audio-0.unity3d",
+          "audio_clip_path_id": -6465388765202202740,
+          "audio_clip": {
+            "m_Name": "FX_MinionSummon_Cast",
+            "m_LoadType": 1,
+            "m_Channels": 1,
+            "m_Frequency": 44100,
+            "m_BitsPerSample": 16,
+            "m_Length": 1.590566873550415,
+            "m_IsTrackerFormat": false,
+            "m_Ambisonic": false,
+            "m_SubsoundIndex": 0,
+            "m_PreloadAudioData": true,
+            "m_LoadInBackground": false,
+            "m_Legacy3D": false,
+            "m_Resource": {
+              "m_Source": "archive:/CAB-c491983cea83897756f11fa097177509/CAB-c491983cea83897756f11fa097177509.resource",
+              "m_Offset": 6719296,
+              "m_Size": 14560
+            },
+            "m_CompressionFormat": 1
+          },
+          "original_encoded_sha256": "73c86411e51cc869ff67a6a319ea7decad0bb1da5912bb3ad760775b2c8a0c36",
+          "original_encoded_bytes": 14560,
+          "export_path": "res://assets/original_audio_v30/clips/global_FX_MinionSummon_Cast_354df9da.wav",
+          "export_sha256": "1f3055b18252f95baf8080bef3dba26c25e1a7fa6a71b4423f5e0c0e00e2fc34",
+          "export_bytes": 140332,
+          "processing": "Original Unity AudioClip FSB decoded to full-length PCM WAV using UnityPy 1.25.4/fmod_toolkit 0.1.3; no trim, gain, pitch, mix or resample.",
+          "sample_rate": 44100,
+          "channels": 1,
+          "sample_width": 2,
+          "sample_frames": 70144,
+          "duration_sec": 1.5905668934240362
+        }
+      ]
+    }
+  ],
+  "stops": [],
+  "unresolved": [],
+  "timing_notes": [
+    "Use the matching original entry_event, not all alternatives. A later external state event can interrupt a pending path.",
+    "RandomWait shared_draw_id must be sampled once per spell instance/state entry and reused by sibling layers.",
+    "Explicit FINISHED event transitions immediately; it does not wait for the longest parallel action.",
+    "Cumulative timing is relative to the subspell state event. SuperSpell spawn, projectile path and metadata iteration remain separate.",
+    "Unity frame scheduling may add up to a frame per state/action step; serialized values are not wall-clock guarantees.",
+    "Legacy animation durations are curve-bounds reconstruction, not measured Unity AnimationClip.length. Prefer the matching original animation-completion callback where available."
+  ]
+}

@@ -1,0 +1,2220 @@
+[
+  {
+    "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5210564580019615545",
+    "prefab_root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5210564580019615545",
+    "fsm_component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:8211937404196173625",
+    "stage": "root",
+    "card_id": "minion_death",
+    "variables": {
+      "floatVariables": [],
+      "intVariables": [],
+      "boolVariables": [],
+      "stringVariables": [],
+      "vector2Variables": [],
+      "vector3Variables": [],
+      "colorVariables": [],
+      "rectVariables": [],
+      "quaternionVariables": [],
+      "gameObjectVariables": [
+        {
+          "useVariable": 1,
+          "name": "Actor",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          }
+        },
+        {
+          "useVariable": 1,
+          "name": "RootObject",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          }
+        },
+        {
+          "useVariable": 1,
+          "name": "RootObjectMesh",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          }
+        }
+      ],
+      "objectVariables": [],
+      "materialVariables": [],
+      "textureVariables": [
+        {
+          "useVariable": 1,
+          "name": "PortraitTexture",
+          "tooltip": "",
+          "showInInspector": 0,
+          "networkSync": 0,
+          "typeName": "UnityEngine.Object",
+          "value": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          }
+        }
+      ],
+      "arrayVariables": [],
+      "enumVariables": [],
+      "categories": [
+        ""
+      ],
+      "variableCategoryIDs": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "globalTransitions": [
+      {
+        "fsmEvent": {
+          "name": "None",
+          "isSystemEvent": 0,
+          "isGlobal": 1
+        },
+        "toState": "None State",
+        "linkStyle": 0,
+        "linkConstraint": 0,
+        "linkTarget": 0,
+        "colorIndex": 0
+      },
+      {
+        "fsmEvent": {
+          "name": "Birth",
+          "isSystemEvent": 0,
+          "isGlobal": 1
+        },
+        "toState": "Birth State",
+        "linkStyle": 0,
+        "linkConstraint": 0,
+        "linkTarget": 0,
+        "colorIndex": 0
+      }
+    ],
+    "all_states": [
+      {
+        "name": "State 1",
+        "state_index": 0,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [],
+        "actions": [],
+        "entry_paths": [
+          [
+            "__start__",
+            "State 1"
+          ]
+        ]
+      },
+      {
+        "name": "Birth State",
+        "state_index": 1,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [
+          {
+            "fsmEvent": {
+              "name": "FINISHED",
+              "isSystemEvent": 1,
+              "isGlobal": 1
+            },
+            "toState": "Birth Animate",
+            "linkStyle": 0,
+            "linkConstraint": 0,
+            "linkTarget": 0,
+            "colorIndex": 0
+          }
+        ],
+        "actions": [
+          {
+            "index": 0,
+            "class_name": "SpellInitActorVariables",
+            "enabled": true,
+            "params": {
+              "m_actorObject": {
+                "useVariable": 1,
+                "name": "Actor",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              },
+              "m_rootObject": {
+                "useVariable": 1,
+                "name": "RootObject",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              },
+              "m_rootObjectMesh": {
+                "useVariable": 1,
+                "name": "RootObjectMesh",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              }
+            },
+            "reference_keys": {
+              "params.m_actorObject.value": null,
+              "params.m_rootObject.value": null,
+              "params.m_rootObjectMesh.value": null
+            },
+            "target_object_key": null
+          },
+          {
+            "index": 1,
+            "class_name": "SpellStateAction",
+            "enabled": true,
+            "params": {
+              "m_SpellObject": {
+                "ownerOption": 0,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "0"
+                  }
+                }
+              }
+            },
+            "reference_keys": {
+              "params.m_SpellObject.gameObject.value": null
+            },
+            "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5210564580019615545"
+          },
+          {
+            "index": 2,
+            "class_name": "GetCardPortraitTextureAction",
+            "enabled": true,
+            "params": {
+              "storedTexture": {
+                "useVariable": 1,
+                "name": "PortraitTexture",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "typeName": "UnityEngine.Object",
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              }
+            },
+            "reference_keys": {
+              "params.storedTexture.value": null
+            },
+            "target_object_key": null
+          },
+          {
+            "index": 3,
+            "class_name": "GetMaterialTexture",
+            "enabled": false,
+            "params": {
+              "gameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 1,
+                  "name": "RootObjectMesh",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "0"
+                  }
+                }
+              },
+              "materialIndex": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "namedTexture": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": "_MainTex"
+              },
+              "storedTexture": {
+                "useVariable": 1,
+                "name": "PortraitTexture",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "typeName": "UnityEngine.Object",
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              },
+              "getFromSharedMaterial": true
+            },
+            "reference_keys": {
+              "params.gameObject.gameObject.value": null,
+              "params.storedTexture.value": null
+            },
+            "target_object_key": null,
+            "target_variable": "RootObjectMesh"
+          },
+          {
+            "index": 4,
+            "class_name": "SetMaterial",
+            "enabled": true,
+            "params": {
+              "gameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 1,
+                  "name": "RootObjectMesh",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "0"
+                  }
+                }
+              },
+              "materialIndex": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "material": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "typeName": "",
+                "value": {
+                  "m_FileID": 2,
+                  "m_PathID": "6737433705032255151"
+                }
+              }
+            },
+            "reference_keys": {
+              "params.gameObject.gameObject.value": null,
+              "params.material.value": "cab-3563ba8b89db13ca6eb196aa111591f1:6737433705032255151"
+            },
+            "target_object_key": null,
+            "target_variable": "RootObjectMesh"
+          },
+          {
+            "index": 5,
+            "class_name": "SetMaterialTexture",
+            "enabled": true,
+            "params": {
+              "gameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 1,
+                  "name": "RootObjectMesh",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "0"
+                  }
+                }
+              },
+              "materialIndex": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "material": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "typeName": "",
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              },
+              "namedTexture": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": "_MainTex"
+              },
+              "texture": {
+                "useVariable": 1,
+                "name": "PortraitTexture",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "typeName": "UnityEngine.Object",
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              }
+            },
+            "reference_keys": {
+              "params.gameObject.gameObject.value": null,
+              "params.material.value": null,
+              "params.texture.value": null
+            },
+            "target_object_key": null,
+            "target_variable": "RootObjectMesh"
+          }
+        ],
+        "entry_paths": [
+          [
+            "Birth",
+            "Birth State"
+          ]
+        ]
+      },
+      {
+        "name": "Birth SubState",
+        "state_index": 2,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [
+          {
+            "fsmEvent": {
+              "name": "FINISHED",
+              "isSystemEvent": 1,
+              "isGlobal": 1
+            },
+            "toState": "disable shadows",
+            "linkStyle": 0,
+            "linkConstraint": 0,
+            "linkTarget": 0,
+            "colorIndex": 0
+          }
+        ],
+        "actions": [
+          {
+            "index": 0,
+            "class_name": "SetVisibilityRecursiveAction",
+            "enabled": true,
+            "params": {
+              "gameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 1,
+                  "name": "RootObject",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "0"
+                  }
+                }
+              },
+              "visible": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "resetOnExit": false,
+              "includeChildren": true
+            },
+            "reference_keys": {
+              "params.gameObject.gameObject.value": null
+            },
+            "target_object_key": null,
+            "target_variable": "RootObject"
+          },
+          {
+            "index": 1,
+            "class_name": "SetVisibilityRecursiveAction",
+            "enabled": true,
+            "params": {
+              "gameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "-2462271060576946375"
+                  }
+                }
+              },
+              "visible": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1
+              },
+              "resetOnExit": false,
+              "includeChildren": true
+            },
+            "reference_keys": {
+              "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-2462271060576946375"
+            },
+            "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2462271060576946375"
+          },
+          {
+            "index": 2,
+            "class_name": "ParticlePlayAction",
+            "enabled": true,
+            "params": {
+              "m_GameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "-2462271060576946375"
+                  }
+                }
+              },
+              "m_IncludeChildren": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1
+              }
+            },
+            "reference_keys": {
+              "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-2462271060576946375"
+            },
+            "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2462271060576946375"
+          },
+          {
+            "index": 3,
+            "class_name": "iTweenMoveTo",
+            "enabled": true,
+            "params": {
+              "gameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "6441767861693396793"
+                  }
+                }
+              },
+              "id": {
+                "useVariable": 1,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": ""
+              },
+              "transformPosition": {
+                "useVariable": 1,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              },
+              "vectorPosition": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "x": 0.0,
+                  "y": -1.0,
+                  "z": 0.0
+                }
+              },
+              "time": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1.5
+              },
+              "delay": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1.5
+              },
+              "speed": {
+                "useVariable": 1,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.0
+              },
+              "space": 1,
+              "easeType": 21,
+              "loopType": 0,
+              "orientToPath": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "lookAtObject": {
+                "useVariable": 1,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              },
+              "lookAtVector": {
+                "useVariable": 1,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                }
+              },
+              "lookTime": {
+                "useVariable": 1,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.0
+              },
+              "axis": 0,
+              "moveToPath": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "lookAhead": {
+                "useVariable": 1,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.0
+              },
+              "transforms": [],
+              "vectors": [],
+              "reverse": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "startEvent": "",
+              "finishEvent": "",
+              "realTime": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "stopOnExit": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1
+              },
+              "loopDontFinish": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              }
+            },
+            "reference_keys": {
+              "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:6441767861693396793",
+              "params.transformPosition.value": null,
+              "params.lookAtObject.value": null
+            },
+            "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6441767861693396793"
+          },
+          {
+            "index": 4,
+            "class_name": "Wait",
+            "enabled": true,
+            "params": {
+              "time": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 3.0
+              },
+              "finishEvent": "FINISHED",
+              "realTime": false
+            },
+            "reference_keys": {},
+            "target_object_key": null
+          }
+        ],
+        "entry_paths": [
+          [
+            "Birth",
+            "Birth State",
+            "FINISHED",
+            "Birth Animate",
+            "FINISHED",
+            "Birth SubState"
+          ]
+        ]
+      },
+      {
+        "name": "None State",
+        "state_index": 3,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [],
+        "actions": [
+          {
+            "index": 0,
+            "class_name": "SpellStateAction",
+            "enabled": true,
+            "params": {
+              "m_SpellObject": {
+                "ownerOption": 0,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "0"
+                  }
+                }
+              }
+            },
+            "reference_keys": {
+              "params.m_SpellObject.gameObject.value": null
+            },
+            "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5210564580019615545"
+          }
+        ],
+        "entry_paths": [
+          [
+            "None",
+            "None State"
+          ],
+          [
+            "Birth",
+            "Birth State",
+            "FINISHED",
+            "Birth Animate",
+            "FINISHED",
+            "Birth SubState",
+            "FINISHED",
+            "disable shadows",
+            "FINISHED",
+            "None State"
+          ]
+        ]
+      },
+      {
+        "name": "disable shadows",
+        "state_index": 4,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [
+          {
+            "fsmEvent": {
+              "name": "FINISHED",
+              "isSystemEvent": 1,
+              "isGlobal": 1
+            },
+            "toState": "None State",
+            "linkStyle": 0,
+            "linkConstraint": 0,
+            "linkTarget": 0,
+            "colorIndex": 0
+          }
+        ],
+        "actions": [
+          {
+            "index": 0,
+            "class_name": "InvokeMethod",
+            "enabled": true,
+            "params": {
+              "gameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "-2238896481340475591"
+                  }
+                }
+              },
+              "behaviour": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": "ProjectedShadow"
+              },
+              "methodName": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": "DisableShadow"
+              },
+              "delay": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.0
+              },
+              "repeating": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "repeatDelay": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1.0
+              },
+              "cancelOnExit": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              }
+            },
+            "reference_keys": {
+              "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-2238896481340475591"
+            },
+            "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2238896481340475591"
+          }
+        ],
+        "entry_paths": [
+          [
+            "Birth",
+            "Birth State",
+            "FINISHED",
+            "Birth Animate",
+            "FINISHED",
+            "Birth SubState",
+            "FINISHED",
+            "disable shadows"
+          ]
+        ]
+      },
+      {
+        "name": "Birth Animate",
+        "state_index": 5,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [
+          {
+            "fsmEvent": {
+              "name": "FINISHED",
+              "isSystemEvent": 1,
+              "isGlobal": 1
+            },
+            "toState": "Birth SubState",
+            "linkStyle": 0,
+            "linkConstraint": 0,
+            "linkTarget": 0,
+            "colorIndex": 0
+          }
+        ],
+        "actions": [
+          {
+            "index": 0,
+            "class_name": "AnimationPlaythroughAction",
+            "enabled": true,
+            "params": {
+              "m_GameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 1,
+                  "name": "Actor",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "0"
+                  }
+                }
+              },
+              "m_AnimName": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": "AllyInPlay_Death"
+              },
+              "m_PhoneAnimName": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": ""
+              },
+              "m_PlayMode": 4,
+              "m_CrossFadeSec": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.0
+              }
+            },
+            "reference_keys": {
+              "params.m_GameObject.gameObject.value": null
+            },
+            "target_object_key": null,
+            "target_variable": "Actor",
+            "clip_key": "cab-69c88b234dfa427e02d1fcee9337ae34:4247831752093950514"
+          },
+          {
+            "index": 1,
+            "class_name": "iTweenShakePosition",
+            "enabled": true,
+            "params": {
+              "gameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 1,
+                  "name": "RootObject",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "0"
+                  }
+                }
+              },
+              "id": {
+                "useVariable": 1,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": ""
+              },
+              "vector": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "x": 0.10000000149011612,
+                  "y": 0.0,
+                  "z": 0.10000000149011612
+                }
+              },
+              "time": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.5
+              },
+              "delay": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.0
+              },
+              "loopType": 0,
+              "space": 0,
+              "axis": 0,
+              "startEvent": "",
+              "finishEvent": "",
+              "realTime": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "stopOnExit": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "loopDontFinish": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              }
+            },
+            "reference_keys": {
+              "params.gameObject.gameObject.value": null
+            },
+            "target_object_key": null,
+            "target_variable": "RootObject"
+          },
+          {
+            "index": 2,
+            "class_name": "AudioPlaythroughAction",
+            "enabled": true,
+            "params": {
+              "m_GameObject": {
+                "ownerOption": 0,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "0"
+                  }
+                }
+              },
+              "m_VolumeScale": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1.0
+              },
+              "m_OneShotClip": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "typeName": "UnityEngine.AudioClip",
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              },
+              "m_Delay": 0.0,
+              "m_OneShotSound": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "typeName": "SoundDef",
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              },
+              "m_FinishedEvent": "",
+              "m_IsMinionSummonVO": false,
+              "m_IsKeywordVO": false,
+              "m_InstanceLimited": false,
+              "m_InstanceLimitedDuration": 0.0,
+              "m_InstanceLimitMaximum": 1,
+              "m_LimitMaxOutOption": 0
+            },
+            "reference_keys": {
+              "params.m_GameObject.gameObject.value": null,
+              "params.m_OneShotClip.value": null,
+              "params.m_OneShotSound.value": null
+            },
+            "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5210564580019615545"
+          }
+        ],
+        "entry_paths": [
+          [
+            "Birth",
+            "Birth State",
+            "FINISHED",
+            "Birth Animate"
+          ]
+        ]
+      }
+    ],
+    "event_schedules": {
+      "__start__": {
+        "state_enter_schedule": [
+          {
+            "at": 0,
+            "state_name": "State 1",
+            "state_index": 0,
+            "actions": []
+          }
+        ],
+        "nominal_duration": 0,
+        "schedule_status": "source-derived-complete-current-pool",
+        "zero_time_transitions_frame_quantized": true,
+        "clock": "scaled game time"
+      },
+      "Birth": {
+        "state_enter_schedule": [
+          {
+            "at": 0,
+            "state_name": "Birth State",
+            "state_index": 1,
+            "actions": [
+              {
+                "index": 0,
+                "class_name": "SpellInitActorVariables",
+                "enabled": true,
+                "params": {
+                  "m_actorObject": {
+                    "useVariable": 1,
+                    "name": "Actor",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": "0"
+                    }
+                  },
+                  "m_rootObject": {
+                    "useVariable": 1,
+                    "name": "RootObject",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": "0"
+                    }
+                  },
+                  "m_rootObjectMesh": {
+                    "useVariable": 1,
+                    "name": "RootObjectMesh",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": "0"
+                    }
+                  }
+                },
+                "reference_keys": {
+                  "params.m_actorObject.value": null,
+                  "params.m_rootObject.value": null,
+                  "params.m_rootObjectMesh.value": null
+                },
+                "target_object_key": null
+              },
+              {
+                "index": 1,
+                "class_name": "SpellStateAction",
+                "enabled": true,
+                "params": {
+                  "m_SpellObject": {
+                    "ownerOption": 0,
+                    "gameObject": {
+                      "useVariable": 0,
+                      "name": "",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "0"
+                      }
+                    }
+                  }
+                },
+                "reference_keys": {
+                  "params.m_SpellObject.gameObject.value": null
+                },
+                "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5210564580019615545"
+              },
+              {
+                "index": 2,
+                "class_name": "GetCardPortraitTextureAction",
+                "enabled": true,
+                "params": {
+                  "storedTexture": {
+                    "useVariable": 1,
+                    "name": "PortraitTexture",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "typeName": "UnityEngine.Object",
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": "0"
+                    }
+                  }
+                },
+                "reference_keys": {
+                  "params.storedTexture.value": null
+                },
+                "target_object_key": null
+              },
+              {
+                "index": 4,
+                "class_name": "SetMaterial",
+                "enabled": true,
+                "params": {
+                  "gameObject": {
+                    "ownerOption": 1,
+                    "gameObject": {
+                      "useVariable": 1,
+                      "name": "RootObjectMesh",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "0"
+                      }
+                    }
+                  },
+                  "materialIndex": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  },
+                  "material": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "typeName": "",
+                    "value": {
+                      "m_FileID": 2,
+                      "m_PathID": "6737433705032255151"
+                    }
+                  }
+                },
+                "reference_keys": {
+                  "params.gameObject.gameObject.value": null,
+                  "params.material.value": "cab-3563ba8b89db13ca6eb196aa111591f1:6737433705032255151"
+                },
+                "target_object_key": null,
+                "target_variable": "RootObjectMesh"
+              },
+              {
+                "index": 5,
+                "class_name": "SetMaterialTexture",
+                "enabled": true,
+                "params": {
+                  "gameObject": {
+                    "ownerOption": 1,
+                    "gameObject": {
+                      "useVariable": 1,
+                      "name": "RootObjectMesh",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "0"
+                      }
+                    }
+                  },
+                  "materialIndex": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  },
+                  "material": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "typeName": "",
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": "0"
+                    }
+                  },
+                  "namedTexture": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": "_MainTex"
+                  },
+                  "texture": {
+                    "useVariable": 1,
+                    "name": "PortraitTexture",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "typeName": "UnityEngine.Object",
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": "0"
+                    }
+                  }
+                },
+                "reference_keys": {
+                  "params.gameObject.gameObject.value": null,
+                  "params.material.value": null,
+                  "params.texture.value": null
+                },
+                "target_object_key": null,
+                "target_variable": "RootObjectMesh"
+              }
+            ]
+          },
+          {
+            "at": 0,
+            "state_name": "Birth Animate",
+            "state_index": 5,
+            "actions": [
+              {
+                "index": 0,
+                "class_name": "AnimationPlaythroughAction",
+                "enabled": true,
+                "params": {
+                  "m_GameObject": {
+                    "ownerOption": 1,
+                    "gameObject": {
+                      "useVariable": 1,
+                      "name": "Actor",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "0"
+                      }
+                    }
+                  },
+                  "m_AnimName": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": "AllyInPlay_Death"
+                  },
+                  "m_PhoneAnimName": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": ""
+                  },
+                  "m_PlayMode": 4,
+                  "m_CrossFadeSec": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0.0
+                  }
+                },
+                "reference_keys": {
+                  "params.m_GameObject.gameObject.value": null
+                },
+                "target_object_key": null,
+                "target_variable": "Actor",
+                "clip_key": "cab-69c88b234dfa427e02d1fcee9337ae34:4247831752093950514"
+              },
+              {
+                "index": 1,
+                "class_name": "iTweenShakePosition",
+                "enabled": true,
+                "params": {
+                  "gameObject": {
+                    "ownerOption": 1,
+                    "gameObject": {
+                      "useVariable": 1,
+                      "name": "RootObject",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "0"
+                      }
+                    }
+                  },
+                  "id": {
+                    "useVariable": 1,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": ""
+                  },
+                  "vector": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "x": 0.10000000149011612,
+                      "y": 0.0,
+                      "z": 0.10000000149011612
+                    }
+                  },
+                  "time": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0.5
+                  },
+                  "delay": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0.0
+                  },
+                  "loopType": 0,
+                  "space": 0,
+                  "axis": 0,
+                  "startEvent": "",
+                  "finishEvent": "",
+                  "realTime": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  },
+                  "stopOnExit": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  },
+                  "loopDontFinish": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  }
+                },
+                "reference_keys": {
+                  "params.gameObject.gameObject.value": null
+                },
+                "target_object_key": null,
+                "target_variable": "RootObject"
+              },
+              {
+                "index": 2,
+                "class_name": "AudioPlaythroughAction",
+                "enabled": true,
+                "params": {
+                  "m_GameObject": {
+                    "ownerOption": 0,
+                    "gameObject": {
+                      "useVariable": 0,
+                      "name": "",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "0"
+                      }
+                    }
+                  },
+                  "m_VolumeScale": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 1.0
+                  },
+                  "m_OneShotClip": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "typeName": "UnityEngine.AudioClip",
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": "0"
+                    }
+                  },
+                  "m_Delay": 0.0,
+                  "m_OneShotSound": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "typeName": "SoundDef",
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": "0"
+                    }
+                  },
+                  "m_FinishedEvent": "",
+                  "m_IsMinionSummonVO": false,
+                  "m_IsKeywordVO": false,
+                  "m_InstanceLimited": false,
+                  "m_InstanceLimitedDuration": 0.0,
+                  "m_InstanceLimitMaximum": 1,
+                  "m_LimitMaxOutOption": 0
+                },
+                "reference_keys": {
+                  "params.m_GameObject.gameObject.value": null,
+                  "params.m_OneShotClip.value": null,
+                  "params.m_OneShotSound.value": null
+                },
+                "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5210564580019615545"
+              }
+            ]
+          },
+          {
+            "at": 0.5,
+            "state_name": "Birth SubState",
+            "state_index": 2,
+            "actions": [
+              {
+                "index": 0,
+                "class_name": "SetVisibilityRecursiveAction",
+                "enabled": true,
+                "params": {
+                  "gameObject": {
+                    "ownerOption": 1,
+                    "gameObject": {
+                      "useVariable": 1,
+                      "name": "RootObject",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "0"
+                      }
+                    }
+                  },
+                  "visible": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  },
+                  "resetOnExit": false,
+                  "includeChildren": true
+                },
+                "reference_keys": {
+                  "params.gameObject.gameObject.value": null
+                },
+                "target_object_key": null,
+                "target_variable": "RootObject"
+              },
+              {
+                "index": 1,
+                "class_name": "SetVisibilityRecursiveAction",
+                "enabled": true,
+                "params": {
+                  "gameObject": {
+                    "ownerOption": 1,
+                    "gameObject": {
+                      "useVariable": 0,
+                      "name": "",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "-2462271060576946375"
+                      }
+                    }
+                  },
+                  "visible": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 1
+                  },
+                  "resetOnExit": false,
+                  "includeChildren": true
+                },
+                "reference_keys": {
+                  "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-2462271060576946375"
+                },
+                "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2462271060576946375"
+              },
+              {
+                "index": 2,
+                "class_name": "ParticlePlayAction",
+                "enabled": true,
+                "params": {
+                  "m_GameObject": {
+                    "ownerOption": 1,
+                    "gameObject": {
+                      "useVariable": 0,
+                      "name": "",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "-2462271060576946375"
+                      }
+                    }
+                  },
+                  "m_IncludeChildren": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 1
+                  }
+                },
+                "reference_keys": {
+                  "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-2462271060576946375"
+                },
+                "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2462271060576946375"
+              },
+              {
+                "index": 3,
+                "class_name": "iTweenMoveTo",
+                "enabled": true,
+                "params": {
+                  "gameObject": {
+                    "ownerOption": 1,
+                    "gameObject": {
+                      "useVariable": 0,
+                      "name": "",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "6441767861693396793"
+                      }
+                    }
+                  },
+                  "id": {
+                    "useVariable": 1,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": ""
+                  },
+                  "transformPosition": {
+                    "useVariable": 1,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": "0"
+                    }
+                  },
+                  "vectorPosition": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "x": 0.0,
+                      "y": -1.0,
+                      "z": 0.0
+                    }
+                  },
+                  "time": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 1.5
+                  },
+                  "delay": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 1.5
+                  },
+                  "speed": {
+                    "useVariable": 1,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0.0
+                  },
+                  "space": 1,
+                  "easeType": 21,
+                  "loopType": 0,
+                  "orientToPath": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  },
+                  "lookAtObject": {
+                    "useVariable": 1,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": "0"
+                    }
+                  },
+                  "lookAtVector": {
+                    "useVariable": 1,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "x": 0.0,
+                      "y": 0.0,
+                      "z": 0.0
+                    }
+                  },
+                  "lookTime": {
+                    "useVariable": 1,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0.0
+                  },
+                  "axis": 0,
+                  "moveToPath": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  },
+                  "lookAhead": {
+                    "useVariable": 1,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0.0
+                  },
+                  "transforms": [],
+                  "vectors": [],
+                  "reverse": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  },
+                  "startEvent": "",
+                  "finishEvent": "",
+                  "realTime": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  },
+                  "stopOnExit": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 1
+                  },
+                  "loopDontFinish": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  }
+                },
+                "reference_keys": {
+                  "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:6441767861693396793",
+                  "params.transformPosition.value": null,
+                  "params.lookAtObject.value": null
+                },
+                "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6441767861693396793"
+              },
+              {
+                "index": 4,
+                "class_name": "Wait",
+                "enabled": true,
+                "params": {
+                  "time": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 3.0
+                  },
+                  "finishEvent": "FINISHED",
+                  "realTime": false
+                },
+                "reference_keys": {},
+                "target_object_key": null
+              }
+            ]
+          },
+          {
+            "at": 3.5,
+            "state_name": "disable shadows",
+            "state_index": 4,
+            "actions": [
+              {
+                "index": 0,
+                "class_name": "InvokeMethod",
+                "enabled": true,
+                "params": {
+                  "gameObject": {
+                    "ownerOption": 1,
+                    "gameObject": {
+                      "useVariable": 0,
+                      "name": "",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "-2238896481340475591"
+                      }
+                    }
+                  },
+                  "behaviour": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": "ProjectedShadow"
+                  },
+                  "methodName": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": "DisableShadow"
+                  },
+                  "delay": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0.0
+                  },
+                  "repeating": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  },
+                  "repeatDelay": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 1.0
+                  },
+                  "cancelOnExit": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": 0
+                  }
+                },
+                "reference_keys": {
+                  "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-2238896481340475591"
+                },
+                "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2238896481340475591"
+              }
+            ]
+          },
+          {
+            "at": 3.5,
+            "state_name": "None State",
+            "state_index": 3,
+            "actions": [
+              {
+                "index": 0,
+                "class_name": "SpellStateAction",
+                "enabled": true,
+                "params": {
+                  "m_SpellObject": {
+                    "ownerOption": 0,
+                    "gameObject": {
+                      "useVariable": 0,
+                      "name": "",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "0"
+                      }
+                    }
+                  }
+                },
+                "reference_keys": {
+                  "params.m_SpellObject.gameObject.value": null
+                },
+                "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5210564580019615545"
+              }
+            ]
+          }
+        ],
+        "nominal_duration": 3.5,
+        "schedule_status": "source-derived-complete-current-pool",
+        "zero_time_transitions_frame_quantized": true,
+        "clock": "scaled game time"
+      },
+      "None": {
+        "state_enter_schedule": [
+          {
+            "at": 0,
+            "state_name": "None State",
+            "state_index": 3,
+            "actions": [
+              {
+                "index": 0,
+                "class_name": "SpellStateAction",
+                "enabled": true,
+                "params": {
+                  "m_SpellObject": {
+                    "ownerOption": 0,
+                    "gameObject": {
+                      "useVariable": 0,
+                      "name": "",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "0"
+                      }
+                    }
+                  }
+                },
+                "reference_keys": {
+                  "params.m_SpellObject.gameObject.value": null
+                },
+                "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5210564580019615545"
+              }
+            ]
+          }
+        ],
+        "nominal_duration": 0,
+        "schedule_status": "source-derived-complete-current-pool",
+        "zero_time_transitions_frame_quantized": true,
+        "clock": "scaled game time"
+      }
+    },
+    "branch_proof": "Original normal type5. ShakePosition blocks0.5s; AnimationPlaythroughAction and AudioPlaythroughAction immediately finish. SubState Wait3s; None releases Actor. Full CIL proof v32_work/source_code/death_release_timing.json and v35 source_death_flow."
+  },
+  {
+    "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2098825116117120534",
+    "prefab_root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2098825116117120534",
+    "fsm_component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:2132378454027520490",
+    "stage": "root",
+    "card_id": "minion_death_splat",
+    "variables": {
+      "floatVariables": [],
+      "intVariables": [],
+      "boolVariables": [],
+      "stringVariables": [],
+      "vector2Variables": [],
+      "vector3Variables": [],
+      "colorVariables": [],
+      "rectVariables": [],
+      "quaternionVariables": [],
+      "gameObjectVariables": [],
+      "objectVariables": [],
+      "materialVariables": [],
+      "textureVariables": [],
+      "arrayVariables": [],
+      "enumVariables": [],
+      "categories": [
+        ""
+      ],
+      "variableCategoryIDs": []
+    },
+    "globalTransitions": [
+      {
+        "fsmEvent": {
+          "name": "Birth",
+          "isSystemEvent": 0,
+          "isGlobal": 1
+        },
+        "toState": "Idle State",
+        "linkStyle": 0,
+        "linkConstraint": 0,
+        "linkTarget": 0,
+        "colorIndex": 0
+      }
+    ],
+    "all_states": [
+      {
+        "name": "State 1",
+        "state_index": 0,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [],
+        "actions": [],
+        "entry_paths": [
+          [
+            "__start__",
+            "State 1"
+          ]
+        ]
+      },
+      {
+        "name": "Idle State",
+        "state_index": 1,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [],
+        "actions": [
+          {
+            "index": 0,
+            "class_name": "SpellStateAction",
+            "enabled": true,
+            "params": {
+              "m_SpellObject": {
+                "ownerOption": 0,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": "0"
+                  }
+                }
+              }
+            },
+            "reference_keys": {
+              "params.m_SpellObject.gameObject.value": null
+            },
+            "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2098825116117120534"
+          }
+        ],
+        "entry_paths": [
+          [
+            "Birth",
+            "Idle State"
+          ]
+        ]
+      }
+    ],
+    "event_schedules": {
+      "__start__": {
+        "state_enter_schedule": [
+          {
+            "at": 0,
+            "state_name": "State 1",
+            "state_index": 0,
+            "actions": []
+          }
+        ],
+        "nominal_duration": 0,
+        "schedule_status": "source-derived-complete-current-pool",
+        "zero_time_transitions_frame_quantized": true,
+        "clock": "scaled game time"
+      },
+      "Idle": {
+        "state_enter_schedule": [
+          {
+            "at": 0,
+            "state_name": "Idle State",
+            "state_index": 1,
+            "actions": [
+              {
+                "index": 0,
+                "class_name": "SpellStateAction",
+                "enabled": true,
+                "params": {
+                  "m_SpellObject": {
+                    "ownerOption": 0,
+                    "gameObject": {
+                      "useVariable": 0,
+                      "name": "",
+                      "tooltip": "",
+                      "showInInspector": 0,
+                      "networkSync": 0,
+                      "value": {
+                        "m_FileID": 0,
+                        "m_PathID": "0"
+                      }
+                    }
+                  }
+                },
+                "reference_keys": {
+                  "params.m_SpellObject.gameObject.value": null
+                },
+                "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2098825116117120534"
+              }
+            ]
+          }
+        ],
+        "nominal_duration": 0,
+        "schedule_status": "source-derived-complete-current-pool",
+        "zero_time_transitions_frame_quantized": true,
+        "clock": "scaled game time"
+      }
+    },
+    "branch_proof": "Separate type10 death-splat indicator. Its use is a Card caller decision, not implied by ordinary death Birth; do not auto-enable with the body."
+  }
+]

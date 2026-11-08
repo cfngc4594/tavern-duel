@@ -1,0 +1,28 @@
+{
+  "build": "37.0.0.255130.254477",
+  "rules_build": 5834,
+  "scope": "Compatibility presentation point for exactly one existing atomic rules resolution. These are not an implementation of native metadata slices. Readiness is consumed separately; do not restart elapsed Birth. Frame yields remain quantized.",
+  "relative_to": "DoActionNow after remaining start Birth; missile entries add first flight and impact spawn delay. Mirror is relative to explicit Action activation.",
+  "entries": {
+    "CS2_029": {"at": 0.4000000059604645,"basis":"first missile arrival + impact metadata gameDelay0"},
+    "CS2_024": {"at": 0.4000000059604645,"basis":"first missile arrival + impact metadata gameDelay0"},
+    "CS2_022": {"at": 0.5,"basis":"impact metadata gameDelay0.5; no missile"},
+    "CS2_023": {"at": 0,"basis":"area Action SpellFinishAction0, not 2.5sec visual cleanup"},
+    "CS2_025": {"at": 0,"basis":"area Death SpellFinishAction0, not 3sec visual cleanup"},
+    "CS2_026": {"at": 0.5,"basis":"selected caster-side area SpellFinishAction0.5"},
+    "CS2_027": {"at": 0.25,"basis":"legacy Action external animation OnSpellFinished0.25"},
+    "CS2_032": {"at": 0.5,"basis":"impact metadata gameDelay0.5; do not add independent impact RandomWait"},
+    "EX1_277": {"at": null,"at_min":1.0,"at_max":1.199999988079071,"basis":"first flight0.5..0.7 + metadata0.5", "requires_observed_rules_targets":true,"note":"Call rules exactly once and record three existing target selections; replay them visually. Do not consume rules RNG in visual paths or call whole-spell rules per missile. Later source metadata timings are not reproduced by this atomic adapter."},
+    "CS2_057": {"at": 0.5,"basis":"missile arrival + impact metadata0"},
+    "CS2_061": {"at": 0.5,"basis":"first missile arrival + metadata0; shared heal/damage remains one original rule resolution"},
+    "CS2_062": {"at": 0.3499999940395355,"basis":"selected caster-side area SpellFinishAction0.35"},
+    "CS2_063": {"at": 0.5,"basis":"missile arrival + metadata0; applies enchantment, not immediate destruction"},
+    "EX1_302": {"at": 0.5,"basis":"missile arrival + metadata0; kill/draw conditional stays rule-owned"},
+    "EX1_308": {"at": 0.5,"basis":"missile arrival + metadata0; discard remains rule-owned"},
+    "NEW1_003": {"at": 0.5,"basis":"first missile arrival + metadata0; Demon destruction/heal stays rule-owned"},
+    "GAME_005": {"at": 0.699999988079071,"basis":"area SpellFinishAction0.7"},
+    "CS2_034": {"at": 0.25,"basis":"missile arrival + impact metadata0"},
+    "CS2_056": {"at": 0.5,"basis":"impact metadata0.5, although impact SpellFinishAction itself0"}
+  },
+  "evidence": ["PowerSpellController.ActivatePowerSpell0x060116c4 explicitly activates Action", "PowerSpellController.CardSpellFinished0x060116c0 -> SpellController.OnFinishedTaskList0x060149cf -> PowerProcessor.OnSpellControllerFinishedTaskList0x06006002 -> DoCurrentTaskList", "SuperSpell.WaitAndSpawnImpact0x06014b8b starts CompleteTasksFromMetaData; MoveNext0x06014b67 waits exact gameDelay", "runtime_routes.json original clip/FSM callback times", "spell_stage_schedule.json original stage parameters"]
+}

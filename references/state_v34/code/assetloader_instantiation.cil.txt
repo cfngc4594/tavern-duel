@@ -1,0 +1,193 @@
+
+TYPE AssetLoader 0x02002769
+FIELD 0x0400f884 SPAWN_POS_CAMERA_OFFSET SIG 06115d
+FIELD 0x0400f885 m_waitingOnObjects SIG 061512490112808d
+FIELD 0x0400f886 m_framesSinceLastDeadHandlesCheck SIG 0608
+FIELD 0x0400f887 m_loadingAssets SIG 061512c0009da8010e
+FIELD 0x0400f888 m_instantiatingPrefabs SIG 061512c0009da8010e
+FIELD 0x0400f889 m_assetLocator SIG 06129689
+FIELD 0x0400f88a m_assetManager SIG 0612968d
+FIELD 0x0400f88b m_assetBank SIG 06129691
+FIELD 0x0400f88c m_bundleErrorReporter SIG 06129695
+FIELD 0x0400f88d m_gameDownloadManager SIG 0612c000c620
+FIELD 0x0400f88e m_prefabInstantiator SIG 06129699
+FIELD 0x0400f88f m_exceptionReporter SIG 0612c000dfbc
+FIELD 0x0400f890 s_assetLoaderUpdateProfiler SIG 0611899d
+FIELD 0x0400f891 AssetLoadQueued SIG 0612969d
+FIELD 0x0400f892 AssetLoaded SIG 061296a1
+FIELD 0x0400f893 AssetUnreferenced SIG 061296a5
+FIELD 0x0400f894 AssetBundleLoaded SIG 061296a9
+FIELD 0x0400f895 AssetBundleUnloaded SIG 061296ad
+FIELD 0x0400f896 m_prefabInstantiatorCheckForDeadHandlesCompleted SIG 0602
+FIELD 0x0400f897 m_assetManagerForDeadHandlesCompleted SIG 0602
+
+0x06012af8 AssetLoader::OnInstantiatePrefabResultHandler(result) RVA 0x573c70 SIG 2001011281a5
+  IL_0000 ldarg.1         
+  IL_0001 isinst         Hearthstone.Core.InstantiatePrefab token(0x010005AC)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 brfalse.s      IL_0032 
+  IL_000a ldloc.0         
+  IL_000b callvirt       Hearthstone.Core.InstantiatePrefab::get_UsePrefabPosition token(0x0A00436D)
+  IL_0010 brtrue.s       IL_0015 
+  IL_0012 ldc.i4.2        
+  IL_0013 br.s           IL_0016 
+  IL_0015 ldc.i4.0        
+  IL_0016 stloc.1         
+  IL_0017 ldarg.0         
+  IL_0018 ldloc.0         
+  IL_0019 callvirt       Hearthstone.Core.InstantiatePrefab::get_AssetRef token(0x0A00436E)
+  IL_001e ldloc.0         
+  IL_001f ldftn          Hearthstone.Core.InstantiatePrefab::OnPrefabInstantiated token(0x0A00436F)
+  IL_0025 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5067afe870>::.ctor token(0x0A000210)
+  IL_002a ldnull          
+  IL_002b ldloc.1         
+  IL_002c call           AssetLoader::InstantiatePrefab token(0x06012B20)
+  IL_0031 pop             
+  IL_0032 ret             
+
+0x06012b1f AssetLoader::InstantiatePrefab(assetRef,options) RVA 0x574854 SIG 200212808d128135118165
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.2         
+  IL_0003 call           AssetLoader::LoadAsset<spec> token(0x2B0007F8)
+  IL_0008 stloc.0         
+  IL_0009 ldloc.0         
+  IL_000a brtrue.s       IL_0010 
+  IL_000c ldnull          
+  IL_000d stloc.1         
+  IL_000e leave.s        IL_002a 
+  IL_0010 ldarg.0         
+  IL_0011 ldfld          AssetLoader::m_prefabInstantiator token(0x0400F88E)
+  IL_0016 ldloc.0         
+  IL_0017 ldarg.2         
+  IL_0018 callvirt       IPrefabInstantiator::InstantiatePrefab token(0x0A0043AA)
+  IL_001d stloc.1         
+  IL_001e leave.s        IL_002a 
+  IL_0020 ldloc.0         
+  IL_0021 brfalse.s      IL_0029 
+  IL_0023 ldloc.0         
+  IL_0024 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0029 endfinally      
+  IL_002a ldloc.1         
+  IL_002b ret             
+
+0x06012b20 AssetLoader::InstantiatePrefab(assetRef,callback,callbackData,options) RVA 0x57489c SIG 2004021281351512820d0112808d1c118165
+  IL_0000 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5067634f20>::.ctor token(0x0A0043AB)
+  IL_0005 dup             
+  IL_0006 ldarg.2         
+  IL_0007 stfld          <dnfile.mdtable.TypeSpecRow object at 0x7f5067634f20>::callerCallback token(0x0A0043AC)
+  IL_000c dup             
+  IL_000d ldarg.3         
+  IL_000e stfld          <dnfile.mdtable.TypeSpecRow object at 0x7f5067634f20>::callerData token(0x0A0043AD)
+  IL_0013 dup             
+  IL_0014 ldarg.s        argument(0x0004) 
+  IL_0016 stfld          <dnfile.mdtable.TypeSpecRow object at 0x7f5067634f20>::callerOptions token(0x0A0043AE)
+  IL_001b dup             
+  IL_001c ldarg.1         
+  IL_001d stfld          <dnfile.mdtable.TypeSpecRow object at 0x7f5067634f20>::requestedAssetRef token(0x0A0043AF)
+  IL_0022 stloc.0         
+  IL_0023 ldarg.0         
+  IL_0024 ldarg.1         
+  IL_0025 ldarg.0         
+  IL_0026 ldftn          AssetLoader::OnPrefabLoaded token(0x06012B23)
+  IL_002c newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5067b46600>::.ctor token(0x0A0004D3)
+  IL_0031 ldloc.0         
+  IL_0032 ldarg.s        argument(0x0004) 
+  IL_0034 call           AssetLoader::LoadAsset<spec> token(0x2B0007F9)
+  IL_0039 ret             
+
+0x06012b21 AssetLoader::GetOrInstantiateSharedPrefab(assetRef,options) RVA 0x5748e4 SIG 2002151281250112808d128135118165
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldloca.s       local(0x0000) 
+  IL_0004 ldarg.2         
+  IL_0005 call           AssetLoader::TryValidateAndGetRuntimeVariant token(0x06012B15)
+  IL_000a brtrue.s       IL_000e 
+  IL_000c ldnull          
+  IL_000d ret             
+  IL_000e ldarg.0         
+  IL_000f ldarg.1         
+  IL_0010 ldarg.2         
+  IL_0011 call           AssetLoader::LoadAsset<spec> token(0x2B0007F8)
+  IL_0016 stloc.1         
+  IL_0017 ldarg.0         
+  IL_0018 ldfld          AssetLoader::m_prefabInstantiator token(0x0400F88E)
+  IL_001d ldloc.1         
+  IL_001e ldarg.2         
+  IL_001f callvirt       IPrefabInstantiator::GetOrInstantiateSharedPrefab token(0x0A0043B0)
+  IL_0024 stloc.2         
+  IL_0025 leave.s        IL_0031 
+  IL_0027 ldloc.1         
+  IL_0028 brfalse.s      IL_0030 
+  IL_002a ldloc.1         
+  IL_002b callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0030 endfinally      
+  IL_0031 ldloc.2         
+  IL_0032 ret             
+
+0x06012b22 AssetLoader::GetOrInstantiateSharedPrefab(assetRef,callback,callbackData,options) RVA 0x574934 SIG 2004021281351512820d01151281250112808d1c118165
+  IL_0000 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f50676350d0>::.ctor token(0x0A0043B1)
+  IL_0005 dup             
+  IL_0006 ldarg.2         
+  IL_0007 stfld          <dnfile.mdtable.TypeSpecRow object at 0x7f50676350d0>::callerCallback token(0x0A0043B2)
+  IL_000c dup             
+  IL_000d ldarg.3         
+  IL_000e stfld          <dnfile.mdtable.TypeSpecRow object at 0x7f50676350d0>::callerData token(0x0A0043B3)
+  IL_0013 dup             
+  IL_0014 ldarg.s        argument(0x0004) 
+  IL_0016 stfld          <dnfile.mdtable.TypeSpecRow object at 0x7f50676350d0>::callerOptions token(0x0A0043B4)
+  IL_001b dup             
+  IL_001c ldarg.1         
+  IL_001d stfld          <dnfile.mdtable.TypeSpecRow object at 0x7f50676350d0>::requestedAssetRef token(0x0A0043B5)
+  IL_0022 stloc.0         
+  IL_0023 ldarg.0         
+  IL_0024 ldarg.1         
+  IL_0025 ldarg.0         
+  IL_0026 ldftn          AssetLoader::OnSharedPrefabLoaded token(0x06012B24)
+  IL_002c newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5067b46600>::.ctor token(0x0A0004D3)
+  IL_0031 ldloc.0         
+  IL_0032 ldarg.s        argument(0x0004) 
+  IL_0034 call           AssetLoader::LoadAsset<spec> token(0x2B0007F9)
+  IL_0039 ret             
+
+0x06012b25 AssetLoader::OnPrefabInstantiated(prefabAddress,instance,callbackData) RVA 0x574a5c SIG 300103010e1e001c
+  IL_0000 ldarg.3         
+  IL_0001 isinst         <dnfile.mdtable.TypeSpecRow object at 0x7f50676355b0> token(0x1B001064)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldfld          <dnfile.mdtable.TypeSpecRow object at 0x7f50676355b0>::callerCallback token(0x0A0043BB)
+  IL_000d call           Blizzard.T5.Core.Utils.GeneralUtils::IsCallbackValid token(0x0A002144)
+  IL_0012 brfalse.s      IL_002c 
+  IL_0014 ldloc.0         
+  IL_0015 ldfld          <dnfile.mdtable.TypeSpecRow object at 0x7f50676355b0>::callerCallback token(0x0A0043BB)
+  IL_001a ldloc.0         
+  IL_001b ldfld          <dnfile.mdtable.TypeSpecRow object at 0x7f50676355b0>::requestedAssetRef token(0x0A0043BC)
+  IL_0020 ldarg.2         
+  IL_0021 ldloc.0         
+  IL_0022 ldfld          <dnfile.mdtable.TypeSpecRow object at 0x7f50676355b0>::callerData token(0x0A0043BD)
+  IL_0027 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5067635760>::Invoke token(0x0A0043BE)
+  IL_002c ret             
+
+0x06012b27 AssetLoader::InstantiateAndWaitThenCallGameObjectCallback(assetRef,prefab,usePrefabPosition,callback,callbackData) RVA 0x574b09 SIG 200512811112813512808d0212829d1c
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <InstantiateAndWaitThenCallGameObjectCallback>d__94::.ctor token(0x06012B44)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <InstantiateAndWaitThenCallGameObjectCallback>d__94::<>4__this token(0x0400F8BB)
+  IL_000d dup             
+  IL_000e ldarg.1         
+  IL_000f stfld          <InstantiateAndWaitThenCallGameObjectCallback>d__94::assetRef token(0x0400F8B8)
+  IL_0014 dup             
+  IL_0015 ldarg.2         
+  IL_0016 stfld          <InstantiateAndWaitThenCallGameObjectCallback>d__94::prefab token(0x0400F8B6)
+  IL_001b dup             
+  IL_001c ldarg.3         
+  IL_001d stfld          <InstantiateAndWaitThenCallGameObjectCallback>d__94::usePrefabPosition token(0x0400F8BA)
+  IL_0022 dup             
+  IL_0023 ldarg.s        argument(0x0004) 
+  IL_0025 stfld          <InstantiateAndWaitThenCallGameObjectCallback>d__94::callback token(0x0400F8B7)
+  IL_002a dup             
+  IL_002b ldarg.s        argument(0x0005) 
+  IL_002d stfld          <InstantiateAndWaitThenCallGameObjectCallback>d__94::callbackData token(0x0400F8B9)
+  IL_0032 ret             

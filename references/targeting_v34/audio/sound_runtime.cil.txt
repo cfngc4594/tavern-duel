@@ -1,0 +1,936 @@
+
+0x06014719 SoundManager::Play
+IL_0000 ldarg.0 
+IL_0001 ldarg.1 
+IL_0002 ldarg.2 
+IL_0003 ldarg.3 
+IL_0004 ldarg.s argument(0x0004)
+IL_0006 call SoundManager::PlayImpl
+IL_000b call UnityEngine.Object::op_Implicit
+IL_0010 ret 
+
+0x0601472c SoundManager::LoadAndPlay
+IL_0000 ldarg.0 
+IL_0001 ldarg.1 
+IL_0002 ldnull 
+IL_0003 ldc.r4 1.0
+IL_0008 ldnull 
+IL_0009 ldnull 
+IL_000a call SoundManager::LoadAndPlay
+IL_000f ret 
+
+0x06014730 SoundManager::LoadAndPlay
+IL_0000 ldarg.1 
+IL_0001 call AssetReference::op_Implicit
+IL_0006 call System.String::IsNullOrEmpty
+IL_000b brfalse.s IL_0030
+IL_000d call Log::get_Sound
+IL_0012 ldstr 'Missing assetref for LoadAndPlay().'
+IL_0017 call System.Array::Empty<spec>
+IL_001c callvirt Logger::PrintWarning
+IL_0021 ldarg.s argument(0x0004)
+IL_0023 brfalse.s IL_002f
+IL_0025 ldarg.s argument(0x0004)
+IL_0027 ldnull 
+IL_0028 ldarg.s argument(0x0005)
+IL_002a callvirt LoadedCallback::Invoke
+IL_002f ret 
+IL_0030 newobj SoundLoadContext::.ctor
+IL_0035 stloc.0 
+IL_0036 ldloc.0 
+IL_0037 ldarg.2 
+IL_0038 ldarg.3 
+IL_0039 ldarg.s argument(0x0004)
+IL_003b ldarg.s argument(0x0005)
+IL_003d callvirt SoundLoadContext::Init
+IL_0042 ldarg.1 
+IL_0043 ldarg.0 
+IL_0044 ldftn SoundManager::OnLoadAndPlaySoundLoaded
+IL_004a newobj <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d55e0f0>::.ctor
+IL_004f ldloc.0 
+IL_0050 ldarg.0 
+IL_0051 call SoundManager::GetPlaceholderSound
+IL_0056 call SoundLoader::LoadSound
+IL_005b pop 
+IL_005c ret 
+
+0x06014738 SoundManager::OnLoadAndPlaySoundLoaded
+IL_0000 ldarg.1 
+IL_0001 brtrue.s IL_0018
+IL_0003 call Log::get_Sound
+IL_0008 ldstr 'SoundManager.OnLoadAndPlaySoundLoaded() - ERROR Tried to load null assetRef!'
+IL_000d call System.Array::Empty<spec>
+IL_0012 callvirt Logger::PrintError
+IL_0017 ret 
+IL_0018 ldarg.2 
+IL_0019 ldnull 
+IL_001a call UnityEngine.Object::op_Equality
+IL_001f brfalse.s IL_003c
+IL_0021 call Log::get_Sound
+IL_0026 ldstr 'SoundManager.OnLoadAndPlaySoundLoaded() - ERROR "{0}" failed to load'
+IL_002b ldarg.1 
+IL_002c call System.String::Format
+IL_0031 call System.Array::Empty<spec>
+IL_0036 callvirt Logger::PrintError
+IL_003b ret 
+IL_003c ldarg.2 
+IL_003d callvirt UnityEngine.GameObject::GetComponent<spec>
+IL_0042 stloc.0 
+IL_0043 ldloc.0 
+IL_0044 ldnull 
+IL_0045 call UnityEngine.Object::op_Equality
+IL_004a brfalse.s IL_006d
+IL_004c ldarg.2 
+IL_004d call UnityEngine.Object::DestroyImmediate
+IL_0052 call Log::get_Sound
+IL_0057 ldstr 'SoundManager.OnLoadAndPlaySoundLoaded() - ERROR "{0}" has no AudioSource'
+IL_005c ldarg.1 
+IL_005d call System.String::Format
+IL_0062 call System.Array::Empty<spec>
+IL_0067 callvirt Logger::PrintError
+IL_006c ret 
+IL_006d ldarg.3 
+IL_006e castclass SoundLoadContext
+IL_0073 stloc.1 
+IL_0074 ldloc.1 
+IL_0075 ldfld SoundLoadContext::m_sceneMode
+IL_007a ldc.i4.s 9
+IL_007c beq.s IL_009a
+IL_007e call SceneMgr::Get
+IL_0083 brfalse.s IL_009a
+IL_0085 call SceneMgr::Get
+IL_008a ldc.i4.s 9
+IL_008c callvirt SceneMgr::IsModeRequested
+IL_0091 brfalse.s IL_009a
+IL_0093 ldarg.2 
+IL_0094 call UnityEngine.Object::DestroyImmediate
+IL_0099 ret 
+IL_009a ldarg.0 
+IL_009b ldarg.1 
+IL_009c ldloc.0 
+IL_009d call SoundManager::RegisterSourceBundle
+IL_00a2 brtrue.s IL_00c5
+IL_00a4 call Log::get_Sound
+IL_00a9 ldstr 'Failed to load and play sound name={0}, go={1} (this may be due to it not yet being downloaded)'
+IL_00ae ldarg.1 
+IL_00af ldarg.2 
+IL_00b0 callvirt UnityEngine.Object::get_name
+IL_00b5 call System.String::Format
+IL_00ba call System.Array::Empty<spec>
+IL_00bf callvirt Logger::PrintWarning
+IL_00c4 ret 
+IL_00c5 ldloc.1 
+IL_00c6 ldfld SoundLoadContext::m_haveCallback
+IL_00cb brfalse.s IL_00f3
+IL_00cd ldloc.1 
+IL_00ce ldfld SoundLoadContext::m_callback
+IL_00d3 call Blizzard.T5.Core.Utils.GeneralUtils::IsCallbackValid
+IL_00d8 brtrue.s IL_00f3
+IL_00da ldarg.2 
+IL_00db call UnityEngine.Object::DestroyImmediate
+IL_00e0 ldarg.0 
+IL_00e1 ldarg.0 
+IL_00e2 call SoundManager::get_SceneObject
+IL_00e7 callvirt UnityEngine.Object::get_name
+IL_00ec ldloc.0 
+IL_00ed call SoundManager::UnregisterSourceBundle
+IL_00f2 ret 
+IL_00f3 ldarg.0 
+IL_00f4 ldfld SoundManager::m_generatedSources
+IL_00f9 ldloc.0 
+IL_00fa callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d227e60>::Add
+IL_00ff ldarg.0 
+IL_0100 ldloc.0 
+IL_0101 ldnull 
+IL_0102 ldnull 
+IL_0103 ldc.i4.0 
+IL_0104 call SoundManager::RegisterExtension
+IL_0109 ldloc.1 
+IL_010a ldfld SoundLoadContext::m_volume
+IL_010f stfld SourceExtension::m_codeVolume
+IL_0114 ldarg.0 
+IL_0115 ldloc.0 
+IL_0116 ldloc.1 
+IL_0117 ldfld SoundLoadContext::m_parent
+IL_011c call SoundManager::InitSourceTransform
+IL_0121 ldarg.0 
+IL_0122 ldloc.0 
+IL_0123 ldnull 
+IL_0124 ldnull 
+IL_0125 ldnull 
+IL_0126 call SoundManager::Play
+IL_012b pop 
+IL_012c ldloc.1 
+IL_012d ldfld SoundLoadContext::m_callback
+IL_0132 brfalse.s IL_0146
+IL_0134 ldloc.1 
+IL_0135 ldfld SoundLoadContext::m_callback
+IL_013a ldloc.0 
+IL_013b ldloc.1 
+IL_013c ldfld SoundLoadContext::m_userData
+IL_0141 callvirt LoadedCallback::Invoke
+IL_0146 ret 
+
+0x0601475a SoundManager::RegisterExtension
+IL_0000 ldarg.2 
+IL_0001 stloc.0 
+IL_0002 ldloc.0 
+IL_0003 ldnull 
+IL_0004 call UnityEngine.Object::op_Equality
+IL_0009 brfalse.s IL_0013
+IL_000b ldarg.0 
+IL_000c ldarg.1 
+IL_000d call SoundManager::GetDefFromSource
+IL_0012 stloc.0 
+IL_0013 ldarg.0 
+IL_0014 ldarg.1 
+IL_0015 call SoundManager::GetExtension
+IL_001a stloc.1 
+IL_001b ldloc.1 
+IL_001c brtrue.s IL_0085
+IL_001e ldnull 
+IL_001f stloc.2 
+IL_0020 ldarg.3 
+IL_0021 ldnull 
+IL_0022 call UnityEngine.Object::op_Equality
+IL_0027 brtrue.s IL_002c
+IL_0029 ldarg.3 
+IL_002a br.s IL_0036
+IL_002c ldarg.0 
+IL_002d ldloca.s local(0x0002)
+IL_002f ldarg.1 
+IL_0030 ldloc.0 
+IL_0031 call SoundManager::LoadClipForPlayback
+IL_0036 stloc.3 
+IL_0037 call Blizzard.T5.Services.ServiceManager::Get<spec>
+IL_003c dup 
+IL_003d brtrue.s IL_0042
+IL_003f pop 
+IL_0040 br.s IL_0049
+IL_0042 ldarg.1 
+IL_0043 ldloc.2 
+IL_0044 call Blizzard.T5.AssetManager.DisposablesCleaner::Attach
+IL_0049 ldloc.3 
+IL_004a ldnull 
+IL_004b call UnityEngine.Object::op_Equality
+IL_0050 brtrue.s IL_005f
+IL_0052 ldarg.s argument(0x0004)
+IL_0054 brfalse.s IL_0061
+IL_0056 ldarg.0 
+IL_0057 ldloc.3 
+IL_0058 call SoundManager::ProcessClipLimits
+IL_005d brfalse.s IL_0061
+IL_005f ldnull 
+IL_0060 ret 
+IL_0061 ldarg.0 
+IL_0062 ldarg.1 
+IL_0063 ldloc.0 
+IL_0064 call SoundManager::RegisterSourceExtensionCommon
+IL_0069 stloc.1 
+IL_006a ldloc.1 
+IL_006b ldarg.1 
+IL_006c callvirt UnityEngine.AudioSource::get_clip
+IL_0071 stfld SourceExtension::m_sourceClip
+IL_0076 ldarg.0 
+IL_0077 ldarg.1 
+IL_0078 ldloc.0 
+IL_0079 ldloc.1 
+IL_007a ldloc.3 
+IL_007b call SoundManager::InitNewClipOnSource
+IL_0080 br IL_0112
+IL_0085 ldarg.s argument(0x0004)
+IL_0087 brfalse IL_0112
+IL_008c ldarg.3 
+IL_008d ldnull 
+IL_008e call UnityEngine.Object::op_Equality
+IL_0093 brfalse.s IL_00b9
+IL_0095 ldnull 
+IL_0096 stloc.s local(0x0005)
+IL_0098 ldarg.0 
+IL_0099 ldloca.s local(0x0005)
+IL_009b ldarg.1 
+IL_009c ldloc.0 
+IL_009d call SoundManager::LoadClipForPlayback
+IL_00a2 stloc.s local(0x0004)
+IL_00a4 call Blizzard.T5.Services.ServiceManager::Get<spec>
+IL_00a9 dup 
+IL_00aa brtrue.s IL_00af
+IL_00ac pop 
+IL_00ad br.s IL_00bc
+IL_00af ldarg.1 
+IL_00b0 ldloc.s local(0x0005)
+IL_00b2 call Blizzard.T5.AssetManager.DisposablesCleaner::Attach
+IL_00b7 br.s IL_00bc
+IL_00b9 ldarg.3 
+IL_00ba stloc.s local(0x0004)
+IL_00bc ldarg.0 
+IL_00bd ldarg.1 
+IL_00be ldloc.s local(0x0004)
+IL_00c0 call SoundManager::CanPlayClipOnExistingSource
+IL_00c5 brtrue.s IL_00e3
+IL_00c7 ldarg.0 
+IL_00c8 ldarg.1 
+IL_00c9 call SoundManager::IsActive
+IL_00ce brfalse.s IL_00da
+IL_00d0 ldarg.0 
+IL_00d1 ldarg.1 
+IL_00d2 call SoundManager::Stop
+IL_00d7 pop 
+IL_00d8 br.s IL_00e1
+IL_00da ldarg.0 
+IL_00db ldarg.1 
+IL_00dc call SoundManager::FinishSource
+IL_00e1 ldnull 
+IL_00e2 ret 
+IL_00e3 ldarg.1 
+IL_00e4 callvirt UnityEngine.AudioSource::get_clip
+IL_00e9 ldloc.s local(0x0004)
+IL_00eb call UnityEngine.Object::op_Inequality
+IL_00f0 brfalse.s IL_0112
+IL_00f2 ldarg.1 
+IL_00f3 callvirt UnityEngine.AudioSource::get_clip
+IL_00f8 ldnull 
+IL_00f9 call UnityEngine.Object::op_Inequality
+IL_00fe brfalse.s IL_0107
+IL_0100 ldarg.0 
+IL_0101 ldarg.1 
+IL_0102 call SoundManager::UnregisterSourceByClip
+IL_0107 ldarg.0 
+IL_0108 ldarg.1 
+IL_0109 ldloc.0 
+IL_010a ldloc.1 
+IL_010b ldloc.s local(0x0004)
+IL_010d call SoundManager::InitNewClipOnSource
+IL_0112 ldloc.1 
+IL_0113 ret 
+
+0x06014798 SoundManager::InitSourceTransform
+IL_0000 ldarg.1 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brtrue.s IL_0025
+IL_0009 ldarg.1 
+IL_000a callvirt UnityEngine.Component::get_gameObject
+IL_000f ldnull 
+IL_0010 call UnityEngine.Object::op_Equality
+IL_0015 brtrue.s IL_0025
+IL_0017 ldarg.1 
+IL_0018 callvirt UnityEngine.Component::get_transform
+IL_001d ldnull 
+IL_001e call UnityEngine.Object::op_Equality
+IL_0023 brfalse.s IL_0026
+IL_0025 ret 
+IL_0026 ldarg.1 
+IL_0027 callvirt UnityEngine.Component::get_transform
+IL_002c ldarg.0 
+IL_002d call SoundManager::get_SceneObject
+IL_0032 callvirt UnityEngine.GameObject::get_transform
+IL_0037 callvirt UnityEngine.Transform::set_parent
+IL_003c ldarg.2 
+IL_003d ldnull 
+IL_003e call UnityEngine.Object::op_Equality
+IL_0043 brtrue.s IL_0053
+IL_0045 ldarg.2 
+IL_0046 callvirt UnityEngine.GameObject::get_transform
+IL_004b ldnull 
+IL_004c call UnityEngine.Object::op_Equality
+IL_0051 brfalse.s IL_0064
+IL_0053 ldarg.1 
+IL_0054 callvirt UnityEngine.Component::get_transform
+IL_0059 call UnityEngine.Vector3::get_zero
+IL_005e callvirt UnityEngine.Transform::set_position
+IL_0063 ret 
+IL_0064 ldarg.1 
+IL_0065 callvirt UnityEngine.Component::get_transform
+IL_006a ldarg.2 
+IL_006b callvirt UnityEngine.GameObject::get_transform
+IL_0070 callvirt UnityEngine.Transform::get_position
+IL_0075 callvirt UnityEngine.Transform::set_position
+IL_007a ret 
+
+0x0601481d SoundUtils::GetRandomClipFromDef
+IL_0000 ldarg.0 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brfalse.s IL_000b
+IL_0009 ldnull 
+IL_000a ret 
+IL_000b ldarg.0 
+IL_000c ldfld SoundDef::m_RandomClips
+IL_0011 stloc.0 
+IL_0012 ldarg.0 
+IL_0013 isinst IMultipleRandomClipSoundDef
+IL_0018 brfalse.s IL_0026
+IL_001a ldarg.0 
+IL_001b castclass IMultipleRandomClipSoundDef
+IL_0020 callvirt IMultipleRandomClipSoundDef::GetRandomAudioClips
+IL_0025 stloc.0 
+IL_0026 ldloc.0 
+IL_0027 brtrue.s IL_002b
+IL_0029 ldnull 
+IL_002a ret 
+IL_002b ldloc.0 
+IL_002c callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48e30>::get_Count
+IL_0031 brtrue.s IL_0035
+IL_0033 ldnull 
+IL_0034 ret 
+IL_0035 ldc.r4 0.0
+IL_003a stloc.1 
+IL_003b ldloc.0 
+IL_003c callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48e30>::GetEnumerator
+IL_0041 stloc.s local(0x0005)
+IL_0043 br.s IL_0058
+IL_0045 ldloca.s local(0x0005)
+IL_0047 call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48fe0>::get_Current
+IL_004c stloc.s local(0x0006)
+IL_004e ldloc.1 
+IL_004f ldloc.s local(0x0006)
+IL_0051 ldfld RandomAudioClip::m_Weight
+IL_0056 add 
+IL_0057 stloc.1 
+IL_0058 ldloca.s local(0x0005)
+IL_005a call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48fe0>::MoveNext
+IL_005f brtrue.s IL_0045
+IL_0061 leave.s IL_0071
+IL_0063 ldloca.s local(0x0005)
+IL_0065 constrained. <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48fe0>
+IL_006b callvirt System.IDisposable::Dispose
+IL_0070 endfinally 
+IL_0071 ldc.r4 0.0
+IL_0076 ldloc.1 
+IL_0077 call UnityEngine.Random::Range
+IL_007c stloc.2 
+IL_007d ldc.r4 0.0
+IL_0082 stloc.3 
+IL_0083 ldloc.0 
+IL_0084 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48e30>::get_Count
+IL_0089 ldc.i4.1 
+IL_008a sub 
+IL_008b stloc.s local(0x0004)
+IL_008d ldc.i4.0 
+IL_008e stloc.s local(0x0007)
+IL_0090 br.s IL_00b8
+IL_0092 ldloc.0 
+IL_0093 ldloc.s local(0x0007)
+IL_0095 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48e30>::get_Item
+IL_009a stloc.s local(0x0008)
+IL_009c ldloc.3 
+IL_009d ldloc.s local(0x0008)
+IL_009f ldfld RandomAudioClip::m_Weight
+IL_00a4 add 
+IL_00a5 stloc.3 
+IL_00a6 ldloc.2 
+IL_00a7 ldloc.3 
+IL_00a8 bgt.un.s IL_00b2
+IL_00aa ldloc.s local(0x0008)
+IL_00ac ldfld RandomAudioClip::m_Clip
+IL_00b1 ret 
+IL_00b2 ldloc.s local(0x0007)
+IL_00b4 ldc.i4.1 
+IL_00b5 add 
+IL_00b6 stloc.s local(0x0007)
+IL_00b8 ldloc.s local(0x0007)
+IL_00ba ldloc.s local(0x0004)
+IL_00bc blt.s IL_0092
+IL_00be ldloc.0 
+IL_00bf ldloc.s local(0x0004)
+IL_00c1 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48e30>::get_Item
+IL_00c6 ldfld RandomAudioClip::m_Clip
+IL_00cb ret 
+
+0x0601481e SoundUtils::GetRandomVolumeFromDef
+IL_0000 ldarg.0 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brfalse.s IL_000f
+IL_0009 ldc.r4 1.0
+IL_000e ret 
+IL_000f ldarg.0 
+IL_0010 ldfld SoundDef::m_RandomVolumeMin
+IL_0015 ldarg.0 
+IL_0016 ldfld SoundDef::m_RandomVolumeMax
+IL_001b call UnityEngine.Random::Range
+IL_0020 ret 
+
+0x0601481f SoundUtils::GetRandomPitchFromDef
+IL_0000 ldarg.0 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brfalse.s IL_000f
+IL_0009 ldc.r4 1.0
+IL_000e ret 
+IL_000f ldarg.0 
+IL_0010 ldfld SoundDef::m_RandomPitchMin
+IL_0015 ldarg.0 
+IL_0016 ldfld SoundDef::m_RandomPitchMax
+IL_001b call UnityEngine.Random::Range
+IL_0020 ret 
+
+0x060059d2 InputManager::UpdateTargetingArrow
+IL_0000 ldarg.0 
+IL_0001 ldfld InputManager::m_targetReticleManager
+IL_0006 call UnityEngine.Object::op_Implicit
+IL_000b brfalse IL_00e6
+IL_0010 ldarg.0 
+IL_0011 ldfld InputManager::m_targetReticleManager
+IL_0016 callvirt TargetReticleManager::IsActive
+IL_001b brfalse IL_00e6
+IL_0020 ldarg.0 
+IL_0021 ldfld InputManager::m_universalInputManager
+IL_0026 call UnityEngine.Camera::get_main
+IL_002b ldc.i4.s 12
+IL_002d callvirt UniversalInputManager::InputHitAnyObject
+IL_0032 stloc.0 
+IL_0033 ldarg.0 
+IL_0034 ldloc.0 
+IL_0035 call InputManager::ShouldCancelTargeting
+IL_003a brfalse.s IL_00b8
+IL_003c ldc.i4.1 
+IL_003d stloc.1 
+IL_003e ldarg.0 
+IL_003f ldfld InputManager::m_heldCard
+IL_0044 ldnull 
+IL_0045 call UnityEngine.Object::op_Inequality
+IL_004a brfalse.s IL_0074
+IL_004c ldarg.0 
+IL_004d ldfld InputManager::m_heldCard
+IL_0052 callvirt Card::GetEntity
+IL_0057 callvirt EntityBase::HasDeckAction
+IL_005c brfalse.s IL_0074
+IL_005e ldarg.0 
+IL_005f ldfld InputManager::m_heldCard
+IL_0064 callvirt Card::IsInAlternateActionArea
+IL_0069 brfalse.s IL_0074
+IL_006b ldarg.0 
+IL_006c call InputManager::CancelTargetMode
+IL_0071 pop 
+IL_0072 ldc.i4.0 
+IL_0073 stloc.1 
+IL_0074 ldloc.1 
+IL_0075 brfalse.s IL_008c
+IL_0077 ldarg.0 
+IL_0078 ldfld InputManager::m_targetReticleManager
+IL_007d callvirt TargetReticleManager::IsLocalArrow
+IL_0082 brfalse.s IL_008c
+IL_0084 ldarg.0 
+IL_0085 ldc.i4.0 
+IL_0086 call InputManager::CancelOption
+IL_008b pop 
+IL_008c ldarg.0 
+IL_008d ldfld InputManager::m_useHandEnlarge
+IL_0092 brfalse.s IL_00a0
+IL_0094 ldarg.0 
+IL_0095 ldfld InputManager::m_myHandZone
+IL_009a ldc.i4.0 
+IL_009b callvirt ZoneHand::SetFriendlyHeroTargetingMode
+IL_00a0 ldarg.0 
+IL_00a1 ldfld InputManager::m_heldCard
+IL_00a6 ldnull 
+IL_00a7 call UnityEngine.Object::op_Inequality
+IL_00ac brfalse IL_020b
+IL_00b1 ldarg.0 
+IL_00b2 call InputManager::PositionHeldCard
+IL_00b7 ret 
+IL_00b8 ldarg.0 
+IL_00b9 ldfld InputManager::m_targetReticleManager
+IL_00be callvirt TargetReticleManager::UpdateArrowPosition
+IL_00c3 ldarg.0 
+IL_00c4 ldfld InputManager::m_heldCard
+IL_00c9 ldnull 
+IL_00ca call UnityEngine.Object::op_Inequality
+IL_00cf brfalse IL_020b
+IL_00d4 ldarg.0 
+IL_00d5 ldfld InputManager::m_myHandZone
+IL_00da ldarg.0 
+IL_00db ldfld InputManager::m_heldCard
+IL_00e0 callvirt ZoneHand::OnCardHeld
+IL_00e5 ret 
+IL_00e6 ldarg.0 
+IL_00e7 ldfld InputManager::m_heldCard
+IL_00ec call UnityEngine.Object::op_Implicit
+IL_00f1 brfalse IL_020b
+IL_00f6 ldarg.0 
+IL_00f7 ldfld InputManager::m_universalInputManager
+IL_00fc call UnityEngine.Camera::get_main
+IL_0101 ldc.i4.s 12
+IL_0103 callvirt UniversalInputManager::InputHitAnyObject
+IL_0108 stloc.2 
+IL_0109 ldarg.0 
+IL_010a ldloc.2 
+IL_010b call InputManager::HandleUpdateWhileHoldingCard
+IL_0110 ldarg.0 
+IL_0111 ldfld InputManager::m_gameState
+IL_0116 callvirt GameState::IsInReverseTargetMode
+IL_011b brtrue IL_020b
+IL_0120 ldarg.0 
+IL_0121 ldfld InputManager::m_heldCard
+IL_0126 ldnull 
+IL_0127 call UnityEngine.Object::op_Inequality
+IL_012c brfalse IL_020b
+IL_0131 ldc.i4.0 
+IL_0132 stloc.3 
+IL_0133 call GameMgr::Get
+IL_0138 callvirt GameMgr::Is2v2Game
+IL_013d brfalse.s IL_016a
+IL_013f ldarg.0 
+IL_0140 ldfld InputManager::m_gameState
+IL_0145 callvirt GameState::GetFriendlySidePlayer
+IL_014a callvirt Player::GetPassingPortal
+IL_014f stloc.s local(0x0006)
+IL_0151 ldarg.0 
+IL_0152 ldfld InputManager::m_gameState
+IL_0157 ldloc.s local(0x0006)
+IL_0159 ldarg.0 
+IL_015a ldfld InputManager::m_heldCard
+IL_015f callvirt Card::GetEntity
+IL_0164 callvirt GameState::IsValidPotentialOptionTarget
+IL_0169 stloc.3 
+IL_016a ldarg.0 
+IL_016b ldfld InputManager::m_gameState
+IL_0170 ldarg.0 
+IL_0171 ldfld InputManager::m_heldCard
+IL_0176 callvirt Card::GetEntity
+IL_017b ldc.i4.1 
+IL_017c newobj <dnfile.mdtable.TypeSpecRow object at 0x7f56719b7500>::.ctor
+IL_0181 ldloca.s local(0x0007)
+IL_0183 initobj <dnfile.mdtable.TypeSpecRow object at 0x7f56719b7500>
+IL_0189 ldloc.s local(0x0007)
+IL_018b ldloca.s local(0x0007)
+IL_018d initobj <dnfile.mdtable.TypeSpecRow object at 0x7f56719b7500>
+IL_0193 ldloc.s local(0x0007)
+IL_0195 callvirt GameState::IsValidOption
+IL_019a stloc.s local(0x0004)
+IL_019c ldarg.0 
+IL_019d ldfld InputManager::m_heldCard
+IL_01a2 callvirt Card::IsInAlternateActionArea
+IL_01a7 brfalse.s IL_01af
+IL_01a9 ldloc.s local(0x0004)
+IL_01ab ldloc.3 
+IL_01ac or 
+IL_01ad br.s IL_01b0
+IL_01af ldc.i4.0 
+IL_01b0 stloc.s local(0x0005)
+IL_01b2 ldloc.s local(0x0005)
+IL_01b4 brfalse.s IL_01df
+IL_01b6 ldarg.0 
+IL_01b7 ldfld InputManager::m_heldCardWasInAlternateActionAreaLastFrame
+IL_01bc brtrue.s IL_01df
+IL_01be ldarg.0 
+IL_01bf ldfld InputManager::m_heldCard
+IL_01c4 ldc.i4.1 
+IL_01c5 callvirt Card::UpdateActorState
+IL_01ca ldarg.0 
+IL_01cb ldfld InputManager::m_heldCard
+IL_01d0 ldloc.s local(0x0005)
+IL_01d2 callvirt Card::UpdateDeckActionHover
+IL_01d7 ldarg.0 
+IL_01d8 ldc.i4.1 
+IL_01d9 stfld InputManager::m_heldCardWasInAlternateActionAreaLastFrame
+IL_01de ret 
+IL_01df ldloc.s local(0x0005)
+IL_01e1 brtrue.s IL_020b
+IL_01e3 ldarg.0 
+IL_01e4 ldfld InputManager::m_heldCardWasInAlternateActionAreaLastFrame
+IL_01e9 brfalse.s IL_020b
+IL_01eb ldarg.0 
+IL_01ec ldfld InputManager::m_heldCard
+IL_01f1 ldc.i4.1 
+IL_01f2 callvirt Card::UpdateActorState
+IL_01f7 ldarg.0 
+IL_01f8 ldfld InputManager::m_heldCard
+IL_01fd ldloc.s local(0x0005)
+IL_01ff callvirt Card::UpdateDeckActionHover
+IL_0204 ldarg.0 
+IL_0205 ldc.i4.0 
+IL_0206 stfld InputManager::m_heldCardWasInAlternateActionAreaLastFrame
+IL_020b ret 
+
+0x060059f9 InputManager::PortalPassWithAttack
+IL_0000 ldarg.1 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Inequality
+IL_0007 brfalse IL_008e
+IL_000c ldarg.0 
+IL_000d ldfld InputManager::m_heldCard
+IL_0012 ldnull 
+IL_0013 call UnityEngine.Object::op_Equality
+IL_0018 brfalse.s IL_008e
+IL_001a call GameState::Get
+IL_001f callvirt GameState::IsInTargetMode
+IL_0024 brfalse.s IL_008e
+IL_0026 call GameState::Get
+IL_002b callvirt GameState::GetFriendlySidePlayer
+IL_0030 dup 
+IL_0031 brtrue.s IL_0037
+IL_0033 pop 
+IL_0034 ldnull 
+IL_0035 br.s IL_003c
+IL_0037 call Player::GetPassingPortal
+IL_003c stloc.0 
+IL_003d ldarg.0 
+IL_003e ldfld InputManager::m_gameState
+IL_0043 call TargetReticleManager::Get
+IL_0048 callvirt TargetReticleManager::get_ArrowSourceEntityID
+IL_004d callvirt GameState::GetEntity
+IL_0052 stloc.1 
+IL_0053 ldloc.0 
+IL_0054 brfalse.s IL_008e
+IL_0056 ldloc.1 
+IL_0057 brfalse.s IL_008e
+IL_0059 ldarg.0 
+IL_005a ldfld InputManager::m_gameState
+IL_005f ldloc.0 
+IL_0060 ldloc.1 
+IL_0061 callvirt GameState::IsValidPotentialOptionTarget
+IL_0066 brfalse.s IL_008e
+IL_0068 ldloc.1 
+IL_0069 callvirt EntityBase::GetZone
+IL_006e ldc.i4.1 
+IL_006f bne.un.s IL_008e
+IL_0071 ldarg.0 
+IL_0072 call InputManager::CancelTargetMode
+IL_0077 pop 
+IL_0078 ldarg.0 
+IL_0079 ldloc.0 
+IL_007a ldc.i4.1 
+IL_007b ldc.i4.0 
+IL_007c call InputManager::DoNetworkResponse
+IL_0081 pop 
+IL_0082 ldarg.0 
+IL_0083 ldloc.1 
+IL_0084 ldc.i4.1 
+IL_0085 ldc.i4.0 
+IL_0086 call InputManager::DoNetworkResponse
+IL_008b pop 
+IL_008c ldc.i4.1 
+IL_008d ret 
+IL_008e ldc.i4.0 
+IL_008f ret 
+
+0x06005a02 InputManager::CancelOption
+IL_0000 ldc.i4.0 
+IL_0001 stloc.0 
+IL_0002 ldarg.0 
+IL_0003 ldfld InputManager::m_gameState
+IL_0008 callvirt GameState::IsInMainOptionMode
+IL_000d brfalse.s IL_001a
+IL_000f ldarg.0 
+IL_0010 ldfld InputManager::m_gameState
+IL_0015 callvirt GameState::CancelCurrentOptionMode
+IL_001a ldarg.0 
+IL_001b call InputManager::CancelTargetMode
+IL_0020 brfalse.s IL_0024
+IL_0022 ldc.i4.1 
+IL_0023 stloc.0 
+IL_0024 ldarg.0 
+IL_0025 ldarg.1 
+IL_0026 call InputManager::CancelSubOptionMode
+IL_002b brfalse.s IL_002f
+IL_002d ldc.i4.1 
+IL_002e stloc.0 
+IL_002f ldarg.0 
+IL_0030 ldarg.1 
+IL_0031 call InputManager::CancelReverseTargetMode
+IL_0036 brfalse.s IL_003a
+IL_0038 ldc.i4.1 
+IL_0039 stloc.0 
+IL_003a ldarg.0 
+IL_003b ldc.i4.1 
+IL_003c call InputManager::DropHeldCard
+IL_0041 brfalse.s IL_0045
+IL_0043 ldc.i4.1 
+IL_0044 stloc.0 
+IL_0045 ldarg.0 
+IL_0046 ldfld InputManager::m_mousedOverCard
+IL_004b call UnityEngine.Object::op_Implicit
+IL_0050 brfalse.s IL_005d
+IL_0052 ldarg.0 
+IL_0053 ldfld InputManager::m_mousedOverCard
+IL_0058 callvirt Card::UpdateProposedManaUsage
+IL_005d ldloc.0 
+IL_005e ret 
+
+0x06005a05 InputManager::CancelTargetMode
+IL_0000 ldarg.0 
+IL_0001 ldfld InputManager::m_gameState
+IL_0006 callvirt GameState::IsInTargetMode
+IL_000b brtrue.s IL_0017
+IL_000d ldarg.0 
+IL_000e ldfld InputManager::m_hadPendingChoiceTargetLastFrame
+IL_0013 brtrue.s IL_0017
+IL_0015 ldc.i4.0 
+IL_0016 ret 
+IL_0017 ldc.i4.1 
+IL_0018 stloc.0 
+IL_0019 ldarg.0 
+IL_001a ldfld InputManager::m_gameState
+IL_001f callvirt GameState::GetSelectedNetworkOption
+IL_0024 stloc.1 
+IL_0025 ldloc.1 
+IL_0026 brfalse.s IL_0053
+IL_0028 ldarg.0 
+IL_0029 ldfld InputManager::m_gameState
+IL_002e ldloc.1 
+IL_002f callvirt Option::get_Main
+IL_0034 callvirt SubOption::get_ID
+IL_0039 callvirt GameState::GetEntity
+IL_003e stloc.2 
+IL_003f ldloc.2 
+IL_0040 brfalse.s IL_004c
+IL_0042 ldloc.2 
+IL_0043 callvirt EntityBase::IsLettuceAbility
+IL_0048 brfalse.s IL_004c
+IL_004a ldc.i4.0 
+IL_004b stloc.0 
+IL_004c ldarg.0 
+IL_004d ldloc.2 
+IL_004e call InputManager::HandleLegendaryHeroPowerCancel
+IL_0053 ldloc.0 
+IL_0054 brfalse.s IL_006a
+IL_0056 call SoundManager::Get
+IL_005b ldstr 'CancelAttack.prefab:9cde7207a78024e46aa5a0a657807845'
+IL_0060 call AssetReference::op_Implicit
+IL_0065 callvirt SoundManager::LoadAndPlay
+IL_006a ldarg.0 
+IL_006b ldfld InputManager::m_mousedOverCard
+IL_0070 call UnityEngine.Object::op_Implicit
+IL_0075 brfalse.s IL_0083
+IL_0077 ldarg.0 
+IL_0078 ldarg.0 
+IL_0079 ldfld InputManager::m_mousedOverCard
+IL_007e call InputManager::DisableSkullIfNeeded
+IL_0083 ldarg.0 
+IL_0084 ldfld InputManager::m_targetReticleManager
+IL_0089 dup 
+IL_008a brtrue.s IL_008f
+IL_008c pop 
+IL_008d br.s IL_0095
+IL_008f ldc.i4.1 
+IL_0090 call TargetReticleManager::DestroyFriendlyTargetArrow
+IL_0095 call ZoneMgr::Get
+IL_009a callvirt ZoneMgr::DisplayLettuceAbilitiesForPreviouslySelectedCard
+IL_009f ldarg.0 
+IL_00a0 ldfld InputManager::m_battlecrySourceCard
+IL_00a5 ldnull 
+IL_00a6 call UnityEngine.Object::op_Inequality
+IL_00ab brfalse.s IL_00c9
+IL_00ad ldarg.0 
+IL_00ae ldfld InputManager::m_myHandZone
+IL_00b3 ldarg.0 
+IL_00b4 ldfld InputManager::m_battlecrySourceCard
+IL_00b9 callvirt ZoneHand::OnCardWithReplacementsDropped
+IL_00be ldarg.0 
+IL_00bf ldfld InputManager::m_myHandZone
+IL_00c4 callvirt ZoneHand::ClearReservedCard
+IL_00c9 ldarg.0 
+IL_00ca call InputManager::ResetBattlecrySourceCard
+IL_00cf ldarg.0 
+IL_00d0 call InputManager::CancelSubOptions
+IL_00d5 ldarg.0 
+IL_00d6 ldfld InputManager::m_gameState
+IL_00db callvirt GameState::CancelCurrentOptionMode
+IL_00e0 ldc.i4.1 
+IL_00e1 ret 
+
+0x06005a45 InputManager::DoNetworkOptionTarget
+IL_0000 ldarg.1 
+IL_0001 callvirt EntityBase::GetEntityId
+IL_0006 stloc.0 
+IL_0007 ldarg.0 
+IL_0008 ldfld InputManager::m_gameState
+IL_000d callvirt GameState::GetSelectedNetworkSubOption
+IL_0012 stloc.1 
+IL_0013 ldarg.0 
+IL_0014 ldfld InputManager::m_gameState
+IL_0019 ldloc.1 
+IL_001a callvirt SubOption::get_ID
+IL_001f callvirt GameState::GetEntity
+IL_0024 stloc.2 
+IL_0025 ldloc.1 
+IL_0026 ldloc.0 
+IL_0027 callvirt SubOption::IsValidTarget
+IL_002c brtrue.s IL_005d
+IL_002e ldarg.0 
+IL_002f ldfld InputManager::m_gameState
+IL_0034 ldloc.0 
+IL_0035 callvirt GameState::GetEntity
+IL_003a stloc.3 
+IL_003b ldloc.3 
+IL_003c callvirt EntityBase::GetEntityId
+IL_0041 stloc.s local(0x0004)
+IL_0043 ldloc.1 
+IL_0044 ldloc.s local(0x0004)
+IL_0046 callvirt SubOption::GetErrorForTarget
+IL_004b ldloc.1 
+IL_004c ldloc.s local(0x0004)
+IL_004e callvirt SubOption::GetErrorParamForTarget
+IL_0053 ldloc.2 
+IL_0054 ldloc.3 
+IL_0055 ldnull 
+IL_0056 call PlayErrors::DisplayPlayError
+IL_005b ldc.i4.0 
+IL_005c ret 
+IL_005d ldarg.0 
+IL_005e ldfld InputManager::m_targetReticleManager
+IL_0063 dup 
+IL_0064 brtrue.s IL_0069
+IL_0066 pop 
+IL_0067 br.s IL_006f
+IL_0069 ldc.i4.0 
+IL_006a call TargetReticleManager::DestroyFriendlyTargetArrow
+IL_006f call RemoteActionHandler::Get
+IL_0074 dup 
+IL_0075 brtrue.s IL_007a
+IL_0077 pop 
+IL_0078 br.s IL_007f
+IL_007a call RemoteActionHandler::NotifyOpponentOfCardDropped
+IL_007f ldarg.0 
+IL_0080 call InputManager::ClearBattlecrySourceCard
+IL_0085 ldarg.0 
+IL_0086 call InputManager::FinishSubOptions
+IL_008b ldloc.2 
+IL_008c callvirt EntityBase::IsHeroPower
+IL_0091 brtrue.s IL_00b9
+IL_0093 ldloc.2 
+IL_0094 callvirt EntityBase::IsGameModeButton
+IL_0099 brfalse.s IL_00a8
+IL_009b ldloc.2 
+IL_009c ldc.i4 4873
+IL_00a1 callvirt EntityBase::HasTag
+IL_00a6 brtrue.s IL_00b9
+IL_00a8 ldloc.2 
+IL_00a9 callvirt EntityBase::IsCoinBasedHeroBuddy
+IL_00ae brfalse.s IL_00d6
+IL_00b0 ldloc.2 
+IL_00b1 ldc.i4.5 
+IL_00b2 callvirt EntityBase::HasTag
+IL_00b7 brtrue.s IL_00d6
+IL_00b9 ldloc.2 
+IL_00ba ldc.i4 4088
+IL_00bf callvirt EntityBase::HasTag
+IL_00c4 brtrue.s IL_00cf
+IL_00c6 ldloc.2 
+IL_00c7 ldc.i4.s 43
+IL_00c9 ldc.i4.1 
+IL_00ca callvirt Entity::SetTagAndHandleChange<spec>
+IL_00cf ldarg.0 
+IL_00d0 ldloc.2 
+IL_00d1 call InputManager::PredictSpentMana
+IL_00d6 ldarg.0 
+IL_00d7 ldfld InputManager::m_gameState
+IL_00dc ldloc.0 
+IL_00dd callvirt GameState::SetSelectedOptionTarget
+IL_00e2 ldarg.0 
+IL_00e3 ldfld InputManager::m_gameState
+IL_00e8 callvirt GameState::SendOption
+IL_00ed ldc.i4.1 
+IL_00ee ret 
+
+0x060060fc TargetReticleManager::DestroyFriendlyTargetArrow
+IL_0000 ldarg.0 
+IL_0001 call TargetReticleManager::EnableCollidersThatWereDisabled
+IL_0006 ldarg.0 
+IL_0007 ldc.i4.0 
+IL_0008 ldarg.1 
+IL_0009 call TargetReticleManager::DestroyTargetArrow
+IL_000e ret 

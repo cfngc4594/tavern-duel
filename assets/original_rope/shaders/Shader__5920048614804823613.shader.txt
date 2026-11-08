@@ -1,0 +1,30 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Obsolete/Pegasus/DiffuseMaskUV2PanAlpha" {
+Properties {
+
+_Color ("_Color", Color) = (1,1,1,1)
+
+_Diffuse ("_Diffuse", 2D) = "black" { }
+
+_Mask ("_Mask", 2D) = "black" { }
+
+_Amount ("_Amount", Float) = 1.0
+
+_Xamount ("_Xamount", Float) = 0.0
+
+_YSpeed ("_YSpeed", Float) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+  GpuProgramID 22395
+}
+}
+}

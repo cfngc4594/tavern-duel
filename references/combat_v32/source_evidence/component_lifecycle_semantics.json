@@ -1,0 +1,71 @@
+{
+  "source_build": "37.0.0.255130.254477",
+  "scope": "Only the ten requested MonoBehaviour classes in original_combat_v32; static source semantics, not a claim to reproduce Unity native scheduling.",
+  "common_gate": "Automatic Awake/Start/Update/LateUpdate/OnEnable/OnDisable invocation is supplied by Unity lifecycle. Current active-in-hierarchy and Behaviour.enabled must be respected. Re-enabling does not replay Start. No class here contains an additional isActiveAndEnabled guard inside its Update.",
+  "ordering_boundary": "CIL establishes each method's internal order, not order among same-priority components or native animation evaluation. Compatibility runner can phase Update before legacy animation and LateUpdate after it; do not call that native frame identity. Current rotation components have no same-GameObject rotation/euler overlap among the 155 resolved clip bindings.",
+  "RotateOverTime": {
+    "methods": {"Start":"0x060154d2", "Update":"0x060154d3"},
+    "Start": "In X,Y,Z order, each enabled RandomStart flag performs Transform.Rotate(axis, float(Random.Range(int 0,int 360))). Axes are Vector3.left (-X), up (+Y), forward (+Z). Default Space.Self. These are integer random angles, not float ranges.",
+    "Update": "In X,Y,Z order, Transform.Rotate(left/up/forward, Time.deltaTime * RotateSpeedX/Y/Z, Space.Self=1). Increment current rotation; do not replace it with prefab rotation every frame.",
+    "current_gate": "37 instances; 36 enabled. Disabled CS2_061 missile Tendril_Container/Core has no direct FSM enabling reference."
+  },
+  "Spinner": {
+    "methods":{"Update":"0x06015569"},
+    "Update":"First Rotate(Vector3.right, dt*SpeedX) with default Self. Then Rotate(Vector3.up, dt*SpeedY, Space.World=0). World Y must be converted through the current parent basis in a local-node port.",
+    "current_gate":"9 enabled components; 6 initially active. Three under CS2_056/impact Root/fx_core_smoke are on inactive GameObjects, with no ancestor ActivateGameObject action in current routes. No Start or OnEnable randomization."
+  },
+  "ScrollingUVs": {
+    "methods":{"Start":"0x06015503","LateUpdate":"0x06015504","ctor":"0x06015505"},
+    "Start":"Cache own Renderer, then GetMaterial(renderer,materialIndex).",
+    "LateUpdate":"If own Renderer.enabled is false, return before advancing time. If cached material is null reacquire it. m_offset += uvAnimationRate * Time.deltaTime; SetTextureOffset('_MainTex',m_offset). m_offset begins (0,0), is not based on material's original offset, and is not explicitly wrapped.",
+    "current_gate":"All 6 Behaviour.m_Enabled=0. Every incoming serialized reference is its own GameObject component list. No normalized FSM references the component or class name; no clip has a MonoBehaviour/class114 enable track. Preserve disabled."
+  },
+  "SetRenderQue": {
+    "methods":{"Awake":"0x0601551c","Start":"0x0601551d","Run":"0x0601551e"},
+    "Awake":"Cache own Renderer, not specifically MeshRenderer.",
+    "Start":"If includeChildren, get Renderer components in children with includeInactive=false and increment each non-null renderer.sortingOrder by queue. Otherwise increment own renderer.sortingOrder by queue, returning if missing. Then call Run. This is once per instance, not every frame or every activation.",
+    "Run":"Return on null queues/renderer/shared material list. For i < min(queues.length,materialCount), skip queues[i]==0 or queues[i]==queue or null material. Otherwise clone shared material, add queues[i] to clone.renderQueue, and assign that index. This secondary per-material branch is distinct from sortingOrder.",
+    "current_branch":"All 18 includeChildren=false and queues empty; only own renderer.sortingOrder += queue is effective. Preserve separate sorting-order metadata rather than reinterpreting this as material renderQueue."
+  },
+  "ParticlePlaybackSpeed": {
+    "methods":{"Start":"0x06015313","Update":"0x06015314","OnDisable":"0x06015315","OnEnable":"0x06015316","Init":"0x06015317","ctor":"0x06015318"},
+    "constructor":"m_ParticlePlaybackSpeed=1; m_RestoreSpeedOnDisable=true; m_PreviousPlaybackSpeed=1. Serialized values override exposed fields.",
+    "OnEnable_and_Start":"Both call Init. Init creates or clears list and original-speed dictionary, queries GameObject.GetComponentsInChildren<ParticleSystem>() with includeInactive=false, saves each system's current main.simulationSpeed, and stores the systems. It does not assign the requested speed.",
+    "Update":"Return when requested speed equals previous. Otherwise set previous=requested; iterate captured systems and assign main.simulationSpeed=requested (absolute, not multiplier). Invalid systems are removed from both containers. Later activated children are not added until Init runs again.",
+    "OnDisable":"If restore flag true, restore saved speed on each valid system. In either case set previous=-10000000 and clear both containers. Next enabled Update is forced by previous sentinel.",
+    "current_branch":"All 16 requested speed=1.5 and enabled. Two restore flags true (large/mega impact extra component); 14 false. Apply to simulation time, not animation clip speed or emission amount."
+  },
+  "SelfAnimUtils": {
+    "automatic_lifecycle":[],
+    "classification":"Animation/event helper only; no Start, Update or OnEnable.",
+    "methods":"Full 17-method index and CIL in current_component_lifecycles.cil.json.",
+    "current_bound_method":"PlayDefaultSound 0x06015511, attack friendly/opponent ACTION_STATE receives the same original event clip at t=0. It uses own AudioSource; with SoundManager calls SoundManager.Play, otherwise AudioSource.Play. Do not duplicate the existing v30 audio route.",
+    "other_helpers":"Play/Stop own Animation; SetActive true/false on own hierarchy; Destroy own GO; FadeIn/FadeOut calls iTween.FadeTo with alpha1/0 and supplied seconds; SetAlphaHierarchy sets first material color alpha on active child Renderers with _Color; RandomRotationX/Y/Z use float Range0..360 and TransformUtil SetEulerAngleX/Y/Z. No current bound event or normalized FSM invocation of these other helpers was found."
+  },
+  "PlayNewParticles": {
+    "automatic_lifecycle":[],
+    "classification":"Explicit animation event helper, not play-on-enable.",
+    "target_mapping":{"PlayNewParticles3":"m_Target","PlayNewParticles3andChilds":"m_Target2","PlayNewParticles3andChilds2":"m_Target3","PlayNewParticles3andChilds3":"m_Target4"},
+    "semantics":"For selected non-null target GameObject, GetComponent<ParticleSystem>().Play() or Stop() for the matching Stop method. The andChilds suffix selects another field; it is not a different traversal algorithm. Unity Play() wrapper includes child particle systems.",
+    "bindings":"Attack external-animation events and Mirror Image t=0 event. See per-instance bound_events_on_same_game_object; duplicate entries describe alternative binding references, not repeated events to emit."
+  },
+  "CameraShaker": {
+    "automatic_lifecycle":[],
+    "method":"StartShake 0x0601508c",
+    "semantics":"Call CameraShakeMgr.Shake(Camera.main,m_Amount,m_IntensityCurve, nullable holdAtSec only when m_Hold, m_IsOverride). It is not an automatic shake just because the component is enabled, and not necessarily the MainCameraShakerAction curve.",
+    "current_instances":"4 attack impact variants. Clip event StartShake at 0.01666666753590107 seconds; amount .01/.05/.22/.6 and source curve endpoint .149999991/.25/.299999952/.449999988. Current curves happen to be linear 1 to 0 with matching slopes. All hold=false, override=false."
+  },
+  "OffScreenRenderFX": {
+    "methods":{"Start":"0x060152ff","OnDestroy":"0x06015300"},
+    "semantics":"Start configures offscreen camera/temporary texture/material, then explicitly enables own Renderer (IL0059..0060). No Update or OnEnable. UpdateOffScreenCamera is an ordinary method called by SetupCamera once. OnDestroy releases temporary RT if created.",
+    "detail":"offscreen_renderfx.cil.json and offscreen_renderfx_bindings.json",
+    "instances":"Two Flamestrike variants and GAME_005/friendly_area Holy GodRays RenderPlane."
+  },
+  "HighlightExclude": {
+    "automatic_lifecycle":[],
+    "method":"ctor 0x06015270 sets ExcludeChildren=true",
+    "semantics":"Marker consumed by highlight traversal, not an autonomous visual effect. Both attack instances have ExcludeChildren=true."
+  },
+  "include_inactive_proof":{"assembly":"UnityEngine.CoreModule.dll same source build","Component.GetComponentsInChildren<T>()":"0x06001398 IL0002 ldc.i4.0","GameObject.GetComponentsInChildren<T>()":"0x060013f9 IL0002 ldc.i4.0","file":"component_children_wrappers.cil.json"},
+  "evidence":["current_component_lifecycles.cil.json","component_runtime_audit.json","component_children_wrappers.cil.json","particle_event_dispatch.cil.json","animate_camera_semantics.cil.json"]
+}

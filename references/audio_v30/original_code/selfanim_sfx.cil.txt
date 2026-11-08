@@ -1,0 +1,208 @@
+
+TYPE SelfAnimUtils 0x02002c99
+
+0x06015506 SelfAnimUtils::PrintLog(message) RVA 0x64860b SIG 2001010e
+  IL_0000 ldarg.1         
+  IL_0001 call           UnityEngine.Debug::Log token(0x0A0001D7)
+  IL_0006 ret             
+
+0x06015507 SelfAnimUtils::PrintLogWarning(message) RVA 0x648613 SIG 2001010e
+  IL_0000 ldarg.1         
+  IL_0001 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0006 ret             
+
+0x06015508 SelfAnimUtils::PrintLogError(message) RVA 0x64861b SIG 2001010e
+  IL_0000 ldarg.1         
+  IL_0001 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0006 ret             
+
+0x06015509 SelfAnimUtils::PlayAnimation() RVA 0x648624 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldloca.s       local(0x0000) 
+  IL_0003 call           UnityEngine.Component::TryGetComponent<spec> token(0x2B00095B)
+  IL_0008 brfalse.s      IL_0011 
+  IL_000a ldloc.0         
+  IL_000b callvirt       UnityEngine.Animation::Play token(0x0A0002F2)
+  IL_0010 pop             
+  IL_0011 ret             
+
+0x0601550a SelfAnimUtils::StopAnimation() RVA 0x648644 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldloca.s       local(0x0000) 
+  IL_0003 call           UnityEngine.Component::TryGetComponent<spec> token(0x2B00095B)
+  IL_0008 brfalse.s      IL_0010 
+  IL_000a ldloc.0         
+  IL_000b callvirt       UnityEngine.Animation::Stop token(0x0A000C6C)
+  IL_0010 ret             
+
+0x0601550b SelfAnimUtils::ActivateHierarchy() RVA 0x5806c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.i4.1        
+  IL_0007 callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_000c ret             
+
+0x0601550c SelfAnimUtils::DeactivateHierarchy() RVA 0x5807a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.i4.0        
+  IL_0007 callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_000c ret             
+
+0x0601550d SelfAnimUtils::DestroyHierarchy() RVA 0x72b0e SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_000b ret             
+
+0x0601550e SelfAnimUtils::FadeIn(FadeSec) RVA 0x648661 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.r4         1.0 
+  IL_000b ldarg.1         
+  IL_000c call           iTween::FadeTo token(0x0A0009F7)
+  IL_0011 ret             
+
+0x0601550f SelfAnimUtils::FadeOut(FadeSec) RVA 0x648674 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.r4         0.0 
+  IL_000b ldarg.1         
+  IL_000c call           iTween::FadeTo token(0x0A0009F7)
+  IL_0011 ret             
+
+0x06015510 SelfAnimUtils::SetAlphaHierarchy(alpha) RVA 0x648688 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::GetComponentsInChildren<spec> token(0x2B00016F)
+  IL_0006 stloc.0         
+  IL_0007 ldc.i4.0        
+  IL_0008 stloc.1         
+  IL_0009 br.s           IL_003b 
+  IL_000b ldloc.0         
+  IL_000c ldloc.1         
+  IL_000d ldelem.ref      
+  IL_000e call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x0A000222)
+  IL_0013 stloc.2         
+  IL_0014 ldloc.2         
+  IL_0015 ldstr          '_Color' string token(0x70005D88)
+  IL_001a callvirt       UnityEngine.Material::HasProperty token(0x0A00039A)
+  IL_001f brfalse.s      IL_0037 
+  IL_0021 ldloc.2         
+  IL_0022 callvirt       UnityEngine.Material::get_color token(0x0A0009E9)
+  IL_0027 stloc.3         
+  IL_0028 ldloca.s       local(0x0003) 
+  IL_002a ldarg.1         
+  IL_002b stfld          UnityEngine.Color::a token(0x0A00039E)
+  IL_0030 ldloc.2         
+  IL_0031 ldloc.3         
+  IL_0032 callvirt       UnityEngine.Material::set_color token(0x0A0009ED)
+  IL_0037 ldloc.1         
+  IL_0038 ldc.i4.1        
+  IL_0039 add             
+  IL_003a stloc.1         
+  IL_003b ldloc.1         
+  IL_003c ldloc.0         
+  IL_003d ldlen           
+  IL_003e conv.i4         
+  IL_003f blt.s          IL_000b 
+  IL_0041 ret             
+
+0x06015511 SelfAnimUtils::PlayDefaultSound() RVA 0x6486d8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldloca.s       local(0x0000) 
+  IL_0003 call           UnityEngine.Component::TryGetComponent<spec> token(0x2B0009E2)
+  IL_0008 brtrue.s       IL_0020 
+  IL_000a ldstr          'SelfAnimUtils.PlayDefaultSound() - Tried to play the AudioSource on {0} but it has no AudioSource. You need an AudioSource to use this function.' string token(0x703F8E52)
+  IL_000f ldarg.0         
+  IL_0010 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0015 call           System.String::Format token(0x0A0000B7)
+  IL_001a call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_001f ret             
+  IL_0020 call           SoundManager::Get token(0x06014710)
+  IL_0025 brtrue.s       IL_002e 
+  IL_0027 ldloc.0         
+  IL_0028 callvirt       UnityEngine.AudioSource::Play token(0x0A0036D8)
+  IL_002d ret             
+  IL_002e call           SoundManager::Get token(0x06014710)
+  IL_0033 ldloc.0         
+  IL_0034 ldnull          
+  IL_0035 ldnull          
+  IL_0036 ldnull          
+  IL_0037 callvirt       SoundManager::Play token(0x06014719)
+  IL_003c pop             
+  IL_003d ret             
+
+0x06015512 SelfAnimUtils::PlaySound(clip) RVA 0x648724 SIG 20010112c000aaf8
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_001f 
+  IL_0009 ldstr          'SelfAnimUtils.PlayDefaultSound() - No clip was given when trying to play the AudioSource on {0}. You need a clip to use this function.' string token(0x703F8F75)
+  IL_000e ldarg.0         
+  IL_000f call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0014 call           System.String::Format token(0x0A0000B7)
+  IL_0019 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_001e ret             
+  IL_001f ldarg.0         
+  IL_0020 ldloca.s       local(0x0000) 
+  IL_0022 call           UnityEngine.Component::TryGetComponent<spec> token(0x2B0009E2)
+  IL_0027 brtrue.s       IL_0040 
+  IL_0029 ldstr          'SelfAnimUtils.PlayDefaultSound() - Tried to play clip {0} on {1} but it has no AudioSource. You need an AudioSource to use this function.' string token(0x703F9084)
+  IL_002e ldarg.1         
+  IL_002f ldarg.0         
+  IL_0030 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0035 call           System.String::Format token(0x0A0000D1)
+  IL_003a call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_003f ret             
+  IL_0040 call           SoundManager::Get token(0x06014710)
+  IL_0045 brtrue.s       IL_0061 
+  IL_0047 ldstr          'TargetAnimutils2: SoundManager is null attempting to play {0}' string token(0x703F9199)
+  IL_004c ldc.i4.1        
+  IL_004d newarr         System.Object token(0x01000001)
+  IL_0052 dup             
+  IL_0053 ldc.i4.0        
+  IL_0054 ldarg.1         
+  IL_0055 ldfld          SoundDef::m_AudioClip token(0x04011A0B)
+  IL_005a stelem.ref      
+  IL_005b call           UnityEngine.Debug::LogErrorFormat token(0x0A000168)
+  IL_0060 ret             
+  IL_0061 call           SoundManager::Get token(0x06014710)
+  IL_0066 ldloc.0         
+  IL_0067 ldarg.1         
+  IL_0068 ldc.r4         1.0 
+  IL_006d ldnull          
+  IL_006e callvirt       SoundManager::PlayOneShot token(0x0601471B)
+  IL_0073 pop             
+  IL_0074 ret             
+
+0x06015513 SelfAnimUtils::RandomRotationX() RVA 0x6487a5 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.r4         0.0 
+  IL_000b ldc.r4         360.0 
+  IL_0010 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0015 call           TransformUtil::SetEulerAngleX token(0x06014FDE)
+  IL_001a ret             
+
+0x06015514 SelfAnimUtils::RandomRotationY() RVA 0x6487c1 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.r4         0.0 
+  IL_000b ldc.r4         360.0 
+  IL_0010 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0015 call           TransformUtil::SetEulerAngleY token(0x06014FDF)
+  IL_001a ret             
+
+0x06015515 SelfAnimUtils::RandomRotationZ() RVA 0x6487dd SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.r4         0.0 
+  IL_000b ldc.r4         360.0 
+  IL_0010 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0015 call           TransformUtil::SetEulerAngleZ token(0x06014FE0)
+  IL_001a ret             
+
+0x06015516 SelfAnimUtils::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             

@@ -1,0 +1,551 @@
+{
+  "types": [
+    {
+      "type": "Blizzard.T5.Core.Time.TimeScaleMgr",
+      "token": "0x0200001b",
+      "fields": [
+        {
+          "name": "s_instance",
+          "token": "0x04000055",
+          "signature": "06126c"
+        },
+        {
+          "name": "m_temporarySpeedIncrease",
+          "token": "0x04000056",
+          "signature": "06151280d9010c"
+        },
+        {
+          "name": "m_gameTimeScale",
+          "token": "0x04000057",
+          "signature": "060c"
+        },
+        {
+          "name": "m_timeScaleMultiplier",
+          "token": "0x04000058",
+          "signature": "060c"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "Blizzard.T5.Core.Time.TimeScaleMgr",
+      "method": "Get",
+      "token": "0x0600008e",
+      "rva": "0x393f",
+      "signature": "0000126c",
+      "parameters": [],
+      "code_size": 23,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldsfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::s_instance",
+          "token": "token(0x04000055)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "brtrue.s",
+          "operand": "IL_0011",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "newobj",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::.ctor",
+          "token": "token(0x06000091)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "stsfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::s_instance",
+          "token": "token(0x04000055)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldsfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::s_instance",
+          "token": "token(0x04000055)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "Blizzard.T5.Core.Time.TimeScaleMgr",
+      "method": "PushTemporarySpeedIncrease",
+      "token": "0x0600008f",
+      "rva": "0x3957",
+      "signature": "2001010c",
+      "parameters": [
+        "t"
+      ],
+      "code_size": 34,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_temporarySpeedIncrease",
+          "token": "token(0x04000056)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::GetTimeScaleMultiplier",
+          "token": "token(0x06000094)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f689009fec0>::Push",
+          "token": "token(0x0A0000B7)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::GetTimeScaleMultiplier",
+          "token": "token(0x06000094)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ble.un.s",
+          "operand": "IL_0021",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::SetTimeScaleMultiplier",
+          "token": "token(0x06000095)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "Blizzard.T5.Core.Time.TimeScaleMgr",
+      "method": "PopTemporarySpeedIncrease",
+      "token": "0x06000090",
+      "rva": "0x397a",
+      "signature": "20000c",
+      "parameters": [],
+      "code_size": 38,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_temporarySpeedIncrease",
+          "token": "token(0x04000056)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f689009fec0>::get_Count",
+          "token": "token(0x0A0000B8)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ble.s",
+          "operand": "IL_001f",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_temporarySpeedIncrease",
+          "token": "token(0x04000056)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f689009fec0>::Pop",
+          "token": "token(0x0A0000B9)"
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::SetTimeScaleMultiplier",
+          "token": "token(0x06000095)"
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::GetTimeScaleMultiplier",
+          "token": "token(0x06000094)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "Blizzard.T5.Core.Time.TimeScaleMgr",
+      "method": ".ctor",
+      "token": "0x06000091",
+      "rva": "0x39a1",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 40,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f689009fec0>::.ctor",
+          "token": "token(0x0A0000BA)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_temporarySpeedIncrease",
+          "token": "token(0x04000056)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "stfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_gameTimeScale",
+          "token": "token(0x04000057)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "stfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_timeScaleMultiplier",
+          "token": "token(0x04000058)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "call",
+          "operand": "System.Object::.ctor",
+          "token": "token(0x0A000021)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "Blizzard.T5.Core.Time.TimeScaleMgr",
+      "method": "GetGameTimeScale",
+      "token": "0x06000092",
+      "rva": "0x39ca",
+      "signature": "20000c",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_gameTimeScale",
+          "token": "token(0x04000057)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "Blizzard.T5.Core.Time.TimeScaleMgr",
+      "method": "SetGameTimeScale",
+      "token": "0x06000093",
+      "rva": "0x39d2",
+      "signature": "2001010c",
+      "parameters": [
+        "t"
+      ],
+      "code_size": 14,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "stfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_gameTimeScale",
+          "token": "token(0x04000057)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::Update",
+          "token": "token(0x06000096)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "Blizzard.T5.Core.Time.TimeScaleMgr",
+      "method": "GetTimeScaleMultiplier",
+      "token": "0x06000094",
+      "rva": "0x39e1",
+      "signature": "20000c",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_timeScaleMultiplier",
+          "token": "token(0x04000058)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "Blizzard.T5.Core.Time.TimeScaleMgr",
+      "method": "SetTimeScaleMultiplier",
+      "token": "0x06000095",
+      "rva": "0x39e9",
+      "signature": "2001010c",
+      "parameters": [
+        "x"
+      ],
+      "code_size": 14,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "stfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_timeScaleMultiplier",
+          "token": "token(0x04000058)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::Update",
+          "token": "token(0x06000096)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "Blizzard.T5.Core.Time.TimeScaleMgr",
+      "method": "Update",
+      "token": "0x06000096",
+      "rva": "0x39f8",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 19,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_gameTimeScale",
+          "token": "token(0x04000057)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldfld",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::m_timeScaleMultiplier",
+          "token": "token(0x04000058)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "mul",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "UnityEngine.Time::set_timeScale",
+          "token": "token(0x0A0000BB)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

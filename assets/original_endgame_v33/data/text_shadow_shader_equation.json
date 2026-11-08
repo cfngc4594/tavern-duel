@@ -1,0 +1,40 @@
+{
+  "source_shader_key": "v32-win-globalgamemanagers.assets:44",
+  "source_name": "Hidden/TextShadow",
+  "source_object_sha256": "1a531452cf23c9d95845654b3daaaea3ec468947bcb958b1d7751f23e4d766ce",
+  "source_vertex_program": {
+    "blob_index": 1,
+    "platform": 4,
+    "size": 1372,
+    "sha256": "27ab227e66c56cbbb88416cc3db364d045b012bb402957b4d83e2e7ac432f811",
+    "file": "platform4_blob1.dxbc"
+  },
+  "source_fragment_program": {
+    "blob_index": 3,
+    "platform": 4,
+    "size": 1248,
+    "sha256": "0dbf1c1599916a84797548b656d74a13c6a25f6a96fbce18771728bb1a8399f0",
+    "file": "platform4_blob3.dxbc"
+  },
+  "original_taps": "Eight: (+x,+y),(-x,-y),(+x,-y),(-x,+y),(0,+y),(0,-y),(+x,0),(-x,0), then apply _MainTex_ST. No center tap.",
+  "original_fragment": "a = sum(alpha taps) / 8; output.rgb = a * _Color.rgb * _Color.a; output.a = a * a * _Color.a.",
+  "original_blend_factors": {
+    "src": 2,
+    "dst": 10,
+    "src_name": "DstColor",
+    "dst_name": "OneMinusSrcAlpha",
+    "same_factors_for_alpha": true
+  },
+  "opaque_framebuffer_rgb_equation": "destination.rgb * (1 - a*a*_Color.a + a*_Color.rgb*_Color.a)",
+  "render_state": {
+    "zwrite": 0,
+    "ztest": 4,
+    "cull": 2
+  },
+  "notes": [
+    "Exact compiled D3D11 shader program decoded from fixed-build native shader44. Runtime _OffsetX/_OffsetY and shadow geometry placement require UberTextRendering CIL, not guessed from editor m_ShadowOffset.",
+    "This is not equivalent to a standard alpha-blended shadow."
+  ],
+  "active_for_current_banner": false,
+  "runtime_gate": "Current result banner and continue use direct TextMesh (m_RenderToTexture=0): outline shader29 Hidden/TextOutline_Unlit is active. Serialized m_Shadow=1 does NOT activate shadow here. CIL UberText.RenderText0600009b enters SetupRenderToTexture060000b3 only when RenderToTexture true; SetupShadow060000c4 is called only from that RTT setup. Shader44 Hidden/TextShadow is retained as inactive original source evidence, not a selected rendering pass."
+}

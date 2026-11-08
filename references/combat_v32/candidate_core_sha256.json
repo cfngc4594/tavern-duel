@@ -1,0 +1,822 @@
+{
+  "freeze_utc": "2026-11-03T05:52:52Z",
+  "scope": "Current v32 production scripts/shaders/scenes/config and combat reference inputs/docs. Five Mono lifecycle classes, original TrailRenderer, source tuple sorting, Light clips, LDR/RTT/OffScreen/Glow, original sampler/mips and shared immutable shader variants. No further production changes unless a recorded verification failure requires correction. Final integrated GPU/PCM/lifecycle remains pending.",
+  "files": [
+    {
+      "file": "main.tscn",
+      "sha256": "6c0a2c98517d92171eca13479d2ab17293822435ff05c80dc5a3fbe837fa58b8"
+    },
+    {
+      "file": "project.godot",
+      "sha256": "f24c549d289e166cc8f078af04b656b72d9a56681ee59beb3d6999568c22da5b"
+    },
+    {
+      "file": "references/combat_v32/IMPLEMENTATION.md",
+      "sha256": "35011fe21093687cd0bf906320dee8475624a89bc312dc080993a1e79d5746fb"
+    },
+    {
+      "file": "references/combat_v32/action_coverage_in_progress.json",
+      "sha256": "9926cf5e63cd5f755a74b93f7df6d260c1e54cbaeeb8ec66c7ecd44cc757041c"
+    },
+    {
+      "file": "references/combat_v32/animation_action_audit.json",
+      "sha256": "f5cf72cfcc3ab9424d832b3583297f3a21ff381fc1f8a39b4a3c0a2c784d525f"
+    },
+    {
+      "file": "references/combat_v32/atomic_compat_dispatch.json",
+      "sha256": "2b21ecf72f8535fd0b27e9bd96677c8be3f1eb1e9b5bb0470b89cac1c989fe7d"
+    },
+    {
+      "file": "references/combat_v32/card_visual_matrix.json",
+      "sha256": "f6e23f252fc55f1c2a09ed4cf0f4f466e6f9f7a076bdea88657d58ffb192612f"
+    },
+    {
+      "file": "references/combat_v32/cast_audio_ownership.json",
+      "sha256": "ca61be363b649a3477fe466ed360e4d90ca8f9c2f470b6bbbc4e0a1d5a5368e5"
+    },
+    {
+      "file": "references/combat_v32/component_lifecycle_semantics.json",
+      "sha256": "e1cc9f28d15e0f60e0c180fa72df05109b795502f15af56b75cef9eb31b58144"
+    },
+    {
+      "file": "references/combat_v32/component_runtime_audit.json",
+      "sha256": "d203cdf703812f25fd374f726d2955dc4b865a50a6eed413c0631f043b175f4c"
+    },
+    {
+      "file": "references/combat_v32/current_component_lifecycles.cil.txt",
+      "sha256": "98a378c78fa2e9778246411cec654152026a5a980484b1c7dff39154bb6132aa"
+    },
+    {
+      "file": "references/combat_v32/mesh_color_channels.json",
+      "sha256": "0620ee7ba755791dd63d69a5b0c1d6f0c9120c1195ffdeac460297c9167aff10"
+    },
+    {
+      "file": "references/combat_v32/minion_shake_runtime.json",
+      "sha256": "949847236384b69184375f62e973d1aa189f2facb14ea2b1ec9842d7489251b3"
+    },
+    {
+      "file": "references/combat_v32/precast_card_matrix.json",
+      "sha256": "552fc58ab023a1678f1fb3ef2cc36b1c8d4c912c165769a43c442e4ae0db6ad0"
+    },
+    {
+      "file": "references/combat_v32/remaining_shader_routes.json",
+      "sha256": "c2a4889aa20fe21569b68274f63b027464cb950a1a84b7085f082af77285adf2"
+    },
+    {
+      "file": "references/combat_v32/runtime_material_audit.json",
+      "sha256": "1ecf6ae9d695f0fa88e1b29d81443c8135348ffff62ba2b06d5242e3a99b3d9a"
+    },
+    {
+      "file": "references/combat_v32/runtime_routes.json",
+      "sha256": "2d2147f3a305735a79390f8a4beb4a7ad3919e9732318f4a43201d265efe7737"
+    },
+    {
+      "file": "references/combat_v32/sampler_rtt_binding_audit.json",
+      "sha256": "653adabd7883e42b0d35f708ddef0fc6913bba1c59b9a7f996609571132141d9"
+    },
+    {
+      "file": "references/combat_v32/source_reachable_action_coverage.json",
+      "sha256": "7f7642385c8a493e6b2f3adef088123833d6dd706ad1f8ede635f364d7c04e02"
+    },
+    {
+      "file": "scripts/classic_flow_audio.gd",
+      "sha256": "7fab4fa354c0e8f73c1a64bbf9cd039e11aea505173aedf95e6110d8b5ded1b4"
+    },
+    {
+      "file": "scripts/classic_flow_cards.gd",
+      "sha256": "d5b842628b8f5dbddf06a8b785062586ab97d2a0495c004907f38820eea365ce"
+    },
+    {
+      "file": "scripts/classic_flow_visuals.gd",
+      "sha256": "15a27564a850243fb62c704ecb890d435dd01b68f9f5a2c87eb2e7fae9ca0754"
+    },
+    {
+      "file": "scripts/classic_match_flow.gd",
+      "sha256": "074ffb15cdfea00a9a0a6aee0e46c346f226aa0c4b71b20efafbc21f268f5f68"
+    },
+    {
+      "file": "scripts/classic_spatial.gd",
+      "sha256": "66f94d4d08f11b3ae3cbd138184382265bef5d7561eae24c34a1e223e53e120a"
+    },
+    {
+      "file": "scripts/dual_class_rules.gd",
+      "sha256": "1009abe3889ae442f77da20162fa34fabbcb5884c5a1722746b8bd20b320d864"
+    },
+    {
+      "file": "scripts/game.gd",
+      "sha256": "4eb768c9cd169c626ced3d6317790fc531f8ca499f8968056892ac7941c82638"
+    },
+    {
+      "file": "scripts/native_card_renderer.gd",
+      "sha256": "0ab4fdc29dbf79e853d42753cad78e5b37f75ce54c2c5153416032ef4cad95d4"
+    },
+    {
+      "file": "scripts/native_combat_assets.gd",
+      "sha256": "0e918a718cc9dcbaa942f4ae4cfabd0c80fa0415e704f5aa75d41a5932b1cb10"
+    },
+    {
+      "file": "scripts/native_combat_capture_materials.gd",
+      "sha256": "fecdb8731a20c6294167ee532b21b57fa47a20b05fc31a23cc1852c4cdbd02b6"
+    },
+    {
+      "file": "scripts/native_combat_components.gd",
+      "sha256": "5fc203e3ab29590d39f278ff5f791dcb7f1e7fdd0e6ccc99d063c4603a64d4d0"
+    },
+    {
+      "file": "scripts/native_combat_effects.gd",
+      "sha256": "e85914a43a77a7cec56a0b2ed77788928dd949a88f20eb36421842e3b222e1a7"
+    },
+    {
+      "file": "scripts/native_combat_minion_shake.gd",
+      "sha256": "abbc73ae581e9c8dd39469f7655e0c0547c3cb16268002e8f50938c5ec047245"
+    },
+    {
+      "file": "scripts/native_combat_particles.gd",
+      "sha256": "b5c4979bce25e80264ec7eeb750bc412925933f4e82ada86b0ad993eba9ee341"
+    },
+    {
+      "file": "scripts/native_combat_player.gd",
+      "sha256": "f18ec9f2b4a863a433b75875caba8e5ee19b850ca8e7837fec941ac62a159edb"
+    },
+    {
+      "file": "scripts/native_combat_rendertexture.gd",
+      "sha256": "270c1fd0b44a249a8c865362813a3a97d9146c953341778a525621cb773ce867"
+    },
+    {
+      "file": "scripts/native_combat_replay.gd",
+      "sha256": "9ed19920f227e7d7853d1c1b3e511edc663fcddeaaecde4e1bee1cf3c857461e"
+    },
+    {
+      "file": "scripts/native_combat_samplers.gd",
+      "sha256": "cde32223589695a04ade3bcb15c023ac3252692cf401061bf9761fe7637b7e58"
+    },
+    {
+      "file": "scripts/native_combat_screen_effects.gd",
+      "sha256": "c100075425d17a93bd4b6fa1a4933c90841089194a3d7a2c393d87974cb78338"
+    },
+    {
+      "file": "scripts/native_combat_screen_materials.gd",
+      "sha256": "f6277334c891513f7abec699286e966336d98f7cd4d0a27841fcf0542141a467"
+    },
+    {
+      "file": "scripts/native_combat_trails.gd",
+      "sha256": "993f4b13c05762b153e1c40b0a3301851caf73df7cd9104921ac3d0d4f748d53"
+    },
+    {
+      "file": "scripts/native_combat_transmission.gd",
+      "sha256": "24a8a9fc5d2c080e2c2bbfae21c1f15ca3dea47682c5f357140edde5b6a2b001"
+    },
+    {
+      "file": "scripts/native_summon_assets.gd",
+      "sha256": "70aeb42b1166e0f65fdaa71abca0cdc814ce6b4a1b5cde1e6df6ed88fa543ef1"
+    },
+    {
+      "file": "scripts/native_summon_curves.gd",
+      "sha256": "d50fdc6888586926a34b8eac117555cfd2ab9afe004558aea7b8b3c912f5fca8"
+    },
+    {
+      "file": "scripts/native_summon_particles.gd",
+      "sha256": "97bdd51d280c40c22debd38707dc33119316f397ec0108a76c23e57de4053c38"
+    },
+    {
+      "file": "scripts/native_summon_player.gd",
+      "sha256": "a12e8e0e6f7f3aad0437e67c2946604da1d6e217935bbcc8d07b2663d651b76e"
+    },
+    {
+      "file": "scripts/native_turn_banner.gd",
+      "sha256": "95ca2256191b6587093b7c7954dc0e855b27570f3364f47be7a8376a20d179fa"
+    },
+    {
+      "file": "scripts/native_turn_burst.gd",
+      "sha256": "ebf4b0700f8c09b0fbdbf8157ffc0b4451325c0707ccc608680fcd86361ee610"
+    },
+    {
+      "file": "scripts/native_turn_rays.gd",
+      "sha256": "92e554d649be2a0293d179251fa2c6c34d6b31b9c31ccf52ee6f22d722b2d731"
+    },
+    {
+      "file": "scripts/native_turn_timeline.gd",
+      "sha256": "648b405a6db6bc10b245623f4c93e592453442c1e666bf0ef6c3a07d4a1de8ab"
+    },
+    {
+      "file": "scripts/native_turn_ui.gd",
+      "sha256": "42a149ed0fdd26946ba5b087e100af7a147a7455e72bd36d5bd6269a9cb6b270"
+    },
+    {
+      "file": "scripts/original_audio_router.gd",
+      "sha256": "e6bd7087d7914f21428ac0d1bd5770a183a466fe8e3faca76048320ef4df5089"
+    },
+    {
+      "file": "scripts/sound_manager.gd",
+      "sha256": "689939e39bb6fc926357122722088e7371c623d1bd88b833d9cd1282d7adcf2c"
+    },
+    {
+      "file": "scripts/summon_release_fx.gd",
+      "sha256": "82a566810466deb4e448b321ca839f1da5226470841459a86ffb5c1ef1194347"
+    },
+    {
+      "file": "shaders/native_combat_additive.gdshader",
+      "sha256": "5f2d1e00c629ff05e9dee790a9b78228a394cc52ac59cbb56a4a184201f90635"
+    },
+    {
+      "file": "shaders/native_combat_additive_vertex.gdshader",
+      "sha256": "f592243871cd5f0103291f8da946a2e9acc181ede2716ada6161c15d86b84c02"
+    },
+    {
+      "file": "shaders/native_combat_addmultiply.gdshader",
+      "sha256": "6d1727080a5a20dc41a9eb776fd363197f964a68f8ff8ba5052ea1c4b56a37a9"
+    },
+    {
+      "file": "shaders/native_combat_addmultiply_world.gdshader",
+      "sha256": "ef31bcd4688bbb7ad67c707f06e2ad89bf98584cd011e293a1942c48f4f8998f"
+    },
+    {
+      "file": "shaders/native_combat_alpha2layer.gdshader",
+      "sha256": "c9620ab27df4ac6b88f1de1998c3833991ba08a631335562c40c4c40669735dd"
+    },
+    {
+      "file": "shaders/native_combat_alpha_fill_opaque.gdshader",
+      "sha256": "9fefabd8052191629bc161df37a1a45a0b7b822c6a1698a4aca2b24e473f2f8f"
+    },
+    {
+      "file": "shaders/native_combat_area_render.gdshader",
+      "sha256": "351755d480b84374c72769e915adacb5cdc87e6aafb925ef585cb417062e07ac"
+    },
+    {
+      "file": "shaders/native_combat_area_render_glow.gdshader",
+      "sha256": "bf120e4a414f9d078bbf42f90f937e2e9ea3fc7f516bccd17931acda6e9207d8"
+    },
+    {
+      "file": "shaders/native_combat_black.gdshader",
+      "sha256": "cd0b119c6acc2bc030a0e007704f61e1c85b027ccf9bc87bb1137b5077ea3399"
+    },
+    {
+      "file": "shaders/native_combat_board_color.gdshader",
+      "sha256": "851d875c8554c729394270710bcdb16957f0808dfee2d6436a62d9fdbb2b22af"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_additive.gdshader",
+      "sha256": "461303ac199da4e77c725379dde13f2927179f97d9f42ad4f808ea7b70342d78"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_additive_vertex.gdshader",
+      "sha256": "8a747ef1d6639bd9186095423a768794af3e45c02657a8fbfd08ff38986c9435"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_addmultiply.gdshader",
+      "sha256": "a05429f62cf40ebb8d2be795c59b11eb3cfd60992989644192b6a7819e825c47"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_addmultiply_world.gdshader",
+      "sha256": "4d5b5881b57528b04696c021d0cbeef80ca052e121f058fcedfa740c8bdb4ed1"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_alpha2layer.gdshader",
+      "sha256": "a1e45f2f6e344c4429e295c745c6f53da8decd63bc846d689e36cec747634726"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_area_render.gdshader",
+      "sha256": "995332a7d47841713140ebac6523f65bdf65b11be1af9f467df0d8c9b62a964d"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_black.gdshader",
+      "sha256": "4708ac5c71ed70c6bcd17edf193024ee60aeaf28771d7c039c7a5498231ca89f"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_board_color.gdshader",
+      "sha256": "ca50752ebb60e05c15c2f72144534a2668a77bc9aaa637ad0ead6cf0bed832cb"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_color_as_alpha.gdshader",
+      "sha256": "ce163733f4b18cc026c4db03d94a84c0d31b3cb2af3af4ae51c9e41dbab5ff37"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_colorize_mask.gdshader",
+      "sha256": "594b5ddc3ad8f9d87436cc738772f0c94ac2535510d0cb27770fa561ea175ff7"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_common_fx.gdshader",
+      "sha256": "ca853c5d3172af5dbe65b210670c6e7a3aa48132d8090bbc13a3b97a99782003"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_cutout.gdshader",
+      "sha256": "e197316c2e2532160845975c898f5e3e2115841d63dff166a75b8e6b431a1e98"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_diffuse.gdshader",
+      "sha256": "abfe7187c68fba427b75a10f3896ac12c800051310752f1524904b31811cab05"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_diffuse_color.gdshader",
+      "sha256": "b55a81379861c40b107866dc09bee636d65f156c57939693c08df4a21c5f52cf"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_dissolve_single.gdshader",
+      "sha256": "21a75b8898a687d27d267828195289274747f1696ef28239967d6e953bebd2eb"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_fresnel.gdshader",
+      "sha256": "2589e2aac2f12cecd157e46d7df5ab098a28fc2df1033a5ae5c505b426e8e8ea"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_hero_mask.gdshader",
+      "sha256": "7cf6f9c07a9100bebf2f45207ccd3c51618d3250b8b56773001096aae204cd4a"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_holy_render.gdshader",
+      "sha256": "cc27dcfb034c0b82939a447c1f9d1d9e91e496564f213f91cb3c1c4905d2d9a3"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_mobile_additive.gdshader",
+      "sha256": "0f4ab1a32944541e86fdc1d725bbecdb0f930f60b9dd75dbe5dcef6505c65bb1"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_multiply.gdshader",
+      "sha256": "79ee85f0a31b8f8d354cbc9e56ca9110342c2cb2b48d98708e02500f4e23af06"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_multiply_rgb.gdshader",
+      "sha256": "0aee52af6e961f46a606b3b70eb3006c93b085bce44fa246405c9ec357324414"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_particle_additive.gdshader",
+      "sha256": "98eb2f97405fc1c3d2e33ba79b37a1dbeb38f881ca7d23c3ad083c611d74c542"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_particle_additive_plus.gdshader",
+      "sha256": "e30bc79a05fd6b5720f29820696b6d96912cf68ad9b7560e11c9198a458c11a3"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_particle_addmultiply.gdshader",
+      "sha256": "a6c6ee04a400082d0587ad045975ecf235cf963dd01019d7f000a6fb3bf65d54"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_r2t_additive.gdshader",
+      "sha256": "e37d732f386b59d3d43f90d399b225755c2177ada0a2bec5cf25fd787ca09692"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_r2t_alpha_clip.gdshader",
+      "sha256": "36643fa6cff5564c7fb89d122353f67cb12aa864670c9b2ff90f0a50e8561f10"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_r2t_alpha_gradient.gdshader",
+      "sha256": "bb0306029a43062695b6579722bbe07121f23f3d194a8fa0d9ea4f99c475fec9"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_r2t_transparent.gdshader",
+      "sha256": "7a0250d740a3748087133d0371e69c235a77f2435505ce6783eb4c9c2a933e4c"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_scrolling.gdshader",
+      "sha256": "ed9d364dd9a71f5242b0f8c1661cc00182db7c815df1b4d31fac2ceb1a1b3cac"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_transparent.gdshader",
+      "sha256": "e6b755a633f5ea88f36e90c9a12101be553af8bf28e96e6a84812d69bcd36899"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_transparent_color.gdshader",
+      "sha256": "60b9f9b98787b6a153486ca4f74f0e02de88a6bac97b30ba022e6062f5ef7cef"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unlit_color.gdshader",
+      "sha256": "ef24d85da3bfb5a319d0d83b9d94b7a182095e1e631d665cf624c42d50835372"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_additive.gdshader",
+      "sha256": "6d1ad9ed6f58ae40dcf64acfd41559e918f6c57b5db650b5ef7f657b4ad73c67"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_additive_vertex.gdshader",
+      "sha256": "4377fbbc61941c244923c88d90c60844bd8f5af5d99178431e0d97638da4ac59"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_addmultiply.gdshader",
+      "sha256": "95c251e5616fa25b39acd893a6b309ff910f786bfb39ff512aaef061d931a6d5"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_addmultiply_world.gdshader",
+      "sha256": "6e6cf18f60a570dfe8c55e54a5f9be60e716769645ef7fdec7b92420afbe07ae"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_alpha2layer.gdshader",
+      "sha256": "1765529df71bd15fcde5e66e1760f0fde10e95a9ea22f16b84d5307f58e960d6"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_area_render.gdshader",
+      "sha256": "b2e19951f5aded165f892f1c4fd4c7aeb55cd1c23b03c60da1214ed2a96ede93"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_black.gdshader",
+      "sha256": "eadc10a00783bb37e14cd35e334a510d5d9215879f930b71b40c5194c14fd737"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_board_color.gdshader",
+      "sha256": "d10a8dc31178c5373fc5283c3c3a4d0a5616a2eb596a520fcdd6294a67576322"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_color_as_alpha.gdshader",
+      "sha256": "ec2dcab1c05b772e51d665f0ea74832ee0a59c3d35949a83e094b0f3d34ef991"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_colorize_mask.gdshader",
+      "sha256": "a79f69e664e4da2456fbb11736b30dc4c9e8ba63ebb05991f85da1d39c08a2a0"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_common_fx.gdshader",
+      "sha256": "f71571aa8fdce578715a009fd9f487828b59456253d1689c0669e7bb6e46561d"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_cutout.gdshader",
+      "sha256": "5211bfa546879dd3ebe688d172650099e3c84578080d5e82e6301b86679f0930"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_diffuse.gdshader",
+      "sha256": "96c03a7e38e2dd8246b78b3101c4ad7120467ee2597e616f827e2878b86af411"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_diffuse_color.gdshader",
+      "sha256": "7dc506f198bef6725c64e36fe80e85f1a6548cf22675ca9d84e0c6c82978b29a"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_dissolve_single.gdshader",
+      "sha256": "d0f4d6a6957d46c73f3b942ca6eb0041cd8f00b4ca7e14943afa68e4b66005be"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_fresnel.gdshader",
+      "sha256": "c75fd1cf5962f6428bac988565ee428bfbd641d716184f3a5ed92d4c741a1576"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_hero_mask.gdshader",
+      "sha256": "792586e5cd041b725de59cf913637bd9cc3af378b4986c5724ad30e7450cff27"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_holy_render.gdshader",
+      "sha256": "737b759ed1099c2dec0588e6c566f33a8f47b465d4f38d664645044b6362b211"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_mobile_additive.gdshader",
+      "sha256": "a6404ce9942f7fac176dba7d32a224797314ff04c6e65a252f09886e3c08bf2b"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_multiply.gdshader",
+      "sha256": "45ac318734f7309f652c26a13f86e0d574b32e7ec05023edf70225f4bd679e9f"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_multiply_rgb.gdshader",
+      "sha256": "c44453f0d9f7e914dd848686b81249444edd9ff603460c565c616a374db49afe"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_particle_additive.gdshader",
+      "sha256": "e6c45077171d394054f3e88ec32fa090567a1049d9b81f64a221b765e1b71cad"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_particle_additive_plus.gdshader",
+      "sha256": "e274bf85a8dcbebdc78f9e347f0d03f6bef178397a5fc0b38dd24f0f39964b87"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_particle_addmultiply.gdshader",
+      "sha256": "09266ae5d163ed8239ea9e95a1c155938f34d78b905c1f7c66a2e3e11c1a09f8"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_r2t_additive.gdshader",
+      "sha256": "a5501ffa98f22a0aa35c871a179609b7d4681b2366e789e29f2780870260f72e"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_r2t_alpha_clip.gdshader",
+      "sha256": "2f426984d0ae829a545b70af0638fae63c5a2d082ddfa19f3c214e62433275e0"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_r2t_alpha_gradient.gdshader",
+      "sha256": "f7dd9036ae6cb206019ba5c2decb0af033f6f12a242e91f1fbe8ac87500cc0ef"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_r2t_transparent.gdshader",
+      "sha256": "22602312ba28bb601d9ddabb5c9b2dbb6f90960d71ec90b5f33e40ca96860bca"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_scrolling.gdshader",
+      "sha256": "5bf75de031a13dcad856f68ee4b90a4586afe33bf40abd6bd2fd2434414d8257"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_transparent.gdshader",
+      "sha256": "41e39e54d0bb880e9b6c823eb32b1b1304d28f1b84dd6241ca40fc5d0ef31d79"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_transparent_color.gdshader",
+      "sha256": "41972dbe17df755644274d3058fcf63def43800e9d102dec3f63ed5f61729620"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_unlit_color.gdshader",
+      "sha256": "d6922ce0ca06de056578ede10a29806aacad0d9dcba85e19fdef94652ffa67c7"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_unorm_urp_simple_lit.gdshader",
+      "sha256": "6061d4edfec21b7da8f7c9116055abf04dc1bef0bf8b3c29f12d22638165bbd0"
+    },
+    {
+      "file": "shaders/native_combat_capture_alpha_urp_simple_lit.gdshader",
+      "sha256": "b3f84a8b1f59df9487dcc240cd513f8a9ba950b8c1fb7051d9faf346e8e5182b"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_additive.gdshader",
+      "sha256": "c6be6e5b25aca67c98e94c42f20a566816d874e4953883813f9faf8a18aa966d"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_additive_vertex.gdshader",
+      "sha256": "66eb2167b26c1fdc755ad48585c7bafb6699ac05d6c7c7c23e7e9fb6f6d0b518"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_addmultiply.gdshader",
+      "sha256": "7f590059260419072dc541d5674abbc6117a08e2d679e0bb71f94481d264d712"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_addmultiply_world.gdshader",
+      "sha256": "8c2cbc1b99f4fcddc0e74f59035b76ccb435c3a6442f1bc5d637ed3301697cfe"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_alpha2layer.gdshader",
+      "sha256": "d57b97f7f75fbb4184ecf7f0a43d564c372599d8cdd69ef5b31572f1a70dff88"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_area_render.gdshader",
+      "sha256": "81eeee8223edbdc0008fd7d0b7aa20d08cfd4ada059acbcd42b5ed6e500ad011"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_black.gdshader",
+      "sha256": "66018c2fb8163473f790e2cf1aa76bb7b0037371f6f601bf81ce12c7984d8b55"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_board_color.gdshader",
+      "sha256": "31d8bab97678e450b10191ee905cd1ef743dfc0f367639cfc5905032eeffd5ad"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_color_as_alpha.gdshader",
+      "sha256": "b2aee3ff3a45a4c816fef15182a19fd9d380423008d4eda0d2b298a69cc4c947"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_colorize_mask.gdshader",
+      "sha256": "f69d853a94837810dbaa09f453f3cfbeb0b80e0e92427e508168ca2c5fc29f90"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_common_fx.gdshader",
+      "sha256": "2b0ca92464b0d3f41b00b5543986dcce04ad64cecbfb4df49e5fb062c271510f"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_cutout.gdshader",
+      "sha256": "afb05324fd7d71e7648cb972f862dee91f209457e7569bac99ff2839aa78e5f1"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_diffuse.gdshader",
+      "sha256": "3fdaad73414fe1f2cdcecaa4df89dfde373d86db7cf10dd1081be9ebb40a3b71"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_diffuse_color.gdshader",
+      "sha256": "81340c9fc06b345d6f189b044d80b0b3af7278dd187e71dd532af55118299978"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_dissolve_single.gdshader",
+      "sha256": "6a1466b68cc4fe13761b7c81de262fa202676308547c1680eed9229a27b328d4"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_fresnel.gdshader",
+      "sha256": "2674c4be3c42b513f238514bd98c31ede25ab4e83c25d2c64656107ff8cce1e5"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_hero_mask.gdshader",
+      "sha256": "9f058ee762bb2142d015bc6643ef18ef3faa21b1c1e822e28d123cc132119665"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_holy_render.gdshader",
+      "sha256": "9336a9bc40f99a65c71c3e20db00c6e9f06a0ed4a33509f6d885d0a0fe9818ca"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_mobile_additive.gdshader",
+      "sha256": "9164a45dc1cb5bb38183e59a392d4587ccfe3eccc469df9f30b1b938c7b6796b"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_multiply.gdshader",
+      "sha256": "ec2ba01782417581b98f56a6f950265a30ff7c7ad847365351153e9191773b26"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_multiply_rgb.gdshader",
+      "sha256": "22e72908d1caef98742d8cb08b83bbd4d58c39a7ea3d56431171b423cbc1ee9b"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_particle_additive.gdshader",
+      "sha256": "7444395c3b2a0c072ed73e106b6f0be3c9e601c6fcbe14c209deefceea945038"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_particle_additive_plus.gdshader",
+      "sha256": "0b4187a9140f06939764f4f2124af768e8e34ed5dc3791dd62eaea8f37883c0b"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_particle_addmultiply.gdshader",
+      "sha256": "cf06b6c5c453956c13af8bde3c15cd4ddb1640aa69f75552005566a1713dce42"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_r2t_additive.gdshader",
+      "sha256": "e1b24130388dae6d64f456fbc207989db94461c7f7d8f9b8e9e74cacceb8b7d9"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_r2t_alpha_clip.gdshader",
+      "sha256": "83c8e785602dd93c446580a0b3de426cc17b38d0bb75210ca0955b52ed0db222"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_r2t_alpha_gradient.gdshader",
+      "sha256": "395584538c42442b0df7b4ddc321aa9b47aa2f0c6a6fe7126791fa7838327a9e"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_r2t_transparent.gdshader",
+      "sha256": "7ec73131e3706efc84ba6ea87d2e208a8432f4af0843d180065f72b9fdff282f"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_scrolling.gdshader",
+      "sha256": "9d58367005ac547a14d8f6f8bc0a9f5295a183955195da7a01d7949c5a338c2e"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_transparent.gdshader",
+      "sha256": "1b4dd4d64aa669c547ba00f96f6f259e392f3551ab2700f8b837fb7c99106d35"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_transparent_color.gdshader",
+      "sha256": "2c1c50c5c7b1a4e696b93fc784fa869f03150eee0ec9ea1395008d4f176d65b5"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_unlit_color.gdshader",
+      "sha256": "7b61ab33cb1a00a4aa0e1e6cc5e593dd2ee6426fb1d42e6f12b4beebeb9c6ae2"
+    },
+    {
+      "file": "shaders/native_combat_capture_color_unorm_urp_simple_lit.gdshader",
+      "sha256": "dfaffb96a4466da6e1b235f338bb0967ed15f549597cf606dba641dba874b943"
+    },
+    {
+      "file": "shaders/native_combat_color_as_alpha.gdshader",
+      "sha256": "0689db263486627eb5b0a523725521ad148475d31e2a7344d7a0f7848551ce93"
+    },
+    {
+      "file": "shaders/native_combat_colorize_mask.gdshader",
+      "sha256": "c1452c8c0a465734f4d0de4a74803db8fe1e357fb451f9c07b1d82b70289ef2c"
+    },
+    {
+      "file": "shaders/native_combat_common_fx.gdshader",
+      "sha256": "8572ce7943bdeedacc392e5a34d8eaead33389328dbf1131c7db46ccd6786580"
+    },
+    {
+      "file": "shaders/native_combat_cutout.gdshader",
+      "sha256": "89cdd9344040daad1dc016d665b8b45a48390029376a961f6ec87c6edc56ef93"
+    },
+    {
+      "file": "shaders/native_combat_diffuse.gdshader",
+      "sha256": "e27b720a7eeaec7854a9bfebfb5934adc0e21ec4f8bf0bf4bf3562ce42834e91"
+    },
+    {
+      "file": "shaders/native_combat_diffuse_color.gdshader",
+      "sha256": "3da98f5e096b23043637b3f2d5f0d46285af42c8cfd76a8d3724a75db8ec5fd1"
+    },
+    {
+      "file": "shaders/native_combat_dissolve_single.gdshader",
+      "sha256": "4c36edcee7dd5ee9c270c3bd637d159787517e464b2faa5a2d50ba2fabda1060"
+    },
+    {
+      "file": "shaders/native_combat_fresnel.gdshader",
+      "sha256": "35f5759cd911956002b9ef86d96babe9a94899c4b866e6ca7d99fd90945513e5"
+    },
+    {
+      "file": "shaders/native_combat_hero_mask.gdshader",
+      "sha256": "f575033db8b6baf270ec3734ed5cbec92c717cd3e1823790b002942a4dec59b6"
+    },
+    {
+      "file": "shaders/native_combat_holy_render.gdshader",
+      "sha256": "d2ae4fe6fc28ceebd3fef6ecd885db4e5cdf1093e1809e0e5636bc230319f5e7"
+    },
+    {
+      "file": "shaders/native_combat_mobile_additive.gdshader",
+      "sha256": "a94cbb8780265f1bcaf8193a06128fee9f4a50933022893255b7b6a8a0c89d64"
+    },
+    {
+      "file": "shaders/native_combat_multiply.gdshader",
+      "sha256": "1159a28f8b3d835a4c5f7a6271bd66cfe05723a3935aff4926e20f36936134f0"
+    },
+    {
+      "file": "shaders/native_combat_multiply_rgb.gdshader",
+      "sha256": "995d3ead0ccdd254ae9fb9a03914805dec3d5d8cd02aea1f26c7b2f00b200417"
+    },
+    {
+      "file": "shaders/native_combat_particle_additive.gdshader",
+      "sha256": "8bfd7007ba3179ef974452fb4d6ffe0e4de6bd9957e7b514b26a5d00100c30c2"
+    },
+    {
+      "file": "shaders/native_combat_particle_additive_plus.gdshader",
+      "sha256": "a1e8c1faa2232e776f1bfdcd760933aa43babd700bddebbac629f6596e4df278"
+    },
+    {
+      "file": "shaders/native_combat_particle_addmultiply.gdshader",
+      "sha256": "a65f6ded35613fe7b67fbfc7ad610d82b2566626932d30a00892e988c29c4629"
+    },
+    {
+      "file": "shaders/native_combat_r2t_additive.gdshader",
+      "sha256": "413e18d8defdbcfdc2db0e6b88f17776e52fe38d7266b1d7dfe2919be4e55479"
+    },
+    {
+      "file": "shaders/native_combat_r2t_alpha_clip.gdshader",
+      "sha256": "871dae096c369771be5e49854dad62dc5ff00d4c78dad271f2192670baf627ce"
+    },
+    {
+      "file": "shaders/native_combat_r2t_alpha_gradient.gdshader",
+      "sha256": "a36a9c6a538dd3f0bad09f32fc86c69823f622c828e3a13eb9e6527b27b9831b"
+    },
+    {
+      "file": "shaders/native_combat_r2t_bloom.gdshader",
+      "sha256": "f0e025958b2fe8cbb8d6f13c193b186ce6be9b5a1a2162a5e33d5babfe1161ca"
+    },
+    {
+      "file": "shaders/native_combat_r2t_blur.gdshader",
+      "sha256": "4a3549bf8e7a2b1d3937109d383130f174c7ca08ed49e19bff43610ca2733efa"
+    },
+    {
+      "file": "shaders/native_combat_r2t_combine.gdshader",
+      "sha256": "a5601d8b31f8a1ef36ef09ec0b30e83d952ee37f6c36bd4cc4bf0935a51dc2bc"
+    },
+    {
+      "file": "shaders/native_combat_r2t_transparent.gdshader",
+      "sha256": "db2eff243c1e56fd6e97a3d7ca382f37255c68b91e9f1d45965d8e4a07a5a47d"
+    },
+    {
+      "file": "shaders/native_combat_screen_area_glow_alpha.gdshader",
+      "sha256": "2d3417af1c6f7175a3248e60e37f6de13795574683d05d6adf8f0841b38c6d55"
+    },
+    {
+      "file": "shaders/native_combat_screen_glow.gdshader",
+      "sha256": "43252034813251aeeab248c9e5e0c33a0839664919d0df9d56d79605d9899e84"
+    },
+    {
+      "file": "shaders/native_combat_screen_mask_prepass.gdshader",
+      "sha256": "5f0c4a7ed9ccb9e2f374a3eb9239a286e20bbfb30c89db9305bc9227b298cee6"
+    },
+    {
+      "file": "shaders/native_combat_scrolling.gdshader",
+      "sha256": "62d27795fec2d7996b9b5ae3ae3c209710c6dd6f664fdb53242de0a40c8d1865"
+    },
+    {
+      "file": "shaders/native_combat_transmission_composite.gdshader",
+      "sha256": "02a7a223b420cf9e86d3df6e735ebaafa1ecef950825809daeba9af17158fcfc"
+    },
+    {
+      "file": "shaders/native_combat_transparent.gdshader",
+      "sha256": "bc79de8a836c7a5a84e30016663a49095ec264b11f02cda52bde4249fa164ff5"
+    },
+    {
+      "file": "shaders/native_combat_transparent_color.gdshader",
+      "sha256": "180f88a61e9cb0c456907318683f5018fafe5c9cabf7fb46b792ea5ef521a55c"
+    },
+    {
+      "file": "shaders/native_combat_unlit_color.gdshader",
+      "sha256": "9acbbf73dba0f3e6c06f689ecd09e2f8d66bc9ed3181e3633d05bed979608dac"
+    },
+    {
+      "file": "shaders/native_combat_urp_simple_lit.gdshader",
+      "sha256": "061150fde57cd99b95396f75c8cbf5858362b5a7d1abc24e3498a9aebc4b349b"
+    },
+    {
+      "file": "shaders/native_scene_composite.gdshader",
+      "sha256": "70f029eb6de639726ebe5fa3d4c439f0071d77a396709af12168e834672d9c35"
+    },
+    {
+      "file": "shaders/native_summon_addmultiply.gdshader",
+      "sha256": "35984bbd1bf234ff89f451992b19791c200eb476b52121cda9f262886e2f6117"
+    },
+    {
+      "file": "shaders/native_summon_dust.gdshader",
+      "sha256": "87d5e4ab866e105170b10ca52ae401696699cc93e0bcd849c70e7513378cbc25"
+    },
+    {
+      "file": "shaders/native_summon_flash.gdshader",
+      "sha256": "a9641c21820e147e5ed6256b8ebe22925df0d47dadac8795199f07a66955507b"
+    },
+    {
+      "file": "shaders/native_summon_hidden_glow.gdshader",
+      "sha256": "142746a6a8c7ae5f09680103fff358a44ea2797cfacf57a8c89982c9fa46ec05"
+    },
+    {
+      "file": "shaders/native_summon_highlight.gdshader",
+      "sha256": "e12e653c967f4d7e8c989b194d1cc04f068afe308ddaacdc8b09e031a690d1cf"
+    },
+    {
+      "file": "shaders/native_summon_portrait.gdshader",
+      "sha256": "aa002f1d45397006a1314ebada66678c49785b26c7e3e0697e4d8cb0a7eb6991"
+    },
+    {
+      "file": "shaders/native_summon_rays.gdshader",
+      "sha256": "bdc02f80ab0ab4e950db4cc28c6403b843e656f3e076195b235d688235720f22"
+    },
+    {
+      "file": "shaders/native_summon_scroll.gdshader",
+      "sha256": "d192cd6478e8828b8b99fbaf099f0ee88db55b7de2f323fb9663d3e62e5a91e9"
+    },
+    {
+      "file": "shaders/native_summon_shadow.gdshader",
+      "sha256": "da5cafbef333f06ab0129a61cfb0fc7b72dd97399747eab9c5218172f2300cc5"
+    }
+  ]
+}

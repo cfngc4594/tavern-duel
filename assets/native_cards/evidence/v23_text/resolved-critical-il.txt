@@ -1,0 +1,847 @@
+
+UberText.SetFont 0x060000ac
+0000 ldarg.0  None
+0001 ldfld UberText m_Font
+0006 ldnull  None
+0007 call  op_Equality
+0012 brfalse.s  15
+0014 ret  None
+0015 ldarg.0  None
+0016 ldfld UberText m_isFontDefLoaded
+0021 brtrue  231
+0026 ldarg.0  None
+0027 ldfld UberText m_fontTable
+0032 brfalse  231
+0037 ldarg.0  None
+0038 ldfld UberText m_fontTable
+0043 callvirt  IsEmpty
+0048 brtrue  231
+0053 ldarg.0  None
+0054 ldfld UberText m_LocalizedSettings
+0059 call UberTextLocalization GetFontModifier
+0064 stloc.0  None
+0065 ldarg.0  None
+0066 ldfld UberText m_fontTable
+0071 ldloc.0  None
+0072 ldnull  None
+0073 call  op_Inequality
+0078 brtrue.s  88
+0080 ldarg.0  None
+0081 ldfld UberText m_Font
+0086 br.s  89
+0088 ldloc.0  None
+0089 callvirt  GetFontDef
+0094 stloc.1  None
+0095 ldloc.1  None
+0096 ldnull  None
+0097 call  op_Inequality
+0102 brfalse.s  197
+0104 ldarg.0  None
+0105 ldloc.1  None
+0106 ldfld  m_Font
+0111 stfld UberText m_LocalizedFont
+0116 ldarg.0  None
+0117 ldloc.1  None
+0118 ldfld  m_LineSpaceModifier
+0123 stfld UberText m_LineSpaceModifier
+0128 ldarg.0  None
+0129 ldloc.1  None
+0130 ldfld  m_FontSizeModifier
+0135 stfld UberText m_FontSizeModifier
+0140 ldarg.0  None
+0141 ldloc.1  None
+0142 ldfld  m_SingleLineAdjustment
+0147 stfld UberText m_SingleLineAdjustment
+0152 ldarg.0  None
+0153 ldloc.1  None
+0154 ldfld  m_CharacterSizeModifier
+0159 stfld UberText m_CharacterSizeModifier
+0164 ldarg.0  None
+0165 ldloc.1  None
+0166 ldfld  m_UnboundCharacterSizeModifier
+0171 stfld UberText m_UnboundCharacterSizeModifier
+0176 ldarg.0  None
+0177 ldloc.1  None
+0178 ldfld  m_OutlineModifier
+0183 stfld UberText m_OutlineModifier
+0188 ldarg.0  None
+0189 ldc.i4.1  None
+0190 stfld UberText m_isFontDefLoaded
+0195 br.s  231
+0197 ldstr  0x70000293
+0202 ldc.i4.2  None
+0203 newarr  0x01000037
+0208 dup  None
+0209 ldc.i4.0  None
+0210 ldarg.0  None
+0211 call  get_name
+0216 stelem.ref  None
+0217 dup  None
+0218 ldc.i4.1  None
+0219 ldarg.0  None
+0220 ldfld UberText m_Font
+0225 stelem.ref  None
+0226 call  LogErrorFormat
+0231 ldarg.0  None
+0232 ldfld UberText m_UberTextRendering
+0237 brfalse.s  321
+0239 ldarg.0  None
+0240 ldfld UberText m_LocalizedFont
+0245 ldnull  None
+0246 call  op_Equality
+0251 brfalse.s  272
+0253 ldarg.0  None
+0254 ldfld UberText m_UberTextRendering
+0259 ldarg.0  None
+0260 ldfld UberText m_Font
+0265 callvirt UberTextRendering SetFont
+0270 br.s  289
+0272 ldarg.0  None
+0273 ldfld UberText m_UberTextRendering
+0278 ldarg.0  None
+0279 ldfld UberText m_LocalizedFont
+0284 callvirt UberTextRendering SetFont
+0289 ldarg.0  None
+0290 ldfld UberText m_UberTextRendering
+0295 callvirt UberTextRendering GetFontTexture
+0300 stloc.2  None
+0301 ldloc.2  None
+0302 call  op_Implicit
+0307 brfalse.s  321
+0309 ldarg.0  None
+0310 ldloc.2  None
+0311 callvirt  get_updateCount
+0316 stfld UberText m_lastFontTextureCount
+0321 ret  None
+
+UberText.SetFontSize 0x060000ad
+0000 ldarg.0  None
+0001 ldfld UberText m_FontSizeModifier
+0006 ldarg.0  None
+0007 ldfld UberText m_LocalizedSettings
+0012 call UberTextLocalization GetFontSizeModifier
+0017 mul  None
+0018 ldarg.1  None
+0019 conv.r4  None
+0020 mul  None
+0021 conv.i4  None
+0022 starg.s  1
+0024 ldarg.0  None
+0025 ldfld UberText m_UberTextRendering
+0030 ldarg.1  None
+0031 callvirt UberTextRendering SetFontSize
+0036 ret  None
+
+UberTextRenderToTexture.SetupMatrices 0x060001b1
+0000 ldc.r4  -3000
+0005 stloc.0  None
+0006 ldarg.3  None
+0007 ldc.r4  0.5
+0012 call  op_Multiply
+0017 stloc.1  None
+0018 ldarg.1  None
+0019 brtrue.s  30
+0021 ldloc.0  None
+0022 ldloc.1  None
+0023 ldfld  x
+0028 add  None
+0029 stloc.0  None
+0030 ldarg.1  None
+0031 ldc.i4.2  None
+0032 bne.un.s  43
+0034 ldloc.0  None
+0035 ldloc.1  None
+0036 ldfld  x
+0041 sub  None
+0042 stloc.0  None
+0043 ldc.r4  0
+0048 stloc.2  None
+0049 ldarg.2  None
+0050 brtrue.s  61
+0052 ldloc.2  None
+0053 ldloc.1  None
+0054 ldfld  y
+0059 add  None
+0060 stloc.2  None
+0061 ldarg.2  None
+0062 ldc.i4.2  None
+0063 bne.un.s  74
+0065 ldloc.2  None
+0066 ldloc.1  None
+0067 ldfld  y
+0072 sub  None
+0073 stloc.2  None
+0074 ldloca.s  3
+0076 ldloc.0  None
+0077 ldc.r4  3000
+0082 ldloc.2  None
+0083 sub  None
+0084 ldarg.s  4
+0086 call  .ctor
+0091 ldarg.0  None
+0092 call  get_zero
+0097 call  get_identity
+0102 ldc.r4  1
+0107 ldc.r4  1
+0112 ldc.r4  -1
+0117 newobj  .ctor
+0122 call  TRS
+0127 ldloc.3  None
+0128 ldloc.3  None
+0129 call  get_forward
+0134 call  op_Addition
+0139 call  get_up
+0144 call  LookAt
+0149 stloc.s  5
+0151 ldloca.s  5
+0153 call  get_inverse
+0158 call  op_Multiply
+0163 stfld UberTextRenderToTexture viewMatrix
+0168 ldloc.1  None
+0169 ldfld  y
+0174 ldarg.3  None
+0175 ldfld  x
+0180 ldarg.3  None
+0181 ldfld  y
+0186 div  None
+0187 mul  None
+0188 stloc.s  4
+0190 ldarg.0  None
+0191 ldloc.s  4
+0193 neg  None
+0194 ldloc.s  4
+0196 ldloc.1  None
+0197 ldfld  y
+0202 neg  None
+0203 ldloc.1  None
+0204 ldfld  y
+0209 ldc.r4  -0.10000000149011612
+0214 ldc.r4  0.10000000149011612
+0219 call  Ortho
+0224 stfld UberTextRenderToTexture projectionMatrix
+0229 ret  None
+
+UberTextRenderToTexture.SetTargetClearColor 0x060001b2
+0000 ldarg.0  None
+0001 ldarg.1  None
+0002 ldfld  r
+0007 ldarg.1  None
+0008 ldfld  g
+0013 ldarg.1  None
+0014 ldfld  b
+0019 ldc.r4  0
+0024 newobj  .ctor
+0029 stfld UberTextRenderToTexture m_clearColor
+0034 ret  None
+
+UberTextRenderToTexture.CreateRenderTexture 0x060001bd
+0000 ldarg.0  None
+0001 ldfld UberTextRenderToTexture m_renderTexture
+0006 call  op_Implicit
+0011 brfalse.s  71
+0013 ldarg.0  None
+0014 ldfld UberTextRenderToTexture m_renderTexture
+0019 callvirt  get_width
+0024 ldarga.s  1
+0026 call  get_x
+0031 bne.un.s  54
+0033 ldarg.0  None
+0034 ldfld UberTextRenderToTexture m_renderTexture
+0039 callvirt  get_height
+0044 ldarga.s  1
+0046 call  get_y
+0051 bne.un.s  54
+0053 ret  None
+0054 ldarg.0  None
+0055 ldfld UberTextRenderToTexture m_uberTextRenderTextureTracker
+0060 ldarg.0  None
+0061 ldfld UberTextRenderToTexture m_renderTexture
+0066 callvirt  0x06000002
+0071 ldarg.0  None
+0072 ldarg.0  None
+0073 ldfld UberTextRenderToTexture m_uberTextRenderTextureTracker
+0078 ldarga.s  1
+0080 call  get_x
+0085 ldarga.s  1
+0087 call  get_y
+0092 ldc.i4.0  None
+0093 ldc.i4.7  None
+0094 ldc.i4.0  None
+0095 callvirt  0x06000001
+0100 stfld UberTextRenderToTexture m_renderTexture
+0105 ldarg.0  None
+0106 ldfld UberTextRenderToTexture m_renderTexture
+0111 ldc.i4.s  61
+0113 call  SetHideFlags
+0118 ldarg.0  None
+0119 ldfld UberTextRenderToTexture m_planeMaterialQuery
+0124 ldarg.0  None
+0125 ldfld UberTextRenderToTexture m_renderTexture
+0130 callvirt  0x06000193
+0135 pop  None
+0136 ldarg.0  None
+0137 ldfld UberTextRenderToTexture m_antialiasingMaterialQuery
+0142 ldarg.0  None
+0143 ldfld UberTextRenderToTexture m_renderTexture
+0148 callvirt  0x0600018d
+0153 pop  None
+0154 ret  None
+
+UberTextRendering.GetTextMeshBounds 0x060001ce
+0000 ldarg.0  None
+0001 ldfld UberTextRendering m_textMeshRenderer
+0006 call  op_Implicit
+0011 brtrue.s  29
+0013 call  get_zero
+0018 call  get_zero
+0023 newobj  .ctor
+0028 ret  None
+0029 ldarg.0  None
+0030 ldfld UberTextRendering m_textMeshRenderer
+0035 callvirt  get_bounds
+0040 ret  None
+
+UberTextRendering.SetCharacterSize 0x060001cf
+0000 ldarg.0  None
+0001 ldfld UberTextRendering m_textMesh
+0006 call  op_Implicit
+0011 brfalse.s  32
+0013 ldarg.0  None
+0014 ldfld UberTextRendering m_textMesh
+0019 callvirt  get_characterSize
+0024 ldarg.1  None
+0025 call  Approximately
+0030 brfalse.s  33
+0032 ret  None
+0033 ldarg.0  None
+0034 ldfld UberTextRendering m_textMesh
+0039 ldarg.1  None
+0040 callvirt  set_characterSize
+0045 ret  None
+
+UberTextRendering.SetFont 0x060001d6
+0000 ldarg.0  None
+0001 ldfld UberTextRendering m_textMesh
+0006 call  op_Implicit
+0011 brfalse.s  32
+0013 ldarg.0  None
+0014 ldfld UberTextRendering m_textMesh
+0019 callvirt  get_font
+0024 ldarg.1  None
+0025 call  op_Equality
+0030 brfalse.s  33
+0032 ret  None
+0033 ldarg.0  None
+0034 ldfld UberTextRendering m_textMesh
+0039 ldarg.1  None
+0040 callvirt  set_font
+0045 ldarg.0  None
+0046 ldarg.1  None
+0047 callvirt  get_material
+0052 callvirt  get_mainTexture
+0057 stfld UberTextRendering m_fontTexture
+0062 ldarg.0  None
+0063 ldfld UberTextRendering m_unlitTextMaterialQuery
+0068 ldarg.0  None
+0069 ldfld UberTextRendering m_fontTexture
+0074 callvirt  0x06000166
+0079 pop  None
+0080 ldarg.0  None
+0081 ldfld UberTextRendering m_boldTextMaterialQuery
+0086 ldarg.0  None
+0087 ldfld UberTextRendering m_fontTexture
+0092 callvirt  0x06000186
+0097 pop  None
+0098 ldarg.0  None
+0099 ldfld UberTextRendering m_outlineTextMaterialQuery
+0104 ldarg.0  None
+0105 ldfld UberTextRendering m_fontTexture
+0110 callvirt  0x06000170
+0115 pop  None
+0116 ldarg.0  None
+0117 ldfld UberTextRendering m_outlineBoldMaterialQuery
+0122 ldarg.0  None
+0123 ldfld UberTextRendering m_fontTexture
+0128 callvirt  0x0600017c
+0133 pop  None
+0134 ret  None
+
+UberTextRendering.SetFontSize 0x060001d9
+0000 ldarg.0  None
+0001 ldfld UberTextRendering m_textMesh
+0006 call  op_Implicit
+0011 brfalse.s  27
+0013 ldarg.0  None
+0014 ldfld UberTextRendering m_textMesh
+0019 callvirt  get_fontSize
+0024 ldarg.1  None
+0025 bne.un.s  28
+0027 ret  None
+0028 ldarg.0  None
+0029 ldfld UberTextRendering m_textMesh
+0034 ldarg.1  None
+0035 callvirt  set_fontSize
+0040 ret  None
+
+UberTextRendering.CreateTextMeshObject 0x060001f2
+0000 ldarg.0  None
+0001 ldfld UberTextRendering m_textMeshGameObject
+0006 call  op_Implicit
+0011 brtrue  209
+0016 ldstr  0x70000a38
+0021 ldarg.1  None
+0022 callvirt  get_name
+0027 call  Concat
+0032 stloc.0  None
+0033 ldarg.1  None
+0034 callvirt  get_transform
+0039 callvirt  get_childCount
+0044 ldc.i4.1  None
+0045 sub  None
+0046 stloc.1  None
+0047 br.s  104
+0049 ldarg.1  None
+0050 callvirt  get_transform
+0055 ldloc.1  None
+0056 callvirt  GetChild
+0061 stloc.2  None
+0062 ldloc.2  None
+0063 call  op_Implicit
+0068 brfalse.s  100
+0070 ldloc.2  None
+0071 callvirt  get_gameObject
+0076 callvirt  get_name
+0081 ldloc.0  None
+0082 call  op_Equality
+0087 brfalse.s  100
+0089 ldloc.2  None
+0090 callvirt  get_gameObject
+0095 call  SafeDestroy
+0100 ldloc.1  None
+0101 ldc.i4.1  None
+0102 sub  None
+0103 stloc.1  None
+0104 ldloc.1  None
+0105 ldc.i4.0  None
+0106 bge.s  49
+0108 ldarg.0  None
+0109 newobj  .ctor
+0114 stfld UberTextRendering m_textMeshGameObject
+0119 ldarg.0  None
+0120 ldfld UberTextRendering m_textMeshGameObject
+0125 ldloc.0  None
+0126 callvirt  set_name
+0131 ldarg.0  None
+0132 ldfld UberTextRendering m_textMeshGameObject
+0137 ldc.i4.s  61
+0139 call  SetHideFlags
+0144 ldarg.0  None
+0145 ldarg.0  None
+0146 ldfld UberTextRendering m_textMeshGameObject
+0151 callvirt  0x2b000010
+0156 stfld UberTextRendering m_textMeshRenderer
+0161 ldarg.0  None
+0162 ldarg.0  None
+0163 ldfld UberTextRendering m_textMeshGameObject
+0168 callvirt  0x2b000011
+0173 stfld UberTextRendering m_textMesh
+0178 ldarg.0  None
+0179 ldsfld  Empty
+0184 call UberTextRendering SetText
+0189 ldarg.0  None
+0190 ldfld UberTextRendering m_popupRoot
+0195 brfalse.s  209
+0197 ldarg.0  None
+0198 ldarg.0  None
+0199 ldfld UberTextRendering m_popupRoot
+0204 call UberTextRendering EnablePopupRendering
+0209 ret  None
+
+UberTextLineWrapper.BreakStringIntoWords 0x06000100
+0000 ldarg.0  None
+0001 ldarg.1  None
+0002 callvirt  get_Length
+0007 newarr  0x0100005d
+0012 stfld UberTextLineWrapper m_charWidths
+0017 ldsfld UberTextLineWrapper s_wordBuilder
+0022 ldc.i4.0  None
+0023 callvirt  set_Length
+0028 ldarg.s  4
+0030 callvirt  Clear
+0035 ldc.i4.0  None
+0036 stloc.0  None
+0037 ldc.i4.0  None
+0038 stloc.1  None
+0039 ldc.r4  0
+0044 stloc.2  None
+0045 ldarg.1  None
+0046 ldc.i4.0  None
+0047 callvirt  get_Chars
+0052 stloc.3  None
+0053 ldsfld UberTextLineWrapper s_wordBuilder
+0058 ldloc.3  None
+0059 callvirt  Append
+0064 pop  None
+0065 ldloc.3  None
+0066 ldc.i4.s  60
+0068 ceq  None
+0070 ldarg.3  None
+0071 and  None
+0072 brfalse.s  78
+0074 ldc.i4.1  None
+0075 stloc.0  None
+0076 br.s  104
+0078 ldarg.0  None
+0079 ldfld UberTextLineWrapper m_charWidths
+0084 ldc.i4.0  None
+0085 ldarg.0  None
+0086 ldloc.3  None
+0087 call UberTextLineWrapper UpdateCharWidth
+0092 stelem.r4  None
+0093 ldloc.2  None
+0094 ldarg.0  None
+0095 ldfld UberTextLineWrapper m_charWidths
+0100 ldc.i4.0  None
+0101 ldelem.r4  None
+0102 add  None
+0103 stloc.2  None
+0104 ldc.i4.1  None
+0105 stloc.s  4
+0107 br  807
+0112 ldarg.1  None
+0113 ldloc.s  4
+0115 callvirt  get_Chars
+0120 stloc.s  5
+0122 ldarg.1  None
+0123 ldloc.s  4
+0125 callvirt  get_Chars
+0130 ldc.i4.s  91
+0132 bne.un  402
+0137 ldloc.s  4
+0139 ldc.i4.2  None
+0140 add  None
+0141 ldarg.1  None
+0142 callvirt  get_Length
+0147 bge  402
+0152 ldarg.1  None
+0153 ldloc.s  4
+0155 ldc.i4.1  None
+0156 add  None
+0157 callvirt  get_Chars
+0162 ldc.i4.s  98
+0164 beq.s  180
+0166 ldarg.1  None
+0167 ldloc.s  4
+0169 ldc.i4.1  None
+0170 add  None
+0171 callvirt  get_Chars
+0176 ldc.i4.s  100
+0178 bne.un.s  300
+0180 ldarg.1  None
+0181 ldloc.s  4
+0183 ldc.i4.2  None
+0184 add  None
+0185 callvirt  get_Chars
+0190 ldc.i4.s  93
+0192 bne.un.s  300
+0194 ldsfld UberTextLineWrapper s_wordBuilder
+0199 ldarg.1  None
+0200 ldloc.s  4
+0202 callvirt  get_Chars
+0207 callvirt  Append
+0212 pop  None
+0213 ldsfld UberTextLineWrapper s_wordBuilder
+0218 ldarg.1  None
+0219 ldloc.s  4
+0221 ldc.i4.1  None
+0222 add  None
+0223 callvirt  get_Chars
+0228 callvirt  Append
+0233 pop  None
+0234 ldsfld UberTextLineWrapper s_wordBuilder
+0239 ldarg.1  None
+0240 ldloc.s  4
+0242 ldc.i4.2  None
+0243 add  None
+0244 callvirt  get_Chars
+0249 callvirt  Append
+0254 pop  None
+0255 ldarg.s  4
+0257 ldsfld UberTextLineWrapper s_wordBuilder
+0262 callvirt  ToString
+0267 callvirt  Add
+0272 ldsfld UberTextLineWrapper s_wordBuilder
+0277 ldc.i4.0  None
+0278 callvirt  set_Length
+0283 ldloc.s  4
+0285 ldc.i4.2  None
+0286 add  None
+0287 stloc.s  4
+0289 ldc.r4  0
+0294 stloc.2  None
+0295 br  801
+0300 ldarg.1  None
+0301 ldloc.s  4
+0303 ldc.i4.1  None
+0304 add  None
+0305 callvirt  get_Chars
+0310 ldc.i4.s  120
+0312 bne.un.s  402
+0314 ldarg.1  None
+0315 ldloc.s  4
+0317 ldc.i4.2  None
+0318 add  None
+0319 callvirt  get_Chars
+0324 ldc.i4.s  93
+0326 bne.un.s  402
+0328 ldc.i4.1  None
+0329 stloc.1  None
+0330 ldsfld UberTextLineWrapper s_wordBuilder
+0335 ldarg.1  None
+0336 ldloc.s  4
+0338 callvirt  get_Chars
+0343 callvirt  Append
+0348 pop  None
+0349 ldsfld UberTextLineWrapper s_wordBuilder
+0354 ldarg.1  None
+0355 ldloc.s  4
+0357 ldc.i4.1  None
+0358 add  None
+0359 callvirt  get_Chars
+0364 callvirt  Append
+0369 pop  None
+0370 ldsfld UberTextLineWrapper s_wordBuilder
+0375 ldarg.1  None
+0376 ldloc.s  4
+0378 ldc.i4.2  None
+0379 add  None
+0380 callvirt  get_Chars
+0385 callvirt  Append
+0390 pop  None
+0391 ldloc.s  4
+0393 ldc.i4.2  None
+0394 add  None
+0395 stloc.s  4
+0397 br  801
+0402 ldarg.1  None
+0403 ldloc.s  4
+0405 callvirt  get_Chars
+0410 ldc.i4.s  60
+0412 ceq  None
+0414 ldarg.3  None
+0415 and  None
+0416 brfalse.s  454
+0418 ldarg.1  None
+0419 ldloc.s  4
+0421 call UberText IsLeftAngleBracketCharEscaped
+0426 brtrue.s  454
+0428 ldc.i4.1  None
+0429 stloc.0  None
+0430 ldsfld UberTextLineWrapper s_wordBuilder
+0435 ldarg.1  None
+0436 ldloc.s  4
+0438 callvirt  get_Chars
+0443 callvirt  Append
+0448 pop  None
+0449 br  801
+0454 ldarg.1  None
+0455 ldloc.s  4
+0457 callvirt  get_Chars
+0462 ldc.i4.s  62
+0464 bne.un.s  502
+0466 ldarg.1  None
+0467 ldloc.s  4
+0469 call UberText IsRightAngleBracketCharEscaped
+0474 brtrue.s  502
+0476 ldc.i4.0  None
+0477 stloc.0  None
+0478 ldsfld UberTextLineWrapper s_wordBuilder
+0483 ldarg.1  None
+0484 ldloc.s  4
+0486 callvirt  get_Chars
+0491 callvirt  Append
+0496 pop  None
+0497 br  801
+0502 ldloc.0  None
+0503 brfalse.s  529
+0505 ldsfld UberTextLineWrapper s_wordBuilder
+0510 ldarg.1  None
+0511 ldloc.s  4
+0513 callvirt  get_Chars
+0518 callvirt  Append
+0523 pop  None
+0524 br  801
+0529 ldarg.0  None
+0530 ldfld UberTextLineWrapper m_charWidths
+0535 ldloc.s  4
+0537 ldarg.0  None
+0538 ldloc.s  5
+0540 call UberTextLineWrapper UpdateCharWidth
+0545 stelem.r4  None
+0546 ldloc.2  None
+0547 ldarg.0  None
+0548 ldfld UberTextLineWrapper m_charWidths
+0553 ldloc.s  4
+0555 ldelem.r4  None
+0556 add  None
+0557 stloc.2  None
+0558 ldarg.1  None
+0559 ldloc.s  4
+0561 ldc.i4.1  None
+0562 sub  None
+0563 callvirt  get_Chars
+0568 stloc.s  6
+0570 ldarg.1  None
+0571 ldloc.s  4
+0573 callvirt  get_Chars
+0578 stloc.s  7
+0580 ldc.i4.0  None
+0581 stloc.s  8
+0583 ldloc.s  4
+0585 ldarg.1  None
+0586 callvirt  get_Length
+0591 ldc.i4.1  None
+0592 sub  None
+0593 bge.s  607
+0595 ldarg.1  None
+0596 ldloc.s  4
+0598 ldc.i4.1  None
+0599 add  None
+0600 callvirt  get_Chars
+0605 stloc.s  8
+0607 ldloc.1  None
+0608 brtrue.s  677
+0610 ldarg.0  None
+0611 ldloc.s  6
+0613 ldloc.s  7
+0615 ldloc.s  8
+0617 call UberTextLineWrapper CanWrapBetween
+0622 brfalse.s  677
+0624 ldarg.s  4
+0626 ldsfld UberTextLineWrapper s_wordBuilder
+0631 callvirt  ToString
+0636 callvirt  Add
+0641 ldsfld UberTextLineWrapper s_wordBuilder
+0646 ldc.i4.0  None
+0647 callvirt  set_Length
+0652 ldsfld UberTextLineWrapper s_wordBuilder
+0657 ldloc.s  5
+0659 callvirt  Append
+0664 pop  None
+0665 ldarg.0  None
+0666 ldfld UberTextLineWrapper m_charWidths
+0671 ldloc.s  4
+0673 ldelem.r4  None
+0674 stloc.2  None
+0675 br.s  801
+0677 ldloc.2  None
+0678 ldarg.2  None
+0679 bge.un.s  696
+0681 ldsfld UberTextLineWrapper s_wordBuilder
+0686 ldloc.s  5
+0688 callvirt  Append
+0693 pop  None
+0694 br.s  801
+0696 ldarg.0  None
+0697 ldflda UberTextLineWrapper m_settings
+0702 ldfld  0x0400009d
+0707 brfalse.s  722
+0709 ldarg.0  None
+0710 ldflda UberTextLineWrapper m_settings
+0715 ldfld  0x0400009b
+0720 brfalse.s  788
+0722 ldarg.0  None
+0723 ldflda UberTextLineWrapper m_settings
+0728 ldfld  0x0400009e
+0733 brfalse.s  788
+0735 ldarg.s  4
+0737 ldsfld UberTextLineWrapper s_wordBuilder
+0742 callvirt  ToString
+0747 callvirt  Add
+0752 ldsfld UberTextLineWrapper s_wordBuilder
+0757 ldc.i4.0  None
+0758 callvirt  set_Length
+0763 ldsfld UberTextLineWrapper s_wordBuilder
+0768 ldloc.s  5
+0770 callvirt  Append
+0775 pop  None
+0776 ldarg.0  None
+0777 ldfld UberTextLineWrapper m_charWidths
+0782 ldloc.s  4
+0784 ldelem.r4  None
+0785 stloc.2  None
+0786 br.s  801
+0788 ldsfld UberTextLineWrapper s_wordBuilder
+0793 ldloc.s  5
+0795 callvirt  Append
+0800 pop  None
+0801 ldloc.s  4
+0803 ldc.i4.1  None
+0804 add  None
+0805 stloc.s  4
+0807 ldloc.s  4
+0809 ldarg.1  None
+0810 callvirt  get_Length
+0815 blt  112
+0820 ldarg.s  4
+0822 ldsfld UberTextLineWrapper s_wordBuilder
+0827 callvirt  ToString
+0832 callvirt  Add
+0837 ret  None
+
+UberTextLineWrapper.Reset 0x06000101
+0000 ldarg.0  None
+0001 ldfld UberTextLineWrapper m_charWidthMap
+0006 callvirt  Clear
+0011 ldarg.0  None
+0012 ldarg.0  None
+0013 ldfld UberTextLineWrapper m_uberTextRendering
+0018 callvirt UberTextRendering GetFont
+0023 stfld UberTextLineWrapper m_font
+0028 ldarg.0  None
+0029 ldarg.0  None
+0030 ldfld UberTextLineWrapper m_uberTextRendering
+0035 callvirt UberTextRendering GetFontSize
+0040 stfld UberTextLineWrapper m_fontSize
+0045 ldarg.0  None
+0046 ldarg.0  None
+0047 ldfld UberTextLineWrapper m_uberTextRendering
+0052 callvirt UberTextRendering GetCharacterSize
+0057 stfld UberTextLineWrapper m_characterSize
+0062 ret  None
+
+UberTextLineWrapper.UpdateCharWidth 0x06000104
+0000 ldarg.0  None
+0001 ldfld UberTextLineWrapper m_charWidthMap
+0006 ldarg.1  None
+0007 ldloca.s  0
+0009 callvirt  TryGetValue
+0014 brtrue.s  82
+0016 ldarg.0  None
+0017 ldfld UberTextLineWrapper m_font
+0022 ldarg.1  None
+0023 ldarg.0  None
+0024 ldflda UberTextLineWrapper m_characterInfo
+0029 ldarg.0  None
+0030 ldfld UberTextLineWrapper m_fontSize
+0035 callvirt  GetCharacterInfo
+0040 pop  None
+0041 ldarg.0  None
+0042 ldflda UberTextLineWrapper m_characterInfo
+0047 call  get_advance
+0052 conv.r4  None
+0053 ldarg.0  None
+0054 ldfld UberTextLineWrapper m_characterSize
+0059 mul  None
+0060 ldc.r4  0.10000000149011612
+0065 mul  None
+0066 stloc.1  None
+0067 ldarg.0  None
+0068 ldfld UberTextLineWrapper m_charWidthMap
+0073 ldarg.1  None
+0074 ldloc.1  None
+0075 callvirt  Add
+0080 ldloc.1  None
+0081 ret  None
+0082 ldloc.0  None
+0083 ret  None

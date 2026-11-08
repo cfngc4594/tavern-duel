@@ -1,0 +1,1159 @@
+{
+  "types": [
+    {
+      "type": "AssetLoader",
+      "token": "0x02002769",
+      "fields": [
+        {
+          "name": "SPAWN_POS_CAMERA_OFFSET",
+          "token": "0x0400f884",
+          "signature": "06115d"
+        },
+        {
+          "name": "m_waitingOnObjects",
+          "token": "0x0400f885",
+          "signature": "061512490112808d"
+        },
+        {
+          "name": "m_framesSinceLastDeadHandlesCheck",
+          "token": "0x0400f886",
+          "signature": "0608"
+        },
+        {
+          "name": "m_loadingAssets",
+          "token": "0x0400f887",
+          "signature": "061512c0009da8010e"
+        },
+        {
+          "name": "m_instantiatingPrefabs",
+          "token": "0x0400f888",
+          "signature": "061512c0009da8010e"
+        },
+        {
+          "name": "m_assetLocator",
+          "token": "0x0400f889",
+          "signature": "06129689"
+        },
+        {
+          "name": "m_assetManager",
+          "token": "0x0400f88a",
+          "signature": "0612968d"
+        },
+        {
+          "name": "m_assetBank",
+          "token": "0x0400f88b",
+          "signature": "06129691"
+        },
+        {
+          "name": "m_bundleErrorReporter",
+          "token": "0x0400f88c",
+          "signature": "06129695"
+        },
+        {
+          "name": "m_gameDownloadManager",
+          "token": "0x0400f88d",
+          "signature": "0612c000c620"
+        },
+        {
+          "name": "m_prefabInstantiator",
+          "token": "0x0400f88e",
+          "signature": "06129699"
+        },
+        {
+          "name": "m_exceptionReporter",
+          "token": "0x0400f88f",
+          "signature": "0612c000dfbc"
+        },
+        {
+          "name": "s_assetLoaderUpdateProfiler",
+          "token": "0x0400f890",
+          "signature": "0611899d"
+        },
+        {
+          "name": "AssetLoadQueued",
+          "token": "0x0400f891",
+          "signature": "0612969d"
+        },
+        {
+          "name": "AssetLoaded",
+          "token": "0x0400f892",
+          "signature": "061296a1"
+        },
+        {
+          "name": "AssetUnreferenced",
+          "token": "0x0400f893",
+          "signature": "061296a5"
+        },
+        {
+          "name": "AssetBundleLoaded",
+          "token": "0x0400f894",
+          "signature": "061296a9"
+        },
+        {
+          "name": "AssetBundleUnloaded",
+          "token": "0x0400f895",
+          "signature": "061296ad"
+        },
+        {
+          "name": "m_prefabInstantiatorCheckForDeadHandlesCompleted",
+          "token": "0x0400f896",
+          "signature": "0602"
+        },
+        {
+          "name": "m_assetManagerForDeadHandlesCompleted",
+          "token": "0x0400f897",
+          "signature": "0602"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "AssetLoader",
+      "method": "OnInstantiatePrefabResultHandler",
+      "token": "0x06012af8",
+      "rva": "0x573c70",
+      "signature": "2001011281a5",
+      "parameters": [
+        "result"
+      ],
+      "code_size": 51,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "isinst",
+          "operand": "Hearthstone.Core.InstantiatePrefab",
+          "token": "token(0x010005AC)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "brfalse.s",
+          "operand": "IL_0032",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "callvirt",
+          "operand": "Hearthstone.Core.InstantiatePrefab::get_UsePrefabPosition",
+          "token": "token(0x0A00436D)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "brtrue.s",
+          "operand": "IL_0015",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "br.s",
+          "operand": "IL_0016",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "callvirt",
+          "operand": "Hearthstone.Core.InstantiatePrefab::get_AssetRef",
+          "token": "token(0x0A00436E)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldftn",
+          "operand": "Hearthstone.Core.InstantiatePrefab::OnPrefabInstantiated",
+          "token": "token(0x0A00436F)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5067afe870>::.ctor",
+          "token": "token(0x0A000210)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "call",
+          "operand": "AssetLoader::InstantiatePrefab",
+          "token": "token(0x06012B20)"
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "AssetLoader",
+      "method": "InstantiatePrefab",
+      "token": "0x06012b1f",
+      "rva": "0x574854",
+      "signature": "200212808d128135118165",
+      "parameters": [
+        "assetRef",
+        "options"
+      ],
+      "code_size": 44,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0003",
+          "opcode": "call",
+          "operand": "AssetLoader::LoadAsset<spec>",
+          "token": "token(0x2B0007F8)"
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "brtrue.s",
+          "operand": "IL_0010",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "leave.s",
+          "operand": "IL_002a",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldfld",
+          "operand": "AssetLoader::m_prefabInstantiator",
+          "token": "token(0x0400F88E)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "callvirt",
+          "operand": "IPrefabInstantiator::InstantiatePrefab",
+          "token": "token(0x0A0043AA)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "leave.s",
+          "operand": "IL_002a",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "brfalse.s",
+          "operand": "IL_0029",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "AssetLoader",
+      "method": "InstantiatePrefab",
+      "token": "0x06012b20",
+      "rva": "0x57489c",
+      "signature": "2004021281351512820d0112808d1c118165",
+      "parameters": [
+        "assetRef",
+        "callback",
+        "callbackData",
+        "options"
+      ],
+      "code_size": 58,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5067634f20>::.ctor",
+          "token": "token(0x0A0043AB)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "stfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5067634f20>::callerCallback",
+          "token": "token(0x0A0043AC)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "stfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5067634f20>::callerData",
+          "token": "token(0x0A0043AD)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "stfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5067634f20>::callerOptions",
+          "token": "token(0x0A0043AE)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "stfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5067634f20>::requestedAssetRef",
+          "token": "token(0x0A0043AF)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldftn",
+          "operand": "AssetLoader::OnPrefabLoaded",
+          "token": "token(0x06012B23)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5067b46600>::.ctor",
+          "token": "token(0x0A0004D3)"
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "call",
+          "operand": "AssetLoader::LoadAsset<spec>",
+          "token": "token(0x2B0007F9)"
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "AssetLoader",
+      "method": "GetOrInstantiateSharedPrefab",
+      "token": "0x06012b21",
+      "rva": "0x5748e4",
+      "signature": "2002151281250112808d128135118165",
+      "parameters": [
+        "assetRef",
+        "options"
+      ],
+      "code_size": 51,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0004",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "call",
+          "operand": "AssetLoader::TryValidateAndGetRuntimeVariant",
+          "token": "token(0x06012B15)"
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "brtrue.s",
+          "operand": "IL_000e",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "call",
+          "operand": "AssetLoader::LoadAsset<spec>",
+          "token": "token(0x2B0007F8)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldfld",
+          "operand": "AssetLoader::m_prefabInstantiator",
+          "token": "token(0x0400F88E)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "callvirt",
+          "operand": "IPrefabInstantiator::GetOrInstantiateSharedPrefab",
+          "token": "token(0x0A0043B0)"
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "leave.s",
+          "operand": "IL_0031",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "brfalse.s",
+          "operand": "IL_0030",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "AssetLoader",
+      "method": "GetOrInstantiateSharedPrefab",
+      "token": "0x06012b22",
+      "rva": "0x574934",
+      "signature": "2004021281351512820d01151281250112808d1c118165",
+      "parameters": [
+        "assetRef",
+        "callback",
+        "callbackData",
+        "options"
+      ],
+      "code_size": 58,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f50676350d0>::.ctor",
+          "token": "token(0x0A0043B1)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "stfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f50676350d0>::callerCallback",
+          "token": "token(0x0A0043B2)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "stfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f50676350d0>::callerData",
+          "token": "token(0x0A0043B3)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "stfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f50676350d0>::callerOptions",
+          "token": "token(0x0A0043B4)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "stfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f50676350d0>::requestedAssetRef",
+          "token": "token(0x0A0043B5)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldftn",
+          "operand": "AssetLoader::OnSharedPrefabLoaded",
+          "token": "token(0x06012B24)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5067b46600>::.ctor",
+          "token": "token(0x0A0004D3)"
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "call",
+          "operand": "AssetLoader::LoadAsset<spec>",
+          "token": "token(0x2B0007F9)"
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "AssetLoader",
+      "method": "OnPrefabInstantiated",
+      "token": "0x06012b25",
+      "rva": "0x574a5c",
+      "signature": "300103010e1e001c",
+      "parameters": [
+        "prefabAddress",
+        "instance",
+        "callbackData"
+      ],
+      "code_size": 45,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "isinst",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f50676355b0>",
+          "token": "token(0x1B001064)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f50676355b0>::callerCallback",
+          "token": "token(0x0A0043BB)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Utils.GeneralUtils::IsCallbackValid",
+          "token": "token(0x0A002144)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "brfalse.s",
+          "operand": "IL_002c",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f50676355b0>::callerCallback",
+          "token": "token(0x0A0043BB)"
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f50676355b0>::requestedAssetRef",
+          "token": "token(0x0A0043BC)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldfld",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f50676355b0>::callerData",
+          "token": "token(0x0A0043BD)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5067635760>::Invoke",
+          "token": "token(0x0A0043BE)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "AssetLoader",
+      "method": "InstantiateAndWaitThenCallGameObjectCallback",
+      "token": "0x06012b27",
+      "rva": "0x574b09",
+      "signature": "200512811112813512808d0212829d1c",
+      "parameters": [
+        "assetRef",
+        "prefab",
+        "usePrefabPosition",
+        "callback",
+        "callbackData"
+      ],
+      "code_size": 51,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "newobj",
+          "operand": "<InstantiateAndWaitThenCallGameObjectCallback>d__94::.ctor",
+          "token": "token(0x06012B44)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "stfld",
+          "operand": "<InstantiateAndWaitThenCallGameObjectCallback>d__94::<>4__this",
+          "token": "token(0x0400F8BB)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "stfld",
+          "operand": "<InstantiateAndWaitThenCallGameObjectCallback>d__94::assetRef",
+          "token": "token(0x0400F8B8)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "stfld",
+          "operand": "<InstantiateAndWaitThenCallGameObjectCallback>d__94::prefab",
+          "token": "token(0x0400F8B6)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "stfld",
+          "operand": "<InstantiateAndWaitThenCallGameObjectCallback>d__94::usePrefabPosition",
+          "token": "token(0x0400F8BA)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "stfld",
+          "operand": "<InstantiateAndWaitThenCallGameObjectCallback>d__94::callback",
+          "token": "token(0x0400F8B7)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "stfld",
+          "operand": "<InstantiateAndWaitThenCallGameObjectCallback>d__94::callbackData",
+          "token": "token(0x0400F8B9)"
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7072 @@
+[
+  {
+    "type": "InputManager",
+    "method": "HandleUpdateWhileHoldingCard",
+    "token": "0x06005a13",
+    "rva": "0x1a3f04",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "call",
+        "operand": "PegCursor::Get",
+        "token": "token(0x06015949)"
+      },
+      {
+        "offset": "IL_0005",
+        "opcode": "ldc.i4.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "callvirt",
+        "operand": "PegCursor::SetMode",
+        "token": "token(0x0601594C)"
+      },
+      {
+        "offset": "IL_000b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000c",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_0011",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0012",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0013",
+        "opcode": "callvirt",
+        "operand": "Card::IsInputEnabled",
+        "token": "token(0x06012CEB)"
+      },
+      {
+        "offset": "IL_0018",
+        "opcode": "brtrue.s",
+        "operand": "IL_0022",
+        "token": null
+      },
+      {
+        "offset": "IL_001a",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001b",
+        "opcode": "call",
+        "operand": "InputManager::DropHeldCard",
+        "token": "token(0x060059F1)"
+      },
+      {
+        "offset": "IL_0020",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0021",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0024",
+        "opcode": "call",
+        "operand": "InputManager::OnFireSpellHeld",
+        "token": "token(0x06005A15)"
+      },
+      {
+        "offset": "IL_0029",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "callvirt",
+        "operand": "Card::GetEntity",
+        "token": "token(0x06012CC3)"
+      },
+      {
+        "offset": "IL_002f",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0030",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0031",
+        "opcode": "brfalse",
+        "operand": "IL_00fb",
+        "token": null
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0037",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_targetReticleManager",
+        "token": "token(0x04003E53)"
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Implicit",
+        "token": "token(0x0A00006A)"
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "brfalse",
+        "operand": "IL_00fb",
+        "token": null
+      },
+      {
+        "offset": "IL_0046",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0047",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_targetReticleManager",
+        "token": "token(0x04003E53)"
+      },
+      {
+        "offset": "IL_004c",
+        "opcode": "callvirt",
+        "operand": "TargetReticleManager::IsActive",
+        "token": "token(0x060060EC)"
+      },
+      {
+        "offset": "IL_0051",
+        "opcode": "brtrue",
+        "operand": "IL_00fb",
+        "token": null
+      },
+      {
+        "offset": "IL_0056",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0057",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_005c",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005d",
+        "opcode": "callvirt",
+        "operand": "GameState::EntityHasTargets",
+        "token": "token(0x060056B5)"
+      },
+      {
+        "offset": "IL_0062",
+        "opcode": "brfalse",
+        "operand": "IL_00fb",
+        "token": null
+      },
+      {
+        "offset": "IL_0067",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0068",
+        "opcode": "callvirt",
+        "operand": "EntityBase::GetCardType",
+        "token": "token(0x060138F5)"
+      },
+      {
+        "offset": "IL_006d",
+        "opcode": "ldc.i4.4",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006e",
+        "opcode": "beq",
+        "operand": "IL_00fb",
+        "token": null
+      },
+      {
+        "offset": "IL_0073",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0074",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_0079",
+        "opcode": "callvirt",
+        "operand": "Card::IsInAlternateActionArea",
+        "token": "token(0x06012E85)"
+      },
+      {
+        "offset": "IL_007e",
+        "opcode": "brtrue.s",
+        "operand": "IL_00fb",
+        "token": null
+      },
+      {
+        "offset": "IL_0080",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0081",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0086",
+        "opcode": "callvirt",
+        "operand": "GameState::IsInReverseTargetMode",
+        "token": "token(0x060056A3)"
+      },
+      {
+        "offset": "IL_008b",
+        "opcode": "brfalse.s",
+        "operand": "IL_0094",
+        "token": null
+      },
+      {
+        "offset": "IL_008d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008e",
+        "opcode": "call",
+        "operand": "InputManager::PositionHeldCard",
+        "token": "token(0x06005A0B)"
+      },
+      {
+        "offset": "IL_0093",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0094",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0095",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0096",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0097",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0098",
+        "opcode": "call",
+        "operand": "InputManager::DoNetworkResponse",
+        "token": "token(0x06005A3B)"
+      },
+      {
+        "offset": "IL_009d",
+        "opcode": "brtrue.s",
+        "operand": "IL_00a6",
+        "token": null
+      },
+      {
+        "offset": "IL_009f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a0",
+        "opcode": "call",
+        "operand": "InputManager::PositionHeldCard",
+        "token": "token(0x06005A0B)"
+      },
+      {
+        "offset": "IL_00a5",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a6",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a7",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Component::GetComponent<spec>",
+        "token": "token(0x2B0003DB)"
+      },
+      {
+        "offset": "IL_00ac",
+        "opcode": "stloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ad",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ae",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Implicit",
+        "token": "token(0x0A00006A)"
+      },
+      {
+        "offset": "IL_00b3",
+        "opcode": "brfalse.s",
+        "operand": "IL_00bb",
+        "token": null
+      },
+      {
+        "offset": "IL_00b5",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b6",
+        "opcode": "callvirt",
+        "operand": "DragCardSoundEffects::Disable",
+        "token": "token(0x06015159)"
+      },
+      {
+        "offset": "IL_00bb",
+        "opcode": "call",
+        "operand": "RemoteActionHandler::Get",
+        "token": "token(0x0600604A)"
+      },
+      {
+        "offset": "IL_00c0",
+        "opcode": "dup",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c1",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c2",
+        "opcode": "callvirt",
+        "operand": "RemoteActionHandler::NotifyOpponentOfCardPickedUp",
+        "token": "token(0x06006057)"
+      },
+      {
+        "offset": "IL_00c7",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c8",
+        "opcode": "callvirt",
+        "operand": "RemoteActionHandler::NotifyOpponentOfTargetModeBegin",
+        "token": "token(0x06006055)"
+      },
+      {
+        "offset": "IL_00cd",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ce",
+        "opcode": "callvirt",
+        "operand": "Entity::GetHero",
+        "token": "token(0x060137E8)"
+      },
+      {
+        "offset": "IL_00d3",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d4",
+        "opcode": "ceq",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d6",
+        "opcode": "stloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d7",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d8",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_targetReticleManager",
+        "token": "token(0x04003E53)"
+      },
+      {
+        "offset": "IL_00dd",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00de",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00df",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e0",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e1",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e2",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e3",
+        "opcode": "callvirt",
+        "operand": "TargetReticleManager::CreateFriendlyTargetArrow",
+        "token": "token(0x060060F5)"
+      },
+      {
+        "offset": "IL_00e8",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e9",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ea",
+        "opcode": "call",
+        "operand": "InputManager::ActivatePowerUpSpell",
+        "token": "token(0x06005A17)"
+      },
+      {
+        "offset": "IL_00ef",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f0",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f1",
+        "opcode": "call",
+        "operand": "InputManager::ActivatePlaySpell",
+        "token": "token(0x06005A18)"
+      },
+      {
+        "offset": "IL_00f6",
+        "opcode": "br",
+        "operand": "IL_01a2",
+        "token": null
+      },
+      {
+        "offset": "IL_00fb",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00fc",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_cardWasInsideHandLastFrame",
+        "token": "token(0x04003E6C)"
+      },
+      {
+        "offset": "IL_0101",
+        "opcode": "stloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_0103",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0104",
+        "opcode": "brfalse.s",
+        "operand": "IL_0122",
+        "token": null
+      },
+      {
+        "offset": "IL_0106",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0107",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_cardWasInsideHandLastFrame",
+        "token": "token(0x04003E6C)"
+      },
+      {
+        "offset": "IL_010c",
+        "opcode": "brfalse.s",
+        "operand": "IL_0122",
+        "token": null
+      },
+      {
+        "offset": "IL_010e",
+        "opcode": "call",
+        "operand": "RemoteActionHandler::Get",
+        "token": "token(0x0600604A)"
+      },
+      {
+        "offset": "IL_0113",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0114",
+        "opcode": "callvirt",
+        "operand": "RemoteActionHandler::NotifyOpponentOfCardPickedUp",
+        "token": "token(0x06006057)"
+      },
+      {
+        "offset": "IL_0119",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_011a",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_011b",
+        "opcode": "stfld",
+        "operand": "InputManager::m_cardWasInsideHandLastFrame",
+        "token": "token(0x04003E6C)"
+      },
+      {
+        "offset": "IL_0120",
+        "opcode": "br.s",
+        "operand": "IL_012c",
+        "token": null
+      },
+      {
+        "offset": "IL_0122",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0123",
+        "opcode": "brtrue.s",
+        "operand": "IL_012c",
+        "token": null
+      },
+      {
+        "offset": "IL_0125",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0126",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0127",
+        "opcode": "stfld",
+        "operand": "InputManager::m_cardWasInsideHandLastFrame",
+        "token": "token(0x04003E6C)"
+      },
+      {
+        "offset": "IL_012c",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_012d",
+        "opcode": "call",
+        "operand": "InputManager::PositionHeldCard",
+        "token": "token(0x06005A0B)"
+      },
+      {
+        "offset": "IL_0132",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0133",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0138",
+        "opcode": "callvirt",
+        "operand": "GameState::IsInReverseTargetMode",
+        "token": "token(0x060056A3)"
+      },
+      {
+        "offset": "IL_013d",
+        "opcode": "brtrue.s",
+        "operand": "IL_018c",
+        "token": null
+      },
+      {
+        "offset": "IL_013f",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0140",
+        "opcode": "brfalse.s",
+        "operand": "IL_0166",
+        "token": null
+      },
+      {
+        "offset": "IL_0142",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0143",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_myPlayZone",
+        "token": "token(0x04003E55)"
+      },
+      {
+        "offset": "IL_0148",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0149",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_014e",
+        "opcode": "callvirt",
+        "operand": "ZonePlay::OnMagneticHeld",
+        "token": "token(0x060065B2)"
+      },
+      {
+        "offset": "IL_0153",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0154",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_myHandZone",
+        "token": "token(0x04003E54)"
+      },
+      {
+        "offset": "IL_0159",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_015a",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_015f",
+        "opcode": "callvirt",
+        "operand": "ZoneHand::OnCardHeld",
+        "token": "token(0x0600647B)"
+      },
+      {
+        "offset": "IL_0164",
+        "opcode": "br.s",
+        "operand": "IL_018c",
+        "token": null
+      },
+      {
+        "offset": "IL_0166",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_0168",
+        "opcode": "brfalse.s",
+        "operand": "IL_018c",
+        "token": null
+      },
+      {
+        "offset": "IL_016a",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_016b",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_myHandZone",
+        "token": "token(0x04003E54)"
+      },
+      {
+        "offset": "IL_0170",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0171",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_0176",
+        "opcode": "callvirt",
+        "operand": "ZoneHand::OnCardWithReplacementsDropped",
+        "token": "token(0x0600647F)"
+      },
+      {
+        "offset": "IL_017b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_017c",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_myPlayZone",
+        "token": "token(0x04003E55)"
+      },
+      {
+        "offset": "IL_0181",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0182",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_0187",
+        "opcode": "callvirt",
+        "operand": "ZonePlay::OnMagneticDropped",
+        "token": "token(0x060065B4)"
+      },
+      {
+        "offset": "IL_018c",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_018d",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0192",
+        "opcode": "callvirt",
+        "operand": "GameState::GetResponseMode",
+        "token": "token(0x0600568A)"
+      },
+      {
+        "offset": "IL_0197",
+        "opcode": "ldc.i4.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0198",
+        "opcode": "bne.un.s",
+        "operand": "IL_01a2",
+        "token": null
+      },
+      {
+        "offset": "IL_019a",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_019b",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_019c",
+        "opcode": "call",
+        "operand": "InputManager::CancelSubOptionMode",
+        "token": "token(0x06005A06)"
+      },
+      {
+        "offset": "IL_01a1",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01a2",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01a3",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_universalInputManager",
+        "token": "token(0x04003E51)"
+      },
+      {
+        "offset": "IL_01a8",
+        "opcode": "callvirt",
+        "operand": "UniversalInputManager::IsTouchMode",
+        "token": "token(0x060145BC)"
+      },
+      {
+        "offset": "IL_01ad",
+        "opcode": "brfalse",
+        "operand": "IL_024b",
+        "token": null
+      },
+      {
+        "offset": "IL_01b2",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01b3",
+        "opcode": "brtrue",
+        "operand": "IL_024b",
+        "token": null
+      },
+      {
+        "offset": "IL_01b8",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01b9",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_01be",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01bf",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_01c4",
+        "opcode": "brfalse",
+        "operand": "IL_024b",
+        "token": null
+      },
+      {
+        "offset": "IL_01c9",
+        "opcode": "call",
+        "operand": "InputCollection::GetMousePosition",
+        "token": "token(0x060059C3)"
+      },
+      {
+        "offset": "IL_01ce",
+        "opcode": "ldfld",
+        "operand": "UnityEngine.Vector3::y",
+        "token": "token(0x0A000022)"
+      },
+      {
+        "offset": "IL_01d3",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01d4",
+        "opcode": "ldflda",
+        "operand": "InputManager::m_lastMouseDownPosition",
+        "token": "token(0x04003E5F)"
+      },
+      {
+        "offset": "IL_01d9",
+        "opcode": "ldfld",
+        "operand": "UnityEngine.Vector3::y",
+        "token": "token(0x0A000022)"
+      },
+      {
+        "offset": "IL_01de",
+        "opcode": "sub",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01df",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01e0",
+        "opcode": "ldfld",
+        "operand": "InputManager::MIN_GRAB_Y",
+        "token": "token(0x04003E4C)"
+      },
+      {
+        "offset": "IL_01e5",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7ff792453050>::op_Implicit",
+        "token": "token(0x0A000A0B)"
+      },
+      {
+        "offset": "IL_01ea",
+        "opcode": "bge.un.s",
+        "operand": "IL_024b",
+        "token": null
+      },
+      {
+        "offset": "IL_01ec",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01ed",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01ee",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_01f3",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01f4",
+        "opcode": "call",
+        "operand": "InputManager::IsInZone",
+        "token": "token(0x06005A81)"
+      },
+      {
+        "offset": "IL_01f9",
+        "opcode": "brtrue.s",
+        "operand": "IL_024b",
+        "token": null
+      },
+      {
+        "offset": "IL_01fb",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01fc",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_0201",
+        "opcode": "callvirt",
+        "operand": "Card::GetActor",
+        "token": "token(0x06012DD6)"
+      },
+      {
+        "offset": "IL_0206",
+        "opcode": "callvirt",
+        "operand": "Actor::GetEntity",
+        "token": "token(0x0601280E)"
+      },
+      {
+        "offset": "IL_020b",
+        "opcode": "ldc.i4",
+        "operand": "4486",
+        "token": null
+      },
+      {
+        "offset": "IL_0210",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_0215",
+        "opcode": "brtrue.s",
+        "operand": "IL_024b",
+        "token": null
+      },
+      {
+        "offset": "IL_0217",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0218",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_myHandZone",
+        "token": "token(0x04003E54)"
+      },
+      {
+        "offset": "IL_021d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_021e",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_0223",
+        "opcode": "callvirt",
+        "operand": "ZoneHand::OnCardWithReplacementsDropped",
+        "token": "token(0x0600647F)"
+      },
+      {
+        "offset": "IL_0228",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0229",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_myPlayZone",
+        "token": "token(0x04003E55)"
+      },
+      {
+        "offset": "IL_022e",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_022f",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_0234",
+        "opcode": "callvirt",
+        "operand": "ZonePlay::OnMagneticDropped",
+        "token": "token(0x060065B4)"
+      },
+      {
+        "offset": "IL_0239",
+        "opcode": "call",
+        "operand": "PegCursor::Get",
+        "token": "token(0x06015949)"
+      },
+      {
+        "offset": "IL_023e",
+        "opcode": "ldc.i4.4",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_023f",
+        "opcode": "callvirt",
+        "operand": "PegCursor::SetMode",
+        "token": "token(0x0601594C)"
+      },
+      {
+        "offset": "IL_0244",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0245",
+        "opcode": "call",
+        "operand": "InputManager::ReturnHeldCardToHand",
+        "token": "token(0x06005A21)"
+      },
+      {
+        "offset": "IL_024a",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_024b",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "type": "InputManager",
+    "method": "DropHeldSpellLikeCard",
+    "token": "0x06005a26",
+    "rva": "0x1a5704",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0002",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Equality",
+        "token": "token(0x0A000046)"
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "brtrue.s",
+        "operand": "IL_000c",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000a",
+        "opcode": "brtrue.s",
+        "operand": "IL_001c",
+        "token": null
+      },
+      {
+        "offset": "IL_000c",
+        "opcode": "ldstr",
+        "operand": "'DropHeldSpellLikeCard() is called with the invalid card or entity.'",
+        "token": "string token(0x70085526)"
+      },
+      {
+        "offset": "IL_0011",
+        "opcode": "call",
+        "operand": "System.Array::Empty<spec>",
+        "token": "token(0x2B000001)"
+      },
+      {
+        "offset": "IL_0016",
+        "opcode": "call",
+        "operand": "UnityEngine.Debug::LogWarningFormat",
+        "token": "token(0x0A00012C)"
+      },
+      {
+        "offset": "IL_001b",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001c",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001d",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsSpell",
+        "token": "token(0x060138E3)"
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "brtrue.s",
+        "operand": "IL_0056",
+        "token": null
+      },
+      {
+        "offset": "IL_0024",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0025",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsHero",
+        "token": "token(0x060138D3)"
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "brtrue.s",
+        "operand": "IL_0056",
+        "token": null
+      },
+      {
+        "offset": "IL_002c",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002d",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsLettuceAbility",
+        "token": "token(0x060138D6)"
+      },
+      {
+        "offset": "IL_0032",
+        "opcode": "brtrue.s",
+        "operand": "IL_0056",
+        "token": null
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0035",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsBattlegroundQuestReward",
+        "token": "token(0x060138F3)"
+      },
+      {
+        "offset": "IL_003a",
+        "opcode": "brtrue.s",
+        "operand": "IL_0056",
+        "token": null
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "ldstr",
+        "operand": "'DropHeldSpellLikeCard() is called with the card: {0}'",
+        "token": "string token(0x700855AD)"
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0042",
+        "opcode": "newarr",
+        "operand": "System.Object",
+        "token": "token(0x01000001)"
+      },
+      {
+        "offset": "IL_0047",
+        "opcode": "dup",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0048",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0049",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004a",
+        "opcode": "callvirt",
+        "operand": "EntityBase::GetCardId",
+        "token": "token(0x06013947)"
+      },
+      {
+        "offset": "IL_004f",
+        "opcode": "stelem.ref",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0050",
+        "opcode": "call",
+        "operand": "UnityEngine.Debug::LogWarningFormat",
+        "token": "token(0x0A00012C)"
+      },
+      {
+        "offset": "IL_0055",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0056",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0057",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_005c",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005d",
+        "opcode": "callvirt",
+        "operand": "GameState::EntityHasTargets",
+        "token": "token(0x060056B5)"
+      },
+      {
+        "offset": "IL_0062",
+        "opcode": "brfalse.s",
+        "operand": "IL_007d",
+        "token": null
+      },
+      {
+        "offset": "IL_0064",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0065",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasDeckAction",
+        "token": "token(0x0601393D)"
+      },
+      {
+        "offset": "IL_006a",
+        "opcode": "brtrue.s",
+        "operand": "IL_007d",
+        "token": null
+      },
+      {
+        "offset": "IL_006c",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006d",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0072",
+        "opcode": "callvirt",
+        "operand": "GameState::IsInReverseTargetMode",
+        "token": "token(0x060056A3)"
+      },
+      {
+        "offset": "IL_0077",
+        "opcode": "brtrue.s",
+        "operand": "IL_007d",
+        "token": null
+      },
+      {
+        "offset": "IL_0079",
+        "opcode": "ldarg.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007a",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007b",
+        "opcode": "stind.i1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007c",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007e",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_universalInputManager",
+        "token": "token(0x04003E51)"
+      },
+      {
+        "offset": "IL_0083",
+        "opcode": "call",
+        "operand": "UnityEngine.Camera::get_main",
+        "token": "token(0x0A000580)"
+      },
+      {
+        "offset": "IL_0088",
+        "opcode": "ldc.i4.s",
+        "operand": "12",
+        "token": null
+      },
+      {
+        "offset": "IL_008a",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_008c",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008d",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008e",
+        "opcode": "callvirt",
+        "operand": "UniversalInputManager::GetInputHitInfo",
+        "token": "token(0x060145DD)"
+      },
+      {
+        "offset": "IL_0093",
+        "opcode": "brtrue.s",
+        "operand": "IL_00a2",
+        "token": null
+      },
+      {
+        "offset": "IL_0095",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0096",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_myHandZone",
+        "token": "token(0x04003E54)"
+      },
+      {
+        "offset": "IL_009b",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_009c",
+        "opcode": "callvirt",
+        "operand": "ZoneHand::OnCardWithReplacementsDropped",
+        "token": "token(0x0600647F)"
+      },
+      {
+        "offset": "IL_00a1",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a2",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a3",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_00a8",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a9",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00aa",
+        "opcode": "newobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7ff7925fa000>::.ctor",
+        "token": "token(0x0A000647)"
+      },
+      {
+        "offset": "IL_00af",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0001)",
+        "token": null
+      },
+      {
+        "offset": "IL_00b1",
+        "opcode": "initobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7ff7925fa000>",
+        "token": "token(0x1B0001E6)"
+      },
+      {
+        "offset": "IL_00b7",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b8",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0001)",
+        "token": null
+      },
+      {
+        "offset": "IL_00ba",
+        "opcode": "initobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7ff7925fa000>",
+        "token": "token(0x1B0001E6)"
+      },
+      {
+        "offset": "IL_00c0",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c1",
+        "opcode": "callvirt",
+        "operand": "GameState::HasResponse",
+        "token": "token(0x060056BA)"
+      },
+      {
+        "offset": "IL_00c6",
+        "opcode": "brtrue.s",
+        "operand": "IL_00e9",
+        "token": null
+      },
+      {
+        "offset": "IL_00c8",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c9",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_00ce",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00cf",
+        "opcode": "callvirt",
+        "operand": "GameState::GetErrorType",
+        "token": "token(0x060056B9)"
+      },
+      {
+        "offset": "IL_00d4",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d5",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_00da",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00db",
+        "opcode": "callvirt",
+        "operand": "GameState::GetErrorParam",
+        "token": "token(0x060056B8)"
+      },
+      {
+        "offset": "IL_00e0",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e1",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e2",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e3",
+        "opcode": "call",
+        "operand": "PlayErrors::DisplayPlayError",
+        "token": "token(0x06005D51)"
+      },
+      {
+        "offset": "IL_00e8",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e9",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ea",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_myHandZone",
+        "token": "token(0x04003E54)"
+      },
+      {
+        "offset": "IL_00ef",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f0",
+        "opcode": "callvirt",
+        "operand": "ZoneHand::OnCardWithReplacementsPlayed",
+        "token": "token(0x0600647E)"
+      },
+      {
+        "offset": "IL_00f5",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f6",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f7",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f8",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f9",
+        "opcode": "call",
+        "operand": "InputManager::DoNetworkResponse",
+        "token": "token(0x06005A3B)"
+      },
+      {
+        "offset": "IL_00fe",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ff",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0100",
+        "opcode": "call",
+        "operand": "ZoneMgr::Get",
+        "token": "token(0x06006502)"
+      },
+      {
+        "offset": "IL_0105",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0106",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0107",
+        "opcode": "callvirt",
+        "operand": "ZoneMgr::AddLocalZoneChange",
+        "token": "token(0x06006523)"
+      },
+      {
+        "offset": "IL_010c",
+        "opcode": "stfld",
+        "operand": "InputManager::m_lastZoneChangeList",
+        "token": "token(0x04003E69)"
+      },
+      {
+        "offset": "IL_0111",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0112",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0113",
+        "opcode": "call",
+        "operand": "InputManager::PredictSpentMana",
+        "token": "token(0x06005A7D)"
+      },
+      {
+        "offset": "IL_0118",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0119",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsSpell",
+        "token": "token(0x060138E3)"
+      },
+      {
+        "offset": "IL_011e",
+        "opcode": "brfalse.s",
+        "operand": "IL_0144",
+        "token": null
+      },
+      {
+        "offset": "IL_0120",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0121",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0126",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0127",
+        "opcode": "callvirt",
+        "operand": "GameState::HasSubOptions",
+        "token": "token(0x060056B7)"
+      },
+      {
+        "offset": "IL_012c",
+        "opcode": "brfalse.s",
+        "operand": "IL_0136",
+        "token": null
+      },
+      {
+        "offset": "IL_012e",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_012f",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0130",
+        "opcode": "callvirt",
+        "operand": "Card::DeactivateHandStateSpells",
+        "token": "token(0x06012D8A)"
+      },
+      {
+        "offset": "IL_0135",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0136",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0137",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0138",
+        "opcode": "call",
+        "operand": "InputManager::ActivatePowerUpSpell",
+        "token": "token(0x06005A17)"
+      },
+      {
+        "offset": "IL_013d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_013e",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_013f",
+        "opcode": "call",
+        "operand": "InputManager::ActivatePlaySpell",
+        "token": "token(0x06005A18)"
+      },
+      {
+        "offset": "IL_0144",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "type": "InputManager",
+    "method": "HandleClickOnCardInBattlefield",
+    "token": "0x06005a2f",
+    "rva": "0x1a5f94",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "brtrue.s",
+        "operand": "IL_0004",
+        "token": null
+      },
+      {
+        "offset": "IL_0003",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0004",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0005",
+        "opcode": "call",
+        "operand": "InputManager::PermitDecisionMakingInput",
+        "token": "token(0x060059E2)"
+      },
+      {
+        "offset": "IL_000a",
+        "opcode": "brtrue.s",
+        "operand": "IL_000d",
+        "token": null
+      },
+      {
+        "offset": "IL_000c",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_isShowingOpponentChoiceUI",
+        "token": "token(0x04003E82)"
+      },
+      {
+        "offset": "IL_0013",
+        "opcode": "brfalse.s",
+        "operand": "IL_0016",
+        "token": null
+      },
+      {
+        "offset": "IL_0015",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0016",
+        "opcode": "call",
+        "operand": "PegCursor::Get",
+        "token": "token(0x06015949)"
+      },
+      {
+        "offset": "IL_001b",
+        "opcode": "ldc.i4.4",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001c",
+        "opcode": "callvirt",
+        "operand": "PegCursor::SetMode",
+        "token": "token(0x0601594C)"
+      },
+      {
+        "offset": "IL_0021",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_universalInputManager",
+        "token": "token(0x04003E51)"
+      },
+      {
+        "offset": "IL_0027",
+        "opcode": "callvirt",
+        "operand": "UniversalInputManager::IsTouchMode",
+        "token": "token(0x060145BC)"
+      },
+      {
+        "offset": "IL_002c",
+        "opcode": "brfalse.s",
+        "operand": "IL_0053",
+        "token": null
+      },
+      {
+        "offset": "IL_002e",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002f",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsCardButton",
+        "token": "token(0x060138EF)"
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "brfalse.s",
+        "operand": "IL_0053",
+        "token": null
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0037",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "callvirt",
+        "operand": "GameState::IsInTargetMode",
+        "token": "token(0x060056A1)"
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "brtrue.s",
+        "operand": "IL_0053",
+        "token": null
+      },
+      {
+        "offset": "IL_0043",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0044",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_mousedOverTimer",
+        "token": "token(0x04003E65)"
+      },
+      {
+        "offset": "IL_0049",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004a",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004b",
+        "opcode": "call",
+        "operand": "InputManager::GetMouseOverDelay",
+        "token": "token(0x06005A2E)"
+      },
+      {
+        "offset": "IL_0050",
+        "opcode": "ble.un.s",
+        "operand": "IL_0053",
+        "token": null
+      },
+      {
+        "offset": "IL_0052",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0053",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0054",
+        "opcode": "callvirt",
+        "operand": "Entity::GetCard",
+        "token": "token(0x060137BF)"
+      },
+      {
+        "offset": "IL_0059",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005a",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005b",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsGameModeButton",
+        "token": "token(0x060138D5)"
+      },
+      {
+        "offset": "IL_0060",
+        "opcode": "brfalse.s",
+        "operand": "IL_008b",
+        "token": null
+      },
+      {
+        "offset": "IL_0062",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0063",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0064",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0069",
+        "opcode": "brfalse.s",
+        "operand": "IL_008b",
+        "token": null
+      },
+      {
+        "offset": "IL_006b",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006c",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006d",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006e",
+        "opcode": "callvirt",
+        "operand": "Card::GetPlaySpell",
+        "token": "token(0x06012D2B)"
+      },
+      {
+        "offset": "IL_0073",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0074",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0079",
+        "opcode": "brfalse.s",
+        "operand": "IL_008b",
+        "token": null
+      },
+      {
+        "offset": "IL_007b",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007c",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007d",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007e",
+        "opcode": "callvirt",
+        "operand": "Card::GetPlaySpell",
+        "token": "token(0x06012D2B)"
+      },
+      {
+        "offset": "IL_0083",
+        "opcode": "callvirt",
+        "operand": "Blizzard.T5.Game.Spells.SpellBase::GetActiveState",
+        "token": "token(0x0A000C93)"
+      },
+      {
+        "offset": "IL_0088",
+        "opcode": "brfalse.s",
+        "operand": "IL_008b",
+        "token": null
+      },
+      {
+        "offset": "IL_008a",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008b",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008c",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsHeroPower",
+        "token": "token(0x060138D4)"
+      },
+      {
+        "offset": "IL_0091",
+        "opcode": "brtrue.s",
+        "operand": "IL_009b",
+        "token": null
+      },
+      {
+        "offset": "IL_0093",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0094",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsGameModeButton",
+        "token": "token(0x060138D5)"
+      },
+      {
+        "offset": "IL_0099",
+        "opcode": "brfalse.s",
+        "operand": "IL_00bd",
+        "token": null
+      },
+      {
+        "offset": "IL_009b",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_009c",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_009d",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_00a2",
+        "opcode": "brfalse.s",
+        "operand": "IL_00bd",
+        "token": null
+      },
+      {
+        "offset": "IL_00a4",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a5",
+        "opcode": "callvirt",
+        "operand": "Card::GetActor",
+        "token": "token(0x06012DD6)"
+      },
+      {
+        "offset": "IL_00aa",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ab",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_00b0",
+        "opcode": "brfalse.s",
+        "operand": "IL_00bd",
+        "token": null
+      },
+      {
+        "offset": "IL_00b2",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b3",
+        "opcode": "callvirt",
+        "operand": "Card::GetActor",
+        "token": "token(0x06012DD6)"
+      },
+      {
+        "offset": "IL_00b8",
+        "opcode": "callvirt",
+        "operand": "Actor::RemovePingAndNotifyTeammate",
+        "token": "token(0x0601290F)"
+      },
+      {
+        "offset": "IL_00bd",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00be",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_00c3",
+        "opcode": "callvirt",
+        "operand": "GameState::GetGameEntity",
+        "token": "token(0x060055A9)"
+      },
+      {
+        "offset": "IL_00c8",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c9",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ca",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00cb",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00cc",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_00d1",
+        "opcode": "callvirt",
+        "operand": "GameState::IsInTargetMode",
+        "token": "token(0x060056A1)"
+      },
+      {
+        "offset": "IL_00d6",
+        "opcode": "callvirt",
+        "operand": "GameEntity::NotifyOfBattlefieldCardClicked",
+        "token": "token(0x0600546E)"
+      },
+      {
+        "offset": "IL_00db",
+        "opcode": "brtrue.s",
+        "operand": "IL_00de",
+        "token": null
+      },
+      {
+        "offset": "IL_00dd",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00de",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00df",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_00e4",
+        "opcode": "callvirt",
+        "operand": "GameState::IsInTargetMode",
+        "token": "token(0x060056A1)"
+      },
+      {
+        "offset": "IL_00e9",
+        "opcode": "brfalse",
+        "operand": "IL_01cd",
+        "token": null
+      },
+      {
+        "offset": "IL_00ee",
+        "opcode": "newobj",
+        "operand": "<>c__DisplayClass171_0::.ctor",
+        "token": "token(0x06005AB2)"
+      },
+      {
+        "offset": "IL_00f3",
+        "opcode": "stloc.s",
+        "operand": "local(0x0007)",
+        "token": null
+      },
+      {
+        "offset": "IL_00f5",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f6",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f7",
+        "opcode": "call",
+        "operand": "InputManager::DisableSkullIfNeeded",
+        "token": "token(0x06005A60)"
+      },
+      {
+        "offset": "IL_00fc",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00fd",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0102",
+        "opcode": "callvirt",
+        "operand": "GameState::GetSelectedNetworkSubOption",
+        "token": "token(0x060056B3)"
+      },
+      {
+        "offset": "IL_0107",
+        "opcode": "stloc.s",
+        "operand": "local(0x0008)",
+        "token": null
+      },
+      {
+        "offset": "IL_0109",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0007)",
+        "token": null
+      },
+      {
+        "offset": "IL_010b",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_010c",
+        "opcode": "callvirt",
+        "operand": "EntityBase::GetEntityId",
+        "token": "token(0x0601392E)"
+      },
+      {
+        "offset": "IL_0111",
+        "opcode": "stfld",
+        "operand": "<>c__DisplayClass171_0::clickedEntityId",
+        "token": "token(0x04003E98)"
+      },
+      {
+        "offset": "IL_0116",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0008)",
+        "token": null
+      },
+      {
+        "offset": "IL_0118",
+        "opcode": "callvirt",
+        "operand": "SubOption::get_ID",
+        "token": "token(0x0600EEA7)"
+      },
+      {
+        "offset": "IL_011d",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0007)",
+        "token": null
+      },
+      {
+        "offset": "IL_011f",
+        "opcode": "ldfld",
+        "operand": "<>c__DisplayClass171_0::clickedEntityId",
+        "token": "token(0x04003E98)"
+      },
+      {
+        "offset": "IL_0124",
+        "opcode": "bne.un.s",
+        "operand": "IL_0156",
+        "token": null
+      },
+      {
+        "offset": "IL_0126",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0008)",
+        "token": null
+      },
+      {
+        "offset": "IL_0128",
+        "opcode": "callvirt",
+        "operand": "SubOption::get_Targets",
+        "token": "token(0x0600EEA9)"
+      },
+      {
+        "offset": "IL_012d",
+        "opcode": "brfalse.s",
+        "operand": "IL_014a",
+        "token": null
+      },
+      {
+        "offset": "IL_012f",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0008)",
+        "token": null
+      },
+      {
+        "offset": "IL_0131",
+        "opcode": "callvirt",
+        "operand": "SubOption::get_Targets",
+        "token": "token(0x0600EEA9)"
+      },
+      {
+        "offset": "IL_0136",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0007)",
+        "token": null
+      },
+      {
+        "offset": "IL_0138",
+        "opcode": "ldftn",
+        "operand": "<>c__DisplayClass171_0::<HandleClickOnCardInBattlefield>b__0",
+        "token": "token(0x06005AB3)"
+      },
+      {
+        "offset": "IL_013e",
+        "opcode": "newobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7ff792297590>::.ctor",
+        "token": "token(0x0A0024B8)"
+      },
+      {
+        "offset": "IL_0143",
+        "opcode": "call",
+        "operand": "System.Linq.Enumerable::Any<spec>",
+        "token": "token(0x2B0003E5)"
+      },
+      {
+        "offset": "IL_0148",
+        "opcode": "br.s",
+        "operand": "IL_014b",
+        "token": null
+      },
+      {
+        "offset": "IL_014a",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_014b",
+        "opcode": "brtrue.s",
+        "operand": "IL_0156",
+        "token": null
+      },
+      {
+        "offset": "IL_014d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_014e",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_014f",
+        "opcode": "call",
+        "operand": "InputManager::CancelOption",
+        "token": "token(0x06005A02)"
+      },
+      {
+        "offset": "IL_0154",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0155",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0156",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0157",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0158",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_015d",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0008)",
+        "token": null
+      },
+      {
+        "offset": "IL_015f",
+        "opcode": "callvirt",
+        "operand": "SubOption::get_ID",
+        "token": "token(0x0600EEA7)"
+      },
+      {
+        "offset": "IL_0164",
+        "opcode": "callvirt",
+        "operand": "GameState::GetEntity",
+        "token": "token(0x060055A7)"
+      },
+      {
+        "offset": "IL_0169",
+        "opcode": "call",
+        "operand": "InputManager::UpdateTelemetryAttackInputCounts",
+        "token": "token(0x06005A32)"
+      },
+      {
+        "offset": "IL_016e",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_016f",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0170",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0171",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0172",
+        "opcode": "call",
+        "operand": "InputManager::DoNetworkResponse",
+        "token": "token(0x06005A3B)"
+      },
+      {
+        "offset": "IL_0177",
+        "opcode": "brfalse.s",
+        "operand": "IL_01cc",
+        "token": null
+      },
+      {
+        "offset": "IL_0179",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_017a",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_017f",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0180",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0185",
+        "opcode": "brfalse.s",
+        "operand": "IL_01c6",
+        "token": null
+      },
+      {
+        "offset": "IL_0187",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0188",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_heldCard",
+        "token": "token(0x04003E5A)"
+      },
+      {
+        "offset": "IL_018d",
+        "opcode": "stloc.s",
+        "operand": "local(0x0009)",
+        "token": null
+      },
+      {
+        "offset": "IL_018f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0190",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0009)",
+        "token": null
+      },
+      {
+        "offset": "IL_0192",
+        "opcode": "call",
+        "operand": "InputManager::OnFireSpellDropped",
+        "token": "token(0x06005A16)"
+      },
+      {
+        "offset": "IL_0197",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0198",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_myHandZone",
+        "token": "token(0x04003E54)"
+      },
+      {
+        "offset": "IL_019d",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0009)",
+        "token": null
+      },
+      {
+        "offset": "IL_019f",
+        "opcode": "callvirt",
+        "operand": "ZoneHand::OnCardWithReplacementsPlayed",
+        "token": "token(0x0600647E)"
+      },
+      {
+        "offset": "IL_01a4",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01a5",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01a6",
+        "opcode": "call",
+        "operand": "InputManager::SetHeldCardValue",
+        "token": "token(0x06005A1E)"
+      },
+      {
+        "offset": "IL_01ab",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0009)",
+        "token": null
+      },
+      {
+        "offset": "IL_01ad",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01ae",
+        "opcode": "callvirt",
+        "operand": "Card::SetDoNotSort",
+        "token": "token(0x06012DF3)"
+      },
+      {
+        "offset": "IL_01b3",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01b4",
+        "opcode": "call",
+        "operand": "ZoneMgr::Get",
+        "token": "token(0x06006502)"
+      },
+      {
+        "offset": "IL_01b9",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0009)",
+        "token": null
+      },
+      {
+        "offset": "IL_01bb",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01bc",
+        "opcode": "callvirt",
+        "operand": "ZoneMgr::AddLocalZoneChange",
+        "token": "token(0x06006523)"
+      },
+      {
+        "offset": "IL_01c1",
+        "opcode": "stfld",
+        "operand": "InputManager::m_lastZoneChangeList",
+        "token": "token(0x04003E69)"
+      },
+      {
+        "offset": "IL_01c6",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01c7",
+        "opcode": "call",
+        "operand": "InputManager::EndMobileTargetingEffect",
+        "token": "token(0x06005A54)"
+      },
+      {
+        "offset": "IL_01cc",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01cd",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01ce",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_01d3",
+        "opcode": "callvirt",
+        "operand": "GameState::IsInReverseTargetMode",
+        "token": "token(0x060056A3)"
+      },
+      {
+        "offset": "IL_01d8",
+        "opcode": "brfalse.s",
+        "operand": "IL_01fb",
+        "token": null
+      },
+      {
+        "offset": "IL_01da",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01db",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_01e0",
+        "opcode": "callvirt",
+        "operand": "GameState::GetSelectedNetworkSubOption",
+        "token": "token(0x060056B3)"
+      },
+      {
+        "offset": "IL_01e5",
+        "opcode": "callvirt",
+        "operand": "SubOption::get_ID",
+        "token": "token(0x0600EEA7)"
+      },
+      {
+        "offset": "IL_01ea",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01eb",
+        "opcode": "callvirt",
+        "operand": "EntityBase::GetEntityId",
+        "token": "token(0x0601392E)"
+      },
+      {
+        "offset": "IL_01f0",
+        "opcode": "bne.un.s",
+        "operand": "IL_01fb",
+        "token": null
+      },
+      {
+        "offset": "IL_01f2",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01f3",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01f4",
+        "opcode": "call",
+        "operand": "InputManager::CancelOption",
+        "token": "token(0x06005A02)"
+      },
+      {
+        "offset": "IL_01f9",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01fa",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01fb",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01fc",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0201",
+        "opcode": "callvirt",
+        "operand": "GameState::GetActionStepType",
+        "token": "token(0x060055E8)"
+      },
+      {
+        "offset": "IL_0206",
+        "opcode": "stloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0207",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0208",
+        "opcode": "call",
+        "operand": "InputCollection::GetMouseButtonUp",
+        "token": "token(0x060059CA)"
+      },
+      {
+        "offset": "IL_020d",
+        "opcode": "stloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_020e",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_020f",
+        "opcode": "isinst",
+        "operand": "LettuceMissionEntity",
+        "token": "token(0x02001C6D)"
+      },
+      {
+        "offset": "IL_0214",
+        "opcode": "brfalse",
+        "operand": "IL_02ed",
+        "token": null
+      },
+      {
+        "offset": "IL_0219",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_021a",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_021f",
+        "opcode": "callvirt",
+        "operand": "GameState::IsActionStep",
+        "token": "token(0x060055E7)"
+      },
+      {
+        "offset": "IL_0224",
+        "opcode": "brfalse",
+        "operand": "IL_02ed",
+        "token": null
+      },
+      {
+        "offset": "IL_0229",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_022a",
+        "opcode": "brtrue",
+        "operand": "IL_02ed",
+        "token": null
+      },
+      {
+        "offset": "IL_022f",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0230",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0231",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0236",
+        "opcode": "brfalse.s",
+        "operand": "IL_0241",
+        "token": null
+      },
+      {
+        "offset": "IL_0238",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0239",
+        "opcode": "callvirt",
+        "operand": "Card::IsInputEnabled",
+        "token": "token(0x06012CEB)"
+      },
+      {
+        "offset": "IL_023e",
+        "opcode": "brtrue.s",
+        "operand": "IL_0241",
+        "token": null
+      },
+      {
+        "offset": "IL_0240",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0241",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0242",
+        "opcode": "ldc.i4",
+        "operand": "1653",
+        "token": null
+      },
+      {
+        "offset": "IL_0247",
+        "opcode": "callvirt",
+        "operand": "EntityBase::GetTag",
+        "token": "token(0x060138A4)"
+      },
+      {
+        "offset": "IL_024c",
+        "opcode": "stloc.s",
+        "operand": "local(0x000A)",
+        "token": null
+      },
+      {
+        "offset": "IL_024e",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_024f",
+        "opcode": "brtrue.s",
+        "operand": "IL_0259",
+        "token": null
+      },
+      {
+        "offset": "IL_0251",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0252",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_dragging",
+        "token": "token(0x04003E61)"
+      },
+      {
+        "offset": "IL_0257",
+        "opcode": "br.s",
+        "operand": "IL_025a",
+        "token": null
+      },
+      {
+        "offset": "IL_0259",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_025a",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_025b",
+        "opcode": "and",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_025c",
+        "opcode": "brfalse",
+        "operand": "IL_02ed",
+        "token": null
+      },
+      {
+        "offset": "IL_0261",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000A)",
+        "token": null
+      },
+      {
+        "offset": "IL_0263",
+        "opcode": "brfalse",
+        "operand": "IL_02ed",
+        "token": null
+      },
+      {
+        "offset": "IL_0268",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000A)",
+        "token": null
+      },
+      {
+        "offset": "IL_026a",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_026b",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0270",
+        "opcode": "callvirt",
+        "operand": "GameState::GetLocalSidePlayer",
+        "token": "token(0x060055AF)"
+      },
+      {
+        "offset": "IL_0275",
+        "opcode": "callvirt",
+        "operand": "Player::GetPlayerId",
+        "token": "token(0x06005D6F)"
+      },
+      {
+        "offset": "IL_027a",
+        "opcode": "bne.un.s",
+        "operand": "IL_02ed",
+        "token": null
+      },
+      {
+        "offset": "IL_027c",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_027d",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsMinion",
+        "token": "token(0x060138DB)"
+      },
+      {
+        "offset": "IL_0282",
+        "opcode": "brfalse.s",
+        "operand": "IL_02c1",
+        "token": null
+      },
+      {
+        "offset": "IL_0284",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0285",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_028a",
+        "opcode": "callvirt",
+        "operand": "GameState::IsResponsePacketBlocked",
+        "token": "token(0x060055C7)"
+      },
+      {
+        "offset": "IL_028f",
+        "opcode": "brfalse.s",
+        "operand": "IL_0292",
+        "token": null
+      },
+      {
+        "offset": "IL_0291",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0292",
+        "opcode": "call",
+        "operand": "ZoneMgr::Get",
+        "token": "token(0x06006502)"
+      },
+      {
+        "offset": "IL_0297",
+        "opcode": "callvirt",
+        "operand": "ZoneMgr::GetLettuceAbilitiesSourceEntity",
+        "token": "token(0x06006574)"
+      },
+      {
+        "offset": "IL_029c",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_029d",
+        "opcode": "beq.s",
+        "operand": "IL_02c0",
+        "token": null
+      },
+      {
+        "offset": "IL_029f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02a0",
+        "opcode": "call",
+        "operand": "InputManager::HandleMouseOffCard",
+        "token": "token(0x06005A65)"
+      },
+      {
+        "offset": "IL_02a5",
+        "opcode": "call",
+        "operand": "ZoneMgr::Get",
+        "token": "token(0x06006502)"
+      },
+      {
+        "offset": "IL_02aa",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02ab",
+        "opcode": "callvirt",
+        "operand": "ZoneMgr::DisplayLettuceAbilitiesForEntity",
+        "token": "token(0x06006575)"
+      },
+      {
+        "offset": "IL_02b0",
+        "opcode": "call",
+        "operand": "RemoteActionHandler::Get",
+        "token": "token(0x0600604A)"
+      },
+      {
+        "offset": "IL_02b5",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02b6",
+        "opcode": "callvirt",
+        "operand": "EntityBase::GetEntityId",
+        "token": "token(0x0601392E)"
+      },
+      {
+        "offset": "IL_02bb",
+        "opcode": "callvirt",
+        "operand": "RemoteActionHandler::NotifyOpponentOfSelection",
+        "token": "token(0x06006052)"
+      },
+      {
+        "offset": "IL_02c0",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02c1",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02c2",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsLettuceAbility",
+        "token": "token(0x060138D6)"
+      },
+      {
+        "offset": "IL_02c7",
+        "opcode": "brfalse.s",
+        "operand": "IL_02ed",
+        "token": null
+      },
+      {
+        "offset": "IL_02c9",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02ca",
+        "opcode": "callvirt",
+        "operand": "Entity::GetLettuceAbilityOwner",
+        "token": "token(0x0601387A)"
+      },
+      {
+        "offset": "IL_02cf",
+        "opcode": "stloc.s",
+        "operand": "local(0x000B)",
+        "token": null
+      },
+      {
+        "offset": "IL_02d1",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000B)",
+        "token": null
+      },
+      {
+        "offset": "IL_02d3",
+        "opcode": "brfalse.s",
+        "operand": "IL_02ed",
+        "token": null
+      },
+      {
+        "offset": "IL_02d5",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000B)",
+        "token": null
+      },
+      {
+        "offset": "IL_02d7",
+        "opcode": "callvirt",
+        "operand": "Entity::GetSelectedLettuceAbilityID",
+        "token": "token(0x06013804)"
+      },
+      {
+        "offset": "IL_02dc",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02dd",
+        "opcode": "callvirt",
+        "operand": "EntityBase::GetEntityId",
+        "token": "token(0x0601392E)"
+      },
+      {
+        "offset": "IL_02e2",
+        "opcode": "bne.un.s",
+        "operand": "IL_02ed",
+        "token": null
+      },
+      {
+        "offset": "IL_02e4",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02e5",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000B)",
+        "token": null
+      },
+      {
+        "offset": "IL_02e7",
+        "opcode": "call",
+        "operand": "InputManager::CancelSelectedLettuceAbilityForEntity",
+        "token": "token(0x06005A30)"
+      },
+      {
+        "offset": "IL_02ec",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02ed",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02ee",
+        "opcode": "brfalse.s",
+        "operand": "IL_0349",
+        "token": null
+      },
+      {
+        "offset": "IL_02f0",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02f1",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_universalInputManager",
+        "token": "token(0x04003E51)"
+      },
+      {
+        "offset": "IL_02f6",
+        "opcode": "callvirt",
+        "operand": "UniversalInputManager::IsTouchMode",
+        "token": "token(0x060145BC)"
+      },
+      {
+        "offset": "IL_02fb",
+        "opcode": "brfalse.s",
+        "operand": "IL_0349",
+        "token": null
+      },
+      {
+        "offset": "IL_02fd",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_02fe",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0303",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0304",
+        "opcode": "callvirt",
+        "operand": "GameState::EntityHasTargets",
+        "token": "token(0x060056B5)"
+      },
+      {
+        "offset": "IL_0309",
+        "opcode": "brfalse.s",
+        "operand": "IL_0349",
+        "token": null
+      },
+      {
+        "offset": "IL_030b",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_030c",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsInteractableObject",
+        "token": "token(0x060138E2)"
+      },
+      {
+        "offset": "IL_0311",
+        "opcode": "brtrue.s",
+        "operand": "IL_0349",
+        "token": null
+      },
+      {
+        "offset": "IL_0313",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0314",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0315",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_031a",
+        "opcode": "brfalse.s",
+        "operand": "IL_0348",
+        "token": null
+      },
+      {
+        "offset": "IL_031c",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_031d",
+        "opcode": "callvirt",
+        "operand": "Card::IsShowingTooltip",
+        "token": "token(0x06012CF4)"
+      },
+      {
+        "offset": "IL_0322",
+        "opcode": "brtrue.s",
+        "operand": "IL_0348",
+        "token": null
+      },
+      {
+        "offset": "IL_0324",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0325",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_032a",
+        "opcode": "callvirt",
+        "operand": "GameState::IsFriendlySidePlayerTurn",
+        "token": "token(0x060055BD)"
+      },
+      {
+        "offset": "IL_032f",
+        "opcode": "brfalse.s",
+        "operand": "IL_0348",
+        "token": null
+      },
+      {
+        "offset": "IL_0331",
+        "opcode": "ldc.i4",
+        "operand": "999",
+        "token": null
+      },
+      {
+        "offset": "IL_0336",
+        "opcode": "ldloca.s",
+        "operand": "local(0x000C)",
+        "token": null
+      },
+      {
+        "offset": "IL_0338",
+        "opcode": "initobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7ff792573dd0>",
+        "token": "token(0x1B000056)"
+      },
+      {
+        "offset": "IL_033e",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000C)",
+        "token": null
+      },
+      {
+        "offset": "IL_0340",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0341",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0342",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0343",
+        "opcode": "call",
+        "operand": "PlayErrors::DisplayPlayError",
+        "token": "token(0x06005D51)"
+      },
+      {
+        "offset": "IL_0348",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0349",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_034a",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsStarship",
+        "token": "token(0x060138E0)"
+      },
+      {
+        "offset": "IL_034f",
+        "opcode": "brfalse.s",
+        "operand": "IL_036a",
+        "token": null
+      },
+      {
+        "offset": "IL_0351",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0352",
+        "opcode": "ldc.i4",
+        "operand": "3563",
+        "token": null
+      },
+      {
+        "offset": "IL_0357",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_035c",
+        "opcode": "brfalse.s",
+        "operand": "IL_036a",
+        "token": null
+      },
+      {
+        "offset": "IL_035e",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_035f",
+        "opcode": "brtrue.s",
+        "operand": "IL_036a",
+        "token": null
+      },
+      {
+        "offset": "IL_0361",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0362",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_dragging",
+        "token": "token(0x04003E61)"
+      },
+      {
+        "offset": "IL_0367",
+        "opcode": "brfalse.s",
+        "operand": "IL_036a",
+        "token": null
+      },
+      {
+        "offset": "IL_0369",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_036a",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_036b",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsStarship",
+        "token": "token(0x060138E0)"
+      },
+      {
+        "offset": "IL_0370",
+        "opcode": "brfalse.s",
+        "operand": "IL_03b6",
+        "token": null
+      },
+      {
+        "offset": "IL_0372",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0373",
+        "opcode": "callvirt",
+        "operand": "Entity::IsControlledByOpposingSidePlayer",
+        "token": "token(0x060137E2)"
+      },
+      {
+        "offset": "IL_0378",
+        "opcode": "brfalse.s",
+        "operand": "IL_03b6",
+        "token": null
+      },
+      {
+        "offset": "IL_037a",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_037b",
+        "opcode": "ldc.i4",
+        "operand": "3563",
+        "token": null
+      },
+      {
+        "offset": "IL_0380",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_0385",
+        "opcode": "brfalse.s",
+        "operand": "IL_03b6",
+        "token": null
+      },
+      {
+        "offset": "IL_0387",
+        "opcode": "call",
+        "operand": "ChoiceCardMgr::Get",
+        "token": "token(0x06005219)"
+      },
+      {
+        "offset": "IL_038c",
+        "opcode": "stloc.s",
+        "operand": "local(0x000D)",
+        "token": null
+      },
+      {
+        "offset": "IL_038e",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000D)",
+        "token": null
+      },
+      {
+        "offset": "IL_0390",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0391",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0396",
+        "opcode": "brfalse.s",
+        "operand": "IL_03b5",
+        "token": null
+      },
+      {
+        "offset": "IL_0398",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0399",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_isShowingOpponentChoiceUI",
+        "token": "token(0x04003E82)"
+      },
+      {
+        "offset": "IL_039e",
+        "opcode": "brtrue.s",
+        "operand": "IL_03b5",
+        "token": null
+      },
+      {
+        "offset": "IL_03a0",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000D)",
+        "token": null
+      },
+      {
+        "offset": "IL_03a2",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03a3",
+        "opcode": "callvirt",
+        "operand": "ChoiceCardMgr::ShowOpponentSubOptions",
+        "token": "token(0x06005274)"
+      },
+      {
+        "offset": "IL_03a8",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03a9",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03aa",
+        "opcode": "stfld",
+        "operand": "InputManager::m_isShowingOpponentChoiceUI",
+        "token": "token(0x04003E82)"
+      },
+      {
+        "offset": "IL_03af",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03b0",
+        "opcode": "call",
+        "operand": "InputManager::SetShouldHideTooltip",
+        "token": "token(0x060059E8)"
+      },
+      {
+        "offset": "IL_03b5",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03b6",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03b7",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsActivatableMinion",
+        "token": "token(0x060138DD)"
+      },
+      {
+        "offset": "IL_03bc",
+        "opcode": "brfalse.s",
+        "operand": "IL_03fd",
+        "token": null
+      },
+      {
+        "offset": "IL_03be",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03bf",
+        "opcode": "callvirt",
+        "operand": "Entity::IsControlledByOpposingSidePlayer",
+        "token": "token(0x060137E2)"
+      },
+      {
+        "offset": "IL_03c4",
+        "opcode": "brfalse.s",
+        "operand": "IL_03fd",
+        "token": null
+      },
+      {
+        "offset": "IL_03c6",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03c7",
+        "opcode": "callvirt",
+        "operand": "Entity::HasSubCards",
+        "token": "token(0x06013813)"
+      },
+      {
+        "offset": "IL_03cc",
+        "opcode": "brfalse.s",
+        "operand": "IL_03fd",
+        "token": null
+      },
+      {
+        "offset": "IL_03ce",
+        "opcode": "call",
+        "operand": "ChoiceCardMgr::Get",
+        "token": "token(0x06005219)"
+      },
+      {
+        "offset": "IL_03d3",
+        "opcode": "stloc.s",
+        "operand": "local(0x000E)",
+        "token": null
+      },
+      {
+        "offset": "IL_03d5",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000E)",
+        "token": null
+      },
+      {
+        "offset": "IL_03d7",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03d8",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_03dd",
+        "opcode": "brfalse.s",
+        "operand": "IL_03fc",
+        "token": null
+      },
+      {
+        "offset": "IL_03df",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03e0",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_isShowingOpponentChoiceUI",
+        "token": "token(0x04003E82)"
+      },
+      {
+        "offset": "IL_03e5",
+        "opcode": "brtrue.s",
+        "operand": "IL_03fc",
+        "token": null
+      },
+      {
+        "offset": "IL_03e7",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000E)",
+        "token": null
+      },
+      {
+        "offset": "IL_03e9",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03ea",
+        "opcode": "callvirt",
+        "operand": "ChoiceCardMgr::ShowOpponentSubOptions",
+        "token": "token(0x06005274)"
+      },
+      {
+        "offset": "IL_03ef",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03f0",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03f1",
+        "opcode": "stfld",
+        "operand": "InputManager::m_isShowingOpponentChoiceUI",
+        "token": "token(0x04003E82)"
+      },
+      {
+        "offset": "IL_03f6",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03f7",
+        "opcode": "call",
+        "operand": "InputManager::SetShouldHideTooltip",
+        "token": "token(0x060059E8)"
+      },
+      {
+        "offset": "IL_03fc",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03fd",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_03fe",
+        "opcode": "stloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_0400",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0401",
+        "opcode": "ldc.i4",
+        "operand": "4089",
+        "token": null
+      },
+      {
+        "offset": "IL_0406",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_040b",
+        "opcode": "brfalse.s",
+        "operand": "IL_0470",
+        "token": null
+      },
+      {
+        "offset": "IL_040d",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_040e",
+        "opcode": "callvirt",
+        "operand": "Entity::IsControlledByFriendlySidePlayer",
+        "token": "token(0x060137E1)"
+      },
+      {
+        "offset": "IL_0413",
+        "opcode": "brfalse.s",
+        "operand": "IL_0470",
+        "token": null
+      },
+      {
+        "offset": "IL_0415",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0416",
+        "opcode": "ldc.i4",
+        "operand": "1356",
+        "token": null
+      },
+      {
+        "offset": "IL_041b",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_0420",
+        "opcode": "brfalse.s",
+        "operand": "IL_046d",
+        "token": null
+      },
+      {
+        "offset": "IL_0422",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0423",
+        "opcode": "brfalse.s",
+        "operand": "IL_0461",
+        "token": null
+      },
+      {
+        "offset": "IL_0425",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0426",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_dragging",
+        "token": "token(0x04003E61)"
+      },
+      {
+        "offset": "IL_042b",
+        "opcode": "brtrue.s",
+        "operand": "IL_0461",
+        "token": null
+      },
+      {
+        "offset": "IL_042d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_042e",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_universalInputManager",
+        "token": "token(0x04003E51)"
+      },
+      {
+        "offset": "IL_0433",
+        "opcode": "callvirt",
+        "operand": "UniversalInputManager::IsTouchMode",
+        "token": "token(0x060145BC)"
+      },
+      {
+        "offset": "IL_0438",
+        "opcode": "brfalse.s",
+        "operand": "IL_045c",
+        "token": null
+      },
+      {
+        "offset": "IL_043a",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_043b",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0440",
+        "opcode": "callvirt",
+        "operand": "GameState::IsInTargetMode",
+        "token": "token(0x060056A1)"
+      },
+      {
+        "offset": "IL_0445",
+        "opcode": "brtrue.s",
+        "operand": "IL_045c",
+        "token": null
+      },
+      {
+        "offset": "IL_0447",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0448",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_mousedOverTimer",
+        "token": "token(0x04003E65)"
+      },
+      {
+        "offset": "IL_044d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_044e",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_044f",
+        "opcode": "call",
+        "operand": "InputManager::GetMouseOverDelay",
+        "token": "token(0x06005A2E)"
+      },
+      {
+        "offset": "IL_0454",
+        "opcode": "ble.un.s",
+        "operand": "IL_0457",
+        "token": null
+      },
+      {
+        "offset": "IL_0456",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0457",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0458",
+        "opcode": "stloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_045a",
+        "opcode": "br.s",
+        "operand": "IL_0470",
+        "token": null
+      },
+      {
+        "offset": "IL_045c",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_045d",
+        "opcode": "stloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_045f",
+        "opcode": "br.s",
+        "operand": "IL_0470",
+        "token": null
+      },
+      {
+        "offset": "IL_0461",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0462",
+        "opcode": "brtrue.s",
+        "operand": "IL_0470",
+        "token": null
+      },
+      {
+        "offset": "IL_0464",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0465",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_dragging",
+        "token": "token(0x04003E61)"
+      },
+      {
+        "offset": "IL_046a",
+        "opcode": "brtrue.s",
+        "operand": "IL_0470",
+        "token": null
+      },
+      {
+        "offset": "IL_046c",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_046d",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_046e",
+        "opcode": "stloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_0470",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_0472",
+        "opcode": "brtrue.s",
+        "operand": "IL_0489",
+        "token": null
+      },
+      {
+        "offset": "IL_0474",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0475",
+        "opcode": "ldc.i4",
+        "operand": "1356",
+        "token": null
+      },
+      {
+        "offset": "IL_047a",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_047f",
+        "opcode": "brfalse.s",
+        "operand": "IL_0489",
+        "token": null
+      },
+      {
+        "offset": "IL_0481",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0482",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsMinion",
+        "token": "token(0x060138DB)"
+      },
+      {
+        "offset": "IL_0487",
+        "opcode": "brtrue.s",
+        "operand": "IL_04a4",
+        "token": null
+      },
+      {
+        "offset": "IL_0489",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_048a",
+        "opcode": "ldc.i4",
+        "operand": "3111",
+        "token": null
+      },
+      {
+        "offset": "IL_048f",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_0494",
+        "opcode": "brfalse",
+        "operand": "IL_055c",
+        "token": null
+      },
+      {
+        "offset": "IL_0499",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_049a",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsBaconSpell",
+        "token": "token(0x060138E7)"
+      },
+      {
+        "offset": "IL_049f",
+        "opcode": "brfalse",
+        "operand": "IL_055c",
+        "token": null
+      },
+      {
+        "offset": "IL_04a4",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04a5",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04a6",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_04ab",
+        "opcode": "brfalse.s",
+        "operand": "IL_04b5",
+        "token": null
+      },
+      {
+        "offset": "IL_04ad",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04ae",
+        "opcode": "callvirt",
+        "operand": "Card::IsInputEnabled",
+        "token": "token(0x06012CEB)"
+      },
+      {
+        "offset": "IL_04b3",
+        "opcode": "brfalse.s",
+        "operand": "IL_04c2",
+        "token": null
+      },
+      {
+        "offset": "IL_04b5",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04b6",
+        "opcode": "ldc.i4",
+        "operand": "1848",
+        "token": null
+      },
+      {
+        "offset": "IL_04bb",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_04c0",
+        "opcode": "brfalse.s",
+        "operand": "IL_04c3",
+        "token": null
+      },
+      {
+        "offset": "IL_04c2",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04c3",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04c4",
+        "opcode": "call",
+        "operand": "InputManager::HasPendingChoiceTarget",
+        "token": "token(0x060059D5)"
+      },
+      {
+        "offset": "IL_04c9",
+        "opcode": "brfalse.s",
+        "operand": "IL_04cc",
+        "token": null
+      },
+      {
+        "offset": "IL_04cb",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04cc",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04cd",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_universalInputManager",
+        "token": "token(0x04003E51)"
+      },
+      {
+        "offset": "IL_04d2",
+        "opcode": "callvirt",
+        "operand": "UniversalInputManager::IsTouchMode",
+        "token": "token(0x060145BC)"
+      },
+      {
+        "offset": "IL_04d7",
+        "opcode": "brfalse.s",
+        "operand": "IL_050c",
+        "token": null
+      },
+      {
+        "offset": "IL_04d9",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04da",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_mousedOverTimer",
+        "token": "token(0x04003E65)"
+      },
+      {
+        "offset": "IL_04df",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04e0",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04e1",
+        "opcode": "call",
+        "operand": "InputManager::GetMouseOverDelay",
+        "token": "token(0x06005A2E)"
+      },
+      {
+        "offset": "IL_04e6",
+        "opcode": "ble.un.s",
+        "operand": "IL_04e9",
+        "token": null
+      },
+      {
+        "offset": "IL_04e8",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04e9",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04ea",
+        "opcode": "call",
+        "operand": "InputCollection::GetMouseButtonUp",
+        "token": "token(0x060059CA)"
+      },
+      {
+        "offset": "IL_04ef",
+        "opcode": "brfalse.s",
+        "operand": "IL_04f2",
+        "token": null
+      },
+      {
+        "offset": "IL_04f1",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04f2",
+        "opcode": "call",
+        "operand": "TeammateBoardViewer::Get",
+        "token": "token(0x06006135)"
+      },
+      {
+        "offset": "IL_04f7",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_04f8",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_04fd",
+        "opcode": "brfalse.s",
+        "operand": "IL_050c",
+        "token": null
+      },
+      {
+        "offset": "IL_04ff",
+        "opcode": "call",
+        "operand": "TeammateBoardViewer::Get",
+        "token": "token(0x06006135)"
+      },
+      {
+        "offset": "IL_0504",
+        "opcode": "callvirt",
+        "operand": "TeammateBoardViewer::IsViewingTeammate",
+        "token": "token(0x06006136)"
+      },
+      {
+        "offset": "IL_0509",
+        "opcode": "brfalse.s",
+        "operand": "IL_050c",
+        "token": null
+      },
+      {
+        "offset": "IL_050b",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_050c",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_050d",
+        "opcode": "callvirt",
+        "operand": "Entity::IsControlledByFriendlySidePlayer",
+        "token": "token(0x060137E1)"
+      },
+      {
+        "offset": "IL_0512",
+        "opcode": "brtrue.s",
+        "operand": "IL_0539",
+        "token": null
+      },
+      {
+        "offset": "IL_0514",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0515",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_051a",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_051b",
+        "opcode": "ldloca.s",
+        "operand": "local(0x000F)",
+        "token": null
+      },
+      {
+        "offset": "IL_051d",
+        "opcode": "callvirt",
+        "operand": "GameState::HasValidHoverTargetForMovedMinion",
+        "token": "token(0x060056CD)"
+      },
+      {
+        "offset": "IL_0522",
+        "opcode": "brtrue.s",
+        "operand": "IL_0539",
+        "token": null
+      },
+      {
+        "offset": "IL_0524",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000F)",
+        "token": null
+      },
+      {
+        "offset": "IL_0526",
+        "opcode": "ldloca.s",
+        "operand": "local(0x000C)",
+        "token": null
+      },
+      {
+        "offset": "IL_0528",
+        "opcode": "initobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7ff792573dd0>",
+        "token": "token(0x1B000056)"
+      },
+      {
+        "offset": "IL_052e",
+        "opcode": "ldloc.s",
+        "operand": "local(0x000C)",
+        "token": null
+      },
+      {
+        "offset": "IL_0530",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0531",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0532",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0533",
+        "opcode": "call",
+        "operand": "PlayErrors::DisplayPlayError",
+        "token": "token(0x06005D51)"
+      },
+      {
+        "offset": "IL_0538",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0539",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_053a",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_053b",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0540",
+        "opcode": "brfalse.s",
+        "operand": "IL_055b",
+        "token": null
+      },
+      {
+        "offset": "IL_0542",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0543",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0544",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Component::get_gameObject",
+        "token": "token(0x0A000045)"
+      },
+      {
+        "offset": "IL_0549",
+        "opcode": "call",
+        "operand": "InputManager::GrabCard",
+        "token": "token(0x06005A1F)"
+      },
+      {
+        "offset": "IL_054e",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_054f",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0554",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0555",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0556",
+        "opcode": "callvirt",
+        "operand": "GameState::EnterMoveMinionMode",
+        "token": "token(0x0600569C)"
+      },
+      {
+        "offset": "IL_055b",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_055c",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_055e",
+        "opcode": "brtrue.s",
+        "operand": "IL_0563",
+        "token": null
+      },
+      {
+        "offset": "IL_0560",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0561",
+        "opcode": "br.s",
+        "operand": "IL_0568",
+        "token": null
+      },
+      {
+        "offset": "IL_0563",
+        "opcode": "ldc.i4",
+        "operand": "4089",
+        "token": null
+      },
+      {
+        "offset": "IL_0568",
+        "opcode": "stloc.s",
+        "operand": "local(0x0010)",
+        "token": null
+      },
+      {
+        "offset": "IL_056a",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_056b",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsActivatableMinion",
+        "token": "token(0x060138DD)"
+      },
+      {
+        "offset": "IL_0570",
+        "opcode": "brfalse.s",
+        "operand": "IL_0585",
+        "token": null
+      },
+      {
+        "offset": "IL_0572",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0573",
+        "opcode": "callvirt",
+        "operand": "Entity::HasActivatableMinionAbilities",
+        "token": "token(0x06013886)"
+      },
+      {
+        "offset": "IL_0578",
+        "opcode": "brfalse.s",
+        "operand": "IL_0585",
+        "token": null
+      },
+      {
+        "offset": "IL_057a",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_057b",
+        "opcode": "brtrue.s",
+        "operand": "IL_0585",
+        "token": null
+      },
+      {
+        "offset": "IL_057d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_057e",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_dragging",
+        "token": "token(0x04003E61)"
+      },
+      {
+        "offset": "IL_0583",
+        "opcode": "brtrue.s",
+        "operand": "IL_0592",
+        "token": null
+      },
+      {
+        "offset": "IL_0585",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0586",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0587",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0588",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0010)",
+        "token": null
+      },
+      {
+        "offset": "IL_058a",
+        "opcode": "call",
+        "operand": "InputManager::DoNetworkResponse",
+        "token": "token(0x06005A3B)"
+      },
+      {
+        "offset": "IL_058f",
+        "opcode": "brtrue.s",
+        "operand": "IL_0592",
+        "token": null
+      },
+      {
+        "offset": "IL_0591",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0592",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0593",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0594",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0599",
+        "opcode": "brfalse.s",
+        "operand": "IL_05b3",
+        "token": null
+      },
+      {
+        "offset": "IL_059b",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_059c",
+        "opcode": "callvirt",
+        "operand": "Card::GetActor",
+        "token": "token(0x06012DD6)"
+      },
+      {
+        "offset": "IL_05a1",
+        "opcode": "isinst",
+        "operand": "LettuceAbilityActor",
+        "token": "token(0x02000BC8)"
+      },
+      {
+        "offset": "IL_05a6",
+        "opcode": "stloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_05a8",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_05aa",
+        "opcode": "brfalse.s",
+        "operand": "IL_05b3",
+        "token": null
+      },
+      {
+        "offset": "IL_05ac",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_05ae",
+        "opcode": "callvirt",
+        "operand": "LettuceAbilityActor::PlayMouseClickedSound",
+        "token": "token(0x06005ACA)"
+      },
+      {
+        "offset": "IL_05b3",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05b4",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_05b9",
+        "opcode": "callvirt",
+        "operand": "GameState::IsInTargetMode",
+        "token": "token(0x060056A1)"
+      },
+      {
+        "offset": "IL_05be",
+        "opcode": "brtrue.s",
+        "operand": "IL_0623",
+        "token": null
+      },
+      {
+        "offset": "IL_05c0",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05c1",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsCardButton",
+        "token": "token(0x060138EF)"
+      },
+      {
+        "offset": "IL_05c6",
+        "opcode": "brfalse.s",
+        "operand": "IL_0622",
+        "token": null
+      },
+      {
+        "offset": "IL_05c8",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05c9",
+        "opcode": "callvirt",
+        "operand": "Entity::HasSubCards",
+        "token": "token(0x06013813)"
+      },
+      {
+        "offset": "IL_05ce",
+        "opcode": "brtrue.s",
+        "operand": "IL_05d7",
+        "token": null
+      },
+      {
+        "offset": "IL_05d0",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05d1",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05d2",
+        "opcode": "call",
+        "operand": "InputManager::ActivatePlaySpell",
+        "token": "token(0x06005A18)"
+      },
+      {
+        "offset": "IL_05d7",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05d8",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsHeroPower",
+        "token": "token(0x060138D4)"
+      },
+      {
+        "offset": "IL_05dd",
+        "opcode": "brtrue.s",
+        "operand": "IL_0605",
+        "token": null
+      },
+      {
+        "offset": "IL_05df",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05e0",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsGameModeButton",
+        "token": "token(0x060138D5)"
+      },
+      {
+        "offset": "IL_05e5",
+        "opcode": "brfalse.s",
+        "operand": "IL_05f4",
+        "token": null
+      },
+      {
+        "offset": "IL_05e7",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05e8",
+        "opcode": "ldc.i4",
+        "operand": "4873",
+        "token": null
+      },
+      {
+        "offset": "IL_05ed",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_05f2",
+        "opcode": "brtrue.s",
+        "operand": "IL_0605",
+        "token": null
+      },
+      {
+        "offset": "IL_05f4",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05f5",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsCoinBasedHeroBuddy",
+        "token": "token(0x060138EE)"
+      },
+      {
+        "offset": "IL_05fa",
+        "opcode": "brfalse.s",
+        "operand": "IL_0622",
+        "token": null
+      },
+      {
+        "offset": "IL_05fc",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05fd",
+        "opcode": "ldc.i4.5",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_05fe",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_0603",
+        "opcode": "brtrue.s",
+        "operand": "IL_0622",
+        "token": null
+      },
+      {
+        "offset": "IL_0605",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0606",
+        "opcode": "ldc.i4",
+        "operand": "4088",
+        "token": null
+      },
+      {
+        "offset": "IL_060b",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_0610",
+        "opcode": "brtrue.s",
+        "operand": "IL_061b",
+        "token": null
+      },
+      {
+        "offset": "IL_0612",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0613",
+        "opcode": "ldc.i4.s",
+        "operand": "43",
+        "token": null
+      },
+      {
+        "offset": "IL_0615",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0616",
+        "opcode": "callvirt",
+        "operand": "Entity::SetTagAndHandleChange<spec>",
+        "token": "token(0x2B000398)"
+      },
+      {
+        "offset": "IL_061b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_061c",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_061d",
+        "opcode": "call",
+        "operand": "InputManager::PredictSpentMana",
+        "token": "token(0x06005A7D)"
+      },
+      {
+        "offset": "IL_0622",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0623",
+        "opcode": "call",
+        "operand": "RemoteActionHandler::Get",
+        "token": "token(0x0600604A)"
+      },
+      {
+        "offset": "IL_0628",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0629",
+        "opcode": "callvirt",
+        "operand": "RemoteActionHandler::NotifyOpponentOfTargetModeBegin",
+        "token": "token(0x06006055)"
+      },
+      {
+        "offset": "IL_062e",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_062f",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_targetReticleManager",
+        "token": "token(0x04003E53)"
+      },
+      {
+        "offset": "IL_0634",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Implicit",
+        "token": "token(0x0A00006A)"
+      },
+      {
+        "offset": "IL_0639",
+        "opcode": "brfalse.s",
+        "operand": "IL_0680",
+        "token": null
+      },
+      {
+        "offset": "IL_063b",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_063c",
+        "opcode": "stloc.s",
+        "operand": "local(0x0011)",
+        "token": null
+      },
+      {
+        "offset": "IL_063e",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_063f",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsLettuceAbility",
+        "token": "token(0x060138D6)"
+      },
+      {
+        "offset": "IL_0644",
+        "opcode": "brfalse.s",
+        "operand": "IL_0653",
+        "token": null
+      },
+      {
+        "offset": "IL_0646",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0647",
+        "opcode": "stloc.s",
+        "operand": "local(0x0011)",
+        "token": null
+      },
+      {
+        "offset": "IL_0649",
+        "opcode": "call",
+        "operand": "ZoneMgr::Get",
+        "token": "token(0x06006502)"
+      },
+      {
+        "offset": "IL_064e",
+        "opcode": "callvirt",
+        "operand": "ZoneMgr::TemporarilyDismissMercenariesAbilityTray",
+        "token": "token(0x06006577)"
+      },
+      {
+        "offset": "IL_0653",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_0655",
+        "opcode": "brfalse.s",
+        "operand": "IL_065a",
+        "token": null
+      },
+      {
+        "offset": "IL_0657",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0658",
+        "opcode": "stloc.s",
+        "operand": "local(0x0011)",
+        "token": null
+      },
+      {
+        "offset": "IL_065a",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_065b",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_targetReticleManager",
+        "token": "token(0x04003E53)"
+      },
+      {
+        "offset": "IL_0660",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0661",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0011)",
+        "token": null
+      },
+      {
+        "offset": "IL_0663",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0664",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0665",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0666",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0667",
+        "opcode": "callvirt",
+        "operand": "TargetReticleManager::CreateFriendlyTargetArrow",
+        "token": "token(0x060060F5)"
+      },
+      {
+        "offset": "IL_066c",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_066d",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0672",
+        "opcode": "callvirt",
+        "operand": "GameState::CanTargetCardsInHand",
+        "token": "token(0x0600568B)"
+      },
+      {
+        "offset": "IL_0677",
+        "opcode": "brfalse.s",
+        "operand": "IL_0680",
+        "token": null
+      },
+      {
+        "offset": "IL_0679",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_067a",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_067b",
+        "opcode": "call",
+        "operand": "InputManager::StartBattleCryEffect",
+        "token": "token(0x06005A55)"
+      },
+      {
+        "offset": "IL_0680",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0681",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsCardButton",
+        "token": "token(0x060138EF)"
+      },
+      {
+        "offset": "IL_0686",
+        "opcode": "brfalse.s",
+        "operand": "IL_0697",
+        "token": null
+      },
+      {
+        "offset": "IL_0688",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0689",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_068a",
+        "opcode": "stfld",
+        "operand": "InputManager::m_targettingHeroPower",
+        "token": "token(0x04003E75)"
+      },
+      {
+        "offset": "IL_068f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0690",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0691",
+        "opcode": "call",
+        "operand": "InputManager::ActivatePlaySpell",
+        "token": "token(0x06005A18)"
+      },
+      {
+        "offset": "IL_0696",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0697",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0698",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsCharacter",
+        "token": "token(0x0601392F)"
+      },
+      {
+        "offset": "IL_069d",
+        "opcode": "brtrue.s",
+        "operand": "IL_06a0",
+        "token": null
+      },
+      {
+        "offset": "IL_069f",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06a0",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06a1",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsInteractableObject",
+        "token": "token(0x060138E2)"
+      },
+      {
+        "offset": "IL_06a6",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06a7",
+        "opcode": "ceq",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06a9",
+        "opcode": "stloc.s",
+        "operand": "local(0x0006)",
+        "token": null
+      },
+      {
+        "offset": "IL_06ab",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06ac",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06ad",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_06b2",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0006)",
+        "token": null
+      },
+      {
+        "offset": "IL_06b4",
+        "opcode": "and",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06b5",
+        "opcode": "brfalse.s",
+        "operand": "IL_06bd",
+        "token": null
+      },
+      {
+        "offset": "IL_06b7",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06b8",
+        "opcode": "callvirt",
+        "operand": "Card::ActivateCharacterAttackEffects",
+        "token": "token(0x06012D52)"
+      },
+      {
+        "offset": "IL_06bd",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06be",
+        "opcode": "ldc.i4",
+        "operand": "433",
+        "token": null
+      },
+      {
+        "offset": "IL_06c3",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasTag",
+        "token": "token(0x060138A1)"
+      },
+      {
+        "offset": "IL_06c8",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06c9",
+        "opcode": "ceq",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06cb",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0006)",
+        "token": null
+      },
+      {
+        "offset": "IL_06cd",
+        "opcode": "and",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06ce",
+        "opcode": "brfalse.s",
+        "operand": "IL_06db",
+        "token": null
+      },
+      {
+        "offset": "IL_06d0",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06d1",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_06d6",
+        "opcode": "callvirt",
+        "operand": "GameState::ShowEnemyTauntCharacters",
+        "token": "token(0x06005600)"
+      },
+      {
+        "offset": "IL_06db",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06dc",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06dd",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_06e2",
+        "opcode": "brfalse.s",
+        "operand": "IL_071a",
+        "token": null
+      },
+      {
+        "offset": "IL_06e4",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06e5",
+        "opcode": "callvirt",
+        "operand": "Card::IsAttacking",
+        "token": "token(0x06012CF8)"
+      },
+      {
+        "offset": "IL_06ea",
+        "opcode": "brtrue.s",
+        "operand": "IL_071a",
+        "token": null
+      },
+      {
+        "offset": "IL_06ec",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06ed",
+        "opcode": "callvirt",
+        "operand": "Card::GetActorAttackSpellForInput",
+        "token": "token(0x06012DAF)"
+      },
+      {
+        "offset": "IL_06f2",
+        "opcode": "stloc.s",
+        "operand": "local(0x0012)",
+        "token": null
+      },
+      {
+        "offset": "IL_06f4",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0012)",
+        "token": null
+      },
+      {
+        "offset": "IL_06f6",
+        "opcode": "brfalse.s",
+        "operand": "IL_071a",
+        "token": null
+      },
+      {
+        "offset": "IL_06f8",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_06fa",
+        "opcode": "brtrue.s",
+        "operand": "IL_0712",
+        "token": null
+      },
+      {
+        "offset": "IL_06fc",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_06fd",
+        "opcode": "callvirt",
+        "operand": "Entity::GetRealTimeIsImmuneWhileAttacking",
+        "token": "token(0x06013848)"
+      },
+      {
+        "offset": "IL_0702",
+        "opcode": "brfalse.s",
+        "operand": "IL_0712",
+        "token": null
+      },
+      {
+        "offset": "IL_0704",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0705",
+        "opcode": "callvirt",
+        "operand": "Card::GetActor",
+        "token": "token(0x06012DD6)"
+      },
+      {
+        "offset": "IL_070a",
+        "opcode": "ldc.i4.s",
+        "operand": "13",
+        "token": null
+      },
+      {
+        "offset": "IL_070c",
+        "opcode": "callvirt",
+        "operand": "Actor::ActivateSpellBirthState",
+        "token": "token(0x06012961)"
+      },
+      {
+        "offset": "IL_0711",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0712",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0012)",
+        "token": null
+      },
+      {
+        "offset": "IL_0714",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0715",
+        "opcode": "callvirt",
+        "operand": "Blizzard.T5.Game.Spells.ISpell::ActivateState",
+        "token": "token(0x0A00224C)"
+      },
+      {
+        "offset": "IL_071a",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "type": "InputManager",
+    "method": "HandleClickOnSubOption",
+    "token": "0x06005a33",
+    "rva": "0x1a67bc",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "brtrue.s",
+        "operand": "IL_000c",
+        "token": null
+      },
+      {
+        "offset": "IL_0003",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0004",
+        "opcode": "call",
+        "operand": "InputManager::PermitDecisionMakingInput",
+        "token": "token(0x060059E2)"
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "brtrue.s",
+        "operand": "IL_000c",
+        "token": null
+      },
+      {
+        "offset": "IL_000b",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000c",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000d",
+        "opcode": "brtrue.s",
+        "operand": "IL_003b",
+        "token": null
+      },
+      {
+        "offset": "IL_000f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0010",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0015",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0016",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_0018",
+        "opcode": "initobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7ff7925fa000>",
+        "token": "token(0x1B0001E6)"
+      },
+      {
+        "offset": "IL_001e",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001f",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_0021",
+        "opcode": "initobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7ff7925fa000>",
+        "token": "token(0x1B0001E6)"
+      },
+      {
+        "offset": "IL_0027",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0028",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "initobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7ff7925fa000>",
+        "token": "token(0x1B0001E6)"
+      },
+      {
+        "offset": "IL_0030",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0031",
+        "opcode": "callvirt",
+        "operand": "GameState::HasResponse",
+        "token": "token(0x060056BA)"
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "brfalse",
+        "operand": "IL_0154",
+        "token": null
+      },
+      {
+        "offset": "IL_003b",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "brfalse",
+        "operand": "IL_0154",
+        "token": null
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0042",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0043",
+        "opcode": "call",
+        "operand": "ChoiceCardMgr::Get",
+        "token": "token(0x06005219)"
+      },
+      {
+        "offset": "IL_0048",
+        "opcode": "stloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0049",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004a",
+        "opcode": "callvirt",
+        "operand": "ChoiceCardMgr::GetSubOptionParentCard",
+        "token": "token(0x06005226)"
+      },
+      {
+        "offset": "IL_004f",
+        "opcode": "stloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0050",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0051",
+        "opcode": "brtrue.s",
+        "operand": "IL_00b7",
+        "token": null
+      },
+      {
+        "offset": "IL_0053",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0054",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0059",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005a",
+        "opcode": "callvirt",
+        "operand": "GameState::SubEntityHasTargets",
+        "token": "token(0x060056B6)"
+      },
+      {
+        "offset": "IL_005f",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0060",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0061",
+        "opcode": "brfalse.s",
+        "operand": "IL_00b7",
+        "token": null
+      },
+      {
+        "offset": "IL_0063",
+        "opcode": "call",
+        "operand": "RemoteActionHandler::Get",
+        "token": "token(0x0600604A)"
+      },
+      {
+        "offset": "IL_0068",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0069",
+        "opcode": "callvirt",
+        "operand": "RemoteActionHandler::NotifyOpponentOfTargetModeBegin",
+        "token": "token(0x06006055)"
+      },
+      {
+        "offset": "IL_006e",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006f",
+        "opcode": "callvirt",
+        "operand": "Entity::GetTargetingArrowText",
+        "token": "token(0x060137FC)"
+      },
+      {
+        "offset": "IL_0074",
+        "opcode": "stloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_0076",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_0078",
+        "opcode": "call",
+        "operand": "System.String::IsNullOrEmpty",
+        "token": "token(0x0A0000B3)"
+      },
+      {
+        "offset": "IL_007d",
+        "opcode": "brfalse.s",
+        "operand": "IL_008f",
+        "token": null
+      },
+      {
+        "offset": "IL_007f",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0080",
+        "opcode": "callvirt",
+        "operand": "Entity::GetCardTextInHand",
+        "token": "token(0x060137F9)"
+      },
+      {
+        "offset": "IL_0085",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0086",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0087",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0088",
+        "opcode": "call",
+        "operand": "UberText::RemoveMarkupAndCollapseWhitespaces",
+        "token": "token(0x0A000E6A)"
+      },
+      {
+        "offset": "IL_008d",
+        "opcode": "stloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_008f",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0090",
+        "opcode": "callvirt",
+        "operand": "Card::GetEntity",
+        "token": "token(0x06012CC3)"
+      },
+      {
+        "offset": "IL_0095",
+        "opcode": "stloc.s",
+        "operand": "local(0x0006)",
+        "token": null
+      },
+      {
+        "offset": "IL_0097",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0098",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_targetReticleManager",
+        "token": "token(0x04003E53)"
+      },
+      {
+        "offset": "IL_009d",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0006)",
+        "token": null
+      },
+      {
+        "offset": "IL_009f",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a0",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a1",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_universalInputManager",
+        "token": "token(0x04003E51)"
+      },
+      {
+        "offset": "IL_00a6",
+        "opcode": "callvirt",
+        "operand": "UniversalInputManager::IsTouchMode",
+        "token": "token(0x060145BC)"
+      },
+      {
+        "offset": "IL_00ab",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ac",
+        "opcode": "ceq",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ae",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_00b0",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b1",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b2",
+        "opcode": "callvirt",
+        "operand": "TargetReticleManager::CreateFriendlyTargetArrow",
+        "token": "token(0x060060F5)"
+      },
+      {
+        "offset": "IL_00b7",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b8",
+        "opcode": "callvirt",
+        "operand": "Entity::GetCard",
+        "token": "token(0x060137BF)"
+      },
+      {
+        "offset": "IL_00bd",
+        "opcode": "stloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_00bf",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c0",
+        "opcode": "brtrue.s",
+        "operand": "IL_00cc",
+        "token": null
+      },
+      {
+        "offset": "IL_00c2",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c3",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c4",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c5",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c6",
+        "opcode": "call",
+        "operand": "InputManager::DoNetworkResponse",
+        "token": "token(0x06005A3B)"
+      },
+      {
+        "offset": "IL_00cb",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00cc",
+        "opcode": "ldarg.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00cd",
+        "opcode": "brfalse.s",
+        "operand": "IL_00d7",
+        "token": null
+      },
+      {
+        "offset": "IL_00cf",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d0",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_00d2",
+        "opcode": "call",
+        "operand": "InputManager::ActivatePowerUpSpell",
+        "token": "token(0x06005A17)"
+      },
+      {
+        "offset": "IL_00d7",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d8",
+        "opcode": "brtrue.s",
+        "operand": "IL_00f3",
+        "token": null
+      },
+      {
+        "offset": "IL_00da",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00db",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00dc",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_00e1",
+        "opcode": "brfalse.s",
+        "operand": "IL_00f3",
+        "token": null
+      },
+      {
+        "offset": "IL_00e3",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e4",
+        "opcode": "callvirt",
+        "operand": "Card::IsLettuceAbility",
+        "token": "token(0x06012E9A)"
+      },
+      {
+        "offset": "IL_00e9",
+        "opcode": "brtrue.s",
+        "operand": "IL_00f3",
+        "token": null
+      },
+      {
+        "offset": "IL_00eb",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ec",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_00ee",
+        "opcode": "call",
+        "operand": "InputManager::ActivatePlaySpell",
+        "token": "token(0x06005A18)"
+      },
+      {
+        "offset": "IL_00f3",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f4",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsMinion",
+        "token": "token(0x060138DB)"
+      },
+      {
+        "offset": "IL_00f9",
+        "opcode": "brtrue.s",
+        "operand": "IL_0103",
+        "token": null
+      },
+      {
+        "offset": "IL_00fb",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00fc",
+        "opcode": "callvirt",
+        "operand": "EntityBase::IsHero",
+        "token": "token(0x060138D3)"
+      },
+      {
+        "offset": "IL_0101",
+        "opcode": "brfalse.s",
+        "operand": "IL_010a",
+        "token": null
+      },
+      {
+        "offset": "IL_0103",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_0105",
+        "opcode": "callvirt",
+        "operand": "Card::HideCard",
+        "token": "token(0x06012D13)"
+      },
+      {
+        "offset": "IL_010a",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_010b",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_010c",
+        "opcode": "callvirt",
+        "operand": "ChoiceCardMgr::OnSubOptionClicked",
+        "token": "token(0x0600522F)"
+      },
+      {
+        "offset": "IL_0111",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0112",
+        "opcode": "brfalse.s",
+        "operand": "IL_011c",
+        "token": null
+      },
+      {
+        "offset": "IL_0114",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0115",
+        "opcode": "callvirt",
+        "operand": "ChoiceCardMgr::ClearSubOptions",
+        "token": "token(0x06005227)"
+      },
+      {
+        "offset": "IL_011a",
+        "opcode": "br.s",
+        "operand": "IL_0125",
+        "token": null
+      },
+      {
+        "offset": "IL_011c",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_011d",
+        "opcode": "brtrue.s",
+        "operand": "IL_0125",
+        "token": null
+      },
+      {
+        "offset": "IL_011f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0120",
+        "opcode": "call",
+        "operand": "InputManager::FinishSubOptions",
+        "token": "token(0x06005A4B)"
+      },
+      {
+        "offset": "IL_0125",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0126",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_universalInputManager",
+        "token": "token(0x04003E51)"
+      },
+      {
+        "offset": "IL_012b",
+        "opcode": "callvirt",
+        "operand": "UniversalInputManager::IsTouchMode",
+        "token": "token(0x060145BC)"
+      },
+      {
+        "offset": "IL_0130",
+        "opcode": "brfalse.s",
+        "operand": "IL_0138",
+        "token": null
+      },
+      {
+        "offset": "IL_0132",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0133",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0134",
+        "opcode": "ceq",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0136",
+        "opcode": "br.s",
+        "operand": "IL_0139",
+        "token": null
+      },
+      {
+        "offset": "IL_0138",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0139",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_013a",
+        "opcode": "and",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_013b",
+        "opcode": "brfalse.s",
+        "operand": "IL_018f",
+        "token": null
+      },
+      {
+        "offset": "IL_013d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_013e",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_013f",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0144",
+        "opcode": "callvirt",
+        "operand": "GameState::GetSelectedNetworkSubOption",
+        "token": "token(0x060056B3)"
+      },
+      {
+        "offset": "IL_0149",
+        "opcode": "callvirt",
+        "operand": "SubOption::get_Targets",
+        "token": "token(0x0600EEA9)"
+      },
+      {
+        "offset": "IL_014e",
+        "opcode": "call",
+        "operand": "InputManager::StartMobileTargetingEffect",
+        "token": "token(0x06005A51)"
+      },
+      {
+        "offset": "IL_0153",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0154",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0155",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_isShowingOpponentChoiceUI",
+        "token": "token(0x04003E82)"
+      },
+      {
+        "offset": "IL_015a",
+        "opcode": "brfalse.s",
+        "operand": "IL_016f",
+        "token": null
+      },
+      {
+        "offset": "IL_015c",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_015d",
+        "opcode": "callvirt",
+        "operand": "EntityBase::GetCardId",
+        "token": "token(0x06013947)"
+      },
+      {
+        "offset": "IL_0162",
+        "opcode": "ldstr",
+        "operand": "'GDB_905'",
+        "token": "string token(0x7008569F)"
+      },
+      {
+        "offset": "IL_0167",
+        "opcode": "call",
+        "operand": "System.String::op_Inequality",
+        "token": "token(0x0A00018E)"
+      },
+      {
+        "offset": "IL_016c",
+        "opcode": "brfalse.s",
+        "operand": "IL_016f",
+        "token": null
+      },
+      {
+        "offset": "IL_016e",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_016f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0170",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0175",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0176",
+        "opcode": "callvirt",
+        "operand": "GameState::GetErrorType",
+        "token": "token(0x060056B9)"
+      },
+      {
+        "offset": "IL_017b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_017c",
+        "opcode": "ldfld",
+        "operand": "InputManager::m_gameState",
+        "token": "token(0x04003E52)"
+      },
+      {
+        "offset": "IL_0181",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0182",
+        "opcode": "callvirt",
+        "operand": "GameState::GetErrorParam",
+        "token": "token(0x060056B8)"
+      },
+      {
+        "offset": "IL_0187",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0188",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0189",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_018a",
+        "opcode": "call",
+        "operand": "PlayErrors::DisplayPlayError",
+        "token": "token(0x06005D51)"
+      },
+      {
+        "offset": "IL_018f",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  }
+]

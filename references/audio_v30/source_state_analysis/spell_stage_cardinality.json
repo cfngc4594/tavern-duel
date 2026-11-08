@@ -1,0 +1,2302 @@
+{
+  "schema_version": 1,
+  "source": "audio_code_evidence/binding.cil.json",
+  "notes": [
+    "Friendly/Opponent Area means alternative presentation for caster controller side, not two victim board regions.",
+    "runtime_eligible in spell bindings is static eligibility; this sidecar supplies runtime stage selection.",
+    "Source-side selection and target iteration must be applied before SoundDef random selection and instance limit.",
+    "Root DrainLife/Pact Death sound is caster/root lifecycle, not one playback per damage target."
+  ],
+  "cil": {
+    "area": "0x06014B33 + 0x06014B18",
+    "missile": "0x06014B1F/0x06014B20/0x06014B28",
+    "impact": "0x06014B2B/0x06014B2C/0x06014B28"
+  },
+  "cards": {
+    "CS2_029": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_024": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_022": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_023": {
+      "area_candidates": {
+        "friendly_available": true,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": "m_FriendlyAreaEffectInfo",
+        "opponent": "m_FriendlyAreaEffectInfo",
+        "unknown": "m_FriendlyAreaEffectInfo"
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_025": {
+      "area_candidates": {
+        "friendly_available": true,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": "m_FriendlyAreaEffectInfo",
+        "opponent": "m_FriendlyAreaEffectInfo",
+        "unknown": "m_FriendlyAreaEffectInfo"
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_026": {
+      "area_candidates": {
+        "friendly_available": true,
+        "opponent_available": true
+      },
+      "area_selection_by_source_side": {
+        "friendly": "m_FriendlyAreaEffectInfo",
+        "opponent": "m_OpponentAreaEffectInfo",
+        "unknown": "m_FriendlyAreaEffectInfo"
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_032": {
+      "area_candidates": {
+        "friendly_available": true,
+        "opponent_available": true
+      },
+      "area_selection_by_source_side": {
+        "friendly": "m_FriendlyAreaEffectInfo",
+        "opponent": "m_OpponentAreaEffectInfo",
+        "unknown": "m_FriendlyAreaEffectInfo"
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "EX1_277": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": true,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "EX1_066": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_189": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_057": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_061": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": true,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_062": {
+      "area_candidates": {
+        "friendly_available": true,
+        "opponent_available": true
+      },
+      "area_selection_by_source_side": {
+        "friendly": "m_FriendlyAreaEffectInfo",
+        "opponent": "m_OpponentAreaEffectInfo",
+        "unknown": "m_FriendlyAreaEffectInfo"
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_063": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_064": {
+      "area_candidates": {
+        "friendly_available": true,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": "m_FriendlyAreaEffectInfo",
+        "opponent": "m_FriendlyAreaEffectInfo",
+        "unknown": "m_FriendlyAreaEffectInfo"
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "EX1_302": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "EX1_308": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "NEW1_003": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": true,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "GAME_005": {
+      "area_candidates": {
+        "friendly_available": true,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": "m_FriendlyAreaEffectInfo",
+        "opponent": "m_FriendlyAreaEffectInfo",
+        "unknown": "m_FriendlyAreaEffectInfo"
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_034": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": false,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    },
+    "CS2_056": {
+      "area_candidates": {
+        "friendly_available": false,
+        "opponent_available": false
+      },
+      "area_selection_by_source_side": {
+        "friendly": null,
+        "opponent": null,
+        "unknown": null
+      },
+      "area_maximum_instances_per_action": 1,
+      "area_selection_cil": "SuperSpell.DetermineAreaEffectInfo 0x06014B33, DoActionNow 0x06014B18",
+      "missile_spawn_timing": {
+        "initial_state": "Birth forced by ActivateState(1)",
+        "spawn_in_sequence": true,
+        "spawn_delay_min_sec": 0.0,
+        "spawn_delay_max_sec": 0.0,
+        "mandatory_coroutine_yield_when": "not spawn_in_sequence or target_index == 0",
+        "zero_delay_still_yields": true,
+        "subsequent_sequence_targets_skip_spawn_delay": true,
+        "spawn_offset_sec": 0.0,
+        "spawn_offset_formula": "if offset>0 and target_index>0: yield offset*target_index",
+        "metadata_gate": "yield CompleteTasksUntilMetaData if ShouldCompleteTasksUntilMetaData; not a fixed delay",
+        "start_action_order": "StartCoroutine missile(s), then immediate DoStartSpellAction; first missile resumes after coroutine yield",
+        "cil": "missile_launch_order.cil.json; 0x06014B91 + 0x06014B20"
+      },
+      "impact_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random Impact.SpawnDelayMin/Max; optional positive target_index*SpawnOffset",
+        "metadata_gate": "may yield CompleteTasksUntilMetaData; GameDelay is not an awaited impact sound delay",
+        "cil": "closure.cil.json 0x06014B8B IL0049\u2013005D"
+      },
+      "area_spawn_timing": {
+        "mandatory_coroutine_yield": true,
+        "zero_delay_still_yields": true,
+        "delay": "Random selected Area.SpawnDelayMin/Max",
+        "instances": 1,
+        "cil": "mana_crystal_events.cil.json 0x06014B7F"
+      }
+    }
+  },
+  "rows": {
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|6778989452209898892|2|1": {
+      "card_id": "CS2_029",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|6778989452209898892|8|9": {
+      "card_id": "CS2_029",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|6778989452209898892|8|10": {
+      "card_id": "CS2_029",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|6778989452209898892|9|11": {
+      "card_id": "CS2_029",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|6778989452209898892|12|2": {
+      "card_id": "CS2_029",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_MissileInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8705572836827648400|2|1": {
+      "card_id": "CS2_029",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_MissileInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8705572836827648400|6|6": {
+      "card_id": "CS2_029",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_ImpactInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|6055582466056812273|2|11": {
+      "card_id": "CS2_029",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_024|af58499642cec471992ecb9e653b92b6|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8643223142898677733|6|9": {
+      "card_id": "CS2_024",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_024|af58499642cec471992ecb9e653b92b6|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8643223142898677733|6|10": {
+      "card_id": "CS2_024",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_024|af58499642cec471992ecb9e653b92b6|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8643223142898677733|7|17": {
+      "card_id": "CS2_024",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_024|af58499642cec471992ecb9e653b92b6|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8643223142898677733|9|15": {
+      "card_id": "CS2_024",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_024|af58499642cec471992ecb9e653b92b6|root/m_MissileInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-9018878061851229040|2|1": {
+      "card_id": "CS2_024",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "CS2_024|af58499642cec471992ecb9e653b92b6|root/m_ImpactInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-6295714230017425956|2|13": {
+      "card_id": "CS2_024",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_022|440eed6d453960b49bad9e13d81151f4|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|1|9": {
+      "card_id": "CS2_022",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_022|440eed6d453960b49bad9e13d81151f4|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|1|11": {
+      "card_id": "CS2_022",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_022|440eed6d453960b49bad9e13d81151f4|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|3|7": {
+      "card_id": "CS2_022",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_022|440eed6d453960b49bad9e13d81151f4|root/m_ImpactInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|4892062274442227968|1|4": {
+      "card_id": "CS2_022",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_022|440eed6d453960b49bad9e13d81151f4|root/m_ImpactInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|4892062274442227968|1|5": {
+      "card_id": "CS2_022",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_023|cdb73ebec49c96442bedf461e04e962b|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-1837424779451148463|2|5": {
+      "card_id": "CS2_023",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_FriendlyAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_025|c3f9b580844671c4c96f0f55ed512bf7|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|4088191548007245364|2|4": {
+      "card_id": "CS2_025",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_FriendlyAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_026|871269ca16c3b90419870cb2ebe37dac|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|8684928514641363595|3|7": {
+      "card_id": "CS2_026",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_OpponentAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_026|871269ca16c3b90419870cb2ebe37dac|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|8684928514641363595|4|7": {
+      "card_id": "CS2_026",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_OpponentAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_026|871269ca16c3b90419870cb2ebe37dac|root/m_OpponentAreaEffectInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7099395162819936584|3|7": {
+      "card_id": "CS2_026",
+      "route": "root/m_OpponentAreaEffectInfo.m_Prefab",
+      "stage": "m_OpponentAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_OpponentAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_OpponentAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_026|871269ca16c3b90419870cb2ebe37dac|root/m_OpponentAreaEffectInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7099395162819936584|3|8": {
+      "card_id": "CS2_026",
+      "route": "root/m_OpponentAreaEffectInfo.m_Prefab",
+      "stage": "m_OpponentAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_OpponentAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_OpponentAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_026|871269ca16c3b90419870cb2ebe37dac|root/m_OpponentAreaEffectInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7099395162819936584|4|7": {
+      "card_id": "CS2_026",
+      "route": "root/m_OpponentAreaEffectInfo.m_Prefab",
+      "stage": "m_OpponentAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_OpponentAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_OpponentAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_027|c47291d24fefc614399762be8750c35b|root|CAB-69c88b234dfa427e02d1fcee9337ae34|4100084773040501245|component|0": {
+      "card_id": "CS2_027",
+      "route": "root",
+      "stage": "root",
+      "cardinality": "once_per_root_state_event",
+      "condition": {
+        "kind": "root_state_event"
+      },
+      "count_semantics": "one root source instance per original spell state event; never replay per damage target"
+    },
+    "CS2_032|0b9b3e4ef9b62a240b4cbf362c0511b4|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|7440498215539319468|3|15": {
+      "card_id": "CS2_032",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_OpponentAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_032|0b9b3e4ef9b62a240b4cbf362c0511b4|root/m_OpponentAreaEffectInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-372854833425875995|3|15": {
+      "card_id": "CS2_032",
+      "route": "root/m_OpponentAreaEffectInfo.m_Prefab",
+      "stage": "m_OpponentAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_OpponentAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_OpponentAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_032|0b9b3e4ef9b62a240b4cbf362c0511b4|root/m_OpponentAreaEffectInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-372854833425875995|5|2": {
+      "card_id": "CS2_032",
+      "route": "root/m_OpponentAreaEffectInfo.m_Prefab",
+      "stage": "m_OpponentAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_OpponentAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_OpponentAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "EX1_277|c81e3c5e81007b84ead1a6c25698213f|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|1|9": {
+      "card_id": "EX1_277",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_277|c81e3c5e81007b84ead1a6c25698213f|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|1|11": {
+      "card_id": "EX1_277",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_277|c81e3c5e81007b84ead1a6c25698213f|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|3|7": {
+      "card_id": "EX1_277",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_277|c81e3c5e81007b84ead1a6c25698213f|root/m_MissileInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-6153650056993336048|2|8": {
+      "card_id": "EX1_277",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "EX1_277|c81e3c5e81007b84ead1a6c25698213f|root/m_ImpactInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-4017497222421805315|2|16": {
+      "card_id": "EX1_277",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "EX1_066|1e8b03e89cf4f7a4d8dc823cf8132ad1|root/m_MissileInfo.m_Prefab|CAB-0afa0c32ae653b9edf6acc516a011107|-3018176660800536879|1|1": {
+      "card_id": "EX1_066",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "EX1_066|1e8b03e89cf4f7a4d8dc823cf8132ad1|root/m_ImpactInfo.m_Prefab|CAB-0afa0c32ae653b9edf6acc516a011107|583982653187527808|1|6": {
+      "card_id": "EX1_066",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_189|bbd7f9a5ebabd8e45b0a22cb4446f1d9|root/m_MissileInfo.m_Prefab|CAB-e988daf8172a43d0c6716d70aa00e51e|8888128747285915370|3|1": {
+      "card_id": "CS2_189",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "CS2_189|bbd7f9a5ebabd8e45b0a22cb4446f1d9|root/m_ImpactInfo.m_Prefab|CAB-e988daf8172a43d0c6716d70aa00e51e|5788179214026420744|1|6": {
+      "card_id": "CS2_189",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_189|bbd7f9a5ebabd8e45b0a22cb4446f1d9|root/m_ImpactInfo.m_Prefab|CAB-e988daf8172a43d0c6716d70aa00e51e|5788179214026420744|1|7": {
+      "card_id": "CS2_189",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_189|bbd7f9a5ebabd8e45b0a22cb4446f1d9|root/m_ImpactInfo.m_Prefab|CAB-e988daf8172a43d0c6716d70aa00e51e|5788179214026420744|3|10": {
+      "card_id": "CS2_189",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_189|bbd7f9a5ebabd8e45b0a22cb4446f1d9|root/m_ImpactInfo.m_Prefab|CAB-e988daf8172a43d0c6716d70aa00e51e|5788179214026420744|5|1": {
+      "card_id": "CS2_189",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_057|e6ce5b6e7e1250e4a92dac52a3508671|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|4": {
+      "card_id": "CS2_057",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_057|e6ce5b6e7e1250e4a92dac52a3508671|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|5": {
+      "card_id": "CS2_057",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_057|e6ce5b6e7e1250e4a92dac52a3508671|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|8": {
+      "card_id": "CS2_057",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_057|e6ce5b6e7e1250e4a92dac52a3508671|root/m_MissileInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|7913944710690818239|2|4": {
+      "card_id": "CS2_057",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "CS2_057|e6ce5b6e7e1250e4a92dac52a3508671|root/m_ImpactInfo.m_Prefab|CAB-5c18ca2f59d647acdad5c9876b9dc7ef|-8878251930795417463|2|10": {
+      "card_id": "CS2_057",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root|CAB-67e4d1eb27ce21c49d64680c42a53700|-6217500217137010237|2|2": {
+      "card_id": "CS2_061",
+      "route": "root",
+      "stage": "root",
+      "cardinality": "once_per_root_state_event",
+      "condition": {
+        "kind": "root_state_event"
+      },
+      "count_semantics": "one root source instance per original spell state event; never replay per damage target"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|4": {
+      "card_id": "CS2_061",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|5": {
+      "card_id": "CS2_061",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|8": {
+      "card_id": "CS2_061",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root/m_MissileInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|2527441325544481557|2|1": {
+      "card_id": "CS2_061",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root/m_ImpactInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|356870063172670035|3|5": {
+      "card_id": "CS2_061",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root/m_ImpactInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|356870063172670035|3|6": {
+      "card_id": "CS2_061",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_062|ce7fee3b48a76f14caddcdfa681db87b|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-8e3755b5c7f289df2f238a71420d2eae|-3398932776541870639|3|8": {
+      "card_id": "CS2_062",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_OpponentAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_062|ce7fee3b48a76f14caddcdfa681db87b|root/m_OpponentAreaEffectInfo.m_Prefab|CAB-8e3755b5c7f289df2f238a71420d2eae|-57422756975257515|3|10": {
+      "card_id": "CS2_062",
+      "route": "root/m_OpponentAreaEffectInfo.m_Prefab",
+      "stage": "m_OpponentAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_OpponentAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_OpponentAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_063|ba0ede6cbdb982c4c80f409b8502aee7|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|4": {
+      "card_id": "CS2_063",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_063|ba0ede6cbdb982c4c80f409b8502aee7|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|5": {
+      "card_id": "CS2_063",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_063|ba0ede6cbdb982c4c80f409b8502aee7|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|8": {
+      "card_id": "CS2_063",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_063|ba0ede6cbdb982c4c80f409b8502aee7|root/m_MissileInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-3979179026735219968|1|2": {
+      "card_id": "CS2_063",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "CS2_063|ba0ede6cbdb982c4c80f409b8502aee7|root/m_ImpactInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-1469527453560936289|3|3": {
+      "card_id": "CS2_063",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_064|fddb438586fd403439e467f6f5ca5119|root/m_ImpactInfo.m_Prefab|CAB-5c18ca2f59d647acdad5c9876b9dc7ef|4456834382676075148|1|7": {
+      "card_id": "CS2_064",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_064|fddb438586fd403439e467f6f5ca5119|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-5c18ca2f59d647acdad5c9876b9dc7ef|1158530735866829198|3|13": {
+      "card_id": "CS2_064",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_FriendlyAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "EX1_302|51b46dd3ff842ba41b4c437325994220|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|4": {
+      "card_id": "EX1_302",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_302|51b46dd3ff842ba41b4c437325994220|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|5": {
+      "card_id": "EX1_302",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_302|51b46dd3ff842ba41b4c437325994220|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|8": {
+      "card_id": "EX1_302",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_302|51b46dd3ff842ba41b4c437325994220|root/m_MissileInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-6040328375409516375|2|4": {
+      "card_id": "EX1_302",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "EX1_302|51b46dd3ff842ba41b4c437325994220|root/m_ImpactInfo.m_Prefab|CAB-5c18ca2f59d647acdad5c9876b9dc7ef|1079944156725505371|2|9": {
+      "card_id": "EX1_302",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "EX1_308|6ad98be477ebbd847b0a3110b7105abc|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|4": {
+      "card_id": "EX1_308",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_308|6ad98be477ebbd847b0a3110b7105abc|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|5": {
+      "card_id": "EX1_308",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_308|6ad98be477ebbd847b0a3110b7105abc|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|8": {
+      "card_id": "EX1_308",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_308|6ad98be477ebbd847b0a3110b7105abc|root/m_MissileInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8705572836827648400|2|1": {
+      "card_id": "EX1_308",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "EX1_308|6ad98be477ebbd847b0a3110b7105abc|root/m_MissileInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8705572836827648400|6|6": {
+      "card_id": "EX1_308",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "EX1_308|6ad98be477ebbd847b0a3110b7105abc|root/m_ImpactInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|6055582466056812273|2|11": {
+      "card_id": "EX1_308",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root|CAB-67e4d1eb27ce21c49d64680c42a53700|-5042207459040453522|2|2": {
+      "card_id": "NEW1_003",
+      "route": "root",
+      "stage": "root",
+      "cardinality": "once_per_root_state_event",
+      "condition": {
+        "kind": "root_state_event"
+      },
+      "count_semantics": "one root source instance per original spell state event; never replay per damage target"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|4": {
+      "card_id": "NEW1_003",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|5": {
+      "card_id": "NEW1_003",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|8": {
+      "card_id": "NEW1_003",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root/m_MissileInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-3979179026735219968|1|2": {
+      "card_id": "NEW1_003",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root/m_ImpactInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|356870063172670035|3|5": {
+      "card_id": "NEW1_003",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root/m_ImpactInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|356870063172670035|3|6": {
+      "card_id": "NEW1_003",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "GAME_005|9abe2b276b167a9459cc37d1d50b1660|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-8e3755b5c7f289df2f238a71420d2eae|-1256982497026704249|1|9": {
+      "card_id": "GAME_005",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_FriendlyAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "GAME_005|9abe2b276b167a9459cc37d1d50b1660|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-8e3755b5c7f289df2f238a71420d2eae|-1256982497026704249|4|17": {
+      "card_id": "GAME_005",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_FriendlyAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_034|b8e7bb6e0944d204297efdc937967085|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|1793577957286404385|2|1": {
+      "card_id": "CS2_034",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_034|b8e7bb6e0944d204297efdc937967085|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|1793577957286404385|7|3": {
+      "card_id": "CS2_034",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_034|b8e7bb6e0944d204297efdc937967085|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|1793577957286404385|8|9": {
+      "card_id": "CS2_034",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_034|b8e7bb6e0944d204297efdc937967085|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|1793577957286404385|8|10": {
+      "card_id": "CS2_034",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_034|b8e7bb6e0944d204297efdc937967085|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|1793577957286404385|12|2": {
+      "card_id": "CS2_034",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_034|b8e7bb6e0944d204297efdc937967085|root/m_MissileInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|7155839278102749317|2|1": {
+      "card_id": "CS2_034",
+      "route": "root/m_MissileInfo.m_Prefab",
+      "stage": "m_MissileInfo",
+      "cardinality": "per_visual_target_iteration",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_missile"
+      },
+      "count_semantics": "per original visual-target iteration; sequential mode advances on arrival, not metadata GameDelay"
+    },
+    "CS2_034|b8e7bb6e0944d204297efdc937967085|root/m_ImpactInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|8808308807956681743|2|10": {
+      "card_id": "CS2_034",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_056|5c3f93a27c9cb434ea6e0c37005a2c0d|root/m_ImpactInfo.m_Prefab|CAB-8e3755b5c7f289df2f238a71420d2eae|7353523188579133091|0|5": {
+      "card_id": "CS2_056",
+      "route": "root/m_ImpactInfo.m_Prefab",
+      "stage": "m_ImpactInfo",
+      "cardinality": "per_visual_target_impact",
+      "condition": {
+        "kind": "valid_visual_target_and_enabled_impact"
+      },
+      "count_semantics": "per arrival when missile exists; otherwise SpawnAllImpacts iterates valid visual targets"
+    },
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|6778989452209898892|7|2": {
+      "card_id": "CS2_029",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|6778989452209898892|9|12": {
+      "card_id": "CS2_029",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_029|563aacc1b2a435441988eae90cf8de94|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|6778989452209898892|12|1": {
+      "card_id": "CS2_029",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_024|af58499642cec471992ecb9e653b92b6|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8643223142898677733|2|5": {
+      "card_id": "CS2_024",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_024|af58499642cec471992ecb9e653b92b6|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8643223142898677733|6|11": {
+      "card_id": "CS2_024",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_024|af58499642cec471992ecb9e653b92b6|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8643223142898677733|7|16": {
+      "card_id": "CS2_024",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_024|af58499642cec471992ecb9e653b92b6|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-8643223142898677733|9|14": {
+      "card_id": "CS2_024",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_022|440eed6d453960b49bad9e13d81151f4|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|1|10": {
+      "card_id": "CS2_022",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_022|440eed6d453960b49bad9e13d81151f4|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|2|5": {
+      "card_id": "CS2_022",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_022|440eed6d453960b49bad9e13d81151f4|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|3|8": {
+      "card_id": "CS2_022",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_277|c81e3c5e81007b84ead1a6c25698213f|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|1|10": {
+      "card_id": "EX1_277",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_277|c81e3c5e81007b84ead1a6c25698213f|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|2|5": {
+      "card_id": "EX1_277",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_277|c81e3c5e81007b84ead1a6c25698213f|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|-7833996871583541132|3|8": {
+      "card_id": "EX1_277",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_057|e6ce5b6e7e1250e4a92dac52a3508671|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|6": {
+      "card_id": "CS2_057",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_057|e6ce5b6e7e1250e4a92dac52a3508671|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|7": {
+      "card_id": "CS2_057",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_057|e6ce5b6e7e1250e4a92dac52a3508671|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|9": {
+      "card_id": "CS2_057",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_057|e6ce5b6e7e1250e4a92dac52a3508671|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|5|3": {
+      "card_id": "CS2_057",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|6": {
+      "card_id": "CS2_061",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|7": {
+      "card_id": "CS2_061",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|9": {
+      "card_id": "CS2_061",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_061|03adb1d075c3ba941a2e9cbff4a18f8f|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|5|3": {
+      "card_id": "CS2_061",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_063|ba0ede6cbdb982c4c80f409b8502aee7|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|6": {
+      "card_id": "CS2_063",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_063|ba0ede6cbdb982c4c80f409b8502aee7|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|7": {
+      "card_id": "CS2_063",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_063|ba0ede6cbdb982c4c80f409b8502aee7|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|9": {
+      "card_id": "CS2_063",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_063|ba0ede6cbdb982c4c80f409b8502aee7|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|5|3": {
+      "card_id": "CS2_063",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_302|51b46dd3ff842ba41b4c437325994220|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|6": {
+      "card_id": "EX1_302",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_302|51b46dd3ff842ba41b4c437325994220|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|7": {
+      "card_id": "EX1_302",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_302|51b46dd3ff842ba41b4c437325994220|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|9": {
+      "card_id": "EX1_302",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_302|51b46dd3ff842ba41b4c437325994220|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|5|3": {
+      "card_id": "EX1_302",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_308|6ad98be477ebbd847b0a3110b7105abc|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|6": {
+      "card_id": "EX1_308",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_308|6ad98be477ebbd847b0a3110b7105abc|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|7": {
+      "card_id": "EX1_308",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_308|6ad98be477ebbd847b0a3110b7105abc|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|9": {
+      "card_id": "EX1_308",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "EX1_308|6ad98be477ebbd847b0a3110b7105abc|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|5|3": {
+      "card_id": "EX1_308",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|6": {
+      "card_id": "NEW1_003",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|1|7": {
+      "card_id": "NEW1_003",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|3|9": {
+      "card_id": "NEW1_003",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "NEW1_003|bf91897c0d34f6d4db6b9c68beffa066|root/m_StartInfo.m_Prefab|CAB-6250080dacfbb0ebe4fb54dcd648911a|-8038510748177281442|5|3": {
+      "card_id": "NEW1_003",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "GAME_005|9abe2b276b167a9459cc37d1d50b1660|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-8e3755b5c7f289df2f238a71420d2eae|-1256982497026704249|4|19": {
+      "card_id": "GAME_005",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_FriendlyAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "GAME_005|9abe2b276b167a9459cc37d1d50b1660|root/m_FriendlyAreaEffectInfo.m_Prefab|CAB-8e3755b5c7f289df2f238a71420d2eae|-1256982497026704249|5|17": {
+      "card_id": "GAME_005",
+      "route": "root/m_FriendlyAreaEffectInfo.m_Prefab",
+      "stage": "m_FriendlyAreaEffectInfo",
+      "cardinality": "once_per_selected_area",
+      "condition": {
+        "kind": "source_side_area_choice",
+        "required_selected_stage": "m_FriendlyAreaEffectInfo",
+        "selection": {
+          "friendly": "m_FriendlyAreaEffectInfo",
+          "opponent": "m_FriendlyAreaEffectInfo",
+          "unknown": "m_FriendlyAreaEffectInfo"
+        }
+      },
+      "count_semantics": "0 or 1; both candidate areas must never play together"
+    },
+    "CS2_034|b8e7bb6e0944d204297efdc937967085|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|1793577957286404385|7|2": {
+      "card_id": "CS2_034",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    },
+    "CS2_034|b8e7bb6e0944d204297efdc937967085|root/m_StartInfo.m_Prefab|CAB-69c88b234dfa427e02d1fcee9337ae34|1793577957286404385|12|1": {
+      "card_id": "CS2_034",
+      "route": "root/m_StartInfo.m_Prefab",
+      "stage": "m_StartInfo",
+      "cardinality": "once_per_spell_state_event",
+      "condition": {
+        "kind": "enabled_start"
+      },
+      "count_semantics": "one Start source instance per SuperSpell, shared across Birth/Action/Death/Cancel"
+    }
+  }
+}

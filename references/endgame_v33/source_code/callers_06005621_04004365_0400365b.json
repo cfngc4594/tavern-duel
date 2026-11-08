@@ -1,0 +1,1774 @@
+[
+  {
+    "type": "EndGameScreen",
+    "method": "ContinueDefaultEvents",
+    "token": "0x06004cde",
+    "rva": "0x16653c",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "call",
+        "operand": "EndGameScreen::IsPlayingBlockingAnim",
+        "token": "token(0x06004CCB)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "brfalse.s",
+        "operand": "IL_000a",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000a",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000b",
+        "opcode": "call",
+        "operand": "EndGameScreen::IsInputBlocked",
+        "token": "token(0x06004CCE)"
+      },
+      {
+        "offset": "IL_0010",
+        "opcode": "brfalse.s",
+        "operand": "IL_0014",
+        "token": null
+      },
+      {
+        "offset": "IL_0012",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0013",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0014",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0015",
+        "opcode": "ldfld",
+        "operand": "EndGameScreen::m_currentlyShowingReward",
+        "token": "token(0x04003656)"
+      },
+      {
+        "offset": "IL_001a",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001b",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0020",
+        "opcode": "brfalse.s",
+        "operand": "IL_0035",
+        "token": null
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "ldfld",
+        "operand": "EndGameScreen::m_currentlyShowingReward",
+        "token": "token(0x04003656)"
+      },
+      {
+        "offset": "IL_0028",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0029",
+        "opcode": "callvirt",
+        "operand": "Reward::Hide",
+        "token": "token(0x060103A1)"
+      },
+      {
+        "offset": "IL_002e",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002f",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0030",
+        "opcode": "stfld",
+        "operand": "EndGameScreen::m_currentlyShowingReward",
+        "token": "token(0x04003656)"
+      },
+      {
+        "offset": "IL_0035",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "call",
+        "operand": "EndGameScreen::HideScoreScreen",
+        "token": "token(0x06004CEA)"
+      },
+      {
+        "offset": "IL_003b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "ldfld",
+        "operand": "EndGameScreen::m_haveShownTwoScoop",
+        "token": "token(0x04003657)"
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "brtrue.s",
+        "operand": "IL_0045",
+        "token": null
+      },
+      {
+        "offset": "IL_0043",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0044",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0045",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0046",
+        "opcode": "call",
+        "operand": "EndGameScreen::HideTwoScoop",
+        "token": "token(0x06004CEB)"
+      },
+      {
+        "offset": "IL_004b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004c",
+        "opcode": "callvirt",
+        "operand": "EndGameScreen::ShowHeroRewardEvent",
+        "token": "token(0x06004D14)"
+      },
+      {
+        "offset": "IL_0051",
+        "opcode": "brfalse.s",
+        "operand": "IL_005d",
+        "token": null
+      },
+      {
+        "offset": "IL_0053",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0054",
+        "opcode": "ldfld",
+        "operand": "EndGameScreen::m_heroRewardEventReady",
+        "token": "token(0x0400364D)"
+      },
+      {
+        "offset": "IL_0059",
+        "opcode": "brfalse.s",
+        "operand": "IL_005d",
+        "token": null
+      },
+      {
+        "offset": "IL_005b",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005c",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005e",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowSpjMissionProgress",
+        "token": "token(0x06004D1A)"
+      },
+      {
+        "offset": "IL_0063",
+        "opcode": "brfalse.s",
+        "operand": "IL_0067",
+        "token": null
+      },
+      {
+        "offset": "IL_0065",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0066",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0067",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0068",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowJournalXpGains",
+        "token": "token(0x06004D1B)"
+      },
+      {
+        "offset": "IL_006d",
+        "opcode": "brfalse.s",
+        "operand": "IL_0071",
+        "token": null
+      },
+      {
+        "offset": "IL_006f",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0070",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0071",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0072",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowNextRewardTrackAutoClaimedReward",
+        "token": "token(0x06004D1D)"
+      },
+      {
+        "offset": "IL_0077",
+        "opcode": "brfalse.s",
+        "operand": "IL_007b",
+        "token": null
+      },
+      {
+        "offset": "IL_0079",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007a",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007c",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowFixedRewards",
+        "token": "token(0x06004D15)"
+      },
+      {
+        "offset": "IL_0081",
+        "opcode": "brfalse.s",
+        "operand": "IL_0085",
+        "token": null
+      },
+      {
+        "offset": "IL_0083",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0084",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0085",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0086",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowGoldReward",
+        "token": "token(0x06004D16)"
+      },
+      {
+        "offset": "IL_008b",
+        "opcode": "brfalse.s",
+        "operand": "IL_008f",
+        "token": null
+      },
+      {
+        "offset": "IL_008d",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008e",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0090",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowRankedCardBackProgress",
+        "token": "token(0x06004D23)"
+      },
+      {
+        "offset": "IL_0095",
+        "opcode": "brfalse.s",
+        "operand": "IL_0099",
+        "token": null
+      },
+      {
+        "offset": "IL_0097",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0098",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0099",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_009a",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowRankChange",
+        "token": "token(0x06004D20)"
+      },
+      {
+        "offset": "IL_009f",
+        "opcode": "brfalse.s",
+        "operand": "IL_00a3",
+        "token": null
+      },
+      {
+        "offset": "IL_00a1",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a2",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a3",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a4",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowRankedRewards",
+        "token": "token(0x06004D21)"
+      },
+      {
+        "offset": "IL_00a9",
+        "opcode": "brfalse.s",
+        "operand": "IL_00ad",
+        "token": null
+      },
+      {
+        "offset": "IL_00ab",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ac",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ad",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ae",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowNextProgressionQuestReward",
+        "token": "token(0x06004D17)"
+      },
+      {
+        "offset": "IL_00b3",
+        "opcode": "brfalse.s",
+        "operand": "IL_00b7",
+        "token": null
+      },
+      {
+        "offset": "IL_00b5",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b6",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b7",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b8",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowMercenariesExperienceRewards",
+        "token": "token(0x06004D2A)"
+      },
+      {
+        "offset": "IL_00bd",
+        "opcode": "brfalse.s",
+        "operand": "IL_00c1",
+        "token": null
+      },
+      {
+        "offset": "IL_00bf",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c0",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c1",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c2",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowPetXpGains",
+        "token": "token(0x06004D1C)"
+      },
+      {
+        "offset": "IL_00c7",
+        "opcode": "brfalse.s",
+        "operand": "IL_00cb",
+        "token": null
+      },
+      {
+        "offset": "IL_00c9",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ca",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00cb",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00cc",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowPetRewards",
+        "token": "token(0x06004D2B)"
+      },
+      {
+        "offset": "IL_00d1",
+        "opcode": "brfalse.s",
+        "operand": "IL_00d5",
+        "token": null
+      },
+      {
+        "offset": "IL_00d3",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d4",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d5",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d6",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowNextCompletedQuest",
+        "token": "token(0x06004D18)"
+      },
+      {
+        "offset": "IL_00db",
+        "opcode": "brfalse.s",
+        "operand": "IL_00df",
+        "token": null
+      },
+      {
+        "offset": "IL_00dd",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00de",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00df",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e0",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowNextReward",
+        "token": "token(0x06004D1E)"
+      },
+      {
+        "offset": "IL_00e5",
+        "opcode": "brfalse.s",
+        "operand": "IL_00e9",
+        "token": null
+      },
+      {
+        "offset": "IL_00e7",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e8",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e9",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ea",
+        "opcode": "call",
+        "operand": "EndGameScreen::ShowNextGenericReward",
+        "token": "token(0x06004D1F)"
+      },
+      {
+        "offset": "IL_00ef",
+        "opcode": "brfalse.s",
+        "operand": "IL_00f3",
+        "token": null
+      },
+      {
+        "offset": "IL_00f1",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f2",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f3",
+        "opcode": "call",
+        "operand": "SpectatorManager::Get",
+        "token": "token(0x06014416)"
+      },
+      {
+        "offset": "IL_00f8",
+        "opcode": "callvirt",
+        "operand": "SpectatorManager::get_IsSpectatingOrWatching",
+        "token": "token(0x06014421)"
+      },
+      {
+        "offset": "IL_00fd",
+        "opcode": "brtrue.s",
+        "operand": "IL_0110",
+        "token": null
+      },
+      {
+        "offset": "IL_00ff",
+        "opcode": "call",
+        "operand": "TemporaryAccountManager::IsTemporaryAccount",
+        "token": "token(0x06011B3C)"
+      },
+      {
+        "offset": "IL_0104",
+        "opcode": "brfalse.s",
+        "operand": "IL_0110",
+        "token": null
+      },
+      {
+        "offset": "IL_0106",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0107",
+        "opcode": "callvirt",
+        "operand": "EndGameScreen::ShowHealUpDialog",
+        "token": "token(0x06004D27)"
+      },
+      {
+        "offset": "IL_010c",
+        "opcode": "brfalse.s",
+        "operand": "IL_0110",
+        "token": null
+      },
+      {
+        "offset": "IL_010e",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_010f",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0110",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0111",
+        "opcode": "callvirt",
+        "operand": "EndGameScreen::ShowPushNotificationPrompt",
+        "token": "token(0x06004D28)"
+      },
+      {
+        "offset": "IL_0116",
+        "opcode": "brfalse.s",
+        "operand": "IL_011a",
+        "token": null
+      },
+      {
+        "offset": "IL_0118",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0119",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_011a",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_011b",
+        "opcode": "callvirt",
+        "operand": "EndGameScreen::ShowAppRatingPrompt",
+        "token": "token(0x06004D29)"
+      },
+      {
+        "offset": "IL_0120",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0121",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0122",
+        "opcode": "stfld",
+        "operand": "EndGameScreen::m_doneDisplayingRewards",
+        "token": "token(0x0400365B)"
+      },
+      {
+        "offset": "IL_0127",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0128",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "type": "EndGameScreen",
+    "method": "IsDoneDisplayingRewards",
+    "token": "0x06004cf1",
+    "rva": "0x166d60",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldfld",
+        "operand": "EndGameScreen::m_doneDisplayingRewards",
+        "token": "token(0x0400365B)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "type": "GameState",
+    "method": "PreprocessTagChange",
+    "token": "0x0600561c",
+    "rva": "0x18f5a0",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldfld",
+        "operand": "TagDelta::tag",
+        "token": "token(0x040116BB)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldc.i4.s",
+        "operand": "20",
+        "token": null
+      },
+      {
+        "offset": "IL_000a",
+        "opcode": "bgt.s",
+        "operand": "IL_0017",
+        "token": null
+      },
+      {
+        "offset": "IL_000c",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000d",
+        "opcode": "ldc.i4.s",
+        "operand": "17",
+        "token": null
+      },
+      {
+        "offset": "IL_000f",
+        "opcode": "beq.s",
+        "operand": "IL_007e",
+        "token": null
+      },
+      {
+        "offset": "IL_0011",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0012",
+        "opcode": "ldc.i4.s",
+        "operand": "20",
+        "token": null
+      },
+      {
+        "offset": "IL_0014",
+        "opcode": "beq.s",
+        "operand": "IL_0045",
+        "token": null
+      },
+      {
+        "offset": "IL_0016",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0017",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0018",
+        "opcode": "ldc.i4.s",
+        "operand": "23",
+        "token": null
+      },
+      {
+        "offset": "IL_001a",
+        "opcode": "beq.s",
+        "operand": "IL_002d",
+        "token": null
+      },
+      {
+        "offset": "IL_001c",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001d",
+        "opcode": "ldc.i4",
+        "operand": "2089",
+        "token": null
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "beq.s",
+        "operand": "IL_0058",
+        "token": null
+      },
+      {
+        "offset": "IL_0024",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0025",
+        "opcode": "ldc.i4",
+        "operand": "2226",
+        "token": null
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "beq.s",
+        "operand": "IL_006b",
+        "token": null
+      },
+      {
+        "offset": "IL_002c",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002d",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002e",
+        "opcode": "ldfld",
+        "operand": "TagDelta::newValue",
+        "token": "token(0x040116BD)"
+      },
+      {
+        "offset": "IL_0033",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "bne.un.s",
+        "operand": "IL_00a3",
+        "token": null
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0037",
+        "opcode": "castclass",
+        "operand": "Player",
+        "token": "token(0x02000C18)"
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003e",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003f",
+        "opcode": "call",
+        "operand": "GameState::OnCurrentPlayerChanged",
+        "token": "token(0x06005623)"
+      },
+      {
+        "offset": "IL_0044",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0045",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0046",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0047",
+        "opcode": "ldfld",
+        "operand": "TagDelta::oldValue",
+        "token": "token(0x040116BC)"
+      },
+      {
+        "offset": "IL_004c",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004d",
+        "opcode": "ldfld",
+        "operand": "TagDelta::newValue",
+        "token": "token(0x040116BD)"
+      },
+      {
+        "offset": "IL_0052",
+        "opcode": "call",
+        "operand": "GameState::OnTurnChanged",
+        "token": "token(0x06005624)"
+      },
+      {
+        "offset": "IL_0057",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0058",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0059",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005a",
+        "opcode": "ldfld",
+        "operand": "TagDelta::oldValue",
+        "token": "token(0x040116BC)"
+      },
+      {
+        "offset": "IL_005f",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0060",
+        "opcode": "ldfld",
+        "operand": "TagDelta::newValue",
+        "token": "token(0x040116BD)"
+      },
+      {
+        "offset": "IL_0065",
+        "opcode": "call",
+        "operand": "GameState::OnDamageCapChanged",
+        "token": "token(0x06005625)"
+      },
+      {
+        "offset": "IL_006a",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006c",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006d",
+        "opcode": "ldfld",
+        "operand": "TagDelta::oldValue",
+        "token": "token(0x040116BC)"
+      },
+      {
+        "offset": "IL_0072",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0073",
+        "opcode": "ldfld",
+        "operand": "TagDelta::newValue",
+        "token": "token(0x040116BD)"
+      },
+      {
+        "offset": "IL_0078",
+        "opcode": "call",
+        "operand": "GameState::OnDiabloFightPlayerIDChanged",
+        "token": "token(0x06005626)"
+      },
+      {
+        "offset": "IL_007d",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007e",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007f",
+        "opcode": "castclass",
+        "operand": "Player",
+        "token": "token(0x02000C18)"
+      },
+      {
+        "offset": "IL_0084",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0085",
+        "opcode": "ldfld",
+        "operand": "TagDelta::tag",
+        "token": "token(0x040116BB)"
+      },
+      {
+        "offset": "IL_008a",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008b",
+        "opcode": "ldfld",
+        "operand": "TagDelta::newValue",
+        "token": "token(0x040116BD)"
+      },
+      {
+        "offset": "IL_0090",
+        "opcode": "call",
+        "operand": "GameUtils::IsGameOverTag",
+        "token": "token(0x06014CFC)"
+      },
+      {
+        "offset": "IL_0095",
+        "opcode": "brfalse.s",
+        "operand": "IL_00a3",
+        "token": null
+      },
+      {
+        "offset": "IL_0097",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0098",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0099",
+        "opcode": "ldfld",
+        "operand": "TagDelta::newValue",
+        "token": "token(0x040116BD)"
+      },
+      {
+        "offset": "IL_009e",
+        "opcode": "call",
+        "operand": "GameState::OnGameOver",
+        "token": "token(0x06005621)"
+      },
+      {
+        "offset": "IL_00a3",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "type": "GameState",
+    "method": "PreprocessEarlyConcedeTagChange",
+    "token": "0x0600561e",
+    "rva": "0x18f695",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldfld",
+        "operand": "TagDelta::tag",
+        "token": "token(0x040116BB)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "ldc.i4.s",
+        "operand": "17",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "bne.un.s",
+        "operand": "IL_002f",
+        "token": null
+      },
+      {
+        "offset": "IL_000a",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000b",
+        "opcode": "castclass",
+        "operand": "Player",
+        "token": "token(0x02000C18)"
+      },
+      {
+        "offset": "IL_0010",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0011",
+        "opcode": "ldfld",
+        "operand": "TagDelta::tag",
+        "token": "token(0x040116BB)"
+      },
+      {
+        "offset": "IL_0016",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0017",
+        "opcode": "ldfld",
+        "operand": "TagDelta::newValue",
+        "token": "token(0x040116BD)"
+      },
+      {
+        "offset": "IL_001c",
+        "opcode": "call",
+        "operand": "GameUtils::IsGameOverTag",
+        "token": "token(0x06014CFC)"
+      },
+      {
+        "offset": "IL_0021",
+        "opcode": "brfalse.s",
+        "operand": "IL_002f",
+        "token": null
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0024",
+        "opcode": "ldarg.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0025",
+        "opcode": "ldfld",
+        "operand": "TagDelta::newValue",
+        "token": "token(0x040116BD)"
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "call",
+        "operand": "GameState::OnGameOver",
+        "token": "token(0x06005621)"
+      },
+      {
+        "offset": "IL_002f",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "type": "GameState",
+    "method": "FakeConceded",
+    "token": "0x06005622",
+    "rva": "0x18f784",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldc.i4.5",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0002",
+        "opcode": "call",
+        "operand": "GameState::OnGameOver",
+        "token": "token(0x06005621)"
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "type": "PowerProcessor",
+    "method": "HasGameOverTaskList",
+    "token": "0x06005fce",
+    "rva": "0x1ccbd1",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldfld",
+        "operand": "PowerProcessor::m_gameOverTaskList",
+        "token": "token(0x04004365)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "cgt.un",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "type": "PowerProcessor",
+    "method": "EnqueueTaskList",
+    "token": "0x06005fe3",
+    "rva": "0x1ce0b0",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0002",
+        "opcode": "ldfld",
+        "operand": "PowerProcessor::m_totalSlushTime",
+        "token": "token(0x04004354)"
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "callvirt",
+        "operand": "PowerTaskList::GetTotalSlushTime",
+        "token": "token(0x06005F81)"
+      },
+      {
+        "offset": "IL_000d",
+        "opcode": "add",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "stfld",
+        "operand": "PowerProcessor::m_totalSlushTime",
+        "token": "token(0x04004354)"
+      },
+      {
+        "offset": "IL_0013",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0014",
+        "opcode": "ldfld",
+        "operand": "PowerProcessor::m_powerHistoryFirstTaskList",
+        "token": "token(0x04004368)"
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "brtrue.s",
+        "operand": "IL_0024",
+        "token": null
+      },
+      {
+        "offset": "IL_001b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001c",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001d",
+        "opcode": "stfld",
+        "operand": "PowerProcessor::m_powerHistoryFirstTaskList",
+        "token": "token(0x04004368)"
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "br.s",
+        "operand": "IL_002b",
+        "token": null
+      },
+      {
+        "offset": "IL_0024",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0025",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0026",
+        "opcode": "stfld",
+        "operand": "PowerProcessor::m_powerHistoryLastTaskList",
+        "token": "token(0x04004369)"
+      },
+      {
+        "offset": "IL_002b",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002c",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002d",
+        "opcode": "call",
+        "operand": "PowerProcessor::GetNextTaskListId",
+        "token": "token(0x06005FDB)"
+      },
+      {
+        "offset": "IL_0032",
+        "opcode": "callvirt",
+        "operand": "PowerTaskList::SetId",
+        "token": "token(0x06005F3F)"
+      },
+      {
+        "offset": "IL_0037",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0038",
+        "opcode": "ldfld",
+        "operand": "PowerProcessor::m_powerQueue",
+        "token": "token(0x0400435B)"
+      },
+      {
+        "offset": "IL_003d",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003e",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb9d3acbc0>::Enqueue",
+        "token": "token(0x0A002606)"
+      },
+      {
+        "offset": "IL_0043",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0044",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0045",
+        "opcode": "ldfld",
+        "operand": "PowerProcessor::m_currentTimeline",
+        "token": "token(0x04004355)"
+      },
+      {
+        "offset": "IL_004a",
+        "opcode": "brfalse.s",
+        "operand": "IL_006c",
+        "token": null
+      },
+      {
+        "offset": "IL_004c",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004d",
+        "opcode": "callvirt",
+        "operand": "PowerTaskList::GetTotalSlushTime",
+        "token": "token(0x06005F81)"
+      },
+      {
+        "offset": "IL_0052",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0053",
+        "opcode": "ble.s",
+        "operand": "IL_006c",
+        "token": null
+      },
+      {
+        "offset": "IL_0055",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0056",
+        "opcode": "ldfld",
+        "operand": "PowerProcessor::m_currentTimeline",
+        "token": "token(0x04004355)"
+      },
+      {
+        "offset": "IL_005b",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005c",
+        "opcode": "callvirt",
+        "operand": "PowerTaskList::GetId",
+        "token": "token(0x06005F3E)"
+      },
+      {
+        "offset": "IL_0061",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0062",
+        "opcode": "callvirt",
+        "operand": "PowerTaskList::GetTotalSlushTime",
+        "token": "token(0x06005F81)"
+      },
+      {
+        "offset": "IL_0067",
+        "opcode": "callvirt",
+        "operand": "PowerHistoryTimeline::AddTimelineEntry",
+        "token": "token(0x06005FBD)"
+      },
+      {
+        "offset": "IL_006c",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006d",
+        "opcode": "callvirt",
+        "operand": "PowerTaskList::HasFriendlyConcede",
+        "token": "token(0x06005F9E)"
+      },
+      {
+        "offset": "IL_0072",
+        "opcode": "brfalse.s",
+        "operand": "IL_007b",
+        "token": null
+      },
+      {
+        "offset": "IL_0074",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0075",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0076",
+        "opcode": "stfld",
+        "operand": "PowerProcessor::m_earlyConcedeTaskList",
+        "token": "token(0x04004363)"
+      },
+      {
+        "offset": "IL_007b",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007c",
+        "opcode": "callvirt",
+        "operand": "PowerTaskList::HasGameOver",
+        "token": "token(0x06005F9D)"
+      },
+      {
+        "offset": "IL_0081",
+        "opcode": "brfalse.s",
+        "operand": "IL_008a",
+        "token": null
+      },
+      {
+        "offset": "IL_0083",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0084",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0085",
+        "opcode": "stfld",
+        "operand": "PowerProcessor::m_gameOverTaskList",
+        "token": "token(0x04004365)"
+      },
+      {
+        "offset": "IL_008a",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  }
+]

@@ -1,0 +1,435 @@
+
+TYPE HutongGames.PlayMaker.Actions.AnimateFloat 0x02000021
+FIELD 0x04000081 animCurve SIG 061281ed
+FIELD 0x04000082 floatVariable SIG 0612809d
+FIELD 0x04000083 finishEvent SIG 0612811d
+FIELD 0x04000084 realTime SIG 0602
+FIELD 0x04000085 startTime SIG 060c
+FIELD 0x04000086 currentTime SIG 060c
+FIELD 0x04000087 endTime SIG 060c
+FIELD 0x04000088 looping SIG 0602
+
+TYPE HutongGames.PlayMaker.Actions.PlayAnimation 0x0200003a
+FIELD 0x04000167 gameObject SIG 0612808d
+FIELD 0x04000168 animName SIG 06128211
+FIELD 0x04000169 playMode SIG 0611823d
+FIELD 0x0400016a blendTime SIG 0612809d
+FIELD 0x0400016b finishEvent SIG 0612811d
+FIELD 0x0400016c loopEvent SIG 0612811d
+FIELD 0x0400016d stopOnExit SIG 0602
+FIELD 0x0400016e anim SIG 061280ad
+FIELD 0x0400016f prevAnimtTime SIG 060c
+
+TYPE HutongGames.PlayMaker.Actions.Wait 0x02000302
+FIELD 0x04000f02 time SIG 0612809d
+FIELD 0x04000f03 finishEvent SIG 0612811d
+FIELD 0x04000f04 realTime SIG 0602
+FIELD 0x04000f05 startTime SIG 060c
+FIELD 0x04000f06 timer SIG 060c
+
+0x060000bb HutongGames.PlayMaker.Actions.AnimateFloat::Reset() RVA 0x4d85 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_0007 ldarg.0         
+  IL_0008 ldnull          
+  IL_0009 stfld          HutongGames.PlayMaker.Actions.AnimateFloat::floatVariable token(0x04000082)
+  IL_000e ldarg.0         
+  IL_000f ldnull          
+  IL_0010 stfld          HutongGames.PlayMaker.Actions.AnimateFloat::finishEvent token(0x04000083)
+  IL_0015 ldarg.0         
+  IL_0016 ldc.i4.0        
+  IL_0017 stfld          HutongGames.PlayMaker.Actions.AnimateFloat::realTime token(0x04000084)
+  IL_001c ret             
+
+0x060000bc HutongGames.PlayMaker.Actions.AnimateFloat::OnEnter() RVA 0x4da4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_0006 stfld          HutongGames.PlayMaker.Actions.AnimateFloat::startTime token(0x04000085)
+  IL_000b ldarg.0         
+  IL_000c ldc.r4         0.0 
+  IL_0011 stfld          HutongGames.PlayMaker.Actions.AnimateFloat::currentTime token(0x04000086)
+  IL_0016 ldarg.0         
+  IL_0017 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_001c brfalse.s      IL_008d 
+  IL_001e ldarg.0         
+  IL_001f ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_0024 ldfld          HutongGames.PlayMaker.FsmAnimationCurve::curve token(0x0A0000B4)
+  IL_0029 brfalse.s      IL_008d 
+  IL_002b ldarg.0         
+  IL_002c ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_0031 ldfld          HutongGames.PlayMaker.FsmAnimationCurve::curve token(0x0A0000B4)
+  IL_0036 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_003b ldlen           
+  IL_003c brfalse.s      IL_008d 
+  IL_003e ldarg.0         
+  IL_003f ldarg.0         
+  IL_0040 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_0045 ldfld          HutongGames.PlayMaker.FsmAnimationCurve::curve token(0x0A0000B4)
+  IL_004a callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_004f ldarg.0         
+  IL_0050 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_0055 ldfld          HutongGames.PlayMaker.FsmAnimationCurve::curve token(0x0A0000B4)
+  IL_005a callvirt       UnityEngine.AnimationCurve::get_length token(0x0A0000BD)
+  IL_005f ldc.i4.1        
+  IL_0060 sub             
+  IL_0061 ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_0066 call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_006b stfld          HutongGames.PlayMaker.Actions.AnimateFloat::endTime token(0x04000087)
+  IL_0070 ldarg.0         
+  IL_0071 ldarg.0         
+  IL_0072 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_0077 ldfld          HutongGames.PlayMaker.FsmAnimationCurve::curve token(0x0A0000B4)
+  IL_007c callvirt       UnityEngine.AnimationCurve::get_postWrapMode token(0x0A0000BF)
+  IL_0081 call           HutongGames.PlayMaker.ActionHelpers::IsLoopingWrapMode token(0x06000060)
+  IL_0086 stfld          HutongGames.PlayMaker.Actions.AnimateFloat::looping token(0x04000088)
+  IL_008b br.s           IL_0094 
+  IL_008d ldarg.0         
+  IL_008e call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0093 ret             
+  IL_0094 ldarg.0         
+  IL_0095 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::floatVariable token(0x04000082)
+  IL_009a ldarg.0         
+  IL_009b ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_00a0 ldfld          HutongGames.PlayMaker.FsmAnimationCurve::curve token(0x0A0000B4)
+  IL_00a5 ldc.r4         0.0 
+  IL_00aa callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_00af callvirt       HutongGames.PlayMaker.FsmFloat::set_Value token(0x0A0000C0)
+  IL_00b4 ret             
+
+0x060000bd HutongGames.PlayMaker.Actions.AnimateFloat::OnUpdate() RVA 0x4e68 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::realTime token(0x04000084)
+  IL_0006 brfalse.s      IL_001c 
+  IL_0008 ldarg.0         
+  IL_0009 call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_000e ldarg.0         
+  IL_000f ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::startTime token(0x04000085)
+  IL_0014 sub             
+  IL_0015 stfld          HutongGames.PlayMaker.Actions.AnimateFloat::currentTime token(0x04000086)
+  IL_001a br.s           IL_002e 
+  IL_001c ldarg.0         
+  IL_001d ldarg.0         
+  IL_001e ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::currentTime token(0x04000086)
+  IL_0023 call           UnityEngine.Time::get_deltaTime token(0x0A0000C1)
+  IL_0028 add             
+  IL_0029 stfld          HutongGames.PlayMaker.Actions.AnimateFloat::currentTime token(0x04000086)
+  IL_002e ldarg.0         
+  IL_002f ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_0034 brfalse.s      IL_006c 
+  IL_0036 ldarg.0         
+  IL_0037 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_003c ldfld          HutongGames.PlayMaker.FsmAnimationCurve::curve token(0x0A0000B4)
+  IL_0041 brfalse.s      IL_006c 
+  IL_0043 ldarg.0         
+  IL_0044 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::floatVariable token(0x04000082)
+  IL_0049 brfalse.s      IL_006c 
+  IL_004b ldarg.0         
+  IL_004c ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::floatVariable token(0x04000082)
+  IL_0051 ldarg.0         
+  IL_0052 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::animCurve token(0x04000081)
+  IL_0057 ldfld          HutongGames.PlayMaker.FsmAnimationCurve::curve token(0x0A0000B4)
+  IL_005c ldarg.0         
+  IL_005d ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::currentTime token(0x04000086)
+  IL_0062 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_0067 callvirt       HutongGames.PlayMaker.FsmFloat::set_Value token(0x0A0000C0)
+  IL_006c ldarg.0         
+  IL_006d ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::currentTime token(0x04000086)
+  IL_0072 ldarg.0         
+  IL_0073 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::endTime token(0x04000087)
+  IL_0078 blt.un.s       IL_00a1 
+  IL_007a ldarg.0         
+  IL_007b ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::looping token(0x04000088)
+  IL_0080 brtrue.s       IL_0088 
+  IL_0082 ldarg.0         
+  IL_0083 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0088 ldarg.0         
+  IL_0089 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::finishEvent token(0x04000083)
+  IL_008e brfalse.s      IL_00a1 
+  IL_0090 ldarg.0         
+  IL_0091 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0096 ldarg.0         
+  IL_0097 ldfld          HutongGames.PlayMaker.Actions.AnimateFloat::finishEvent token(0x04000083)
+  IL_009c callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A0000B9)
+  IL_00a1 ret             
+
+0x060000be HutongGames.PlayMaker.Actions.AnimateFloat::.ctor() RVA 0x4f16 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A0000C2)
+  IL_0006 ret             
+
+0x0600014a HutongGames.PlayMaker.Actions.PlayAnimation::Reset() RVA 0x993c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.PlayAnimation::gameObject token(0x04000167)
+  IL_0007 ldarg.0         
+  IL_0008 ldnull          
+  IL_0009 stfld          HutongGames.PlayMaker.Actions.PlayAnimation::animName token(0x04000168)
+  IL_000e ldarg.0         
+  IL_000f ldc.i4.4        
+  IL_0010 stfld          HutongGames.PlayMaker.Actions.PlayAnimation::playMode token(0x04000169)
+  IL_0015 ldarg.0         
+  IL_0016 ldc.r4         0.30000001192092896 
+  IL_001b call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A0000DA)
+  IL_0020 stfld          HutongGames.PlayMaker.Actions.PlayAnimation::blendTime token(0x0400016A)
+  IL_0025 ldarg.0         
+  IL_0026 ldnull          
+  IL_0027 stfld          HutongGames.PlayMaker.Actions.PlayAnimation::finishEvent token(0x0400016B)
+  IL_002c ldarg.0         
+  IL_002d ldnull          
+  IL_002e stfld          HutongGames.PlayMaker.Actions.PlayAnimation::loopEvent token(0x0400016C)
+  IL_0033 ldarg.0         
+  IL_0034 ldc.i4.0        
+  IL_0035 stfld          HutongGames.PlayMaker.Actions.PlayAnimation::stopOnExit token(0x0400016D)
+  IL_003a ret             
+
+0x0600014b HutongGames.PlayMaker.Actions.PlayAnimation::OnEnter() RVA 0x9978 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.PlayAnimation::DoPlayAnimation token(0x0600014C)
+  IL_0006 ret             
+
+0x0600014c HutongGames.PlayMaker.Actions.PlayAnimation::DoPlayAnimation() RVA 0x9980 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::gameObject token(0x04000167)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A00002C)
+  IL_0011 stloc.0         
+  IL_0012 ldarg.0         
+  IL_0013 ldloc.0         
+  IL_0014 call           <dnfile.mdtable.TypeSpecRow object at 0x7f7fda87ef00>::UpdateCache token(0x0A0000D2)
+  IL_0019 brtrue.s       IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0021 ret             
+  IL_0022 ldarg.0         
+  IL_0023 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::animName token(0x04000168)
+  IL_0028 callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A0000D4)
+  IL_002d call           System.String::IsNullOrEmpty token(0x0A00002D)
+  IL_0032 brfalse.s      IL_0046 
+  IL_0034 ldarg.0         
+  IL_0035 ldstr          'Missing animName!' string token(0x7000049F)
+  IL_003a call           HutongGames.PlayMaker.FsmStateAction::LogWarning token(0x0A0000DC)
+  IL_003f ldarg.0         
+  IL_0040 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0045 ret             
+  IL_0046 ldarg.0         
+  IL_0047 ldarg.0         
+  IL_0048 call           <dnfile.mdtable.TypeSpecRow object at 0x7f7fda87ef00>::get_animation token(0x0A0000D3)
+  IL_004d ldarg.0         
+  IL_004e ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::animName token(0x04000168)
+  IL_0053 callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A0000D4)
+  IL_0058 callvirt       UnityEngine.Animation::get_Item token(0x0A0000D5)
+  IL_005d stfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_0062 ldarg.0         
+  IL_0063 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_0068 ldnull          
+  IL_0069 call           UnityEngine.TrackedReference::op_Equality token(0x0A0000D6)
+  IL_006e brfalse.s      IL_0092 
+  IL_0070 ldarg.0         
+  IL_0071 ldstr          'Missing animation: ' string token(0x700002ED)
+  IL_0076 ldarg.0         
+  IL_0077 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::animName token(0x04000168)
+  IL_007c callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A0000D4)
+  IL_0081 call           System.String::Concat token(0x0A00004D)
+  IL_0086 call           HutongGames.PlayMaker.FsmStateAction::LogWarning token(0x0A0000DC)
+  IL_008b ldarg.0         
+  IL_008c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0091 ret             
+  IL_0092 ldarg.0         
+  IL_0093 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::blendTime token(0x0400016A)
+  IL_0098 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_009d stloc.1         
+  IL_009e ldloc.1         
+  IL_009f ldc.r4         0.0010000000474974513 
+  IL_00a4 bge.un.s       IL_00c5 
+  IL_00a6 ldarg.0         
+  IL_00a7 call           <dnfile.mdtable.TypeSpecRow object at 0x7f7fda87ef00>::get_animation token(0x0A0000D3)
+  IL_00ac ldarg.0         
+  IL_00ad ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::animName token(0x04000168)
+  IL_00b2 callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A0000D4)
+  IL_00b7 ldarg.0         
+  IL_00b8 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::playMode token(0x04000169)
+  IL_00bd callvirt       UnityEngine.Animation::Play token(0x0A0000FA)
+  IL_00c2 pop             
+  IL_00c3 br.s           IL_00e2 
+  IL_00c5 ldarg.0         
+  IL_00c6 call           <dnfile.mdtable.TypeSpecRow object at 0x7f7fda87ef00>::get_animation token(0x0A0000D3)
+  IL_00cb ldarg.0         
+  IL_00cc ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::animName token(0x04000168)
+  IL_00d1 callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A0000D4)
+  IL_00d6 ldloc.1         
+  IL_00d7 ldarg.0         
+  IL_00d8 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::playMode token(0x04000169)
+  IL_00dd callvirt       UnityEngine.Animation::CrossFade token(0x0A0000FB)
+  IL_00e2 ldarg.0         
+  IL_00e3 ldarg.0         
+  IL_00e4 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_00e9 callvirt       UnityEngine.AnimationState::get_time token(0x0A0000FC)
+  IL_00ee stfld          HutongGames.PlayMaker.Actions.PlayAnimation::prevAnimtTime token(0x0400016F)
+  IL_00f3 ret             
+
+0x0600014d HutongGames.PlayMaker.Actions.PlayAnimation::OnUpdate() RVA 0x9a80 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::gameObject token(0x04000167)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A00002C)
+  IL_0011 ldnull          
+  IL_0012 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_0017 brtrue.s       IL_0027 
+  IL_0019 ldarg.0         
+  IL_001a ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_001f ldnull          
+  IL_0020 call           UnityEngine.TrackedReference::op_Equality token(0x0A0000D6)
+  IL_0025 brfalse.s      IL_0028 
+  IL_0027 ret             
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_002e callvirt       UnityEngine.AnimationState::get_enabled token(0x0A0000FD)
+  IL_0033 brfalse.s      IL_005b 
+  IL_0035 ldarg.0         
+  IL_0036 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_003b callvirt       UnityEngine.AnimationState::get_wrapMode token(0x0A000037)
+  IL_0040 ldc.i4.8        
+  IL_0041 bne.un.s       IL_0072 
+  IL_0043 ldarg.0         
+  IL_0044 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_0049 callvirt       UnityEngine.AnimationState::get_time token(0x0A0000FC)
+  IL_004e ldarg.0         
+  IL_004f ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_0054 callvirt       UnityEngine.AnimationState::get_length token(0x0A000039)
+  IL_0059 ble.un.s       IL_0072 
+  IL_005b ldarg.0         
+  IL_005c call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0061 ldarg.0         
+  IL_0062 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::finishEvent token(0x0400016B)
+  IL_0067 callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A0000B9)
+  IL_006c ldarg.0         
+  IL_006d call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0072 ldarg.0         
+  IL_0073 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_0078 callvirt       UnityEngine.AnimationState::get_wrapMode token(0x0A000037)
+  IL_007d ldc.i4.8        
+  IL_007e beq.s          IL_00bc 
+  IL_0080 ldarg.0         
+  IL_0081 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_0086 callvirt       UnityEngine.AnimationState::get_time token(0x0A0000FC)
+  IL_008b ldarg.0         
+  IL_008c ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_0091 callvirt       UnityEngine.AnimationState::get_length token(0x0A000039)
+  IL_0096 ble.un.s       IL_00bc 
+  IL_0098 ldarg.0         
+  IL_0099 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::prevAnimtTime token(0x0400016F)
+  IL_009e ldarg.0         
+  IL_009f ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::anim token(0x0400016E)
+  IL_00a4 callvirt       UnityEngine.AnimationState::get_length token(0x0A000039)
+  IL_00a9 bge.un.s       IL_00bc 
+  IL_00ab ldarg.0         
+  IL_00ac call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_00b1 ldarg.0         
+  IL_00b2 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::loopEvent token(0x0400016C)
+  IL_00b7 callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A0000B9)
+  IL_00bc ret             
+
+0x0600014e HutongGames.PlayMaker.Actions.PlayAnimation::OnExit() RVA 0x9b49 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::stopOnExit token(0x0400016D)
+  IL_0006 brfalse.s      IL_000e 
+  IL_0008 ldarg.0         
+  IL_0009 call           HutongGames.PlayMaker.Actions.PlayAnimation::StopAnimation token(0x0600014F)
+  IL_000e ret             
+
+0x0600014f HutongGames.PlayMaker.Actions.PlayAnimation::StopAnimation() RVA 0x9b59 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           <dnfile.mdtable.TypeSpecRow object at 0x7f7fda87ef00>::get_animation token(0x0A0000D3)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Inequality token(0x0A00001F)
+  IL_000c brfalse.s      IL_0024 
+  IL_000e ldarg.0         
+  IL_000f call           <dnfile.mdtable.TypeSpecRow object at 0x7f7fda87ef00>::get_animation token(0x0A0000D3)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          HutongGames.PlayMaker.Actions.PlayAnimation::animName token(0x04000168)
+  IL_001a callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A0000D4)
+  IL_001f callvirt       UnityEngine.Animation::Stop token(0x0A0000FE)
+  IL_0024 ret             
+
+0x06000150 HutongGames.PlayMaker.Actions.PlayAnimation::.ctor() RVA 0x92d3 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.BaseAnimationAction::.ctor token(0x06000136)
+  IL_0006 ret             
+
+0x06000d9c HutongGames.PlayMaker.Actions.Wait::Reset() RVA 0x314e6 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         1.0 
+  IL_0006 call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A0000DA)
+  IL_000b stfld          HutongGames.PlayMaker.Actions.Wait::time token(0x04000F02)
+  IL_0010 ldarg.0         
+  IL_0011 ldnull          
+  IL_0012 stfld          HutongGames.PlayMaker.Actions.Wait::finishEvent token(0x04000F03)
+  IL_0017 ldarg.0         
+  IL_0018 ldc.i4.0        
+  IL_0019 stfld          HutongGames.PlayMaker.Actions.Wait::realTime token(0x04000F04)
+  IL_001e ret             
+
+0x06000d9d HutongGames.PlayMaker.Actions.Wait::OnEnter() RVA 0x31508 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.Wait::time token(0x04000F02)
+  IL_0006 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_000b ldc.r4         0.0 
+  IL_0010 bgt.un.s       IL_002a 
+  IL_0012 ldarg.0         
+  IL_0013 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0018 ldarg.0         
+  IL_0019 ldfld          HutongGames.PlayMaker.Actions.Wait::finishEvent token(0x04000F03)
+  IL_001e callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A0000B9)
+  IL_0023 ldarg.0         
+  IL_0024 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0029 ret             
+  IL_002a ldarg.0         
+  IL_002b call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_0030 stfld          HutongGames.PlayMaker.Actions.Wait::startTime token(0x04000F05)
+  IL_0035 ldarg.0         
+  IL_0036 ldc.r4         0.0 
+  IL_003b stfld          HutongGames.PlayMaker.Actions.Wait::timer token(0x04000F06)
+  IL_0040 ret             
+
+0x06000d9e HutongGames.PlayMaker.Actions.Wait::OnUpdate() RVA 0x31558 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.Wait::realTime token(0x04000F04)
+  IL_0006 brfalse.s      IL_001c 
+  IL_0008 ldarg.0         
+  IL_0009 call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_000e ldarg.0         
+  IL_000f ldfld          HutongGames.PlayMaker.Actions.Wait::startTime token(0x04000F05)
+  IL_0014 sub             
+  IL_0015 stfld          HutongGames.PlayMaker.Actions.Wait::timer token(0x04000F06)
+  IL_001a br.s           IL_002e 
+  IL_001c ldarg.0         
+  IL_001d ldarg.0         
+  IL_001e ldfld          HutongGames.PlayMaker.Actions.Wait::timer token(0x04000F06)
+  IL_0023 call           UnityEngine.Time::get_deltaTime token(0x0A0000C1)
+  IL_0028 add             
+  IL_0029 stfld          HutongGames.PlayMaker.Actions.Wait::timer token(0x04000F06)
+  IL_002e ldarg.0         
+  IL_002f ldfld          HutongGames.PlayMaker.Actions.Wait::timer token(0x04000F06)
+  IL_0034 ldarg.0         
+  IL_0035 ldfld          HutongGames.PlayMaker.Actions.Wait::time token(0x04000F02)
+  IL_003a callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_003f blt.un.s       IL_0060 
+  IL_0041 ldarg.0         
+  IL_0042 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0047 ldarg.0         
+  IL_0048 ldfld          HutongGames.PlayMaker.Actions.Wait::finishEvent token(0x04000F03)
+  IL_004d brfalse.s      IL_0060 
+  IL_004f ldarg.0         
+  IL_0050 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          HutongGames.PlayMaker.Actions.Wait::finishEvent token(0x04000F03)
+  IL_005b callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A0000B9)
+  IL_0060 ret             
+
+0x06000d9f HutongGames.PlayMaker.Actions.Wait::.ctor() RVA 0x4f16 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A0000C2)
+  IL_0006 ret             

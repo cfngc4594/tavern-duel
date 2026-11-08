@@ -1,0 +1,47 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Selection/Highlight" {
+Properties {
+
+_Color ("Base Color", Color) = (0.5,0.5,0.5,1)
+
+_HiColor ("Hot Color", Color) = (0.5,0.5,0.5,1)
+
+_Colorize ("Colorize", Color) = (1,1,1,1)
+
+_ColorIntensity ("Color Intensity", Float) = 1.0
+
+_Intensity ("Intensity", Float) = 1.0
+
+_FlareTex ("Flare Texture", 2D) = "white" { }
+
+_FlareIntensity ("Flare Intensity", Float) = 1.0
+
+_VflareSpeed ("Flare V Speed", Float) = 1.0
+
+_UflareScale ("Flare U Scale", Float) = 1.0
+
+_VflareScale ("Flare V Scale", Float) = 1.0
+
+_ColorAlphaWeight ("Color Alpha Weight", Float) = 1.0
+
+_TexCoordTwoWeight ("2nd Texture Coord Weight", Float) = 1.0
+
+_MainTex ("Main Texture", 2D) = "black" { }
+
+_Seed ("_Seed", Float) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 28648
+}
+}
+}

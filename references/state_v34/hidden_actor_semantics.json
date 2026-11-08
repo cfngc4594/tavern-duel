@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "build": "37.0.0.255130.254477",
+  "scope": "Read-only original CIL and recovered prefab inspection. Current pool frozen minion/hero, sleep, normal taunt only. No production edits, GPU, client execution or new resources.",
+  "conclusion": "Temporary Actor.Hide preserves existing status Spell/FSM identity and current state. Hide its renderers, continue its FSM clock and pending actions, then restore visibility without emitting Birth or Death. Actor destruction, keyword tag removal, normal death presentation, and actor-path replacement are separate operations.",
+  "temporary_hide": {
+    "actor_entry": [
+      "Actor.Hide 0x0601283d",
+      "Actor.SetVisibility 0x06012838",
+      "Actor.HideImpl 0x06012842",
+      "Actor.HideSpellTable 0x06012840"
+    ],
+    "actor_field": "Actor.m_shown 0x0400f763 becomes false; Actor.m_rootObject 0x0400f768.SetActive(false).",
+    "root_separation": "Actor.AssignRootObject 0x06012980 finds the child named RootObject. Actor.GetSpellParent 0x06012987 creates Spells directly under Actor.gameObject.transform; it is not under RootObject. Disabling RootObject does not disable these status FSM roots.",
+    "spell_entry": [
+      "Spell.Hide 0x06014936",
+      "Spell.HideImpl 0x06014989",
+      "Spell.OnEnteredNoneState 0x0601498b",
+      "Spell.ActivateObjectContainer 0x06014937"
+    ],
+    "spell_fields": "Spell.m_shown 0x04011c11 becomes false. m_activeStateType is read, not changed. Calling OnEnteredNoneState here is a visibility/blocking-side-effect helper, not ChangeState(None).",
+    "renderer_operation": "RenderUtils.EnableRenderers(go,enable) 0x06014f23 delegates to 0x06014f24 with includeInactive=false; the latter calls Renderer.enabled=enable on matching children, not GameObject.SetActive or PlayMakerFSM.enabled.",
+    "existing_instance": "Preserve existing Spell/FSM identity, current event/state, clock, variables and schedules. Do not retire and recreate it merely because the actor is hidden.",
+    "new_status_while_hidden": "Card.CanShowActorVisuals 0x06012d83 returns false when loading assets, no actor, or actor.IsShown false. TagVisualConfiguration.ProcessTagChange 0x06014bac returns at this gate. Do not fabricate a Birth from an invisible desired-state snapshot; source show/summon completion and state refresh are separate entrypoints.",
+    "not_audio_mute": "Hide itself does not invoke Death audio, restart Birth audio, or globally cancel/mute already scheduled PlayMaker actions. Any unrelated source action already scheduled on a continuing FSM retains its own conditions.",
+    "ignoreSpells": "Actor.Hide(ignoreSpells=true) bypasses HideSpellTable, so the default Hide() and explicit ignoreSpells overload must not be conflated. Default Hide() passes false."
+  },
+  "hidden_tick": {
+    "result": "continue",
+    "wrapper": "PlayMaker.dll PlayMakerFSM.Update 0x0600005b invokes Fsm.Update only when !Fsm.Finished and !Fsm.ManualUpdate. There is no Actor.IsShown or Spell.m_shown test.",
+    "core": "Blizzard.T5.PlayMaker.Runtime.dll HutongGames.PlayMaker.Fsm.Update 0x06000491 checks null owner and debugger HitBreakpoint, then Continue if needed, UpdateDelayedEvents and UpdateState. It has no visibility gate.",
+    "source_prefabs": "All four recovered prefabs have m_IsActive=true at their roots, PlayMakerFSM.m_Enabled=1, manualUpdate=0. Their FSM component is on the same GameObject as Spell, outside the ObjectContainer affected by renderer hiding.",
+    "on_disable_distinction": "PlayMakerFSM.OnDisable 0x0600005d would send the Disable event and invoke Fsm.OnDisable. The ordinary Actor.Hide/Spell.Hide chain does not disable these FSM roots or components, so that hook is not reached by hiding.",
+    "legacy_exception": "Frozen hero has one SpellState on child BIRTH_STATE, GameObject path_id -524763259448499053; the FSM stays on root path_id 5353412325203731603. HideState 0x06014a8b calls StopImpl 0x06014a93, which deactivates only that legacy state GameObject and stops its configured external animations/audio. Its audio list is empty; the external particle target is Transform-only with no ParticleSystem and no animation clip. This is not a pause of the root FSM.",
+    "evidence": [
+      "code/hidden_playmaker_wrapper.cil.json",
+      "code/hidden_actor_prefab_bindings.json",
+      "code/hidden_actor_methods.json",
+      "code/hidden_destroy_and_render.cil.json"
+    ]
+  },
+  "show": {
+    "chain": [
+      "Actor.Show 0x0601283a",
+      "Actor.ShowImpl 0x06012841",
+      "Actor.ShowSpellTable 0x0601283c",
+      "Spell.Show 0x06014935",
+      "Spell.OnExitedNoneState 0x0601498a (only false-to-true shown edge and activeStateType!=None)",
+      "Spell.ShowImpl 0x06014988"
+    ],
+    "result": "Restore m_shown and object-container rendering without ChangeState, Birth, timeline reset, or new instance. The legacy state child can run its ShowState/PlayImpl separately; its verified hero-Birth binding has no audible/particle work.",
+    "exact_renderer_edge": "Spell.Show returns immediately if m_shown is already true. On a real false-to-true edge, IL0011 reads m_activeStateType; if nonzero IL0019 invokes OnExitedNoneState before ShowImpl. This sets all active child renderers in ObjectContainer enabled=true, not a restoration of per-renderer saved flags. A real Hide->Show during Death therefore can re-enable ice shells previously disabled by Death. If the FSM reached None while hidden, Show does not enable the container. No ChangeState/Birth or FSM clock reset occurs.",
+    "evidence": "code/hidden_actor_methods.json contains Spell.Show 0x06014935 and its conditional chain; reapply_lifecycle_semantics.json explicitly distinguishes this from direct Death->Birth."
+  },
+  "normal_keyword_removal": {
+    "result": "Use genuine source tag/state trigger Death, not Hide. FROZEN260 clear invokes type14 Death; asleep predicate transition invokes type52 Death; normal TAUNT removal invokes type8 Death through the verified taunt path.",
+    "evidence": [
+      "trigger_config_selected.json",
+      "tag_visual_config.json",
+      "reachability_manifest.json"
+    ]
+  },
+  "normal_minion_death": {
+    "phase_origin": "Card.HandlePlayActorDeath 0x06012e79, when normal death effects and keyword deaths are not suppressed.",
+    "order": [
+      "Start WaitAndPrepareForDeathAnimation coroutine at IL_00d1/IL_00d6.",
+      "Without waiting for that coroutine, activate the body death spell at IL_00de (Card.ActivateDeathSpell). This is t0.",
+      "Iterator <WaitAndPrepareForDeathAnimation>d__562.MoveNext 0x06012f7b first yields WaitForSeconds(Card.m_keywordDeathDelaySec) at IL_0020..IL_0037.",
+      "On resume, IL_0046 calls Card.PrepareForDeathAnimation 0x06012e77.",
+      "PrepareForDeathAnimation IL_0016 calls Actor.DoCardDeathVisuals 0x06012966. That invokes ActivateSpellDeathState for active frozen14, sleep52 and taunt8."
+    ],
+    "keyword_delay_seconds_default": 0.30000001192092896,
+    "default_evidence": "Card constructor 0x06012eb2 IL_0034..IL_0039 sets this value. OnSpellFinished_Death 0x06012dc9 restores it. SetKeywordDeathDelaySec 0x06012d05 can override it; no override caller was found in the inspected existing source dumps.",
+    "excluded_spell_types": [
+      127,
+      5,
+      35,
+      150,
+      7
+    ],
+    "suppressions": "m_suppressDeathEffects bypasses normal death flow and destroys old actor. m_suppressKeywordDeaths bypasses the delayed PrepareForDeathAnimation branch. These must not be silently ignored if introduced into the port.",
+    "integration": "Anchor keyword Death to existing native body-death presentation origin plus the source delay. If retain_dead.start is that origin, schedule once at start+0.30000001192092896. Do not re-anchor to a later snapshot or add the delay again inside each SoundDef. This is not a generic delay for ordinary tag removal."
+  },
+  "hero_death": {
+    "chain": "Card.Check_HeroToGraveyard 0x06012e28 calls Actor.DoCardDeathVisuals at IL_001b directly.",
+    "result": "Hero branch has no minion WaitAndPrepareForDeathAnimation delay. Do not apply the minion 0.3 second offset to frozen hero death."
+  },
+  "actor_release": {
+    "chain": [
+      "Actor.Destroy 0x060127ef",
+      "Actor.ReleaseSpells 0x060127f0",
+      "SpellManager.ReleaseSpell 0x06014a03 with reset=false",
+      "SpellManager.DestroySpell 0x06014a07"
+    ],
+    "result": "Destroy/release does not itself invoke keyword Death. ReleaseSpells passes false at IL_008f/IL_0090 and IL_00f1/IL_00f2, so ReleaseSpell skips the reset hook and destroys the Spell object. Cancel owned schedules when the actual owner is destroyed; do not synthesize thaw/shield-break sounds merely because an entity vanished from a display list."
+  },
+  "actual_actor_path_replacement": {
+    "chain": [
+      "Card.UpdateActor 0x06012dfb",
+      "Card.DeactivateActorSpellsAndDestroy 0x06012dfc",
+      "<DeactivateActorSpellsAndDestroy>d__440.MoveNext 0x06012f09"
+    ],
+    "order": [
+      "Hide old actor at IL_0042.",
+      "If the current actor has active taunt, invoke old actor.DeactivateTaunt(callback) at IL_00c4.",
+      "Actor.DeactivateTaunt 0x06012953 selects normal type8 and, with nonnull callback, calls ActivateSpellDeathState at IL_00a4 then AddFinishedCallback at IL_00ab.",
+      "Wait for taunt/divine-shield completion flags, then Actor.Destroy old actor at IL_0110. Divine shield is outside current pool and must not be added."
+    ],
+    "frozen_and_sleep": "The replacement coroutine does not explicitly call their Death. They stay hidden while the actor awaits any taunt completion and are then released with that actor.",
+    "taunt": "Retain hidden old taunt FSM for its explicit Death action/audio and completion, then release. Do not equate this branch with pure temporary hide or pure instant owner destruction.",
+    "polymorph_limit": "Resolved by polymorph_actor_semantics.json: all thirteen current normal minion identities -> normal CS2_tk1 reuse the same Actor. This replacement-only callback branch is NOT reached for current-pool Polymorph. Normal frozen/taunt tag removal uses Death with audio; unchanged sleep keeps its same instance.",
+    "new_actor_order": [
+      "Card.UpdateActor 0x06012dfb first instantiates the new prefab (IL_0067) and gets its Actor (IL_008b).",
+      "IL_00c5 creates the old-actor cleanup iterator; IL_00ca starts it as a coroutine without yielding or awaiting its completion. The iterator may now hide old actor/start taunt Death and yield.",
+      "The outer UpdateActor continues immediately: IL_00d2 assigns m_actor=new, IL_00ea SetEntity, IL_00f6 SetCard, IL_0107 SetCardDef, IL_0113 UpdateAllComponents(true).",
+      "IL_0121 ShowImpl or IL_0129 HideImpl follows Card.m_shown; IL_012f RefreshActor and IL_0136 actorReady=true complete the new actor setup.",
+      "Only old-actor cleanup waits for the taunt completion callback before old Actor.Destroy. This is not a reason to delay the new actor or the independent v32 Polymorph presentation route."
+    ]
+  },
+  "implementation_checks": [
+    "Temporary hide/show with unchanged status preserves effect instance and serial, advances the FSM clock, emits no new lifecycle event and no new lifecycle audio.",
+    "Visibility changes must be represented separately from logical status changes and owner destruction; absence from visible desired states is insufficient to choose Death.",
+    "Existing hidden statuses may still execute actions they had already scheduled. Do not blanket mute or cancel their source timelines.",
+    "First Birth remains gated until source actor visibility/state-refresh permits it.",
+    "Normal minion keyword Death is delayed from body-death t0 by the source field default 0.3 seconds; hero and ordinary tag removal are separate branches.",
+    "A genuine owner release produces no additional Death audio. An actual actor-path replacement has the explicit taunt exception above, which must not be guessed from cardID alone."
+  ],
+  "open_limits": [
+    "No official client was run. These conclusions are from CIL and same-build prefab hierarchy only.",
+    "Renderer hiding preserves FSM tick; Unity particle simulation culling behavior is a separate component-level concern and is not used here to infer FSM pause."
+  ],
+  "current_pool_polymorph": "See polymorph_actor_semantics.json with 13 exact mappings and complete OnChangeEntity -> same-Actor CardDef refresh -> tag-delta dispatch evidence."
+}

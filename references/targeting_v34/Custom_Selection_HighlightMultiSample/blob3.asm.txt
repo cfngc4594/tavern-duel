@@ -1,0 +1,29 @@
+// ISGN
+// SV_Position0: register0.xyzw systemvalue=1 componenttype=3
+// TEXCOORD0: register1.xy systemvalue=0 componenttype=3
+// TEXCOORD1: register2.xy systemvalue=0 componenttype=3
+// TEXCOORD2: register3.xy systemvalue=0 componenttype=3
+// TEXCOORD3: register4.xy systemvalue=0 componenttype=3
+// TEXCOORD4: register5.xy systemvalue=0 componenttype=3
+// OSGN
+// SV_Target0: register0.xyzw systemvalue=0 componenttype=3
+// SHDR
+// shader kind=0, model=4.0, length=110
+0002: dcl_constant_buffer cb0[5].xyzw
+0006: dcl_sampler s0
+0009: dcl_resource t0, dimension=3,returntype=0x5555
+0013: dcl_input_ps v2.xy
+0016: dcl_input_ps v3.xy
+0019: dcl_input_ps v4.xy
+0022: dcl_input_ps v5.xy
+0025: dcl_output o0.xyzw
+0028: dcl_temps 2
+0030: sample_b r0.xyzw, v2.xyxx, t0.xyzw, s0, cb0[4].x
+0042: sample_b r1.xyzw, v3.xyxx, t0.xyzw, s0, cb0[4].x
+0054: add r0.x, r0.x, r1.x
+0061: sample_b r1.xyzw, v4.xyxx, t0.xyzw, s0, cb0[4].x
+0073: add r0.x, r0.x, r1.x
+0080: sample_b r1.xyzw, v5.xyxx, t0.xyzw, s0, cb0[4].x
+0092: add r0.x, r0.x, r1.x
+0099: mul o0.xyzw, r0.xxxx, l(0.25,0.25,0.25,0.25)
+0109: ret 

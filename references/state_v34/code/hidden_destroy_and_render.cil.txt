@@ -1,0 +1,146 @@
+
+TYPE <DeactivateActorSpellsAndDestroy>d__440 0x020027c6
+FIELD 0x0400faf6 <>1__state SIG 0608
+FIELD 0x0400faf7 <>2__current SIG 061c
+FIELD 0x0400faf8 actor SIG 0612c0009cf8
+FIELD 0x0400faf9 <>4__this SIG 0612c0009ebc
+FIELD 0x0400fafa <>8__1 SIG 0612c0009ed4
+
+TYPE RenderUtils 0x02002bb2
+FIELD 0x04011ecb MinRenderQueueValue SIG 0608
+FIELD 0x04011ecc MaxRenderQueueValue SIG 0608
+
+0x06012f09 <DeactivateActorSpellsAndDestroy>d__440::MoveNext() RVA 0x58a1b4 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <DeactivateActorSpellsAndDestroy>d__440::<>1__state token(0x0400FAF6)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <DeactivateActorSpellsAndDestroy>d__440::<>4__this token(0x0400FAF9)
+  IL_000d stloc.1         
+  IL_000e ldloc.0         
+  IL_000f brfalse.s      IL_001a 
+  IL_0011 ldloc.0         
+  IL_0012 ldc.i4.1        
+  IL_0013 beq            IL_00db 
+  IL_0018 ldc.i4.0        
+  IL_0019 ret             
+  IL_001a ldarg.0         
+  IL_001b ldc.i4.m1       
+  IL_001c stfld          <DeactivateActorSpellsAndDestroy>d__440::<>1__state token(0x0400FAF6)
+  IL_0021 ldarg.0         
+  IL_0022 newobj         <>c__DisplayClass440_0::.ctor token(0x06012EC1)
+  IL_0027 stfld          <DeactivateActorSpellsAndDestroy>d__440::<>8__1 token(0x0400FAFA)
+  IL_002c ldarg.0         
+  IL_002d ldfld          <DeactivateActorSpellsAndDestroy>d__440::actor token(0x0400FAF8)
+  IL_0032 ldnull          
+  IL_0033 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0038 brfalse.s      IL_003c 
+  IL_003a ldc.i4.0        
+  IL_003b ret             
+  IL_003c ldarg.0         
+  IL_003d ldfld          <DeactivateActorSpellsAndDestroy>d__440::actor token(0x0400FAF8)
+  IL_0042 callvirt       Actor::Hide token(0x0601283D)
+  IL_0047 ldarg.0         
+  IL_0048 ldfld          <DeactivateActorSpellsAndDestroy>d__440::<>8__1 token(0x0400FAFA)
+  IL_004d ldc.i4.1        
+  IL_004e stfld          <>c__DisplayClass440_0::isDivineShieldFinished token(0x0400FAB4)
+  IL_0053 ldarg.0         
+  IL_0054 ldfld          <DeactivateActorSpellsAndDestroy>d__440::actor token(0x0400FAF8)
+  IL_0059 callvirt       Actor::IsDivineShieldActive token(0x06012950)
+  IL_005e brfalse.s      IL_0088 
+  IL_0060 ldarg.0         
+  IL_0061 ldfld          <DeactivateActorSpellsAndDestroy>d__440::<>8__1 token(0x0400FAFA)
+  IL_0066 ldc.i4.0        
+  IL_0067 stfld          <>c__DisplayClass440_0::isDivineShieldFinished token(0x0400FAB4)
+  IL_006c ldarg.0         
+  IL_006d ldfld          <DeactivateActorSpellsAndDestroy>d__440::actor token(0x0400FAF8)
+  IL_0072 ldarg.0         
+  IL_0073 ldfld          <DeactivateActorSpellsAndDestroy>d__440::<>8__1 token(0x0400FAFA)
+  IL_0078 ldftn          <>c__DisplayClass440_0::<DeactivateActorSpellsAndDestroy>b__0 token(0x06012EC2)
+  IL_007e newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f0eb5509820>::.ctor token(0x0A00026C)
+  IL_0083 callvirt       Actor::DeactivateDivineShield token(0x06012954)
+  IL_0088 ldarg.0         
+  IL_0089 ldfld          <DeactivateActorSpellsAndDestroy>d__440::<>8__1 token(0x0400FAFA)
+  IL_008e ldc.i4.1        
+  IL_008f stfld          <>c__DisplayClass440_0::isTauntFinished token(0x0400FAB5)
+  IL_0094 ldloc.1         
+  IL_0095 ldfld          Card::m_actor token(0x0400FA62)
+  IL_009a callvirt       Actor::IsTauntActive token(0x0601294F)
+  IL_009f brfalse.s      IL_00e2 
+  IL_00a1 ldarg.0         
+  IL_00a2 ldfld          <DeactivateActorSpellsAndDestroy>d__440::<>8__1 token(0x0400FAFA)
+  IL_00a7 ldc.i4.0        
+  IL_00a8 stfld          <>c__DisplayClass440_0::isTauntFinished token(0x0400FAB5)
+  IL_00ad ldarg.0         
+  IL_00ae ldfld          <DeactivateActorSpellsAndDestroy>d__440::actor token(0x0400FAF8)
+  IL_00b3 ldarg.0         
+  IL_00b4 ldfld          <DeactivateActorSpellsAndDestroy>d__440::<>8__1 token(0x0400FAFA)
+  IL_00b9 ldftn          <>c__DisplayClass440_0::<DeactivateActorSpellsAndDestroy>b__1 token(0x06012EC3)
+  IL_00bf newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f0eb5509820>::.ctor token(0x0A00026C)
+  IL_00c4 callvirt       Actor::DeactivateTaunt token(0x06012953)
+  IL_00c9 br.s           IL_00e2 
+  IL_00cb ldarg.0         
+  IL_00cc ldnull          
+  IL_00cd stfld          <DeactivateActorSpellsAndDestroy>d__440::<>2__current token(0x0400FAF7)
+  IL_00d2 ldarg.0         
+  IL_00d3 ldc.i4.1        
+  IL_00d4 stfld          <DeactivateActorSpellsAndDestroy>d__440::<>1__state token(0x0400FAF6)
+  IL_00d9 ldc.i4.1        
+  IL_00da ret             
+  IL_00db ldarg.0         
+  IL_00dc ldc.i4.m1       
+  IL_00dd stfld          <DeactivateActorSpellsAndDestroy>d__440::<>1__state token(0x0400FAF6)
+  IL_00e2 ldarg.0         
+  IL_00e3 ldfld          <DeactivateActorSpellsAndDestroy>d__440::<>8__1 token(0x0400FAFA)
+  IL_00e8 ldfld          <>c__DisplayClass440_0::isDivineShieldFinished token(0x0400FAB4)
+  IL_00ed brfalse.s      IL_00cb 
+  IL_00ef ldarg.0         
+  IL_00f0 ldfld          <DeactivateActorSpellsAndDestroy>d__440::<>8__1 token(0x0400FAFA)
+  IL_00f5 ldfld          <>c__DisplayClass440_0::isTauntFinished token(0x0400FAB5)
+  IL_00fa brfalse.s      IL_00cb 
+  IL_00fc ldarg.0         
+  IL_00fd ldfld          <DeactivateActorSpellsAndDestroy>d__440::actor token(0x0400FAF8)
+  IL_0102 ldnull          
+  IL_0103 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0108 brfalse.s      IL_0115 
+  IL_010a ldarg.0         
+  IL_010b ldfld          <DeactivateActorSpellsAndDestroy>d__440::actor token(0x0400FAF8)
+  IL_0110 callvirt       Actor::Destroy token(0x060127EF)
+  IL_0115 ldc.i4.0        
+  IL_0116 ret             
+
+0x06014f23 RenderUtils::EnableRenderers(go,enable) RVA 0x629098 SIG 00020112808d02
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldc.i4.0        
+  IL_0003 call           RenderUtils::EnableRenderers token(0x06014F24)
+  IL_0008 ret             
+
+0x06014f24 RenderUtils::EnableRenderers(go,enable,includeInactive) RVA 0x6290a4 SIG 00030112808d0202
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.2         
+  IL_0002 callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B00001C)
+  IL_0007 stloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 brtrue.s       IL_000c 
+  IL_000b ret             
+  IL_000c ldloc.0         
+  IL_000d stloc.1         
+  IL_000e ldc.i4.0        
+  IL_000f stloc.2         
+  IL_0010 br.s           IL_001f 
+  IL_0012 ldloc.1         
+  IL_0013 ldloc.2         
+  IL_0014 ldelem.ref      
+  IL_0015 ldarg.1         
+  IL_0016 callvirt       UnityEngine.Renderer::set_enabled token(0x0A00022D)
+  IL_001b ldloc.2         
+  IL_001c ldc.i4.1        
+  IL_001d add             
+  IL_001e stloc.2         
+  IL_001f ldloc.2         
+  IL_0020 ldloc.1         
+  IL_0021 ldlen           
+  IL_0022 conv.i4         
+  IL_0023 blt.s          IL_0012 
+  IL_0025 ret             

@@ -1,0 +1,960 @@
+
+TYPE Blizzard.T5.MaterialService.MaterialService 0x02000003
+FIELD 0x04000001 m_customMaterialRenderers SIG 0615121902081118
+FIELD 0x04000002 m_timeProvider SIG 061221
+FIELD 0x04000003 m_customMaterials SIG 0615121902081114
+FIELD 0x04000004 m_unusedMaterials SIG 061512150108
+FIELD 0x04000005 m_unusedRenderers SIG 061512150108
+FIELD 0x04000006 m_tempRemoveMaterial SIG 061512150108
+FIELD 0x04000007 m_isAppPlaying SIG 0602
+
+TYPE Blizzard.T5.MaterialService.Extensions.RendererExtension 0x02000007
+FIELD 0x04000011 m_service SIG 061208
+
+0x0600000f Blizzard.T5.MaterialService.MaterialService::.ctor() RVA 0x2050 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000001)
+  IL_0006 ldarg.0         
+  IL_0007 newobj         Blizzard.T5.Core.Time.UnityTimeProvider::.ctor token(0x0A000002)
+  IL_000c stfld          Blizzard.T5.MaterialService.MaterialService::m_timeProvider token(0x04000002)
+  IL_0011 ret             
+
+0x06000010 Blizzard.T5.MaterialService.MaterialService::.ctor(timeProvider) RVA 0x2063 SIG 2001011221
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000001)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 stfld          Blizzard.T5.MaterialService.MaterialService::m_timeProvider token(0x04000002)
+  IL_000d ret             
+
+0x06000011 Blizzard.T5.MaterialService.MaterialService::Initialize(serviceLocator) RVA 0x2072 SIG 200115122901122d1231
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <Initialize>d__14::.ctor token(0x0600002C)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <Initialize>d__14::<>4__this token(0x0400000A)
+  IL_000d ret             
+
+0x06000012 Blizzard.T5.MaterialService.MaterialService::GetDependencies() RVA 0x2081 SIG 20001d1239
+  IL_0000 ldnull          
+  IL_0001 ret             
+
+0x06000013 Blizzard.T5.MaterialService.MaterialService::Shutdown() RVA 0x2084 SIG 200001
+  IL_0000 ret             
+
+0x06000014 Blizzard.T5.MaterialService.MaterialService::FixedUpdate() RVA 0x2086 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           Blizzard.T5.MaterialService.MaterialService::CleanupDestroyedRenderers token(0x06000024)
+  IL_0006 ldarg.0         
+  IL_0007 call           Blizzard.T5.MaterialService.MaterialService::CleanupDestroyedMaterials token(0x06000025)
+  IL_000c ret             
+
+0x06000015 Blizzard.T5.MaterialService.MaterialService::GetSecondsBetweenUpdates() RVA 0x2094 SIG 20000c
+  IL_0000 ldc.r4         1.0 
+  IL_0005 ret             
+
+0x06000016 Blizzard.T5.MaterialService.MaterialService::HasCustomMaterial(renderer) RVA 0x209b SIG 200102120d
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterialRenderers token(0x04000001)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 call           Blizzard.T5.MaterialService.MaterialService::GetRendererID token(0x06000027)
+  IL_000d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547050>::ContainsKey token(0x0A000004)
+  IL_0012 ret             
+
+0x06000017 Blizzard.T5.MaterialService.MaterialService::RegisterNewMaterialsUsages(renderer,materials) RVA 0x20b0 SIG 200201120d1d1211
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           Blizzard.T5.MaterialService.MaterialService::RegisterRenderer token(0x06000019)
+  IL_0007 stloc.0         
+  IL_0008 ldarg.2         
+  IL_0009 stloc.1         
+  IL_000a ldc.i4.0        
+  IL_000b stloc.2         
+  IL_000c br.s           IL_0026 
+  IL_000e ldloc.1         
+  IL_000f ldloc.2         
+  IL_0010 ldelem.ref      
+  IL_0011 stloc.3         
+  IL_0012 ldloc.3         
+  IL_0013 call           UnityEngine.Object::op_Implicit token(0x0A000005)
+  IL_0018 brfalse.s      IL_0022 
+  IL_001a ldarg.0         
+  IL_001b ldloc.0         
+  IL_001c ldloc.3         
+  IL_001d call           Blizzard.T5.MaterialService.MaterialService::RegisterMaterialUsage token(0x06000023)
+  IL_0022 ldloc.2         
+  IL_0023 ldc.i4.1        
+  IL_0024 add             
+  IL_0025 stloc.2         
+  IL_0026 ldloc.2         
+  IL_0027 ldloc.1         
+  IL_0028 ldlen           
+  IL_0029 conv.i4         
+  IL_002a blt.s          IL_000e 
+  IL_002c ret             
+
+0x06000018 Blizzard.T5.MaterialService.MaterialService::RegisterNewMaterialsUsages(renderer,materials) RVA 0x20ec SIG 200201120d151215011211
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           Blizzard.T5.MaterialService.MaterialService::RegisterRenderer token(0x06000019)
+  IL_0007 stloc.0         
+  IL_0008 ldarg.2         
+  IL_0009 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547080>::GetEnumerator token(0x0A000006)
+  IL_000e stloc.1         
+  IL_000f br.s           IL_0029 
+  IL_0011 ldloca.s       local(0x0001) 
+  IL_0013 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a6a5a30>::get_Current token(0x0A000007)
+  IL_0018 stloc.2         
+  IL_0019 ldloc.2         
+  IL_001a call           UnityEngine.Object::op_Implicit token(0x0A000005)
+  IL_001f brfalse.s      IL_0029 
+  IL_0021 ldarg.0         
+  IL_0022 ldloc.0         
+  IL_0023 ldloc.2         
+  IL_0024 call           Blizzard.T5.MaterialService.MaterialService::RegisterMaterialUsage token(0x06000023)
+  IL_0029 ldloca.s       local(0x0001) 
+  IL_002b call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a6a5a30>::MoveNext token(0x0A000008)
+  IL_0030 brtrue.s       IL_0011 
+  IL_0032 leave.s        IL_0042 
+  IL_0034 ldloca.s       local(0x0001) 
+  IL_0036 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a6a5a30> token(0x1B000003)
+  IL_003c callvirt       System.IDisposable::Dispose token(0x0A000009)
+  IL_0041 endfinally      
+  IL_0042 ret             
+
+0x06000019 Blizzard.T5.MaterialService.MaterialService::RegisterRenderer(renderer) RVA 0x214c SIG 20011118120d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           Blizzard.T5.MaterialService.MaterialService::GetRendererID token(0x06000027)
+  IL_0007 stloc.0         
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterialRenderers token(0x04000001)
+  IL_000e ldloc.0         
+  IL_000f ldloca.s       local(0x0001) 
+  IL_0011 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547050>::TryGetValue token(0x0A00000A)
+  IL_0016 brtrue.s       IL_002d 
+  IL_0018 ldloca.s       local(0x0001) 
+  IL_001a ldarg.1         
+  IL_001b call           Blizzard.T5.MaterialService.RegisteredRenderer::.ctor token(0x06000032)
+  IL_0020 ldarg.0         
+  IL_0021 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterialRenderers token(0x04000001)
+  IL_0026 ldloc.0         
+  IL_0027 ldloc.1         
+  IL_0028 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547050>::Add token(0x0A00000B)
+  IL_002d ldloc.1         
+  IL_002e ret             
+
+0x0600001a Blizzard.T5.MaterialService.MaterialService::RegisterNewMaterialUsage(renderer,material) RVA 0x2188 SIG 200201120d1211
+  IL_0000 ldarg.2         
+  IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A000005)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldarg.1         
+  IL_000b call           Blizzard.T5.MaterialService.MaterialService::GetRendererID token(0x06000027)
+  IL_0010 stloc.0         
+  IL_0011 ldarg.0         
+  IL_0012 ldarg.2         
+  IL_0013 call           Blizzard.T5.MaterialService.MaterialService::GetMaterialID token(0x06000026)
+  IL_0018 stloc.1         
+  IL_0019 ldc.i4.0        
+  IL_001a ldloc.1         
+  IL_001b bge.s          IL_001e 
+  IL_001d ret             
+  IL_001e ldarg.0         
+  IL_001f ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterialRenderers token(0x04000001)
+  IL_0024 ldloc.0         
+  IL_0025 ldloca.s       local(0x0002) 
+  IL_0027 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547050>::TryGetValue token(0x0A00000A)
+  IL_002c brtrue.s       IL_0043 
+  IL_002e ldloca.s       local(0x0002) 
+  IL_0030 ldarg.1         
+  IL_0031 call           Blizzard.T5.MaterialService.RegisteredRenderer::.ctor token(0x06000032)
+  IL_0036 ldarg.0         
+  IL_0037 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterialRenderers token(0x04000001)
+  IL_003c ldloc.0         
+  IL_003d ldloc.2         
+  IL_003e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547050>::Add token(0x0A00000B)
+  IL_0043 ldarg.0         
+  IL_0044 ldloc.2         
+  IL_0045 ldarg.2         
+  IL_0046 call           Blizzard.T5.MaterialService.MaterialService::RegisterMaterialUsage token(0x06000023)
+  IL_004b ret             
+
+0x0600001b Blizzard.T5.MaterialService.MaterialService::StopUsingMaterial(renderer,material) RVA 0x21e0 SIG 200201120d1211
+  IL_0000 ldarg.2         
+  IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A000005)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldarg.2         
+  IL_000b call           Blizzard.T5.MaterialService.MaterialService::GetMaterialID token(0x06000026)
+  IL_0010 stloc.0         
+  IL_0011 ldarg.0         
+  IL_0012 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterialRenderers token(0x04000001)
+  IL_0017 ldarg.0         
+  IL_0018 ldarg.1         
+  IL_0019 call           Blizzard.T5.MaterialService.MaterialService::GetRendererID token(0x06000027)
+  IL_001e ldloca.s       local(0x0001) 
+  IL_0020 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547050>::TryGetValue token(0x0A00000A)
+  IL_0025 brfalse.s      IL_003b 
+  IL_0027 ldloc.1         
+  IL_0028 ldfld          Blizzard.T5.MaterialService.RegisteredRenderer::Materials token(0x04000010)
+  IL_002d ldloc.0         
+  IL_002e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547470>::Remove token(0x0A00000C)
+  IL_0033 pop             
+  IL_0034 ldarg.0         
+  IL_0035 ldloc.0         
+  IL_0036 call           Blizzard.T5.MaterialService.MaterialService::DecrementMaterialUsage token(0x06000022)
+  IL_003b ret             
+
+0x0600001c Blizzard.T5.MaterialService.MaterialService::StopUsingMaterials(renderer,materials) RVA 0x2228 SIG 200201120d1d1211
+  IL_0000 ldarg.2         
+  IL_0001 stloc.0         
+  IL_0002 ldc.i4.0        
+  IL_0003 stloc.1         
+  IL_0004 br.s           IL_0016 
+  IL_0006 ldloc.0         
+  IL_0007 ldloc.1         
+  IL_0008 ldelem.ref      
+  IL_0009 stloc.2         
+  IL_000a ldarg.0         
+  IL_000b ldarg.1         
+  IL_000c ldloc.2         
+  IL_000d call           Blizzard.T5.MaterialService.MaterialService::StopUsingMaterial token(0x0600001B)
+  IL_0012 ldloc.1         
+  IL_0013 ldc.i4.1        
+  IL_0014 add             
+  IL_0015 stloc.1         
+  IL_0016 ldloc.1         
+  IL_0017 ldloc.0         
+  IL_0018 ldlen           
+  IL_0019 conv.i4         
+  IL_001a blt.s          IL_0006 
+  IL_001c ret             
+
+0x0600001d Blizzard.T5.MaterialService.MaterialService::IgnoreMaterial(material) RVA 0x2251 SIG 2001011211
+  IL_0000 ldarg.1         
+  IL_0001 dup             
+  IL_0002 callvirt       UnityEngine.Object::get_name token(0x0A00000D)
+  IL_0007 ldstr          '[IGNORE]' string token(0x70000001)
+  IL_000c call           System.String::Concat token(0x0A00000E)
+  IL_0011 callvirt       UnityEngine.Object::set_name token(0x0A00000F)
+  IL_0016 ret             
+
+0x0600001e Blizzard.T5.MaterialService.MaterialService::KeepMaterial(material) RVA 0x2269 SIG 2001011211
+  IL_0000 ldarg.1         
+  IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A000005)
+  IL_0006 brfalse.s      IL_000f 
+  IL_0008 ldarg.0         
+  IL_0009 ldarg.1         
+  IL_000a call           Blizzard.T5.MaterialService.MaterialService::IncrementMaterialUsage token(0x06000021)
+  IL_000f ret             
+
+0x0600001f Blizzard.T5.MaterialService.MaterialService::DropMaterial(material) RVA 0x227a SIG 2001011211
+  IL_0000 ldarg.1         
+  IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A000005)
+  IL_0006 brfalse.s      IL_0015 
+  IL_0008 ldarg.0         
+  IL_0009 ldarg.0         
+  IL_000a ldarg.1         
+  IL_000b call           Blizzard.T5.MaterialService.MaterialService::GetMaterialID token(0x06000026)
+  IL_0010 call           Blizzard.T5.MaterialService.MaterialService::DecrementMaterialUsage token(0x06000022)
+  IL_0015 ret             
+
+0x06000020 Blizzard.T5.MaterialService.MaterialService::CanIgnoreMaterial(material) RVA 0x2294 SIG 2001021211
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Inequality token(0x0A000010)
+  IL_0007 brfalse.s      IL_003d 
+  IL_0009 ldarg.0         
+  IL_000a ldarg.1         
+  IL_000b call           Blizzard.T5.MaterialService.MaterialService::GetMaterialID token(0x06000026)
+  IL_0010 ldc.i4.0        
+  IL_0011 bgt.s          IL_003d 
+  IL_0013 ldarg.1         
+  IL_0014 callvirt       UnityEngine.Object::get_name token(0x0A00000D)
+  IL_0019 stloc.0         
+  IL_001a ldloc.0         
+  IL_001b call           System.String::IsNullOrEmpty token(0x0A000011)
+  IL_0020 brtrue.s       IL_003d 
+  IL_0022 ldloc.0         
+  IL_0023 ldstr          '(' string token(0x70000013)
+  IL_0028 callvirt       System.String::Contains token(0x0A000012)
+  IL_002d brfalse.s      IL_003b 
+  IL_002f ldloc.0         
+  IL_0030 ldstr          '[IGNORE]' string token(0x70000001)
+  IL_0035 callvirt       System.String::Contains token(0x0A000012)
+  IL_003a ret             
+  IL_003b ldc.i4.1        
+  IL_003c ret             
+  IL_003d ldc.i4.1        
+  IL_003e ret             
+
+0x06000021 Blizzard.T5.MaterialService.MaterialService::IncrementMaterialUsage(material) RVA 0x22e0 SIG 2001011211
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           Blizzard.T5.MaterialService.MaterialService::GetMaterialID token(0x06000026)
+  IL_0007 stloc.0         
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterials token(0x04000003)
+  IL_000e ldloc.0         
+  IL_000f ldloca.s       local(0x0001) 
+  IL_0011 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547620>::TryGetValue token(0x0A000013)
+  IL_0016 brtrue.s       IL_0046 
+  IL_0018 ldarg.0         
+  IL_0019 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterials token(0x04000003)
+  IL_001e ldloc.0         
+  IL_001f ldloca.s       local(0x0002) 
+  IL_0021 initobj        Blizzard.T5.MaterialService.MaterialUsages token(0x02000005)
+  IL_0027 ldloca.s       local(0x0002) 
+  IL_0029 ldarg.1         
+  IL_002a stfld          Blizzard.T5.MaterialService.MaterialUsages::Material token(0x0400000B)
+  IL_002f ldloca.s       local(0x0002) 
+  IL_0031 ldloc.0         
+  IL_0032 stfld          Blizzard.T5.MaterialService.MaterialUsages::HashCode token(0x0400000C)
+  IL_0037 ldloca.s       local(0x0002) 
+  IL_0039 ldc.i4.1        
+  IL_003a stfld          Blizzard.T5.MaterialService.MaterialUsages::TimesUsed token(0x0400000D)
+  IL_003f ldloc.2         
+  IL_0040 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547620>::Add token(0x0A000014)
+  IL_0045 ret             
+  IL_0046 ldloca.s       local(0x0001) 
+  IL_0048 ldflda         Blizzard.T5.MaterialService.MaterialUsages::TimesUsed token(0x0400000D)
+  IL_004d dup             
+  IL_004e ldind.i4        
+  IL_004f ldc.i4.1        
+  IL_0050 add             
+  IL_0051 stind.i4        
+  IL_0052 ldloca.s       local(0x0001) 
+  IL_0054 ldc.r4         0.0 
+  IL_0059 stfld          Blizzard.T5.MaterialService.MaterialUsages::TimeToRemove token(0x0400000E)
+  IL_005e ldarg.0         
+  IL_005f ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterials token(0x04000003)
+  IL_0064 ldloc.0         
+  IL_0065 ldloc.1         
+  IL_0066 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547620>::set_Item token(0x0A000015)
+  IL_006b ret             
+
+0x06000022 Blizzard.T5.MaterialService.MaterialService::DecrementMaterialUsage(materialHashCode) RVA 0x2358 SIG 20010108
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterials token(0x04000003)
+  IL_0006 ldarg.1         
+  IL_0007 ldloca.s       local(0x0000) 
+  IL_0009 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547620>::TryGetValue token(0x0A000013)
+  IL_000e brtrue.s       IL_0011 
+  IL_0010 ret             
+  IL_0011 ldloca.s       local(0x0000) 
+  IL_0013 ldflda         Blizzard.T5.MaterialService.MaterialUsages::TimesUsed token(0x0400000D)
+  IL_0018 dup             
+  IL_0019 ldind.i4        
+  IL_001a ldc.i4.1        
+  IL_001b sub             
+  IL_001c stind.i4        
+  IL_001d ldloc.0         
+  IL_001e ldfld          Blizzard.T5.MaterialService.MaterialUsages::TimesUsed token(0x0400000D)
+  IL_0023 ldc.i4.0        
+  IL_0024 ble.s          IL_0033 
+  IL_0026 ldloc.0         
+  IL_0027 ldfld          Blizzard.T5.MaterialService.MaterialUsages::Material token(0x0400000B)
+  IL_002c call           UnityEngine.Object::op_Implicit token(0x0A000005)
+  IL_0031 brtrue.s       IL_0057 
+  IL_0033 ldarg.0         
+  IL_0034 ldfld          Blizzard.T5.MaterialService.MaterialService::m_unusedMaterials token(0x04000004)
+  IL_0039 ldarg.1         
+  IL_003a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::Add token(0x0A000016)
+  IL_003f ldloca.s       local(0x0000) 
+  IL_0041 ldarg.0         
+  IL_0042 ldfld          Blizzard.T5.MaterialService.MaterialService::m_timeProvider token(0x04000002)
+  IL_0047 callvirt       Blizzard.T5.Core.Time.ITimeProvider::get_TimeSinceStartup token(0x0A000017)
+  IL_004c ldc.r4         10.0 
+  IL_0051 add             
+  IL_0052 stfld          Blizzard.T5.MaterialService.MaterialUsages::TimeToRemove token(0x0400000E)
+  IL_0057 ldarg.0         
+  IL_0058 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterials token(0x04000003)
+  IL_005d ldarg.1         
+  IL_005e ldloc.0         
+  IL_005f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547620>::set_Item token(0x0A000015)
+  IL_0064 ret             
+
+0x06000023 Blizzard.T5.MaterialService.MaterialService::RegisterMaterialUsage(registeredRenderer,material) RVA 0x23cc SIG 20020111181211
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.2         
+  IL_0002 call           Blizzard.T5.MaterialService.MaterialService::GetMaterialID token(0x06000026)
+  IL_0007 stloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldfld          Blizzard.T5.MaterialService.RegisteredRenderer::Materials token(0x04000010)
+  IL_000e ldloc.0         
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547470>::Contains token(0x0A000018)
+  IL_0014 brfalse.s      IL_0017 
+  IL_0016 ret             
+  IL_0017 ldarg.0         
+  IL_0018 ldarg.2         
+  IL_0019 call           Blizzard.T5.MaterialService.MaterialService::CanIgnoreMaterial token(0x06000020)
+  IL_001e brfalse.s      IL_0021 
+  IL_0020 ret             
+  IL_0021 ldarg.1         
+  IL_0022 ldfld          Blizzard.T5.MaterialService.RegisteredRenderer::Materials token(0x04000010)
+  IL_0027 ldloc.0         
+  IL_0028 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547470>::Add token(0x0A000019)
+  IL_002d pop             
+  IL_002e ldarg.0         
+  IL_002f ldarg.2         
+  IL_0030 call           Blizzard.T5.MaterialService.MaterialService::IncrementMaterialUsage token(0x06000021)
+  IL_0035 ret             
+
+0x06000024 Blizzard.T5.MaterialService.MaterialService::CleanupDestroyedRenderers() RVA 0x2410 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.MaterialService.MaterialService::m_unusedRenderers token(0x04000005)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::Clear token(0x0A00001A)
+  IL_000b ldarg.0         
+  IL_000c ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterialRenderers token(0x04000001)
+  IL_0011 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547050>::GetEnumerator token(0x0A00001B)
+  IL_0016 stloc.0         
+  IL_0017 br.s           IL_008e 
+  IL_0019 ldloca.s       local(0x0000) 
+  IL_001b call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547980>::get_Current token(0x0A00001C)
+  IL_0020 stloc.1         
+  IL_0021 ldloca.s       local(0x0001) 
+  IL_0023 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547b30>::get_Value token(0x0A00001D)
+  IL_0028 stloc.2         
+  IL_0029 ldc.i4.0        
+  IL_002a ldloc.2         
+  IL_002b ldfld          Blizzard.T5.MaterialService.RegisteredRenderer::Materials token(0x04000010)
+  IL_0030 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547470>::get_Count token(0x0A00001E)
+  IL_0035 bge.s          IL_0044 
+  IL_0037 ldloc.2         
+  IL_0038 ldfld          Blizzard.T5.MaterialService.RegisteredRenderer::Renderer token(0x0400000F)
+  IL_003d call           UnityEngine.Object::op_Implicit token(0x0A000005)
+  IL_0042 brtrue.s       IL_008e 
+  IL_0044 ldarg.0         
+  IL_0045 ldfld          Blizzard.T5.MaterialService.MaterialService::m_unusedRenderers token(0x04000005)
+  IL_004a ldloca.s       local(0x0001) 
+  IL_004c call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547b30>::get_Key token(0x0A00001F)
+  IL_0051 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::Add token(0x0A000016)
+  IL_0056 ldloc.2         
+  IL_0057 ldfld          Blizzard.T5.MaterialService.RegisteredRenderer::Materials token(0x04000010)
+  IL_005c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547470>::GetEnumerator token(0x0A000020)
+  IL_0061 stloc.3         
+  IL_0062 br.s           IL_0075 
+  IL_0064 ldloca.s       local(0x0003) 
+  IL_0066 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547ce0>::get_Current token(0x0A000021)
+  IL_006b stloc.s        local(0x0004) 
+  IL_006d ldarg.0         
+  IL_006e ldloc.s        local(0x0004) 
+  IL_0070 call           Blizzard.T5.MaterialService.MaterialService::DecrementMaterialUsage token(0x06000022)
+  IL_0075 ldloca.s       local(0x0003) 
+  IL_0077 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547ce0>::MoveNext token(0x0A000022)
+  IL_007c brtrue.s       IL_0064 
+  IL_007e leave.s        IL_008e 
+  IL_0080 ldloca.s       local(0x0003) 
+  IL_0082 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547ce0> token(0x1B000009)
+  IL_0088 callvirt       System.IDisposable::Dispose token(0x0A000009)
+  IL_008d endfinally      
+  IL_008e ldloca.s       local(0x0000) 
+  IL_0090 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547980>::MoveNext token(0x0A000023)
+  IL_0095 brtrue.s       IL_0019 
+  IL_0097 leave.s        IL_00a7 
+  IL_0099 ldloca.s       local(0x0000) 
+  IL_009b constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547980> token(0x1B000007)
+  IL_00a1 callvirt       System.IDisposable::Dispose token(0x0A000009)
+  IL_00a6 endfinally      
+  IL_00a7 ldarg.0         
+  IL_00a8 ldfld          Blizzard.T5.MaterialService.MaterialService::m_unusedRenderers token(0x04000005)
+  IL_00ad callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::GetEnumerator token(0x0A000024)
+  IL_00b2 stloc.s        local(0x0005) 
+  IL_00b4 br.s           IL_00cd 
+  IL_00b6 ldloca.s       local(0x0005) 
+  IL_00b8 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547e90>::get_Current token(0x0A000025)
+  IL_00bd stloc.s        local(0x0006) 
+  IL_00bf ldarg.0         
+  IL_00c0 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterialRenderers token(0x04000001)
+  IL_00c5 ldloc.s        local(0x0006) 
+  IL_00c7 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547050>::Remove token(0x0A000026)
+  IL_00cc pop             
+  IL_00cd ldloca.s       local(0x0005) 
+  IL_00cf call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547e90>::MoveNext token(0x0A000027)
+  IL_00d4 brtrue.s       IL_00b6 
+  IL_00d6 leave.s        IL_00e6 
+  IL_00d8 ldloca.s       local(0x0005) 
+  IL_00da constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547e90> token(0x1B00000A)
+  IL_00e0 callvirt       System.IDisposable::Dispose token(0x0A000009)
+  IL_00e5 endfinally      
+  IL_00e6 ret             
+
+0x06000025 Blizzard.T5.MaterialService.MaterialService::CleanupDestroyedMaterials() RVA 0x252c SIG 200001
+  IL_0000 ldc.i4.0        
+  IL_0001 stloc.0         
+  IL_0002 ldarg.0         
+  IL_0003 ldfld          Blizzard.T5.MaterialService.MaterialService::m_timeProvider token(0x04000002)
+  IL_0008 callvirt       Blizzard.T5.Core.Time.ITimeProvider::get_TimeSinceStartup token(0x0A000017)
+  IL_000d stloc.1         
+  IL_000e ldarg.0         
+  IL_000f ldfld          Blizzard.T5.MaterialService.MaterialService::m_unusedMaterials token(0x04000004)
+  IL_0014 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::GetEnumerator token(0x0A000024)
+  IL_0019 stloc.2         
+  IL_001a br             IL_00b2 
+  IL_001f ldloca.s       local(0x0002) 
+  IL_0021 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547e90>::get_Current token(0x0A000025)
+  IL_0026 stloc.3         
+  IL_0027 ldarg.0         
+  IL_0028 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterials token(0x04000003)
+  IL_002d ldloc.3         
+  IL_002e ldloca.s       local(0x0004) 
+  IL_0030 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547620>::TryGetValue token(0x0A000013)
+  IL_0035 brfalse.s      IL_00b2 
+  IL_0037 ldloc.s        local(0x0004) 
+  IL_0039 ldfld          Blizzard.T5.MaterialService.MaterialUsages::TimesUsed token(0x0400000D)
+  IL_003e ldc.i4.0        
+  IL_003f bgt.s          IL_009c 
+  IL_0041 ldloc.s        local(0x0004) 
+  IL_0043 ldfld          Blizzard.T5.MaterialService.MaterialUsages::TimeToRemove token(0x0400000E)
+  IL_0048 ldc.r4         0.0 
+  IL_004d beq.s          IL_009c 
+  IL_004f ldloc.s        local(0x0004) 
+  IL_0051 ldfld          Blizzard.T5.MaterialService.MaterialUsages::TimeToRemove token(0x0400000E)
+  IL_0056 ldloc.1         
+  IL_0057 bge.un.s       IL_009c 
+  IL_0059 ldloc.s        local(0x0004) 
+  IL_005b ldfld          Blizzard.T5.MaterialService.MaterialUsages::Material token(0x0400000B)
+  IL_0060 call           UnityEngine.Object::op_Implicit token(0x0A000005)
+  IL_0065 brfalse.s      IL_008d 
+  IL_0067 ldarg.0         
+  IL_0068 ldfld          Blizzard.T5.MaterialService.MaterialService::m_isAppPlaying token(0x04000007)
+  IL_006d brfalse.s      IL_007d 
+  IL_006f ldloc.s        local(0x0004) 
+  IL_0071 ldfld          Blizzard.T5.MaterialService.MaterialUsages::Material token(0x0400000B)
+  IL_0076 call           UnityEngine.Object::Destroy token(0x0A000028)
+  IL_007b br.s           IL_0089 
+  IL_007d ldloc.s        local(0x0004) 
+  IL_007f ldfld          Blizzard.T5.MaterialService.MaterialUsages::Material token(0x0400000B)
+  IL_0084 call           UnityEngine.Object::DestroyImmediate token(0x0A000029)
+  IL_0089 ldloc.0         
+  IL_008a ldc.i4.1        
+  IL_008b add             
+  IL_008c stloc.0         
+  IL_008d ldarg.0         
+  IL_008e ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterials token(0x04000003)
+  IL_0093 ldloc.3         
+  IL_0094 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547620>::Remove token(0x0A00002A)
+  IL_0099 pop             
+  IL_009a br.s           IL_00b2 
+  IL_009c ldloc.s        local(0x0004) 
+  IL_009e ldfld          Blizzard.T5.MaterialService.MaterialUsages::TimesUsed token(0x0400000D)
+  IL_00a3 ldc.i4.0        
+  IL_00a4 bgt.s          IL_00b2 
+  IL_00a6 ldarg.0         
+  IL_00a7 ldfld          Blizzard.T5.MaterialService.MaterialService::m_tempRemoveMaterial token(0x04000006)
+  IL_00ac ldloc.3         
+  IL_00ad callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::Add token(0x0A000016)
+  IL_00b2 ldloca.s       local(0x0002) 
+  IL_00b4 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547e90>::MoveNext token(0x0A000027)
+  IL_00b9 brtrue         IL_001f 
+  IL_00be leave.s        IL_00ce 
+  IL_00c0 ldloca.s       local(0x0002) 
+  IL_00c2 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547e90> token(0x1B00000A)
+  IL_00c8 callvirt       System.IDisposable::Dispose token(0x0A000009)
+  IL_00cd endfinally      
+  IL_00ce ldarg.0         
+  IL_00cf ldfld          Blizzard.T5.MaterialService.MaterialService::m_unusedMaterials token(0x04000004)
+  IL_00d4 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::Clear token(0x0A00001A)
+  IL_00d9 ldc.i4.0        
+  IL_00da ldarg.0         
+  IL_00db ldfld          Blizzard.T5.MaterialService.MaterialService::m_tempRemoveMaterial token(0x04000006)
+  IL_00e0 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::get_Count token(0x0A00002B)
+  IL_00e5 bge.s          IL_0124 
+  IL_00e7 ldarg.0         
+  IL_00e8 ldfld          Blizzard.T5.MaterialService.MaterialService::m_tempRemoveMaterial token(0x04000006)
+  IL_00ed callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::GetEnumerator token(0x0A000024)
+  IL_00f2 stloc.2         
+  IL_00f3 br.s           IL_010b 
+  IL_00f5 ldloca.s       local(0x0002) 
+  IL_00f7 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547e90>::get_Current token(0x0A000025)
+  IL_00fc stloc.s        local(0x0005) 
+  IL_00fe ldarg.0         
+  IL_00ff ldfld          Blizzard.T5.MaterialService.MaterialService::m_unusedMaterials token(0x04000004)
+  IL_0104 ldloc.s        local(0x0005) 
+  IL_0106 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::Add token(0x0A000016)
+  IL_010b ldloca.s       local(0x0002) 
+  IL_010d call           <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547e90>::MoveNext token(0x0A000027)
+  IL_0112 brtrue.s       IL_00f5 
+  IL_0114 leave.s        IL_0124 
+  IL_0116 ldloca.s       local(0x0002) 
+  IL_0118 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547e90> token(0x1B00000A)
+  IL_011e callvirt       System.IDisposable::Dispose token(0x0A000009)
+  IL_0123 endfinally      
+  IL_0124 ldarg.0         
+  IL_0125 ldfld          Blizzard.T5.MaterialService.MaterialService::m_tempRemoveMaterial token(0x04000006)
+  IL_012a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a5477d0>::Clear token(0x0A00001A)
+  IL_012f ret             
+
+0x06000026 Blizzard.T5.MaterialService.MaterialService::GetMaterialID(material) RVA 0x2684 SIG 2001081211
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       UnityEngine.Object::GetInstanceID token(0x0A00002C)
+  IL_0006 ret             
+
+0x06000027 Blizzard.T5.MaterialService.MaterialService::GetRendererID(renderer) RVA 0x2684 SIG 200108120d
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       UnityEngine.Object::GetInstanceID token(0x0A00002C)
+  IL_0006 ret             
+
+0x06000028 Blizzard.T5.MaterialService.MaterialService::GetRegisteredRenderers() RVA 0x268c SIG 200015121902081118
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterialRenderers token(0x04000001)
+  IL_0006 ret             
+
+0x06000029 Blizzard.T5.MaterialService.MaterialService::GetRegisteredMaterials() RVA 0x2694 SIG 200015121902081114
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.MaterialService.MaterialService::m_customMaterials token(0x04000003)
+  IL_0006 ret             
+
+0x0600002a Blizzard.T5.MaterialService.MaterialService::GetUnusedMaterials() RVA 0x269c SIG 20001512150108
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.MaterialService.MaterialService::m_unusedMaterials token(0x04000004)
+  IL_0006 ret             
+
+0x0600002b Blizzard.T5.MaterialService.MaterialService::GetUnusedRenderers() RVA 0x26a4 SIG 20001512150108
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.MaterialService.MaterialService::m_unusedRenderers token(0x04000005)
+  IL_0006 ret             
+
+0x06000033 Blizzard.T5.MaterialService.Extensions.RendererExtension::SetMaterial(renderer,material) RVA 0x275c SIG 000201120d1211
+  IL_0000 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brfalse.s      IL_0027 
+  IL_0009 ldloc.0         
+  IL_000a ldarg.0         
+  IL_000b callvirt       Blizzard.T5.MaterialService.IMaterialService::HasCustomMaterial token(0x06000001)
+  IL_0010 brfalse.s      IL_001f 
+  IL_0012 ldloc.0         
+  IL_0013 ldarg.0         
+  IL_0014 ldarg.0         
+  IL_0015 callvirt       UnityEngine.Renderer::get_material token(0x0A000039)
+  IL_001a callvirt       Blizzard.T5.MaterialService.IMaterialService::StopUsingMaterial token(0x06000005)
+  IL_001f ldloc.0         
+  IL_0020 ldarg.0         
+  IL_0021 ldarg.1         
+  IL_0022 callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialUsage token(0x06000004)
+  IL_0027 ldarg.0         
+  IL_0028 ldarg.1         
+  IL_0029 callvirt       UnityEngine.Renderer::set_material token(0x0A00003A)
+  IL_002e ret             
+
+0x06000034 Blizzard.T5.MaterialService.Extensions.RendererExtension::SetMaterial(renderer,materialIndex,material) RVA 0x2798 SIG 000301120d081211
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_000b 
+  IL_0003 ldarg.0         
+  IL_0004 ldarg.2         
+  IL_0005 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::SetMaterial token(0x06000033)
+  IL_000a ret             
+  IL_000b ldarg.0         
+  IL_000c callvirt       UnityEngine.Renderer::get_materials token(0x0A00003C)
+  IL_0011 stloc.0         
+  IL_0012 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_0017 stloc.1         
+  IL_0018 ldloc.1         
+  IL_0019 brfalse.s      IL_0023 
+  IL_001b ldloc.1         
+  IL_001c ldarg.0         
+  IL_001d ldloc.0         
+  IL_001e callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialsUsages token(0x06000002)
+  IL_0023 ldloc.0         
+  IL_0024 ldlen           
+  IL_0025 conv.i4         
+  IL_0026 ldarg.1         
+  IL_0027 bge.s          IL_002a 
+  IL_0029 ret             
+  IL_002a ldloc.0         
+  IL_002b ldarg.1         
+  IL_002c ldelem.ref      
+  IL_002d stloc.2         
+  IL_002e ldloc.0         
+  IL_002f ldarg.1         
+  IL_0030 ldarg.2         
+  IL_0031 stelem.ref      
+  IL_0032 ldarg.0         
+  IL_0033 ldloc.0         
+  IL_0034 callvirt       UnityEngine.Renderer::set_materials token(0x0A00003D)
+  IL_0039 ldloc.1         
+  IL_003a brfalse.s      IL_004c 
+  IL_003c ldloc.1         
+  IL_003d ldarg.0         
+  IL_003e ldloc.2         
+  IL_003f callvirt       Blizzard.T5.MaterialService.IMaterialService::StopUsingMaterial token(0x06000005)
+  IL_0044 ldloc.1         
+  IL_0045 ldarg.0         
+  IL_0046 ldarg.2         
+  IL_0047 callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialUsage token(0x06000004)
+  IL_004c ret             
+
+0x06000035 Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial(renderer) RVA 0x27f4 SIG 00011211120d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Renderer::get_material token(0x0A000039)
+  IL_0006 stloc.0         
+  IL_0007 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_000c dup             
+  IL_000d brtrue.s       IL_0012 
+  IL_000f pop             
+  IL_0010 br.s           IL_0019 
+  IL_0012 ldarg.0         
+  IL_0013 ldloc.0         
+  IL_0014 callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialUsage token(0x06000004)
+  IL_0019 ldloc.0         
+  IL_001a ret             
+
+0x06000036 Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial(renderer,materialIndex) RVA 0x281c SIG 00021211120d08
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_000a 
+  IL_0003 ldarg.0         
+  IL_0004 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x06000035)
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b callvirt       UnityEngine.Renderer::get_materials token(0x0A00003C)
+  IL_0010 stloc.0         
+  IL_0011 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_0016 dup             
+  IL_0017 brtrue.s       IL_001c 
+  IL_0019 pop             
+  IL_001a br.s           IL_0023 
+  IL_001c ldarg.0         
+  IL_001d ldloc.0         
+  IL_001e callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialsUsages token(0x06000002)
+  IL_0023 ldloc.0         
+  IL_0024 ldlen           
+  IL_0025 conv.i4         
+  IL_0026 ldarg.1         
+  IL_0027 bgt.s          IL_002b 
+  IL_0029 ldnull          
+  IL_002a ret             
+  IL_002b ldloc.0         
+  IL_002c ldarg.1         
+  IL_002d ldelem.ref      
+  IL_002e ret             
+
+0x06000037 Blizzard.T5.MaterialService.Extensions.RendererExtension::SetMaterials(renderer,materials) RVA 0x2858 SIG 000201120d1d1211
+  IL_0000 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brfalse.s      IL_0027 
+  IL_0009 ldloc.0         
+  IL_000a ldarg.0         
+  IL_000b callvirt       Blizzard.T5.MaterialService.IMaterialService::HasCustomMaterial token(0x06000001)
+  IL_0010 brfalse.s      IL_001f 
+  IL_0012 ldloc.0         
+  IL_0013 ldarg.0         
+  IL_0014 ldarg.0         
+  IL_0015 callvirt       UnityEngine.Renderer::get_materials token(0x0A00003C)
+  IL_001a callvirt       Blizzard.T5.MaterialService.IMaterialService::StopUsingMaterials token(0x06000006)
+  IL_001f ldloc.0         
+  IL_0020 ldarg.0         
+  IL_0021 ldarg.1         
+  IL_0022 callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialsUsages token(0x06000002)
+  IL_0027 ldarg.0         
+  IL_0028 ldarg.1         
+  IL_0029 callvirt       UnityEngine.Renderer::set_materials token(0x0A00003D)
+  IL_002e ret             
+
+0x06000038 Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterials(renderer) RVA 0x2894 SIG 0001151215011211120d
+  IL_0000 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547080>::.ctor token(0x0A00003E)
+  IL_0005 stloc.0         
+  IL_0006 ldarg.0         
+  IL_0007 ldloc.0         
+  IL_0008 callvirt       UnityEngine.Renderer::GetMaterials token(0x0A00003F)
+  IL_000d call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_0012 dup             
+  IL_0013 brtrue.s       IL_0018 
+  IL_0015 pop             
+  IL_0016 br.s           IL_001f 
+  IL_0018 ldarg.0         
+  IL_0019 ldloc.0         
+  IL_001a callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialsUsages token(0x06000003)
+  IL_001f ldloc.0         
+  IL_0020 ret             
+
+0x06000039 Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterialsToExistingList(renderer,matList) RVA 0x28c1 SIG 0002151215011211120d151215011211
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 callvirt       UnityEngine.Renderer::GetMaterials token(0x0A00003F)
+  IL_0007 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_000c dup             
+  IL_000d brtrue.s       IL_0012 
+  IL_000f pop             
+  IL_0010 br.s           IL_0019 
+  IL_0012 ldarg.0         
+  IL_0013 ldarg.1         
+  IL_0014 callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialsUsages token(0x06000003)
+  IL_0019 ldarg.1         
+  IL_001a ret             
+
+0x0600003a Blizzard.T5.MaterialService.Extensions.RendererExtension::HasCustomMaterials(renderer) RVA 0x28e0 SIG 000102120d
+  IL_0000 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brfalse.s      IL_0011 
+  IL_0009 ldloc.0         
+  IL_000a ldarg.0         
+  IL_000b callvirt       Blizzard.T5.MaterialService.IMaterialService::HasCustomMaterial token(0x06000001)
+  IL_0010 ret             
+  IL_0011 ldc.i4.1        
+  IL_0012 ret             
+
+0x0600003b Blizzard.T5.MaterialService.Extensions.RendererExtension::SetSharedMaterial(renderer,material) RVA 0x2900 SIG 000201120d1211
+  IL_0000 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brfalse.s      IL_0027 
+  IL_0009 ldloc.0         
+  IL_000a ldarg.0         
+  IL_000b callvirt       Blizzard.T5.MaterialService.IMaterialService::HasCustomMaterial token(0x06000001)
+  IL_0010 brfalse.s      IL_001f 
+  IL_0012 ldloc.0         
+  IL_0013 ldarg.0         
+  IL_0014 ldarg.0         
+  IL_0015 callvirt       UnityEngine.Renderer::get_sharedMaterial token(0x0A000040)
+  IL_001a callvirt       Blizzard.T5.MaterialService.IMaterialService::StopUsingMaterial token(0x06000005)
+  IL_001f ldloc.0         
+  IL_0020 ldarg.0         
+  IL_0021 ldarg.1         
+  IL_0022 callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialUsage token(0x06000004)
+  IL_0027 ldarg.0         
+  IL_0028 ldarg.1         
+  IL_0029 callvirt       UnityEngine.Renderer::set_sharedMaterial token(0x0A000041)
+  IL_002e ret             
+
+0x0600003c Blizzard.T5.MaterialService.Extensions.RendererExtension::SetSharedMaterial(renderer,materialIndex,material) RVA 0x293c SIG 000301120d081211
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_000b 
+  IL_0003 ldarg.0         
+  IL_0004 ldarg.2         
+  IL_0005 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::SetSharedMaterial token(0x0600003B)
+  IL_000a ret             
+  IL_000b ldarg.0         
+  IL_000c callvirt       UnityEngine.Renderer::get_sharedMaterials token(0x0A000042)
+  IL_0011 stloc.0         
+  IL_0012 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_0017 stloc.1         
+  IL_0018 ldloc.1         
+  IL_0019 brfalse.s      IL_0023 
+  IL_001b ldloc.1         
+  IL_001c ldarg.0         
+  IL_001d ldloc.0         
+  IL_001e callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialsUsages token(0x06000002)
+  IL_0023 ldloc.0         
+  IL_0024 ldlen           
+  IL_0025 conv.i4         
+  IL_0026 ldarg.1         
+  IL_0027 bge.s          IL_002a 
+  IL_0029 ret             
+  IL_002a ldloc.0         
+  IL_002b ldarg.1         
+  IL_002c ldelem.ref      
+  IL_002d stloc.2         
+  IL_002e ldloc.2         
+  IL_002f ldarg.2         
+  IL_0030 call           UnityEngine.Object::op_Equality token(0x0A000043)
+  IL_0035 brfalse.s      IL_0038 
+  IL_0037 ret             
+  IL_0038 ldloc.0         
+  IL_0039 ldarg.1         
+  IL_003a ldarg.2         
+  IL_003b stelem.ref      
+  IL_003c ldarg.0         
+  IL_003d ldloc.0         
+  IL_003e callvirt       UnityEngine.Renderer::set_sharedMaterials token(0x0A000044)
+  IL_0043 ldloc.1         
+  IL_0044 brfalse.s      IL_0056 
+  IL_0046 ldloc.1         
+  IL_0047 ldarg.0         
+  IL_0048 ldloc.2         
+  IL_0049 callvirt       Blizzard.T5.MaterialService.IMaterialService::StopUsingMaterial token(0x06000005)
+  IL_004e ldloc.1         
+  IL_004f ldarg.0         
+  IL_0050 ldarg.2         
+  IL_0051 callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialUsage token(0x06000004)
+  IL_0056 ret             
+
+0x0600003d Blizzard.T5.MaterialService.Extensions.RendererExtension::SetSharedMaterials(renderer,materials) RVA 0x29a0 SIG 000201120d1d1211
+  IL_0000 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brfalse.s      IL_0027 
+  IL_0009 ldloc.0         
+  IL_000a ldarg.0         
+  IL_000b callvirt       Blizzard.T5.MaterialService.IMaterialService::HasCustomMaterial token(0x06000001)
+  IL_0010 brfalse.s      IL_001f 
+  IL_0012 ldloc.0         
+  IL_0013 ldarg.0         
+  IL_0014 ldarg.0         
+  IL_0015 callvirt       UnityEngine.Renderer::get_sharedMaterials token(0x0A000042)
+  IL_001a callvirt       Blizzard.T5.MaterialService.IMaterialService::StopUsingMaterials token(0x06000006)
+  IL_001f ldloc.0         
+  IL_0020 ldarg.0         
+  IL_0021 ldarg.1         
+  IL_0022 callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialsUsages token(0x06000002)
+  IL_0027 ldarg.0         
+  IL_0028 ldarg.1         
+  IL_0029 callvirt       UnityEngine.Renderer::set_sharedMaterials token(0x0A000044)
+  IL_002e ret             
+
+0x0600003e Blizzard.T5.MaterialService.Extensions.RendererExtension::GetSharedMaterial(renderer) RVA 0x29dc SIG 00011211120d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Renderer::get_sharedMaterial token(0x0A000040)
+  IL_0006 stloc.0         
+  IL_0007 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_000c dup             
+  IL_000d brtrue.s       IL_0012 
+  IL_000f pop             
+  IL_0010 br.s           IL_0019 
+  IL_0012 ldarg.0         
+  IL_0013 ldloc.0         
+  IL_0014 callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialUsage token(0x06000004)
+  IL_0019 ldloc.0         
+  IL_001a ret             
+
+0x0600003f Blizzard.T5.MaterialService.Extensions.RendererExtension::GetSharedMaterial(renderer,materialIndex) RVA 0x2a04 SIG 00021211120d08
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_000a 
+  IL_0003 ldarg.0         
+  IL_0004 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetSharedMaterial token(0x0600003E)
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b callvirt       UnityEngine.Renderer::get_sharedMaterials token(0x0A000042)
+  IL_0010 stloc.0         
+  IL_0011 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService token(0x06000041)
+  IL_0016 dup             
+  IL_0017 brtrue.s       IL_001c 
+  IL_0019 pop             
+  IL_001a br.s           IL_0023 
+  IL_001c ldarg.0         
+  IL_001d ldloc.0         
+  IL_001e callvirt       Blizzard.T5.MaterialService.IMaterialService::RegisterNewMaterialsUsages token(0x06000002)
+  IL_0023 ldarg.1         
+  IL_0024 ldloc.0         
+  IL_0025 ldlen           
+  IL_0026 conv.i4         
+  IL_0027 bge.s          IL_002d 
+  IL_0029 ldloc.0         
+  IL_002a ldarg.1         
+  IL_002b ldelem.ref      
+  IL_002c ret             
+  IL_002d ldnull          
+  IL_002e ret             
+
+0x06000040 Blizzard.T5.MaterialService.Extensions.RendererExtension::GetSharedMaterials(renderer) RVA 0x2a40 SIG 0001151215011211120d
+  IL_0000 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f8f7a547080>::.ctor token(0x0A00003E)
+  IL_0005 stloc.0         
+  IL_0006 ldarg.0         
+  IL_0007 ldloc.0         
+  IL_0008 callvirt       UnityEngine.Renderer::GetSharedMaterials token(0x0A000045)
+  IL_000d ldloc.0         
+  IL_000e ret             
+
+0x06000041 Blizzard.T5.MaterialService.Extensions.RendererExtension::GetService() RVA 0x2a5b SIG 00001208
+  IL_0000 ldsfld         Blizzard.T5.MaterialService.Extensions.RendererExtension::m_service token(0x04000011)
+  IL_0005 brtrue.s       IL_0011 
+  IL_0007 call           Blizzard.T5.Services.ServiceManager::Get<spec> token(0x2B000001)
+  IL_000c stsfld         Blizzard.T5.MaterialService.Extensions.RendererExtension::m_service token(0x04000011)
+  IL_0011 ldsfld         Blizzard.T5.MaterialService.Extensions.RendererExtension::m_service token(0x04000011)
+  IL_0016 ret             

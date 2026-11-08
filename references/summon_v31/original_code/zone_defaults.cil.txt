@@ -1,0 +1,93 @@
+
+TYPE Zone 0x02000cad
+FIELD 0x040045fb m_ServerTag SIG 0611c000a944
+FIELD 0x040045fc m_Side SIG 0611b064
+FIELD 0x040045fd TRANSITION_SEC SIG 060c
+FIELD 0x040045fe m_controller SIG 0612b060
+FIELD 0x040045ff m_cards SIG 061512490112c0009ebc
+FIELD 0x04004600 m_layoutDirty SIG 0602
+FIELD 0x04004601 m_updatingLayout SIG 0608
+FIELD 0x04004602 m_completeListeners SIG 061512490112b2c4
+FIELD 0x04004603 m_contentsChangedListeners SIG 061512490112b2c8
+FIELD 0x04004604 m_inputBlockerCount SIG 0608
+FIELD 0x04004605 m_layoutBlockerCount SIG 0608
+
+TYPE ZonePlay 0x02000cda
+FIELD 0x04004705 m_MaxSlots SIG 0608
+FIELD 0x04004706 m_BigCardCenterOffset SIG 060c
+FIELD 0x04004707 m_MagneticBeamSpell SIG 06128fb0
+FIELD 0x04004708 DEFAULT_TRANSITION_TIME SIG 060c
+FIELD 0x04004709 PHONE_CARD_SCALE SIG 060c
+FIELD 0x0400470a PHONE_WIDTH_MODIFIERS SIG 061d0c
+FIELD 0x0400470b m_mousedOverSlot SIG 0608
+FIELD 0x0400470c m_lettuceAbilityReservedSlot SIG 0608
+FIELD 0x0400470d m_slotWidth SIG 060c
+FIELD 0x0400470e m_transitionTime SIG 060c
+FIELD 0x0400470f m_baseTransitionTime SIG 060c
+FIELD 0x04004710 m_transitionStyleOverride SIG 0611b31c
+FIELD 0x04004711 m_magneticBeamSpellInstance SIG 06128fb0
+FIELD 0x04004712 m_previousHeldCard SIG 0612c0009ebc
+FIELD 0x04004713 m_defaultScale SIG 06115d
+
+0x060063b0 Zone::.ctor() RVA 0x1e48c2 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f4b7c9957f0>::.ctor token(0x0A0021FC)
+  IL_0006 stfld          Zone::m_cards token(0x040045FF)
+  IL_000b ldarg.0         
+  IL_000c ldc.i4.1        
+  IL_000d stfld          Zone::m_layoutDirty token(0x04004600)
+  IL_0012 ldarg.0         
+  IL_0013 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f4b7c682180>::.ctor token(0x0A0026CA)
+  IL_0018 stfld          Zone::m_completeListeners token(0x04004602)
+  IL_001d ldarg.0         
+  IL_001e newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f4b7c6824e0>::.ctor token(0x0A0026CB)
+  IL_0023 stfld          Zone::m_contentsChangedListeners token(0x04004603)
+  IL_0028 ldarg.0         
+  IL_0029 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_002e ret             
+
+0x060065a6 ZonePlay::Awake() RVA 0x1ef714 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 call           UnityEngine.Component::GetComponent<spec> token(0x2B00002F)
+  IL_0007 callvirt       UnityEngine.Collider::get_bounds token(0x0A0003A9)
+  IL_000c stloc.0         
+  IL_000d ldloca.s       local(0x0000) 
+  IL_000f call           UnityEngine.Bounds::get_size token(0x0A0003DA)
+  IL_0014 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0019 ldarg.0         
+  IL_001a ldfld          ZonePlay::m_MaxSlots token(0x04004705)
+  IL_001f conv.r4         
+  IL_0020 div             
+  IL_0021 stfld          ZonePlay::m_slotWidth token(0x0400470D)
+  IL_0026 ret             
+
+0x060065c8 ZonePlay::.ctor() RVA 0x1f0a28 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.7        
+  IL_0002 stfld          ZonePlay::m_MaxSlots token(0x04004705)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.r4         2.5 
+  IL_000d stfld          ZonePlay::m_BigCardCenterOffset token(0x04004706)
+  IL_0012 ldarg.0         
+  IL_0013 ldc.i4.8        
+  IL_0014 newarr         System.Single token(0x01000074)
+  IL_0019 dup             
+  IL_001a ldtoken        <PrivateImplementationDetails>::CE49D1D888EBA2E289D1FE8D3E7BCB65BD618D082D76A0DFC96B942B58AF8F2D token(0x04016672)
+  IL_001f call           System.Runtime.CompilerServices.RuntimeHelpers::InitializeArray token(0x0A000224)
+  IL_0024 stfld          ZonePlay::PHONE_WIDTH_MODIFIERS token(0x0400470A)
+  IL_0029 ldarg.0         
+  IL_002a ldc.i4.m1       
+  IL_002b stfld          ZonePlay::m_mousedOverSlot token(0x0400470B)
+  IL_0030 ldarg.0         
+  IL_0031 ldc.i4.m1       
+  IL_0032 stfld          ZonePlay::m_lettuceAbilityReservedSlot token(0x0400470C)
+  IL_0037 ldarg.0         
+  IL_0038 ldc.r4         1.0 
+  IL_003d stfld          ZonePlay::m_transitionTime token(0x0400470E)
+  IL_0042 ldarg.0         
+  IL_0043 ldc.r4         1.0 
+  IL_0048 stfld          ZonePlay::m_baseTransitionTime token(0x0400470F)
+  IL_004d ldarg.0         
+  IL_004e call           Zone::.ctor token(0x060063B0)
+  IL_0053 ret             

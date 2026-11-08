@@ -1,0 +1,767 @@
+# Exact extracts from same-build existing CIL evidence.
+
+0x060127ef Actor::Destroy() RVA 0x56431c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000b brtrue.s       IL_000e 
+  IL_000d ret             
+  IL_000e ldarg.0         
+  IL_000f call           Actor::ReleaseSpells token(0x060127F0)
+  IL_0014 ldarg.0         
+  IL_0015 call           Actor::ReleaseCardDef token(0x06012809)
+  IL_001a ldarg.0         
+  IL_001b call           Actor::DestroyCreatedMaterials token(0x060127F1)
+  IL_0020 ldarg.0         
+  IL_0021 call           Actor::DestroyLegendaryHeroPortrait token(0x060127F2)
+  IL_0026 ldarg.0         
+  IL_0027 call           Actor::DestroyCustomFrame token(0x06012990)
+  IL_002c ldarg.0         
+  IL_002d call           UnityEngine.Application::IsPlaying token(0x0A002C44)
+  IL_0032 brtrue.s       IL_0040 
+  IL_0034 ldarg.0         
+  IL_0035 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_003a call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_003f ret             
+  IL_0040 ldarg.0         
+  IL_0041 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0046 call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_004b ret             
+
+
+0x060127f0 Actor::ReleaseSpells() RVA 0x564374 SIG 200001
+  IL_0000 call           SpellManager::Get token(0x060149FC)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brtrue.s       IL_000a 
+  IL_0009 ret             
+  IL_000a newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6e98bb2db0>::.ctor token(0x0A000312)
+  IL_000f stloc.1         
+  IL_0010 ldarg.0         
+  IL_0011 ldfld          Actor::m_ownedSpells token(0x0400F774)
+  IL_0016 brfalse.s      IL_007a 
+  IL_0018 ldarg.0         
+  IL_0019 ldfld          Actor::m_ownedSpells token(0x0400F774)
+  IL_001e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e986b73b0>::get_Values token(0x0A0042DE)
+  IL_0023 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e986b7560>::GetEnumerator token(0x0A0042DF)
+  IL_0028 stloc.2         
+  IL_0029 br.s           IL_0056 
+  IL_002b ldloca.s       local(0x0002) 
+  IL_002d call           <dnfile.mdtable.TypeSpecRow object at 0x7f6e986b7710>::get_Current token(0x0A0042E0)
+  IL_0032 stloc.3         
+  IL_0033 ldloc.3         
+  IL_0034 ldnull          
+  IL_0035 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_003a brtrue.s       IL_0056 
+  IL_003c ldloc.3         
+  IL_003d ldarg.0         
+  IL_003e ldftn          Actor::OnSpellRelease token(0x0601294D)
+  IL_0044 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6e986b78c0>::.ctor token(0x0A0042E1)
+  IL_0049 callvirt       Spell::RemoveSpellReleasedCallback token(0x06014955)
+  IL_004e pop             
+  IL_004f ldloc.1         
+  IL_0050 ldloc.3         
+  IL_0051 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e98bb2db0>::Add token(0x0A00030E)
+  IL_0056 ldloca.s       local(0x0002) 
+  IL_0058 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6e986b7710>::MoveNext token(0x0A0042E2)
+  IL_005d brtrue.s       IL_002b 
+  IL_005f leave.s        IL_006f 
+  IL_0061 ldloca.s       local(0x0002) 
+  IL_0063 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f6e986b7710> token(0x1B001030)
+  IL_0069 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_006e endfinally      
+  IL_006f ldarg.0         
+  IL_0070 ldfld          Actor::m_ownedSpells token(0x0400F774)
+  IL_0075 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e986b73b0>::Clear token(0x0A0042E3)
+  IL_007a ldloc.1         
+  IL_007b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e98bb2db0>::get_Count token(0x0A002303)
+  IL_0080 ldc.i4.1        
+  IL_0081 sub             
+  IL_0082 stloc.s        local(0x0004) 
+  IL_0084 br.s           IL_009c 
+  IL_0086 ldloc.0         
+  IL_0087 ldloc.1         
+  IL_0088 ldloc.s        local(0x0004) 
+  IL_008a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e98bb2db0>::get_Item token(0x0A002302)
+  IL_008f ldc.i4.0        
+  IL_0090 callvirt       SpellManager::ReleaseSpell token(0x06014A03)
+  IL_0095 pop             
+  IL_0096 ldloc.s        local(0x0004) 
+  IL_0098 ldc.i4.1        
+  IL_0099 sub             
+  IL_009a stloc.s        local(0x0004) 
+  IL_009c ldloc.s        local(0x0004) 
+  IL_009e ldc.i4.0        
+  IL_009f bge.s          IL_0086 
+  IL_00a1 ldloc.1         
+  IL_00a2 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e98bb2db0>::Clear token(0x0A000307)
+  IL_00a7 ldarg.0         
+  IL_00a8 ldfld          Actor::m_localSpellTable token(0x0400F775)
+  IL_00ad ldnull          
+  IL_00ae call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00b3 brfalse.s      IL_0103 
+  IL_00b5 ldarg.0         
+  IL_00b6 ldfld          Actor::m_localSpellTable token(0x0400F775)
+  IL_00bb ldfld          SpellTable::m_Table token(0x04011CCF)
+  IL_00c0 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e986b7a70>::get_Count token(0x0A0042E4)
+  IL_00c5 ldc.i4.1        
+  IL_00c6 sub             
+  IL_00c7 stloc.s        local(0x0005) 
+  IL_00c9 br.s           IL_00fe 
+  IL_00cb ldarg.0         
+  IL_00cc ldfld          Actor::m_localSpellTable token(0x0400F775)
+  IL_00d1 ldfld          SpellTable::m_Table token(0x04011CCF)
+  IL_00d6 ldloc.s        local(0x0005) 
+  IL_00d8 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e986b7a70>::get_Item token(0x0A0042E5)
+  IL_00dd ldfld          SpellTableEntry::m_Spell token(0x04011CCD)
+  IL_00e2 stloc.s        local(0x0006) 
+  IL_00e4 ldloc.s        local(0x0006) 
+  IL_00e6 ldnull          
+  IL_00e7 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00ec brtrue.s       IL_00f8 
+  IL_00ee ldloc.0         
+  IL_00ef ldloc.s        local(0x0006) 
+  IL_00f1 ldc.i4.0        
+  IL_00f2 callvirt       SpellManager::ReleaseSpell token(0x06014A03)
+  IL_00f7 pop             
+  IL_00f8 ldloc.s        local(0x0005) 
+  IL_00fa ldc.i4.1        
+  IL_00fb sub             
+  IL_00fc stloc.s        local(0x0005) 
+  IL_00fe ldloc.s        local(0x0005) 
+  IL_0100 ldc.i4.0        
+  IL_0101 bge.s          IL_00cb 
+  IL_0103 ret             
+
+
+0x06012837 Actor::SetVisibility(isVisible,isInternal) RVA 0x564ea6 SIG 2002010202
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldc.i4.0        
+  IL_0003 ldarg.2         
+  IL_0004 call           Actor::SetVisibility token(0x06012838)
+  IL_0009 ret             
+
+
+0x06012838 Actor::SetVisibility(isVisible,ignoreSpells,isInternal) RVA 0x564eb1 SIG 200301020202
+  IL_0000 ldarg.1         
+  IL_0001 ldarg.0         
+  IL_0002 ldfld          Actor::m_shown token(0x0400F763)
+  IL_0007 bne.un.s       IL_000a 
+  IL_0009 ret             
+  IL_000a ldarg.3         
+  IL_000b brtrue.s       IL_0017 
+  IL_000d ldarg.0         
+  IL_000e ldarg.1         
+  IL_000f ldc.i4.0        
+  IL_0010 ceq             
+  IL_0012 call           Actor::set_IsDesiredHidden token(0x06012834)
+  IL_0017 ldarg.0         
+  IL_0018 ldarg.1         
+  IL_0019 stfld          Actor::m_shown token(0x0400F763)
+  IL_001e ldarg.1         
+  IL_001f brfalse.s      IL_0029 
+  IL_0021 ldarg.0         
+  IL_0022 ldarg.2         
+  IL_0023 callvirt       Actor::ShowImpl token(0x06012841)
+  IL_0028 ret             
+  IL_0029 ldarg.0         
+  IL_002a ldarg.2         
+  IL_002b callvirt       Actor::HideImpl token(0x06012842)
+  IL_0030 ret             
+
+
+0x0601283d Actor::Hide() RVA 0x564f88 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.0        
+  IL_0002 ldc.i4.0        
+  IL_0003 ldc.i4.0        
+  IL_0004 call           Actor::SetVisibility token(0x06012838)
+  IL_0009 ret             
+
+
+0x0601283e Actor::Hide(ignoreSpells) RVA 0x564f93 SIG 20010102
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.0        
+  IL_0002 ldarg.1         
+  IL_0003 ldc.i4.0        
+  IL_0004 call           Actor::SetVisibility token(0x06012838)
+  IL_0009 ret             
+
+
+0x06012842 Actor::HideImpl(ignoreSpells) RVA 0x5651d4 SIG 20010102
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Actor::m_rootObject token(0x0400F768)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_000c brfalse.s      IL_001a 
+  IL_000e ldarg.0         
+  IL_000f ldfld          Actor::m_rootObject token(0x0400F768)
+  IL_0014 ldc.i4.0        
+  IL_0015 callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_001a ldarg.0         
+  IL_001b call           Actor::UpdateContactShadow token(0x060128F3)
+  IL_0020 ldarg.0         
+  IL_0021 call           Actor::HideArmorSpell token(0x0601296B)
+  IL_0026 ldarg.0         
+  IL_0027 ldfld          Actor::m_actorStateMgr token(0x0400F765)
+  IL_002c ldnull          
+  IL_002d call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0032 brfalse.s      IL_003f 
+  IL_0034 ldarg.0         
+  IL_0035 ldfld          Actor::m_actorStateMgr token(0x0400F765)
+  IL_003a callvirt       ActorStateMgr::HideStateMgr token(0x0601489D)
+  IL_003f ldarg.0         
+  IL_0040 ldfld          Actor::m_projectedShadow token(0x0400F761)
+  IL_0045 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_004a brfalse.s      IL_0058 
+  IL_004c ldarg.0         
+  IL_004d ldfld          Actor::m_projectedShadow token(0x0400F761)
+  IL_0052 ldc.i4.0        
+  IL_0053 callvirt       UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0058 ldarg.0         
+  IL_0059 ldfld          Actor::m_ghostCardGameObject token(0x0400F745)
+  IL_005e ldnull          
+  IL_005f call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0064 brfalse.s      IL_0072 
+  IL_0066 ldarg.0         
+  IL_0067 ldfld          Actor::m_ghostCardGameObject token(0x0400F745)
+  IL_006c ldc.i4.0        
+  IL_006d callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_0072 ldarg.1         
+  IL_0073 brtrue.s       IL_007b 
+  IL_0075 ldarg.0         
+  IL_0076 call           Actor::HideSpellTable token(0x06012840)
+  IL_007b ldarg.0         
+  IL_007c ldfld          Actor::m_missingCardEffect token(0x0400F744)
+  IL_0081 ldnull          
+  IL_0082 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0087 brfalse.s      IL_008f 
+  IL_0089 ldarg.0         
+  IL_008a call           Actor::UpdateMissingCardArt token(0x06012863)
+  IL_008f ldarg.0         
+  IL_0090 ldfld          Actor::m_diamondRenderToTexture token(0x0400F7A0)
+  IL_0095 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_009a brfalse.s      IL_00a8 
+  IL_009c ldarg.0         
+  IL_009d ldfld          Actor::m_diamondRenderToTexture token(0x0400F7A0)
+  IL_00a2 ldc.i4.0        
+  IL_00a3 callvirt       UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_00a8 ldarg.0         
+  IL_00a9 call           UnityEngine.Component::GetComponentInChildren<spec> token(0x2B0000A0)
+  IL_00ae stloc.0         
+  IL_00af ldloc.0         
+  IL_00b0 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_00b5 brfalse.s      IL_00bd 
+  IL_00b7 ldloc.0         
+  IL_00b8 callvirt       HighlightState::Hide token(0x0601528E)
+  IL_00bd ldarg.0         
+  IL_00be ldfld          Actor::m_baconCoinObject token(0x0400F70F)
+  IL_00c3 ldnull          
+  IL_00c4 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00c9 brfalse.s      IL_00d7 
+  IL_00cb ldarg.0         
+  IL_00cc ldfld          Actor::m_baconCoinObject token(0x0400F70F)
+  IL_00d1 ldc.i4.0        
+  IL_00d2 callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_00d7 ldarg.0         
+  IL_00d8 ldfld          Actor::m_tradeableBannerContainer token(0x0400F721)
+  IL_00dd ldnull          
+  IL_00de call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00e3 brfalse.s      IL_00f6 
+  IL_00e5 ldarg.0         
+  IL_00e6 ldfld          Actor::m_tradeableBannerContainer token(0x0400F721)
+  IL_00eb callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00f0 ldc.i4.0        
+  IL_00f1 callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_00f6 ldarg.0         
+  IL_00f7 ldc.i4.0        
+  IL_00f8 call           Actor::ToggleUsedAbilityBanner token(0x0601296C)
+  IL_00fd ret             
+
+
+0x06012dca Card::OnSpellStateFinished_DestroyActor(spell,prevStateType,userData) RVA 0x581984 SIG 20030112c000ac1c1182811c
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0006 brfalse.s      IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldfld          Card::m_zone token(0x0400FA68)
+  IL_000f isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0014 brfalse.s      IL_001c 
+  IL_0016 ldarg.0         
+  IL_0017 call           Card::PurgeSpells token(0x06012D23)
+  IL_001c ldarg.1         
+  IL_001d callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0022 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B0001E0)
+  IL_0027 stloc.0         
+  IL_0028 ldloc.0         
+  IL_0029 ldnull          
+  IL_002a call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_002f brfalse.s      IL_0043 
+  IL_0031 ldstr          'Card.OnSpellStateFinished_DestroyActor() - spell {0} on Card {1} has no Actor ancestor' string token(0x703ADF81)
+  IL_0036 ldarg.1         
+  IL_0037 ldarg.0         
+  IL_0038 call           System.String::Format token(0x0A0000D1)
+  IL_003d call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0042 ret             
+  IL_0043 ldloc.0         
+  IL_0044 callvirt       Actor::Destroy token(0x060127EF)
+  IL_0049 ret             
+
+
+0x06012e50 Card::ActivateActorSpells_HandToPlay(oldActor) RVA 0x586b38 SIG 20010112c0009cf8
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_001a 
+  IL_0009 ldstr          '{0}.ActivateActorSpells_HandToPlay() - oldActor=null' string token(0x703AEC12)
+  IL_000e ldarg.0         
+  IL_000f call           System.String::Format token(0x0A0000B7)
+  IL_0014 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0019 ret             
+  IL_001a ldarg.0         
+  IL_001b ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_0020 brtrue.s       IL_0033 
+  IL_0022 ldstr          '{0}.ActivateActorSpells_HandToPlay() - m_cardDef=null' string token(0x703AEC7C)
+  IL_0027 ldarg.0         
+  IL_0028 call           System.String::Format token(0x0A0000B7)
+  IL_002d call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0032 ret             
+  IL_0033 ldarg.0         
+  IL_0034 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0039 ldnull          
+  IL_003a call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_003f brfalse.s      IL_0052 
+  IL_0041 ldstr          '{0}.ActivateActorSpells_HandToPlay() - m_actor=null' string token(0x703AECE8)
+  IL_0046 ldarg.0         
+  IL_0047 call           System.String::Format token(0x0A0000B7)
+  IL_004c call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0051 ret             
+  IL_0052 ldarg.0         
+  IL_0053 ldarg.1         
+  IL_0054 call           Card::DeactivateHandStateSpells token(0x06012D8A)
+  IL_0059 ldarg.0         
+  IL_005a ldarg.0         
+  IL_005b callvirt       Card::DetermineSummonOutSpell_HandToPlay token(0x06012E9D)
+  IL_0060 stloc.0         
+  IL_0061 ldarg.1         
+  IL_0062 ldloc.0         
+  IL_0063 callvirt       Actor::GetSpell token(0x0601295E)
+  IL_0068 stloc.1         
+  IL_0069 ldloc.1         
+  IL_006a brtrue.s       IL_008a 
+  IL_006c ldstr          '{0}.ActivateActorSpells_HandToPlay() - outSpell=null outSpellType={1}' string token(0x703AED50)
+  IL_0071 ldarg.0         
+  IL_0072 ldloc.0         
+  IL_0073 box            SpellType token(0x010000A1)
+  IL_0078 call           System.String::Format token(0x0A0000D1)
+  IL_007d call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0082 ldarg.0         
+  IL_0083 ldc.i4.1        
+  IL_0084 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0089 ret             
+  IL_008a ldarg.0         
+  IL_008b ldloca.s       local(0x0002) 
+  IL_008d call           Card::GetBestSummonSpell token(0x06012D48)
+  IL_0092 brtrue.s       IL_00ab 
+  IL_0094 ldstr          '{0}.ActivateActorSpells_HandToPlay() - inSpell=null standard={1}' string token(0x703AEDDD)
+  IL_0099 ldarg.0         
+  IL_009a ldloc.2         
+  IL_009b box            System.Boolean token(0x0100008A)
+  IL_00a0 call           System.String::Format token(0x0A0000D1)
+  IL_00a5 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_00aa ret             
+  IL_00ab ldarg.0         
+  IL_00ac ldc.i4.0        
+  IL_00ad stfld          Card::m_inputEnabled token(0x0400FA7E)
+  IL_00b2 ldloc.1         
+  IL_00b3 ldarg.0         
+  IL_00b4 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00b9 callvirt       Blizzard.T5.Game.Spells.ISpell::SetSource token(0x0A0041BD)
+  IL_00be ldarg.0         
+  IL_00bf ldloc.1         
+  IL_00c0 ldarg.0         
+  IL_00c1 ldftn          Card::OnSpellFinished_HandToPlay_SummonOut token(0x06012E51)
+  IL_00c7 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6e98ba50a0>::.ctor token(0x0A00026C)
+  IL_00cc ldarg.1         
+  IL_00cd ldarg.0         
+  IL_00ce ldftn          Card::OnSpellStateFinished_DestroyActor token(0x06012DCA)
+  IL_00d4 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6e98be1370>::.ctor token(0x0A0004BF)
+  IL_00d9 call           Card::ActivateSpell token(0x06012DAD)
+  IL_00de ret             
+
+
+0x06012e51 Card::OnSpellFinished_HandToPlay_SummonOut(spell,userData) RVA 0x586c24 SIG 20020112c000ac1c1c
+  IL_0000 ldarg.2         
+  IL_0001 isinst         Actor token(0x0200273E)
+  IL_0006 stloc.0         
+  IL_0007 ldsfld         Card::HandToPlaySummonOutStart token(0x0400FA3F)
+  IL_000c dup             
+  IL_000d brtrue.s       IL_0012 
+  IL_000f pop             
+  IL_0010 br.s           IL_0018 
+  IL_0012 ldarg.0         
+  IL_0013 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e987559a0>::Invoke token(0x0A0044A3)
+  IL_0018 ldarg.0         
+  IL_0019 ldfld          Card::m_actor token(0x0400FA62)
+  IL_001e callvirt       Actor::Show token(0x0601283A)
+  IL_0023 ldarg.0         
+  IL_0024 ldfld          Card::m_magneticPlayData token(0x0400FA93)
+  IL_0029 brfalse.s      IL_008b 
+  IL_002b ldloc.0         
+  IL_002c ldc.i4         130 
+  IL_0031 callvirt       Actor::GetSpellIfLoaded token(0x0601295F)
+  IL_0036 call           SpellUtils::ActivateDeathIfNecessary token(0x06014ACC)
+  IL_003b pop             
+  IL_003c ldarg.0         
+  IL_003d ldc.i4         133 
+  IL_0042 call           Card::ActivateActorSpell token(0x06012DA5)
+  IL_0047 pop             
+  IL_0048 ldarg.0         
+  IL_0049 ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_004e brfalse.s      IL_008b 
+  IL_0050 ldarg.0         
+  IL_0051 ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_0056 callvirt       DisposableCardDef::get_CardDef token(0x0601366B)
+  IL_005b ldfld          CardDef::m_PlayEffectDef token(0x0400FBFA)
+  IL_0060 brfalse.s      IL_007e 
+  IL_0062 ldarg.0         
+  IL_0063 ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_0068 callvirt       DisposableCardDef::get_CardDef token(0x0601366B)
+  IL_006d ldfld          CardDef::m_PlayEffectDef token(0x0400FBFA)
+  IL_0072 ldfld          CardEffectDef::m_SpellPath token(0x0400FC49)
+  IL_0077 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_007c brfalse.s      IL_008b 
+  IL_007e ldarg.0         
+  IL_007f ldarg.0         
+  IL_0080 call           Card::ActivateMagneticPlaySpell token(0x06012E52)
+  IL_0085 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_008a pop             
+  IL_008b ldarg.0         
+  IL_008c ldloca.s       local(0x0001) 
+  IL_008e call           Card::GetBestSummonSpell token(0x06012D48)
+  IL_0093 stloc.2         
+  IL_0094 ldloc.2         
+  IL_0095 brtrue.s       IL_00b5 
+  IL_0097 ldstr          '{0}.OnSpellFinished_HandToPlay_SummonOut() - inSpell=null standard={1}' string token(0x703AEE60)
+  IL_009c ldc.i4.2        
+  IL_009d newarr         System.Object token(0x01000001)
+  IL_00a2 dup             
+  IL_00a3 ldc.i4.0        
+  IL_00a4 ldarg.0         
+  IL_00a5 stelem.ref      
+  IL_00a6 dup             
+  IL_00a7 ldc.i4.1        
+  IL_00a8 ldloc.1         
+  IL_00a9 box            System.Boolean token(0x0100008A)
+  IL_00ae stelem.ref      
+  IL_00af call           UnityEngine.Debug::LogErrorFormat token(0x0A000168)
+  IL_00b4 ret             
+  IL_00b5 ldloc.2         
+  IL_00b6 isinst         Spell token(0x02002B07)
+  IL_00bb stloc.3         
+  IL_00bc ldloc.1         
+  IL_00bd brtrue.s       IL_00e6 
+  IL_00bf ldarg.1         
+  IL_00c0 ldnull          
+  IL_00c1 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00c6 brfalse.s      IL_00da 
+  IL_00c8 ldloc.3         
+  IL_00c9 ldarg.0         
+  IL_00ca ldftn          Card::OnSpellStateFinished_ReleaseSpell token(0x06012DCB)
+  IL_00d0 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6e98be1370>::.ctor token(0x0A0004BF)
+  IL_00d5 callvirt       Spell::AddStateFinishedCallback token(0x06014948)
+  IL_00da ldloc.2         
+  IL_00db ldarg.0         
+  IL_00dc ldfld          Card::m_actor token(0x0400FA62)
+  IL_00e1 call           SpellUtils::SetCustomSpellParent token(0x06014AC6)
+  IL_00e6 ldarg.1         
+  IL_00e7 ldnull          
+  IL_00e8 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00ed brfalse.s      IL_0101 
+  IL_00ef ldloc.3         
+  IL_00f0 ldarg.0         
+  IL_00f1 ldftn          Card::OnSpellFinished_HandToPlay_SummonIn token(0x06012E53)
+  IL_00f7 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6e98ba50a0>::.ctor token(0x0A00026C)
+  IL_00fc callvirt       Spell::AddFinishedCallback token(0x06014944)
+  IL_0101 ldloc.2         
+  IL_0102 callvirt       Blizzard.T5.Game.Spells.ISpell::Activate token(0x0A00225D)
+  IL_0107 ret             
+
+
+0x0601495f Spell::OnSpellFinished() RVA 0x613b54 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          Spell::m_finished token(0x04011C19)
+  IL_0007 call           GameState::Get token(0x06005589)
+  IL_000c brfalse.s      IL_001a 
+  IL_000e call           GameState::Get token(0x06005589)
+  IL_0013 ldarg.0         
+  IL_0014 callvirt       GameState::RemoveServerBlockingSpell token(0x0600562B)
+  IL_0019 pop             
+  IL_001a ldarg.0         
+  IL_001b ldc.i4.0        
+  IL_001c call           Spell::BlockZones token(0x0601498C)
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          Spell::m_UseFastActorTriggers token(0x04011C04)
+  IL_0027 brfalse.s      IL_0043 
+  IL_0029 call           GameState::Get token(0x06005589)
+  IL_002e brfalse.s      IL_0043 
+  IL_0030 ldarg.0         
+  IL_0031 call           Spell::IsHandlingLastTaskList token(0x0601495D)
+  IL_0036 brfalse.s      IL_0043 
+  IL_0038 call           GameState::Get token(0x06005589)
+  IL_003d ldc.i4.0        
+  IL_003e callvirt       GameState::SetUsingFastActorTriggers token(0x0600560B)
+  IL_0043 ldarg.0         
+  IL_0044 call           Spell::FireFinishedCallbacks token(0x06014973)
+  IL_0049 ret             
+
+
+0x0601496c Spell::ChangeStateImpl(stateType) RVA 0x614058 SIG 200101118281
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          Spell::m_activeStateChange token(0x04011C09)
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          Spell::m_activeStateType token(0x04011C08)
+  IL_000d stloc.0         
+  IL_000e ldarg.0         
+  IL_000f ldarg.1         
+  IL_0010 stfld          Spell::m_activeStateType token(0x04011C08)
+  IL_0015 ldarg.1         
+  IL_0016 brtrue.s       IL_001e 
+  IL_0018 ldarg.0         
+  IL_0019 call           Spell::FinishIfNecessary token(0x06014971)
+  IL_001e ldnull          
+  IL_001f stloc.1         
+  IL_0020 ldarg.0         
+  IL_0021 ldfld          Spell::m_spellStateMap token(0x04011C07)
+  IL_0026 brfalse.s      IL_0037 
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          Spell::m_spellStateMap token(0x04011C07)
+  IL_002e ldarg.1         
+  IL_002f ldloca.s       local(0x0001) 
+  IL_0031 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e98598c80>::TryGetValue token(0x0A004E93)
+  IL_0036 pop             
+  IL_0037 ldloc.0         
+  IL_0038 brfalse.s      IL_00b6 
+  IL_003a ldarg.0         
+  IL_003b ldfld          Spell::m_spellStateMap token(0x04011C07)
+  IL_0040 brfalse.s      IL_00ad 
+  IL_0042 ldarg.0         
+  IL_0043 ldfld          Spell::m_spellStateMap token(0x04011C07)
+  IL_0048 ldloc.0         
+  IL_0049 ldloca.s       local(0x0002) 
+  IL_004b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e98598c80>::TryGetValue token(0x0A004E93)
+  IL_0050 brfalse.s      IL_00ad 
+  IL_0052 ldloc.2         
+  IL_0053 brfalse.s      IL_00ad 
+  IL_0055 ldloc.2         
+  IL_0056 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e98675a60>::GetEnumerator token(0x0A003EF3)
+  IL_005b stloc.3         
+  IL_005c br.s           IL_0094 
+  IL_005e ldloca.s       local(0x0003) 
+  IL_0060 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6e98675c10>::get_Current token(0x0A003EF4)
+  IL_0065 castclass      SpellState token(0x02002B2A)
+  IL_006a stloc.s        local(0x0004) 
+  IL_006c ldloc.s        local(0x0004) 
+  IL_006e ldnull          
+  IL_006f call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0074 brfalse.s      IL_008c 
+  IL_0076 call           Log::get_Spells token(0x06014E55)
+  IL_007b ldstr          'Spell.ChangeStateImpl() - Failed cast or Null object inside previous spell state list.' string token(0x703F065E)
+  IL_0080 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0085 callvirt       Logger::PrintWarning token(0x0A00002E)
+  IL_008a br.s           IL_0094 
+  IL_008c ldloc.s        local(0x0004) 
+  IL_008e ldloc.1         
+  IL_008f callvirt       SpellState::Stop token(0x06014A89)
+  IL_0094 ldloca.s       local(0x0003) 
+  IL_0096 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6e98675c10>::MoveNext token(0x0A003EF9)
+  IL_009b brtrue.s       IL_005e 
+  IL_009d leave.s        IL_00ad 
+  IL_009f ldloca.s       local(0x0003) 
+  IL_00a1 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f6e98675c10> token(0x1B000F62)
+  IL_00a7 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_00ac endfinally      
+  IL_00ad ldarg.0         
+  IL_00ae ldloc.0         
+  IL_00af call           Spell::FireStateFinishedCallbacks token(0x06014974)
+  IL_00b4 br.s           IL_00c6 
+  IL_00b6 ldarg.1         
+  IL_00b7 brfalse.s      IL_00c6 
+  IL_00b9 ldarg.0         
+  IL_00ba ldc.i4.0        
+  IL_00bb stfld          Spell::m_finished token(0x04011C19)
+  IL_00c0 ldarg.0         
+  IL_00c1 call           Spell::OnExitedNoneState token(0x0601498A)
+  IL_00c6 ldloc.1         
+  IL_00c7 brfalse.s      IL_012b 
+  IL_00c9 ldloc.1         
+  IL_00ca callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6e98675a60>::GetEnumerator token(0x0A003EF3)
+  IL_00cf stloc.3         
+  IL_00d0 br.s           IL_0112 
+  IL_00d2 ldloca.s       local(0x0003) 
+  IL_00d4 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6e98675c10>::get_Current token(0x0A003EF4)
+  IL_00d9 castclass      SpellState token(0x02002B2A)
+  IL_00de stloc.s        local(0x0005) 
+  IL_00e0 ldloc.s        local(0x0005) 
+  IL_00e2 ldnull          
+  IL_00e3 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00e8 brfalse.s      IL_010b 
+  IL_00ea call           Log::get_Spells token(0x06014E55)
+  IL_00ef ldstr          'Spell.ChangeStateImpl() - Failed cast or Null object inside Spell State list for state {0}' string token(0x703F070D)
+  IL_00f4 ldarg.1         
+  IL_00f5 box            SpellStateType token(0x010000A0)
+  IL_00fa call           System.String::Format token(0x0A0000B7)
+  IL_00ff call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0104 callvirt       Logger::PrintWarning token(0x0A00002E)
+  IL_0109 br.s           IL_0112 
+  IL_010b ldloc.s        local(0x0005) 
+  IL_010d callvirt       SpellState::Play token(0x06014A88)
+  IL_0112 ldloca.s       local(0x0003) 
+  IL_0114 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6e98675c10>::MoveNext token(0x0A003EF9)
+  IL_0119 brtrue.s       IL_00d2 
+  IL_011b leave.s        IL_012b 
+  IL_011d ldloca.s       local(0x0003) 
+  IL_011f constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f6e98675c10> token(0x1B000F62)
+  IL_0125 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_012a endfinally      
+  IL_012b ldarg.0         
+  IL_012c ldloc.0         
+  IL_012d ldarg.1         
+  IL_012e call           Spell::CallStateFunction token(0x06014972)
+  IL_0133 ldloc.0         
+  IL_0134 brfalse.s      IL_013f 
+  IL_0136 ldarg.1         
+  IL_0137 brtrue.s       IL_013f 
+  IL_0139 ldarg.0         
+  IL_013a call           Spell::OnEnteredNoneState token(0x0601498B)
+  IL_013f ret             
+
+
+0x06016a80 HutongGames.PlayMaker.Actions.AnimationPlaythroughAction::OnEnter() RVA 0x698f80 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.AnimationPlaythroughAction::m_GameObject token(0x040139E8)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0019 brfalse.s      IL_002c 
+  IL_001b ldstr          'AnimationPlaythroughAction GameObject is null!' string token(0x70406837)
+  IL_0020 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0025 ldarg.0         
+  IL_0026 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_002b ret             
+  IL_002c ldarg.0         
+  IL_002d ldfld          HutongGames.PlayMaker.Actions.AnimationPlaythroughAction::m_AnimName token(0x040139E9)
+  IL_0032 callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A00449C)
+  IL_0037 stloc.1         
+  IL_0038 ldsfld         UniversalInputManager::UsePhoneUI token(0x04011771)
+  IL_003d call           <dnfile.mdtable.TypeSpecRow object at 0x7f6e98b91250>::op_Implicit token(0x0A000162)
+  IL_0042 brfalse.s      IL_0062 
+  IL_0044 ldarg.0         
+  IL_0045 ldfld          HutongGames.PlayMaker.Actions.AnimationPlaythroughAction::m_PhoneAnimName token(0x040139EA)
+  IL_004a callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A00449C)
+  IL_004f call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0054 brtrue.s       IL_0062 
+  IL_0056 ldarg.0         
+  IL_0057 ldfld          HutongGames.PlayMaker.Actions.AnimationPlaythroughAction::m_PhoneAnimName token(0x040139EA)
+  IL_005c callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A00449C)
+  IL_0061 stloc.1         
+  IL_0062 ldloc.1         
+  IL_0063 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0068 brfalse.s      IL_0071 
+  IL_006a ldarg.0         
+  IL_006b call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0070 ret             
+  IL_0071 ldarg.0         
+  IL_0072 ldloc.0         
+  IL_0073 ldloc.1         
+  IL_0074 call           HutongGames.PlayMaker.Actions.AnimationPlaythroughAction::StartAnimation token(0x06016A81)
+  IL_0079 ldarg.0         
+  IL_007a call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_007f ret             
+
+
+0x06016a81 HutongGames.PlayMaker.Actions.AnimationPlaythroughAction::StartAnimation(go,animName) RVA 0x69900c SIG 20020112808d0e
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.AnimationPlaythroughAction::m_CrossFadeSec token(0x040139EC)
+  IL_0006 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_000b stloc.0         
+  IL_000c ldarg.1         
+  IL_000d callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000245)
+  IL_0012 stloc.1         
+  IL_0013 ldloc.1         
+  IL_0014 ldnull          
+  IL_0015 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001a brfalse.s      IL_0037 
+  IL_001c ldstr          'AnimationPlaythroughAction: Trying to start an animation on a GameObject ' string token(0x70406895)
+  IL_0021 ldarg.1         
+  IL_0022 callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_0027 ldstr          ' without a animation component' string token(0x7040692A)
+  IL_002c call           System.String::Concat token(0x0A0001B1)
+  IL_0031 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0036 ret             
+  IL_0037 ldloc.0         
+  IL_0038 ldsfld         UnityEngine.Mathf::Epsilon token(0x0A0004BC)
+  IL_003d bgt.un.s       IL_004e 
+  IL_003f ldloc.1         
+  IL_0040 ldarg.2         
+  IL_0041 ldarg.0         
+  IL_0042 ldfld          HutongGames.PlayMaker.Actions.AnimationPlaythroughAction::m_PlayMode token(0x040139EB)
+  IL_0047 callvirt       UnityEngine.Animation::Play token(0x0A0041CF)
+  IL_004c pop             
+  IL_004d ret             
+  IL_004e ldloc.1         
+  IL_004f ldarg.2         
+  IL_0050 ldloc.0         
+  IL_0051 ldarg.0         
+  IL_0052 ldfld          HutongGames.PlayMaker.Actions.AnimationPlaythroughAction::m_PlayMode token(0x040139EB)
+  IL_0057 callvirt       UnityEngine.Animation::CrossFade token(0x0A004232)
+  IL_005c ret             
+
+
+0x06016a63 HutongGames.PlayMaker.Actions.ActorSetVisibility::OnEnter() RVA 0x6986b4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.ActorAction::OnEnter token(0x06016A4B)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ActorAction::m_actor token(0x040139BD)
+  IL_000c ldnull          
+  IL_000d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0012 brfalse.s      IL_001b 
+  IL_0014 ldarg.0         
+  IL_0015 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_001a ret             
+  IL_001b ldarg.0         
+  IL_001c ldarg.0         
+  IL_001d ldfld          HutongGames.PlayMaker.Actions.ActorAction::m_actor token(0x040139BD)
+  IL_0022 callvirt       Actor::IsShown token(0x06012839)
+  IL_0027 stfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_initialVisibility token(0x040139D4)
+  IL_002c ldarg.0         
+  IL_002d ldfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_Visible token(0x040139D1)
+  IL_0032 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A000471)
+  IL_0037 brfalse.s      IL_0041 
+  IL_0039 ldarg.0         
+  IL_003a call           HutongGames.PlayMaker.Actions.ActorSetVisibility::ShowActor token(0x06016A65)
+  IL_003f br.s           IL_0047 
+  IL_0041 ldarg.0         
+  IL_0042 call           HutongGames.PlayMaker.Actions.ActorSetVisibility::HideActor token(0x06016A66)
+  IL_0047 ldarg.0         
+  IL_0048 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_004d ret             
+
+
+0x06016a66 HutongGames.PlayMaker.Actions.ActorSetVisibility::HideActor() RVA 0x698746 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.ActorAction::m_actor token(0x040139BD)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_IgnoreSpells token(0x040139D2)
+  IL_000c callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A000471)
+  IL_0011 callvirt       Actor::Hide token(0x0601283E)
+  IL_0016 ret             
+

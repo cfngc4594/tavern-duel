@@ -1,0 +1,40 @@
+# v35 最后候选的三个限定变更
+
+这里区分原始证据、兼容算法与验证；不得将headless合同写成原客户端或GPU等价认证。当前工程生产脚本/Shader/project集合SHA为2a7c76fcd74b07843df94755c03c7fbe88b634c08d2ed1a1298ecad677e9158c。含QA脚本的候选指纹会随独立测试脚本变化，最终以对应运行的input-hashes.json为准。
+
+## 1. 英雄终局声音与Frozen交接
+
+现有v33英雄死亡声不是终局本体的任意音效，而是CardDef.m_DeathEffectDef.m_SoundSpellPaths→CardSoundSpell。
+
+- HERO_08：SoundDef cab-69c88b234dfa427e02d1fcee9337ae34:7184301611055783411，VO_HERO_08_Death_72.wav，GUID b828e2fdda7c1d1478b0dd2c6cc0a98d。
+- HERO_07：SoundDef cab-7d8ad43727a1f256bbca3d19c8d4ef4b:-1086652226453468695，VO_HERO_07_Death_17.wav，GUID 320d3232dfd09ac41803b1bf35264bc0。
+- 原ZONE分支：EntityBase.IsCharacter包含英雄；DeathSpellController派发选中的角色VO，再继续任务和区域变化。Card.Check_HeroToGraveyard在IL001b直接DoCardDeathVisuals，不加普通随从的0.3秒。
+- 原PLAYSTATE分支：GameEntity.BlowUpHero在IL001c ActivateAllSpellsDeathStates，IL0024才激活英雄终局本体。这个入口也可先触发活跃Frozen的Death；不能从静态代码推造它与ZONE包的先后。
+
+本地native_endgame只把既有选中hero VO放在明确的keyword交接之前、本体之前。audio.begin、BGM和jingle保持原位置。单一history中的hero_activation_stage记录派发调用返回顺序、frame、generation、side和本地clock，明确不是可听起点或原服务器packet时间。没有改变规则的死亡wave或随机选择。
+
+原证据：source_flow/hero_frozen_order_oracle.cil.{json,txt}及hero_frozen_order_semantics.json。真实音轨身份仍由assets/original_endgame_audio_v33/runtime_manifest.json约束。
+
+## 2. 原FX_Shatter的Edge兼容采样
+
+指定ParticleSystem为cab-69c88b234dfa427e02d1fcee9337ae34:6318409310918042771，其Mesh为cab-66e7137de3b79380e05eb711ae004556:4021318450489716359（HeroFrameEmitter2）。原网格88顶点、48三角形，显式适配后116条非零唯一索引边；不换网格，不切截图，不改变原数量、寿命或速度。
+
+同build ParticleSystemModule中的枚举为Mesh=6，MeshShapeType Vertex=0、Edge=1、Triangle=2。然而meshShapeType的managed get/set均为RVA0 InternalCall，没有可据此恢复serialized placementMode映射或原生边采样实现。当前选择将该唯一原FX_Shatter的placementMode1解释为Edge，是明确的兼容映射。
+
+算法：每个surface按无向顶点索引对去重，跳过长度≤1e-8的边，按源边长度累积权重选择，再沿两端线性插值位置、法线与颜色，法线归一化。随机数使用已有独立视觉PCG，不使用历史规则RNG。原Unity如何去重、是否长度加权、随机序列与帧调度仍未知。不同surface或不同顶点索引的接缝不按空间位置焊接。
+
+新算法仅native_status_particles中的指定source key可达；其他Edge粒子继续显式unsupported。公共native_combat_particles未改。audit新增edge_compatibility，明确serialized_mapping_verified=false与native_sampling_recovered=false。
+
+合同覆盖：合成边集合、共享边/接缝、线性位置/颜色/法线、零长边与全零边、256次同seed一致；实际原网格116边、512次有效采样、正寿命粒子和原InitialModule未变。真实英雄GUI另由QA验证：win180、lose178、tie366检查全过，包含逐帧源时钟；每个死英雄发射/存活峰值80，无unsupported，均自然None释放后观察30帧、真实R重开及正常退出0。代码合同不能替代该GPU结果。
+
+原证据：source_flow/particle_mesh_shape_enum.json及particle_mesh_shape_wrapper.cil.{json,txt}。
+
+## 3. 递归只读源manifest共享
+
+native_source_manifest只缓存规范路径键的源manifest JSON。summon_assets与combat_assets两个入口改用此loader；同路径只parse一次，所有嵌套Dictionary/Array递归make_read_only。失败的open、JSON或manifest结构不入cache，修复文件后可以重试。每个已缓存源保留原文件SHA及parse count用于审计。
+
+未共享的内容：节点、ShaderMaterial、Texture2D、geometry/texture运行缓存、clip索引、runtime components、粒子raw、renderer、OffScreenRenderFX的record/data/refs及FSM调度副本。原来的显式deep duplicate全部保留。mesh_color_channels仍按旧路径独立解析并merge；临时geometry mesh JSON不加入长期强缓存。
+
+验证：5组实际源manifest新旧parser内容与规范化JSON hash一致；res/绝对/带点路径对象identity相同、单次parse；每层readonly；两个真实loader共享objects但运行缓存独立；粒子、Death renderer及RT record/refs/data的深复制可写且不串状态；失败不缓存并可恢复。另一个进程真实尝试源Dictionary赋值与Array追加，两操作被引擎拒绝，源值不变。该拒绝探针日志中的引擎错误是明确标记的预期结果，不混入正常运行日志。
+
+独立审计还以冻结的小源图驱动真实combat components、两个Death粒子实例及子发射器、RT属性、FSM schedule和Curves分量，实现20项隔离测试；路径/冻结等合成合同23项。最终新候选完成45项缓存GPU回归，24组GUI/C/T逐字节一致、8项原RGBA一致；另完成36秒/1080帧/78体的有界复用50项，均正常退出0。完整游戏采样峰RSS为2,192,456KiB。预热后的相同批次场景绑定材料/纹理/网格数与显存字节不变，但RSS仍增加2,508/2,048KiB、静态内存约3.92MB、Resource总数各增加1，测试保留审计数据；不是零增长证明或无限期压力结论，不能由文件字节数推算节省内存。七次−9均保留，其中第七次伴随QA接口错误与关闭交互，不与前六次混作同一归因，更不将后来成功运行宣称为已解释终止根因。

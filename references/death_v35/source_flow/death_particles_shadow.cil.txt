@@ -1,0 +1,1731 @@
+
+TYPE ProjectedShadow 0x02002c53
+FIELD 0x04012355 RENDER_SIZE SIG 0608
+FIELD 0x04012356 CONTACT_SHADER_NAME SIG 060e
+FIELD 0x04012357 UNLIT_WHITE_SHADER_NAME SIG 060e
+FIELD 0x04012358 UNLIT_DARKGREY_SHADER_NAME SIG 060e
+FIELD 0x04012359 MULTISAMPLE_SHADER_NAME SIG 060e
+FIELD 0x0401235a NEARCLIP_PLANE SIG 060c
+FIELD 0x0401235b SHADOW_OFFSET_SCALE SIG 060c
+FIELD 0x0401235c RENDERMASK_OFFSET SIG 060c
+FIELD 0x0401235d RENDERMASK_BLUR SIG 060c
+FIELD 0x0401235e RENDERMASK_BLUR2 SIG 060c
+FIELD 0x0401235f CONTACT_SHADOW_SCALE SIG 060c
+FIELD 0x04012360 CONTACT_SHADOW_FADE_IN_HEIGHT SIG 060c
+FIELD 0x04012361 CONTACT_SHADOW_INTENSITY SIG 060c
+FIELD 0x04012362 REDRAW_SHADOW_SCALE_DIFFERENCE SIG 060c
+FIELD 0x04012363 s_commandBuffer SIG 06128ae5
+FIELD 0x04012364 s_tempBuffer SIG 06128315
+FIELD 0x04012365 BLUR_OFFSETS_ID SIG 0608
+FIELD 0x04012366 PLANE_UVS SIG 061d1175
+FIELD 0x04012367 PLANE_NORMALS SIG 061d115d
+FIELD 0x04012368 PLANE_TRIANGLES SIG 061d08
+FIELD 0x04012369 m_ShadowProjectorSize SIG 060c
+FIELD 0x0401236a m_ShadowEnabled SIG 0602
+FIELD 0x0401236b m_AutoBoardHeightDisable SIG 0602
+FIELD 0x0401236c m_AutoDisableHeight SIG 060c
+FIELD 0x0401236d m_ProjectionFarClip SIG 060c
+FIELD 0x0401236e m_ProjectionOffset SIG 06115d
+FIELD 0x0401236f m_ContactShadow SIG 0602
+FIELD 0x04012370 m_ContactOffset SIG 06115d
+FIELD 0x04012371 m_isDirtyContactShadow SIG 0602
+FIELD 0x04012372 m_enabledAlongsideRealtimeShadows SIG 0602
+FIELD 0x04012373 s_offset SIG 060c
+FIELD 0x04012374 s_ShadowColor SIG 06118091
+FIELD 0x04012375 m_RootObject SIG 0612808d
+FIELD 0x04012376 m_ProjectorGameObject SIG 0612808d
+FIELD 0x04012377 m_ProjectorTransform SIG 061280a5
+FIELD 0x04012378 m_Projector SIG 0612c000ba04
+FIELD 0x04012379 m_ShadowTexture SIG 06128315
+FIELD 0x0401237a m_ContactShadowTexture SIG 06128315
+FIELD 0x0401237b m_AdjustedShadowProjectorSize SIG 060c
+FIELD 0x0401237c m_BoardHeight SIG 060c
+FIELD 0x0401237d m_HasBoardHeight SIG 0602
+FIELD 0x0401237e m_PlaneMesh SIG 061280b5
+FIELD 0x0401237f m_PlaneGameObject SIG 0612808d
+FIELD 0x04012380 m_LoadTokenSource SIG 06128749
+FIELD 0x04012381 m_graphicsManager SIG 0612856d
+FIELD 0x04012382 m_objectsToRender SIG 0615124901128085
+FIELD 0x04012383 m_projectorShadowDelay SIG 0602
+FIELD 0x04012384 m_LastWorldScale SIG 060c
+FIELD 0x04012385 m_materialsTempList SIG 06151249011280b9
+FIELD 0x04012386 m_UnlitWhiteShader SIG 061280c9
+FIELD 0x04012387 m_UnlitDarkGreyShader SIG 061280c9
+FIELD 0x04012388 m_ShadowMaterial SIG 061280b9
+FIELD 0x04012389 m_WhiteMaterial SIG 061280b9
+FIELD 0x0401238a m_UnlitDarkGreyMaterial SIG 061280b9
+FIELD 0x0401238b m_ContactShadowShader SIG 061280c9
+FIELD 0x0401238c m_ContactShadowMaterial SIG 061280b9
+FIELD 0x0401238d m_MultiSampleShader SIG 061280c9
+FIELD 0x0401238e m_MultiSampleMaterial SIG 061280b9
+
+0x06015337 ProjectedShadow::get_WhiteMaterial() RVA 0x63df00 SIG 20001280b9
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_WhiteMaterial token(0x04012389)
+  IL_0006 dup             
+  IL_0007 brtrue.s       IL_001e 
+  IL_0009 pop             
+  IL_000a ldarg.0         
+  IL_000b ldarg.0         
+  IL_000c ldfld          ProjectedShadow::m_UnlitWhiteShader token(0x04012386)
+  IL_0011 newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_0016 dup             
+  IL_0017 stloc.0         
+  IL_0018 stfld          ProjectedShadow::m_WhiteMaterial token(0x04012389)
+  IL_001d ldloc.0         
+  IL_001e ret             
+
+0x06015338 ProjectedShadow::get_UnlitDarkGreyMaterial() RVA 0x63df2c SIG 20001280b9
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_UnlitDarkGreyMaterial token(0x0401238A)
+  IL_0006 dup             
+  IL_0007 brtrue.s       IL_001e 
+  IL_0009 pop             
+  IL_000a ldarg.0         
+  IL_000b ldarg.0         
+  IL_000c ldfld          ProjectedShadow::m_UnlitDarkGreyShader token(0x04012387)
+  IL_0011 newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_0016 dup             
+  IL_0017 stloc.0         
+  IL_0018 stfld          ProjectedShadow::m_UnlitDarkGreyMaterial token(0x0401238A)
+  IL_001d ldloc.0         
+  IL_001e ret             
+
+0x06015339 ProjectedShadow::get_ContactShadowMaterial() RVA 0x63df58 SIG 20001280b9
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_0056 
+  IL_000e ldarg.0         
+  IL_000f ldarg.0         
+  IL_0010 ldfld          ProjectedShadow::m_ContactShadowShader token(0x0401238B)
+  IL_0015 newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_001a stfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_001f ldarg.0         
+  IL_0020 ldfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_0025 ldstr          '_Intensity' string token(0x7000FC1D)
+  IL_002a ldc.r4         3.5 
+  IL_002f callvirt       UnityEngine.Material::SetFloat token(0x0A000313)
+  IL_0034 ldarg.0         
+  IL_0035 ldfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_003a ldstr          '_Color' string token(0x70005D88)
+  IL_003f ldsfld         ProjectedShadow::s_ShadowColor token(0x04012374)
+  IL_0044 callvirt       UnityEngine.Material::SetColor token(0x0A000223)
+  IL_0049 ldarg.0         
+  IL_004a ldfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_004f ldc.i4.s       52 
+  IL_0051 call           Blizzard.T5.Core.Utils.GameObjectUtils::SetHideFlags token(0x0A00112E)
+  IL_0056 ldarg.0         
+  IL_0057 ldfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_005c ret             
+
+0x0601533a ProjectedShadow::get_MultiSampleMaterial() RVA 0x63dfc1 SIG 20001280b9
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_MultiSampleMaterial token(0x0401238E)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_002c 
+  IL_000e ldarg.0         
+  IL_000f ldarg.0         
+  IL_0010 ldfld          ProjectedShadow::m_MultiSampleShader token(0x0401238D)
+  IL_0015 newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_001a stfld          ProjectedShadow::m_MultiSampleMaterial token(0x0401238E)
+  IL_001f ldarg.0         
+  IL_0020 ldfld          ProjectedShadow::m_MultiSampleMaterial token(0x0401238E)
+  IL_0025 ldc.i4.s       52 
+  IL_0027 call           Blizzard.T5.Core.Utils.GameObjectUtils::SetHideFlags token(0x0A00112E)
+  IL_002c ldarg.0         
+  IL_002d ldfld          ProjectedShadow::m_MultiSampleMaterial token(0x0401238E)
+  IL_0032 ret             
+
+0x0601533b ProjectedShadow::Awake() RVA 0x63dff8 SIG 200001
+  IL_0000 ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_0005 brtrue.s       IL_0016 
+  IL_0007 ldstr          'Render Shadow' string token(0x703F7995)
+  IL_000c call           UnityEngine.Rendering.CommandBufferPool::Get token(0x0A0040CF)
+  IL_0011 stsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_0016 ldsfld         ProjectedShadow::s_tempBuffer token(0x04012364)
+  IL_001b ldnull          
+  IL_001c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0021 brtrue.s       IL_002f 
+  IL_0023 ldsfld         ProjectedShadow::s_tempBuffer token(0x04012364)
+  IL_0028 callvirt       UnityEngine.RenderTexture::IsCreated token(0x0A0050F3)
+  IL_002d brtrue.s       IL_004a 
+  IL_002f call           RenderTextureTracker::Get token(0x06004590)
+  IL_0034 ldc.i4.s       64 
+  IL_0036 ldc.i4.s       64 
+  IL_0038 ldsfld         RenderTextureTracker::TEXTURE_DEPTH token(0x0400309D)
+  IL_003d ldc.i4.s       16 
+  IL_003f ldc.i4.0        
+  IL_0040 callvirt       RenderTextureTracker::CreateNewTexture token(0x06004591)
+  IL_0045 stsfld         ProjectedShadow::s_tempBuffer token(0x04012364)
+  IL_004a ldarg.0         
+  IL_004b call           Blizzard.T5.Services.ServiceManager::Get<spec> token(0x2B000144)
+  IL_0050 stfld          ProjectedShadow::m_graphicsManager token(0x04012381)
+  IL_0055 ldarg.0         
+  IL_0056 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f648c04ab70>::.ctor token(0x0A00046E)
+  IL_005b stfld          ProjectedShadow::m_objectsToRender token(0x04012382)
+  IL_0060 ret             
+
+0x0601533c ProjectedShadow::Start() RVA 0x63e068 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_graphicsManager token(0x04012381)
+  IL_0006 brfalse.s      IL_0024 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          ProjectedShadow::m_graphicsManager token(0x04012381)
+  IL_000e callvirt       IGraphicsManager::get_RealtimeShadows token(0x0A005128)
+  IL_0013 brfalse.s      IL_0024 
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          ProjectedShadow::m_enabledAlongsideRealtimeShadows token(0x04012372)
+  IL_001b brtrue.s       IL_0024 
+  IL_001d ldarg.0         
+  IL_001e ldc.i4.0        
+  IL_001f call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          ProjectedShadow::m_ContactShadowShader token(0x0401238B)
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0030 brfalse.s      IL_0042 
+  IL_0032 ldarg.0         
+  IL_0033 ldstr          'Custom/ContactShadow' string token(0x703F79B1)
+  IL_0038 call           ShaderUtils::FindShader token(0x06015550)
+  IL_003d stfld          ProjectedShadow::m_ContactShadowShader token(0x0401238B)
+  IL_0042 ldarg.0         
+  IL_0043 ldfld          ProjectedShadow::m_ContactShadowShader token(0x0401238B)
+  IL_0048 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_004d brtrue.s       IL_0060 
+  IL_004f ldstr          'Failed to load Projected Shadow Shader: Custom/ContactShadow' string token(0x703F79DB)
+  IL_0054 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0059 ldarg.0         
+  IL_005a ldc.i4.0        
+  IL_005b call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0060 ldarg.0         
+  IL_0061 ldfld          ProjectedShadow::m_MultiSampleShader token(0x0401238D)
+  IL_0066 ldnull          
+  IL_0067 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_006c brfalse.s      IL_007e 
+  IL_006e ldarg.0         
+  IL_006f ldstr          'Custom/Selection/HighlightMultiSample' string token(0x703F70BB)
+  IL_0074 call           ShaderUtils::FindShader token(0x06015550)
+  IL_0079 stfld          ProjectedShadow::m_MultiSampleShader token(0x0401238D)
+  IL_007e ldarg.0         
+  IL_007f ldfld          ProjectedShadow::m_MultiSampleShader token(0x0401238D)
+  IL_0084 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0089 brtrue.s       IL_009c 
+  IL_008b ldstr          'Failed to load Projected Shadow Shader: Custom/Selection/HighlightMultiSample' string token(0x703F7A55)
+  IL_0090 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0095 ldarg.0         
+  IL_0096 ldc.i4.0        
+  IL_0097 call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_009c ldarg.0         
+  IL_009d ldstr          'Custom/Unlit/Color/White' string token(0x703F72AB)
+  IL_00a2 call           ShaderUtils::FindShader token(0x06015550)
+  IL_00a7 stfld          ProjectedShadow::m_UnlitWhiteShader token(0x04012386)
+  IL_00ac ldarg.0         
+  IL_00ad ldfld          ProjectedShadow::m_UnlitWhiteShader token(0x04012386)
+  IL_00b2 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_00b7 brtrue.s       IL_00c3 
+  IL_00b9 ldstr          'Failed to load Projected Shadow Shader: Custom/Unlit/Color/White' string token(0x703F7AF2)
+  IL_00be call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_00c3 ldarg.0         
+  IL_00c4 ldstr          'Custom/Unlit/Color/DarkGrey' string token(0x703F7233)
+  IL_00c9 call           ShaderUtils::FindShader token(0x06015550)
+  IL_00ce stfld          ProjectedShadow::m_UnlitDarkGreyShader token(0x04012387)
+  IL_00d3 ldarg.0         
+  IL_00d4 ldfld          ProjectedShadow::m_UnlitDarkGreyShader token(0x04012387)
+  IL_00d9 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_00de brtrue.s       IL_00ea 
+  IL_00e0 ldstr          'Failed to load Projected Shadow Shader: Custom/Unlit/Color/DarkGrey' string token(0x703F7B75)
+  IL_00e5 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_00ea call           Board::Get token(0x06012C1F)
+  IL_00ef ldnull          
+  IL_00f0 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00f5 brfalse.s      IL_0123 
+  IL_00f7 ldarg.0         
+  IL_00f8 ldfld          ProjectedShadow::m_LoadTokenSource token(0x04012380)
+  IL_00fd brtrue.s       IL_010a 
+  IL_00ff ldarg.0         
+  IL_0100 newobj         System.Threading.CancellationTokenSource::.ctor token(0x0A0010D7)
+  IL_0105 stfld          ProjectedShadow::m_LoadTokenSource token(0x04012380)
+  IL_010a ldarg.0         
+  IL_010b ldarg.0         
+  IL_010c ldfld          ProjectedShadow::m_LoadTokenSource token(0x04012380)
+  IL_0111 callvirt       System.Threading.CancellationTokenSource::get_Token token(0x0A0010D8)
+  IL_0116 call           ProjectedShadow::AssignBoardHeight_WaitForBoardStandardGameLoaded token(0x0601533D)
+  IL_011b stloc.1         
+  IL_011c ldloca.s       local(0x0001) 
+  IL_011e call           Cysharp.Threading.Tasks.UniTaskVoid::Forget token(0x0A00102B)
+  IL_0123 ldarg.0         
+  IL_0124 call           UnityEngine.Component::GetComponent<spec> token(0x2B00039A)
+  IL_0129 stloc.0         
+  IL_012a ldloc.0         
+  IL_012b ldnull          
+  IL_012c call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0131 brfalse.s      IL_0140 
+  IL_0133 ldarg.0         
+  IL_0134 ldloc.0         
+  IL_0135 callvirt       Actor::GetRootObject token(0x06012845)
+  IL_013a stfld          ProjectedShadow::m_RootObject token(0x04012375)
+  IL_013f ret             
+  IL_0140 ldarg.0         
+  IL_0141 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0146 ldstr          'RootObject' string token(0x7007B371)
+  IL_014b call           Blizzard.T5.Core.Utils.GameObjectUtils::FindChildBySubstring token(0x0A00221B)
+  IL_0150 stloc.2         
+  IL_0151 ldloc.2         
+  IL_0152 ldnull          
+  IL_0153 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0158 brfalse.s      IL_0162 
+  IL_015a ldarg.0         
+  IL_015b ldloc.2         
+  IL_015c stfld          ProjectedShadow::m_RootObject token(0x04012375)
+  IL_0161 ret             
+  IL_0162 ldarg.0         
+  IL_0163 ldarg.0         
+  IL_0164 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0169 stfld          ProjectedShadow::m_RootObject token(0x04012375)
+  IL_016e ret             
+
+0x0601533d ProjectedShadow::AssignBoardHeight_WaitForBoardStandardGameLoaded(token) RVA 0x63e1e4 SIG 2001118719118731
+  IL_0000 ldloca.s       local(0x0000) 
+  IL_0002 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::Create token(0x0A00102D)
+  IL_0007 stfld          <AssignBoardHeight_WaitForBoardStandardGameLoaded>d__68::<>t__builder token(0x04012390)
+  IL_000c ldloca.s       local(0x0000) 
+  IL_000e ldarg.0         
+  IL_000f stfld          <AssignBoardHeight_WaitForBoardStandardGameLoaded>d__68::<>4__this token(0x04012392)
+  IL_0014 ldloca.s       local(0x0000) 
+  IL_0016 ldarg.1         
+  IL_0017 stfld          <AssignBoardHeight_WaitForBoardStandardGameLoaded>d__68::token token(0x04012391)
+  IL_001c ldloca.s       local(0x0000) 
+  IL_001e ldc.i4.m1       
+  IL_001f stfld          <AssignBoardHeight_WaitForBoardStandardGameLoaded>d__68::<>1__state token(0x0401238F)
+  IL_0024 ldloca.s       local(0x0000) 
+  IL_0026 ldflda         <AssignBoardHeight_WaitForBoardStandardGameLoaded>d__68::<>t__builder token(0x04012390)
+  IL_002b ldloca.s       local(0x0000) 
+  IL_002d call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::Start<spec> token(0x2B0009D0)
+  IL_0032 ldloca.s       local(0x0000) 
+  IL_0034 ldflda         <AssignBoardHeight_WaitForBoardStandardGameLoaded>d__68::<>t__builder token(0x04012390)
+  IL_0039 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::get_Task token(0x0A00102F)
+  IL_003e ret             
+
+0x0601533e ProjectedShadow::LateUpdate() RVA 0x63e22f SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_graphicsManager token(0x04012381)
+  IL_0006 brfalse.s      IL_0025 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          ProjectedShadow::m_graphicsManager token(0x04012381)
+  IL_000e callvirt       IGraphicsManager::get_RealtimeShadows token(0x0A005128)
+  IL_0013 brfalse.s      IL_0025 
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          ProjectedShadow::m_enabledAlongsideRealtimeShadows token(0x04012372)
+  IL_001b brtrue.s       IL_0025 
+  IL_001d ldarg.0         
+  IL_001e ldc.i4.0        
+  IL_001f call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0024 ret             
+  IL_0025 ldarg.0         
+  IL_0026 call           ProjectedShadow::Render token(0x06015342)
+  IL_002b ldarg.0         
+  IL_002c ldfld          ProjectedShadow::m_ContactShadow token(0x0401236F)
+  IL_0031 brfalse.s      IL_0039 
+  IL_0033 ldarg.0         
+  IL_0034 call           ProjectedShadow::RenderContactShadow token(0x06015350)
+  IL_0039 ret             
+
+0x0601533f ProjectedShadow::OnDisable() RVA 0x63e26a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000b brfalse.s      IL_0019 
+  IL_000d ldarg.0         
+  IL_000e ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0013 ldc.i4.0        
+  IL_0014 callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_0019 ldarg.0         
+  IL_001a ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_001f ldnull          
+  IL_0020 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0025 brfalse.s      IL_0033 
+  IL_0027 ldarg.0         
+  IL_0028 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_002d ldc.i4.0        
+  IL_002e callvirt       UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0033 ret             
+
+0x06015340 ProjectedShadow::OnDestroy() RVA 0x63e2a0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000b brfalse.s      IL_0018 
+  IL_000d ldarg.0         
+  IL_000e ldfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_0013 call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_0018 ldarg.0         
+  IL_0019 ldfld          ProjectedShadow::m_ShadowMaterial token(0x04012388)
+  IL_001e call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0023 brfalse.s      IL_0030 
+  IL_0025 ldarg.0         
+  IL_0026 ldfld          ProjectedShadow::m_ShadowMaterial token(0x04012388)
+  IL_002b call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_0030 ldarg.0         
+  IL_0031 ldfld          ProjectedShadow::m_MultiSampleMaterial token(0x0401238E)
+  IL_0036 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_003b brfalse.s      IL_0048 
+  IL_003d ldarg.0         
+  IL_003e ldfld          ProjectedShadow::m_MultiSampleMaterial token(0x0401238E)
+  IL_0043 call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_0048 ldarg.0         
+  IL_0049 ldfld          ProjectedShadow::m_ProjectorGameObject token(0x04012376)
+  IL_004e call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0053 brfalse.s      IL_0060 
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          ProjectedShadow::m_ProjectorGameObject token(0x04012376)
+  IL_005b call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_0060 ldarg.0         
+  IL_0061 ldfld          ProjectedShadow::m_ShadowTexture token(0x04012379)
+  IL_0066 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_006b brfalse.s      IL_0084 
+  IL_006d call           RenderTextureTracker::Get token(0x06004590)
+  IL_0072 ldarg.0         
+  IL_0073 ldfld          ProjectedShadow::m_ShadowTexture token(0x04012379)
+  IL_0078 callvirt       RenderTextureTracker::DestroyRenderTexture token(0x06004592)
+  IL_007d ldarg.0         
+  IL_007e ldnull          
+  IL_007f stfld          ProjectedShadow::m_ShadowTexture token(0x04012379)
+  IL_0084 ldarg.0         
+  IL_0085 ldfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_008a call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_008f brfalse.s      IL_00a8 
+  IL_0091 call           RenderTextureTracker::Get token(0x06004590)
+  IL_0096 ldarg.0         
+  IL_0097 ldfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_009c callvirt       RenderTextureTracker::DestroyRenderTexture token(0x06004592)
+  IL_00a1 ldarg.0         
+  IL_00a2 ldnull          
+  IL_00a3 stfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_00a8 ldarg.0         
+  IL_00a9 ldfld          ProjectedShadow::m_PlaneMesh token(0x0401237E)
+  IL_00ae call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_00b3 brfalse.s      IL_00e3 
+  IL_00b5 ldarg.0         
+  IL_00b6 ldfld          ProjectedShadow::m_PlaneMesh token(0x0401237E)
+  IL_00bb call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_00c0 ldarg.0         
+  IL_00c1 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_00c6 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000193)
+  IL_00cb dup             
+  IL_00cc callvirt       UnityEngine.MeshFilter::get_mesh token(0x0A000056)
+  IL_00d1 call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_00d6 ldnull          
+  IL_00d7 callvirt       UnityEngine.MeshFilter::set_mesh token(0x0A000055)
+  IL_00dc ldarg.0         
+  IL_00dd ldnull          
+  IL_00de stfld          ProjectedShadow::m_PlaneMesh token(0x0401237E)
+  IL_00e3 ldarg.0         
+  IL_00e4 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_00e9 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_00ee brfalse.s      IL_0102 
+  IL_00f0 ldarg.0         
+  IL_00f1 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_00f6 call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_00fb ldarg.0         
+  IL_00fc ldnull          
+  IL_00fd stfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0102 ldarg.0         
+  IL_0103 ldfld          ProjectedShadow::m_LoadTokenSource token(0x04012380)
+  IL_0108 dup             
+  IL_0109 brtrue.s       IL_010e 
+  IL_010b pop             
+  IL_010c br.s           IL_0113 
+  IL_010e call           System.Threading.CancellationTokenSource::Cancel token(0x0A0010D9)
+  IL_0113 ldarg.0         
+  IL_0114 ldfld          ProjectedShadow::m_LoadTokenSource token(0x04012380)
+  IL_0119 dup             
+  IL_011a brtrue.s       IL_011e 
+  IL_011c pop             
+  IL_011d ret             
+  IL_011e call           System.Threading.CancellationTokenSource::Dispose token(0x0A0010DA)
+  IL_0123 ret             
+
+0x06015341 ProjectedShadow::OnDrawGizmos() RVA 0x63e3d0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_ShadowProjectorSize token(0x04012369)
+  IL_0006 ldarg.0         
+  IL_0007 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_000c call           TransformUtil::ComputeWorldScale token(0x06014FFE)
+  IL_0011 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0016 mul             
+  IL_0017 ldc.r4         2.0 
+  IL_001c mul             
+  IL_001d stloc.0         
+  IL_001e ldarg.0         
+  IL_001f call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0024 callvirt       UnityEngine.Transform::get_localToWorldMatrix token(0x0A0000D9)
+  IL_0029 call           UnityEngine.Gizmos::set_matrix token(0x0A0000DA)
+  IL_002e ldc.r4         0.6000000238418579 
+  IL_0033 ldc.r4         0.15000000596046448 
+  IL_0038 ldc.r4         0.6000000238418579 
+  IL_003d newobj         UnityEngine.Color::.ctor token(0x0A001000)
+  IL_0042 call           UnityEngine.Gizmos::set_color token(0x0A0000DC)
+  IL_0047 ldarg.0         
+  IL_0048 ldfld          ProjectedShadow::m_ContactShadow token(0x0401236F)
+  IL_004d brfalse.s      IL_0068 
+  IL_004f ldarg.0         
+  IL_0050 ldfld          ProjectedShadow::m_ContactOffset token(0x04012370)
+  IL_0055 ldloc.0         
+  IL_0056 ldc.r4         0.0 
+  IL_005b ldloc.0         
+  IL_005c newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0061 call           UnityEngine.Gizmos::DrawWireCube token(0x0A00509C)
+  IL_0066 br.s           IL_007e 
+  IL_0068 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_006d ldloc.0         
+  IL_006e ldc.r4         0.0 
+  IL_0073 ldloc.0         
+  IL_0074 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0079 call           UnityEngine.Gizmos::DrawWireCube token(0x0A00509C)
+  IL_007e call           UnityEngine.Matrix4x4::get_identity token(0x0A0027BC)
+  IL_0083 call           UnityEngine.Gizmos::set_matrix token(0x0A0000DA)
+  IL_0088 ret             
+
+0x06015342 ProjectedShadow::Render() RVA 0x63e468 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_ShadowEnabled token(0x0401236A)
+  IL_0006 brfalse.s      IL_0022 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          ProjectedShadow::m_RootObject token(0x04012375)
+  IL_000e call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0013 brfalse.s      IL_0062 
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          ProjectedShadow::m_RootObject token(0x04012375)
+  IL_001b callvirt       UnityEngine.GameObject::get_activeSelf token(0x0A000362)
+  IL_0020 brtrue.s       IL_0062 
+  IL_0022 ldarg.0         
+  IL_0023 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_0028 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_002d brfalse.s      IL_0048 
+  IL_002f ldarg.0         
+  IL_0030 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_0035 callvirt       UnityEngine.Behaviour::get_enabled token(0x0A000B4B)
+  IL_003a brfalse.s      IL_0048 
+  IL_003c ldarg.0         
+  IL_003d ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_0042 ldc.i4.0        
+  IL_0043 callvirt       UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0048 ldarg.0         
+  IL_0049 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_004e call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0053 brfalse.s      IL_0061 
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_005b ldc.i4.0        
+  IL_005c callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_0061 ret             
+  IL_0062 ldarg.0         
+  IL_0063 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0068 call           TransformUtil::ComputeWorldScale token(0x06014FFE)
+  IL_006d ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0072 stloc.0         
+  IL_0073 ldarg.0         
+  IL_0074 ldarg.0         
+  IL_0075 ldfld          ProjectedShadow::m_ShadowProjectorSize token(0x04012369)
+  IL_007a ldloc.0         
+  IL_007b mul             
+  IL_007c stfld          ProjectedShadow::m_AdjustedShadowProjectorSize token(0x0401237B)
+  IL_0081 ldarg.0         
+  IL_0082 ldfld          ProjectedShadow::m_AdjustedShadowProjectorSize token(0x0401237B)
+  IL_0087 ldc.r4         0.0 
+  IL_008c bne.un.s       IL_008f 
+  IL_008e ret             
+  IL_008f ldarg.0         
+  IL_0090 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_0095 ldnull          
+  IL_0096 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_009b brfalse.s      IL_00a3 
+  IL_009d ldarg.0         
+  IL_009e call           ProjectedShadow::CreateProjector token(0x06015352)
+  IL_00a3 ldarg.0         
+  IL_00a4 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00a9 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_00ae ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_00b3 stloc.1         
+  IL_00b4 ldarg.0         
+  IL_00b5 ldfld          ProjectedShadow::m_HasBoardHeight token(0x0401237D)
+  IL_00ba brtrue.s       IL_00d6 
+  IL_00bc ldloc.1         
+  IL_00bd ldc.r4         0.0 
+  IL_00c2 ldarg.0         
+  IL_00c3 ldfld          ProjectedShadow::m_AutoDisableHeight token(0x0401236C)
+  IL_00c8 call           UnityEngine.Mathf::Max token(0x0A0009C0)
+  IL_00cd sub             
+  IL_00ce ldc.r4         1.401298464324817e-45 
+  IL_00d3 sub             
+  IL_00d4 br.s           IL_00dc 
+  IL_00d6 ldarg.0         
+  IL_00d7 ldfld          ProjectedShadow::m_BoardHeight token(0x0401237C)
+  IL_00dc stloc.2         
+  IL_00dd ldloc.1         
+  IL_00de ldloc.2         
+  IL_00df sub             
+  IL_00e0 ldc.r4         0.30000001192092896 
+  IL_00e5 mul             
+  IL_00e6 stloc.3         
+  IL_00e7 ldarg.0         
+  IL_00e8 ldarg.0         
+  IL_00e9 ldfld          ProjectedShadow::m_AdjustedShadowProjectorSize token(0x0401237B)
+  IL_00ee ldc.r4         0.0 
+  IL_00f3 ldc.r4         0.5 
+  IL_00f8 ldloc.3         
+  IL_00f9 ldc.r4         0.5 
+  IL_00fe mul             
+  IL_00ff call           UnityEngine.Mathf::Lerp token(0x0A000D72)
+  IL_0104 add             
+  IL_0105 stfld          ProjectedShadow::m_AdjustedShadowProjectorSize token(0x0401237B)
+  IL_010a ldarg.0         
+  IL_010b ldfld          ProjectedShadow::m_ContactShadow token(0x0401236F)
+  IL_0110 brfalse        IL_01f4 
+  IL_0115 ldloc.2         
+  IL_0116 ldc.r4         0.07999999821186066 
+  IL_011b add             
+  IL_011c stloc.s        local(0x000A) 
+  IL_011e ldloc.3         
+  IL_011f ldloc.s        local(0x000A) 
+  IL_0121 bge.un         IL_01da 
+  IL_0126 ldarg.0         
+  IL_0127 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_012c ldnull          
+  IL_012d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0132 brfalse.s      IL_013d 
+  IL_0134 ldarg.0         
+  IL_0135 ldc.i4.1        
+  IL_0136 stfld          ProjectedShadow::m_isDirtyContactShadow token(0x04012371)
+  IL_013b br.s           IL_0151 
+  IL_013d ldarg.0         
+  IL_013e ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0143 callvirt       UnityEngine.GameObject::get_activeSelf token(0x0A000362)
+  IL_0148 brtrue.s       IL_0151 
+  IL_014a ldarg.0         
+  IL_014b ldc.i4.1        
+  IL_014c stfld          ProjectedShadow::m_isDirtyContactShadow token(0x04012371)
+  IL_0151 ldloc.s        local(0x000A) 
+  IL_0153 ldloc.3         
+  IL_0154 sub             
+  IL_0155 ldc.r4         0.07999999821186066 
+  IL_015a div             
+  IL_015b ldc.r4         0.0 
+  IL_0160 ldc.r4         1.0 
+  IL_0165 call           UnityEngine.Mathf::Clamp token(0x0A0003AA)
+  IL_016a stloc.s        local(0x000B) 
+  IL_016c ldarg.0         
+  IL_016d ldfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_0172 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0177 brfalse.s      IL_01f4 
+  IL_0179 ldarg.0         
+  IL_017a ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_017f call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0184 brfalse.s      IL_01f4 
+  IL_0186 ldarg.0         
+  IL_0187 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_018c callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000007)
+  IL_0191 stloc.s        local(0x000C) 
+  IL_0193 ldloc.s        local(0x000C) 
+  IL_0195 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_019a brtrue.s       IL_019f 
+  IL_019c ldnull          
+  IL_019d br.s           IL_01a6 
+  IL_019f ldloc.s        local(0x000C) 
+  IL_01a1 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetSharedMaterial token(0x0A000974)
+  IL_01a6 stloc.s        local(0x000D) 
+  IL_01a8 ldloc.s        local(0x000D) 
+  IL_01aa call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_01af brfalse.s      IL_01f4 
+  IL_01b1 ldloc.s        local(0x000D) 
+  IL_01b3 ldarg.0         
+  IL_01b4 ldfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_01b9 callvirt       UnityEngine.Material::set_mainTexture token(0x0A0000AE)
+  IL_01be ldloc.s        local(0x000D) 
+  IL_01c0 ldsfld         ProjectedShadow::s_ShadowColor token(0x04012374)
+  IL_01c5 callvirt       UnityEngine.Material::set_color token(0x0A0009ED)
+  IL_01ca ldloc.s        local(0x000D) 
+  IL_01cc ldstr          '_Alpha' string token(0x7004F7E6)
+  IL_01d1 ldloc.s        local(0x000B) 
+  IL_01d3 callvirt       UnityEngine.Material::SetFloat token(0x0A000313)
+  IL_01d8 br.s           IL_01f4 
+  IL_01da ldarg.0         
+  IL_01db ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_01e0 ldnull          
+  IL_01e1 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_01e6 brfalse.s      IL_01f4 
+  IL_01e8 ldarg.0         
+  IL_01e9 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_01ee ldc.i4.0        
+  IL_01ef callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_01f4 ldloc.3         
+  IL_01f5 ldarg.0         
+  IL_01f6 ldfld          ProjectedShadow::m_AutoDisableHeight token(0x0401236C)
+  IL_01fb bge.un.s       IL_0224 
+  IL_01fd ldarg.0         
+  IL_01fe ldfld          ProjectedShadow::m_AutoBoardHeightDisable token(0x0401236B)
+  IL_0203 brfalse.s      IL_0224 
+  IL_0205 ldarg.0         
+  IL_0206 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_020b ldc.i4.0        
+  IL_020c callvirt       UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0211 ldarg.0         
+  IL_0212 ldfld          ProjectedShadow::m_ShadowTexture token(0x04012379)
+  IL_0217 call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_021c ldarg.0         
+  IL_021d ldnull          
+  IL_021e stfld          ProjectedShadow::m_ShadowTexture token(0x04012379)
+  IL_0223 ret             
+  IL_0224 ldarg.0         
+  IL_0225 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_022a ldc.i4.1        
+  IL_022b callvirt       UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0230 ldc.r4         0.0 
+  IL_0235 stloc.s        local(0x0004) 
+  IL_0237 ldarg.0         
+  IL_0238 ldfld          ProjectedShadow::m_projectorShadowDelay token(0x04012383)
+  IL_023d brfalse.s      IL_024f 
+  IL_023f ldarg.0         
+  IL_0240 ldc.i4.0        
+  IL_0241 stfld          ProjectedShadow::m_projectorShadowDelay token(0x04012383)
+  IL_0246 ldc.r4         1000.0 
+  IL_024b stloc.s        local(0x0004) 
+  IL_024d br.s           IL_0296 
+  IL_024f ldarg.0         
+  IL_0250 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0255 callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_025a ldnull          
+  IL_025b call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0260 brfalse.s      IL_0296 
+  IL_0262 ldc.r4         -0.699999988079071 
+  IL_0267 ldc.r4         1.7999999523162842 
+  IL_026c ldarg.0         
+  IL_026d call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0272 callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_0277 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_027c ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0281 ldc.r4         17.0 
+  IL_0286 div             
+  IL_0287 ldc.r4         -1.0 
+  IL_028c mul             
+  IL_028d call           UnityEngine.Mathf::Lerp token(0x0A000D72)
+  IL_0292 ldloc.3         
+  IL_0293 mul             
+  IL_0294 stloc.s        local(0x0004) 
+  IL_0296 ldloca.s       local(0x0005) 
+  IL_0298 ldarg.0         
+  IL_0299 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_029e callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_02a3 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_02a8 ldloc.s        local(0x0004) 
+  IL_02aa sub             
+  IL_02ab ldloc.3         
+  IL_02ac ldc.r4         0.25 
+  IL_02b1 mul             
+  IL_02b2 sub             
+  IL_02b3 ldarg.0         
+  IL_02b4 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_02b9 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_02be ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_02c3 ldarg.0         
+  IL_02c4 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_02c9 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_02ce ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_02d3 ldloc.3         
+  IL_02d4 ldc.r4         0.800000011920929 
+  IL_02d9 mul             
+  IL_02da sub             
+  IL_02db call           UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_02e0 ldarg.0         
+  IL_02e1 ldfld          ProjectedShadow::m_ProjectorTransform token(0x04012377)
+  IL_02e6 ldloc.s        local(0x0005) 
+  IL_02e8 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_02ed ldarg.0         
+  IL_02ee ldfld          ProjectedShadow::m_ProjectorTransform token(0x04012377)
+  IL_02f3 ldarg.0         
+  IL_02f4 ldfld          ProjectedShadow::m_ProjectionOffset token(0x0401236E)
+  IL_02f9 callvirt       UnityEngine.Transform::Translate token(0x0A00405A)
+  IL_02fe ldarg.0         
+  IL_02ff call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0304 callvirt       UnityEngine.Transform::get_rotation token(0x0A000B4F)
+  IL_0309 stloc.s        local(0x0006) 
+  IL_030b ldc.r4         1.0 
+  IL_0310 ldloc.s        local(0x0006) 
+  IL_0312 ldfld          UnityEngine.Quaternion::z token(0x0A005129)
+  IL_0317 sub             
+  IL_0318 ldc.r4         0.5 
+  IL_031d mul             
+  IL_031e ldc.r4         0.5 
+  IL_0323 add             
+  IL_0324 stloc.s        local(0x0007) 
+  IL_0326 ldloc.s        local(0x0006) 
+  IL_0328 ldfld          UnityEngine.Quaternion::x token(0x0A00512A)
+  IL_032d ldc.r4         0.5 
+  IL_0332 mul             
+  IL_0333 stloc.s        local(0x0008) 
+  IL_0335 ldarg.0         
+  IL_0336 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_033b ldloc.s        local(0x0007) 
+  IL_033d ldloc.s        local(0x0008) 
+  IL_033f sub             
+  IL_0340 callvirt       DecalProjector::set_AspectRatio token(0x06016218)
+  IL_0345 ldarg.0         
+  IL_0346 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_034b ldarg.0         
+  IL_034c ldfld          ProjectedShadow::m_AdjustedShadowProjectorSize token(0x0401237B)
+  IL_0351 ldloc.s        local(0x0008) 
+  IL_0353 add             
+  IL_0354 callvirt       DecalProjector::set_OrthographicSize token(0x0601621A)
+  IL_0359 ldarg.0         
+  IL_035a ldfld          ProjectedShadow::m_ProjectorTransform token(0x04012377)
+  IL_035f call           UnityEngine.Quaternion::get_identity token(0x0A00021E)
+  IL_0364 callvirt       UnityEngine.Transform::set_rotation token(0x0A000B50)
+  IL_0369 ldarg.0         
+  IL_036a ldfld          ProjectedShadow::m_ProjectorTransform token(0x04012377)
+  IL_036f ldc.r4         90.0 
+  IL_0374 ldloca.s       local(0x0006) 
+  IL_0376 call           UnityEngine.Quaternion::get_eulerAngles token(0x0A000B56)
+  IL_037b ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0380 ldc.r4         0.0 
+  IL_0385 callvirt       UnityEngine.Transform::Rotate token(0x0A00112D)
+  IL_038a ldc.i4.0        
+  IL_038b stloc.s        local(0x0009) 
+  IL_038d ldarg.0         
+  IL_038e ldfld          ProjectedShadow::m_ShadowTexture token(0x04012379)
+  IL_0393 ldnull          
+  IL_0394 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0399 brtrue.s       IL_03a8 
+  IL_039b ldarg.0         
+  IL_039c ldfld          ProjectedShadow::m_ShadowTexture token(0x04012379)
+  IL_03a1 callvirt       UnityEngine.RenderTexture::IsCreated token(0x0A0050F3)
+  IL_03a6 brtrue.s       IL_03c7 
+  IL_03a8 ldarg.0         
+  IL_03a9 call           RenderTextureTracker::Get token(0x06004590)
+  IL_03ae ldc.i4.s       64 
+  IL_03b0 ldc.i4.s       64 
+  IL_03b2 ldsfld         RenderTextureTracker::TEXTURE_DEPTH token(0x0400309D)
+  IL_03b7 ldc.i4.s       16 
+  IL_03b9 ldc.i4.0        
+  IL_03ba callvirt       RenderTextureTracker::CreateNewTexture token(0x06004591)
+  IL_03bf stfld          ProjectedShadow::m_ShadowTexture token(0x04012379)
+  IL_03c4 ldc.i4.1        
+  IL_03c5 stloc.s        local(0x0009) 
+  IL_03c7 ldloc.s        local(0x0009) 
+  IL_03c9 brtrue.s       IL_03e1 
+  IL_03cb ldarg.0         
+  IL_03cc ldfld          ProjectedShadow::m_LastWorldScale token(0x04012384)
+  IL_03d1 ldloc.0         
+  IL_03d2 sub             
+  IL_03d3 call           UnityEngine.Mathf::Abs token(0x0A000AF6)
+  IL_03d8 ldc.r4         0.10000000149011612 
+  IL_03dd cgt             
+  IL_03df br.s           IL_03e2 
+  IL_03e1 ldc.i4.1        
+  IL_03e2 stloc.s        local(0x0009) 
+  IL_03e4 ldloc.s        local(0x0009) 
+  IL_03e6 brfalse.s      IL_03ee 
+  IL_03e8 ldarg.0         
+  IL_03e9 call           ProjectedShadow::RenderShadowMask token(0x0601534E)
+  IL_03ee ret             
+
+0x06015343 ProjectedShadow::SetShadowColor(color) RVA 0x63e863 SIG 000101118091
+  IL_0000 ldarg.0         
+  IL_0001 stsfld         ProjectedShadow::s_ShadowColor token(0x04012374)
+  IL_0006 ret             
+
+0x06015344 ProjectedShadow::EnableShadow() RVA 0x63e86b SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          ProjectedShadow::m_ShadowEnabled token(0x0401236A)
+  IL_0007 ret             
+
+0x06015345 ProjectedShadow::EnableShadow(FadeInTime) RVA 0x63e874 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          ProjectedShadow::m_ShadowEnabled token(0x0401236A)
+  IL_0007 call           iTweenManager::Get token(0x0A000228)
+  IL_000c callvirt       iTweenManager::GetTweenHashTable token(0x0A000229)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldstr          'from' string token(0x700128CC)
+  IL_0018 ldc.r4         0.0 
+  IL_001d box            System.Single token(0x01000074)
+  IL_0022 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0027 ldloc.0         
+  IL_0028 ldstr          'to' string token(0x700128D6)
+  IL_002d ldc.r4         1.0 
+  IL_0032 box            System.Single token(0x01000074)
+  IL_0037 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_003c ldloc.0         
+  IL_003d ldstr          'time' string token(0x70001972)
+  IL_0042 ldarg.1         
+  IL_0043 box            System.Single token(0x01000074)
+  IL_0048 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_004d ldloc.0         
+  IL_004e ldstr          'easetype' string token(0x700061FD)
+  IL_0053 ldc.i4.3        
+  IL_0054 box            EaseType token(0x01000089)
+  IL_0059 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_005e ldloc.0         
+  IL_005f ldstr          'onupdate' string token(0x700128DC)
+  IL_0064 ldstr          'UpdateShadowColor' string token(0x703F7BFE)
+  IL_0069 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_006e ldloc.0         
+  IL_006f ldstr          'onupdatetarget' string token(0x700128EE)
+  IL_0074 ldarg.0         
+  IL_0075 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_007a callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_007f ldloc.0         
+  IL_0080 ldstr          'name' string token(0x7000E398)
+  IL_0085 ldstr          'ProjectedShadowFade' string token(0x703F7C22)
+  IL_008a callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_008f ldarg.0         
+  IL_0090 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0095 ldstr          'ProjectedShadowFade' string token(0x703F7C22)
+  IL_009a call           iTween::StopByName token(0x0A0003AB)
+  IL_009f ldarg.0         
+  IL_00a0 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00a5 ldloc.0         
+  IL_00a6 call           iTween::ValueTo token(0x0A0004D1)
+  IL_00ab ret             
+
+0x06015346 ProjectedShadow::DisableShadow() RVA 0x63e92c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           ProjectedShadow::DisableShadowProjector token(0x0601534C)
+  IL_0006 ret             
+
+0x06015347 ProjectedShadow::DisableShadow(FadeOutTime) RVA 0x63e934 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brtrue.s       IL_0016 
+  IL_000e ldarg.0         
+  IL_000f ldfld          ProjectedShadow::m_ShadowEnabled token(0x0401236A)
+  IL_0014 brtrue.s       IL_0017 
+  IL_0016 ret             
+  IL_0017 call           iTweenManager::Get token(0x0A000228)
+  IL_001c callvirt       iTweenManager::GetTweenHashTable token(0x0A000229)
+  IL_0021 stloc.0         
+  IL_0022 ldloc.0         
+  IL_0023 ldstr          'from' string token(0x700128CC)
+  IL_0028 ldc.r4         1.0 
+  IL_002d box            System.Single token(0x01000074)
+  IL_0032 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0037 ldloc.0         
+  IL_0038 ldstr          'to' string token(0x700128D6)
+  IL_003d ldc.r4         0.0 
+  IL_0042 box            System.Single token(0x01000074)
+  IL_0047 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_004c ldloc.0         
+  IL_004d ldstr          'time' string token(0x70001972)
+  IL_0052 ldarg.1         
+  IL_0053 box            System.Single token(0x01000074)
+  IL_0058 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_005d ldloc.0         
+  IL_005e ldstr          'easetype' string token(0x700061FD)
+  IL_0063 ldc.i4.4        
+  IL_0064 box            EaseType token(0x01000089)
+  IL_0069 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_006e ldloc.0         
+  IL_006f ldstr          'onupdate' string token(0x700128DC)
+  IL_0074 ldstr          'UpdateShadowColor' string token(0x703F7BFE)
+  IL_0079 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_007e ldloc.0         
+  IL_007f ldstr          'onupdatetarget' string token(0x700128EE)
+  IL_0084 ldarg.0         
+  IL_0085 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_008a callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_008f ldloc.0         
+  IL_0090 ldstr          'name' string token(0x7000E398)
+  IL_0095 ldstr          'ProjectedShadowFade' string token(0x703F7C22)
+  IL_009a callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_009f ldloc.0         
+  IL_00a0 ldstr          'oncomplete' string token(0x7000197C)
+  IL_00a5 ldstr          'DisableShadowProjector' string token(0x703F7C4A)
+  IL_00aa callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_00af ldarg.0         
+  IL_00b0 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00b5 ldstr          'ProjectedShadowFade' string token(0x703F7C22)
+  IL_00ba call           iTween::StopByName token(0x0A0003AB)
+  IL_00bf ldarg.0         
+  IL_00c0 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00c5 ldloc.0         
+  IL_00c6 call           iTween::ValueTo token(0x0A0004D1)
+  IL_00cb ret             
+
+0x06015348 ProjectedShadow::UpdateContactShadow(spell,prevStateType,userData) RVA 0x63ea0c SIG 20030112c000ac1c1182811c
+  IL_0000 ldarg.0         
+  IL_0001 call           ProjectedShadow::UpdateContactShadow token(0x0601534B)
+  IL_0006 ret             
+
+0x06015349 ProjectedShadow::UpdateContactShadow(spell,userData) RVA 0x63ea0c SIG 20020112c000ac1c1c
+  IL_0000 ldarg.0         
+  IL_0001 call           ProjectedShadow::UpdateContactShadow token(0x0601534B)
+  IL_0006 ret             
+
+0x0601534a ProjectedShadow::UpdateContactShadow(spell) RVA 0x63ea0c SIG 20010112c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 call           ProjectedShadow::UpdateContactShadow token(0x0601534B)
+  IL_0006 ret             
+
+0x0601534b ProjectedShadow::UpdateContactShadow() RVA 0x63ea14 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_ContactShadow token(0x0401236F)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldc.i4.1        
+  IL_000b stfld          ProjectedShadow::m_isDirtyContactShadow token(0x04012371)
+  IL_0010 ret             
+
+0x0601534c ProjectedShadow::DisableShadowProjector() RVA 0x63ea26 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_000c brfalse.s      IL_001a 
+  IL_000e ldarg.0         
+  IL_000f ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_0014 ldc.i4.0        
+  IL_0015 callvirt       UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_001a ldarg.0         
+  IL_001b ldc.i4.0        
+  IL_001c stfld          ProjectedShadow::m_ShadowEnabled token(0x0401236A)
+  IL_0021 ret             
+
+0x0601534d ProjectedShadow::UpdateShadowColor(val) RVA 0x63ea4c SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brtrue.s       IL_0021 
+  IL_000e ldarg.0         
+  IL_000f ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_0014 callvirt       DecalProjector::get_Material token(0x0601621F)
+  IL_0019 ldnull          
+  IL_001a call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001f brfalse.s      IL_0022 
+  IL_0021 ret             
+  IL_0022 ldc.r4         0.5 
+  IL_0027 ldc.r4         0.5 
+  IL_002c ldc.r4         0.5 
+  IL_0031 ldc.r4         0.5 
+  IL_0036 newobj         UnityEngine.Color::.ctor token(0x0A000063)
+  IL_003b ldsfld         ProjectedShadow::s_ShadowColor token(0x04012374)
+  IL_0040 ldarg.1         
+  IL_0041 call           UnityEngine.Color::Lerp token(0x0A0009EA)
+  IL_0046 stloc.0         
+  IL_0047 ldarg.0         
+  IL_0048 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_004d callvirt       DecalProjector::get_Material token(0x0601621F)
+  IL_0052 ldstr          '_Color' string token(0x70005D88)
+  IL_0057 ldloc.0         
+  IL_0058 callvirt       UnityEngine.Material::SetColor token(0x0A000223)
+  IL_005d ret             
+
+0x0601534e ProjectedShadow::RenderShadowMask() RVA 0x63eab8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_000b stloc.0         
+  IL_000c ldsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_0011 ldc.r4         10.0 
+  IL_0016 sub             
+  IL_0017 stsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_001c ldsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_0021 ldc.r4         -19000.0 
+  IL_0026 bge.un.s       IL_0032 
+  IL_0028 ldc.r4         -12000.0 
+  IL_002d stsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_0032 call           UnityEngine.Vector3::get_left token(0x0A0000E2)
+  IL_0037 ldsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_003c call           UnityEngine.Vector3::op_Multiply token(0x0A0000DF)
+  IL_0041 stloc.1         
+  IL_0042 ldarg.0         
+  IL_0043 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0048 ldloc.1         
+  IL_0049 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_004e ldarg.0         
+  IL_004f call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0054 call           TransformUtil::ComputeWorldScale token(0x06014FFE)
+  IL_0059 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_005e stloc.2         
+  IL_005f ldarg.0         
+  IL_0060 ldfld          ProjectedShadow::m_ShadowProjectorSize token(0x04012369)
+  IL_0065 ldloc.2         
+  IL_0066 mul             
+  IL_0067 ldc.r4         0.10999999940395355 
+  IL_006c sub             
+  IL_006d ldc.r4         0.05000000074505806 
+  IL_0072 sub             
+  IL_0073 stloc.3         
+  IL_0074 ldarg.0         
+  IL_0075 ldloc.2         
+  IL_0076 stfld          ProjectedShadow::m_LastWorldScale token(0x04012384)
+  IL_007b ldarg.0         
+  IL_007c ldarg.0         
+  IL_007d ldfld          ProjectedShadow::m_ShadowTexture token(0x04012379)
+  IL_0082 ldloc.1         
+  IL_0083 ldloc.3         
+  IL_0084 ldc.i4.0        
+  IL_0085 call           ProjectedShadow::RenderToShadowTexture token(0x06015351)
+  IL_008a ldarg.0         
+  IL_008b ldfld          ProjectedShadow::m_ShadowMaterial token(0x04012388)
+  IL_0090 ldstr          '_MainTex' string token(0x700003AB)
+  IL_0095 ldarg.0         
+  IL_0096 ldfld          ProjectedShadow::m_ShadowTexture token(0x04012379)
+  IL_009b callvirt       UnityEngine.Material::SetTexture token(0x0A000061)
+  IL_00a0 ldarg.0         
+  IL_00a1 ldfld          ProjectedShadow::m_ShadowMaterial token(0x04012388)
+  IL_00a6 ldstr          '_Color' string token(0x70005D88)
+  IL_00ab ldsfld         ProjectedShadow::s_ShadowColor token(0x04012374)
+  IL_00b0 callvirt       UnityEngine.Material::SetColor token(0x0A000223)
+  IL_00b5 ldarg.0         
+  IL_00b6 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00bb ldloc.0         
+  IL_00bc callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_00c1 ret             
+
+0x0601534f ProjectedShadow::DelayRenderContactShadow() RVA 0x63eb88 SIG 2000118719
+  IL_0000 ldloca.s       local(0x0000) 
+  IL_0002 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::Create token(0x0A00102D)
+  IL_0007 stfld          <DelayRenderContactShadow>d__86::<>t__builder token(0x04012396)
+  IL_000c ldloca.s       local(0x0000) 
+  IL_000e ldarg.0         
+  IL_000f stfld          <DelayRenderContactShadow>d__86::<>4__this token(0x04012397)
+  IL_0014 ldloca.s       local(0x0000) 
+  IL_0016 ldc.i4.m1       
+  IL_0017 stfld          <DelayRenderContactShadow>d__86::<>1__state token(0x04012395)
+  IL_001c ldloca.s       local(0x0000) 
+  IL_001e ldflda         <DelayRenderContactShadow>d__86::<>t__builder token(0x04012396)
+  IL_0023 ldloca.s       local(0x0000) 
+  IL_0025 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::Start<spec> token(0x2B0009D1)
+  IL_002a ldloca.s       local(0x0000) 
+  IL_002c ldflda         <DelayRenderContactShadow>d__86::<>t__builder token(0x04012396)
+  IL_0031 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::get_Task token(0x0A00102F)
+  IL_0036 ret             
+
+0x06015350 ProjectedShadow::RenderContactShadow() RVA 0x63ebcc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_graphicsManager token(0x04012381)
+  IL_0006 brfalse.s      IL_0024 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          ProjectedShadow::m_graphicsManager token(0x04012381)
+  IL_000e callvirt       IGraphicsManager::get_RealtimeShadows token(0x0A005128)
+  IL_0013 brfalse.s      IL_0024 
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          ProjectedShadow::m_enabledAlongsideRealtimeShadows token(0x04012372)
+  IL_001b brtrue.s       IL_0024 
+  IL_001d ldarg.0         
+  IL_001e ldc.i4.0        
+  IL_001f call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0030 brfalse.s      IL_0048 
+  IL_0032 ldarg.0         
+  IL_0033 ldfld          ProjectedShadow::m_isDirtyContactShadow token(0x04012371)
+  IL_0038 brtrue.s       IL_0048 
+  IL_003a ldarg.0         
+  IL_003b ldfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_0040 callvirt       UnityEngine.RenderTexture::IsCreated token(0x0A0050F3)
+  IL_0045 brfalse.s      IL_0048 
+  IL_0047 ret             
+  IL_0048 ldarg.0         
+  IL_0049 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_004e ldnull          
+  IL_004f call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0054 brfalse.s      IL_005c 
+  IL_0056 ldarg.0         
+  IL_0057 call           ProjectedShadow::CreateRenderPlane token(0x06015353)
+  IL_005c ldarg.0         
+  IL_005d ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0062 ldc.i4.1        
+  IL_0063 callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_0068 ldarg.0         
+  IL_0069 ldfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_006e ldnull          
+  IL_006f call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0074 brfalse.s      IL_0092 
+  IL_0076 ldarg.0         
+  IL_0077 call           RenderTextureTracker::Get token(0x06004590)
+  IL_007c ldc.i4.s       64 
+  IL_007e ldc.i4.s       64 
+  IL_0080 ldsfld         RenderTextureTracker::TEXTURE_DEPTH token(0x0400309D)
+  IL_0085 ldc.i4.s       16 
+  IL_0087 ldc.i4.0        
+  IL_0088 callvirt       RenderTextureTracker::CreateNewTexture token(0x06004591)
+  IL_008d stfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_0092 ldarg.0         
+  IL_0093 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0098 callvirt       UnityEngine.Transform::get_localRotation token(0x0A000CDB)
+  IL_009d stloc.0         
+  IL_009e ldarg.0         
+  IL_009f call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00a4 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_00a9 stloc.1         
+  IL_00aa ldarg.0         
+  IL_00ab call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00b0 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_00b5 stloc.2         
+  IL_00b6 ldsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_00bb ldc.r4         10.0 
+  IL_00c0 sub             
+  IL_00c1 stsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_00c6 ldsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_00cb ldc.r4         -19000.0 
+  IL_00d0 bge.un.s       IL_00dc 
+  IL_00d2 ldc.r4         -12000.0 
+  IL_00d7 stsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_00dc call           UnityEngine.Vector3::get_left token(0x0A0000E2)
+  IL_00e1 ldsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_00e6 call           UnityEngine.Vector3::op_Multiply token(0x0A0000DF)
+  IL_00eb stloc.3         
+  IL_00ec ldarg.0         
+  IL_00ed call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00f2 ldloc.3         
+  IL_00f3 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_00f8 ldarg.0         
+  IL_00f9 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00fe call           UnityEngine.Quaternion::get_identity token(0x0A00021E)
+  IL_0103 callvirt       UnityEngine.Transform::set_rotation token(0x0A000B50)
+  IL_0108 ldarg.0         
+  IL_0109 ldarg.0         
+  IL_010a call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_010f call           UnityEngine.Vector3::get_one token(0x0A000165)
+  IL_0114 call           ProjectedShadow::SetWorldScale token(0x06015354)
+  IL_0119 ldarg.0         
+  IL_011a ldfld          ProjectedShadow::m_ShadowProjectorSize token(0x04012369)
+  IL_011f ldc.r4         0.10999999940395355 
+  IL_0124 sub             
+  IL_0125 ldc.r4         0.15000000596046448 
+  IL_012a sub             
+  IL_012b stloc.s        local(0x0004) 
+  IL_012d ldarg.0         
+  IL_012e ldarg.0         
+  IL_012f ldfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_0134 ldloc.3         
+  IL_0135 ldloc.s        local(0x0004) 
+  IL_0137 ldc.i4.1        
+  IL_0138 call           ProjectedShadow::RenderToShadowTexture token(0x06015351)
+  IL_013d ldarg.0         
+  IL_013e call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0143 ldloc.0         
+  IL_0144 callvirt       UnityEngine.Transform::set_localRotation token(0x0A00021F)
+  IL_0149 ldarg.0         
+  IL_014a call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_014f ldloc.1         
+  IL_0150 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0155 ldarg.0         
+  IL_0156 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_015b ldloc.2         
+  IL_015c callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0161 ldarg.0         
+  IL_0162 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0167 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000007)
+  IL_016c call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetSharedMaterial token(0x0A000974)
+  IL_0171 ldarg.0         
+  IL_0172 ldfld          ProjectedShadow::m_ContactShadowTexture token(0x0401237A)
+  IL_0177 callvirt       UnityEngine.Material::set_mainTexture token(0x0A0000AE)
+  IL_017c ldarg.0         
+  IL_017d ldc.i4.0        
+  IL_017e stfld          ProjectedShadow::m_isDirtyContactShadow token(0x04012371)
+  IL_0183 ret             
+
+0x06015351 ProjectedShadow::RenderToShadowTexture(destTexture,renderPosition,halfSize,isContactShadow) RVA 0x63ed5c SIG 200401128315115d0c02
+  IL_0000 ldarg.2         
+  IL_0001 ldc.r4         90.0 
+  IL_0006 ldc.r4         0.0 
+  IL_000b ldc.r4         0.0 
+  IL_0010 call           UnityEngine.Quaternion::Euler token(0x0A000D67)
+  IL_0015 ldc.r4         1.0 
+  IL_001a ldc.r4         1.0 
+  IL_001f ldc.r4         -1.0 
+  IL_0024 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0029 call           UnityEngine.Matrix4x4::TRS token(0x0A0027BD)
+  IL_002e stloc.2         
+  IL_002f ldloca.s       local(0x0002) 
+  IL_0031 call           UnityEngine.Matrix4x4::get_inverse token(0x0A0027BE)
+  IL_0036 stloc.0         
+  IL_0037 ldarg.3         
+  IL_0038 neg             
+  IL_0039 ldarg.3         
+  IL_003a ldarg.3         
+  IL_003b neg             
+  IL_003c ldarg.3         
+  IL_003d ldc.r4         -3.0 
+  IL_0042 ldc.r4         3.0 
+  IL_0047 call           UnityEngine.Matrix4x4::Ortho token(0x0A0027BF)
+  IL_004c stloc.1         
+  IL_004d ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_0052 ldarg.1         
+  IL_0053 call           UnityEngine.Rendering.RenderTargetIdentifier::op_Implicit token(0x0A0027CB)
+  IL_0058 callvirt       UnityEngine.Rendering.CommandBuffer::SetRenderTarget token(0x0A004071)
+  IL_005d ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_0062 ldc.i4.1        
+  IL_0063 ldc.i4.1        
+  IL_0064 call           UnityEngine.Color::get_clear token(0x0A0000BC)
+  IL_0069 callvirt       UnityEngine.Rendering.CommandBuffer::ClearRenderTarget token(0x0A0027C7)
+  IL_006e ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_0073 ldloc.0         
+  IL_0074 ldloc.1         
+  IL_0075 callvirt       UnityEngine.Rendering.CommandBuffer::SetViewProjectionMatrices token(0x0A0027C8)
+  IL_007a ldarg.0         
+  IL_007b ldc.i4.0        
+  IL_007c ldarg.0         
+  IL_007d ldfld          ProjectedShadow::m_objectsToRender token(0x04012382)
+  IL_0082 call           UnityEngine.Component::GetComponentsInChildren<spec> token(0x2B0009D2)
+  IL_0087 ldarg.0         
+  IL_0088 ldfld          ProjectedShadow::m_objectsToRender token(0x04012382)
+  IL_008d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f648c04ab70>::GetEnumerator token(0x0A000462)
+  IL_0092 stloc.3         
+  IL_0093 br             IL_0127 
+  IL_0098 ldloca.s       local(0x0003) 
+  IL_009a call           <dnfile.mdtable.TypeSpecRow object at 0x7f648c04ad20>::get_Current token(0x0A000463)
+  IL_009f stloc.s        local(0x0004) 
+  IL_00a1 ldloc.s        local(0x0004) 
+  IL_00a3 callvirt       UnityEngine.Renderer::get_enabled token(0x0A000D18)
+  IL_00a8 brfalse.s      IL_0127 
+  IL_00aa ldloc.s        local(0x0004) 
+  IL_00ac ldarg.0         
+  IL_00ad ldfld          ProjectedShadow::m_materialsTempList token(0x04012385)
+  IL_00b2 callvirt       UnityEngine.Renderer::GetSharedMaterials token(0x0A000D7A)
+  IL_00b7 ldarg.0         
+  IL_00b8 ldfld          ProjectedShadow::m_materialsTempList token(0x04012385)
+  IL_00bd callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f648c008da0>::get_Count token(0x0A0001D3)
+  IL_00c2 stloc.s        local(0x0005) 
+  IL_00c4 ldc.i4.0        
+  IL_00c5 stloc.s        local(0x0006) 
+  IL_00c7 br.s           IL_0121 
+  IL_00c9 ldarg.0         
+  IL_00ca ldfld          ProjectedShadow::m_materialsTempList token(0x04012385)
+  IL_00cf ldloc.s        local(0x0006) 
+  IL_00d1 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f648c008da0>::get_Item token(0x0A0009A1)
+  IL_00d6 stloc.s        local(0x0007) 
+  IL_00d8 ldloc.s        local(0x0007) 
+  IL_00da ldnull          
+  IL_00db call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00e0 brfalse.s      IL_011b 
+  IL_00e2 ldloc.s        local(0x0007) 
+  IL_00e4 ldstr          'Highlight' string token(0x703F6EFF)
+  IL_00e9 ldc.i4.0        
+  IL_00ea callvirt       UnityEngine.Material::GetTag token(0x0A0027DF)
+  IL_00ef ldstr          '' string token(0x70000E3C)
+  IL_00f4 call           System.String::op_Inequality token(0x0A00018E)
+  IL_00f9 brfalse.s      IL_011b 
+  IL_00fb ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_0100 ldloc.s        local(0x0004) 
+  IL_0102 ldarg.s        argument(0x0004) 
+  IL_0104 brtrue.s       IL_010e 
+  IL_0106 ldarg.0         
+  IL_0107 call           ProjectedShadow::get_WhiteMaterial token(0x06015337)
+  IL_010c br.s           IL_0114 
+  IL_010e ldarg.0         
+  IL_010f call           ProjectedShadow::get_UnlitDarkGreyMaterial token(0x06015338)
+  IL_0114 ldloc.s        local(0x0006) 
+  IL_0116 callvirt       UnityEngine.Rendering.CommandBuffer::DrawRenderer token(0x0A0050F8)
+  IL_011b ldloc.s        local(0x0006) 
+  IL_011d ldc.i4.1        
+  IL_011e add             
+  IL_011f stloc.s        local(0x0006) 
+  IL_0121 ldloc.s        local(0x0006) 
+  IL_0123 ldloc.s        local(0x0005) 
+  IL_0125 blt.s          IL_00c9 
+  IL_0127 ldloca.s       local(0x0003) 
+  IL_0129 call           <dnfile.mdtable.TypeSpecRow object at 0x7f648c04ad20>::MoveNext token(0x0A000464)
+  IL_012e brtrue         IL_0098 
+  IL_0133 leave.s        IL_0143 
+  IL_0135 ldloca.s       local(0x0003) 
+  IL_0137 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f648c04ad20> token(0x1B00014A)
+  IL_013d callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0142 endfinally      
+  IL_0143 ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_0148 ldsfld         ProjectedShadow::BLUR_OFFSETS_ID token(0x04012365)
+  IL_014d call           UnityEngine.Vector4::get_one token(0x0A0050F9)
+  IL_0152 ldc.r4         -0.6000000238418579 
+  IL_0157 call           UnityEngine.Vector4::op_Multiply token(0x0A000DCD)
+  IL_015c callvirt       UnityEngine.Rendering.CommandBuffer::SetGlobalVector token(0x0A0027CC)
+  IL_0161 ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_0166 ldarg.1         
+  IL_0167 ldsfld         ProjectedShadow::s_tempBuffer token(0x04012364)
+  IL_016c call           UnityEngine.Rendering.RenderTargetIdentifier::op_Implicit token(0x0A0027CB)
+  IL_0171 ldarg.0         
+  IL_0172 call           ProjectedShadow::get_MultiSampleMaterial token(0x0601533A)
+  IL_0177 callvirt       UnityEngine.Rendering.CommandBuffer::Blit token(0x0A004072)
+  IL_017c ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_0181 ldsfld         ProjectedShadow::BLUR_OFFSETS_ID token(0x04012365)
+  IL_0186 call           UnityEngine.Vector4::get_one token(0x0A0050F9)
+  IL_018b ldc.r4         -0.800000011920929 
+  IL_0190 call           UnityEngine.Vector4::op_Multiply token(0x0A000DCD)
+  IL_0195 callvirt       UnityEngine.Rendering.CommandBuffer::SetGlobalVector token(0x0A0027CC)
+  IL_019a ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_019f ldsfld         ProjectedShadow::s_tempBuffer token(0x04012364)
+  IL_01a4 ldarg.1         
+  IL_01a5 call           UnityEngine.Rendering.RenderTargetIdentifier::op_Implicit token(0x0A0027CB)
+  IL_01aa ldarg.0         
+  IL_01ab call           ProjectedShadow::get_MultiSampleMaterial token(0x0601533A)
+  IL_01b0 callvirt       UnityEngine.Rendering.CommandBuffer::Blit token(0x0A004072)
+  IL_01b5 ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_01ba call           UnityEngine.Graphics::ExecuteCommandBuffer token(0x0A004074)
+  IL_01bf ldsfld         ProjectedShadow::s_commandBuffer token(0x04012363)
+  IL_01c4 callvirt       UnityEngine.Rendering.CommandBuffer::Clear token(0x0A004075)
+  IL_01c9 ret             
+
+0x06015352 ProjectedShadow::CreateProjector() RVA 0x63ef44 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_ProjectorGameObject token(0x04012376)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_000c brfalse.s      IL_0027 
+  IL_000e ldarg.0         
+  IL_000f ldfld          ProjectedShadow::m_ProjectorGameObject token(0x04012376)
+  IL_0014 call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_0019 ldarg.0         
+  IL_001a ldnull          
+  IL_001b stfld          ProjectedShadow::m_ProjectorGameObject token(0x04012376)
+  IL_0020 ldarg.0         
+  IL_0021 ldnull          
+  IL_0022 stfld          ProjectedShadow::m_ProjectorTransform token(0x04012377)
+  IL_0027 ldarg.0         
+  IL_0028 ldstr          'Prefabs/ShadowProjector' string token(0x703F7C78)
+  IL_002d call           UnityEngine.Resources::Load token(0x0A002A5E)
+  IL_0032 call           UnityEngine.Object::Instantiate token(0x0A0000BA)
+  IL_0037 castclass      UnityEngine.GameObject token(0x01000023)
+  IL_003c stfld          ProjectedShadow::m_ProjectorGameObject token(0x04012376)
+  IL_0041 ldarg.0         
+  IL_0042 ldarg.0         
+  IL_0043 ldfld          ProjectedShadow::m_ProjectorGameObject token(0x04012376)
+  IL_0048 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0009D3)
+  IL_004d stfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_0052 ldarg.0         
+  IL_0053 ldarg.0         
+  IL_0054 ldfld          ProjectedShadow::m_ProjectorGameObject token(0x04012376)
+  IL_0059 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_005e stfld          ProjectedShadow::m_ProjectorTransform token(0x04012377)
+  IL_0063 ldarg.0         
+  IL_0064 ldfld          ProjectedShadow::m_ProjectorTransform token(0x04012377)
+  IL_0069 ldc.r4         90.0 
+  IL_006e ldc.r4         0.0 
+  IL_0073 ldc.r4         0.0 
+  IL_0078 callvirt       UnityEngine.Transform::Rotate token(0x0A00112D)
+  IL_007d ldarg.0         
+  IL_007e ldfld          ProjectedShadow::m_RootObject token(0x04012375)
+  IL_0083 ldnull          
+  IL_0084 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0089 brfalse.s      IL_00a1 
+  IL_008b ldarg.0         
+  IL_008c ldfld          ProjectedShadow::m_ProjectorTransform token(0x04012377)
+  IL_0091 ldarg.0         
+  IL_0092 ldfld          ProjectedShadow::m_RootObject token(0x04012375)
+  IL_0097 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_009c callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_00a1 ldarg.0         
+  IL_00a2 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_00a7 ldc.r4         0.0 
+  IL_00ac callvirt       DecalProjector::set_NearClipPlane token(0x0601621C)
+  IL_00b1 ldarg.0         
+  IL_00b2 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_00b7 ldarg.0         
+  IL_00b8 ldfld          ProjectedShadow::m_ProjectionFarClip token(0x0401236D)
+  IL_00bd callvirt       DecalProjector::set_FarClipPlane token(0x0601621E)
+  IL_00c2 ldarg.0         
+  IL_00c3 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_00c8 ldarg.0         
+  IL_00c9 ldfld          ProjectedShadow::m_AdjustedShadowProjectorSize token(0x0401237B)
+  IL_00ce callvirt       DecalProjector::set_OrthographicSize token(0x0601621A)
+  IL_00d3 ldarg.0         
+  IL_00d4 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_00d9 ldc.i4.s       61 
+  IL_00db call           Blizzard.T5.Core.Utils.GameObjectUtils::SetHideFlags token(0x0A00112E)
+  IL_00e0 ldarg.0         
+  IL_00e1 ldarg.0         
+  IL_00e2 ldfld          ProjectedShadow::m_Projector token(0x04012378)
+  IL_00e7 callvirt       DecalProjector::get_Material token(0x0601621F)
+  IL_00ec stfld          ProjectedShadow::m_ShadowMaterial token(0x04012388)
+  IL_00f1 ldarg.0         
+  IL_00f2 ldc.i4.1        
+  IL_00f3 stfld          ProjectedShadow::m_projectorShadowDelay token(0x04012383)
+  IL_00f8 ret             
+
+0x06015353 ProjectedShadow::CreateRenderPlane() RVA 0x63f04c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_000c brfalse.s      IL_0019 
+  IL_000e ldarg.0         
+  IL_000f ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0014 call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_0019 ldarg.0         
+  IL_001a newobj         UnityEngine.GameObject::.ctor token(0x0A000583)
+  IL_001f stfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_002a ldarg.0         
+  IL_002b call           UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_0030 ldstr          '_ContactShadowRenderPlane' string token(0x703F7CA8)
+  IL_0035 call           System.String::Concat token(0x0A0000C0)
+  IL_003a callvirt       UnityEngine.Object::set_name token(0x0A000050)
+  IL_003f ldarg.0         
+  IL_0040 ldfld          ProjectedShadow::m_RootObject token(0x04012375)
+  IL_0045 ldnull          
+  IL_0046 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_004b brfalse.s      IL_0068 
+  IL_004d ldarg.0         
+  IL_004e ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0053 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0058 ldarg.0         
+  IL_0059 ldfld          ProjectedShadow::m_RootObject token(0x04012375)
+  IL_005e callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0063 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0068 ldarg.0         
+  IL_0069 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_006e callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0073 ldarg.0         
+  IL_0074 ldfld          ProjectedShadow::m_ContactOffset token(0x04012370)
+  IL_0079 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_007e ldarg.0         
+  IL_007f ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0084 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0089 call           UnityEngine.Quaternion::get_identity token(0x0A00021E)
+  IL_008e callvirt       UnityEngine.Transform::set_localRotation token(0x0A00021F)
+  IL_0093 ldarg.0         
+  IL_0094 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0099 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_009e ldc.r4         0.9800000190734863 
+  IL_00a3 ldc.r4         1.0 
+  IL_00a8 ldc.r4         0.9800000190734863 
+  IL_00ad newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_00b2 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_00b7 ldarg.0         
+  IL_00b8 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_00bd callvirt       UnityEngine.GameObject::AddComponent<spec> token(0x2B000003)
+  IL_00c2 pop             
+  IL_00c3 ldarg.0         
+  IL_00c4 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_00c9 callvirt       UnityEngine.GameObject::AddComponent<spec> token(0x2B000005)
+  IL_00ce pop             
+  IL_00cf ldarg.0         
+  IL_00d0 ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_00d5 ldc.i4.s       61 
+  IL_00d7 call           Blizzard.T5.Core.Utils.GameObjectUtils::SetHideFlags token(0x0A00112E)
+  IL_00dc newobj         UnityEngine.Mesh::.ctor token(0x0A00004F)
+  IL_00e1 stloc.0         
+  IL_00e2 ldloc.0         
+  IL_00e3 ldstr          'ContactShadowMeshPlane' string token(0x703F7CDC)
+  IL_00e8 callvirt       UnityEngine.Object::set_name token(0x0A000050)
+  IL_00ed ldarg.0         
+  IL_00ee ldfld          ProjectedShadow::m_ShadowProjectorSize token(0x04012369)
+  IL_00f3 stloc.1         
+  IL_00f4 ldarg.0         
+  IL_00f5 ldfld          ProjectedShadow::m_ShadowProjectorSize token(0x04012369)
+  IL_00fa stloc.2         
+  IL_00fb ldloc.0         
+  IL_00fc ldc.i4.4        
+  IL_00fd newarr         UnityEngine.Vector3 token(0x01000017)
+  IL_0102 dup             
+  IL_0103 ldc.i4.0        
+  IL_0104 ldloc.1         
+  IL_0105 neg             
+  IL_0106 ldc.r4         0.0 
+  IL_010b ldloc.2         
+  IL_010c neg             
+  IL_010d newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0112 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0117 dup             
+  IL_0118 ldc.i4.1        
+  IL_0119 ldloc.1         
+  IL_011a ldc.r4         0.0 
+  IL_011f ldloc.2         
+  IL_0120 neg             
+  IL_0121 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0126 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_012b dup             
+  IL_012c ldc.i4.2        
+  IL_012d ldloc.1         
+  IL_012e neg             
+  IL_012f ldc.r4         0.0 
+  IL_0134 ldloc.2         
+  IL_0135 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_013a stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_013f dup             
+  IL_0140 ldc.i4.3        
+  IL_0141 ldloc.1         
+  IL_0142 ldc.r4         0.0 
+  IL_0147 ldloc.2         
+  IL_0148 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_014d stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0152 callvirt       UnityEngine.Mesh::set_vertices token(0x0A000051)
+  IL_0157 ldloc.0         
+  IL_0158 ldarg.0         
+  IL_0159 ldfld          ProjectedShadow::PLANE_UVS token(0x04012366)
+  IL_015e callvirt       UnityEngine.Mesh::set_uv token(0x0A000053)
+  IL_0163 ldloc.0         
+  IL_0164 ldarg.0         
+  IL_0165 ldfld          ProjectedShadow::PLANE_NORMALS token(0x04012367)
+  IL_016a callvirt       UnityEngine.Mesh::set_normals token(0x0A003FC5)
+  IL_016f ldloc.0         
+  IL_0170 ldarg.0         
+  IL_0171 ldfld          ProjectedShadow::PLANE_TRIANGLES token(0x04012368)
+  IL_0176 callvirt       UnityEngine.Mesh::set_triangles token(0x0A000052)
+  IL_017b ldarg.0         
+  IL_017c ldarg.0         
+  IL_017d ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_0182 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000193)
+  IL_0187 ldloc.0         
+  IL_0188 dup             
+  IL_0189 stloc.3         
+  IL_018a callvirt       UnityEngine.MeshFilter::set_mesh token(0x0A000055)
+  IL_018f ldloc.3         
+  IL_0190 stfld          ProjectedShadow::m_PlaneMesh token(0x0401237E)
+  IL_0195 ldarg.0         
+  IL_0196 ldfld          ProjectedShadow::m_PlaneMesh token(0x0401237E)
+  IL_019b callvirt       UnityEngine.Mesh::RecalculateBounds token(0x0A003FC7)
+  IL_01a0 ldarg.0         
+  IL_01a1 ldarg.0         
+  IL_01a2 call           ProjectedShadow::get_ContactShadowMaterial token(0x06015339)
+  IL_01a7 stfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_01ac ldarg.0         
+  IL_01ad ldfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_01b2 ldsfld         ProjectedShadow::s_ShadowColor token(0x04012374)
+  IL_01b7 callvirt       UnityEngine.Material::set_color token(0x0A0009ED)
+  IL_01bc ldarg.0         
+  IL_01bd ldfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_01c2 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_01c7 brfalse.s      IL_01df 
+  IL_01c9 ldarg.0         
+  IL_01ca ldfld          ProjectedShadow::m_PlaneGameObject token(0x0401237F)
+  IL_01cf callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000007)
+  IL_01d4 ldarg.0         
+  IL_01d5 ldfld          ProjectedShadow::m_ContactShadowMaterial token(0x0401238C)
+  IL_01da call           Blizzard.T5.MaterialService.Extensions.RendererExtension::SetSharedMaterial token(0x0A000277)
+  IL_01df ret             
+
+0x06015354 ProjectedShadow::SetWorldScale(xform,scale) RVA 0x63f238 SIG 2002011280a5115d
+  IL_0000 newobj         UnityEngine.GameObject::.ctor token(0x0A000583)
+  IL_0005 dup             
+  IL_0006 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_000b stloc.0         
+  IL_000c ldloc.0         
+  IL_000d ldnull          
+  IL_000e callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0013 ldloc.0         
+  IL_0014 call           UnityEngine.Quaternion::get_identity token(0x0A00021E)
+  IL_0019 callvirt       UnityEngine.Transform::set_localRotation token(0x0A00021F)
+  IL_001e ldloc.0         
+  IL_001f call           UnityEngine.Vector3::get_one token(0x0A000165)
+  IL_0024 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0029 ldarg.1         
+  IL_002a callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_002f stloc.1         
+  IL_0030 ldarg.1         
+  IL_0031 ldloc.0         
+  IL_0032 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0037 ldarg.1         
+  IL_0038 ldarg.2         
+  IL_0039 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_003e ldarg.1         
+  IL_003f ldloc.1         
+  IL_0040 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0045 call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_004a ret             
+
+0x06015355 ProjectedShadow::.ctor() RVA 0x63f290 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.4        
+  IL_0002 newarr         UnityEngine.Vector2 token(0x0100001D)
+  IL_0007 dup             
+  IL_0008 ldc.i4.0        
+  IL_0009 ldc.r4         0.0 
+  IL_000e ldc.r4         0.0 
+  IL_0013 newobj         UnityEngine.Vector2::.ctor token(0x0A00004E)
+  IL_0018 stelem         UnityEngine.Vector2 token(0x0100001D)
+  IL_001d dup             
+  IL_001e ldc.i4.1        
+  IL_001f ldc.r4         1.0 
+  IL_0024 ldc.r4         0.0 
+  IL_0029 newobj         UnityEngine.Vector2::.ctor token(0x0A00004E)
+  IL_002e stelem         UnityEngine.Vector2 token(0x0100001D)
+  IL_0033 dup             
+  IL_0034 ldc.i4.2        
+  IL_0035 ldc.r4         0.0 
+  IL_003a ldc.r4         1.0 
+  IL_003f newobj         UnityEngine.Vector2::.ctor token(0x0A00004E)
+  IL_0044 stelem         UnityEngine.Vector2 token(0x0100001D)
+  IL_0049 dup             
+  IL_004a ldc.i4.3        
+  IL_004b ldc.r4         1.0 
+  IL_0050 ldc.r4         1.0 
+  IL_0055 newobj         UnityEngine.Vector2::.ctor token(0x0A00004E)
+  IL_005a stelem         UnityEngine.Vector2 token(0x0100001D)
+  IL_005f stfld          ProjectedShadow::PLANE_UVS token(0x04012366)
+  IL_0064 ldarg.0         
+  IL_0065 ldc.i4.4        
+  IL_0066 newarr         UnityEngine.Vector3 token(0x01000017)
+  IL_006b dup             
+  IL_006c ldc.i4.0        
+  IL_006d call           UnityEngine.Vector3::get_up token(0x0A0000E4)
+  IL_0072 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0077 dup             
+  IL_0078 ldc.i4.1        
+  IL_0079 call           UnityEngine.Vector3::get_up token(0x0A0000E4)
+  IL_007e stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0083 dup             
+  IL_0084 ldc.i4.2        
+  IL_0085 call           UnityEngine.Vector3::get_up token(0x0A0000E4)
+  IL_008a stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_008f dup             
+  IL_0090 ldc.i4.3        
+  IL_0091 call           UnityEngine.Vector3::get_up token(0x0A0000E4)
+  IL_0096 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_009b stfld          ProjectedShadow::PLANE_NORMALS token(0x04012367)
+  IL_00a0 ldarg.0         
+  IL_00a1 ldc.i4.6        
+  IL_00a2 newarr         System.Int32 token(0x0100002C)
+  IL_00a7 dup             
+  IL_00a8 ldtoken        <PrivateImplementationDetails>::F743410F068E382F5CD38968D9B625EC8FE5A17DC235B579429F25AC83330D1D token(0x04016684)
+  IL_00ad call           System.Runtime.CompilerServices.RuntimeHelpers::InitializeArray token(0x0A000224)
+  IL_00b2 stfld          ProjectedShadow::PLANE_TRIANGLES token(0x04012368)
+  IL_00b7 ldarg.0         
+  IL_00b8 ldc.r4         1.5 
+  IL_00bd stfld          ProjectedShadow::m_ShadowProjectorSize token(0x04012369)
+  IL_00c2 ldarg.0         
+  IL_00c3 ldc.r4         10.0 
+  IL_00c8 stfld          ProjectedShadow::m_ProjectionFarClip token(0x0401236D)
+  IL_00cd ldarg.0         
+  IL_00ce call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_00d3 stfld          ProjectedShadow::m_ContactOffset token(0x04012370)
+  IL_00d8 ldarg.0         
+  IL_00d9 ldc.i4.1        
+  IL_00da stfld          ProjectedShadow::m_isDirtyContactShadow token(0x04012371)
+  IL_00df ldarg.0         
+  IL_00e0 ldc.r4         1.5 
+  IL_00e5 stfld          ProjectedShadow::m_AdjustedShadowProjectorSize token(0x0401237B)
+  IL_00ea ldarg.0         
+  IL_00eb ldc.r4         0.20000000298023224 
+  IL_00f0 stfld          ProjectedShadow::m_BoardHeight token(0x0401237C)
+  IL_00f5 ldarg.0         
+  IL_00f6 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f648c008da0>::.ctor token(0x0A00099D)
+  IL_00fb stfld          ProjectedShadow::m_materialsTempList token(0x04012385)
+  IL_0100 ldarg.0         
+  IL_0101 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0106 ret             
+
+0x06015356 ProjectedShadow::.cctor() RVA 0x63f3a3 SIG 000001
+  IL_0000 ldstr          '_BlurOffsets' string token(0x703F7319)
+  IL_0005 call           UnityEngine.Shader::PropertyToID token(0x0A000CBD)
+  IL_000a stsfld         ProjectedShadow::BLUR_OFFSETS_ID token(0x04012365)
+  IL_000f ldc.r4         -12000.0 
+  IL_0014 stsfld         ProjectedShadow::s_offset token(0x04012373)
+  IL_0019 ldc.r4         0.09799999743700027 
+  IL_001e ldc.r4         0.09799999743700027 
+  IL_0023 ldc.r4         0.23499999940395355 
+  IL_0028 ldc.r4         0.44999998807907104 
+  IL_002d newobj         UnityEngine.Color::.ctor token(0x0A000063)
+  IL_0032 stsfld         ProjectedShadow::s_ShadowColor token(0x04012374)
+  IL_0037 ret             

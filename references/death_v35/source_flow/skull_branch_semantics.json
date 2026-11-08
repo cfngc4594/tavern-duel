@@ -1,0 +1,33 @@
+{
+  "build": "37.0.0.255130.254477",
+  "scope": "Separate lethal-attack preview/history UI branches; not counted as ordinary death implementation.",
+  "preview": {
+    "method": "InputManager.ShowSkull(entity1, entity2, card)",
+    "token": "0x06005a5f",
+    "steps": [
+      "attack = entity1.GetRealTimeAttack(); if entity2.HasTag(421), attack = Min(attack, 1).",
+      "Return unless entity2.CanBeDamagedRealTime().",
+      "Proceed if entity2.WouldAnAttackZeroHealth(attack), or if EntityIsPoisonousForSkullPreview(entity1) and entity2.IsMinion().",
+      "If EntityIsPoisonousForSkullPreview(entity1): activate card spell7 as DamageSplatSpell, SetPoisonous(true), ActivateState2; otherwise activate card spell10.",
+      "For nonnull resulting spell, localScale=zero then iTween.ScaleTo(one, time=.5, easeType30)."
+    ],
+    "boundary": "Caller-side input selection and poison predicate internals are separate methods; this is the full ShowSkull branch, not inferred runtime timing."
+  },
+  "disable": {
+    "token": "0x06005a61",
+    "steps": [
+      "GetActorSpell(10,true); if present stop iTween, scale zero and Deactivate.",
+      "GetActorSpell(7,true); if present and card entity IsMinion, stop iTween, scale zero and Deactivate."
+    ]
+  },
+  "history": {
+    "method": "HistoryItem.DisplaySkullOnActor(actor)",
+    "token": "0x060058e1",
+    "steps": [
+      "actor.GetSpell(10); if missing return.",
+      "Activate the spell, then FadeHistoryOverlay(spell.gameObject)."
+    ],
+    "boundary": "Historical overlay eligibility is caller-side, not a normal death trigger."
+  },
+  "scan": "type10_spell_call_sites.json records original Assembly-CSharp ldc.i4.s10 sites near spell calls; this is evidence of direct usage, not proof that no dynamic/indirect invocation exists."
+}

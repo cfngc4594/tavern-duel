@@ -1,0 +1,1164 @@
+
+TYPE CardEffectType 0x02000aef
+FIELD 0x04003a37 value__ SIG 0608
+FIELD 0x04003a38 None SIG 0611abbc
+FIELD 0x04003a39 Play SIG 0611abbc
+FIELD 0x04003a3a Attack SIG 0611abbc
+FIELD 0x04003a3b Death SIG 0611abbc
+FIELD 0x04003a3c Lifetime SIG 0611abbc
+
+TYPE GameEntityOptions 0x02000b49
+FIELD 0x04003c69 m_booleanOptions SIG 06151281a10211ad2002
+FIELD 0x04003c6a m_stringOptions SIG 06151281a10211ad200e
+
+TYPE <WaitForSourceThenFinishState>d__14 0x0200255e
+FIELD 0x0400efdd <>1__state SIG 0608
+FIELD 0x0400efde <>2__current SIG 061c
+FIELD 0x0400efdf <>4__this SIG 0612c0009570
+
+TYPE CardEffectDef 0x020027e9
+FIELD 0x0400fc49 m_SpellPath SIG 060e
+FIELD 0x0400fc4a m_SoundSpellPaths SIG 06151249010e
+
+TYPE CardEffect 0x020027ea
+FIELD 0x0400fc4b m_spell SIG 0612c000ac1c
+FIELD 0x0400fc4c m_soundSpells SIG 061512490112c0009570
+FIELD 0x0400fc4d m_spellPath SIG 060e
+FIELD 0x0400fc4e m_soundSpellPaths SIG 06151249010e
+FIELD 0x0400fc4f m_owner SIG 0612c0009ebc
+
+TYPE RandomAudioClip 0x02002abd
+FIELD 0x04011a09 m_Clip SIG 060e
+FIELD 0x04011a0a m_Weight SIG 060c
+
+TYPE LimitMaxOutOption 0x02002ac2
+FIELD 0x04011a3d value__ SIG 0608
+FIELD 0x04011a3e SKIP_NEWEST SIG 0611c000ab08
+FIELD 0x04011a3f STOP_OLDEST SIG 0611c000ab08
+
+TYPE <EnableInstanceLimitedSound>d__187 0x02002acf
+FIELD 0x04011a71 <>1__state SIG 0608
+FIELD 0x04011a72 <>2__current SIG 061c
+FIELD 0x04011a73 <>4__this SIG 0612c000ab00
+FIELD 0x04011a74 sound SIG 060e
+FIELD 0x04011a75 time SIG 060c
+
+TYPE <WaitAndSpawnImpact>d__89 0x02002b3e
+FIELD 0x04011d1a <>1__state SIG 0608
+FIELD 0x04011d1b <>2__current SIG 061c
+FIELD 0x04011d1c <>4__this SIG 0612c000acd4
+FIELD 0x04011d1d targetIndex SIG 0608
+FIELD 0x04011d1e <metaDataIndex>5__2 SIG 0608
+
+TYPE <WaitAndSpawnMissile>d__78 0x02002b3f
+FIELD 0x04011d1f <>1__state SIG 0608
+FIELD 0x04011d20 <>2__current SIG 061c
+FIELD 0x04011d21 <>4__this SIG 0612c000acd4
+FIELD 0x04011d22 targetIndex SIG 0608
+
+0x0600557e GameEntityOptions::.ctor() RVA 0x18db0b SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7efe82e48620>::.ctor token(0x0A0022C2)
+  IL_0006 stfld          GameEntityOptions::m_booleanOptions token(0x04003C69)
+  IL_000b ldarg.0         
+  IL_000c newobj         <dnfile.mdtable.TypeSpecRow object at 0x7efe82e487d0>::.ctor token(0x0A0022C4)
+  IL_0011 stfld          GameEntityOptions::m_stringOptions token(0x04003C6A)
+  IL_0016 ldarg.0         
+  IL_0017 call           System.Object::.ctor token(0x0A000003)
+  IL_001c ret             
+
+0x0600557f GameEntityOptions::.ctor(booleanOptions,stringOptions) RVA 0x18db29 SIG 200201151281a10211ad2002151281a10211ad200e
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7efe82e48620>::.ctor token(0x0A0022C2)
+  IL_0006 stfld          GameEntityOptions::m_booleanOptions token(0x04003C69)
+  IL_000b ldarg.0         
+  IL_000c newobj         <dnfile.mdtable.TypeSpecRow object at 0x7efe82e487d0>::.ctor token(0x0A0022C4)
+  IL_0011 stfld          GameEntityOptions::m_stringOptions token(0x04003C6A)
+  IL_0016 ldarg.0         
+  IL_0017 call           System.Object::.ctor token(0x0A000003)
+  IL_001c ldarg.0         
+  IL_001d ldarg.1         
+  IL_001e call           GameEntityOptions::AddBooleanOptions token(0x06005582)
+  IL_0023 ldarg.0         
+  IL_0024 ldarg.2         
+  IL_0025 call           GameEntityOptions::AddStringOptions token(0x06005583)
+  IL_002a ret             
+
+0x06005580 GameEntityOptions::.ctor(source,booleanOptions,stringOptions) RVA 0x18db58 SIG 20030112ad24151281a10211ad2002151281a10211ad200e
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7efe82e48620>::.ctor token(0x0A0022C2)
+  IL_0006 stfld          GameEntityOptions::m_booleanOptions token(0x04003C69)
+  IL_000b ldarg.0         
+  IL_000c newobj         <dnfile.mdtable.TypeSpecRow object at 0x7efe82e487d0>::.ctor token(0x0A0022C4)
+  IL_0011 stfld          GameEntityOptions::m_stringOptions token(0x04003C6A)
+  IL_0016 ldarg.0         
+  IL_0017 call           System.Object::.ctor token(0x0A000003)
+  IL_001c ldarg.0         
+  IL_001d ldarg.1         
+  IL_001e ldfld          GameEntityOptions::m_booleanOptions token(0x04003C69)
+  IL_0023 call           GameEntityOptions::AddBooleanOptions token(0x06005582)
+  IL_0028 ldarg.0         
+  IL_0029 ldarg.1         
+  IL_002a ldfld          GameEntityOptions::m_stringOptions token(0x04003C6A)
+  IL_002f call           GameEntityOptions::AddStringOptions token(0x06005583)
+  IL_0034 ldarg.0         
+  IL_0035 ldarg.2         
+  IL_0036 call           GameEntityOptions::AddBooleanOptions token(0x06005582)
+  IL_003b ldarg.0         
+  IL_003c ldarg.3         
+  IL_003d call           GameEntityOptions::AddStringOptions token(0x06005583)
+  IL_0042 ret             
+
+0x06005581 GameEntityOptions::AddOptions(booleanOptions,stringOptions) RVA 0x18dba7 SIG 200201151281a10211ad2002151281a10211ad200e
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           GameEntityOptions::AddBooleanOptions token(0x06005582)
+  IL_0007 ldarg.0         
+  IL_0008 ldarg.2         
+  IL_0009 call           GameEntityOptions::AddStringOptions token(0x06005583)
+  IL_000e ret             
+
+0x06005582 GameEntityOptions::AddBooleanOptions(options) RVA 0x18dbb8 SIG 200101151281a10211ad2002
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e48620>::GetEnumerator token(0x0A0022D7)
+  IL_0006 stloc.0         
+  IL_0007 br.s           IL_0025 
+  IL_0009 ldloca.s       local(0x0000) 
+  IL_000b call           <dnfile.mdtable.TypeSpecRow object at 0x7efe82e491f0>::get_Current token(0x0A0022D8)
+  IL_0010 stloc.1         
+  IL_0011 ldarg.0         
+  IL_0012 ldloca.s       local(0x0001) 
+  IL_0014 call           <dnfile.mdtable.TypeSpecRow object at 0x7efe82e493a0>::get_Key token(0x0A0022D9)
+  IL_0019 ldloca.s       local(0x0001) 
+  IL_001b call           <dnfile.mdtable.TypeSpecRow object at 0x7efe82e493a0>::get_Value token(0x0A0022DA)
+  IL_0020 call           GameEntityOptions::SetBooleanOption token(0x06005584)
+  IL_0025 ldloca.s       local(0x0000) 
+  IL_0027 call           <dnfile.mdtable.TypeSpecRow object at 0x7efe82e491f0>::MoveNext token(0x0A0022DB)
+  IL_002c brtrue.s       IL_0009 
+  IL_002e leave.s        IL_003e 
+  IL_0030 ldloca.s       local(0x0000) 
+  IL_0032 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7efe82e491f0> token(0x1B00098A)
+  IL_0038 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_003d endfinally      
+  IL_003e ret             
+
+0x06005583 GameEntityOptions::AddStringOptions(options) RVA 0x18dc14 SIG 200101151281a10211ad200e
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e487d0>::GetEnumerator token(0x0A0022DC)
+  IL_0006 stloc.0         
+  IL_0007 br.s           IL_0025 
+  IL_0009 ldloca.s       local(0x0000) 
+  IL_000b call           <dnfile.mdtable.TypeSpecRow object at 0x7efe82e49550>::get_Current token(0x0A0022DD)
+  IL_0010 stloc.1         
+  IL_0011 ldarg.0         
+  IL_0012 ldloca.s       local(0x0001) 
+  IL_0014 call           <dnfile.mdtable.TypeSpecRow object at 0x7efe82e49700>::get_Key token(0x0A0022DE)
+  IL_0019 ldloca.s       local(0x0001) 
+  IL_001b call           <dnfile.mdtable.TypeSpecRow object at 0x7efe82e49700>::get_Value token(0x0A0022DF)
+  IL_0020 call           GameEntityOptions::SetStringOption token(0x06005585)
+  IL_0025 ldloca.s       local(0x0000) 
+  IL_0027 call           <dnfile.mdtable.TypeSpecRow object at 0x7efe82e49550>::MoveNext token(0x0A0022E0)
+  IL_002c brtrue.s       IL_0009 
+  IL_002e leave.s        IL_003e 
+  IL_0030 ldloca.s       local(0x0000) 
+  IL_0032 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7efe82e49550> token(0x1B00098C)
+  IL_0038 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_003d endfinally      
+  IL_003e ret             
+
+0x06005584 GameEntityOptions::SetBooleanOption(option,value) RVA 0x18dc70 SIG 20020111ad2002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameEntityOptions::m_booleanOptions token(0x04003C69)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e48620>::ContainsKey token(0x0A0022E1)
+  IL_000c brtrue.s       IL_001c 
+  IL_000e ldarg.0         
+  IL_000f ldfld          GameEntityOptions::m_booleanOptions token(0x04003C69)
+  IL_0014 ldarg.1         
+  IL_0015 ldarg.2         
+  IL_0016 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e48620>::Add token(0x0A0022C3)
+  IL_001b ret             
+  IL_001c ldarg.0         
+  IL_001d ldfld          GameEntityOptions::m_booleanOptions token(0x04003C69)
+  IL_0022 ldarg.1         
+  IL_0023 ldarg.2         
+  IL_0024 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e48620>::set_Item token(0x0A0022E2)
+  IL_0029 ret             
+
+0x06005585 GameEntityOptions::SetStringOption(option,value) RVA 0x18dc9b SIG 20020111ad200e
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameEntityOptions::m_stringOptions token(0x04003C6A)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e487d0>::ContainsKey token(0x0A0022E3)
+  IL_000c brtrue.s       IL_001c 
+  IL_000e ldarg.0         
+  IL_000f ldfld          GameEntityOptions::m_stringOptions token(0x04003C6A)
+  IL_0014 ldarg.1         
+  IL_0015 ldarg.2         
+  IL_0016 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e487d0>::Add token(0x0A0022C5)
+  IL_001b ret             
+  IL_001c ldarg.0         
+  IL_001d ldfld          GameEntityOptions::m_stringOptions token(0x04003C6A)
+  IL_0022 ldarg.1         
+  IL_0023 ldarg.2         
+  IL_0024 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e487d0>::set_Item token(0x0A0022E4)
+  IL_0029 ret             
+
+0x06005586 GameEntityOptions::GetBooleanOption(option) RVA 0x18dcc6 SIG 20010211ad20
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameEntityOptions::m_booleanOptions token(0x04003C69)
+  IL_0006 brfalse.s      IL_0023 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          GameEntityOptions::m_booleanOptions token(0x04003C69)
+  IL_000e ldarg.1         
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e48620>::ContainsKey token(0x0A0022E1)
+  IL_0014 brfalse.s      IL_0023 
+  IL_0016 ldarg.0         
+  IL_0017 ldfld          GameEntityOptions::m_booleanOptions token(0x04003C69)
+  IL_001c ldarg.1         
+  IL_001d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e48620>::get_Item token(0x0A0022E5)
+  IL_0022 ret             
+  IL_0023 ldc.i4.0        
+  IL_0024 ret             
+
+0x06005587 GameEntityOptions::GetStringOption(option) RVA 0x18dcec SIG 20010e11ad20
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameEntityOptions::m_stringOptions token(0x04003C6A)
+  IL_0006 brfalse.s      IL_0023 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          GameEntityOptions::m_stringOptions token(0x04003C6A)
+  IL_000e ldarg.1         
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e487d0>::ContainsKey token(0x0A0022E3)
+  IL_0014 brfalse.s      IL_0023 
+  IL_0016 ldarg.0         
+  IL_0017 ldfld          GameEntityOptions::m_stringOptions token(0x04003C6A)
+  IL_001c ldarg.1         
+  IL_001d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e487d0>::get_Item token(0x0A0022E6)
+  IL_0022 ret             
+  IL_0023 ldnull          
+  IL_0024 ret             
+
+0x06011d94 <WaitForSourceThenFinishState>d__14::.ctor(<>1__state) RVA 0x537d92 SIG 20010108
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 stfld          <WaitForSourceThenFinishState>d__14::<>1__state token(0x0400EFDD)
+  IL_000d ret             
+
+0x06011d95 <WaitForSourceThenFinishState>d__14::System.IDisposable.Dispose() RVA 0x4291 SIG 200001
+  IL_0000 ret             
+
+0x06011d96 <WaitForSourceThenFinishState>d__14::MoveNext() RVA 0x537da4 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitForSourceThenFinishState>d__14::<>1__state token(0x0400EFDD)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <WaitForSourceThenFinishState>d__14::<>4__this token(0x0400EFDF)
+  IL_000d stloc.1         
+  IL_000e ldloc.0         
+  IL_000f brfalse.s      IL_0017 
+  IL_0011 ldloc.0         
+  IL_0012 ldc.i4.1        
+  IL_0013 beq.s          IL_0035 
+  IL_0015 ldc.i4.0        
+  IL_0016 ret             
+  IL_0017 ldarg.0         
+  IL_0018 ldc.i4.m1       
+  IL_0019 stfld          <WaitForSourceThenFinishState>d__14::<>1__state token(0x0400EFDD)
+  IL_001e br.s           IL_003c 
+  IL_0020 ldarg.0         
+  IL_0021 ldc.i4.0        
+  IL_0022 box            System.Int32 token(0x0100002C)
+  IL_0027 stfld          <WaitForSourceThenFinishState>d__14::<>2__current token(0x0400EFDE)
+  IL_002c ldarg.0         
+  IL_002d ldc.i4.1        
+  IL_002e stfld          <WaitForSourceThenFinishState>d__14::<>1__state token(0x0400EFDD)
+  IL_0033 ldc.i4.1        
+  IL_0034 ret             
+  IL_0035 ldarg.0         
+  IL_0036 ldc.i4.m1       
+  IL_0037 stfld          <WaitForSourceThenFinishState>d__14::<>1__state token(0x0400EFDD)
+  IL_003c call           SoundManager::Get token(0x06014710)
+  IL_0041 ldloc.1         
+  IL_0042 ldfld          CardSoundSpell::m_activeAudioSource token(0x0400EFD8)
+  IL_0047 callvirt       SoundManager::IsActive token(0x06014723)
+  IL_004c brtrue.s       IL_0020 
+  IL_004e ldloc.1         
+  IL_004f callvirt       Spell::OnStateFinished token(0x0601495E)
+  IL_0054 ldc.i4.0        
+  IL_0055 ret             
+
+0x06011d97 <WaitForSourceThenFinishState>d__14::System.Collections.Generic.IEnumerator<System.Object>.get_Current() RVA 0x537e06 SIG 20001c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitForSourceThenFinishState>d__14::<>2__current token(0x0400EFDE)
+  IL_0006 ret             
+
+0x06011d98 <WaitForSourceThenFinishState>d__14::System.Collections.IEnumerator.Reset() RVA 0x4585 SIG 200001
+  IL_0000 newobj         System.NotSupportedException::.ctor token(0x0A0000F7)
+  IL_0005 throw           
+
+0x06011d99 <WaitForSourceThenFinishState>d__14::System.Collections.IEnumerator.get_Current() RVA 0x537e06 SIG 20001c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitForSourceThenFinishState>d__14::<>2__current token(0x0400EFDE)
+  IL_0006 ret             
+
+0x06012fce CardEffectDef::.ctor() RVA 0x58e40f SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7efe83186450>::.ctor token(0x0A0003B4)
+  IL_0006 stfld          CardEffectDef::m_SoundSpellPaths token(0x0400FC4A)
+  IL_000b ldarg.0         
+  IL_000c call           System.Object::.ctor token(0x0A000003)
+  IL_0011 ret             
+
+0x06012fcf CardEffect::.ctor(def,owner) RVA 0x58e424 SIG 20020112c0009fa412c0009ebc
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 ldfld          CardEffectDef::m_SpellPath token(0x0400FC49)
+  IL_000d stfld          CardEffect::m_spellPath token(0x0400FC4D)
+  IL_0012 ldarg.0         
+  IL_0013 ldarg.1         
+  IL_0014 ldfld          CardEffectDef::m_SoundSpellPaths token(0x0400FC4A)
+  IL_0019 stfld          CardEffect::m_soundSpellPaths token(0x0400FC4E)
+  IL_001e ldarg.0         
+  IL_001f ldarg.2         
+  IL_0020 stfld          CardEffect::m_owner token(0x0400FC4F)
+  IL_0025 ldarg.0         
+  IL_0026 ldfld          CardEffect::m_soundSpellPaths token(0x0400FC4E)
+  IL_002b brfalse.s      IL_0065 
+  IL_002d ldarg.0         
+  IL_002e ldarg.0         
+  IL_002f ldfld          CardEffect::m_soundSpellPaths token(0x0400FC4E)
+  IL_0034 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83186450>::get_Count token(0x0A000371)
+  IL_0039 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7efe82e339e0>::.ctor token(0x0A0044AC)
+  IL_003e stfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_0043 ldc.i4.0        
+  IL_0044 stloc.0         
+  IL_0045 br.s           IL_0057 
+  IL_0047 ldarg.0         
+  IL_0048 ldfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_004d ldnull          
+  IL_004e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e339e0>::Add token(0x0A003F04)
+  IL_0053 ldloc.0         
+  IL_0054 ldc.i4.1        
+  IL_0055 add             
+  IL_0056 stloc.0         
+  IL_0057 ldloc.0         
+  IL_0058 ldarg.0         
+  IL_0059 ldfld          CardEffect::m_soundSpellPaths token(0x0400FC4E)
+  IL_005e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83186450>::get_Count token(0x0A000371)
+  IL_0063 blt.s          IL_0047 
+  IL_0065 ret             
+
+0x06012fd0 CardEffect::.ctor(spellPath,owner) RVA 0x58e496 SIG 2002010e12c0009ebc
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 stfld          CardEffect::m_spellPath token(0x0400FC4D)
+  IL_000d ldarg.0         
+  IL_000e ldarg.2         
+  IL_000f stfld          CardEffect::m_owner token(0x0400FC4F)
+  IL_0014 ret             
+
+0x06012fd1 CardEffect::GetSpell(loadIfNeeded) RVA 0x58e4ac SIG 200112c000ac1c02
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          CardEffect::m_spell token(0x0400FC4B)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_001e 
+  IL_000e ldarg.0         
+  IL_000f ldfld          CardEffect::m_spellPath token(0x0400FC4D)
+  IL_0014 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0019 ldc.i4.0        
+  IL_001a ceq             
+  IL_001c br.s           IL_001f 
+  IL_001e ldc.i4.0        
+  IL_001f ldarg.1         
+  IL_0020 and             
+  IL_0021 brfalse.s      IL_003a 
+  IL_0023 ldarg.0         
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          CardEffect::m_spellPath token(0x0400FC4D)
+  IL_002a ldarg.0         
+  IL_002b ldfld          CardEffect::m_owner token(0x0400FC4F)
+  IL_0030 call           SpellUtils::LoadAndSetupSpell token(0x06014AC7)
+  IL_0035 stfld          CardEffect::m_spell token(0x0400FC4B)
+  IL_003a ldarg.0         
+  IL_003b ldfld          CardEffect::m_spell token(0x0400FC4B)
+  IL_0040 ret             
+
+0x06012fd2 CardEffect::LoadSpell() RVA 0x58e4f9 SIG 200012c000ac1c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          CardEffect::m_spellPath token(0x0400FC4D)
+  IL_0006 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_000b brtrue.s       IL_0024 
+  IL_000d ldarg.0         
+  IL_000e ldarg.0         
+  IL_000f ldfld          CardEffect::m_spellPath token(0x0400FC4D)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          CardEffect::m_owner token(0x0400FC4F)
+  IL_001a call           SpellUtils::LoadAndSetupSpell token(0x06014AC7)
+  IL_001f stfld          CardEffect::m_spell token(0x0400FC4B)
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          CardEffect::m_spell token(0x0400FC4B)
+  IL_002a ret             
+
+0x06012fd3 CardEffect::LoadSoundSpell(index) RVA 0x58e528 SIG 20010108
+  IL_0000 ldarg.1         
+  IL_0001 ldc.i4.0        
+  IL_0002 blt.s          IL_002d 
+  IL_0004 ldarg.0         
+  IL_0005 ldfld          CardEffect::m_soundSpellPaths token(0x0400FC4E)
+  IL_000a brfalse.s      IL_002d 
+  IL_000c ldarg.1         
+  IL_000d ldarg.0         
+  IL_000e ldfld          CardEffect::m_soundSpellPaths token(0x0400FC4E)
+  IL_0013 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83186450>::get_Count token(0x0A000371)
+  IL_0018 bge.s          IL_002d 
+  IL_001a ldarg.0         
+  IL_001b ldfld          CardEffect::m_soundSpellPaths token(0x0400FC4E)
+  IL_0020 ldarg.1         
+  IL_0021 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83186450>::get_Item token(0x0A0003C1)
+  IL_0026 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_002b brfalse.s      IL_002e 
+  IL_002d ret             
+  IL_002e ldarg.0         
+  IL_002f ldfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_0034 ldarg.1         
+  IL_0035 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e339e0>::get_Item token(0x0A002BD3)
+  IL_003a ldnull          
+  IL_003b call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0040 brfalse.s      IL_00b7 
+  IL_0042 ldarg.0         
+  IL_0043 ldfld          CardEffect::m_soundSpellPaths token(0x0400FC4E)
+  IL_0048 ldarg.1         
+  IL_0049 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83186450>::get_Item token(0x0A0003C1)
+  IL_004e stloc.0         
+  IL_004f call           SpellManager::Get token(0x060149FC)
+  IL_0054 ldloc.0         
+  IL_0055 callvirt       SpellManager::GetSpell token(0x06014A01)
+  IL_005a isinst         CardSoundSpell token(0x0200255C)
+  IL_005f stloc.1         
+  IL_0060 ldarg.0         
+  IL_0061 ldfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_0066 ldarg.1         
+  IL_0067 ldloc.1         
+  IL_0068 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e339e0>::set_Item token(0x0A0044AD)
+  IL_006d ldloc.1         
+  IL_006e ldnull          
+  IL_006f call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0074 brfalse.s      IL_009d 
+  IL_0076 ldstr          'CardEffect.LoadSoundSpell() - FAILED TO LOAD "{0}" (PATH: "{1}") (index {2})' string token(0x703B0556)
+  IL_007b ldc.i4.3        
+  IL_007c newarr         System.Object token(0x01000001)
+  IL_0081 dup             
+  IL_0082 ldc.i4.0        
+  IL_0083 ldarg.0         
+  IL_0084 ldfld          CardEffect::m_spellPath token(0x0400FC4D)
+  IL_0089 stelem.ref      
+  IL_008a dup             
+  IL_008b ldc.i4.1        
+  IL_008c ldloc.0         
+  IL_008d stelem.ref      
+  IL_008e dup             
+  IL_008f ldc.i4.2        
+  IL_0090 ldarg.1         
+  IL_0091 box            System.Int32 token(0x0100002C)
+  IL_0096 stelem.ref      
+  IL_0097 call           Error::AddDevFatal token(0x06004E7D)
+  IL_009c ret             
+  IL_009d ldarg.0         
+  IL_009e ldfld          CardEffect::m_owner token(0x0400FC4F)
+  IL_00a3 ldnull          
+  IL_00a4 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00a9 brfalse.s      IL_00b7 
+  IL_00ab ldloc.1         
+  IL_00ac ldarg.0         
+  IL_00ad ldfld          CardEffect::m_owner token(0x0400FC4F)
+  IL_00b2 call           SpellUtils::SetupSoundSpell token(0x06014AC9)
+  IL_00b7 ret             
+
+0x06012fd4 CardEffect::GetSoundSpells(loadIfNeeded) RVA 0x58e5ec SIG 20011512490112c000957002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_0006 brtrue.s       IL_000a 
+  IL_0008 ldnull          
+  IL_0009 ret             
+  IL_000a ldarg.1         
+  IL_000b brfalse.s      IL_002a 
+  IL_000d ldc.i4.0        
+  IL_000e stloc.0         
+  IL_000f br.s           IL_001c 
+  IL_0011 ldarg.0         
+  IL_0012 ldloc.0         
+  IL_0013 call           CardEffect::LoadSoundSpell token(0x06012FD3)
+  IL_0018 ldloc.0         
+  IL_0019 ldc.i4.1        
+  IL_001a add             
+  IL_001b stloc.0         
+  IL_001c ldloc.0         
+  IL_001d ldarg.0         
+  IL_001e ldfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_0023 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e339e0>::get_Count token(0x0A002BD2)
+  IL_0028 blt.s          IL_0011 
+  IL_002a ldarg.0         
+  IL_002b ldfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_0030 ret             
+
+0x06012fd5 CardEffect::Clear() RVA 0x58e62c SIG 200001
+  IL_0000 call           SpellManager::Get token(0x060149FC)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brtrue.s       IL_000a 
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b ldfld          CardEffect::m_spell token(0x0400FC4B)
+  IL_0010 ldnull          
+  IL_0011 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0016 brfalse.s      IL_0026 
+  IL_0018 ldloc.0         
+  IL_0019 ldarg.0         
+  IL_001a ldfld          CardEffect::m_spell token(0x0400FC4B)
+  IL_001f ldc.i4.0        
+  IL_0020 callvirt       SpellManager::ReleaseSpell token(0x06014A03)
+  IL_0025 pop             
+  IL_0026 ldarg.0         
+  IL_0027 ldfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_002c brfalse.s      IL_0063 
+  IL_002e ldc.i4.0        
+  IL_002f stloc.1         
+  IL_0030 br.s           IL_0055 
+  IL_0032 ldarg.0         
+  IL_0033 ldfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_0038 ldloc.1         
+  IL_0039 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e339e0>::get_Item token(0x0A002BD3)
+  IL_003e stloc.2         
+  IL_003f ldloc.2         
+  IL_0040 ldnull          
+  IL_0041 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0046 brfalse.s      IL_0051 
+  IL_0048 ldloc.0         
+  IL_0049 ldloc.2         
+  IL_004a ldc.i4.0        
+  IL_004b callvirt       SpellManager::ReleaseSpell token(0x06014A03)
+  IL_0050 pop             
+  IL_0051 ldloc.1         
+  IL_0052 ldc.i4.1        
+  IL_0053 add             
+  IL_0054 stloc.1         
+  IL_0055 ldloc.1         
+  IL_0056 ldarg.0         
+  IL_0057 ldfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_005c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe82e339e0>::get_Count token(0x0A002BD2)
+  IL_0061 blt.s          IL_0032 
+  IL_0063 ret             
+
+0x06012fd6 CardEffect::LoadAll() RVA 0x58e69c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 call           CardEffect::GetSpell token(0x06012FD1)
+  IL_0007 pop             
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          CardEffect::m_soundSpellPaths token(0x0400FC4E)
+  IL_000e brfalse.s      IL_002d 
+  IL_0010 ldc.i4.0        
+  IL_0011 stloc.0         
+  IL_0012 br.s           IL_001f 
+  IL_0014 ldarg.0         
+  IL_0015 ldloc.0         
+  IL_0016 call           CardEffect::LoadSoundSpell token(0x06012FD3)
+  IL_001b ldloc.0         
+  IL_001c ldc.i4.1        
+  IL_001d add             
+  IL_001e stloc.0         
+  IL_001f ldloc.0         
+  IL_0020 ldarg.0         
+  IL_0021 ldfld          CardEffect::m_soundSpellPaths token(0x0400FC4E)
+  IL_0026 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83186450>::get_Count token(0x0A000371)
+  IL_002b blt.s          IL_0014 
+  IL_002d ret             
+
+0x06012fd7 CardEffect::PurgeSpells() RVA 0x58e6d6 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          CardEffect::m_spell token(0x0400FC4B)
+  IL_0006 call           SpellUtils::PurgeSpell token(0x06014ACE)
+  IL_000b ldarg.0         
+  IL_000c ldfld          CardEffect::m_soundSpells token(0x0400FC4C)
+  IL_0011 call           SpellUtils::PurgeSpells<spec> token(0x2B000827)
+  IL_0016 ret             
+
+0x060146fd RandomAudioClip::.ctor() RVA 0x60b364 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         1.0 
+  IL_0006 stfld          RandomAudioClip::m_Weight token(0x04011A0A)
+  IL_000b ldarg.0         
+  IL_000c call           System.Object::.ctor token(0x0A000003)
+  IL_0011 ret             
+
+0x060147e3 <EnableInstanceLimitedSound>d__187::.ctor(<>1__state) RVA 0x60eaba SIG 20010108
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 stfld          <EnableInstanceLimitedSound>d__187::<>1__state token(0x04011A71)
+  IL_000d ret             
+
+0x060147e4 <EnableInstanceLimitedSound>d__187::System.IDisposable.Dispose() RVA 0x4291 SIG 200001
+  IL_0000 ret             
+
+0x060147e5 <EnableInstanceLimitedSound>d__187::MoveNext() RVA 0x60eacc SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <EnableInstanceLimitedSound>d__187::<>1__state token(0x04011A71)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <EnableInstanceLimitedSound>d__187::<>4__this token(0x04011A73)
+  IL_000d stloc.1         
+  IL_000e ldloc.0         
+  IL_000f brfalse.s      IL_0017 
+  IL_0011 ldloc.0         
+  IL_0012 ldc.i4.1        
+  IL_0013 beq.s          IL_0055 
+  IL_0015 ldc.i4.0        
+  IL_0016 ret             
+  IL_0017 ldarg.0         
+  IL_0018 ldc.i4.m1       
+  IL_0019 stfld          <EnableInstanceLimitedSound>d__187::<>1__state token(0x04011A71)
+  IL_001e ldloc.1         
+  IL_001f ldfld          SoundManager::activeLimitedSounds token(0x04011A29)
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          <EnableInstanceLimitedSound>d__187::sound token(0x04011A74)
+  IL_002a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83207c50>::ContainsKey token(0x0A000810)
+  IL_002f brtrue.s       IL_005c 
+  IL_0031 ldc.i4.0        
+  IL_0032 ret             
+  IL_0033 ldarg.0         
+  IL_0034 ldarg.0         
+  IL_0035 ldfld          <EnableInstanceLimitedSound>d__187::time token(0x04011A75)
+  IL_003a call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+  IL_003f sub             
+  IL_0040 stfld          <EnableInstanceLimitedSound>d__187::time token(0x04011A75)
+  IL_0045 ldarg.0         
+  IL_0046 ldnull          
+  IL_0047 stfld          <EnableInstanceLimitedSound>d__187::<>2__current token(0x04011A72)
+  IL_004c ldarg.0         
+  IL_004d ldc.i4.1        
+  IL_004e stfld          <EnableInstanceLimitedSound>d__187::<>1__state token(0x04011A71)
+  IL_0053 ldc.i4.1        
+  IL_0054 ret             
+  IL_0055 ldarg.0         
+  IL_0056 ldc.i4.m1       
+  IL_0057 stfld          <EnableInstanceLimitedSound>d__187::<>1__state token(0x04011A71)
+  IL_005c ldarg.0         
+  IL_005d ldfld          <EnableInstanceLimitedSound>d__187::time token(0x04011A75)
+  IL_0062 ldc.r4         0.0 
+  IL_0067 bgt.s          IL_0033 
+  IL_0069 ldloc.1         
+  IL_006a ldfld          SoundManager::activeLimitedSounds token(0x04011A29)
+  IL_006f ldarg.0         
+  IL_0070 ldfld          <EnableInstanceLimitedSound>d__187::sound token(0x04011A74)
+  IL_0075 ldloca.s       local(0x0002) 
+  IL_0077 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83207c50>::TryGetValue token(0x0A00434B)
+  IL_007c brfalse.s      IL_00aa 
+  IL_007e ldloc.1         
+  IL_007f ldfld          SoundManager::activeLimitedSounds token(0x04011A29)
+  IL_0084 ldarg.0         
+  IL_0085 ldfld          <EnableInstanceLimitedSound>d__187::sound token(0x04011A74)
+  IL_008a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83207c50>::Remove token(0x0A004DC1)
+  IL_008f pop             
+  IL_0090 ldloc.2         
+  IL_0091 ldc.i4.1        
+  IL_0092 sub             
+  IL_0093 stloc.2         
+  IL_0094 ldloc.2         
+  IL_0095 ldc.i4.0        
+  IL_0096 ble.s          IL_00aa 
+  IL_0098 ldloc.1         
+  IL_0099 ldfld          SoundManager::activeLimitedSounds token(0x04011A29)
+  IL_009e ldarg.0         
+  IL_009f ldfld          <EnableInstanceLimitedSound>d__187::sound token(0x04011A74)
+  IL_00a4 ldloc.2         
+  IL_00a5 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83207c50>::Add token(0x0A004DC2)
+  IL_00aa ldc.i4.0        
+  IL_00ab ret             
+
+0x060147e6 <EnableInstanceLimitedSound>d__187::System.Collections.Generic.IEnumerator<System.Object>.get_Current() RVA 0x60eb84 SIG 20001c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <EnableInstanceLimitedSound>d__187::<>2__current token(0x04011A72)
+  IL_0006 ret             
+
+0x060147e7 <EnableInstanceLimitedSound>d__187::System.Collections.IEnumerator.Reset() RVA 0x4585 SIG 200001
+  IL_0000 newobj         System.NotSupportedException::.ctor token(0x0A0000F7)
+  IL_0005 throw           
+
+0x060147e8 <EnableInstanceLimitedSound>d__187::System.Collections.IEnumerator.get_Current() RVA 0x60eb84 SIG 20001c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <EnableInstanceLimitedSound>d__187::<>2__current token(0x04011A72)
+  IL_0006 ret             
+
+0x06014b89 <WaitAndSpawnImpact>d__89::.ctor(<>1__state) RVA 0x61bb9c SIG 20010108
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 stfld          <WaitAndSpawnImpact>d__89::<>1__state token(0x04011D1A)
+  IL_000d ret             
+
+0x06014b8a <WaitAndSpawnImpact>d__89::System.IDisposable.Dispose() RVA 0x4291 SIG 200001
+  IL_0000 ret             
+
+0x06014b8b <WaitAndSpawnImpact>d__89::MoveNext() RVA 0x61bbac SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitAndSpawnImpact>d__89::<>1__state token(0x04011D1A)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <WaitAndSpawnImpact>d__89::<>4__this token(0x04011D1C)
+  IL_000d stloc.1         
+  IL_000e ldloc.0         
+  IL_000f switch         [IL_0026, IL_005e, IL_00a7, IL_00f8] 
+  IL_0024 ldc.i4.0        
+  IL_0025 ret             
+  IL_0026 ldarg.0         
+  IL_0027 ldc.i4.m1       
+  IL_0028 stfld          <WaitAndSpawnImpact>d__89::<>1__state token(0x04011D1A)
+  IL_002d ldloc.1         
+  IL_002e ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_0033 callvirt       SpellImpactInfo::get_SpawnDelaySecMin token(0x060149F3)
+  IL_0038 ldloc.1         
+  IL_0039 ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_003e callvirt       SpellImpactInfo::get_SpawnDelaySecMax token(0x060149F4)
+  IL_0043 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0048 stloc.2         
+  IL_0049 ldarg.0         
+  IL_004a ldloc.2         
+  IL_004b newobj         UnityEngine.WaitForSeconds::.ctor token(0x0A00016C)
+  IL_0050 stfld          <WaitAndSpawnImpact>d__89::<>2__current token(0x04011D1B)
+  IL_0055 ldarg.0         
+  IL_0056 ldc.i4.1        
+  IL_0057 stfld          <WaitAndSpawnImpact>d__89::<>1__state token(0x04011D1A)
+  IL_005c ldc.i4.1        
+  IL_005d ret             
+  IL_005e ldarg.0         
+  IL_005f ldc.i4.m1       
+  IL_0060 stfld          <WaitAndSpawnImpact>d__89::<>1__state token(0x04011D1A)
+  IL_0065 ldloc.1         
+  IL_0066 ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_006b callvirt       SpellImpactInfo::get_SpawnOffset token(0x060149F5)
+  IL_0070 ldc.r4         0.0 
+  IL_0075 ble.un.s       IL_00ae 
+  IL_0077 ldarg.0         
+  IL_0078 ldfld          <WaitAndSpawnImpact>d__89::targetIndex token(0x04011D1D)
+  IL_007d ldc.i4.0        
+  IL_007e ble.s          IL_00ae 
+  IL_0080 ldarg.0         
+  IL_0081 ldloc.1         
+  IL_0082 ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_0087 callvirt       SpellImpactInfo::get_SpawnOffset token(0x060149F5)
+  IL_008c ldarg.0         
+  IL_008d ldfld          <WaitAndSpawnImpact>d__89::targetIndex token(0x04011D1D)
+  IL_0092 conv.r4         
+  IL_0093 mul             
+  IL_0094 newobj         UnityEngine.WaitForSeconds::.ctor token(0x0A00016C)
+  IL_0099 stfld          <WaitAndSpawnImpact>d__89::<>2__current token(0x04011D1B)
+  IL_009e ldarg.0         
+  IL_009f ldc.i4.2        
+  IL_00a0 stfld          <WaitAndSpawnImpact>d__89::<>1__state token(0x04011D1A)
+  IL_00a5 ldc.i4.1        
+  IL_00a6 ret             
+  IL_00a7 ldarg.0         
+  IL_00a8 ldc.i4.m1       
+  IL_00a9 stfld          <WaitAndSpawnImpact>d__89::<>1__state token(0x04011D1A)
+  IL_00ae ldarg.0         
+  IL_00af ldloc.1         
+  IL_00b0 ldarg.0         
+  IL_00b1 ldfld          <WaitAndSpawnImpact>d__89::targetIndex token(0x04011D1D)
+  IL_00b6 call           SuperSpell::GetMetaDataIndexForTarget token(0x06014B4D)
+  IL_00bb stfld          <WaitAndSpawnImpact>d__89::<metaDataIndex>5__2 token(0x04011D1E)
+  IL_00c0 ldarg.0         
+  IL_00c1 ldfld          <WaitAndSpawnImpact>d__89::<metaDataIndex>5__2 token(0x04011D1E)
+  IL_00c6 ldc.i4.0        
+  IL_00c7 blt.s          IL_0131 
+  IL_00c9 ldloc.1         
+  IL_00ca ldarg.0         
+  IL_00cb ldfld          <WaitAndSpawnImpact>d__89::<metaDataIndex>5__2 token(0x04011D1E)
+  IL_00d0 call           SuperSpell::ShouldCompleteTasksUntilMetaData token(0x06014B4E)
+  IL_00d5 brfalse.s      IL_00ff 
+  IL_00d7 ldarg.0         
+  IL_00d8 ldloc.1         
+  IL_00d9 ldloc.1         
+  IL_00da ldarg.0         
+  IL_00db ldfld          <WaitAndSpawnImpact>d__89::<metaDataIndex>5__2 token(0x04011D1E)
+  IL_00e0 call           SuperSpell::CompleteTasksUntilMetaData token(0x06014B50)
+  IL_00e5 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_00ea stfld          <WaitAndSpawnImpact>d__89::<>2__current token(0x04011D1B)
+  IL_00ef ldarg.0         
+  IL_00f0 ldc.i4.3        
+  IL_00f1 stfld          <WaitAndSpawnImpact>d__89::<>1__state token(0x04011D1A)
+  IL_00f6 ldc.i4.1        
+  IL_00f7 ret             
+  IL_00f8 ldarg.0         
+  IL_00f9 ldc.i4.m1       
+  IL_00fa stfld          <WaitAndSpawnImpact>d__89::<>1__state token(0x04011D1A)
+  IL_00ff ldloc.1         
+  IL_0100 ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_0105 callvirt       SpellImpactInfo::get_GameDelaySecMin token(0x060149F6)
+  IL_010a ldloc.1         
+  IL_010b ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_0110 callvirt       SpellImpactInfo::get_GameDelaySecMax token(0x060149F7)
+  IL_0115 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_011a stloc.s        local(0x0007) 
+  IL_011c ldloc.1         
+  IL_011d ldloc.1         
+  IL_011e ldarg.0         
+  IL_011f ldfld          <WaitAndSpawnImpact>d__89::<metaDataIndex>5__2 token(0x04011D1E)
+  IL_0124 ldloc.s        local(0x0007) 
+  IL_0126 call           SuperSpell::CompleteTasksFromMetaData token(0x06014B53)
+  IL_012b call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_0130 pop             
+  IL_0131 ldloc.1         
+  IL_0132 ldfld          SuperSpell::m_visualTargets token(0x04011CF0)
+  IL_0137 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83178fe0>::get_Count token(0x0A0002F7)
+  IL_013c ldarg.0         
+  IL_013d ldfld          <WaitAndSpawnImpact>d__89::targetIndex token(0x04011D1D)
+  IL_0142 ble.s          IL_015d 
+  IL_0144 ldloc.1         
+  IL_0145 ldfld          SuperSpell::m_visualTargets token(0x04011CF0)
+  IL_014a ldarg.0         
+  IL_014b ldfld          <WaitAndSpawnImpact>d__89::targetIndex token(0x04011D1D)
+  IL_0150 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83178fe0>::get_Item token(0x0A00045D)
+  IL_0155 ldnull          
+  IL_0156 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_015b brfalse.s      IL_016d 
+  IL_015d ldloc.1         
+  IL_015e ldloc.1         
+  IL_015f ldfld          SuperSpell::m_effectsPendingFinish token(0x04011CF2)
+  IL_0164 ldc.i4.1        
+  IL_0165 sub             
+  IL_0166 stfld          SuperSpell::m_effectsPendingFinish token(0x04011CF2)
+  IL_016b ldc.i4.0        
+  IL_016c ret             
+  IL_016d ldloc.1         
+  IL_016e call           Spell::GetSource token(0x0601491A)
+  IL_0173 stloc.3         
+  IL_0174 ldloc.1         
+  IL_0175 ldfld          SuperSpell::m_visualTargets token(0x04011CF0)
+  IL_017a ldarg.0         
+  IL_017b ldfld          <WaitAndSpawnImpact>d__89::targetIndex token(0x04011D1D)
+  IL_0180 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83178fe0>::get_Item token(0x0A00045D)
+  IL_0185 stloc.s        local(0x0004) 
+  IL_0187 ldloc.1         
+  IL_0188 ldloc.s        local(0x0004) 
+  IL_018a call           SuperSpell::DetermineImpactPrefab token(0x06014B2E)
+  IL_018f stloc.s        local(0x0005) 
+  IL_0191 ldloc.1         
+  IL_0192 ldloc.s        local(0x0005) 
+  IL_0194 ldloca.s       local(0x0008) 
+  IL_0196 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7efe8316f800> token(0x1B0000BE)
+  IL_019c ldloc.s        local(0x0008) 
+  IL_019e call           SuperSpell::CloneSpell token(0x06014B57)
+  IL_01a3 stloc.s        local(0x0006) 
+  IL_01a5 ldloc.s        local(0x0006) 
+  IL_01a7 ldloc.3         
+  IL_01a8 callvirt       Blizzard.T5.Game.Spells.ISpell::SetSource token(0x0A0041BD)
+  IL_01ad ldloc.s        local(0x0006) 
+  IL_01af ldloc.s        local(0x0004) 
+  IL_01b1 callvirt       Blizzard.T5.Game.Spells.ISpell::AddTarget token(0x0A004222)
+  IL_01b6 ldloc.1         
+  IL_01b7 ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_01bc callvirt       SpellImpactInfo::get_UseSuperSpellLocation token(0x060149F0)
+  IL_01c1 brfalse.s      IL_01d7 
+  IL_01c3 ldloc.s        local(0x0006) 
+  IL_01c5 ldloc.1         
+  IL_01c6 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_01cb callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_01d0 callvirt       Blizzard.T5.Game.Spells.ISpell::SetPosition token(0x0A004231)
+  IL_01d5 br.s           IL_024a 
+  IL_01d7 ldloc.1         
+  IL_01d8 call           SuperSpell::IsMakingClones token(0x06014B55)
+  IL_01dd brfalse.s      IL_0203 
+  IL_01df ldloc.s        local(0x0006) 
+  IL_01e1 ldloc.1         
+  IL_01e2 ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_01e7 callvirt       SpellImpactInfo::get_Location token(0x060149F1)
+  IL_01ec callvirt       Blizzard.T5.Game.Spells.ISpell::set_Location token(0x0A004F46)
+  IL_01f1 ldloc.s        local(0x0006) 
+  IL_01f3 ldloc.1         
+  IL_01f4 ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_01f9 callvirt       SpellImpactInfo::get_SetParentToLocation token(0x060149F2)
+  IL_01fe callvirt       Blizzard.T5.Game.Spells.ISpell::set_SetParentToLocation token(0x0A004F47)
+  IL_0203 ldloc.s        local(0x0006) 
+  IL_0205 callvirt       Blizzard.T5.Game.Spells.ISpell::UpdatePosition token(0x0A004F48)
+  IL_020a ldloc.1         
+  IL_020b ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_0210 callvirt       SpellImpactInfo::get_AdjustRotation token(0x060149F8)
+  IL_0215 brfalse.s      IL_024a 
+  IL_0217 ldloc.1         
+  IL_0218 ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_021d callvirt       SpellImpactInfo::get_ImpactRotationAdjustment token(0x060149FA)
+  IL_0222 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0227 call           UnityEngine.Vector3::op_Inequality token(0x0A0003AE)
+  IL_022c brfalse.s      IL_024a 
+  IL_022e ldloc.s        local(0x0006) 
+  IL_0230 callvirt       Blizzard.T5.Game.Spells.ISpell::get_GameObject token(0x0A0041D5)
+  IL_0235 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_023a ldloc.1         
+  IL_023b ldfld          SuperSpell::m_ImpactInfo token(0x04011CEB)
+  IL_0240 callvirt       SpellImpactInfo::get_ImpactRotationAdjustment token(0x060149FA)
+  IL_0245 callvirt       UnityEngine.Transform::Rotate token(0x0A000220)
+  IL_024a ldloc.s        local(0x0006) 
+  IL_024c callvirt       Blizzard.T5.Game.Spells.ISpell::UpdateOrientation token(0x0A004F2C)
+  IL_0251 ldloc.s        local(0x0006) 
+  IL_0253 callvirt       Blizzard.T5.Game.Spells.ISpell::Activate token(0x0A00225D)
+  IL_0258 ldc.i4.0        
+  IL_0259 ret             
+
+0x06014b8c <WaitAndSpawnImpact>d__89::System.Collections.Generic.IEnumerator<System.Object>.get_Current() RVA 0x61be12 SIG 20001c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitAndSpawnImpact>d__89::<>2__current token(0x04011D1B)
+  IL_0006 ret             
+
+0x06014b8d <WaitAndSpawnImpact>d__89::System.Collections.IEnumerator.Reset() RVA 0x4585 SIG 200001
+  IL_0000 newobj         System.NotSupportedException::.ctor token(0x0A0000F7)
+  IL_0005 throw           
+
+0x06014b8e <WaitAndSpawnImpact>d__89::System.Collections.IEnumerator.get_Current() RVA 0x61be12 SIG 20001c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitAndSpawnImpact>d__89::<>2__current token(0x04011D1B)
+  IL_0006 ret             
+
+0x06014b8f <WaitAndSpawnMissile>d__78::.ctor(<>1__state) RVA 0x61be1a SIG 20010108
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 stfld          <WaitAndSpawnMissile>d__78::<>1__state token(0x04011D1F)
+  IL_000d ret             
+
+0x06014b90 <WaitAndSpawnMissile>d__78::System.IDisposable.Dispose() RVA 0x4291 SIG 200001
+  IL_0000 ret             
+
+0x06014b91 <WaitAndSpawnMissile>d__78::MoveNext() RVA 0x61be2c SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitAndSpawnMissile>d__78::<>1__state token(0x04011D1F)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <WaitAndSpawnMissile>d__78::<>4__this token(0x04011D21)
+  IL_000d stloc.1         
+  IL_000e ldloc.0         
+  IL_000f switch         [IL_0026, IL_0073, IL_00bc, IL_00f5] 
+  IL_0024 ldc.i4.0        
+  IL_0025 ret             
+  IL_0026 ldarg.0         
+  IL_0027 ldc.i4.m1       
+  IL_0028 stfld          <WaitAndSpawnMissile>d__78::<>1__state token(0x04011D1F)
+  IL_002d ldloc.1         
+  IL_002e ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_0033 callvirt       SpellMissileInfo::get_SpawnDelaySecMin token(0x06014A14)
+  IL_0038 ldloc.1         
+  IL_0039 ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_003e callvirt       SpellMissileInfo::get_SpawnDelaySecMax token(0x06014A15)
+  IL_0043 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0048 stloc.2         
+  IL_0049 ldloc.1         
+  IL_004a ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_004f callvirt       SpellMissileInfo::get_SpawnInSequence token(0x06014A16)
+  IL_0054 brfalse.s      IL_005e 
+  IL_0056 ldarg.0         
+  IL_0057 ldfld          <WaitAndSpawnMissile>d__78::targetIndex token(0x04011D22)
+  IL_005c brtrue.s       IL_007a 
+  IL_005e ldarg.0         
+  IL_005f ldloc.2         
+  IL_0060 newobj         UnityEngine.WaitForSeconds::.ctor token(0x0A00016C)
+  IL_0065 stfld          <WaitAndSpawnMissile>d__78::<>2__current token(0x04011D20)
+  IL_006a ldarg.0         
+  IL_006b ldc.i4.1        
+  IL_006c stfld          <WaitAndSpawnMissile>d__78::<>1__state token(0x04011D1F)
+  IL_0071 ldc.i4.1        
+  IL_0072 ret             
+  IL_0073 ldarg.0         
+  IL_0074 ldc.i4.m1       
+  IL_0075 stfld          <WaitAndSpawnMissile>d__78::<>1__state token(0x04011D1F)
+  IL_007a ldloc.1         
+  IL_007b ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_0080 callvirt       SpellMissileInfo::get_SpawnOffset token(0x06014A17)
+  IL_0085 ldc.r4         0.0 
+  IL_008a ble.un.s       IL_00c3 
+  IL_008c ldarg.0         
+  IL_008d ldfld          <WaitAndSpawnMissile>d__78::targetIndex token(0x04011D22)
+  IL_0092 ldc.i4.0        
+  IL_0093 ble.s          IL_00c3 
+  IL_0095 ldarg.0         
+  IL_0096 ldloc.1         
+  IL_0097 ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_009c callvirt       SpellMissileInfo::get_SpawnOffset token(0x06014A17)
+  IL_00a1 ldarg.0         
+  IL_00a2 ldfld          <WaitAndSpawnMissile>d__78::targetIndex token(0x04011D22)
+  IL_00a7 conv.r4         
+  IL_00a8 mul             
+  IL_00a9 newobj         UnityEngine.WaitForSeconds::.ctor token(0x0A00016C)
+  IL_00ae stfld          <WaitAndSpawnMissile>d__78::<>2__current token(0x04011D20)
+  IL_00b3 ldarg.0         
+  IL_00b4 ldc.i4.2        
+  IL_00b5 stfld          <WaitAndSpawnMissile>d__78::<>1__state token(0x04011D1F)
+  IL_00ba ldc.i4.1        
+  IL_00bb ret             
+  IL_00bc ldarg.0         
+  IL_00bd ldc.i4.m1       
+  IL_00be stfld          <WaitAndSpawnMissile>d__78::<>1__state token(0x04011D1F)
+  IL_00c3 ldloc.1         
+  IL_00c4 ldarg.0         
+  IL_00c5 ldfld          <WaitAndSpawnMissile>d__78::targetIndex token(0x04011D22)
+  IL_00ca call           SuperSpell::GetMetaDataIndexForTarget token(0x06014B4D)
+  IL_00cf stloc.3         
+  IL_00d0 ldloc.1         
+  IL_00d1 ldloc.3         
+  IL_00d2 call           SuperSpell::ShouldCompleteTasksUntilMetaData token(0x06014B4E)
+  IL_00d7 brfalse.s      IL_00fc 
+  IL_00d9 ldarg.0         
+  IL_00da ldloc.1         
+  IL_00db ldloc.1         
+  IL_00dc ldloc.3         
+  IL_00dd call           SuperSpell::CompleteTasksUntilMetaData token(0x06014B50)
+  IL_00e2 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_00e7 stfld          <WaitAndSpawnMissile>d__78::<>2__current token(0x04011D20)
+  IL_00ec ldarg.0         
+  IL_00ed ldc.i4.3        
+  IL_00ee stfld          <WaitAndSpawnMissile>d__78::<>1__state token(0x04011D1F)
+  IL_00f3 ldc.i4.1        
+  IL_00f4 ret             
+  IL_00f5 ldarg.0         
+  IL_00f6 ldc.i4.m1       
+  IL_00f7 stfld          <WaitAndSpawnMissile>d__78::<>1__state token(0x04011D1F)
+  IL_00fc ldloc.1         
+  IL_00fd ldfld          SuperSpell::m_visualTargets token(0x04011CF0)
+  IL_0102 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83178fe0>::get_Count token(0x0A0002F7)
+  IL_0107 ldarg.0         
+  IL_0108 ldfld          <WaitAndSpawnMissile>d__78::targetIndex token(0x04011D22)
+  IL_010d ble.s          IL_0128 
+  IL_010f ldloc.1         
+  IL_0110 ldfld          SuperSpell::m_visualTargets token(0x04011CF0)
+  IL_0115 ldarg.0         
+  IL_0116 ldfld          <WaitAndSpawnMissile>d__78::targetIndex token(0x04011D22)
+  IL_011b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83178fe0>::get_Item token(0x0A00045D)
+  IL_0120 ldnull          
+  IL_0121 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0126 brfalse.s      IL_0138 
+  IL_0128 ldloc.1         
+  IL_0129 ldloc.1         
+  IL_012a ldfld          SuperSpell::m_effectsPendingFinish token(0x04011CF2)
+  IL_012f ldc.i4.1        
+  IL_0130 sub             
+  IL_0131 stfld          SuperSpell::m_effectsPendingFinish token(0x04011CF2)
+  IL_0136 ldc.i4.0        
+  IL_0137 ret             
+  IL_0138 ldloc.1         
+  IL_0139 call           Spell::GetSource token(0x0601491A)
+  IL_013e stloc.s        local(0x0004) 
+  IL_0140 ldloc.1         
+  IL_0141 ldfld          SuperSpell::m_visualTargets token(0x04011CF0)
+  IL_0146 ldarg.0         
+  IL_0147 ldfld          <WaitAndSpawnMissile>d__78::targetIndex token(0x04011D22)
+  IL_014c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7efe83178fe0>::get_Item token(0x0A00045D)
+  IL_0151 stloc.s        local(0x0005) 
+  IL_0153 ldloc.1         
+  IL_0154 ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_0159 callvirt       SpellMissileInfo::get_Prefab token(0x06014A10)
+  IL_015e brfalse        IL_0203 
+  IL_0163 ldnull          
+  IL_0164 stloc.s        local(0x0006) 
+  IL_0166 ldloc.1         
+  IL_0167 ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_016c callvirt       SpellMissileInfo::get_UseSuperSpellLocation token(0x06014A13)
+  IL_0171 brfalse.s      IL_019f 
+  IL_0173 ldloc.1         
+  IL_0174 ldloc.1         
+  IL_0175 ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_017a callvirt       SpellMissileInfo::get_Prefab token(0x06014A10)
+  IL_017f ldloc.1         
+  IL_0180 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0185 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_018a newobj         <dnfile.mdtable.TypeSpecRow object at 0x7efe8316f800>::.ctor token(0x0A0002A3)
+  IL_018f call           SuperSpell::CloneSpell token(0x06014B57)
+  IL_0194 stloc.s        local(0x0006) 
+  IL_0196 ldloc.s        local(0x0006) 
+  IL_0198 callvirt       Blizzard.T5.Game.Spells.ISpell::ClearPositionDirtyFlag token(0x0A004F49)
+  IL_019d br.s           IL_01bc 
+  IL_019f ldloc.1         
+  IL_01a0 ldloc.1         
+  IL_01a1 ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_01a6 callvirt       SpellMissileInfo::get_Prefab token(0x06014A10)
+  IL_01ab ldloca.s       local(0x0008) 
+  IL_01ad initobj        <dnfile.mdtable.TypeSpecRow object at 0x7efe8316f800> token(0x1B0000BE)
+  IL_01b3 ldloc.s        local(0x0008) 
+  IL_01b5 call           SuperSpell::CloneSpell token(0x06014B57)
+  IL_01ba stloc.s        local(0x0006) 
+  IL_01bc ldloc.s        local(0x0006) 
+  IL_01be ldloc.s        local(0x0004) 
+  IL_01c0 callvirt       Blizzard.T5.Game.Spells.ISpell::SetSource token(0x0A0041BD)
+  IL_01c5 ldloc.s        local(0x0006) 
+  IL_01c7 ldloc.s        local(0x0005) 
+  IL_01c9 callvirt       Blizzard.T5.Game.Spells.ISpell::AddTarget token(0x0A004222)
+  IL_01ce ldloc.s        local(0x0006) 
+  IL_01d0 isinst         Spell token(0x02002B07)
+  IL_01d5 stloc.s        local(0x0007) 
+  IL_01d7 ldloc.s        local(0x0007) 
+  IL_01d9 brfalse.s      IL_01f9 
+  IL_01db ldloc.s        local(0x0007) 
+  IL_01dd ldloc.1         
+  IL_01de ldftn          SuperSpell::OnMissileSpellStateFinished token(0x06014B24)
+  IL_01e4 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7efe831a9250>::.ctor token(0x0A0004BF)
+  IL_01e9 ldarg.0         
+  IL_01ea ldfld          <WaitAndSpawnMissile>d__78::targetIndex token(0x04011D22)
+  IL_01ef box            System.Int32 token(0x0100002C)
+  IL_01f4 callvirt       Spell::AddStateFinishedCallback token(0x06014949)
+  IL_01f9 ldloc.s        local(0x0006) 
+  IL_01fb ldc.i4.1        
+  IL_01fc callvirt       Blizzard.T5.Game.Spells.ISpell::ActivateState token(0x0A00224C)
+  IL_0201 br.s           IL_0211 
+  IL_0203 ldloc.1         
+  IL_0204 ldloc.1         
+  IL_0205 ldfld          SuperSpell::m_effectsPendingFinish token(0x04011CF2)
+  IL_020a ldc.i4.1        
+  IL_020b sub             
+  IL_020c stfld          SuperSpell::m_effectsPendingFinish token(0x04011CF2)
+  IL_0211 ldloc.1         
+  IL_0212 ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_0217 callvirt       SpellMissileInfo::get_ReversePrefab token(0x06014A11)
+  IL_021c brfalse.s      IL_0253 
+  IL_021e ldloc.1         
+  IL_021f ldloc.1         
+  IL_0220 ldfld          SuperSpell::m_effectsPendingFinish token(0x04011CF2)
+  IL_0225 ldc.i4.1        
+  IL_0226 add             
+  IL_0227 stfld          SuperSpell::m_effectsPendingFinish token(0x04011CF2)
+  IL_022c ldloc.1         
+  IL_022d ldloc.1         
+  IL_022e ldloc.1         
+  IL_022f ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_0234 callvirt       SpellMissileInfo::get_ReversePrefab token(0x06014A11)
+  IL_0239 ldloc.s        local(0x0004) 
+  IL_023b ldloc.s        local(0x0005) 
+  IL_023d ldloc.1         
+  IL_023e ldfld          SuperSpell::m_MissileInfo token(0x04011CEA)
+  IL_0243 callvirt       SpellMissileInfo::get_ReverseDelay token(0x06014A12)
+  IL_0248 call           SuperSpell::SpawnReverseMissile token(0x06014B23)
+  IL_024d call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_0252 pop             
+  IL_0253 ldc.i4.0        
+  IL_0254 ret             
+
+0x06014b92 <WaitAndSpawnMissile>d__78::System.Collections.Generic.IEnumerator<System.Object>.get_Current() RVA 0x61c08d SIG 20001c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitAndSpawnMissile>d__78::<>2__current token(0x04011D20)
+  IL_0006 ret             
+
+0x06014b93 <WaitAndSpawnMissile>d__78::System.Collections.IEnumerator.Reset() RVA 0x4585 SIG 200001
+  IL_0000 newobj         System.NotSupportedException::.ctor token(0x0A0000F7)
+  IL_0005 throw           
+
+0x06014b94 <WaitAndSpawnMissile>d__78::System.Collections.IEnumerator.get_Current() RVA 0x61c08d SIG 20001c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitAndSpawnMissile>d__78::<>2__current token(0x04011D20)
+  IL_0006 ret             

@@ -1,0 +1,131 @@
+
+TYPE SubOption 0x02001f52
+FIELD 0x0400cd8e <ID>k__BackingField SIG 0608
+FIELD 0x0400cd8f <Targets>k__BackingField SIG 061512490112c0007d44
+FIELD 0x0400cd90 <PlayErrorInfo>k__BackingField SIG 0612c0007d40
+FIELD 0x0400cd91 <PowerKeyword>k__BackingField SIG 0611c000a930
+
+0x0600eea6 SubOption::.ctor() RVA 0x473063 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ldarg.0         
+  IL_0007 ldc.i4.0        
+  IL_0008 call           SubOption::set_ID token(0x0600EEA8)
+  IL_000d ldarg.0         
+  IL_000e newobj         PlayErrorInfo::.ctor token(0x0600EE99)
+  IL_0013 call           SubOption::set_PlayErrorInfo token(0x0600EEAC)
+  IL_0018 ret             
+
+0x0600eeb3 SubOption::IsValidTarget(entityID) RVA 0x473130 SIG 20010208
+  IL_0000 ldarg.0         
+  IL_0001 call           SubOption::get_Targets token(0x0600EEA9)
+  IL_0006 brtrue.s       IL_000a 
+  IL_0008 ldc.i4.0        
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b call           SubOption::get_Targets token(0x0600EEA9)
+  IL_0010 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fa346143d70>::GetEnumerator token(0x0A002394)
+  IL_0015 stloc.0         
+  IL_0016 br.s           IL_003a 
+  IL_0018 ldloca.s       local(0x0000) 
+  IL_001a call           <dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::get_Current token(0x0A002395)
+  IL_001f stloc.1         
+  IL_0020 ldloc.1         
+  IL_0021 callvirt       TargetOption::get_ID token(0x0600EEA0)
+  IL_0026 ldarg.1         
+  IL_0027 bne.un.s       IL_003a 
+  IL_0029 ldloc.1         
+  IL_002a callvirt       TargetOption::get_PlayErrorInfo token(0x0600EEA2)
+  IL_002f callvirt       PlayErrorInfo::IsValid token(0x0600EE9E)
+  IL_0034 brfalse.s      IL_003a 
+  IL_0036 ldc.i4.1        
+  IL_0037 stloc.2         
+  IL_0038 leave.s        IL_0055 
+  IL_003a ldloca.s       local(0x0000) 
+  IL_003c call           <dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::MoveNext token(0x0A002396)
+  IL_0041 brtrue.s       IL_0018 
+  IL_0043 leave.s        IL_0053 
+  IL_0045 ldloca.s       local(0x0000) 
+  IL_0047 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20> token(0x1B0009C5)
+  IL_004d callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0052 endfinally      
+  IL_0053 ldc.i4.0        
+  IL_0054 ret             
+  IL_0055 ldloc.2         
+  IL_0056 ret             
+
+0x0600eeb4 SubOption::GetErrorForTarget(entityID) RVA 0x4731a4 SIG 200111b05c08
+  IL_0000 ldarg.0         
+  IL_0001 call           SubOption::get_Targets token(0x0600EEA9)
+  IL_0006 brtrue.s       IL_000a 
+  IL_0008 ldc.i4.m1       
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b call           SubOption::get_Targets token(0x0600EEA9)
+  IL_0010 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fa346143d70>::GetEnumerator token(0x0A002394)
+  IL_0015 stloc.0         
+  IL_0016 br.s           IL_0037 
+  IL_0018 ldloca.s       local(0x0000) 
+  IL_001a call           <dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::get_Current token(0x0A002395)
+  IL_001f stloc.1         
+  IL_0020 ldloc.1         
+  IL_0021 callvirt       TargetOption::get_ID token(0x0600EEA0)
+  IL_0026 ldarg.1         
+  IL_0027 bne.un.s       IL_0037 
+  IL_0029 ldloc.1         
+  IL_002a callvirt       TargetOption::get_PlayErrorInfo token(0x0600EEA2)
+  IL_002f callvirt       PlayErrorInfo::get_PlayError token(0x0600EE9A)
+  IL_0034 stloc.2         
+  IL_0035 leave.s        IL_0052 
+  IL_0037 ldloca.s       local(0x0000) 
+  IL_0039 call           <dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::MoveNext token(0x0A002396)
+  IL_003e brtrue.s       IL_0018 
+  IL_0040 leave.s        IL_0050 
+  IL_0042 ldloca.s       local(0x0000) 
+  IL_0044 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20> token(0x1B0009C5)
+  IL_004a callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_004f endfinally      
+  IL_0050 ldc.i4.m1       
+  IL_0051 ret             
+  IL_0052 ldloc.2         
+  IL_0053 ret             
+
+0x0600eeb5 SubOption::GetErrorParamForTarget(entityID) RVA 0x473214 SIG 2001151181bd010808
+  IL_0000 ldarg.0         
+  IL_0001 call           SubOption::get_Targets token(0x0600EEA9)
+  IL_0006 brtrue.s       IL_0012 
+  IL_0008 ldloca.s       local(0x0000) 
+  IL_000a initobj        <dnfile.mdtable.TypeSpecRow object at 0x7fa3464353d0> token(0x1B000056)
+  IL_0010 ldloc.0         
+  IL_0011 ret             
+  IL_0012 ldarg.0         
+  IL_0013 call           SubOption::get_Targets token(0x0600EEA9)
+  IL_0018 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fa346143d70>::GetEnumerator token(0x0A002394)
+  IL_001d stloc.1         
+  IL_001e br.s           IL_003f 
+  IL_0020 ldloca.s       local(0x0001) 
+  IL_0022 call           <dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::get_Current token(0x0A002395)
+  IL_0027 stloc.2         
+  IL_0028 ldloc.2         
+  IL_0029 callvirt       TargetOption::get_ID token(0x0600EEA0)
+  IL_002e ldarg.1         
+  IL_002f bne.un.s       IL_003f 
+  IL_0031 ldloc.2         
+  IL_0032 callvirt       TargetOption::get_PlayErrorInfo token(0x0600EEA2)
+  IL_0037 callvirt       PlayErrorInfo::get_PlayErrorParam token(0x0600EE9C)
+  IL_003c stloc.0         
+  IL_003d leave.s        IL_0062 
+  IL_003f ldloca.s       local(0x0001) 
+  IL_0041 call           <dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::MoveNext token(0x0A002396)
+  IL_0046 brtrue.s       IL_0020 
+  IL_0048 leave.s        IL_0058 
+  IL_004a ldloca.s       local(0x0001) 
+  IL_004c constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20> token(0x1B0009C5)
+  IL_0052 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0057 endfinally      
+  IL_0058 ldloca.s       local(0x0003) 
+  IL_005a initobj        <dnfile.mdtable.TypeSpecRow object at 0x7fa3464353d0> token(0x1B000056)
+  IL_0060 ldloc.3         
+  IL_0061 ret             
+  IL_0062 ldloc.0         
+  IL_0063 ret             

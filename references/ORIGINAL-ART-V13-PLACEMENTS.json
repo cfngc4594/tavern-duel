@@ -1,0 +1,446 @@
+{
+  "source_repository": "https://github.com/HearthSim/Sunwell",
+  "commit": "e6c4dc118a76e5b15e65d1897625c4f266c4d44e",
+  "source_files": [
+    "src/Card.ts",
+    "src/MinionCard.ts",
+    "src/SpellCard.ts",
+    "src/HeroPowerCard.ts",
+    "src/Components/CardArt.ts",
+    "src/Components/Gem.ts"
+  ],
+  "reference_size": [
+    670,
+    1000
+  ],
+  "scaling": "Multiply every position and dimension by target_card_width / 670. Coordinates are top-left unless explicitly named center. Text centers refer to centers of rendered alpha bounds, not baseline positions.",
+  "draw_order": [
+    "clipped art",
+    "frame",
+    "rarity gem",
+    "elite dragon when legendary",
+    "name banner and title",
+    "race banner when present in pinned historical data",
+    "attack gem and text",
+    "mana gem and text",
+    "health gem and text",
+    "watermark",
+    "body text"
+  ],
+  "shared": {
+    "mana_gem": {
+      "asset": "cost-mana.png",
+      "rect": [
+        47,
+        105,
+        140,
+        144
+      ]
+    },
+    "cost_text_center": [
+      115,
+      174
+    ],
+    "stat_reference_font_size": 124,
+    "stat_outline_width": 10,
+    "stat_inner_stroke_width": 2.5,
+    "race_banner": {
+      "asset": "race-banner.png",
+      "rect": [
+        129,
+        791,
+        408,
+        69
+      ]
+    },
+    "race_text_center": [
+      337,
+      829
+    ]
+  },
+  "minion": {
+    "frame": {
+      "asset": "frame-minion-neutral.png",
+      "rect": [
+        70,
+        89,
+        528,
+        793
+      ],
+      "source_png_size": [
+        527,
+        793
+      ],
+      "note": "528 width is intentionally the renderer coordinate, although PNG metadata is527."
+    },
+    "art_rect": [
+      105,
+      100,
+      461,
+      461
+    ],
+    "art_clip_polygon": [
+      [
+        335,
+        102
+      ],
+      [
+        292,
+        110
+      ],
+      [
+        256,
+        131
+      ],
+      [
+        222,
+        163
+      ],
+      [
+        195,
+        203
+      ],
+      [
+        171,
+        273
+      ],
+      [
+        163,
+        330
+      ],
+      [
+        170,
+        398
+      ],
+      [
+        200,
+        474
+      ],
+      [
+        266,
+        547
+      ],
+      [
+        302,
+        563
+      ],
+      [
+        343,
+        567
+      ],
+      [
+        406,
+        544
+      ],
+      [
+        449,
+        506
+      ],
+      [
+        488,
+        432
+      ],
+      [
+        505,
+        346
+      ],
+      [
+        494,
+        255
+      ],
+      [
+        460,
+        172
+      ],
+      [
+        425,
+        135
+      ],
+      [
+        385,
+        111
+      ]
+    ],
+    "name_banner": {
+      "asset": "name-banner-minion.png",
+      "rect": [
+        96,
+        469,
+        485,
+        113
+      ]
+    },
+    "name_curve_relative_to_banner": {
+      "control_points": [
+        [
+          0,
+          88
+        ],
+        [
+          98,
+          112
+        ],
+        [
+          294,
+          13
+        ],
+        [
+          460,
+          80
+        ]
+      ],
+      "path_middle": 0.55,
+      "max_width": 450
+    },
+    "rarity_gem": {
+      "asset": "rarity-minion-common.png",
+      "rect": [
+        263,
+        532,
+        148,
+        81
+      ]
+    },
+    "elite_dragon": {
+      "asset": "elite-minion.png",
+      "rect": [
+        188,
+        52,
+        436,
+        325
+      ]
+    },
+    "body_rect": [
+      130,
+      622,
+      408,
+      176
+    ],
+    "attack_gem": {
+      "asset": "attack-minion.png",
+      "rect": [
+        36,
+        721,
+        154,
+        173
+      ]
+    },
+    "attack_text_center": [
+      125,
+      824
+    ],
+    "health_gem": {
+      "asset": "health.png",
+      "rect": [
+        504,
+        728,
+        109,
+        164
+      ]
+    },
+    "health_text_center": [
+      556,
+      825
+    ],
+    "watermark_rect": [
+      231,
+      604,
+      225,
+      225
+    ],
+    "watermark_rect_with_race": [
+      231,
+      594,
+      225,
+      225
+    ]
+  },
+  "spell": {
+    "frame": {
+      "asset": "frame-spell-mage.png",
+      "rect": [
+        70,
+        133,
+        527,
+        746
+      ]
+    },
+    "art_rect": [
+      123,
+      138,
+      418,
+      418
+    ],
+    "art_clip_polygon": [
+      [
+        338,
+        171
+      ],
+      [
+        425,
+        179
+      ],
+      [
+        544,
+        213
+      ],
+      [
+        551,
+        474
+      ],
+      [
+        439,
+        511
+      ],
+      [
+        327,
+        519
+      ],
+      [
+        202,
+        505
+      ],
+      [
+        118,
+        474
+      ],
+      [
+        116,
+        213
+      ],
+      [
+        236,
+        176
+      ]
+    ],
+    "name_banner": {
+      "asset": "name-banner-spell.png",
+      "rect": [
+        80,
+        457,
+        507,
+        155
+      ]
+    },
+    "name_curve_relative_to_banner": {
+      "control_points": [
+        [
+          10,
+          78
+        ],
+        [
+          170,
+          36
+        ],
+        [
+          294,
+          36
+        ],
+        [
+          450,
+          80
+        ]
+      ],
+      "path_middle": 0.49,
+      "max_width": 450
+    },
+    "rarity_gem_rect": [
+      272,
+      541,
+      116,
+      77
+    ],
+    "body_rect": [
+      144,
+      630,
+      378,
+      168
+    ],
+    "watermark_rect": [
+      232,
+      612,
+      210,
+      210
+    ]
+  },
+  "hero_power_zoom_card": {
+    "warning": "This is the hover/collection-style power card. It is not the board power-button socket.",
+    "frame": {
+      "asset": "hero-power-player.png",
+      "opponent_asset": "hero-power-opponent.png",
+      "rect": [
+        56,
+        65,
+        564,
+        841
+      ]
+    },
+    "art_rect": [
+      208,
+      163,
+      261,
+      261
+    ],
+    "art_clip_polygon": [
+      [
+        344,
+        161
+      ],
+      [
+        264,
+        173
+      ],
+      [
+        204,
+        257
+      ],
+      [
+        207,
+        331
+      ],
+      [
+        234,
+        394
+      ],
+      [
+        333,
+        431
+      ],
+      [
+        424,
+        407
+      ],
+      [
+        465,
+        355
+      ],
+      [
+        471,
+        261
+      ],
+      [
+        427,
+        187
+      ]
+    ],
+    "body_rect": [
+      144,
+      606,
+      380,
+      174
+    ],
+    "cost_text_center": [
+      338,
+      124
+    ]
+  },
+  "historical_application_notes": [
+    "Use archived5834 card metadata for all stats, text, tribe and rarity. No formal spell-school footer in2014.",
+    "Harvest Golem and Damaged Golem have no Mech footer in pinned5834. Current/Classic-mode rendered images incorrectly add it for this pin.",
+    "River Crocolisk, Huffer, Scavenging Hyena and Ironfur Grizzly use Beast race banners. Alexstrasza uses Dragon.",
+    "Mage spells use mage frame; Priest spells use priest frame; Coin uses neutral spell frame; Scavenging Hyena uses hunter minion frame. Ordinary neutral minions use neutral frame.",
+    "Art must be clipped by specified polygon BEFORE frame draw; full square art leaks beyond the visible card/frame otherwise.",
+    "Portraits are square source art: in-play oval cropping may differ from this hand-card layout and must be compared with the video.",
+    "Minion-play rings, Taunt shields and hero portrait sockets are absent from Sunwell assets. Do not relabel these card frames as in-play originals."
+  ]
+}

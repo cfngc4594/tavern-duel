@@ -1,0 +1,1078 @@
+{
+  "types": [
+    {
+      "type": "CardBackSummon",
+      "token": "0x020003ad",
+      "fields": [
+        {
+          "name": "m_CardBackManager",
+          "token": "0x040014e3",
+          "signature": "06128e5c"
+        },
+        {
+          "name": "m_Actor",
+          "token": "0x040014e4",
+          "signature": "0612c0009cf8"
+        },
+        {
+          "name": "m_Spell",
+          "token": "0x040014e5",
+          "signature": "0612c000ac1c"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "CardBackSummon",
+      "method": "OnEnable",
+      "token": "0x06001b6f",
+      "rva": "0x86bf8",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 101,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "CardBackManager::Get",
+          "token": "token(0x06001ACD)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "brfalse.s",
+          "operand": "IL_001c",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldftn",
+          "operand": "CardBackSummon::UpdateCardBack",
+          "token": "token(0x06001B74)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "newobj",
+          "operand": "UpdateCardbacksCallback::.ctor",
+          "token": "token(0x06001B2A)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "callvirt",
+          "operand": "CardBackManager::RegisterUpdateCardbacksListener",
+          "token": "token(0x06001ACE)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInParents<spec>",
+          "token": "token(0x2B0001E9)"
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "stfld",
+          "operand": "CardBackSummon::m_Spell",
+          "token": "token(0x040014E5)"
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldfld",
+          "operand": "CardBackSummon::m_Spell",
+          "token": "token(0x040014E5)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "brfalse.s",
+          "operand": "IL_004d",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldstr",
+          "operand": "'Failed to find Spell on CardBackSummon'",
+          "token": "string token(0x7003A034)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "call",
+          "operand": "UnityEngine.Debug::LogWarning",
+          "token": "token(0x0A0000B0)"
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "call",
+          "operand": "CardBackSummon::UpdateEchoTexture",
+          "token": "token(0x06001B73)"
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "ldfld",
+          "operand": "CardBackSummon::m_Spell",
+          "token": "token(0x040014E5)"
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "ldftn",
+          "operand": "CardBackSummon::OnStateStarted",
+          "token": "token(0x06001B71)"
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f46ff1f9ee0>::.ctor",
+          "token": "token(0x0A000D61)"
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "callvirt",
+          "operand": "Spell::AddStateStartedCallback",
+          "token": "token(0x0601494C)"
+        },
+        {
+          "offset": "IL_0064",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CardBackSummon",
+      "method": "OnDisable",
+      "token": "0x06001b70",
+      "rva": "0x86c6c",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 29,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "CardBackManager::Get",
+          "token": "token(0x06001ACD)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "brfalse.s",
+          "operand": "IL_001c",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldftn",
+          "operand": "CardBackSummon::UpdateCardBack",
+          "token": "token(0x06001B74)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "newobj",
+          "operand": "UpdateCardbacksCallback::.ctor",
+          "token": "token(0x06001B2A)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "callvirt",
+          "operand": "CardBackManager::UnregisterUpdateCardbacksListener",
+          "token": "token(0x06001ACF)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CardBackSummon",
+      "method": "OnStateStarted",
+      "token": "0x06001b71",
+      "rva": "0x86c98",
+      "signature": "20030112c000ac1c1182811c",
+      "parameters": [
+        "spell",
+        "spellStateType",
+        "userData"
+      ],
+      "code_size": 44,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Game.Spells.SpellBase::GetActiveState",
+          "token": "token(0x0A000C93)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "bne.un.s",
+          "operand": "IL_0021",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "callvirt",
+          "operand": "Spell::GetSourceCard",
+          "token": "token(0x0601491E)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "brfalse.s",
+          "operand": "IL_002b",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "call",
+          "operand": "CardBackSummon::UpdateEchoTexture",
+          "token": "token(0x06001B73)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "brtrue.s",
+          "operand": "IL_002b",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "stfld",
+          "operand": "CardBackSummon::m_Actor",
+          "token": "token(0x040014E4)"
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CardBackSummon",
+      "method": "UpdateEffectWithCardBack",
+      "token": "0x06001b72",
+      "rva": "0x86cd0",
+      "signature": "200101128e38",
+      "parameters": [
+        "cardBack"
+      ],
+      "code_size": 8,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "call",
+          "operand": "CardBackSummon::UpdateEchoTexture",
+          "token": "token(0x06001B73)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CardBackSummon",
+      "method": "UpdateEchoTexture",
+      "token": "0x06001b73",
+      "rva": "0x86cdc",
+      "signature": "200101128e38",
+      "parameters": [
+        "cardBackOverride"
+      ],
+      "code_size": 236,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "CardBackSummon::m_Actor",
+          "token": "token(0x040014E4)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "brfalse.s",
+          "operand": "IL_0037",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInParents<spec>",
+          "token": "token(0x2B0001EA)"
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "stfld",
+          "operand": "CardBackSummon::m_Actor",
+          "token": "token(0x040014E4)"
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldfld",
+          "operand": "CardBackSummon::m_Actor",
+          "token": "token(0x040014E4)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "brfalse.s",
+          "operand": "IL_0037",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldstr",
+          "operand": "'CardBackSummonIn failed to get Actor!'",
+          "token": "string token(0x7003A082)"
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "call",
+          "operand": "UnityEngine.Debug::LogError",
+          "token": "token(0x0A0000C1)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::GetComponent<spec>",
+          "token": "token(0x2B000024)"
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "call",
+          "operand": "Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial",
+          "token": "token(0x0A000222)"
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Material::get_mainTexture",
+          "token": "token(0x0A000CA9)"
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004b",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "brfalse.s",
+          "operand": "IL_005c",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "ldfld",
+          "operand": "CardBack::m_HiddenCardEchoTexture",
+          "token": "token(0x0400145A)"
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "br.s",
+          "operand": "IL_00d6",
+          "token": null
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "ldfld",
+          "operand": "CardBackSummon::m_CardBackManager",
+          "token": "token(0x040014E3)"
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "brtrue.s",
+          "operand": "IL_0089",
+          "token": null
+        },
+        {
+          "offset": "IL_0064",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "call",
+          "operand": "CardBackManager::Get",
+          "token": "token(0x06001ACD)"
+        },
+        {
+          "offset": "IL_006a",
+          "opcode": "stfld",
+          "operand": "CardBackSummon::m_CardBackManager",
+          "token": "token(0x040014E3)"
+        },
+        {
+          "offset": "IL_006f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0070",
+          "opcode": "ldfld",
+          "operand": "CardBackSummon::m_CardBackManager",
+          "token": "token(0x040014E3)"
+        },
+        {
+          "offset": "IL_0075",
+          "opcode": "brtrue.s",
+          "operand": "IL_0089",
+          "token": null
+        },
+        {
+          "offset": "IL_0077",
+          "opcode": "ldstr",
+          "operand": "'CardBackSummonIn failed to get CardBackManager!'",
+          "token": "string token(0x7003A0CE)"
+        },
+        {
+          "offset": "IL_007c",
+          "opcode": "call",
+          "operand": "UnityEngine.Debug::LogError",
+          "token": "token(0x0A0000C1)"
+        },
+        {
+          "offset": "IL_0081",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0082",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0083",
+          "opcode": "call",
+          "operand": "UnityEngine.Behaviour::set_enabled",
+          "token": "token(0x0A00046B)"
+        },
+        {
+          "offset": "IL_0088",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0089",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008a",
+          "opcode": "ldfld",
+          "operand": "CardBackSummon::m_CardBackManager",
+          "token": "token(0x040014E3)"
+        },
+        {
+          "offset": "IL_008f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0090",
+          "opcode": "ldfld",
+          "operand": "CardBackSummon::m_Actor",
+          "token": "token(0x040014E4)"
+        },
+        {
+          "offset": "IL_0095",
+          "opcode": "callvirt",
+          "operand": "CardBackManager::IsActorFriendly",
+          "token": "token(0x06001AFE)"
+        },
+        {
+          "offset": "IL_009a",
+          "opcode": "brfalse.s",
+          "operand": "IL_00ba",
+          "token": null
+        },
+        {
+          "offset": "IL_009c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_009d",
+          "opcode": "ldfld",
+          "operand": "CardBackSummon::m_CardBackManager",
+          "token": "token(0x040014E3)"
+        },
+        {
+          "offset": "IL_00a2",
+          "opcode": "callvirt",
+          "operand": "CardBackManager::GetFriendlyCardBack",
+          "token": "token(0x06001AD1)"
+        },
+        {
+          "offset": "IL_00a7",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a8",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a9",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00aa",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_00af",
+          "opcode": "brfalse.s",
+          "operand": "IL_00d6",
+          "token": null
+        },
+        {
+          "offset": "IL_00b1",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b2",
+          "opcode": "ldfld",
+          "operand": "CardBack::m_HiddenCardEchoTexture",
+          "token": "token(0x0400145A)"
+        },
+        {
+          "offset": "IL_00b7",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b8",
+          "opcode": "br.s",
+          "operand": "IL_00d6",
+          "token": null
+        },
+        {
+          "offset": "IL_00ba",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00bb",
+          "opcode": "ldfld",
+          "operand": "CardBackSummon::m_CardBackManager",
+          "token": "token(0x040014E3)"
+        },
+        {
+          "offset": "IL_00c0",
+          "opcode": "callvirt",
+          "operand": "CardBackManager::GetOpponentCardBack",
+          "token": "token(0x06001AD2)"
+        },
+        {
+          "offset": "IL_00c5",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00c6",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00c7",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00c8",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_00cd",
+          "opcode": "brfalse.s",
+          "operand": "IL_00d6",
+          "token": null
+        },
+        {
+          "offset": "IL_00cf",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d0",
+          "opcode": "ldfld",
+          "operand": "CardBack::m_HiddenCardEchoTexture",
+          "token": "token(0x0400145A)"
+        },
+        {
+          "offset": "IL_00d5",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d6",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d7",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d8",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_00dd",
+          "opcode": "brfalse.s",
+          "operand": "IL_00eb",
+          "token": null
+        },
+        {
+          "offset": "IL_00df",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00e0",
+          "opcode": "call",
+          "operand": "Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial",
+          "token": "token(0x0A000222)"
+        },
+        {
+          "offset": "IL_00e5",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00e6",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Material::set_mainTexture",
+          "token": "token(0x0A0000AE)"
+        },
+        {
+          "offset": "IL_00eb",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CardBackSummon",
+      "method": "UpdateCardBack",
+      "token": "0x06001b74",
+      "rva": "0x86dd4",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 8,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "call",
+          "operand": "CardBackSummon::UpdateEchoTexture",
+          "token": "token(0x06001B73)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CardBackSummon",
+      "method": ".ctor",
+      "token": "0x06001b75",
+      "rva": "0x24e0",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "UnityEngine.MonoBehaviour::.ctor",
+          "token": "token(0x0A000018)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

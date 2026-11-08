@@ -1,0 +1,72 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hero/AddMultiply/AddMultiplyDistortion2Layer" {
+Properties {
+
+_Color ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_Intensity ("Intensity", Float) = 1.0
+
+_MainTex ("Main Texture", 2D) = "black" { }
+
+_ScrollX ("Main Scroll X", Float) = 0.0
+
+_ScrollY ("Main Scroll Y", Float) = 0.0
+
+_ScaleX ("Main Scale X", Float) = 1.0
+
+_ScaleY ("Main Scale Y", Float) = 1.0
+
+_FxTex ("Distortion Texture", 2D) = "black" { }
+
+_FxIntensity ("Distortion Intensity", Float) = 1.0
+
+_FxScrollX ("Distortion Scroll X", Float) = 0.0
+
+_FxScrollY ("Distortion Scroll Y", Float) = 0.0
+
+_FxScaleX ("Distortion Scale X", Float) = 1.0
+
+_FxScaleY ("Distortion Scale Y", Float) = 1.0
+
+_MaskTex ("Mask Texture", 2D) = "black" { }
+
+_MaskIntensity ("Mask Intensity", Float) = 1.0
+
+_MaskScrollX ("Mask Scroll X", Float) = 0.0
+
+_MaskScrollY ("Mask Scroll Y", Float) = 0.0
+
+_MaskScaleX ("Mask Scale X", Float) = 1.0
+
+_MaskScaleY ("Mask Scale Y", Float) = 1.0
+
+_GlowColor ("Glow Color", Color) = (1,1,1,1)
+
+_GlowIntensity ("Glow Intensity", Float) = 0.0
+
+_GlowAddMul ("Glow Add/Multiply", Range(0, 1)) = 0.0
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 54499
+}
+ Pass {
+ Name "GlowTransparent"
+  Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "GlowTransparent" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 111901
+}
+}
+}

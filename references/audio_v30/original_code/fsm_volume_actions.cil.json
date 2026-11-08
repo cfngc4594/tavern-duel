@@ -1,0 +1,1495 @@
+{
+  "types": [
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction",
+      "token": "0x0200305b",
+      "fields": [
+        {
+          "name": "m_GameObject",
+          "token": "0x04013a62",
+          "signature": "061295bd"
+        },
+        {
+          "name": "m_Volume",
+          "token": "0x04013a63",
+          "signature": "06128aa1"
+        },
+        {
+          "name": "m_EveryFrame",
+          "token": "0x04013a64",
+          "signature": "0602"
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction",
+      "token": "0x02003062",
+      "fields": [
+        {
+          "name": "m_GameObject",
+          "token": "0x04013a6c",
+          "signature": "061295bd"
+        },
+        {
+          "name": "m_AudioSource",
+          "token": "0x04013a6d",
+          "signature": "06129ec5"
+        },
+        {
+          "name": "m_FadeTime",
+          "token": "0x04013a6e",
+          "signature": "06128aa1"
+        },
+        {
+          "name": "m_TargetVolume",
+          "token": "0x04013a6f",
+          "signature": "06128aa1"
+        },
+        {
+          "name": "m_StopWhenDone",
+          "token": "0x04013a70",
+          "signature": "061282c1"
+        },
+        {
+          "name": "m_RealTime",
+          "token": "0x04013a71",
+          "signature": "061282c1"
+        },
+        {
+          "name": "m_audio",
+          "token": "0x04013a72",
+          "signature": "06128351"
+        },
+        {
+          "name": "m_startVolume",
+          "token": "0x04013a73",
+          "signature": "060c"
+        },
+        {
+          "name": "m_startTime",
+          "token": "0x04013a74",
+          "signature": "060c"
+        },
+        {
+          "name": "m_currentTime",
+          "token": "0x04013a75",
+          "signature": "060c"
+        },
+        {
+          "name": "m_endTime",
+          "token": "0x04013a76",
+          "signature": "060c"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction",
+      "method": "Reset",
+      "token": "0x06016ae5",
+      "rva": "0x69a88f",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 31,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction::m_GameObject",
+          "token": "token(0x04013A62)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmFloat::op_Implicit",
+          "token": "token(0x0A0058F9)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction::m_Volume",
+          "token": "token(0x04013A63)"
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction::m_EveryFrame",
+          "token": "token(0x04013A64)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction",
+      "method": "OnEnter",
+      "token": "0x06016ae6",
+      "rva": "0x69a8af",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 21,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction::UpdateVolume",
+          "token": "token(0x06016AE8)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction::m_EveryFrame",
+          "token": "token(0x04013A64)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "brtrue.s",
+          "operand": "IL_0014",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::Finish",
+          "token": "token(0x0A004067)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction",
+      "method": "OnUpdate",
+      "token": "0x06016ae7",
+      "rva": "0x69a8c5",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction::UpdateVolume",
+          "token": "token(0x06016AE8)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction",
+      "method": "UpdateVolume",
+      "token": "0x06016ae8",
+      "rva": "0x69a8d0",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 82,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::get_Fsm",
+          "token": "token(0x0A004068)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction::m_GameObject",
+          "token": "token(0x04013A62)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget",
+          "token": "token(0x0A004069)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "brfalse.s",
+          "operand": "IL_001c",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::GetComponent<spec>",
+          "token": "token(0x2B0001AF)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "brfalse.s",
+          "operand": "IL_002d",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction::m_Volume",
+          "token": "token(0x04013A63)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.NamedVariable::get_IsNone",
+          "token": "token(0x0A0058FE)"
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "brfalse.s",
+          "operand": "IL_003b",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "call",
+          "operand": "SoundManager::Get",
+          "token": "token(0x06014710)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction::m_Volume",
+          "token": "token(0x04013A63)"
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::get_Value",
+          "token": "token(0x0A003708)"
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "callvirt",
+          "operand": "SoundManager::SetVolume",
+          "token": "token(0x06014726)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioSetVolumeAction",
+      "method": ".ctor",
+      "token": "0x06016ae9",
+      "rva": "0x53731a",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::.ctor",
+          "token": "token(0x0A00406B)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction",
+      "method": "Reset",
+      "token": "0x06016afb",
+      "rva": "0x69ab04",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 64,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_GameObject",
+          "token": "token(0x04013A6C)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmFloat::op_Implicit",
+          "token": "token(0x0A0058F9)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_FadeTime",
+          "token": "token(0x04013A6E)"
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmFloat::op_Implicit",
+          "token": "token(0x0A0058F9)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_TargetVolume",
+          "token": "token(0x04013A6F)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmBool::op_Implicit",
+          "token": "token(0x0A0058FA)"
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_StopWhenDone",
+          "token": "token(0x04013A70)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmBool::op_Implicit",
+          "token": "token(0x0A0058FA)"
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_RealTime",
+          "token": "token(0x04013A71)"
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction",
+      "method": "OnEnter",
+      "token": "0x06016afc",
+      "rva": "0x69ab50",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 227,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_AudioSource",
+          "token": "token(0x04013A6D)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmObject::get_Value",
+          "token": "token(0x0A0058FF)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "brfalse.s",
+          "operand": "IL_0043",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::get_Fsm",
+          "token": "token(0x0A004068)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_GameObject",
+          "token": "token(0x04013A6C)"
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget",
+          "token": "token(0x0A004069)"
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "brfalse.s",
+          "operand": "IL_0035",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::Finish",
+          "token": "token(0x0A004067)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::GetComponent<spec>",
+          "token": "token(0x2B0001AF)"
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio",
+          "token": "token(0x04013A72)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "br.s",
+          "operand": "IL_0059",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_AudioSource",
+          "token": "token(0x04013A6D)"
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmObject::get_Value",
+          "token": "token(0x0A0058FF)"
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "isinst",
+          "operand": "UnityEngine.AudioSource",
+          "token": "token(0x010000D4)"
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio",
+          "token": "token(0x04013A72)"
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio",
+          "token": "token(0x04013A72)"
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "brfalse.s",
+          "operand": "IL_006e",
+          "token": null
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::Finish",
+          "token": "token(0x0A004067)"
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006f",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_FadeTime",
+          "token": "token(0x04013A6E)"
+        },
+        {
+          "offset": "IL_0074",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::get_Value",
+          "token": "token(0x0A003708)"
+        },
+        {
+          "offset": "IL_0079",
+          "opcode": "ldsfld",
+          "operand": "UnityEngine.Mathf::Epsilon",
+          "token": "token(0x0A0004BC)"
+        },
+        {
+          "offset": "IL_007e",
+          "opcode": "bgt.un.s",
+          "operand": "IL_0087",
+          "token": null
+        },
+        {
+          "offset": "IL_0080",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0081",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::Finish",
+          "token": "token(0x0A004067)"
+        },
+        {
+          "offset": "IL_0086",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0087",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0088",
+          "opcode": "call",
+          "operand": "SoundManager::Get",
+          "token": "token(0x06014710)"
+        },
+        {
+          "offset": "IL_008d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008e",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio",
+          "token": "token(0x04013A72)"
+        },
+        {
+          "offset": "IL_0093",
+          "opcode": "callvirt",
+          "operand": "SoundManager::GetVolume",
+          "token": "token(0x06014725)"
+        },
+        {
+          "offset": "IL_0098",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startVolume",
+          "token": "token(0x04013A73)"
+        },
+        {
+          "offset": "IL_009d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_009e",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup",
+          "token": "token(0x0A00591E)"
+        },
+        {
+          "offset": "IL_00a3",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startTime",
+          "token": "token(0x04013A74)"
+        },
+        {
+          "offset": "IL_00a8",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a9",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00aa",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startTime",
+          "token": "token(0x04013A74)"
+        },
+        {
+          "offset": "IL_00af",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_currentTime",
+          "token": "token(0x04013A75)"
+        },
+        {
+          "offset": "IL_00b4",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b5",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b6",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startTime",
+          "token": "token(0x04013A74)"
+        },
+        {
+          "offset": "IL_00bb",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00bc",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_FadeTime",
+          "token": "token(0x04013A6E)"
+        },
+        {
+          "offset": "IL_00c1",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::get_Value",
+          "token": "token(0x0A003708)"
+        },
+        {
+          "offset": "IL_00c6",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00c7",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_endTime",
+          "token": "token(0x04013A76)"
+        },
+        {
+          "offset": "IL_00cc",
+          "opcode": "call",
+          "operand": "SoundManager::Get",
+          "token": "token(0x06014710)"
+        },
+        {
+          "offset": "IL_00d1",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d2",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio",
+          "token": "token(0x04013A72)"
+        },
+        {
+          "offset": "IL_00d7",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d8",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startVolume",
+          "token": "token(0x04013A73)"
+        },
+        {
+          "offset": "IL_00dd",
+          "opcode": "callvirt",
+          "operand": "SoundManager::SetVolume",
+          "token": "token(0x06014726)"
+        },
+        {
+          "offset": "IL_00e2",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction",
+      "method": "OnUpdate",
+      "token": "0x06016afd",
+      "rva": "0x69ac40",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 197,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_RealTime",
+          "token": "token(0x04013A71)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmBool::get_Value",
+          "token": "token(0x0A000471)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "brfalse.s",
+          "operand": "IL_0021",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup",
+          "token": "token(0x0A00591E)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startTime",
+          "token": "token(0x04013A74)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "sub",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_currentTime",
+          "token": "token(0x04013A75)"
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "br.s",
+          "operand": "IL_0033",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_currentTime",
+          "token": "token(0x04013A75)"
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "call",
+          "operand": "UnityEngine.Time::get_deltaTime",
+          "token": "token(0x0A00096D)"
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_currentTime",
+          "token": "token(0x04013A75)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_currentTime",
+          "token": "token(0x04013A75)"
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_endTime",
+          "token": "token(0x04013A76)"
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "bge.un.s",
+          "operand": "IL_0085",
+          "token": null
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_currentTime",
+          "token": "token(0x04013A75)"
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startTime",
+          "token": "token(0x04013A74)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "sub",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_FadeTime",
+          "token": "token(0x04013A6E)"
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::get_Value",
+          "token": "token(0x0A003708)"
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "div",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startVolume",
+          "token": "token(0x04013A73)"
+        },
+        {
+          "offset": "IL_0061",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_TargetVolume",
+          "token": "token(0x04013A6F)"
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::get_Value",
+          "token": "token(0x0A003708)"
+        },
+        {
+          "offset": "IL_006c",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "call",
+          "operand": "UnityEngine.Mathf::Lerp",
+          "token": "token(0x0A000D72)"
+        },
+        {
+          "offset": "IL_0072",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0073",
+          "opcode": "call",
+          "operand": "SoundManager::Get",
+          "token": "token(0x06014710)"
+        },
+        {
+          "offset": "IL_0078",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0079",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio",
+          "token": "token(0x04013A72)"
+        },
+        {
+          "offset": "IL_007e",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007f",
+          "opcode": "callvirt",
+          "operand": "SoundManager::SetVolume",
+          "token": "token(0x06014726)"
+        },
+        {
+          "offset": "IL_0084",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0085",
+          "opcode": "call",
+          "operand": "SoundManager::Get",
+          "token": "token(0x06014710)"
+        },
+        {
+          "offset": "IL_008a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008b",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio",
+          "token": "token(0x04013A72)"
+        },
+        {
+          "offset": "IL_0090",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0091",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_TargetVolume",
+          "token": "token(0x04013A6F)"
+        },
+        {
+          "offset": "IL_0096",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::get_Value",
+          "token": "token(0x0A003708)"
+        },
+        {
+          "offset": "IL_009b",
+          "opcode": "callvirt",
+          "operand": "SoundManager::SetVolume",
+          "token": "token(0x06014726)"
+        },
+        {
+          "offset": "IL_00a0",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a1",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_StopWhenDone",
+          "token": "token(0x04013A70)"
+        },
+        {
+          "offset": "IL_00a6",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmBool::get_Value",
+          "token": "token(0x0A000471)"
+        },
+        {
+          "offset": "IL_00ab",
+          "opcode": "brfalse.s",
+          "operand": "IL_00be",
+          "token": null
+        },
+        {
+          "offset": "IL_00ad",
+          "opcode": "call",
+          "operand": "SoundManager::Get",
+          "token": "token(0x06014710)"
+        },
+        {
+          "offset": "IL_00b2",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b3",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio",
+          "token": "token(0x04013A72)"
+        },
+        {
+          "offset": "IL_00b8",
+          "opcode": "callvirt",
+          "operand": "SoundManager::Stop",
+          "token": "token(0x0601471F)"
+        },
+        {
+          "offset": "IL_00bd",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00be",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00bf",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::Finish",
+          "token": "token(0x0A004067)"
+        },
+        {
+          "offset": "IL_00c4",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AudioVolumeFadeAction",
+      "method": ".ctor",
+      "token": "0x06016afe",
+      "rva": "0x53731a",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::.ctor",
+          "token": "token(0x0A00406B)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "build": "37.0.0.255130.254477",
+  "shader_formula_cases": 6144,
+  "results": [
+    {
+      "shader": "Custom_Selection_HighlightMultiSample",
+      "cases": 2048,
+      "max_shader_error": 0,
+      "max_uv_error": 0,
+      "state_verified": true,
+      "passed": true
+    },
+    {
+      "shader": "Custom_Selection_HighlightMultiSampleBlend",
+      "cases": 2048,
+      "max_shader_error": 0,
+      "max_uv_error": 0,
+      "state_verified": true,
+      "passed": true
+    },
+    {
+      "shader": "Custom_Selection_HighlightMaskBlend",
+      "cases": 2048,
+      "max_shader_error": 0,
+      "max_uv_error": 0,
+      "state_verified": true,
+      "passed": true
+    }
+  ],
+  "replacement_outputs": {
+    "White": {
+      "source_rgba": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "canonical_r8_code": 255,
+      "state": "One/Zero RGBA, Always depth test, no depth write, no culling, ZClip on"
+    },
+    "LightGrey": {
+      "source_rgba": [
+        0.75,
+        0.75,
+        0.75,
+        1.0
+      ],
+      "canonical_r8_code": 191,
+      "state": "One/Zero RGBA, Always depth test, no depth write, no culling, ZClip on"
+    },
+    "Grey": {
+      "source_rgba": [
+        0.5,
+        0.5,
+        0.5,
+        1.0
+      ],
+      "canonical_r8_code": 128,
+      "state": "One/Zero RGBA, Always depth test, no depth write, no culling, ZClip on"
+    },
+    "DarkGrey": {
+      "source_rgba": [
+        0.25,
+        0.25,
+        0.25,
+        1.0
+      ],
+      "canonical_r8_code": 64,
+      "state": "One/Zero RGBA, Always depth test, no depth write, no culling, ZClip on"
+    },
+    "BlackOverlay": {
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "canonical_r8_code": 0,
+      "state": "One/Zero RGBA, Always depth test, no depth write, no culling, ZClip on"
+    }
+  },
+  "image_oracle_instruction_cases": 1800,
+  "max_image_oracle_error": 0,
+  "passed": true,
+  "scope": "Scalar source instructions and canonical R8 image pass functions; no GPU, triangle coverage, MSAA, client pixels or native default wrap verified. Both clamp/repeat and ideal/fixed8 bilinear options tested.",
+  "r8_quantization": "floor(clamp(x,0,1)*255+0.5)/255 at EACH pass target. D3D FLOAT->UNORM allows 0.6 integer ULP; canonical values are reference, not source GPU bit identity.",
+  "quantization_source": "https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#FLOATtoUNORM",
+  "native_wrap_boundary": "HighlightRender and RenderTextureTracker set no wrap mode. Native Unity defaults have not been recovered. Compare both oracle modes; if borders stay black the output can be mode-independent."
+}

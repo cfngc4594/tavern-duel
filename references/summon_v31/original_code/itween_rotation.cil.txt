@@ -1,0 +1,1013 @@
+Source SHA256 35702517648b33a463b6f061478787c30cba28555bf2178cc5cafbda56fb660d
+
+0x0600001d RotateTo
+0000 ldarg.0 
+0001 ldc.i4.4 
+0002 newarr 0x01000001
+0007 dup 
+0008 ldc.i4.0 
+0009 ldstr 'rotation'
+000e stelem.ref 
+000f dup 
+0010 ldc.i4.1 
+0011 ldarg.1 
+0012 box 0x01000005
+0017 stelem.ref 
+0018 dup 
+0019 ldc.i4.2 
+001a ldstr 'time'
+001f stelem.ref 
+0020 dup 
+0021 ldc.i4.3 
+0022 ldarg.2 
+0023 box 0x01000015
+0028 stelem.ref 
+0029 call iTween::Hash
+002e call iTween::RotateTo
+0033 ret 
+
+0x0600001e RotateTo
+0000 ldarg.1 
+0001 ldstr 'rotation'
+0006 callvirt System.Collections.Hashtable::Contains
+000b brfalse 231
+0010 ldarg.1 
+0011 ldstr 'rotation'
+0016 callvirt System.Collections.Hashtable::get_Item
+001b callvirt System.Object::GetType
+0020 ldtoken 0x0100000c
+0025 call System.Type::GetTypeFromHandle
+002a call System.Type::op_Equality
+002f brfalse 231
+0034 ldarg.1 
+0035 ldstr 'rotation'
+003a callvirt System.Collections.Hashtable::get_Item
+003f castclass 0x0100000c
+0044 stloc.0 
+0045 ldarg.1 
+0046 ldstr 'position'
+004b ldloc.0 
+004c callvirt UnityEngine.Transform::get_position
+0051 ldfld UnityEngine.Vector3::x
+0056 ldloc.0 
+0057 callvirt UnityEngine.Transform::get_position
+005c ldfld UnityEngine.Vector3::y
+0061 ldloc.0 
+0062 callvirt UnityEngine.Transform::get_position
+0067 ldfld UnityEngine.Vector3::z
+006c newobj UnityEngine.Vector3::.ctor
+0071 box 0x01000005
+0076 callvirt System.Collections.Hashtable::set_Item
+007b ldarg.1 
+007c ldstr 'rotation'
+0081 ldloc.0 
+0082 callvirt UnityEngine.Transform::get_eulerAngles
+0087 ldfld UnityEngine.Vector3::x
+008c ldloc.0 
+008d callvirt UnityEngine.Transform::get_eulerAngles
+0092 ldfld UnityEngine.Vector3::y
+0097 ldloc.0 
+0098 callvirt UnityEngine.Transform::get_eulerAngles
+009d ldfld UnityEngine.Vector3::z
+00a2 newobj UnityEngine.Vector3::.ctor
+00a7 box 0x01000005
+00ac callvirt System.Collections.Hashtable::set_Item
+00b1 ldarg.1 
+00b2 ldstr 'scale'
+00b7 ldloc.0 
+00b8 callvirt UnityEngine.Transform::get_localScale
+00bd ldfld UnityEngine.Vector3::x
+00c2 ldloc.0 
+00c3 callvirt UnityEngine.Transform::get_localScale
+00c8 ldfld UnityEngine.Vector3::y
+00cd ldloc.0 
+00ce callvirt UnityEngine.Transform::get_localScale
+00d3 ldfld UnityEngine.Vector3::z
+00d8 newobj UnityEngine.Vector3::.ctor
+00dd box 0x01000005
+00e2 callvirt System.Collections.Hashtable::set_Item
+00e7 ldarg.1 
+00e8 ldstr 'type'
+00ed ldstr 'rotate'
+00f2 callvirt System.Collections.Hashtable::set_Item
+00f7 ldarg.1 
+00f8 ldstr 'method'
+00fd ldstr 'to'
+0102 callvirt System.Collections.Hashtable::set_Item
+0107 ldarg.0 
+0108 ldarg.1 
+0109 call iTween::Launch
+010e ret 
+
+0x0600003c GenerateRotateToTargets
+0000 ldarg.0 
+0001 ldc.i4.3 
+0002 newarr 0x01000005
+0007 stfld iTween::vector3s
+000c ldarg.0 
+000d ldfld iTween::isLocal
+0012 brfalse.s 60
+0014 ldarg.0 
+0015 ldfld iTween::vector3s
+001a ldc.i4.0 
+001b ldarg.0 
+001c ldfld iTween::vector3s
+0021 ldc.i4.1 
+0022 ldarg.0 
+0023 call iTween::get_transform
+0028 callvirt UnityEngine.Transform::get_localEulerAngles
+002d dup 
+002e stloc.0 
+002f stelem 0x01000005
+0034 ldloc.0 
+0035 stelem 0x01000005
+003a br.s 98
+003c ldarg.0 
+003d ldfld iTween::vector3s
+0042 ldc.i4.0 
+0043 ldarg.0 
+0044 ldfld iTween::vector3s
+0049 ldc.i4.1 
+004a ldarg.0 
+004b call iTween::get_transform
+0050 callvirt UnityEngine.Transform::get_eulerAngles
+0055 dup 
+0056 stloc.0 
+0057 stelem 0x01000005
+005c ldloc.0 
+005d stelem 0x01000005
+0062 ldarg.0 
+0063 ldfld iTween::tweenArguments
+0068 ldstr 'rotation'
+006d callvirt System.Collections.Hashtable::Contains
+0072 brfalse 281
+0077 ldarg.0 
+0078 ldfld iTween::tweenArguments
+007d ldstr 'rotation'
+0082 callvirt System.Collections.Hashtable::get_Item
+0087 callvirt System.Object::GetType
+008c ldtoken 0x0100000c
+0091 call System.Type::GetTypeFromHandle
+0096 call System.Type::op_Equality
+009b brfalse.s 202
+009d ldarg.0 
+009e ldfld iTween::tweenArguments
+00a3 ldstr 'rotation'
+00a8 callvirt System.Collections.Hashtable::get_Item
+00ad castclass 0x0100000c
+00b2 stloc.1 
+00b3 ldarg.0 
+00b4 ldfld iTween::vector3s
+00b9 ldc.i4.1 
+00ba ldloc.1 
+00bb callvirt UnityEngine.Transform::get_eulerAngles
+00c0 stelem 0x01000005
+00c5 br 449
+00ca ldarg.0 
+00cb ldfld iTween::tweenArguments
+00d0 ldstr 'rotation'
+00d5 callvirt System.Collections.Hashtable::get_Item
+00da callvirt System.Object::GetType
+00df ldtoken 0x01000005
+00e4 call System.Type::GetTypeFromHandle
+00e9 call System.Type::op_Equality
+00ee brfalse 449
+00f3 ldarg.0 
+00f4 ldfld iTween::vector3s
+00f9 ldc.i4.1 
+00fa ldarg.0 
+00fb ldfld iTween::tweenArguments
+0100 ldstr 'rotation'
+0105 callvirt System.Collections.Hashtable::get_Item
+010a unbox.any 0x01000005
+010f stelem 0x01000005
+0114 br 449
+0119 ldarg.0 
+011a ldfld iTween::tweenArguments
+011f ldstr 'x'
+0124 callvirt System.Collections.Hashtable::Contains
+0129 brfalse.s 337
+012b ldarg.0 
+012c ldfld iTween::vector3s
+0131 ldc.i4.1 
+0132 ldelema 0x01000005
+0137 ldarg.0 
+0138 ldfld iTween::tweenArguments
+013d ldstr 'x'
+0142 callvirt System.Collections.Hashtable::get_Item
+0147 unbox.any 0x01000015
+014c stfld UnityEngine.Vector3::x
+0151 ldarg.0 
+0152 ldfld iTween::tweenArguments
+0157 ldstr 'y'
+015c callvirt System.Collections.Hashtable::Contains
+0161 brfalse.s 393
+0163 ldarg.0 
+0164 ldfld iTween::vector3s
+0169 ldc.i4.1 
+016a ldelema 0x01000005
+016f ldarg.0 
+0170 ldfld iTween::tweenArguments
+0175 ldstr 'y'
+017a callvirt System.Collections.Hashtable::get_Item
+017f unbox.any 0x01000015
+0184 stfld UnityEngine.Vector3::y
+0189 ldarg.0 
+018a ldfld iTween::tweenArguments
+018f ldstr 'z'
+0194 callvirt System.Collections.Hashtable::Contains
+0199 brfalse.s 449
+019b ldarg.0 
+019c ldfld iTween::vector3s
+01a1 ldc.i4.1 
+01a2 ldelema 0x01000005
+01a7 ldarg.0 
+01a8 ldfld iTween::tweenArguments
+01ad ldstr 'z'
+01b2 callvirt System.Collections.Hashtable::get_Item
+01b7 unbox.any 0x01000015
+01bc stfld UnityEngine.Vector3::z
+01c1 ldarg.0 
+01c2 ldfld iTween::vector3s
+01c7 ldc.i4.1 
+01c8 ldarg.0 
+01c9 ldfld iTween::vector3s
+01ce ldc.i4.0 
+01cf ldelema 0x01000005
+01d4 ldfld UnityEngine.Vector3::x
+01d9 ldarg.0 
+01da ldfld iTween::vector3s
+01df ldc.i4.1 
+01e0 ldelema 0x01000005
+01e5 ldfld UnityEngine.Vector3::x
+01ea ldc.r4 1
+01ef call iTween::clerp
+01f4 ldarg.0 
+01f5 ldfld iTween::vector3s
+01fa ldc.i4.0 
+01fb ldelema 0x01000005
+0200 ldfld UnityEngine.Vector3::y
+0205 ldarg.0 
+0206 ldfld iTween::vector3s
+020b ldc.i4.1 
+020c ldelema 0x01000005
+0211 ldfld UnityEngine.Vector3::y
+0216 ldc.r4 1
+021b call iTween::clerp
+0220 ldarg.0 
+0221 ldfld iTween::vector3s
+0226 ldc.i4.0 
+0227 ldelema 0x01000005
+022c ldfld UnityEngine.Vector3::z
+0231 ldarg.0 
+0232 ldfld iTween::vector3s
+0237 ldc.i4.1 
+0238 ldelema 0x01000005
+023d ldfld UnityEngine.Vector3::z
+0242 ldc.r4 1
+0247 call iTween::clerp
+024c newobj UnityEngine.Vector3::.ctor
+0251 stelem 0x01000005
+0256 ldarg.0 
+0257 ldfld iTween::tweenArguments
+025c ldstr 'speed'
+0261 callvirt System.Collections.Hashtable::Contains
+0266 brfalse.s 680
+0268 ldarg.0 
+0269 ldfld iTween::vector3s
+026e ldc.i4.0 
+026f ldelem 0x01000005
+0274 ldarg.0 
+0275 ldfld iTween::vector3s
+027a ldc.i4.1 
+027b ldelem 0x01000005
+0280 call UnityEngine.Vector3::Distance
+0285 call System.Math::Abs
+028a stloc.2 
+028b ldarg.0 
+028c ldloc.2 
+028d ldarg.0 
+028e ldfld iTween::tweenArguments
+0293 ldstr 'speed'
+0298 callvirt System.Collections.Hashtable::get_Item
+029d unbox.any 0x01000015
+02a2 div 
+02a3 stfld iTween::time
+02a8 ret 
+
+0x06000052 ApplyRotateToTargets
+0000 ldarg.0 
+0001 ldarg.0 
+0002 call iTween::get_transform
+0007 callvirt UnityEngine.Transform::get_eulerAngles
+000c stfld iTween::preUpdate
+0011 ldarg.0 
+0012 ldfld iTween::vector3s
+0017 ldc.i4.2 
+0018 ldelema 0x01000005
+001d ldarg.0 
+001e ldfld iTween::ease
+0023 ldarg.0 
+0024 ldfld iTween::vector3s
+0029 ldc.i4.0 
+002a ldelema 0x01000005
+002f ldfld UnityEngine.Vector3::x
+0034 ldarg.0 
+0035 ldfld iTween::vector3s
+003a ldc.i4.1 
+003b ldelema 0x01000005
+0040 ldfld UnityEngine.Vector3::x
+0045 ldarg.0 
+0046 ldfld iTween::percentage
+004b callvirt 0x060000c4
+0050 stfld UnityEngine.Vector3::x
+0055 ldarg.0 
+0056 ldfld iTween::vector3s
+005b ldc.i4.2 
+005c ldelema 0x01000005
+0061 ldarg.0 
+0062 ldfld iTween::ease
+0067 ldarg.0 
+0068 ldfld iTween::vector3s
+006d ldc.i4.0 
+006e ldelema 0x01000005
+0073 ldfld UnityEngine.Vector3::y
+0078 ldarg.0 
+0079 ldfld iTween::vector3s
+007e ldc.i4.1 
+007f ldelema 0x01000005
+0084 ldfld UnityEngine.Vector3::y
+0089 ldarg.0 
+008a ldfld iTween::percentage
+008f callvirt 0x060000c4
+0094 stfld UnityEngine.Vector3::y
+0099 ldarg.0 
+009a ldfld iTween::vector3s
+009f ldc.i4.2 
+00a0 ldelema 0x01000005
+00a5 ldarg.0 
+00a6 ldfld iTween::ease
+00ab ldarg.0 
+00ac ldfld iTween::vector3s
+00b1 ldc.i4.0 
+00b2 ldelema 0x01000005
+00b7 ldfld UnityEngine.Vector3::z
+00bc ldarg.0 
+00bd ldfld iTween::vector3s
+00c2 ldc.i4.1 
+00c3 ldelema 0x01000005
+00c8 ldfld UnityEngine.Vector3::z
+00cd ldarg.0 
+00ce ldfld iTween::percentage
+00d3 callvirt 0x060000c4
+00d8 stfld UnityEngine.Vector3::z
+00dd ldarg.0 
+00de ldfld iTween::isLocal
+00e3 brfalse.s 259
+00e5 ldarg.0 
+00e6 call iTween::get_transform
+00eb ldarg.0 
+00ec ldfld iTween::vector3s
+00f1 ldc.i4.2 
+00f2 ldelem 0x01000005
+00f7 call UnityEngine.Quaternion::Euler
+00fc callvirt UnityEngine.Transform::set_localRotation
+0101 br.s 287
+0103 ldarg.0 
+0104 call iTween::get_transform
+0109 ldarg.0 
+010a ldfld iTween::vector3s
+010f ldc.i4.2 
+0110 ldelem 0x01000005
+0115 call UnityEngine.Quaternion::Euler
+011a callvirt UnityEngine.Transform::set_rotation
+011f ldarg.0 
+0120 ldfld iTween::percentage
+0125 ldc.r4 1
+012a bne.un.s 366
+012c ldarg.0 
+012d ldfld iTween::isLocal
+0132 brfalse.s 338
+0134 ldarg.0 
+0135 call iTween::get_transform
+013a ldarg.0 
+013b ldfld iTween::vector3s
+0140 ldc.i4.1 
+0141 ldelem 0x01000005
+0146 call UnityEngine.Quaternion::Euler
+014b callvirt UnityEngine.Transform::set_localRotation
+0150 br.s 366
+0152 ldarg.0 
+0153 call iTween::get_transform
+0158 ldarg.0 
+0159 ldfld iTween::vector3s
+015e ldc.i4.1 
+015f ldelem 0x01000005
+0164 call UnityEngine.Quaternion::Euler
+0169 callvirt UnityEngine.Transform::set_rotation
+016e ldarg.0 
+016f ldarg.0 
+0170 call iTween::get_transform
+0175 callvirt UnityEngine.Transform::get_eulerAngles
+017a stfld iTween::postUpdate
+017f ldarg.0 
+0180 ldfld iTween::physics
+0185 brfalse.s 430
+0187 ldarg.0 
+0188 call iTween::get_transform
+018d ldarg.0 
+018e ldfld iTween::preUpdate
+0193 callvirt UnityEngine.Transform::set_eulerAngles
+0198 ldarg.0 
+0199 call iTween::get_rigidbody
+019e ldarg.0 
+019f ldfld iTween::postUpdate
+01a4 call UnityEngine.Quaternion::Euler
+01a9 callvirt UnityEngine.Rigidbody::MoveRotation
+01ae ret 
+
+0x0600005b TweenStart
+0000 ldarg.0 
+0001 ldfld iTween::tweenArguments
+0006 brtrue.s 9
+0008 ret 
+0009 ldarg.0 
+000a ldc.i4.0 
+000b call iTween::CallBack
+0010 ldarg.0 
+0011 ldfld iTween::loop
+0016 brtrue.s 45
+0018 ldarg.0 
+0019 call iTween::ConflictCheck
+001e ldarg.0 
+001f ldfld iTween::destroyed
+0024 brfalse.s 39
+0026 ret 
+0027 ldarg.0 
+0028 call iTween::GenerateTargets
+002d ldarg.0 
+002e ldc.i4.1 
+002f stfld iTween::loop
+0034 ldarg.0 
+0035 ldfld iTween::type
+003a ldstr 'stab'
+003f call System.String::op_Equality
+0044 brfalse.s 92
+0046 ldarg.0 
+0047 ldfld iTween::audioSource
+004c ldarg.0 
+004d ldfld iTween::audioSource
+0052 callvirt UnityEngine.AudioSource::get_clip
+0057 callvirt UnityEngine.AudioSource::PlayOneShot
+005c ldarg.0 
+005d ldfld iTween::type
+0062 ldstr 'move'
+0067 call System.String::op_Equality
+006c brtrue.s 218
+006e ldarg.0 
+006f ldfld iTween::type
+0074 ldstr 'scale'
+0079 call System.String::op_Equality
+007e brtrue.s 218
+0080 ldarg.0 
+0081 ldfld iTween::type
+0086 ldstr 'rotate'
+008b call System.String::op_Equality
+0090 brtrue.s 218
+0092 ldarg.0 
+0093 ldfld iTween::type
+0098 ldstr 'punch'
+009d call System.String::op_Equality
+00a2 brtrue.s 218
+00a4 ldarg.0 
+00a5 ldfld iTween::type
+00aa ldstr 'shake'
+00af call System.String::op_Equality
+00b4 brtrue.s 218
+00b6 ldarg.0 
+00b7 ldfld iTween::type
+00bc ldstr 'curve'
+00c1 call System.String::op_Equality
+00c6 brtrue.s 218
+00c8 ldarg.0 
+00c9 ldfld iTween::type
+00ce ldstr 'look'
+00d3 call System.String::op_Equality
+00d8 brfalse.s 224
+00da ldarg.0 
+00db call iTween::EnableKinematic
+00e0 ldarg.0 
+00e1 ldc.i4.1 
+00e2 stfld iTween::isRunning
+00e7 ret 
+
+0x0600005d TweenUpdate
+0000 ldarg.0 
+0001 ldfld iTween::type
+0006 ldstr 'timer'
+000b call System.String::op_Inequality
+0010 brfalse.s 38
+0012 ldarg.0 
+0013 ldfld iTween::apply
+0018 brtrue.s 27
+001a ret 
+001b ldarg.0 
+001c ldfld iTween::apply
+0021 callvirt 0x060000c6
+0026 ldarg.0 
+0027 ldc.i4.1 
+0028 call iTween::CallBack
+002d ldarg.0 
+002e call iTween::UpdatePercentage
+0033 ret 
+
+0x0600005e TweenComplete
+0000 ldarg.0 
+0001 ldc.i4.0 
+0002 stfld iTween::isRunning
+0007 ldarg.0 
+0008 ldfld iTween::percentage
+000d ldc.r4 0.5
+0012 ble.un.s 33
+0014 ldarg.0 
+0015 ldc.r4 1
+001a stfld iTween::percentage
+001f br.s 44
+0021 ldarg.0 
+0022 ldc.r4 0
+0027 stfld iTween::percentage
+002c ldarg.0 
+002d ldfld iTween::type
+0032 ldstr 'timer'
+0037 call System.String::op_Inequality
+003c brfalse.s 73
+003e ldarg.0 
+003f ldfld iTween::apply
+0044 callvirt 0x060000c6
+0049 ldarg.0 
+004a ldfld iTween::type
+004f ldstr 'value'
+0054 call System.String::op_Equality
+0059 brtrue.s 109
+005b ldarg.0 
+005c ldfld iTween::type
+0061 ldstr 'timer'
+0066 call System.String::op_Equality
+006b brfalse.s 116
+006d ldarg.0 
+006e ldc.i4.1 
+006f call iTween::CallBack
+0074 ldarg.0 
+0075 ldfld iTween::loopType
+007a brfalse.s 130
+007c ldarg.0 
+007d call iTween::TweenLoop
+0082 ldarg.0 
+0083 ldc.i4.2 
+0084 call iTween::CallBack
+0089 ldarg.0 
+008a ldfld iTween::loopType
+008f brtrue.s 151
+0091 ldarg.0 
+0092 call iTween::Dispose
+0097 ret 
+
+0x06000091 RetrieveArgs
+0000 ldarg.0 
+0001 ldfld iTween::tweenArguments
+0006 brtrue.s 9
+0008 ret 
+0009 ldarg.0 
+000a ldarg.0 
+000b ldfld iTween::tweenArguments
+0010 ldstr 'id'
+0015 callvirt System.Collections.Hashtable::get_Item
+001a unbox.any 0x01000027
+001f stfld iTween::id
+0024 ldarg.0 
+0025 ldarg.0 
+0026 ldfld iTween::tweenArguments
+002b ldstr 'type'
+0030 callvirt System.Collections.Hashtable::get_Item
+0035 castclass 0x0100001c
+003a stfld iTween::type
+003f ldarg.0 
+0040 ldarg.0 
+0041 ldfld iTween::tweenArguments
+0046 ldstr 'name'
+004b callvirt System.Collections.Hashtable::get_Item
+0050 castclass 0x0100001c
+0055 stfld iTween::_name
+005a ldarg.0 
+005b ldarg.0 
+005c ldfld iTween::tweenArguments
+0061 ldstr 'method'
+0066 callvirt System.Collections.Hashtable::get_Item
+006b castclass 0x0100001c
+0070 stfld iTween::method
+0075 ldarg.0 
+0076 ldfld iTween::tweenArguments
+007b ldstr 'time'
+0080 callvirt System.Collections.Hashtable::Contains
+0085 brfalse.s 164
+0087 ldarg.0 
+0088 ldarg.0 
+0089 ldfld iTween::tweenArguments
+008e ldstr 'time'
+0093 callvirt System.Collections.Hashtable::get_Item
+0098 unbox.any 0x01000015
+009d stfld iTween::time
+00a2 br.s 175
+00a4 ldarg.0 
+00a5 ldsfld Defaults::time
+00aa stfld iTween::time
+00af ldarg.0 
+00b0 ldfld iTween::tweenArguments
+00b5 ldstr 'delay'
+00ba callvirt System.Collections.Hashtable::Contains
+00bf brfalse.s 222
+00c1 ldarg.0 
+00c2 ldarg.0 
+00c3 ldfld iTween::tweenArguments
+00c8 ldstr 'delay'
+00cd callvirt System.Collections.Hashtable::get_Item
+00d2 unbox.any 0x01000015
+00d7 stfld iTween::delay
+00dc br.s 233
+00de ldarg.0 
+00df ldsfld Defaults::delay
+00e4 stfld iTween::delay
+00e9 ldarg.0 
+00ea ldfld iTween::tweenArguments
+00ef ldstr 'namedcolorvalue'
+00f4 callvirt System.Collections.Hashtable::Contains
+00f9 brfalse 516
+00fe ldarg.0 
+00ff ldfld iTween::tweenArguments
+0104 ldstr 'namedcolorvalue'
+0109 callvirt System.Collections.Hashtable::get_Item
+010e callvirt System.Object::GetType
+0113 ldtoken 0x02000008
+0118 call System.Type::GetTypeFromHandle
+011d call System.Type::op_Equality
+0122 brfalse.s 338
+0124 ldarg.0 
+0125 ldarg.0 
+0126 ldfld iTween::tweenArguments
+012b ldstr 'namedcolorvalue'
+0130 callvirt System.Collections.Hashtable::get_Item
+0135 unbox.any 0x02000008
+013a stloc.0 
+013b ldloca.s 0
+013d constrained. 0x02000008
+0143 callvirt System.Object::ToString
+0148 stfld iTween::namedColorValueString
+014d br 538
+0152 ldarg.0 
+0153 ldfld iTween::tweenArguments
+0158 ldstr 'namedcolorvalue'
+015d callvirt System.Collections.Hashtable::get_Item
+0162 callvirt System.Object::GetType
+0167 ldtoken 0x0100001c
+016c call System.Type::GetTypeFromHandle
+0171 call System.Type::op_Equality
+0176 brfalse.s 408
+0178 ldarg.0 
+0179 ldarg.0 
+017a ldfld iTween::tweenArguments
+017f ldstr 'namedcolorvalue'
+0184 callvirt System.Collections.Hashtable::get_Item
+0189 castclass 0x0100001c
+018e stfld iTween::namedColorValueString
+0193 br 538
+0198 nop 
+0199 ldarg.0 
+019a ldtoken 0x02000008
+019f call System.Type::GetTypeFromHandle
+01a4 ldarg.0 
+01a5 ldfld iTween::tweenArguments
+01aa ldstr 'namedcolorvalue'
+01af callvirt System.Collections.Hashtable::get_Item
+01b4 castclass 0x0100001c
+01b9 ldc.i4.1 
+01ba call System.Enum::Parse
+01bf unbox.any 0x02000008
+01c4 stloc.0 
+01c5 ldloca.s 0
+01c7 constrained. 0x02000008
+01cd callvirt System.Object::ToString
+01d2 stfld iTween::namedColorValueString
+01d7 leave.s 538
+01d9 pop 
+01da ldstr 'iTween: Unsupported namedcolorvalue supplied! Default will be used.'
+01df call UnityEngine.Debug::LogWarning
+01e4 ldarg.0 
+01e5 ldc.i4.0 
+01e6 stfld iTween::namedcolorvalue
+01eb ldarg.0 
+01ec ldarg.0 
+01ed ldflda iTween::namedcolorvalue
+01f2 constrained. 0x02000008
+01f8 callvirt System.Object::ToString
+01fd stfld iTween::namedColorValueString
+0202 leave.s 538
+0204 ldarg.0 
+0205 ldsfld Defaults::namedColorValue
+020a stfld iTween::namedcolorvalue
+020f ldarg.0 
+0210 ldstr '_Color'
+0215 stfld iTween::namedColorValueString
+021a ldarg.0 
+021b ldfld iTween::tweenArguments
+0220 ldstr 'looptype'
+0225 callvirt System.Collections.Hashtable::Contains
+022a brfalse 697
+022f ldarg.0 
+0230 ldfld iTween::tweenArguments
+0235 ldstr 'looptype'
+023a callvirt System.Collections.Hashtable::get_Item
+023f callvirt System.Object::GetType
+0244 ldtoken 0x02000007
+0249 call System.Type::GetTypeFromHandle
+024e call System.Type::op_Equality
+0253 brfalse.s 626
+0255 ldarg.0 
+0256 ldarg.0 
+0257 ldfld iTween::tweenArguments
+025c ldstr 'looptype'
+0261 callvirt System.Collections.Hashtable::get_Item
+0266 unbox.any 0x02000007
+026b stfld iTween::loopType
+0270 br.s 704
+0272 nop 
+0273 ldarg.0 
+0274 ldtoken 0x02000007
+0279 call System.Type::GetTypeFromHandle
+027e ldarg.0 
+027f ldfld iTween::tweenArguments
+0284 ldstr 'looptype'
+0289 callvirt System.Collections.Hashtable::get_Item
+028e castclass 0x0100001c
+0293 ldc.i4.1 
+0294 call System.Enum::Parse
+0299 unbox.any 0x02000007
+029e stfld iTween::loopType
+02a3 leave.s 704
+02a5 pop 
+02a6 ldstr 'iTween: Unsupported loopType supplied! Default will be used.'
+02ab call UnityEngine.Debug::LogWarning
+02b0 ldarg.0 
+02b1 ldc.i4.0 
+02b2 stfld iTween::loopType
+02b7 leave.s 704
+02b9 ldarg.0 
+02ba ldc.i4.0 
+02bb stfld iTween::loopType
+02c0 ldarg.0 
+02c1 ldfld iTween::tweenArguments
+02c6 ldstr 'easetype'
+02cb callvirt System.Collections.Hashtable::Contains
+02d0 brfalse 867
+02d5 ldarg.0 
+02d6 ldfld iTween::tweenArguments
+02db ldstr 'easetype'
+02e0 callvirt System.Collections.Hashtable::get_Item
+02e5 callvirt System.Object::GetType
+02ea ldtoken 0x02000005
+02ef call System.Type::GetTypeFromHandle
+02f4 call System.Type::op_Equality
+02f9 brfalse.s 792
+02fb ldarg.0 
+02fc ldarg.0 
+02fd ldfld iTween::tweenArguments
+0302 ldstr 'easetype'
+0307 callvirt System.Collections.Hashtable::get_Item
+030c unbox.any 0x02000005
+0311 stfld iTween::easeType
+0316 br.s 878
+0318 nop 
+0319 ldarg.0 
+031a ldtoken 0x02000005
+031f call System.Type::GetTypeFromHandle
+0324 ldarg.0 
+0325 ldfld iTween::tweenArguments
+032a ldstr 'easetype'
+032f callvirt System.Collections.Hashtable::get_Item
+0334 castclass 0x0100001c
+0339 ldc.i4.1 
+033a call System.Enum::Parse
+033f unbox.any 0x02000005
+0344 stfld iTween::easeType
+0349 leave.s 878
+034b pop 
+034c ldstr 'iTween: Unsupported easeType supplied! Default will be used.'
+0351 call UnityEngine.Debug::LogWarning
+0356 ldarg.0 
+0357 ldsfld Defaults::easeType
+035c stfld iTween::easeType
+0361 leave.s 878
+0363 ldarg.0 
+0364 ldsfld Defaults::easeType
+0369 stfld iTween::easeType
+036e ldarg.0 
+036f ldfld iTween::tweenArguments
+0374 ldstr 'space'
+0379 callvirt System.Collections.Hashtable::Contains
+037e brfalse 1041
+0383 ldarg.0 
+0384 ldfld iTween::tweenArguments
+0389 ldstr 'space'
+038e callvirt System.Collections.Hashtable::get_Item
+0393 callvirt System.Object::GetType
+0398 ldtoken 0x01000003
+039d call System.Type::GetTypeFromHandle
+03a2 call System.Type::op_Equality
+03a7 brfalse.s 966
+03a9 ldarg.0 
+03aa ldarg.0 
+03ab ldfld iTween::tweenArguments
+03b0 ldstr 'space'
+03b5 callvirt System.Collections.Hashtable::get_Item
+03ba unbox.any 0x01000003
+03bf stfld iTween::space
+03c4 br.s 1052
+03c6 nop 
+03c7 ldarg.0 
+03c8 ldtoken 0x01000003
+03cd call System.Type::GetTypeFromHandle
+03d2 ldarg.0 
+03d3 ldfld iTween::tweenArguments
+03d8 ldstr 'space'
+03dd callvirt System.Collections.Hashtable::get_Item
+03e2 castclass 0x0100001c
+03e7 ldc.i4.1 
+03e8 call System.Enum::Parse
+03ed unbox.any 0x01000003
+03f2 stfld iTween::space
+03f7 leave.s 1052
+03f9 pop 
+03fa ldstr 'iTween: Unsupported space supplied! Default will be used.'
+03ff call UnityEngine.Debug::LogWarning
+0404 ldarg.0 
+0405 ldsfld Defaults::space
+040a stfld iTween::space
+040f leave.s 1052
+0411 ldarg.0 
+0412 ldsfld Defaults::space
+0417 stfld iTween::space
+041c ldarg.0 
+041d ldfld iTween::tweenArguments
+0422 ldstr 'islocal'
+0427 callvirt System.Collections.Hashtable::Contains
+042c brfalse.s 1099
+042e ldarg.0 
+042f ldarg.0 
+0430 ldfld iTween::tweenArguments
+0435 ldstr 'islocal'
+043a callvirt System.Collections.Hashtable::get_Item
+043f unbox.any 0x01000018
+0444 stfld iTween::isLocal
+0449 br.s 1110
+044b ldarg.0 
+044c ldsfld Defaults::isLocal
+0451 stfld iTween::isLocal
+0456 ldarg.0 
+0457 ldfld iTween::tweenArguments
+045c ldstr 'ignoretimescale'
+0461 callvirt System.Collections.Hashtable::Contains
+0466 brfalse.s 1157
+0468 ldarg.0 
+0469 ldarg.0 
+046a ldfld iTween::tweenArguments
+046f ldstr 'ignoretimescale'
+0474 callvirt System.Collections.Hashtable::get_Item
+0479 unbox.any 0x01000018
+047e stfld iTween::useRealTime
+0483 br.s 1168
+0485 ldarg.0 
+0486 ldsfld Defaults::useRealTime
+048b stfld iTween::useRealTime
+0490 ldarg.0 
+0491 call iTween::GetEasingFunction
+0496 ret 
+
+0x0600009c clerp
+0000 ldc.r4 0
+0005 stloc.0 
+0006 ldc.r4 360
+000b stloc.1 
+000c ldloc.1 
+000d ldloc.0 
+000e sub 
+000f ldc.r4 2
+0014 div 
+0015 call UnityEngine.Mathf::Abs
+001a stloc.2 
+001b ldc.r4 0
+0020 stloc.3 
+0021 ldc.r4 0
+0026 stloc.s 4
+0028 ldarg.1 
+0029 ldarg.0 
+002a sub 
+002b ldloc.2 
+002c neg 
+002d bge.un.s 63
+002f ldloc.1 
+0030 ldarg.0 
+0031 sub 
+0032 ldarg.1 
+0033 add 
+0034 ldarg.2 
+0035 mul 
+0036 stloc.s 4
+0038 ldarg.0 
+0039 ldloc.s 4
+003b add 
+003c stloc.3 
+003d br.s 94
+003f ldarg.1 
+0040 ldarg.0 
+0041 sub 
+0042 ldloc.2 
+0043 ble.un.s 86
+0045 ldloc.1 
+0046 ldarg.1 
+0047 sub 
+0048 ldarg.0 
+0049 add 
+004a neg 
+004b ldarg.2 
+004c mul 
+004d stloc.s 4
+004f ldarg.0 
+0050 ldloc.s 4
+0052 add 
+0053 stloc.3 
+0054 br.s 94
+0056 ldarg.0 
+0057 ldarg.1 
+0058 ldarg.0 
+0059 sub 
+005a ldarg.2 
+005b mul 
+005c add 
+005d stloc.3 
+005e ldloc.3 
+005f ret 
+
+0x060000ae easeOutExpo
+0000 ldarg.1 
+0001 ldarg.0 
+0002 sub 
+0003 starg.s 1
+0005 ldarg.1 
+0006 ldc.r4 2
+000b ldc.r4 -10
+0010 ldarg.2 
+0011 mul 
+0012 ldc.r4 1
+0017 div 
+0018 call UnityEngine.Mathf::Pow
+001d neg 
+001e ldc.r4 1
+0023 add 
+0024 mul 
+0025 ldarg.0 
+0026 add 
+0027 ret 
+
+0x060000c7 Defaults::.cctor
+0000 ldc.r4 1
+0005 stsfld Defaults::time
+000a ldc.r4 0
+000f stsfld Defaults::delay
+0014 ldc.i4.0 
+0015 stsfld Defaults::namedColorValue
+001a ldc.i4.0 
+001b stsfld Defaults::loopType
+0020 ldc.i4.s 16
+0022 stsfld Defaults::easeType
+0027 ldc.r4 3
+002c stsfld Defaults::lookSpeed
+0031 ldc.i4.0 
+0032 stsfld Defaults::isLocal
+0037 ldc.i4.1 
+0038 stsfld Defaults::space
+003d ldc.i4.0 
+003e stsfld Defaults::orientToPath
+0043 call UnityEngine.Color::get_white
+0048 stsfld Defaults::color
+004d ldc.r4 0.05000000074505806
+0052 stsfld Defaults::updateTimePercentage
+0057 ldc.r4 1
+005c ldsfld Defaults::updateTimePercentage
+0061 mul 
+0062 stsfld Defaults::updateTime
+0067 ldc.r4 0.05000000074505806
+006c stsfld Defaults::lookAhead
+0071 ldc.i4.0 
+0072 stsfld Defaults::useRealTime
+0077 call UnityEngine.Vector3::get_up
+007c stsfld Defaults::up
+0081 ret 

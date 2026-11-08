@@ -1,0 +1,297 @@
+{
+  "source_build": "37.0.0.255130.254477",
+  "baseline": 37408,
+  "status": "implemented and tested; listed compatibility limits remain",
+  "archer": {
+    "status": "implemented and tested",
+    "files": [
+      "scripts/game.gd",
+      "scripts/native_archer_effect.gd",
+      "scripts/original_audio_router.gd",
+      "assets/original_combat_v32/archer/routes.json",
+      "tests/archer_audio_gate_test.gd",
+      "tests/archer_death_audio_gate_test.gd"
+    ],
+    "patch": "archer_audio_delta.patch",
+    "source_basis": {
+      "birth_flight": "Same-build SuperSpell.OnMissileSpellStateFinished 0x06014b24 calls FireMissileOnPath only on finished Birth; source missile ActionState owns AudioPlaythroughAction index1.",
+      "hit_audio": "Source impact DeathState audio actions6/7; WaitState action1; DeathState 2 action10. Callback from the actual realized visual state, not a second timer or RNG.",
+      "legacy_length_correction": "Take 001 m_Legacy=true, actual legacy curve end=0.6333333253860474; m_MuscleClip.stop=1.0 is a default unrelated muscle field. Prior visual 1.0 gate was incorrect and is corrected. Same-build prior audio legacy-duration evidence agrees.",
+      "clock": "Calls execute in the same Godot visual state-entry update. skip_spawn_delay is justified because the instantiated visual FSM already reached the source action; action_local_delay retained. No second Birth wait, impact RandomWait or prefab spawn delay is added.",
+      "observed_death_gate": "Preserves this project legacy observed.deaths behavior: defer its flush until this exact visual impact, then retain _audio_flush_deaths existing one-frame defer. This is compatibility preservation, not a claim that original Unity native death voice necessarily begins at missile impact. Normal native_death owns its independent Birth and selected-voice lifecycle and remains unchanged."
+    },
+    "tests": [
+      "archer_audio_gate_test.gd: no launch before Birth end; same-instance launch at Birth end; exactly 2 immediate impact layers at Birth+flight; build at legacy curve completion; explode at that same sampled impact wait completion; each layer exactly once; _timing_draws empty",
+      "archer_audio_gate_test.gd: cancel suppresses later audio; lethal target removal remains immediate; source-owner cleanup",
+      "archer_source_test.gd --instantiate: mesh/skin/material/RT lifecycle, repeated casts, cancel, unchanged damage passed",
+      "phone_source_audio_test.gd: eight original SHA-verified WAVs and existing zero/0.5-second delay paths passed",
+      "archer_death_audio_gate_test.gd: with native_death explicitly absent, lethal target is removed immediately; two observed death requests are absent before impact, accepted exactly once at impact, absent after cancellation-before-impact; no extra damage or timing random draw."
+    ],
+    "remaining": [
+      "Original Unity native animation disabled callback was not executed or measured; 0.6333333254 is exact serialized legacy-curve reconstruction, supported by existing source audit.",
+      "No GPU side-by-side or acoustic output loopback test; engine frame quantization, audio buffer/DAC latency, Unity-vs-Godot RNG/particle/raster kernels remain compatibility boundaries.",
+      "Original SoundDef clip selection, weights, volume and pitch continue through the existing evidence-bound original audio router. No replacement sound or fabricated timing."
+    ],
+    "cancellation": "Before impact, pending observed deaths are discarded with their shot. After impact, the already submitted independent death sound keeps existing audio-router behavior; it is not replayed or retroactively undone."
+  },
+  "burn_spatial": {
+    "source": "references/hand_burn/spatial_evidence.json",
+    "embers_spatial_blend": 0,
+    "fatigue_spatial_blend": 1,
+    "fatigue_generated_source_template": "SoundConfig.m_PlayClipTemplate -8545291008535992616",
+    "rolloff": "linear",
+    "min_distance": 100,
+    "max_distance": 500,
+    "listener_source_world": [
+      -7.801186561584473,
+      1,
+      -4.937725067138672
+    ],
+    "friendly_source_distance": 7.6903317861,
+    "opposing_source_distance": 6.4413358675,
+    "both_source_distance_gains": 1,
+    "runtime": "Existing SFX adapter retained. Snapshot original FX world coordinates passed at Birth for source-distance diagnostic; no guessed panner/reverb/listener added."
+  },
+  "full_hand_voice": {
+    "entry": "<MillCardWithTiming>d__523.MoveNext 0x06012f45 acquires side draw slot, compares one GameState last-turn field and handCount>=10, calls hero.PlayEmote(21) before card Show/flight.",
+    "route": "Card.InitEmoteList 0x06012d69 -> Card.GetEmoteEntryExact 0x06012d46 -> Card.PlayEmote 0x06012d60 -> EmoteEntry.GetSoundSpell -> CardSoundSpell.OnBirth/Play/DelayedPlay 0x06011d81/0x06011d88/0x06011d90 -> SoundManager.Play",
+    "lifecycle": "One global per-turn gate, not per-side; active_turn is local presentation equivalent of source TURN. Reset/menu/new-match increments burn generation, immediately retires old source/audio instances. Generated-card overflow without deck metadata is still not inferred.",
+    "prefab_objects": 18,
+    "unresolved": 0,
+    "export_errors": 0,
+    "heroes": {
+      "HERO_08": {
+        "prefab": "fe3d8a4327b695c428a8105c11909b9a",
+        "clip": "VO_HERO_08_ERROR06_80",
+        "zhCN_guid": "c162c26a4f16cb5408e5e307525c67fc",
+        "duration_seconds": 1.496
+      },
+      "HERO_07": {
+        "prefab": "3d21a105436599141a1ae1625afe5d07",
+        "clip": "VO_HERO_07_ERROR06_25",
+        "zhCN_guid": "222e33593e7215049928aac4922e9e7c",
+        "duration_seconds": 2.2592083333333335
+      }
+    },
+    "source_volume": 1,
+    "source_pitch": 1,
+    "source_delay": 0,
+    "source_category": 3,
+    "source_spatial_blend": 0,
+    "playback": "Registered verified source route in existing original_audio_router and SoundManager, preserving its category/ducking behavior rather than a parallel voice player."
+  },
+  "tests": [
+    {
+      "test": "hand_burn_source_test",
+      "args": [],
+      "code": 0,
+      "seconds": 5.489,
+      "script_error": false,
+      "error": false,
+      "leak": false,
+      "pass_lines": [
+        "HAND_BURN_SOURCE_PASS source hierarchy/materials/particles, timing, both sides, draw queue, reset, rule RNG preservation"
+      ]
+    },
+    {
+      "test": "hand_full_voice_test",
+      "args": [],
+      "code": 0,
+      "seconds": 4.917,
+      "script_error": false,
+      "error": false,
+      "leak": false,
+      "pass_lines": [
+        "HAND_FULL_VOICE_PASS source Emote21, zero delay, two zhCN SHA clips, global per-turn gate, no rules RNG consumption, reset and generated-overflow refusal"
+      ]
+    },
+    {
+      "test": "hand_burn_audio_test",
+      "args": [],
+      "code": 0,
+      "seconds": 4.547,
+      "script_error": false,
+      "error": false,
+      "leak": false,
+      "pass_lines": [
+        "HAND_BURN_AUDIO_PASS: 512 same-frame resets, source gains/pitch, three variants, global RNG isolation, mute, natural finish, setup replacement, awaited shutdown"
+      ]
+    },
+    {
+      "test": "archer_audio_gate_test",
+      "args": [],
+      "code": 0,
+      "seconds": 4.816,
+      "script_error": false,
+      "error": false,
+      "leak": false,
+      "pass_lines": [
+        "ARCHER_AUDIO_GATE_PASS [{\"action_index\":1.0,\"local_visual_time\":0.388557914581423,\"owner_serial\":1000001,\"request\":{\"accepted\":true,\"card_id\":\"CS2_189\",\"event\":\"launch\",\"first_delay_sec\":0.0,\"layers_scheduled\":1,\"request_id\":1},\"route\":\"CS2_189/missile\",\"state\":\"ActionState\",\"visual_clock\":0.388557914581423},{\"action_index\":6.0,\"local_visual_time\":0.0,\"owner_serial\":1000001,\"request\":{\"accepted\":true,\"card_id\":\"CS2_189\",\"event\":\"hit\",\"first_delay_sec\":0.0,\"layers_scheduled\":1,\"request_id\":2},\"route\":\"CS2_189/impact\",\"state\":\"DeathState\",\"visual_clock\":0.488557916071539},{\"action_index\":7.0,\"local_visual_time\":0.0,\"owner_serial\":1000001,\"request\":{\"accepted\":true,\"card_id\":\"CS2_189\",\"event\":\"hit\",\"first_delay_sec\":0.0,\"layers_scheduled\":1,\"request_id\":3},\"route\":\"CS2_189/impact\",\"state\":\"DeathState\",\"visual_clock\":0.488557916071539},{\"action_index\":1.0,\"local_visual_time\":0.633333325386047,\"owner_serial\":1000001,\"request\":{\"accepted\":true,\"card_id\":\"CS2_189\",\"event\":\"hit\",\"first_delay_sec\":0.0,\"layers_scheduled\":1,\"request_id\":4},\"route\":\"CS2_189/impact\",\"state\":\"WaitState\",\"visual_clock\":1.12189124145759},{\"action_index\":10.0,\"local_visual_time\":0.718087499911183,\"owner_serial\":1000001,\"request\":{\"accepted\":true,\"card_id\":\"CS2_189\",\"event\":\"hit\",\"first_delay_sec\":0.0,\"layers_scheduled\":1,\"request_id\":5},\"route\":\"CS2_189/impact\",\"state\":\"DeathState 2\",\"visual_clock\":1.20664541598272}]",
+        "ARCHER_AUDIO_CANCEL_PASS",
+        "ARCHER_LETHAL_IMMEDIATE_RULE_PASS"
+      ]
+    },
+    {
+      "test": "archer_death_audio_gate_test",
+      "args": [],
+      "code": 0,
+      "seconds": 4.727,
+      "script_error": false,
+      "error": false,
+      "leak": false,
+      "pass_lines": [
+        "ARCHER_OBSERVED_DEATH_IMPACT_ONCE_PASS",
+        "ARCHER_OBSERVED_DEATH_CANCEL_BEFORE_IMPACT_PASS"
+      ]
+    },
+    {
+      "test": "archer_source_test",
+      "args": [
+        "--",
+        "--instantiate"
+      ],
+      "code": 0,
+      "seconds": 7.796,
+      "script_error": false,
+      "error": false,
+      "leak": false,
+      "pass_lines": [
+        "ARCHER_RULE_AND_LIFECYCLE_PASS",
+        "ARCHER_REPEAT_CANCEL_NO_EXTRA_DAMAGE_PASS"
+      ]
+    },
+    {
+      "test": "phone_source_audio_test",
+      "args": [],
+      "code": 0,
+      "seconds": 0.537,
+      "script_error": false,
+      "error": false,
+      "leak": false,
+      "pass_lines": [
+        "PHONE_SOURCE_AUDIO_PASS eight SHA verified original WAVs, source random weights/gain, precise zero-delay events, normal destroy original .5 delay retained"
+      ]
+    }
+  ],
+  "other_regression": {
+    "results": [
+      {
+        "test": "hand_burn_source_test",
+        "code": 0,
+        "seconds": 5.197056163975503,
+        "script_error": false,
+        "error": false,
+        "pass_lines": [
+          "HAND_BURN_SOURCE_PASS source hierarchy/materials/particles, timing, both sides, draw queue, reset, rule RNG preservation"
+        ]
+      },
+      {
+        "test": "archer_source_test",
+        "code": 0,
+        "seconds": 4.920449070981704,
+        "script_error": false,
+        "error": false,
+        "pass_lines": [
+          "ARCHER_RULE_AND_LIFECYCLE_PASS",
+          "ARCHER_REPEAT_CANCEL_NO_EXTRA_DAMAGE_PASS"
+        ]
+      },
+      {
+        "test": "phone_draw_test",
+        "code": 0,
+        "seconds": 0.2513312099908944,
+        "script_error": false,
+        "error": false,
+        "pass_lines": [
+          "PHONE_DRAW_PASS original world spline, recovered ease33 actual branch, .15delays/.75scale/1.35rotation, queue, source bones, style1 hand entry, .3interactive"
+        ]
+      },
+      {
+        "test": "phone_opponent_draw_test",
+        "code": 0,
+        "seconds": 0.2468293530109804,
+        "script_error": false,
+        "error": false,
+        "pass_lines": [
+          "PASS original hidden-opponent 4-point path/ease8, rotation5/scale11, delays/endpoints/time scale"
+        ]
+      },
+      {
+        "test": "phone_hand_game_test",
+        "code": 0,
+        "seconds": 0.5313542220101226,
+        "script_error": false,
+        "error": false,
+        "pass_lines": [
+          "PHONE_HAND_GAME_PASS source layout, .1s hold, raw held hit, .7 scale, quaternion handout, .5s source return; unregistered draw refused"
+        ]
+      },
+      {
+        "test": "phone_raw_hand_test",
+        "code": 0,
+        "seconds": 0.9162860819778871,
+        "script_error": false,
+        "error": true,
+        "pass_lines": [
+          "PHONE_OPPOSING_DRAW_QUEUE_PASS hidden queued card, original source bones, serialized flights, hand endpoint",
+          "PHONE_OPPOSING_HAND_PASS original Card_Hidden460 vertices, defaultback shader/texture, shadow, enemy span40, scale .682/.125/.682",
+          "PHONE_RAW_HAND_PASS ten original geometry/glyph clones; source TRS/Z reflection, raw highlight, cache reuse, missing-pose refusal. CPU clone_us=13758 sync_us=560.49 inventory={ \"cards\": 9, \"meshes\": 87, \"vertices\": 19195, \"backend\": \"source geometry and glyphs; Godot material translations\" }"
+        ]
+      },
+      {
+        "test": "phone_source_audio_test",
+        "code": 0,
+        "seconds": 0.5350576460186858,
+        "script_error": false,
+        "error": false,
+        "pass_lines": [
+          "PHONE_SOURCE_AUDIO_PASS eight SHA verified original WAVs, source random weights/gain, precise zero-delay events, normal destroy original .5 delay retained"
+        ]
+      },
+      {
+        "test": "source_phone_consumers_parse_test",
+        "code": 0,
+        "seconds": 1.098736451996956,
+        "script_error": false,
+        "error": false,
+        "pass_lines": [
+          "SOURCE_PHONE_CONSUMERS_PARSE_PASS"
+        ]
+      },
+      {
+        "test": "touch_input_test",
+        "code": 0,
+        "seconds": 0.7687772540084552,
+        "script_error": false,
+        "error": false,
+        "pass_lines": [
+          "TOUCH_WINDOW_THRESHOLD_PASS (800, 450) stretch=[X: (0.5, 0.0), Y: (0.0, 0.5), O: (0.0, 0.0)]",
+          "TOUCH_WINDOW_THRESHOLD_PASS (1600, 900) stretch=[X: (1.0, 0.0), Y: (0.0, 1.0), O: (0.0, 0.0)]",
+          "TOUCH_WINDOW_THRESHOLD_PASS (2400, 1080) stretch=[X: (1.2, 0.0), Y: (0.0, 1.2), O: (0.0, 0.0)]",
+          "TOUCH_WINDOW_THRESHOLD_PASS (3200, 1800) stretch=[X: (2.0, 0.0), Y: (0.0, 2.0), O: (0.0, 0.0)]",
+          "TOUCH_PREVIEW_SWITCH_PASS: real two-card fan hits, preserved down.x, reset down.y, new card grabs only after >80",
+          "TOUCH_INPUT_PASS: single finger, emulation dedupe, >80 window-pixel upward grab, horizontal rejection, scaled boundaries, release, cancellation"
+        ]
+      },
+      {
+        "test": "mobile_integration_test",
+        "code": 0,
+        "seconds": 0.9080492720240727,
+        "script_error": false,
+        "error": false,
+        "pass_lines": []
+      }
+    ],
+    "phone_raw_hand_cleanup": "All assertions passed. Its immediate quit emitted two leaked preexisting opposing-draw WAVs in the rerun. Verbose log identifies phone_source/draw_card_and_add_to_hand_opp1/2, not burn/voice assets. The same test with an explicit WeakRef audio retirement barrier passed cleanly; QA-only wrapper and log retained. The production SoundManager shutdown is outside this patch and parent must integrate its awaited shutdown."
+  },
+  "remaining": [
+    "Source Unity runtime was not executed; animation-completion time derives from exact serialized legacy curve endpoints, not measurement.",
+    "No GPU comparison, acoustic loopback or Android-device listening verification.",
+    "Fatigue native 3D panning, Doppler, reverb and runtime listener changes remain unverified; static-source distance gain1 does not prove spatial output equivalence.",
+    "Burn ExternalForcesModule remains an explicit particle compatibility gap.",
+    "Unity category mix equality is not claimed; existing Godot SFX bus/headroom remains.",
+    "Original hero speech bubble layout and text renderer were not ported; existing full-hand toast remains local compatibility UI. Other hero skins/emote variants are not inferred.",
+    "Normal native_death Birth/voice lifecycle remains independent; only fallback observed.deaths is delayed at the same realized Archer impact gate, preserving prior prototype behavior without a second RNG draw.",
+    "Parent production exit must await phone_burn_renderer.shutdown() before quitting; the root-owned sink contract is unchanged, no new fixed sleep was introduced."
+  ]
+}

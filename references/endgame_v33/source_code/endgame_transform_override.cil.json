@@ -1,0 +1,577 @@
+{
+  "types": [
+    {
+      "type": "TransformOverride",
+      "token": "0x02001eda",
+      "fields": [
+        {
+          "name": "m_screenCategory",
+          "token": "0x0400cae6",
+          "signature": "061512490111c000ae68"
+        },
+        {
+          "name": "m_localPosition",
+          "token": "0x0400cae7",
+          "signature": "0615124901115d"
+        },
+        {
+          "name": "m_localScale",
+          "token": "0x0400cae8",
+          "signature": "0615124901115d"
+        },
+        {
+          "name": "m_localRotation",
+          "token": "0x0400cae9",
+          "signature": "0615124901118215"
+        },
+        {
+          "name": "testVal",
+          "token": "0x0400caea",
+          "signature": "060c"
+        }
+      ]
+    },
+    {
+      "type": "TransformOverride",
+      "token": "0x020021b5",
+      "fields": [
+        {
+          "name": "Transform",
+          "token": "0x0400dca4",
+          "signature": "061280a5"
+        },
+        {
+          "name": "Type",
+          "token": "0x0400dca5",
+          "signature": "0611c00086d8"
+        },
+        {
+          "name": "Value",
+          "token": "0x0400dca6",
+          "signature": "06115d"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "TransformOverride",
+      "method": "Awake",
+      "token": "0x0600e8c7",
+      "rva": "0x45cf76",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 15,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "UnityEngine.Application::IsPlaying",
+          "token": "token(0x0A002C44)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brfalse.s",
+          "operand": "IL_000e",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "call",
+          "operand": "TransformOverride::UpdateObject",
+          "token": "token(0x0600E8CA)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "TransformOverride",
+      "method": "AddCategory",
+      "token": "0x0600e8c8",
+      "rva": "0x45cf88",
+      "signature": "20010111c000ae68",
+      "parameters": [
+        "screen"
+      ],
+      "code_size": 87,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "UnityEngine.Application::IsPlaying",
+          "token": "token(0x0A002C44)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_0056",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldfld",
+          "operand": "TransformOverride::m_screenCategory",
+          "token": "token(0x0400CAE6)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1bb9ac30>::Add",
+          "token": "token(0x0A002C45)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldfld",
+          "operand": "TransformOverride::m_localPosition",
+          "token": "token(0x0400CAE7)"
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_localPosition",
+          "token": "token(0x0A00022A)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::Add",
+          "token": "token(0x0A00054E)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldfld",
+          "operand": "TransformOverride::m_localScale",
+          "token": "token(0x0400CAE8)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_localScale",
+          "token": "token(0x0A00004A)"
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::Add",
+          "token": "token(0x0A00054E)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ldfld",
+          "operand": "TransformOverride::m_localRotation",
+          "token": "token(0x0400CAE9)"
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_localRotation",
+          "token": "token(0x0A000CDB)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1bee3290>::Add",
+          "token": "token(0x0A000DB2)"
+        },
+        {
+          "offset": "IL_0056",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "TransformOverride",
+      "method": "AddCategory",
+      "token": "0x0600e8c9",
+      "rva": "0x45cfeb",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 12,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "PlatformSettings::get_Screen",
+          "token": "token(0x06014EA9)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "TransformOverride::AddCategory",
+          "token": "token(0x0600E8C8)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "TransformOverride",
+      "method": "UpdateObject",
+      "token": "0x0600e8ca",
+      "rva": "0x45cff8",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 82,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "TransformOverride::m_screenCategory",
+          "token": "token(0x0400CAE6)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "PlatformSettings::GetBestScreenMatch",
+          "token": "token(0x06014EB0)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldfld",
+          "operand": "TransformOverride::m_localPosition",
+          "token": "token(0x0400CAE7)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::get_Item",
+          "token": "token(0x0A000552)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_localPosition",
+          "token": "token(0x0A000226)"
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldfld",
+          "operand": "TransformOverride::m_localScale",
+          "token": "token(0x0400CAE8)"
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::get_Item",
+          "token": "token(0x0A000552)"
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_localScale",
+          "token": "token(0x0A000166)"
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ldfld",
+          "operand": "TransformOverride::m_localRotation",
+          "token": "token(0x0400CAE9)"
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1bee3290>::get_Item",
+          "token": "token(0x0A002C77)"
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_localRotation",
+          "token": "token(0x0A00021F)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "TransformOverride",
+      "method": ".ctor",
+      "token": "0x0600e8cb",
+      "rva": "0x45d056",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 51,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1bb9ac30>::.ctor",
+          "token": "token(0x0A002C47)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stfld",
+          "operand": "TransformOverride::m_screenCategory",
+          "token": "token(0x0400CAE6)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::.ctor",
+          "token": "token(0x0A000567)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "stfld",
+          "operand": "TransformOverride::m_localPosition",
+          "token": "token(0x0400CAE7)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::.ctor",
+          "token": "token(0x0A000567)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "stfld",
+          "operand": "TransformOverride::m_localScale",
+          "token": "token(0x0400CAE8)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbb1bee3290>::.ctor",
+          "token": "token(0x0A000DB3)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "stfld",
+          "operand": "TransformOverride::m_localRotation",
+          "token": "token(0x0400CAE9)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "call",
+          "operand": "UnityEngine.MonoBehaviour::.ctor",
+          "token": "token(0x0A000018)"
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

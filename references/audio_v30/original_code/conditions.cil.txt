@@ -1,0 +1,700 @@
+
+TYPE AnimationEventSfxPlayer 0x02000cea
+
+TYPE CardSpecificVoData 0x02002564
+FIELD 0x0400efef m_CardId SIG 060e
+FIELD 0x0400eff0 m_RequireTag SIG 0611c000a930
+FIELD 0x0400eff1 m_TagValue SIG 0608
+FIELD 0x0400eff2 m_AudioSource SIG 06128351
+FIELD 0x0400eff3 m_SideToSearch SIG 061195e1
+FIELD 0x0400eff4 m_ZonesToSearch SIG 06151249011195e5
+FIELD 0x0400eff5 m_GameStringKey SIG 060e
+
+TYPE CardSpecificVoSpell 0x02002565
+FIELD 0x0400eff6 m_CardSpecificVoDataList SIG 061512490112c0009590
+
+TYPE ClassSpecificVoData 0x02002567
+FIELD 0x0400eff9 m_Lines SIG 061512490112c0009598
+FIELD 0x0400effa m_SideToSearch SIG 061195e1
+FIELD 0x0400effb m_ZonesToSearch SIG 06151249011195e5
+
+TYPE ClassSpecificVoSpell 0x02002568
+FIELD 0x0400effc m_ClassSpecificVoData SIG 0612c000959c
+
+TYPE TagVoData 0x0200256c
+FIELD 0x0400f000 m_AudioSource SIG 06128351
+FIELD 0x0400f001 m_GameStringKeyOverride SIG 060e
+FIELD 0x0400f002 m_TagRequirements SIG 061512490112c00095ac
+
+TYPE TagVoSpell 0x0200256d
+FIELD 0x0400f003 m_TagVoDataList SIG 061512490112c00095b0
+
+TYPE AliasedAssetResolver 0x02002767
+FIELD 0x0400f880 m_assetBundleResolver SIG 0612c000c6a4
+
+TYPE IAliasedAssetResolver 0x02002779
+
+0x0600663a AnimationEventSfxPlayer::PlaySFX(obj) RVA 0x1f35b7 SIG 2001011280a1
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           AnimationEventSfxPlayer::PlaySfx token(0x0600663B)
+  IL_0007 ret             
+
+0x0600663b AnimationEventSfxPlayer::PlaySfx(obj) RVA 0x1f35c0 SIG 2001011280a1
+  IL_0000 ldnull          
+  IL_0001 stloc.0         
+  IL_0002 ldarg.1         
+  IL_0003 isinst         UnityEngine.GameObject token(0x01000023)
+  IL_0008 stloc.1         
+  IL_0009 ldloc.1         
+  IL_000a brfalse.s      IL_0054 
+  IL_000c ldloc.1         
+  IL_000d call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0012 brfalse.s      IL_0054 
+  IL_0014 ldstr          'PlaySFX prefab: ' string token(0x70098FA1)
+  IL_0019 ldarg.1         
+  IL_001a callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_001f call           System.String::Concat token(0x0A0000C0)
+  IL_0024 call           UnityEngine.Debug::Log token(0x0A0001D7)
+  IL_0029 ldloc.1         
+  IL_002a callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000487)
+  IL_002f stloc.2         
+  IL_0030 ldloc.2         
+  IL_0031 ldnull          
+  IL_0032 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0037 brfalse.s      IL_0094 
+  IL_0039 newobj         SoundPlayClipArgs::.ctor token(0x06014812)
+  IL_003e stloc.0         
+  IL_003f ldloc.0         
+  IL_0040 ldloc.2         
+  IL_0041 stfld          SoundPlayClipArgs::m_def token(0x04011AA4)
+  IL_0046 ldloc.0         
+  IL_0047 ldarg.0         
+  IL_0048 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_004d stfld          SoundPlayClipArgs::m_parentObject token(0x04011AAA)
+  IL_0052 br.s           IL_0094 
+  IL_0054 ldarg.1         
+  IL_0055 isinst         UnityEngine.AudioClip token(0x0100025B)
+  IL_005a stloc.3         
+  IL_005b ldloc.3         
+  IL_005c brfalse.s      IL_0094 
+  IL_005e ldloc.3         
+  IL_005f call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0064 brfalse.s      IL_0094 
+  IL_0066 ldstr          'PlaySFX clip: ' string token(0x70098FC3)
+  IL_006b ldloc.3         
+  IL_006c callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_0071 call           System.String::Concat token(0x0A0000C0)
+  IL_0076 call           UnityEngine.Debug::Log token(0x0A0001D7)
+  IL_007b newobj         SoundPlayClipArgs::.ctor token(0x06014812)
+  IL_0080 stloc.0         
+  IL_0081 ldloc.0         
+  IL_0082 ldloc.3         
+  IL_0083 stfld          SoundPlayClipArgs::m_forcedAudioClip token(0x04011AA5)
+  IL_0088 ldloc.0         
+  IL_0089 ldarg.0         
+  IL_008a call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_008f stfld          SoundPlayClipArgs::m_parentObject token(0x04011AAA)
+  IL_0094 ldloc.0         
+  IL_0095 brfalse.s      IL_00ac 
+  IL_0097 call           SoundManager::Get token(0x06014710)
+  IL_009c brfalse.s      IL_00ac 
+  IL_009e call           SoundManager::Get token(0x06014710)
+  IL_00a3 ldloc.0         
+  IL_00a4 ldc.i4.1        
+  IL_00a5 ldnull          
+  IL_00a6 callvirt       SoundManager::PlayClip token(0x06014735)
+  IL_00ab pop             
+  IL_00ac ret             
+
+0x0600663c AnimationEventSfxPlayer::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             
+
+0x06011db1 CardSpecificVoData::.ctor() RVA 0x5381d0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.4        
+  IL_0002 stfld          CardSpecificVoData::m_SideToSearch token(0x0400EFF3)
+  IL_0007 ldarg.0         
+  IL_0008 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439850>::.ctor token(0x0A004078)
+  IL_000d dup             
+  IL_000e ldc.i4.1        
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439850>::Add token(0x0A004079)
+  IL_0014 dup             
+  IL_0015 ldc.i4.2        
+  IL_0016 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439850>::Add token(0x0A004079)
+  IL_001b dup             
+  IL_001c ldc.i4.3        
+  IL_001d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439850>::Add token(0x0A004079)
+  IL_0022 dup             
+  IL_0023 ldc.i4.4        
+  IL_0024 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439850>::Add token(0x0A004079)
+  IL_0029 stfld          CardSpecificVoData::m_ZonesToSearch token(0x0400EFF4)
+  IL_002e ldarg.0         
+  IL_002f call           System.Object::.ctor token(0x0A000003)
+  IL_0034 ret             
+
+0x06011db2 CardSpecificVoSpell::DetermineBestAudioSource() RVA 0x538208 SIG 2000128351
+  IL_0000 ldarg.0         
+  IL_0001 call           CardSpecificVoSpell::GetBestVoiceData token(0x06011DB3)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 brtrue.s       IL_0011 
+  IL_000a ldarg.0         
+  IL_000b call           CardSoundSpell::DetermineBestAudioSource token(0x06011D86)
+  IL_0010 ret             
+  IL_0011 ldloc.0         
+  IL_0012 ldfld          CardSpecificVoData::m_AudioSource token(0x0400EFF2)
+  IL_0017 ret             
+
+0x06011db3 CardSpecificVoSpell::GetBestVoiceData() RVA 0x53822c SIG 200012c0009590
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          CardSpecificVoSpell::m_CardSpecificVoDataList token(0x0400EFF6)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439bb0>::GetEnumerator token(0x0A00407D)
+  IL_000b stloc.0         
+  IL_000c br.s           IL_0023 
+  IL_000e ldloca.s       local(0x0000) 
+  IL_0010 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439d60>::get_Current token(0x0A00407E)
+  IL_0015 stloc.1         
+  IL_0016 ldarg.0         
+  IL_0017 ldloc.1         
+  IL_0018 call           CardSpecificVoSpell::SearchForCard token(0x06011DB4)
+  IL_001d brfalse.s      IL_0023 
+  IL_001f ldloc.1         
+  IL_0020 stloc.2         
+  IL_0021 leave.s        IL_003e 
+  IL_0023 ldloca.s       local(0x0000) 
+  IL_0025 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439d60>::MoveNext token(0x0A00407F)
+  IL_002a brtrue.s       IL_000e 
+  IL_002c leave.s        IL_003c 
+  IL_002e ldloca.s       local(0x0000) 
+  IL_0030 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439d60> token(0x1B000FAF)
+  IL_0036 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_003b endfinally      
+  IL_003c ldnull          
+  IL_003d ret             
+  IL_003e ldloc.2         
+  IL_003f ret             
+
+0x06011db4 CardSpecificVoSpell::SearchForCard(cardVOData) RVA 0x538288 SIG 20010212c0009590
+  IL_0000 ldarg.1         
+  IL_0001 ldfld          CardSpecificVoData::m_ZonesToSearch token(0x0400EFF4)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439850>::GetEnumerator token(0x0A00407A)
+  IL_000b stloc.0         
+  IL_000c br.s           IL_0043 
+  IL_000e ldloca.s       local(0x0000) 
+  IL_0010 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439a00>::get_Current token(0x0A00407B)
+  IL_0015 stloc.1         
+  IL_0016 ldarg.0         
+  IL_0017 ldloc.1         
+  IL_0018 ldarg.1         
+  IL_0019 ldfld          CardSpecificVoData::m_SideToSearch token(0x0400EFF3)
+  IL_001e call           SpellUtils::FindZonesFromTag token(0x06014AB5)
+  IL_0023 stloc.2         
+  IL_0024 ldarg.0         
+  IL_0025 ldarg.1         
+  IL_0026 ldfld          CardSpecificVoData::m_CardId token(0x0400EFEF)
+  IL_002b ldarg.1         
+  IL_002c ldfld          CardSpecificVoData::m_RequireTag token(0x0400EFF0)
+  IL_0031 ldarg.1         
+  IL_0032 ldfld          CardSpecificVoData::m_TagValue token(0x0400EFF1)
+  IL_0037 ldloc.2         
+  IL_0038 call           CardSpecificVoSpell::IsCardInZones token(0x06011DB5)
+  IL_003d brfalse.s      IL_0043 
+  IL_003f ldc.i4.1        
+  IL_0040 stloc.3         
+  IL_0041 leave.s        IL_005e 
+  IL_0043 ldloca.s       local(0x0000) 
+  IL_0045 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439a00>::MoveNext token(0x0A00407C)
+  IL_004a brtrue.s       IL_000e 
+  IL_004c leave.s        IL_005c 
+  IL_004e ldloca.s       local(0x0000) 
+  IL_0050 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439a00> token(0x1B000FAD)
+  IL_0056 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_005b endfinally      
+  IL_005c ldc.i4.0        
+  IL_005d ret             
+  IL_005e ldloc.3         
+  IL_005f ret             
+
+0x06011db5 CardSpecificVoSpell::IsCardInZones(cardId,requireTag,tagValue,zones) RVA 0x538304 SIG 2004020e11c000a930081512490112b2b4
+  IL_0000 ldarg.s        argument(0x0004) 
+  IL_0002 brtrue.s       IL_0006 
+  IL_0004 ldc.i4.0        
+  IL_0005 ret             
+  IL_0006 ldarg.s        argument(0x0004) 
+  IL_0008 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e7de7b0>::GetEnumerator token(0x0A0023A8)
+  IL_000d stloc.0         
+  IL_000e br.s           IL_007e 
+  IL_0010 ldloca.s       local(0x0000) 
+  IL_0012 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e650200>::get_Current token(0x0A0023A9)
+  IL_0017 callvirt       Zone::GetCards token(0x06006374)
+  IL_001c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e98d430>::GetEnumerator token(0x0A0011BA)
+  IL_0021 stloc.1         
+  IL_0022 br.s           IL_0065 
+  IL_0024 ldloca.s       local(0x0001) 
+  IL_0026 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e8a6b10>::get_Current token(0x0A0011BB)
+  IL_002b callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0030 stloc.2         
+  IL_0031 ldc.i4.1        
+  IL_0032 stloc.3         
+  IL_0033 ldc.i4.1        
+  IL_0034 stloc.s        local(0x0004) 
+  IL_0036 ldarg.2         
+  IL_0037 brfalse.s      IL_0044 
+  IL_0039 ldloc.2         
+  IL_003a ldarg.2         
+  IL_003b callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_0040 ldarg.3         
+  IL_0041 ceq             
+  IL_0043 stloc.3         
+  IL_0044 ldarg.1         
+  IL_0045 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_004a brtrue.s       IL_005a 
+  IL_004c ldloc.2         
+  IL_004d callvirt       EntityBase::GetCardId token(0x06013947)
+  IL_0052 ldarg.1         
+  IL_0053 call           System.String::op_Equality token(0x0A0000ED)
+  IL_0058 stloc.s        local(0x0004) 
+  IL_005a ldloc.3         
+  IL_005b ldloc.s        local(0x0004) 
+  IL_005d and             
+  IL_005e brfalse.s      IL_0065 
+  IL_0060 ldc.i4.1        
+  IL_0061 stloc.s        local(0x0005) 
+  IL_0063 leave.s        IL_0099 
+  IL_0065 ldloca.s       local(0x0001) 
+  IL_0067 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e8a6b10>::MoveNext token(0x0A0011BC)
+  IL_006c brtrue.s       IL_0024 
+  IL_006e leave.s        IL_007e 
+  IL_0070 ldloca.s       local(0x0001) 
+  IL_0072 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e8a6b10> token(0x1B0004DE)
+  IL_0078 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_007d endfinally      
+  IL_007e ldloca.s       local(0x0000) 
+  IL_0080 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e650200>::MoveNext token(0x0A0023AA)
+  IL_0085 brtrue.s       IL_0010 
+  IL_0087 leave.s        IL_0097 
+  IL_0089 ldloca.s       local(0x0000) 
+  IL_008b constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e650200> token(0x1B0009CC)
+  IL_0091 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0096 endfinally      
+  IL_0097 ldc.i4.0        
+  IL_0098 ret             
+  IL_0099 ldloc.s        local(0x0005) 
+  IL_009b ret             
+
+0x06011db6 CardSpecificVoSpell::.ctor() RVA 0x5383c8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439bb0>::.ctor token(0x0A004080)
+  IL_0006 stfld          CardSpecificVoSpell::m_CardSpecificVoDataList token(0x0400EFF6)
+  IL_000b ldarg.0         
+  IL_000c call           CardSoundSpell::.ctor token(0x06011D8D)
+  IL_0011 ret             
+
+0x06011db8 ClassSpecificVoData::.ctor() RVA 0x5383db SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439f10>::.ctor token(0x0A004081)
+  IL_0006 stfld          ClassSpecificVoData::m_Lines token(0x0400EFF9)
+  IL_000b ldarg.0         
+  IL_000c ldc.i4.4        
+  IL_000d stfld          ClassSpecificVoData::m_SideToSearch token(0x0400EFFA)
+  IL_0012 ldarg.0         
+  IL_0013 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439850>::.ctor token(0x0A004078)
+  IL_0018 dup             
+  IL_0019 ldc.i4.2        
+  IL_001a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439850>::Add token(0x0A004079)
+  IL_001f stfld          ClassSpecificVoData::m_ZonesToSearch token(0x0400EFFB)
+  IL_0024 ldarg.0         
+  IL_0025 call           System.Object::.ctor token(0x0A000003)
+  IL_002a ret             
+
+0x06011db9 ClassSpecificVoSpell::DetermineBestAudioSource() RVA 0x538408 SIG 2000128351
+  IL_0000 ldarg.0         
+  IL_0001 call           ClassSpecificVoSpell::SearchForClassSpecificVo token(0x06011DBA)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000d brfalse.s      IL_0011 
+  IL_000f ldloc.0         
+  IL_0010 ret             
+  IL_0011 ldarg.0         
+  IL_0012 call           CardSoundSpell::DetermineBestAudioSource token(0x06011D86)
+  IL_0017 ret             
+
+0x06011dba ClassSpecificVoSpell::SearchForClassSpecificVo() RVA 0x53842c SIG 2000128351
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ClassSpecificVoSpell::m_ClassSpecificVoData token(0x0400EFFC)
+  IL_0006 ldfld          ClassSpecificVoData::m_ZonesToSearch token(0x0400EFFB)
+  IL_000b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439850>::GetEnumerator token(0x0A00407A)
+  IL_0010 stloc.0         
+  IL_0011 br.s           IL_0043 
+  IL_0013 ldloca.s       local(0x0000) 
+  IL_0015 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439a00>::get_Current token(0x0A00407B)
+  IL_001a stloc.1         
+  IL_001b ldarg.0         
+  IL_001c ldloc.1         
+  IL_001d ldarg.0         
+  IL_001e ldfld          ClassSpecificVoSpell::m_ClassSpecificVoData token(0x0400EFFC)
+  IL_0023 ldfld          ClassSpecificVoData::m_SideToSearch token(0x0400EFFA)
+  IL_0028 call           SpellUtils::FindZonesFromTag token(0x06014AB5)
+  IL_002d stloc.2         
+  IL_002e ldarg.0         
+  IL_002f ldloc.2         
+  IL_0030 call           ClassSpecificVoSpell::SearchForClassSpecificVo token(0x06011DBB)
+  IL_0035 stloc.3         
+  IL_0036 ldloc.3         
+  IL_0037 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_003c brfalse.s      IL_0043 
+  IL_003e ldloc.3         
+  IL_003f stloc.s        local(0x0004) 
+  IL_0041 leave.s        IL_005e 
+  IL_0043 ldloca.s       local(0x0000) 
+  IL_0045 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439a00>::MoveNext token(0x0A00407C)
+  IL_004a brtrue.s       IL_0013 
+  IL_004c leave.s        IL_005c 
+  IL_004e ldloca.s       local(0x0000) 
+  IL_0050 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439a00> token(0x1B000FAD)
+  IL_0056 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_005b endfinally      
+  IL_005c ldnull          
+  IL_005d ret             
+  IL_005e ldloc.s        local(0x0004) 
+  IL_0060 ret             
+
+0x06011dbb ClassSpecificVoSpell::SearchForClassSpecificVo(zones) RVA 0x5384ac SIG 20011283511512490112b2b4
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_0005 
+  IL_0003 ldnull          
+  IL_0004 ret             
+  IL_0005 ldarg.1         
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e7de7b0>::GetEnumerator token(0x0A0023A8)
+  IL_000b stloc.0         
+  IL_000c br             IL_00a2 
+  IL_0011 ldloca.s       local(0x0000) 
+  IL_0013 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e650200>::get_Current token(0x0A0023A9)
+  IL_0018 callvirt       Zone::GetCards token(0x06006374)
+  IL_001d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e98d430>::GetEnumerator token(0x0A0011BA)
+  IL_0022 stloc.1         
+  IL_0023 br.s           IL_0089 
+  IL_0025 ldloca.s       local(0x0001) 
+  IL_0027 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e8a6b10>::get_Current token(0x0A0011BB)
+  IL_002c callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0031 callvirt       EntityBase::GetClass token(0x06013933)
+  IL_0036 call           SpellUtils::ConvertClassTagToSpellEnum token(0x06014AB2)
+  IL_003b stloc.2         
+  IL_003c ldloc.2         
+  IL_003d brfalse.s      IL_0089 
+  IL_003f ldarg.0         
+  IL_0040 ldfld          ClassSpecificVoSpell::m_ClassSpecificVoData token(0x0400EFFC)
+  IL_0045 ldfld          ClassSpecificVoData::m_Lines token(0x0400EFF9)
+  IL_004a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e439f10>::GetEnumerator token(0x0A004082)
+  IL_004f stloc.3         
+  IL_0050 br.s           IL_0070 
+  IL_0052 ldloca.s       local(0x0003) 
+  IL_0054 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a0c0>::get_Current token(0x0A004083)
+  IL_0059 stloc.s        local(0x0004) 
+  IL_005b ldloc.s        local(0x0004) 
+  IL_005d ldfld          ClassSpecificVoLine::m_Class token(0x0400EFF7)
+  IL_0062 ldloc.2         
+  IL_0063 bne.un.s       IL_0070 
+  IL_0065 ldloc.s        local(0x0004) 
+  IL_0067 ldfld          ClassSpecificVoLine::m_AudioSource token(0x0400EFF8)
+  IL_006c stloc.s        local(0x0005) 
+  IL_006e leave.s        IL_00c0 
+  IL_0070 ldloca.s       local(0x0003) 
+  IL_0072 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a0c0>::MoveNext token(0x0A004084)
+  IL_0077 brtrue.s       IL_0052 
+  IL_0079 leave.s        IL_0089 
+  IL_007b ldloca.s       local(0x0003) 
+  IL_007d constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a0c0> token(0x1B000FB1)
+  IL_0083 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0088 endfinally      
+  IL_0089 ldloca.s       local(0x0001) 
+  IL_008b call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e8a6b10>::MoveNext token(0x0A0011BC)
+  IL_0090 brtrue.s       IL_0025 
+  IL_0092 leave.s        IL_00a2 
+  IL_0094 ldloca.s       local(0x0001) 
+  IL_0096 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e8a6b10> token(0x1B0004DE)
+  IL_009c callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_00a1 endfinally      
+  IL_00a2 ldloca.s       local(0x0000) 
+  IL_00a4 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e650200>::MoveNext token(0x0A0023AA)
+  IL_00a9 brtrue         IL_0011 
+  IL_00ae leave.s        IL_00be 
+  IL_00b0 ldloca.s       local(0x0000) 
+  IL_00b2 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e650200> token(0x1B0009CC)
+  IL_00b8 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_00bd endfinally      
+  IL_00be ldnull          
+  IL_00bf ret             
+  IL_00c0 ldloc.s        local(0x0005) 
+  IL_00c2 ret             
+
+0x06011dbc ClassSpecificVoSpell::.ctor() RVA 0x5385a4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         ClassSpecificVoData::.ctor token(0x06011DB8)
+  IL_0006 stfld          ClassSpecificVoSpell::m_ClassSpecificVoData token(0x0400EFFC)
+  IL_000b ldarg.0         
+  IL_000c call           CardSoundSpell::.ctor token(0x06011D8D)
+  IL_0011 ret             
+
+0x06011dc1 TagVoData::.ctor() RVA 0x5385f8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a270>::.ctor token(0x0A004085)
+  IL_0006 stfld          TagVoData::m_TagRequirements token(0x0400F002)
+  IL_000b ldarg.0         
+  IL_000c call           System.Object::.ctor token(0x0A000003)
+  IL_0011 ret             
+
+0x06011dc2 TagVoSpell::DetermineBestAudioSource() RVA 0x53860c SIG 2000128351
+  IL_0000 ldc.i4.0        
+  IL_0001 stloc.0         
+  IL_0002 br.s           IL_0025 
+  IL_0004 ldarg.0         
+  IL_0005 ldfld          TagVoSpell::m_TagVoDataList token(0x0400F003)
+  IL_000a ldloc.0         
+  IL_000b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a420>::get_Item token(0x0A004086)
+  IL_0010 stloc.1         
+  IL_0011 ldarg.0         
+  IL_0012 ldloc.1         
+  IL_0013 call           TagVoSpell::CanPlayTagVo token(0x06011DC4)
+  IL_0018 brfalse.s      IL_0021 
+  IL_001a ldloc.1         
+  IL_001b ldfld          TagVoData::m_AudioSource token(0x0400F000)
+  IL_0020 ret             
+  IL_0021 ldloc.0         
+  IL_0022 ldc.i4.1        
+  IL_0023 add             
+  IL_0024 stloc.0         
+  IL_0025 ldloc.0         
+  IL_0026 ldarg.0         
+  IL_0027 ldfld          TagVoSpell::m_TagVoDataList token(0x0400F003)
+  IL_002c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a420>::get_Count token(0x0A004087)
+  IL_0031 blt.s          IL_0004 
+  IL_0033 ldarg.0         
+  IL_0034 call           CardSoundSpell::DetermineBestAudioSource token(0x06011D86)
+  IL_0039 ret             
+
+0x06011dc3 TagVoSpell::DetermineGameStringKey() RVA 0x538654 SIG 20000e
+  IL_0000 ldc.i4.0        
+  IL_0001 stloc.0         
+  IL_0002 br.s           IL_0025 
+  IL_0004 ldarg.0         
+  IL_0005 ldfld          TagVoSpell::m_TagVoDataList token(0x0400F003)
+  IL_000a ldloc.0         
+  IL_000b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a420>::get_Item token(0x0A004086)
+  IL_0010 stloc.1         
+  IL_0011 ldarg.0         
+  IL_0012 ldloc.1         
+  IL_0013 call           TagVoSpell::CanPlayTagVo token(0x06011DC4)
+  IL_0018 brfalse.s      IL_0021 
+  IL_001a ldloc.1         
+  IL_001b ldfld          TagVoData::m_GameStringKeyOverride token(0x0400F001)
+  IL_0020 ret             
+  IL_0021 ldloc.0         
+  IL_0022 ldc.i4.1        
+  IL_0023 add             
+  IL_0024 stloc.0         
+  IL_0025 ldloc.0         
+  IL_0026 ldarg.0         
+  IL_0027 ldfld          TagVoSpell::m_TagVoDataList token(0x0400F003)
+  IL_002c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a420>::get_Count token(0x0A004087)
+  IL_0031 blt.s          IL_0004 
+  IL_0033 ldstr          '' string token(0x70000E3C)
+  IL_0038 ret             
+
+0x06011dc4 TagVoSpell::CanPlayTagVo(potentialVOData) RVA 0x53869c SIG 20010212c00095b0
+  IL_0000 ldarg.1         
+  IL_0001 ldfld          TagVoData::m_TagRequirements token(0x0400F002)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a270>::get_Count token(0x0A004088)
+  IL_000b brtrue.s       IL_000f 
+  IL_000d ldc.i4.0        
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 call           Spell::GetSourceCard token(0x0601491E)
+  IL_0015 stloc.0         
+  IL_0016 ldloc.0         
+  IL_0017 ldnull          
+  IL_0018 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001d brfalse.s      IL_0021 
+  IL_001f ldc.i4.0        
+  IL_0020 ret             
+  IL_0021 ldloc.0         
+  IL_0022 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0027 stloc.1         
+  IL_0028 ldarg.1         
+  IL_0029 ldfld          TagVoData::m_TagRequirements token(0x0400F002)
+  IL_002e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a270>::GetEnumerator token(0x0A004089)
+  IL_0033 stloc.2         
+  IL_0034 br.s           IL_0057 
+  IL_0036 ldloca.s       local(0x0002) 
+  IL_0038 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a5d0>::get_Current token(0x0A00408A)
+  IL_003d stloc.3         
+  IL_003e ldloc.1         
+  IL_003f ldloc.3         
+  IL_0040 ldfld          TagVoRequirement::m_Tag token(0x0400EFFE)
+  IL_0045 callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_004a ldloc.3         
+  IL_004b ldfld          TagVoRequirement::m_Value token(0x0400EFFF)
+  IL_0050 beq.s          IL_0057 
+  IL_0052 ldc.i4.0        
+  IL_0053 stloc.s        local(0x0004) 
+  IL_0055 leave.s        IL_0072 
+  IL_0057 ldloca.s       local(0x0002) 
+  IL_0059 call           <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a5d0>::MoveNext token(0x0A00408B)
+  IL_005e brtrue.s       IL_0036 
+  IL_0060 leave.s        IL_0070 
+  IL_0062 ldloca.s       local(0x0002) 
+  IL_0064 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a5d0> token(0x1B000FB4)
+  IL_006a callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_006f endfinally      
+  IL_0070 ldc.i4.1        
+  IL_0071 ret             
+  IL_0072 ldloc.s        local(0x0004) 
+  IL_0074 ret             
+
+0x06011dc5 TagVoSpell::.ctor() RVA 0x538730 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f3f7e43a420>::.ctor token(0x0A00408C)
+  IL_0006 stfld          TagVoSpell::m_TagVoDataList token(0x0400F003)
+  IL_000b ldarg.0         
+  IL_000c call           CardSoundSpell::.ctor token(0x06011D8D)
+  IL_0011 ret             
+
+0x06012ade AliasedAssetResolver::GetDependencies() RVA 0x573815 SIG 20001d128179
+  IL_0000 ldc.i4.1        
+  IL_0001 newarr         System.Type token(0x0100005E)
+  IL_0006 dup             
+  IL_0007 ldc.i4.0        
+  IL_0008 ldtoken        IAssetLoader token(0x01000058)
+  IL_000d call           System.Type::GetTypeFromHandle token(0x0A00010D)
+  IL_0012 stelem.ref      
+  IL_0013 ret             
+
+0x06012adf AliasedAssetResolver::Initialize(serviceLocator) RVA 0x57382a SIG 200115128109011281a51281a9
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <Initialize>d__1::.ctor token(0x06012AE5)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <Initialize>d__1::<>4__this token(0x0400F883)
+  IL_000d ret             
+
+0x06012ae0 AliasedAssetResolver::Shutdown() RVA 0x573839 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          AliasedAssetResolver::m_assetBundleResolver token(0x0400F880)
+  IL_0006 callvirt       Hearthstone.Core.Assets.AssetBundlesAliasedAssetResolver::Shutdown token(0x06017279)
+  IL_000b ret             
+
+0x06012ae1 AliasedAssetResolver::GetCardDefAssetRefFromCardId(cardId) RVA 0x573846 SIG 20011281350e
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          AliasedAssetResolver::m_assetBundleResolver token(0x0400F880)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       Hearthstone.Core.Assets.AssetBundlesAliasedAssetResolver::GetCardDefAssetRefFromCardId token(0x0601727A)
+  IL_000c dup             
+  IL_000d brtrue.s       IL_002e 
+  IL_000f ldtoken        CardDef token(0x020027E6)
+  IL_0014 call           System.Type::GetTypeFromHandle token(0x0A00010D)
+  IL_0019 ldstr          'cardId' string token(0x7037D232)
+  IL_001e ldarg.1         
+  IL_001f ldstr          'prefab' string token(0x703AA407)
+  IL_0024 ldstr          '' string token(0x70000E3C)
+  IL_0029 call           AliasedAssetResolver::SendMissingAssetTelemetry token(0x06012AE3)
+  IL_002e ret             
+
+0x06012ae2 AliasedAssetResolver::GetSpriteAtlasAssetRefFromTag(atlasTag) RVA 0x573876 SIG 20011281350e
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          AliasedAssetResolver::m_assetBundleResolver token(0x0400F880)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       Hearthstone.Core.Assets.AssetBundlesAliasedAssetResolver::GetSpriteAtlasAssetRefFromTag token(0x0601727B)
+  IL_000c dup             
+  IL_000d brtrue.s       IL_002e 
+  IL_000f ldtoken        UnityEngine.U2D.SpriteAtlas token(0x010005A0)
+  IL_0014 call           System.Type::GetTypeFromHandle token(0x0A00010D)
+  IL_0019 ldstr          'atlasTag' string token(0x703AA415)
+  IL_001e ldarg.1         
+  IL_001f ldstr          'spriteatlas' string token(0x703AA427)
+  IL_0024 ldstr          '' string token(0x70000E3C)
+  IL_0029 call           AliasedAssetResolver::SendMissingAssetTelemetry token(0x06012AE3)
+  IL_002e ret             
+
+0x06012ae3 AliasedAssetResolver::SendMissingAssetTelemetry(assetType,idLabel,id,fileExtension,filePath) RVA 0x5738a8 SIG 0005011281790e0e0e0e
+  IL_0000 call           UnityEngine.Application::get_isEditor token(0x0A00024F)
+  IL_0005 brfalse.s      IL_0076 
+  IL_0007 call           Log::get_Telemetry token(0x06014E5A)
+  IL_000c ldc.i4.s       10 
+  IL_000e newarr         System.String token(0x01000006)
+  IL_0013 dup             
+  IL_0014 ldc.i4.0        
+  IL_0015 ldstr          'Missing ' string token(0x703AA43F)
+  IL_001a stelem.ref      
+  IL_001b dup             
+  IL_001c ldc.i4.1        
+  IL_001d ldarg.0         
+  IL_001e callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000241)
+  IL_0023 stelem.ref      
+  IL_0024 dup             
+  IL_0025 ldc.i4.2        
+  IL_0026 ldstr          ' in editor - not sending missing asset telemetry for ' string token(0x703AA451)
+  IL_002b stelem.ref      
+  IL_002c dup             
+  IL_002d ldc.i4.3        
+  IL_002e ldarg.1         
+  IL_002f stelem.ref      
+  IL_0030 dup             
+  IL_0031 ldc.i4.4        
+  IL_0032 ldstr          '=' string token(0x7035BEC8)
+  IL_0037 stelem.ref      
+  IL_0038 dup             
+  IL_0039 ldc.i4.5        
+  IL_003a ldarg.2         
+  IL_003b stelem.ref      
+  IL_003c dup             
+  IL_003d ldc.i4.6        
+  IL_003e ldstr          ', extension=' string token(0x703AA4BD)
+  IL_0043 stelem.ref      
+  IL_0044 dup             
+  IL_0045 ldc.i4.7        
+  IL_0046 ldarg.3         
+  IL_0047 stelem.ref      
+  IL_0048 dup             
+  IL_0049 ldc.i4.8        
+  IL_004a ldstr          ', filepath=' string token(0x703AA4D7)
+  IL_004f stelem.ref      
+  IL_0050 dup             
+  IL_0051 ldc.i4.s       9 
+  IL_0053 ldarg.s        argument(0x0004) 
+  IL_0055 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_005a brtrue.s       IL_0060 
+  IL_005c ldarg.s        argument(0x0004) 
+  IL_005e br.s           IL_0065 
+  IL_0060 ldstr          'unknown' string token(0x70053647)
+  IL_0065 stelem.ref      
+  IL_0066 call           System.String::Concat token(0x0A0001E0)
+  IL_006b call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0070 callvirt       Logger::Print token(0x0A00013E)
+  IL_0075 ret             
+  IL_0076 call           TelemetryManager::Client token(0x06014511)
+  IL_007b ldarg.0         
+  IL_007c callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000241)
+  IL_0081 ldsfld         System.String::Empty token(0x0A000135)
+  IL_0086 ldarg.s        argument(0x0004) 
+  IL_0088 ldarg.2         
+  IL_0089 ldstr          '.' string token(0x7004EEDD)
+  IL_008e ldarg.3         
+  IL_008f call           System.String::Concat token(0x0A0001B1)
+  IL_0094 callvirt       HearthstoneTelemetry.ITelemetryClient::SendAssetNotFound token(0x06016380)
+  IL_0099 ret             
+
+0x06012ae4 AliasedAssetResolver::.ctor() RVA 0x57394e SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         Hearthstone.Core.Assets.AssetBundlesAliasedAssetResolver::.ctor token(0x06017280)
+  IL_0006 stfld          AliasedAssetResolver::m_assetBundleResolver token(0x0400F880)
+  IL_000b ldarg.0         
+  IL_000c call           System.Object::.ctor token(0x0A000003)
+  IL_0011 ret             
+
+0x06012b5c IAliasedAssetResolver::GetCardDefAssetRefFromCardId(cardId) RVA 0x0 SIG 20011281350e
+
+0x06012b5d IAliasedAssetResolver::GetSpriteAtlasAssetRefFromTag(atlasTag) RVA 0x0 SIG 20011281350e

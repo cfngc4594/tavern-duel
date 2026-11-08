@@ -1,0 +1,158 @@
+{
+  "types": [
+    {
+      "type": "CardTextBuilder",
+      "token": "0x02002576",
+      "fields": [
+        {
+          "name": "m_controller",
+          "token": "0x0400f00e",
+          "signature": "0612c000a320"
+        },
+        {
+          "name": "m_source",
+          "token": "0x0400f00f",
+          "signature": "0612c000a320"
+        },
+        {
+          "name": "m_useEntityForTextInPlay",
+          "token": "0x0400f010",
+          "signature": "0602"
+        },
+        {
+          "name": "m_useEntityForTextInHand",
+          "token": "0x0400f011",
+          "signature": "0602"
+        },
+        {
+          "name": "m_fallbackCardTextBuilder",
+          "token": "0x0400f012",
+          "signature": "0612c00095d8"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "CardTextBuilder",
+      "method": "GetTargetingArrowText",
+      "token": "0x06011e0f",
+      "rva": "0x5399c4",
+      "signature": "20010e12c000a320",
+      "parameters": [
+        "entity"
+      ],
+      "code_size": 52,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "GameDbf::GetIndex",
+          "token": "token(0x06003669)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "EntityBase::GetCardId",
+          "token": "token(0x06013947)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "callvirt",
+          "operand": "GameDbfIndex::GetCardRecord",
+          "token": "token(0x06013A30)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "brfalse.s",
+          "operand": "IL_001c",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "callvirt",
+          "operand": "CardDbfRecord::get_TargetArrowText",
+          "token": "token(0x0600329F)"
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "brtrue.s",
+          "operand": "IL_0022",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldsfld",
+          "operand": "System.String::Empty",
+          "token": "token(0x0A000135)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "callvirt",
+          "operand": "CardDbfRecord::get_TargetArrowText",
+          "token": "token(0x0600329F)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "callvirt",
+          "operand": "DbfLocValue::GetString",
+          "token": "token(0x06012009)"
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "call",
+          "operand": "TextUtils::TransformCardText",
+          "token": "token(0x06014F54)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

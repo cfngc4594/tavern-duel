@@ -1,0 +1,34 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Card/UnlitTextureDualClass" {
+Properties {
+
+_MainTex ("Texture", 2D) = "white" { }
+
+[Header(Dual class)] [Toggle] _EnableDualClass ("Dual Enabled", Float) = 0.0
+
+_SecondTex ("Base (RGB)", 2D) = "white" { }
+
+_MiddleValue ("Middle Point", Range(0, 1)) = 0.5
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+ Name "ShadowCaster"
+  Tags { "Highlight" = "true" "LIGHTMODE" = "SHADOWCASTER" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Cull Off
+  GpuProgramID 42476
+}
+ Pass {
+  Tags { "Highlight" = "true" "LIGHTMODE" = "UniversalForward" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Cull Off
+  GpuProgramID 83049
+}
+}
+}

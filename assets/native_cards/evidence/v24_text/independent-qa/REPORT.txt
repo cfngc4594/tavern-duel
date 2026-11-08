@@ -1,0 +1,35 @@
+Unity MiddleCenter baseline registration — independent numerical QA
+2026-11-02 13:25 UTC
+
+Inputs / coverage:
+104 glyphs, atlas512x1024, all available and each UV region nonempty, 54927 nonzero alpha pixels.101 rotated glyphs. Font SHA matches original GLEI00M_t_Outline. MiddleCenter and preceding104 UpperLeft atlases have identical file SHA; previous23-glyph UVs must not be mixed. All89 unique name/race characters in classic_flow_cards.gd are covered.
+
+Method (not visual tuning):
+Read known orthographic camera, image size and world transform from actual textmesh-supplement.json. Inverse-project each output pixel center to world XY. Place CharacterInfo quads using min/max and cumulative advance, with0.1world-unit/glyph-pixel at characterSize1. Bilinearly sample the actual alpha atlas preserving all four UV corners and PNG1-v. Compare predicted alpha against actual Unity transparent RT. Fit only a common XY translation per title via least-squares; compare linear-coverage and default-alpha-blending models. Alpha-squared matches the default TextMesh diagnostic RT; raw-alpha model is much worse. This is diagnostic blend-model evidence, NOT a reason to square coverage before the separate recovered nine-tap title shader.
+
+Fitted MiddleCenter translations at characterSize1:
+冰风雪人 x=-9.199999064,y=-1.729591421; MSE2.72897186e-7; MAE0.000158420.
+吸取生命 x=-9.200002531,y=-1.729410722; MSE3.22723197e-7; MAE0.000184093.
+
+Independent original TTF head/hhea table values:
+unitsPerEm1024,ascent900,descent-124,lineGap6.
+Linebox=46*.1*(900+124+6)/1024=4.626953125, exactly agrees with actual TextMesh bounds height.
+Recommended shared MiddleCenter baseline:
+y=46*.1*((900+124+6)/1024/2 -900/1024)=-1.7294921875 world at characterSize1.
+x=-totalAdvance*.1/2=-9.2 for both four-character titles.
+Equivalent baseline glyph pixels=-17.294921875. At original characterSize.05: y=-.086474609375.
+Fitted y differs from this formula by at most.00010world (<.0043 projected pixels), an observed residual bound from two captures, NOT a statistical confidence interval or universal guarantee.
+
+Fixed-formula verification (no per-title fit):
+冰风雪人 MSE3.05343271e-7,MAE.000167652,max abs alpha error.005722054.
+吸取生命 MSE3.48237231e-7,MAE.000191748,max abs alpha error.005580016.
+Alpha center-of-mass coordinates agree within.012 output pixels.
+UpperLeft independent registration similarly gives y≈-4.04296875, agreeing with -46*.1*900/1024; changing anchor adds half native linebox.
+
+Evidence boundary:
+These are actual Unity6000.3.10f1 AppleM3 diagnostic renders, not original Hearthstone card screenshots. MeshFilter/sharedMesh are absent; [] vertex arrays mean unavailable, NOT an extracted empty mesh. The baseline is supported by numerical screenshot registration plus TTF metrics and measured bounds, not by recovered TextMesh native vertex arrays or proven original-client implementation. Two titles directly validate translation; applying same font/size/anchor model to other titles is an explicit generalization. Original nine-tap shader must consume original atlas alpha, not this diagnostic blend-model squared alpha.
+
+Files:
+analyze.py,baseline-fit.json: registration.
+check_equation.py,baseline-font-equation-check.json: fixed TTF equation verification.
+../glyphs.json,../textmesh-supplement.json,../textmesh-title-1.png,../textmesh-title-2.png: received native evidence.

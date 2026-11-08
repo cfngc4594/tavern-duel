@@ -1,0 +1,1441 @@
+
+TYPE HutongGames.PlayMaker.Actions.CurveFloat 0x02000028
+FIELD 0x040000cc floatVariable SIG 0612809d
+FIELD 0x040000cd fromValue SIG 0612809d
+FIELD 0x040000ce toValue SIG 0612809d
+FIELD 0x040000cf animCurve SIG 061281ed
+FIELD 0x040000d0 calculation SIG 061180a8
+FIELD 0x040000d1 finishInNextStep SIG 0602
+
+TYPE HutongGames.PlayMaker.Actions.CurveFsmAction 0x02000029
+FIELD 0x040000d2 time SIG 0612809d
+FIELD 0x040000d3 speed SIG 0612809d
+FIELD 0x040000d4 delay SIG 0612809d
+FIELD 0x040000d5 ignoreCurveOffset SIG 06128205
+FIELD 0x040000d6 finishEvent SIG 0612811d
+FIELD 0x040000d7 realTime SIG 0602
+FIELD 0x040000d8 startTime SIG 060c
+FIELD 0x040000d9 currentTime SIG 060c
+FIELD 0x040000da endTimes SIG 061d0c
+FIELD 0x040000db lastTime SIG 060c
+FIELD 0x040000dc deltaTime SIG 060c
+FIELD 0x040000dd delayTime SIG 060c
+FIELD 0x040000de keyOffsets SIG 061d0c
+FIELD 0x040000df curves SIG 061d122d
+FIELD 0x040000e0 calculations SIG 061d1180a8
+FIELD 0x040000e1 resultFloats SIG 061d0c
+FIELD 0x040000e2 fromFloats SIG 061d0c
+FIELD 0x040000e3 toFloats SIG 061d0c
+FIELD 0x040000e4 distances SIG 061d0c
+FIELD 0x040000e5 finishAction SIG 0602
+FIELD 0x040000e6 isRunning SIG 0602
+FIELD 0x040000e7 looping SIG 0602
+FIELD 0x040000e8 start SIG 0602
+FIELD 0x040000e9 largestEndTime SIG 060c
+
+0x060000dc HutongGames.PlayMaker.Actions.CurveFloat::Reset() RVA 0x6323 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.CurveFsmAction::Reset token(0x060000E1)
+  IL_0006 ldarg.0         
+  IL_0007 newobj         HutongGames.PlayMaker.FsmFloat::.ctor token(0x0A0000C3)
+  IL_000c dup             
+  IL_000d ldc.i4.1        
+  IL_000e callvirt       HutongGames.PlayMaker.NamedVariable::set_UseVariable token(0x0A0000AF)
+  IL_0013 stfld          HutongGames.PlayMaker.Actions.CurveFloat::floatVariable token(0x040000CC)
+  IL_0018 ldarg.0         
+  IL_0019 newobj         HutongGames.PlayMaker.FsmFloat::.ctor token(0x0A0000C3)
+  IL_001e dup             
+  IL_001f ldc.i4.1        
+  IL_0020 callvirt       HutongGames.PlayMaker.NamedVariable::set_UseVariable token(0x0A0000AF)
+  IL_0025 stfld          HutongGames.PlayMaker.Actions.CurveFloat::toValue token(0x040000CE)
+  IL_002a ldarg.0         
+  IL_002b newobj         HutongGames.PlayMaker.FsmFloat::.ctor token(0x0A0000C3)
+  IL_0030 dup             
+  IL_0031 ldc.i4.1        
+  IL_0032 callvirt       HutongGames.PlayMaker.NamedVariable::set_UseVariable token(0x0A0000AF)
+  IL_0037 stfld          HutongGames.PlayMaker.Actions.CurveFloat::fromValue token(0x040000CD)
+  IL_003c ret             
+
+0x060000dd HutongGames.PlayMaker.Actions.CurveFloat::OnEnter() RVA 0x6364 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.CurveFsmAction::OnEnter token(0x060000E2)
+  IL_0006 ldarg.0         
+  IL_0007 ldc.i4.0        
+  IL_0008 stfld          HutongGames.PlayMaker.Actions.CurveFloat::finishInNextStep token(0x040000D1)
+  IL_000d ldarg.0         
+  IL_000e ldc.i4.1        
+  IL_000f newarr         System.Single token(0x0100002D)
+  IL_0014 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_0019 ldarg.0         
+  IL_001a ldc.i4.1        
+  IL_001b newarr         System.Single token(0x0100002D)
+  IL_0020 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0025 ldarg.0         
+  IL_0026 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_002b ldc.i4.0        
+  IL_002c ldarg.0         
+  IL_002d ldfld          HutongGames.PlayMaker.Actions.CurveFloat::fromValue token(0x040000CD)
+  IL_0032 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0037 brtrue.s       IL_0046 
+  IL_0039 ldarg.0         
+  IL_003a ldfld          HutongGames.PlayMaker.Actions.CurveFloat::fromValue token(0x040000CD)
+  IL_003f callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0044 br.s           IL_004b 
+  IL_0046 ldc.r4         0.0 
+  IL_004b stelem.r4       
+  IL_004c ldarg.0         
+  IL_004d ldc.i4.1        
+  IL_004e newarr         System.Single token(0x0100002D)
+  IL_0053 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::toFloats token(0x040000E3)
+  IL_0058 ldarg.0         
+  IL_0059 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::toFloats token(0x040000E3)
+  IL_005e ldc.i4.0        
+  IL_005f ldarg.0         
+  IL_0060 ldfld          HutongGames.PlayMaker.Actions.CurveFloat::toValue token(0x040000CE)
+  IL_0065 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_006a brtrue.s       IL_0079 
+  IL_006c ldarg.0         
+  IL_006d ldfld          HutongGames.PlayMaker.Actions.CurveFloat::toValue token(0x040000CE)
+  IL_0072 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0077 br.s           IL_007e 
+  IL_0079 ldc.r4         0.0 
+  IL_007e stelem.r4       
+  IL_007f ldarg.0         
+  IL_0080 ldc.i4.1        
+  IL_0081 newarr         Calculation token(0x0200002A)
+  IL_0086 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::calculations token(0x040000E0)
+  IL_008b ldarg.0         
+  IL_008c ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::calculations token(0x040000E0)
+  IL_0091 ldc.i4.0        
+  IL_0092 ldarg.0         
+  IL_0093 ldfld          HutongGames.PlayMaker.Actions.CurveFloat::calculation token(0x040000D0)
+  IL_0098 stelem.i4       
+  IL_0099 ldarg.0         
+  IL_009a ldc.i4.1        
+  IL_009b newarr         UnityEngine.AnimationCurve token(0x0100000B)
+  IL_00a0 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_00a5 ldarg.0         
+  IL_00a6 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_00ab ldc.i4.0        
+  IL_00ac ldarg.0         
+  IL_00ad ldfld          HutongGames.PlayMaker.Actions.CurveFloat::animCurve token(0x040000CF)
+  IL_00b2 ldfld          HutongGames.PlayMaker.FsmAnimationCurve::curve token(0x0A0000B4)
+  IL_00b7 stelem.ref      
+  IL_00b8 ldarg.0         
+  IL_00b9 call           HutongGames.PlayMaker.Actions.CurveFsmAction::Init token(0x060000E3)
+  IL_00be ret             
+
+0x060000de HutongGames.PlayMaker.Actions.CurveFloat::OnExit() RVA 0x4b1c SIG 200001
+  IL_0000 ret             
+
+0x060000df HutongGames.PlayMaker.Actions.CurveFloat::OnUpdate() RVA 0x6430 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.CurveFsmAction::OnUpdate token(0x060000E4)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.CurveFloat::floatVariable token(0x040000CC)
+  IL_000c callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0011 brtrue.s       IL_002e 
+  IL_0013 ldarg.0         
+  IL_0014 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::isRunning token(0x040000E6)
+  IL_0019 brfalse.s      IL_002e 
+  IL_001b ldarg.0         
+  IL_001c ldfld          HutongGames.PlayMaker.Actions.CurveFloat::floatVariable token(0x040000CC)
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_0027 ldc.i4.0        
+  IL_0028 ldelem.r4       
+  IL_0029 callvirt       HutongGames.PlayMaker.FsmFloat::set_Value token(0x0A0000C0)
+  IL_002e ldarg.0         
+  IL_002f ldfld          HutongGames.PlayMaker.Actions.CurveFloat::finishInNextStep token(0x040000D1)
+  IL_0034 brfalse.s      IL_005d 
+  IL_0036 ldarg.0         
+  IL_0037 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::looping token(0x040000E7)
+  IL_003c brtrue.s       IL_005d 
+  IL_003e ldarg.0         
+  IL_003f call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0044 ldarg.0         
+  IL_0045 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::finishEvent token(0x040000D6)
+  IL_004a brfalse.s      IL_005d 
+  IL_004c ldarg.0         
+  IL_004d call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0052 ldarg.0         
+  IL_0053 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::finishEvent token(0x040000D6)
+  IL_0058 callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A0000B9)
+  IL_005d ldarg.0         
+  IL_005e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::finishAction token(0x040000E5)
+  IL_0063 brfalse.s      IL_0094 
+  IL_0065 ldarg.0         
+  IL_0066 ldfld          HutongGames.PlayMaker.Actions.CurveFloat::finishInNextStep token(0x040000D1)
+  IL_006b brtrue.s       IL_0094 
+  IL_006d ldarg.0         
+  IL_006e ldfld          HutongGames.PlayMaker.Actions.CurveFloat::floatVariable token(0x040000CC)
+  IL_0073 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0078 brtrue.s       IL_008d 
+  IL_007a ldarg.0         
+  IL_007b ldfld          HutongGames.PlayMaker.Actions.CurveFloat::floatVariable token(0x040000CC)
+  IL_0080 ldarg.0         
+  IL_0081 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_0086 ldc.i4.0        
+  IL_0087 ldelem.r4       
+  IL_0088 callvirt       HutongGames.PlayMaker.FsmFloat::set_Value token(0x0A0000C0)
+  IL_008d ldarg.0         
+  IL_008e ldc.i4.1        
+  IL_008f stfld          HutongGames.PlayMaker.Actions.CurveFloat::finishInNextStep token(0x040000D1)
+  IL_0094 ret             
+
+0x060000e0 HutongGames.PlayMaker.Actions.CurveFloat::.ctor() RVA 0x631b SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.CurveFsmAction::.ctor token(0x060000E5)
+  IL_0006 ret             
+
+0x060000e1 HutongGames.PlayMaker.Actions.CurveFsmAction::Reset() RVA 0x64d4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::finishEvent token(0x040000D6)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::realTime token(0x040000D7)
+  IL_000e ldarg.0         
+  IL_000f newobj         HutongGames.PlayMaker.FsmFloat::.ctor token(0x0A0000C3)
+  IL_0014 dup             
+  IL_0015 ldc.i4.1        
+  IL_0016 callvirt       HutongGames.PlayMaker.NamedVariable::set_UseVariable token(0x0A0000AF)
+  IL_001b stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0020 ldarg.0         
+  IL_0021 newobj         HutongGames.PlayMaker.FsmFloat::.ctor token(0x0A0000C3)
+  IL_0026 dup             
+  IL_0027 ldc.i4.1        
+  IL_0028 callvirt       HutongGames.PlayMaker.NamedVariable::set_UseVariable token(0x0A0000AF)
+  IL_002d stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::speed token(0x040000D3)
+  IL_0032 ldarg.0         
+  IL_0033 newobj         HutongGames.PlayMaker.FsmFloat::.ctor token(0x0A0000C3)
+  IL_0038 dup             
+  IL_0039 ldc.i4.1        
+  IL_003a callvirt       HutongGames.PlayMaker.NamedVariable::set_UseVariable token(0x0A0000AF)
+  IL_003f stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::delay token(0x040000D4)
+  IL_0044 ldarg.0         
+  IL_0045 newobj         HutongGames.PlayMaker.FsmBool::.ctor token(0x0A0000C4)
+  IL_004a dup             
+  IL_004b ldc.i4.1        
+  IL_004c callvirt       HutongGames.PlayMaker.FsmBool::set_Value token(0x0A0000C5)
+  IL_0051 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::ignoreCurveOffset token(0x040000D5)
+  IL_0056 ldarg.0         
+  IL_0057 ldc.i4.0        
+  IL_0058 newarr         System.Single token(0x0100002D)
+  IL_005d stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_0062 ldarg.0         
+  IL_0063 ldc.i4.0        
+  IL_0064 newarr         System.Single token(0x0100002D)
+  IL_0069 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_006e ldarg.0         
+  IL_006f ldc.i4.0        
+  IL_0070 newarr         System.Single token(0x0100002D)
+  IL_0075 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::toFloats token(0x040000E3)
+  IL_007a ldarg.0         
+  IL_007b ldc.i4.0        
+  IL_007c newarr         System.Single token(0x0100002D)
+  IL_0081 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_0086 ldarg.0         
+  IL_0087 ldc.i4.0        
+  IL_0088 newarr         System.Single token(0x0100002D)
+  IL_008d stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0092 ldarg.0         
+  IL_0093 ldc.i4.0        
+  IL_0094 newarr         System.Single token(0x0100002D)
+  IL_0099 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::keyOffsets token(0x040000DE)
+  IL_009e ldarg.0         
+  IL_009f ldc.i4.0        
+  IL_00a0 newarr         UnityEngine.AnimationCurve token(0x0100000B)
+  IL_00a5 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_00aa ldarg.0         
+  IL_00ab ldc.i4.0        
+  IL_00ac stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::finishAction token(0x040000E5)
+  IL_00b1 ldarg.0         
+  IL_00b2 ldc.i4.0        
+  IL_00b3 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::start token(0x040000E8)
+  IL_00b8 ret             
+
+0x060000e2 HutongGames.PlayMaker.Actions.CurveFsmAction::OnEnter() RVA 0x659c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_0006 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::startTime token(0x040000D8)
+  IL_000b ldarg.0         
+  IL_000c call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_0011 ldarg.0         
+  IL_0012 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::startTime token(0x040000D8)
+  IL_0017 sub             
+  IL_0018 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::lastTime token(0x040000DB)
+  IL_001d ldarg.0         
+  IL_001e ldc.r4         0.0 
+  IL_0023 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::deltaTime token(0x040000DC)
+  IL_0028 ldarg.0         
+  IL_0029 ldc.r4         0.0 
+  IL_002e stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0033 ldarg.0         
+  IL_0034 ldc.i4.0        
+  IL_0035 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::isRunning token(0x040000E6)
+  IL_003a ldarg.0         
+  IL_003b ldc.i4.0        
+  IL_003c stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::finishAction token(0x040000E5)
+  IL_0041 ldarg.0         
+  IL_0042 ldc.i4.0        
+  IL_0043 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::looping token(0x040000E7)
+  IL_0048 ldarg.0         
+  IL_0049 ldarg.0         
+  IL_004a ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::delay token(0x040000D4)
+  IL_004f callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0054 brtrue.s       IL_006c 
+  IL_0056 ldarg.0         
+  IL_0057 ldarg.0         
+  IL_0058 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::delay token(0x040000D4)
+  IL_005d callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0062 dup             
+  IL_0063 stloc.0         
+  IL_0064 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::delayTime token(0x040000DD)
+  IL_0069 ldloc.0         
+  IL_006a br.s           IL_0071 
+  IL_006c ldc.r4         0.0 
+  IL_0071 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::delayTime token(0x040000DD)
+  IL_0076 ldarg.0         
+  IL_0077 ldc.i4.1        
+  IL_0078 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::start token(0x040000E8)
+  IL_007d ret             
+
+0x060000e3 HutongGames.PlayMaker.Actions.CurveFsmAction::Init() RVA 0x6628 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0007 ldlen           
+  IL_0008 conv.i4         
+  IL_0009 newarr         System.Single token(0x0100002D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0013 ldarg.0         
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_001a ldlen           
+  IL_001b conv.i4         
+  IL_001c newarr         System.Single token(0x0100002D)
+  IL_0021 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::keyOffsets token(0x040000DE)
+  IL_0026 ldarg.0         
+  IL_0027 ldc.r4         0.0 
+  IL_002c stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::largestEndTime token(0x040000E9)
+  IL_0031 ldc.i4.0        
+  IL_0032 stloc.0         
+  IL_0033 br             IL_01c0 
+  IL_0038 ldarg.0         
+  IL_0039 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_003e ldloc.0         
+  IL_003f ldelem.ref      
+  IL_0040 brfalse        IL_01af 
+  IL_0045 ldarg.0         
+  IL_0046 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_004b ldloc.0         
+  IL_004c ldelem.ref      
+  IL_004d callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_0052 ldlen           
+  IL_0053 brfalse        IL_01af 
+  IL_0058 ldarg.0         
+  IL_0059 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::keyOffsets token(0x040000DE)
+  IL_005e ldloc.0         
+  IL_005f ldarg.0         
+  IL_0060 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0065 ldloc.0         
+  IL_0066 ldelem.ref      
+  IL_0067 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_006c ldlen           
+  IL_006d brtrue.s       IL_0076 
+  IL_006f ldc.r4         0.0 
+  IL_0074 br.s           IL_00e8 
+  IL_0076 ldarg.0         
+  IL_0077 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_007c callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0081 brtrue.s       IL_00d0 
+  IL_0083 ldarg.0         
+  IL_0084 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0089 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_008e ldarg.0         
+  IL_008f ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0094 ldloc.0         
+  IL_0095 ldelem.ref      
+  IL_0096 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_009b ldarg.0         
+  IL_009c ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_00a1 ldloc.0         
+  IL_00a2 ldelem.ref      
+  IL_00a3 callvirt       UnityEngine.AnimationCurve::get_length token(0x0A0000BD)
+  IL_00a8 ldc.i4.1        
+  IL_00a9 sub             
+  IL_00aa ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_00af call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_00b4 div             
+  IL_00b5 ldarg.0         
+  IL_00b6 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_00bb ldloc.0         
+  IL_00bc ldelem.ref      
+  IL_00bd callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_00c2 ldc.i4.0        
+  IL_00c3 ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_00c8 call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_00cd mul             
+  IL_00ce br.s           IL_00e8 
+  IL_00d0 ldarg.0         
+  IL_00d1 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_00d6 ldloc.0         
+  IL_00d7 ldelem.ref      
+  IL_00d8 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_00dd ldc.i4.0        
+  IL_00de ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_00e3 call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_00e8 stelem.r4       
+  IL_00e9 ldarg.0         
+  IL_00ea ldarg.0         
+  IL_00eb ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::ignoreCurveOffset token(0x040000D5)
+  IL_00f0 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_00f5 brtrue.s       IL_0115 
+  IL_00f7 ldarg.0         
+  IL_00f8 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::ignoreCurveOffset token(0x040000D5)
+  IL_00fd callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A0000C6)
+  IL_0102 brtrue.s       IL_010b 
+  IL_0104 ldc.r4         0.0 
+  IL_0109 br.s           IL_011a 
+  IL_010b ldarg.0         
+  IL_010c ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::keyOffsets token(0x040000DE)
+  IL_0111 ldloc.0         
+  IL_0112 ldelem.r4       
+  IL_0113 br.s           IL_011a 
+  IL_0115 ldc.r4         0.0 
+  IL_011a stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_011f ldarg.0         
+  IL_0120 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0125 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_012a brtrue.s       IL_0141 
+  IL_012c ldarg.0         
+  IL_012d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0132 ldloc.0         
+  IL_0133 ldarg.0         
+  IL_0134 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0139 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_013e stelem.r4       
+  IL_013f br.s           IL_016f 
+  IL_0141 ldarg.0         
+  IL_0142 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0147 ldloc.0         
+  IL_0148 ldarg.0         
+  IL_0149 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_014e ldloc.0         
+  IL_014f ldelem.ref      
+  IL_0150 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_0155 ldarg.0         
+  IL_0156 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_015b ldloc.0         
+  IL_015c ldelem.ref      
+  IL_015d callvirt       UnityEngine.AnimationCurve::get_length token(0x0A0000BD)
+  IL_0162 ldc.i4.1        
+  IL_0163 sub             
+  IL_0164 ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_0169 call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_016e stelem.r4       
+  IL_016f ldarg.0         
+  IL_0170 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::largestEndTime token(0x040000E9)
+  IL_0175 ldarg.0         
+  IL_0176 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_017b ldloc.0         
+  IL_017c ldelem.r4       
+  IL_017d bge.un.s       IL_018d 
+  IL_017f ldarg.0         
+  IL_0180 ldarg.0         
+  IL_0181 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0186 ldloc.0         
+  IL_0187 ldelem.r4       
+  IL_0188 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::largestEndTime token(0x040000E9)
+  IL_018d ldarg.0         
+  IL_018e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::looping token(0x040000E7)
+  IL_0193 brtrue.s       IL_01bc 
+  IL_0195 ldarg.0         
+  IL_0196 ldarg.0         
+  IL_0197 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_019c ldloc.0         
+  IL_019d ldelem.ref      
+  IL_019e callvirt       UnityEngine.AnimationCurve::get_postWrapMode token(0x0A0000BF)
+  IL_01a3 call           HutongGames.PlayMaker.ActionHelpers::IsLoopingWrapMode token(0x06000060)
+  IL_01a8 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::looping token(0x040000E7)
+  IL_01ad br.s           IL_01bc 
+  IL_01af ldarg.0         
+  IL_01b0 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_01b5 ldloc.0         
+  IL_01b6 ldc.r4         -1.0 
+  IL_01bb stelem.r4       
+  IL_01bc ldloc.0         
+  IL_01bd ldc.i4.1        
+  IL_01be add             
+  IL_01bf stloc.0         
+  IL_01c0 ldloc.0         
+  IL_01c1 ldarg.0         
+  IL_01c2 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_01c7 ldlen           
+  IL_01c8 conv.i4         
+  IL_01c9 blt            IL_0038 
+  IL_01ce ldc.i4.0        
+  IL_01cf stloc.1         
+  IL_01d0 br.s           IL_024d 
+  IL_01d2 ldarg.0         
+  IL_01d3 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::largestEndTime token(0x040000E9)
+  IL_01d8 ldc.r4         0.0 
+  IL_01dd ble.un.s       IL_01fe 
+  IL_01df ldarg.0         
+  IL_01e0 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_01e5 ldloc.1         
+  IL_01e6 ldelem.r4       
+  IL_01e7 ldc.r4         -1.0 
+  IL_01ec bne.un.s       IL_01fe 
+  IL_01ee ldarg.0         
+  IL_01ef ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_01f4 ldloc.1         
+  IL_01f5 ldarg.0         
+  IL_01f6 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::largestEndTime token(0x040000E9)
+  IL_01fb stelem.r4       
+  IL_01fc br.s           IL_0249 
+  IL_01fe ldarg.0         
+  IL_01ff ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::largestEndTime token(0x040000E9)
+  IL_0204 ldc.r4         0.0 
+  IL_0209 bne.un.s       IL_0249 
+  IL_020b ldarg.0         
+  IL_020c ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0211 ldloc.1         
+  IL_0212 ldelem.r4       
+  IL_0213 ldc.r4         -1.0 
+  IL_0218 bne.un.s       IL_0249 
+  IL_021a ldarg.0         
+  IL_021b ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0220 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0225 brfalse.s      IL_0236 
+  IL_0227 ldarg.0         
+  IL_0228 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_022d ldloc.1         
+  IL_022e ldc.r4         1.0 
+  IL_0233 stelem.r4       
+  IL_0234 br.s           IL_0249 
+  IL_0236 ldarg.0         
+  IL_0237 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_023c ldloc.1         
+  IL_023d ldarg.0         
+  IL_023e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0243 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0248 stelem.r4       
+  IL_0249 ldloc.1         
+  IL_024a ldc.i4.1        
+  IL_024b add             
+  IL_024c stloc.1         
+  IL_024d ldloc.1         
+  IL_024e ldarg.0         
+  IL_024f ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0254 ldlen           
+  IL_0255 conv.i4         
+  IL_0256 blt            IL_01d2 
+  IL_025b ldarg.0         
+  IL_025c ldarg.0         
+  IL_025d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0262 ldlen           
+  IL_0263 conv.i4         
+  IL_0264 newarr         System.Single token(0x0100002D)
+  IL_0269 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_026e ldc.i4.0        
+  IL_026f stloc.2         
+  IL_0270 br.s           IL_028f 
+  IL_0272 ldarg.0         
+  IL_0273 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_0278 ldloc.2         
+  IL_0279 ldarg.0         
+  IL_027a ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::toFloats token(0x040000E3)
+  IL_027f ldloc.2         
+  IL_0280 ldelem.r4       
+  IL_0281 ldarg.0         
+  IL_0282 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0287 ldloc.2         
+  IL_0288 ldelem.r4       
+  IL_0289 sub             
+  IL_028a stelem.r4       
+  IL_028b ldloc.2         
+  IL_028c ldc.i4.1        
+  IL_028d add             
+  IL_028e stloc.2         
+  IL_028f ldloc.2         
+  IL_0290 ldarg.0         
+  IL_0291 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0296 ldlen           
+  IL_0297 conv.i4         
+  IL_0298 blt.s          IL_0272 
+  IL_029a ret             
+
+0x060000e4 HutongGames.PlayMaker.Actions.CurveFsmAction::OnUpdate() RVA 0x68d0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::isRunning token(0x040000E6)
+  IL_0006 brtrue         IL_00aa 
+  IL_000b ldarg.0         
+  IL_000c ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::start token(0x040000E8)
+  IL_0011 brfalse        IL_00aa 
+  IL_0016 ldarg.0         
+  IL_0017 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::delayTime token(0x040000DD)
+  IL_001c ldc.r4         0.0 
+  IL_0021 blt.un.s       IL_007f 
+  IL_0023 ldarg.0         
+  IL_0024 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::realTime token(0x040000D7)
+  IL_0029 brfalse.s      IL_006b 
+  IL_002b ldarg.0         
+  IL_002c call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::startTime token(0x040000D8)
+  IL_0037 sub             
+  IL_0038 ldarg.0         
+  IL_0039 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::lastTime token(0x040000DB)
+  IL_003e sub             
+  IL_003f stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::deltaTime token(0x040000DC)
+  IL_0044 ldarg.0         
+  IL_0045 call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_004a ldarg.0         
+  IL_004b ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::startTime token(0x040000D8)
+  IL_0050 sub             
+  IL_0051 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::lastTime token(0x040000DB)
+  IL_0056 ldarg.0         
+  IL_0057 ldarg.0         
+  IL_0058 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::delayTime token(0x040000DD)
+  IL_005d ldarg.0         
+  IL_005e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::deltaTime token(0x040000DC)
+  IL_0063 sub             
+  IL_0064 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::delayTime token(0x040000DD)
+  IL_0069 br.s           IL_00aa 
+  IL_006b ldarg.0         
+  IL_006c ldarg.0         
+  IL_006d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::delayTime token(0x040000DD)
+  IL_0072 call           UnityEngine.Time::get_deltaTime token(0x0A0000C1)
+  IL_0077 sub             
+  IL_0078 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::delayTime token(0x040000DD)
+  IL_007d br.s           IL_00aa 
+  IL_007f ldarg.0         
+  IL_0080 ldc.i4.1        
+  IL_0081 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::isRunning token(0x040000E6)
+  IL_0086 ldarg.0         
+  IL_0087 ldc.i4.0        
+  IL_0088 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::start token(0x040000E8)
+  IL_008d ldarg.0         
+  IL_008e call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_0093 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::startTime token(0x040000D8)
+  IL_0098 ldarg.0         
+  IL_0099 call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_009e ldarg.0         
+  IL_009f ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::startTime token(0x040000D8)
+  IL_00a4 sub             
+  IL_00a5 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::lastTime token(0x040000DB)
+  IL_00aa ldarg.0         
+  IL_00ab ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::isRunning token(0x040000E6)
+  IL_00b0 brfalse        IL_0885 
+  IL_00b5 ldarg.0         
+  IL_00b6 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::finishAction token(0x040000E5)
+  IL_00bb brtrue         IL_0885 
+  IL_00c0 ldarg.0         
+  IL_00c1 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::realTime token(0x040000D7)
+  IL_00c6 brfalse.s      IL_0136 
+  IL_00c8 ldarg.0         
+  IL_00c9 call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_00ce ldarg.0         
+  IL_00cf ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::startTime token(0x040000D8)
+  IL_00d4 sub             
+  IL_00d5 ldarg.0         
+  IL_00d6 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::lastTime token(0x040000DB)
+  IL_00db sub             
+  IL_00dc stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::deltaTime token(0x040000DC)
+  IL_00e1 ldarg.0         
+  IL_00e2 call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_00e7 ldarg.0         
+  IL_00e8 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::startTime token(0x040000D8)
+  IL_00ed sub             
+  IL_00ee stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::lastTime token(0x040000DB)
+  IL_00f3 ldarg.0         
+  IL_00f4 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::speed token(0x040000D3)
+  IL_00f9 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_00fe brtrue.s       IL_0121 
+  IL_0100 ldarg.0         
+  IL_0101 ldarg.0         
+  IL_0102 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0107 ldarg.0         
+  IL_0108 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::deltaTime token(0x040000DC)
+  IL_010d ldarg.0         
+  IL_010e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::speed token(0x040000D3)
+  IL_0113 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0118 mul             
+  IL_0119 add             
+  IL_011a stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_011f br.s           IL_0175 
+  IL_0121 ldarg.0         
+  IL_0122 ldarg.0         
+  IL_0123 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0128 ldarg.0         
+  IL_0129 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::deltaTime token(0x040000DC)
+  IL_012e add             
+  IL_012f stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0134 br.s           IL_0175 
+  IL_0136 ldarg.0         
+  IL_0137 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::speed token(0x040000D3)
+  IL_013c callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0141 brtrue.s       IL_0163 
+  IL_0143 ldarg.0         
+  IL_0144 ldarg.0         
+  IL_0145 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_014a call           UnityEngine.Time::get_deltaTime token(0x0A0000C1)
+  IL_014f ldarg.0         
+  IL_0150 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::speed token(0x040000D3)
+  IL_0155 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_015a mul             
+  IL_015b add             
+  IL_015c stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0161 br.s           IL_0175 
+  IL_0163 ldarg.0         
+  IL_0164 ldarg.0         
+  IL_0165 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_016a call           UnityEngine.Time::get_deltaTime token(0x0A0000C1)
+  IL_016f add             
+  IL_0170 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0175 ldc.i4.0        
+  IL_0176 stloc.0         
+  IL_0177 br             IL_082f 
+  IL_017c ldarg.0         
+  IL_017d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0182 ldloc.0         
+  IL_0183 ldelem.ref      
+  IL_0184 brfalse        IL_0794 
+  IL_0189 ldarg.0         
+  IL_018a ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_018f ldloc.0         
+  IL_0190 ldelem.ref      
+  IL_0191 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_0196 ldlen           
+  IL_0197 brfalse        IL_0794 
+  IL_019c ldarg.0         
+  IL_019d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::calculations token(0x040000E0)
+  IL_01a2 ldloc.0         
+  IL_01a3 ldelem.i4       
+  IL_01a4 brfalse        IL_0728 
+  IL_01a9 ldarg.0         
+  IL_01aa ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::calculations token(0x040000E0)
+  IL_01af ldloc.0         
+  IL_01b0 ldelem.i4       
+  IL_01b1 stloc.1         
+  IL_01b2 ldloc.1         
+  IL_01b3 ldc.i4.1        
+  IL_01b4 sub             
+  IL_01b5 switch         [IL_01d7, IL_029e, IL_0365, IL_042c, IL_04f3, IL_0632] 
+  IL_01d2 br             IL_082b 
+  IL_01d7 ldarg.0         
+  IL_01d8 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_01dd callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_01e2 brtrue.s       IL_025c 
+  IL_01e4 ldarg.0         
+  IL_01e5 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_01ea ldloc.0         
+  IL_01eb ldarg.0         
+  IL_01ec ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_01f1 ldloc.0         
+  IL_01f2 ldelem.r4       
+  IL_01f3 ldarg.0         
+  IL_01f4 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_01f9 ldloc.0         
+  IL_01fa ldelem.r4       
+  IL_01fb ldarg.0         
+  IL_01fc ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0201 ldarg.0         
+  IL_0202 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0207 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_020c div             
+  IL_020d mul             
+  IL_020e ldarg.0         
+  IL_020f ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0214 ldloc.0         
+  IL_0215 ldelem.ref      
+  IL_0216 ldarg.0         
+  IL_0217 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_021c ldarg.0         
+  IL_021d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0222 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0227 div             
+  IL_0228 ldarg.0         
+  IL_0229 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_022e ldloc.0         
+  IL_022f ldelem.ref      
+  IL_0230 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_0235 ldarg.0         
+  IL_0236 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_023b ldloc.0         
+  IL_023c ldelem.ref      
+  IL_023d callvirt       UnityEngine.AnimationCurve::get_length token(0x0A0000BD)
+  IL_0242 ldc.i4.1        
+  IL_0243 sub             
+  IL_0244 ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_0249 call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_024e mul             
+  IL_024f callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_0254 add             
+  IL_0255 add             
+  IL_0256 stelem.r4       
+  IL_0257 br             IL_082b 
+  IL_025c ldarg.0         
+  IL_025d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_0262 ldloc.0         
+  IL_0263 ldarg.0         
+  IL_0264 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0269 ldloc.0         
+  IL_026a ldelem.r4       
+  IL_026b ldarg.0         
+  IL_026c ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_0271 ldloc.0         
+  IL_0272 ldelem.r4       
+  IL_0273 ldarg.0         
+  IL_0274 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0279 ldarg.0         
+  IL_027a ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_027f ldloc.0         
+  IL_0280 ldelem.r4       
+  IL_0281 div             
+  IL_0282 mul             
+  IL_0283 ldarg.0         
+  IL_0284 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0289 ldloc.0         
+  IL_028a ldelem.ref      
+  IL_028b ldarg.0         
+  IL_028c ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0291 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_0296 add             
+  IL_0297 add             
+  IL_0298 stelem.r4       
+  IL_0299 br             IL_082b 
+  IL_029e ldarg.0         
+  IL_029f ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_02a4 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_02a9 brtrue.s       IL_0323 
+  IL_02ab ldarg.0         
+  IL_02ac ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_02b1 ldloc.0         
+  IL_02b2 ldarg.0         
+  IL_02b3 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_02b8 ldloc.0         
+  IL_02b9 ldelem.r4       
+  IL_02ba ldarg.0         
+  IL_02bb ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_02c0 ldloc.0         
+  IL_02c1 ldelem.r4       
+  IL_02c2 ldarg.0         
+  IL_02c3 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_02c8 ldarg.0         
+  IL_02c9 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_02ce callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_02d3 div             
+  IL_02d4 mul             
+  IL_02d5 ldarg.0         
+  IL_02d6 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_02db ldloc.0         
+  IL_02dc ldelem.ref      
+  IL_02dd ldarg.0         
+  IL_02de ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_02e3 ldarg.0         
+  IL_02e4 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_02e9 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_02ee div             
+  IL_02ef ldarg.0         
+  IL_02f0 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_02f5 ldloc.0         
+  IL_02f6 ldelem.ref      
+  IL_02f7 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_02fc ldarg.0         
+  IL_02fd ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0302 ldloc.0         
+  IL_0303 ldelem.ref      
+  IL_0304 callvirt       UnityEngine.AnimationCurve::get_length token(0x0A0000BD)
+  IL_0309 ldc.i4.1        
+  IL_030a sub             
+  IL_030b ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_0310 call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_0315 mul             
+  IL_0316 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_031b sub             
+  IL_031c add             
+  IL_031d stelem.r4       
+  IL_031e br             IL_082b 
+  IL_0323 ldarg.0         
+  IL_0324 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_0329 ldloc.0         
+  IL_032a ldarg.0         
+  IL_032b ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0330 ldloc.0         
+  IL_0331 ldelem.r4       
+  IL_0332 ldarg.0         
+  IL_0333 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_0338 ldloc.0         
+  IL_0339 ldelem.r4       
+  IL_033a ldarg.0         
+  IL_033b ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0340 ldarg.0         
+  IL_0341 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0346 ldloc.0         
+  IL_0347 ldelem.r4       
+  IL_0348 div             
+  IL_0349 mul             
+  IL_034a ldarg.0         
+  IL_034b ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0350 ldloc.0         
+  IL_0351 ldelem.ref      
+  IL_0352 ldarg.0         
+  IL_0353 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0358 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_035d sub             
+  IL_035e add             
+  IL_035f stelem.r4       
+  IL_0360 br             IL_082b 
+  IL_0365 ldarg.0         
+  IL_0366 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_036b callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0370 brtrue.s       IL_03ea 
+  IL_0372 ldarg.0         
+  IL_0373 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_0378 ldloc.0         
+  IL_0379 ldarg.0         
+  IL_037a ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_037f ldloc.0         
+  IL_0380 ldelem.ref      
+  IL_0381 ldarg.0         
+  IL_0382 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0387 ldarg.0         
+  IL_0388 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_038d callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0392 div             
+  IL_0393 ldarg.0         
+  IL_0394 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0399 ldloc.0         
+  IL_039a ldelem.ref      
+  IL_039b callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_03a0 ldarg.0         
+  IL_03a1 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_03a6 ldloc.0         
+  IL_03a7 ldelem.ref      
+  IL_03a8 callvirt       UnityEngine.AnimationCurve::get_length token(0x0A0000BD)
+  IL_03ad ldc.i4.1        
+  IL_03ae sub             
+  IL_03af ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_03b4 call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_03b9 mul             
+  IL_03ba callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_03bf ldarg.0         
+  IL_03c0 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_03c5 ldloc.0         
+  IL_03c6 ldelem.r4       
+  IL_03c7 ldarg.0         
+  IL_03c8 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_03cd ldarg.0         
+  IL_03ce ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_03d3 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_03d8 div             
+  IL_03d9 mul             
+  IL_03da sub             
+  IL_03db ldarg.0         
+  IL_03dc ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_03e1 ldloc.0         
+  IL_03e2 ldelem.r4       
+  IL_03e3 add             
+  IL_03e4 stelem.r4       
+  IL_03e5 br             IL_082b 
+  IL_03ea ldarg.0         
+  IL_03eb ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_03f0 ldloc.0         
+  IL_03f1 ldarg.0         
+  IL_03f2 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_03f7 ldloc.0         
+  IL_03f8 ldelem.ref      
+  IL_03f9 ldarg.0         
+  IL_03fa ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_03ff callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_0404 ldarg.0         
+  IL_0405 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_040a ldloc.0         
+  IL_040b ldelem.r4       
+  IL_040c ldarg.0         
+  IL_040d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0412 ldarg.0         
+  IL_0413 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0418 ldloc.0         
+  IL_0419 ldelem.r4       
+  IL_041a div             
+  IL_041b mul             
+  IL_041c sub             
+  IL_041d ldarg.0         
+  IL_041e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0423 ldloc.0         
+  IL_0424 ldelem.r4       
+  IL_0425 add             
+  IL_0426 stelem.r4       
+  IL_0427 br             IL_082b 
+  IL_042c ldarg.0         
+  IL_042d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0432 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0437 brtrue.s       IL_04b1 
+  IL_0439 ldarg.0         
+  IL_043a ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_043f ldloc.0         
+  IL_0440 ldarg.0         
+  IL_0441 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0446 ldloc.0         
+  IL_0447 ldelem.ref      
+  IL_0448 ldarg.0         
+  IL_0449 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_044e ldarg.0         
+  IL_044f ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0454 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0459 div             
+  IL_045a ldarg.0         
+  IL_045b ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0460 ldloc.0         
+  IL_0461 ldelem.ref      
+  IL_0462 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_0467 ldarg.0         
+  IL_0468 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_046d ldloc.0         
+  IL_046e ldelem.ref      
+  IL_046f callvirt       UnityEngine.AnimationCurve::get_length token(0x0A0000BD)
+  IL_0474 ldc.i4.1        
+  IL_0475 sub             
+  IL_0476 ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_047b call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_0480 mul             
+  IL_0481 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_0486 ldarg.0         
+  IL_0487 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_048c ldloc.0         
+  IL_048d ldelem.r4       
+  IL_048e mul             
+  IL_048f ldarg.0         
+  IL_0490 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0495 ldarg.0         
+  IL_0496 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_049b callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_04a0 div             
+  IL_04a1 mul             
+  IL_04a2 ldarg.0         
+  IL_04a3 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_04a8 ldloc.0         
+  IL_04a9 ldelem.r4       
+  IL_04aa add             
+  IL_04ab stelem.r4       
+  IL_04ac br             IL_082b 
+  IL_04b1 ldarg.0         
+  IL_04b2 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_04b7 ldloc.0         
+  IL_04b8 ldarg.0         
+  IL_04b9 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_04be ldloc.0         
+  IL_04bf ldelem.ref      
+  IL_04c0 ldarg.0         
+  IL_04c1 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_04c6 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_04cb ldarg.0         
+  IL_04cc ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_04d1 ldloc.0         
+  IL_04d2 ldelem.r4       
+  IL_04d3 mul             
+  IL_04d4 ldarg.0         
+  IL_04d5 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_04da ldarg.0         
+  IL_04db ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_04e0 ldloc.0         
+  IL_04e1 ldelem.r4       
+  IL_04e2 div             
+  IL_04e3 mul             
+  IL_04e4 ldarg.0         
+  IL_04e5 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_04ea ldloc.0         
+  IL_04eb ldelem.r4       
+  IL_04ec add             
+  IL_04ed stelem.r4       
+  IL_04ee br             IL_082b 
+  IL_04f3 ldarg.0         
+  IL_04f4 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_04f9 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_04fe brtrue         IL_05cf 
+  IL_0503 ldarg.0         
+  IL_0504 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_0509 ldloc.0         
+  IL_050a ldarg.0         
+  IL_050b ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0510 ldloc.0         
+  IL_0511 ldelem.ref      
+  IL_0512 ldarg.0         
+  IL_0513 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0518 ldarg.0         
+  IL_0519 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_051e callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0523 div             
+  IL_0524 ldarg.0         
+  IL_0525 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_052a ldloc.0         
+  IL_052b ldelem.ref      
+  IL_052c callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_0531 ldarg.0         
+  IL_0532 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0537 ldloc.0         
+  IL_0538 ldelem.ref      
+  IL_0539 callvirt       UnityEngine.AnimationCurve::get_length token(0x0A0000BD)
+  IL_053e ldc.i4.1        
+  IL_053f sub             
+  IL_0540 ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_0545 call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_054a mul             
+  IL_054b callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_0550 ldc.r4         0.0 
+  IL_0555 bne.un.s       IL_055e 
+  IL_0557 ldc.r4         3.4028234663852886e+38 
+  IL_055c br.s           IL_05c9 
+  IL_055e ldarg.0         
+  IL_055f ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0564 ldloc.0         
+  IL_0565 ldelem.r4       
+  IL_0566 ldarg.0         
+  IL_0567 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_056c ldloc.0         
+  IL_056d ldelem.r4       
+  IL_056e ldarg.0         
+  IL_056f ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0574 ldarg.0         
+  IL_0575 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_057a callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_057f div             
+  IL_0580 mul             
+  IL_0581 ldarg.0         
+  IL_0582 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0587 ldloc.0         
+  IL_0588 ldelem.ref      
+  IL_0589 ldarg.0         
+  IL_058a ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_058f ldarg.0         
+  IL_0590 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0595 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_059a div             
+  IL_059b ldarg.0         
+  IL_059c ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_05a1 ldloc.0         
+  IL_05a2 ldelem.ref      
+  IL_05a3 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_05a8 ldarg.0         
+  IL_05a9 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_05ae ldloc.0         
+  IL_05af ldelem.ref      
+  IL_05b0 callvirt       UnityEngine.AnimationCurve::get_length token(0x0A0000BD)
+  IL_05b5 ldc.i4.1        
+  IL_05b6 sub             
+  IL_05b7 ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_05bc call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_05c1 mul             
+  IL_05c2 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_05c7 div             
+  IL_05c8 add             
+  IL_05c9 stelem.r4       
+  IL_05ca br             IL_082b 
+  IL_05cf ldarg.0         
+  IL_05d0 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_05d5 ldloc.0         
+  IL_05d6 ldarg.0         
+  IL_05d7 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_05dc ldloc.0         
+  IL_05dd ldelem.ref      
+  IL_05de ldarg.0         
+  IL_05df ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_05e4 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_05e9 ldc.r4         0.0 
+  IL_05ee bne.un.s       IL_05f7 
+  IL_05f0 ldc.r4         3.4028234663852886e+38 
+  IL_05f5 br.s           IL_062c 
+  IL_05f7 ldarg.0         
+  IL_05f8 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_05fd ldloc.0         
+  IL_05fe ldelem.r4       
+  IL_05ff ldarg.0         
+  IL_0600 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_0605 ldloc.0         
+  IL_0606 ldelem.r4       
+  IL_0607 ldarg.0         
+  IL_0608 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_060d ldarg.0         
+  IL_060e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0613 ldloc.0         
+  IL_0614 ldelem.r4       
+  IL_0615 div             
+  IL_0616 mul             
+  IL_0617 ldarg.0         
+  IL_0618 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_061d ldloc.0         
+  IL_061e ldelem.ref      
+  IL_061f ldarg.0         
+  IL_0620 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0625 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_062a div             
+  IL_062b add             
+  IL_062c stelem.r4       
+  IL_062d br             IL_082b 
+  IL_0632 ldarg.0         
+  IL_0633 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0638 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_063d brtrue         IL_06d0 
+  IL_0642 ldarg.0         
+  IL_0643 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_0648 ldloc.0         
+  IL_0649 ldarg.0         
+  IL_064a ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_064f ldloc.0         
+  IL_0650 ldelem.r4       
+  IL_0651 ldc.r4         0.0 
+  IL_0656 bne.un.s       IL_065f 
+  IL_0658 ldc.r4         3.4028234663852886e+38 
+  IL_065d br.s           IL_06ca 
+  IL_065f ldarg.0         
+  IL_0660 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0665 ldloc.0         
+  IL_0666 ldelem.ref      
+  IL_0667 ldarg.0         
+  IL_0668 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_066d ldarg.0         
+  IL_066e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0673 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0678 div             
+  IL_0679 ldarg.0         
+  IL_067a ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_067f ldloc.0         
+  IL_0680 ldelem.ref      
+  IL_0681 callvirt       UnityEngine.AnimationCurve::get_keys token(0x0A0000BC)
+  IL_0686 ldarg.0         
+  IL_0687 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_068c ldloc.0         
+  IL_068d ldelem.ref      
+  IL_068e callvirt       UnityEngine.AnimationCurve::get_length token(0x0A0000BD)
+  IL_0693 ldc.i4.1        
+  IL_0694 sub             
+  IL_0695 ldelema        UnityEngine.Keyframe token(0x01000080)
+  IL_069a call           UnityEngine.Keyframe::get_time token(0x0A0000BE)
+  IL_069f mul             
+  IL_06a0 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_06a5 ldarg.0         
+  IL_06a6 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_06ab ldloc.0         
+  IL_06ac ldelem.r4       
+  IL_06ad ldarg.0         
+  IL_06ae ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_06b3 ldarg.0         
+  IL_06b4 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_06b9 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_06be div             
+  IL_06bf mul             
+  IL_06c0 div             
+  IL_06c1 ldarg.0         
+  IL_06c2 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_06c7 ldloc.0         
+  IL_06c8 ldelem.r4       
+  IL_06c9 add             
+  IL_06ca stelem.r4       
+  IL_06cb br             IL_082b 
+  IL_06d0 ldarg.0         
+  IL_06d1 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_06d6 ldloc.0         
+  IL_06d7 ldarg.0         
+  IL_06d8 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_06dd ldloc.0         
+  IL_06de ldelem.r4       
+  IL_06df ldc.r4         0.0 
+  IL_06e4 bne.un.s       IL_06ed 
+  IL_06e6 ldc.r4         3.4028234663852886e+38 
+  IL_06eb br.s           IL_0722 
+  IL_06ed ldarg.0         
+  IL_06ee ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_06f3 ldloc.0         
+  IL_06f4 ldelem.ref      
+  IL_06f5 ldarg.0         
+  IL_06f6 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_06fb callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A00000E)
+  IL_0700 ldarg.0         
+  IL_0701 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_0706 ldloc.0         
+  IL_0707 ldelem.r4       
+  IL_0708 ldarg.0         
+  IL_0709 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_070e ldarg.0         
+  IL_070f ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0714 ldloc.0         
+  IL_0715 ldelem.r4       
+  IL_0716 div             
+  IL_0717 mul             
+  IL_0718 div             
+  IL_0719 ldarg.0         
+  IL_071a ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_071f ldloc.0         
+  IL_0720 ldelem.r4       
+  IL_0721 add             
+  IL_0722 stelem.r4       
+  IL_0723 br             IL_082b 
+  IL_0728 ldarg.0         
+  IL_0729 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_072e callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0733 brtrue.s       IL_0766 
+  IL_0735 ldarg.0         
+  IL_0736 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_073b ldloc.0         
+  IL_073c ldarg.0         
+  IL_073d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0742 ldloc.0         
+  IL_0743 ldelem.r4       
+  IL_0744 ldarg.0         
+  IL_0745 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_074a ldloc.0         
+  IL_074b ldelem.r4       
+  IL_074c ldarg.0         
+  IL_074d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0752 ldarg.0         
+  IL_0753 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_0758 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_075d div             
+  IL_075e mul             
+  IL_075f add             
+  IL_0760 stelem.r4       
+  IL_0761 br             IL_082b 
+  IL_0766 ldarg.0         
+  IL_0767 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_076c ldloc.0         
+  IL_076d ldarg.0         
+  IL_076e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0773 ldloc.0         
+  IL_0774 ldelem.r4       
+  IL_0775 ldarg.0         
+  IL_0776 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_077b ldloc.0         
+  IL_077c ldelem.r4       
+  IL_077d ldarg.0         
+  IL_077e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0783 ldarg.0         
+  IL_0784 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0789 ldloc.0         
+  IL_078a ldelem.r4       
+  IL_078b div             
+  IL_078c mul             
+  IL_078d add             
+  IL_078e stelem.r4       
+  IL_078f br             IL_082b 
+  IL_0794 ldarg.0         
+  IL_0795 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_079a callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_079f brtrue.s       IL_07cf 
+  IL_07a1 ldarg.0         
+  IL_07a2 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_07a7 ldloc.0         
+  IL_07a8 ldarg.0         
+  IL_07a9 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_07ae ldloc.0         
+  IL_07af ldelem.r4       
+  IL_07b0 ldarg.0         
+  IL_07b1 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_07b6 ldloc.0         
+  IL_07b7 ldelem.r4       
+  IL_07b8 ldarg.0         
+  IL_07b9 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_07be ldarg.0         
+  IL_07bf ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::time token(0x040000D2)
+  IL_07c4 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_07c9 div             
+  IL_07ca mul             
+  IL_07cb add             
+  IL_07cc stelem.r4       
+  IL_07cd br.s           IL_082b 
+  IL_07cf ldarg.0         
+  IL_07d0 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::largestEndTime token(0x040000E9)
+  IL_07d5 ldc.r4         0.0 
+  IL_07da bne.un.s       IL_0804 
+  IL_07dc ldarg.0         
+  IL_07dd ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_07e2 ldloc.0         
+  IL_07e3 ldarg.0         
+  IL_07e4 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_07e9 ldloc.0         
+  IL_07ea ldelem.r4       
+  IL_07eb ldarg.0         
+  IL_07ec ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_07f1 ldloc.0         
+  IL_07f2 ldelem.r4       
+  IL_07f3 ldarg.0         
+  IL_07f4 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_07f9 ldc.r4         1.0 
+  IL_07fe div             
+  IL_07ff mul             
+  IL_0800 add             
+  IL_0801 stelem.r4       
+  IL_0802 br.s           IL_082b 
+  IL_0804 ldarg.0         
+  IL_0805 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::resultFloats token(0x040000E1)
+  IL_080a ldloc.0         
+  IL_080b ldarg.0         
+  IL_080c ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::fromFloats token(0x040000E2)
+  IL_0811 ldloc.0         
+  IL_0812 ldelem.r4       
+  IL_0813 ldarg.0         
+  IL_0814 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::distances token(0x040000E4)
+  IL_0819 ldloc.0         
+  IL_081a ldelem.r4       
+  IL_081b ldarg.0         
+  IL_081c ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0821 ldarg.0         
+  IL_0822 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::largestEndTime token(0x040000E9)
+  IL_0827 div             
+  IL_0828 mul             
+  IL_0829 add             
+  IL_082a stelem.r4       
+  IL_082b ldloc.0         
+  IL_082c ldc.i4.1        
+  IL_082d add             
+  IL_082e stloc.0         
+  IL_082f ldloc.0         
+  IL_0830 ldarg.0         
+  IL_0831 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::curves token(0x040000DF)
+  IL_0836 ldlen           
+  IL_0837 conv.i4         
+  IL_0838 blt            IL_017c 
+  IL_083d ldarg.0         
+  IL_083e ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::isRunning token(0x040000E6)
+  IL_0843 brfalse.s      IL_0885 
+  IL_0845 ldarg.0         
+  IL_0846 ldc.i4.1        
+  IL_0847 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::finishAction token(0x040000E5)
+  IL_084c ldc.i4.0        
+  IL_084d stloc.2         
+  IL_084e br.s           IL_086b 
+  IL_0850 ldarg.0         
+  IL_0851 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::currentTime token(0x040000D9)
+  IL_0856 ldarg.0         
+  IL_0857 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_085c ldloc.2         
+  IL_085d ldelem.r4       
+  IL_085e bge.un.s       IL_0867 
+  IL_0860 ldarg.0         
+  IL_0861 ldc.i4.0        
+  IL_0862 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::finishAction token(0x040000E5)
+  IL_0867 ldloc.2         
+  IL_0868 ldc.i4.1        
+  IL_0869 add             
+  IL_086a stloc.2         
+  IL_086b ldloc.2         
+  IL_086c ldarg.0         
+  IL_086d ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::endTimes token(0x040000DA)
+  IL_0872 ldlen           
+  IL_0873 conv.i4         
+  IL_0874 blt.s          IL_0850 
+  IL_0876 ldarg.0         
+  IL_0877 ldarg.0         
+  IL_0878 ldfld          HutongGames.PlayMaker.Actions.CurveFsmAction::finishAction token(0x040000E5)
+  IL_087d ldc.i4.0        
+  IL_087e ceq             
+  IL_0880 stfld          HutongGames.PlayMaker.Actions.CurveFsmAction::isRunning token(0x040000E6)
+  IL_0885 ret             
+
+0x060000e5 HutongGames.PlayMaker.Actions.CurveFsmAction::.ctor() RVA 0x4f16 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A0000C2)
+  IL_0006 ret             

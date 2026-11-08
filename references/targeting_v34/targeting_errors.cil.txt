@@ -1,0 +1,993 @@
+
+TYPE PlayErrors 0x02000c16
+FIELD 0x04004123 s_playErrorsMessages SIG 06151281a10211b05c0e
+
+0x06005d51 PlayErrors::DisplayPlayError(error,errorParam,errorSource,errorTarget,messageOverride) RVA 0x1bd624 SIG 00050111b05c151181bd010812c000a32012c000a3200e
+  IL_0000 call           Log::get_PlayErrors token(0x06014E49)
+  IL_0005 ldc.i4.6        
+  IL_0006 newarr         System.String token(0x01000006)
+  IL_000b dup             
+  IL_000c ldc.i4.0        
+  IL_000d ldstr          'DisplayPlayError: ErrorType = ' string token(0x700897C3)
+  IL_0012 stelem.ref      
+  IL_0013 dup             
+  IL_0014 ldc.i4.1        
+  IL_0015 ldarga.s       argument(0x0000) 
+  IL_0017 constrained.   ErrorType token(0x02000C17)
+  IL_001d callvirt       System.Object::ToString token(0x0A00000C)
+  IL_0022 stelem.ref      
+  IL_0023 dup             
+  IL_0024 ldc.i4.2        
+  IL_0025 ldstr          ', ErrorParam = ' string token(0x70089801)
+  IL_002a stelem.ref      
+  IL_002b dup             
+  IL_002c ldc.i4.3        
+  IL_002d ldarg.1         
+  IL_002e stloc.1         
+  IL_002f ldloca.s       local(0x0001) 
+  IL_0031 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_0037 callvirt       System.Object::ToString token(0x0A00000C)
+  IL_003c stelem.ref      
+  IL_003d dup             
+  IL_003e ldc.i4.4        
+  IL_003f ldstr          ', ErrorSource = ' string token(0x70089821)
+  IL_0044 stelem.ref      
+  IL_0045 dup             
+  IL_0046 ldc.i4.5        
+  IL_0047 ldarg.2         
+  IL_0048 dup             
+  IL_0049 brtrue.s       IL_004f 
+  IL_004b pop             
+  IL_004c ldnull          
+  IL_004d br.s           IL_0054 
+  IL_004f callvirt       System.Object::ToString token(0x0A00000C)
+  IL_0054 stelem.ref      
+  IL_0055 call           System.String::Concat token(0x0A0001E0)
+  IL_005a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_005f callvirt       Logger::Print token(0x0A00013E)
+  IL_0064 call           GameState::Get token(0x06005589)
+  IL_0069 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_006e ldarg.0         
+  IL_006f ldarg.1         
+  IL_0070 ldarg.2         
+  IL_0071 callvirt       GameEntity::NotifyOfPlayError token(0x06005476)
+  IL_0076 brfalse.s      IL_0079 
+  IL_0078 ret             
+  IL_0079 ldarg.0         
+  IL_007a ldc.i4         143 
+  IL_007f bgt            IL_028d 
+  IL_0084 ldarg.0         
+  IL_0085 ldc.i4         131 
+  IL_008a bgt            IL_0267 
+  IL_008f ldarg.0         
+  IL_0090 ldc.i4.1        
+  IL_0091 sub             
+  IL_0092 switch         [IL_04c4, IL_04c4, IL_04c4, IL_04c4, IL_0503, IL_04c4, IL_0503, IL_04c4, IL_0503, IL_04c4, IL_046a, IL_03d6, IL_02f9, IL_0370, IL_04e3, IL_03a7, IL_04c4, IL_0503, IL_03d6, IL_03d6, IL_0503, IL_0445, IL_0503, IL_0445, IL_031e, IL_0503, IL_03cc, IL_0503, IL_0503, IL_0503, IL_0503, IL_0503, IL_04c4, IL_04c4, IL_0503, IL_0445, IL_0420, IL_0503, IL_04c4, IL_0503, IL_04c4, IL_04c4, IL_04c4, IL_0503, IL_0503, IL_0503, IL_0503, IL_04c4, IL_0445, IL_04c4, IL_0445, IL_04c4, IL_0445, IL_0445, IL_0445, IL_0445, IL_04c4, IL_04c4, IL_0445, IL_0503, IL_04c4, IL_04c4, IL_0445, IL_0503, IL_0503, IL_0503, IL_0503, IL_0503, IL_0445, IL_0503, IL_0503, IL_0503, IL_0445, IL_0445, IL_0503, IL_0503, IL_0445, IL_0503, IL_0503, IL_0445, IL_0503, IL_0445, IL_0503, IL_0503, IL_0503, IL_0445, IL_0503, IL_0503, IL_0445, IL_0445, IL_0503, IL_0445, IL_0503, IL_0503, IL_0503, IL_0503, IL_04c4, IL_0503, IL_0503, IL_0445, IL_0503, IL_0503, IL_0503, IL_0503, IL_0503, IL_0503, IL_0503, IL_0503, IL_0503, IL_04c4] 
+  IL_024f ldarg.0         
+  IL_0250 ldc.i4.s       123 
+  IL_0252 beq            IL_04c4 
+  IL_0257 ldarg.0         
+  IL_0258 ldc.i4         131 
+  IL_025d beq            IL_04c4 
+  IL_0262 br             IL_0503 
+  IL_0267 ldarg.0         
+  IL_0268 ldc.i4         134 
+  IL_026d beq            IL_04c4 
+  IL_0272 ldarg.0         
+  IL_0273 ldc.i4         137 
+  IL_0278 beq            IL_04c4 
+  IL_027d ldarg.0         
+  IL_027e ldc.i4         143 
+  IL_0283 beq            IL_04c4 
+  IL_0288 br             IL_0503 
+  IL_028d ldarg.0         
+  IL_028e ldc.i4         159 
+  IL_0293 bgt.s          IL_02bb 
+  IL_0295 ldarg.0         
+  IL_0296 ldc.i4         148 
+  IL_029b beq            IL_0445 
+  IL_02a0 ldarg.0         
+  IL_02a1 ldc.i4         156 
+  IL_02a6 beq            IL_04c4 
+  IL_02ab ldarg.0         
+  IL_02ac ldc.i4         159 
+  IL_02b1 beq            IL_04c4 
+  IL_02b6 br             IL_0503 
+  IL_02bb ldarg.0         
+  IL_02bc ldc.i4         164 
+  IL_02c1 bgt.s          IL_02de 
+  IL_02c3 ldarg.0         
+  IL_02c4 ldc.i4         163 
+  IL_02c9 beq            IL_03fb 
+  IL_02ce ldarg.0         
+  IL_02cf ldc.i4         164 
+  IL_02d4 beq            IL_04c4 
+  IL_02d9 br             IL_0503 
+  IL_02de ldarg.0         
+  IL_02df ldc.i4         998 
+  IL_02e4 beq            IL_04e4 
+  IL_02e9 ldarg.0         
+  IL_02ea ldc.i4         999 
+  IL_02ef beq            IL_0520 
+  IL_02f4 br             IL_0503 
+  IL_02f9 call           GameState::Get token(0x06005589)
+  IL_02fe callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_0303 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0308 dup             
+  IL_0309 brtrue.s       IL_0311 
+  IL_030b pop             
+  IL_030c br             IL_0520 
+  IL_0311 ldc.i4.s       16 
+  IL_0313 call           Card::PlayEmote token(0x06012D5F)
+  IL_0318 pop             
+  IL_0319 br             IL_0520 
+  IL_031e ldarg.2         
+  IL_031f callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_0324 brfalse.s      IL_034b 
+  IL_0326 call           GameState::Get token(0x06005589)
+  IL_032b callvirt       GameState::GetCurrentPlayer token(0x060055BF)
+  IL_0330 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0335 dup             
+  IL_0336 brtrue.s       IL_033e 
+  IL_0338 pop             
+  IL_0339 br             IL_0520 
+  IL_033e ldc.i4.s       19 
+  IL_0340 call           Card::PlayEmote token(0x06012D5F)
+  IL_0345 pop             
+  IL_0346 br             IL_0520 
+  IL_034b call           GameState::Get token(0x06005589)
+  IL_0350 callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_0355 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_035a dup             
+  IL_035b brtrue.s       IL_0363 
+  IL_035d pop             
+  IL_035e br             IL_0520 
+  IL_0363 ldc.i4.s       18 
+  IL_0365 call           Card::PlayEmote token(0x06012D5F)
+  IL_036a pop             
+  IL_036b br             IL_0520 
+  IL_0370 ldc.i4.s       17 
+  IL_0372 stloc.2         
+  IL_0373 ldarg.2         
+  IL_0374 ldc.i4         2837 
+  IL_0379 callvirt       EntityBase::GetTag<spec> token(0x2B00040A)
+  IL_037e brfalse.s      IL_0383 
+  IL_0380 ldc.i4.s       24 
+  IL_0382 stloc.2         
+  IL_0383 call           GameState::Get token(0x06005589)
+  IL_0388 callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_038d callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0392 dup             
+  IL_0393 brtrue.s       IL_039b 
+  IL_0395 pop             
+  IL_0396 br             IL_0520 
+  IL_039b ldloc.2         
+  IL_039c call           Card::PlayEmote token(0x06012D5F)
+  IL_03a1 pop             
+  IL_03a2 br             IL_0520 
+  IL_03a7 call           GameState::Get token(0x06005589)
+  IL_03ac callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_03b1 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_03b6 dup             
+  IL_03b7 brtrue.s       IL_03bf 
+  IL_03b9 pop             
+  IL_03ba br             IL_0520 
+  IL_03bf ldc.i4.s       23 
+  IL_03c1 call           Card::PlayEmote token(0x06012D5F)
+  IL_03c6 pop             
+  IL_03c7 br             IL_0520 
+  IL_03cc call           PlayErrors::DisplayTauntErrorEffects token(0x06005D53)
+  IL_03d1 br             IL_0520 
+  IL_03d6 call           GameState::Get token(0x06005589)
+  IL_03db callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_03e0 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_03e5 dup             
+  IL_03e6 brtrue.s       IL_03ee 
+  IL_03e8 pop             
+  IL_03e9 br             IL_0520 
+  IL_03ee ldc.i4.s       22 
+  IL_03f0 call           Card::PlayEmote token(0x06012D5F)
+  IL_03f5 pop             
+  IL_03f6 br             IL_0520 
+  IL_03fb call           GameState::Get token(0x06005589)
+  IL_0400 callvirt       GameState::GetOpposingPlayer token(0x060055B8)
+  IL_0405 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_040a dup             
+  IL_040b brtrue.s       IL_0413 
+  IL_040d pop             
+  IL_040e br             IL_0520 
+  IL_0413 ldc.i4.s       22 
+  IL_0415 call           Card::PlayEmote token(0x06012D5F)
+  IL_041a pop             
+  IL_041b br             IL_0520 
+  IL_0420 call           GameState::Get token(0x06005589)
+  IL_0425 callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_042a callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_042f dup             
+  IL_0430 brtrue.s       IL_0438 
+  IL_0432 pop             
+  IL_0433 br             IL_0520 
+  IL_0438 ldc.i4.s       20 
+  IL_043a call           Card::PlayEmote token(0x06012D5F)
+  IL_043f pop             
+  IL_0440 br             IL_0520 
+  IL_0445 call           GameState::Get token(0x06005589)
+  IL_044a callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_044f callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0454 dup             
+  IL_0455 brtrue.s       IL_045d 
+  IL_0457 pop             
+  IL_0458 br             IL_0520 
+  IL_045d ldc.i4.s       24 
+  IL_045f call           Card::PlayEmote token(0x06012D5F)
+  IL_0464 pop             
+  IL_0465 br             IL_0520 
+  IL_046a ldarg.2         
+  IL_046b callvirt       EntityBase::IsMinion token(0x060138DB)
+  IL_0470 brtrue.s       IL_047a 
+  IL_0472 ldarg.2         
+  IL_0473 callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_0478 brfalse.s      IL_04a5 
+  IL_047a ldarg.2         
+  IL_047b callvirt       EntityBase::GetZone token(0x06013922)
+  IL_0480 ldc.i4.1        
+  IL_0481 bne.un.s       IL_04a5 
+  IL_0483 call           GameState::Get token(0x06005589)
+  IL_0488 callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_048d callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0492 dup             
+  IL_0493 brtrue.s       IL_049b 
+  IL_0495 pop             
+  IL_0496 br             IL_0520 
+  IL_049b ldc.i4.s       27 
+  IL_049d call           Card::PlayEmote token(0x06012D5F)
+  IL_04a2 pop             
+  IL_04a3 br.s           IL_0520 
+  IL_04a5 call           GameState::Get token(0x06005589)
+  IL_04aa callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_04af callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_04b4 dup             
+  IL_04b5 brtrue.s       IL_04ba 
+  IL_04b7 pop             
+  IL_04b8 br.s           IL_0520 
+  IL_04ba ldc.i4.s       24 
+  IL_04bc call           Card::PlayEmote token(0x06012D5F)
+  IL_04c1 pop             
+  IL_04c2 br.s           IL_0520 
+  IL_04c4 call           GameState::Get token(0x06005589)
+  IL_04c9 callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_04ce callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_04d3 dup             
+  IL_04d4 brtrue.s       IL_04d9 
+  IL_04d6 pop             
+  IL_04d7 br.s           IL_0520 
+  IL_04d9 ldc.i4.s       25 
+  IL_04db call           Card::PlayEmote token(0x06012D5F)
+  IL_04e0 pop             
+  IL_04e1 br.s           IL_0520 
+  IL_04e3 ret             
+  IL_04e4 call           GameState::Get token(0x06005589)
+  IL_04e9 callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_04ee callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_04f3 dup             
+  IL_04f4 brtrue.s       IL_04f9 
+  IL_04f6 pop             
+  IL_04f7 br.s           IL_0520 
+  IL_04f9 ldc.i4.s       27 
+  IL_04fb call           Card::PlayEmote token(0x06012D5F)
+  IL_0500 pop             
+  IL_0501 br.s           IL_0520 
+  IL_0503 call           GameState::Get token(0x06005589)
+  IL_0508 callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_050d callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0512 dup             
+  IL_0513 brtrue.s       IL_0518 
+  IL_0515 pop             
+  IL_0516 br.s           IL_0520 
+  IL_0518 ldc.i4.s       27 
+  IL_051a call           Card::PlayEmote token(0x06012D5F)
+  IL_051f pop             
+  IL_0520 ldarg.s        argument(0x0004) 
+  IL_0522 brtrue.s       IL_052f 
+  IL_0524 ldarg.0         
+  IL_0525 ldarg.1         
+  IL_0526 ldarg.2         
+  IL_0527 ldarg.3         
+  IL_0528 call           PlayErrors::GetErrorDescription token(0x06005D54)
+  IL_052d br.s           IL_053b 
+  IL_052f ldarg.s        argument(0x0004) 
+  IL_0531 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0536 call           GameStrings::Format token(0x06013C12)
+  IL_053b stloc.0         
+  IL_053c ldloc.0         
+  IL_053d call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0542 brfalse.s      IL_0545 
+  IL_0544 ret             
+  IL_0545 call           GameplayErrorManager::Get token(0x06005871)
+  IL_054a ldloc.0         
+  IL_054b callvirt       GameplayErrorManager::DisplayMessage token(0x06005874)
+  IL_0550 ret             
+
+0x06005d54 PlayErrors::GetErrorDescription(type,errorParam,errorSource,errorTarget) RVA 0x1bdbe8 SIG 00040e11b05c151181bd010812c000a32012c000a320
+  IL_0000 call           Log::get_PlayErrors token(0x06014E49)
+  IL_0005 ldstr          'GetErrorDescription: ' string token(0x70089843)
+  IL_000a ldarga.s       argument(0x0000) 
+  IL_000c constrained.   ErrorType token(0x02000C17)
+  IL_0012 callvirt       System.Object::ToString token(0x0A00000C)
+  IL_0017 ldstr          ' ' string token(0x70021DC6)
+  IL_001c ldarg.1         
+  IL_001d stloc.1         
+  IL_001e ldloca.s       local(0x0001) 
+  IL_0020 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_0026 callvirt       System.Object::ToString token(0x0A00000C)
+  IL_002b call           System.String::Concat token(0x0A0004EE)
+  IL_0030 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0035 callvirt       Logger::Print token(0x0A00013E)
+  IL_003a ldarg.0         
+  IL_003b ldc.i4.s       73 
+  IL_003d bgt            IL_0111 
+  IL_0042 ldarg.0         
+  IL_0043 ldc.i4.s       35 
+  IL_0045 bgt.s          IL_00c5 
+  IL_0047 ldarg.0         
+  IL_0048 ldc.i4.s       15 
+  IL_004a bgt.s          IL_008b 
+  IL_004c ldarg.0         
+  IL_004d brfalse        IL_020a 
+  IL_0052 ldarg.0         
+  IL_0053 ldc.i4.5        
+  IL_0054 sub             
+  IL_0055 switch         [IL_028a, IL_086f, IL_086f, IL_0230, IL_086f, IL_024a, IL_0502, IL_086f, IL_086f, IL_0464, IL_021a] 
+  IL_0086 br             IL_086f 
+  IL_008b ldarg.0         
+  IL_008c ldc.i4.s       18 
+  IL_008e beq            IL_02d0 
+  IL_0093 ldarg.0         
+  IL_0094 ldc.i4.s       23 
+  IL_0096 sub             
+  IL_0097 switch         [IL_0316, IL_086f, IL_0668, IL_086f, IL_0447, IL_086f, IL_0220] 
+  IL_00b8 ldarg.0         
+  IL_00b9 ldc.i4.s       35 
+  IL_00bb beq            IL_063f 
+  IL_00c0 br             IL_086f 
+  IL_00c5 ldarg.0         
+  IL_00c6 ldc.i4.s       45 
+  IL_00c8 bgt.s          IL_00df 
+  IL_00ca ldarg.0         
+  IL_00cb ldc.i4.s       41 
+  IL_00cd beq            IL_035d 
+  IL_00d2 ldarg.0         
+  IL_00d3 ldc.i4.s       45 
+  IL_00d5 beq            IL_0413 
+  IL_00da br             IL_086f 
+  IL_00df ldarg.0         
+  IL_00e0 ldc.i4.s       49 
+  IL_00e2 beq            IL_0551 
+  IL_00e7 ldarg.0         
+  IL_00e8 ldc.i4.s       60 
+  IL_00ea sub             
+  IL_00eb switch         [IL_02f3, IL_0391, IL_086f, IL_086f, IL_02ad] 
+  IL_0104 ldarg.0         
+  IL_0105 ldc.i4.s       73 
+  IL_0107 beq            IL_0668 
+  IL_010c br             IL_086f 
+  IL_0111 ldarg.0         
+  IL_0112 ldc.i4         137 
+  IL_0117 bgt            IL_019f 
+  IL_011c ldarg.0         
+  IL_011d ldc.i4.s       112 
+  IL_011f bgt.s          IL_0163 
+  IL_0121 ldarg.0         
+  IL_0122 ldc.i4.s       97 
+  IL_0124 sub             
+  IL_0125 switch         [IL_03ab, IL_03c5, IL_03df, IL_086f, IL_086f, IL_086f, IL_03f9, IL_0623, IL_086f, IL_086f, IL_0578] 
+  IL_0156 ldarg.0         
+  IL_0157 ldc.i4.s       112 
+  IL_0159 beq            IL_05a0 
+  IL_015e br             IL_086f 
+  IL_0163 ldarg.0         
+  IL_0164 ldc.i4.s       116 
+  IL_0166 beq            IL_07e6 
+  IL_016b ldarg.0         
+  IL_016c ldc.i4         128 
+  IL_0171 sub             
+  IL_0172 switch         [IL_05ab, IL_05c5, IL_05d0, IL_086f, IL_086f, IL_0618] 
+  IL_018f ldarg.0         
+  IL_0190 ldc.i4         137 
+  IL_0195 beq            IL_0700 
+  IL_019a br             IL_086f 
+  IL_019f ldarg.0         
+  IL_01a0 ldc.i4         154 
+  IL_01a5 bgt.s          IL_01e7 
+  IL_01a7 ldarg.0         
+  IL_01a8 ldc.i4         143 
+  IL_01ad beq            IL_0377 
+  IL_01b2 ldarg.0         
+  IL_01b3 ldc.i4         146 
+  IL_01b8 sub             
+  IL_01b9 switch         [IL_0343, IL_086f, IL_042d, IL_086f, IL_086f, IL_086f, IL_071a, IL_0725, IL_073f] 
+  IL_01e2 br             IL_086f 
+  IL_01e7 ldarg.0         
+  IL_01e8 ldc.i4         158 
+  IL_01ed beq            IL_0785 
+  IL_01f2 ldarg.0         
+  IL_01f3 ldc.i4         159 
+  IL_01f8 beq            IL_07a0 
+  IL_01fd ldarg.0         
+  IL_01fe ldc.i4         164 
+  IL_0203 beq.s          IL_026a 
+  IL_0205 br             IL_086f 
+  IL_020a ldstr          'PlayErrors.GetErrorDescription() - Action is not valid, but no error string found.' string token(0x7008986F)
+  IL_020f call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0214 ldstr          '' string token(0x70000E3C)
+  IL_0219 ret             
+  IL_021a ldstr          '' string token(0x70000E3C)
+  IL_021f ret             
+  IL_0220 ldstr          '[Unity Editor] Action power must be master power' string token(0x70089916)
+  IL_0225 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_022a call           PlayErrors::ErrorInEditorOnly token(0x06005D55)
+  IL_022f ret             
+  IL_0230 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_MAX_ATTACK' string token(0x70089978)
+  IL_0235 ldc.i4.1        
+  IL_0236 newarr         System.Object token(0x01000001)
+  IL_023b dup             
+  IL_023c ldc.i4.0        
+  IL_023d ldarg.1         
+  IL_023e box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_0243 stelem.ref      
+  IL_0244 call           GameStrings::Format token(0x06013C12)
+  IL_0249 ret             
+  IL_024a ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_WITH_RACE' string token(0x700899CC)
+  IL_024f ldc.i4.1        
+  IL_0250 newarr         System.Object token(0x01000001)
+  IL_0255 dup             
+  IL_0256 ldc.i4.0        
+  IL_0257 ldarga.s       argument(0x0001) 
+  IL_0259 call           <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370>::get_Value token(0x0A00014D)
+  IL_025e call           GameStrings::GetRaceName token(0x06013C34)
+  IL_0263 stelem.ref      
+  IL_0264 call           GameStrings::Format token(0x06013C12)
+  IL_0269 ret             
+  IL_026a ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_WITH_SPELL_SCHOOL' string token(0x70089A1E)
+  IL_026f ldc.i4.1        
+  IL_0270 newarr         System.Object token(0x01000001)
+  IL_0275 dup             
+  IL_0276 ldc.i4.0        
+  IL_0277 ldarga.s       argument(0x0001) 
+  IL_0279 call           <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370>::get_Value token(0x0A00014D)
+  IL_027e call           GameStrings::GetSpellSchoolName token(0x06013C47)
+  IL_0283 stelem.ref      
+  IL_0284 call           GameStrings::Format token(0x06013C12)
+  IL_0289 ret             
+  IL_028a ldstr          'GAMEPLAY_PlayErrors_REQ_MAX_SECRETS' string token(0x70089A80)
+  IL_028f ldc.i4.1        
+  IL_0290 newarr         System.Object token(0x01000001)
+  IL_0295 dup             
+  IL_0296 ldc.i4.0        
+  IL_0297 call           GameState::Get token(0x06005589)
+  IL_029c callvirt       GameState::GetMaxSecretsPerPlayer token(0x060055D9)
+  IL_02a1 box            System.Int32 token(0x0100002C)
+  IL_02a6 stelem.ref      
+  IL_02a7 call           GameStrings::Format token(0x06013C12)
+  IL_02ac ret             
+  IL_02ad ldstr          'GAMEPLAY_PlayErrors_REQ_MAX_QUESTS' string token(0x70089AC8)
+  IL_02b2 ldc.i4.1        
+  IL_02b3 newarr         System.Object token(0x01000001)
+  IL_02b8 dup             
+  IL_02b9 ldc.i4.0        
+  IL_02ba call           GameState::Get token(0x06005589)
+  IL_02bf callvirt       GameState::GetMaxQuestsPerPlayer token(0x060055DA)
+  IL_02c4 box            System.Int32 token(0x0100002C)
+  IL_02c9 stelem.ref      
+  IL_02ca call           GameStrings::Format token(0x06013C12)
+  IL_02cf ret             
+  IL_02d0 ldstr          'GAMEPLAY_PlayErrors_REQ_SECRET_ZONE_CAP' string token(0x70089B0E)
+  IL_02d5 ldc.i4.1        
+  IL_02d6 newarr         System.Object token(0x01000001)
+  IL_02db dup             
+  IL_02dc ldc.i4.0        
+  IL_02dd call           GameState::Get token(0x06005589)
+  IL_02e2 callvirt       GameState::GetMaxSecretZoneSizePerPlayer token(0x060055D8)
+  IL_02e7 box            System.Int32 token(0x0100002C)
+  IL_02ec stelem.ref      
+  IL_02ed call           GameStrings::Format token(0x06013C12)
+  IL_02f2 ret             
+  IL_02f3 ldstr          'GAMEPLAY_PlayErrors_REQ_MAX_SECRETS' string token(0x70089A80)
+  IL_02f8 ldc.i4.1        
+  IL_02f9 newarr         System.Object token(0x01000001)
+  IL_02fe dup             
+  IL_02ff ldc.i4.0        
+  IL_0300 call           GameState::Get token(0x06005589)
+  IL_0305 callvirt       GameState::GetMaxSecretsPerPlayer token(0x060055D9)
+  IL_030a box            System.Int32 token(0x0100002C)
+  IL_030f stelem.ref      
+  IL_0310 call           GameStrings::Format token(0x06013C12)
+  IL_0315 ret             
+  IL_0316 call           GameMgr::Get token(0x06013AFF)
+  IL_031b callvirt       GameMgr::IsBattlegrounds token(0x06013B5B)
+  IL_0320 brtrue.s       IL_0329 
+  IL_0322 ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_ENEMY_MINIONS' string token(0x70089B5E)
+  IL_0327 br.s           IL_032e 
+  IL_0329 ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_ENEMY_MINIONS_BATTLEGROUNDS' string token(0x70089BBA)
+  IL_032e ldc.i4.1        
+  IL_032f newarr         System.Object token(0x01000001)
+  IL_0334 dup             
+  IL_0335 ldc.i4.0        
+  IL_0336 ldarg.1         
+  IL_0337 box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_033c stelem.ref      
+  IL_033d call           GameStrings::Format token(0x06013C12)
+  IL_0342 ret             
+  IL_0343 ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_NON_GOLDEN_ENEMY_MINIONS' string token(0x70089C32)
+  IL_0348 ldc.i4.1        
+  IL_0349 newarr         System.Object token(0x01000001)
+  IL_034e dup             
+  IL_034f ldc.i4.0        
+  IL_0350 ldarg.1         
+  IL_0351 box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_0356 stelem.ref      
+  IL_0357 call           GameStrings::Format token(0x06013C12)
+  IL_035c ret             
+  IL_035d ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_MIN_ATTACK' string token(0x70089CA4)
+  IL_0362 ldc.i4.1        
+  IL_0363 newarr         System.Object token(0x01000001)
+  IL_0368 dup             
+  IL_0369 ldc.i4.0        
+  IL_036a ldarg.1         
+  IL_036b box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_0370 stelem.ref      
+  IL_0371 call           GameStrings::Format token(0x06013C12)
+  IL_0376 ret             
+  IL_0377 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_EXACT_ATTACK' string token(0x70089CF8)
+  IL_037c ldc.i4.1        
+  IL_037d newarr         System.Object token(0x01000001)
+  IL_0382 dup             
+  IL_0383 ldc.i4.0        
+  IL_0384 ldarg.1         
+  IL_0385 box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_038a stelem.ref      
+  IL_038b call           GameStrings::Format token(0x06013C12)
+  IL_0390 ret             
+  IL_0391 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_EXACT_COST' string token(0x70089D50)
+  IL_0396 ldc.i4.1        
+  IL_0397 newarr         System.Object token(0x01000001)
+  IL_039c dup             
+  IL_039d ldc.i4.0        
+  IL_039e ldarg.1         
+  IL_039f box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_03a4 stelem.ref      
+  IL_03a5 call           GameStrings::Format token(0x06013C12)
+  IL_03aa ret             
+  IL_03ab ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_NON_TRIPLED_MINION' string token(0x70089DA4)
+  IL_03b0 ldc.i4.1        
+  IL_03b1 newarr         System.Object token(0x01000001)
+  IL_03b6 dup             
+  IL_03b7 ldc.i4.0        
+  IL_03b8 ldarg.1         
+  IL_03b9 box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_03be stelem.ref      
+  IL_03bf call           GameStrings::Format token(0x06013C12)
+  IL_03c4 ret             
+  IL_03c5 ldstr          'GAMEPLAY_PlayErrors_REQ_BOUGHT_MINION_THIS_TURN' string token(0x70089E08)
+  IL_03ca ldc.i4.1        
+  IL_03cb newarr         System.Object token(0x01000001)
+  IL_03d0 dup             
+  IL_03d1 ldc.i4.0        
+  IL_03d2 ldarg.1         
+  IL_03d3 box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_03d8 stelem.ref      
+  IL_03d9 call           GameStrings::Format token(0x06013C12)
+  IL_03de ret             
+  IL_03df ldstr          'GAMEPLAY_PlayErrors_REQ_SOLD_MINION_THIS_TURN' string token(0x70089E68)
+  IL_03e4 ldc.i4.1        
+  IL_03e5 newarr         System.Object token(0x01000001)
+  IL_03ea dup             
+  IL_03eb ldc.i4.0        
+  IL_03ec ldarg.1         
+  IL_03ed box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_03f2 stelem.ref      
+  IL_03f3 call           GameStrings::Format token(0x06013C12)
+  IL_03f8 ret             
+  IL_03f9 ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_MINION_DORMANT' string token(0x70089EC4)
+  IL_03fe ldc.i4.1        
+  IL_03ff newarr         System.Object token(0x01000001)
+  IL_0404 dup             
+  IL_0405 ldc.i4.0        
+  IL_0406 ldarg.1         
+  IL_0407 box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_040c stelem.ref      
+  IL_040d call           GameStrings::Format token(0x06013C12)
+  IL_0412 ret             
+  IL_0413 ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_TOTAL_MINIONS' string token(0x70089F1A)
+  IL_0418 ldc.i4.1        
+  IL_0419 newarr         System.Object token(0x01000001)
+  IL_041e dup             
+  IL_041f ldc.i4.0        
+  IL_0420 ldarg.1         
+  IL_0421 box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_0426 stelem.ref      
+  IL_0427 call           GameStrings::Format token(0x06013C12)
+  IL_042c ret             
+  IL_042d ldstr          'GAMEPLAY_PlayErrors_REQ_FRIENDLY_TAUNT_MINION_DIED_THIS_GAME' string token(0x70089F76)
+  IL_0432 ldc.i4.1        
+  IL_0433 newarr         System.Object token(0x01000001)
+  IL_0438 dup             
+  IL_0439 ldc.i4.0        
+  IL_043a ldarg.1         
+  IL_043b box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_0440 stelem.ref      
+  IL_0441 call           GameStrings::Format token(0x06013C12)
+  IL_0446 ret             
+  IL_0447 call           PlayErrors::CanShowMinionTauntError token(0x06005D52)
+  IL_044c brfalse.s      IL_0459 
+  IL_044e ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_TAUNTER_MINION' string token(0x70089FF0)
+  IL_0453 call           GameStrings::Get token(0x06013C11)
+  IL_0458 ret             
+  IL_0459 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_TAUNTER_CHARACTER' string token(0x7008A04C)
+  IL_045e call           GameStrings::Get token(0x06013C11)
+  IL_0463 ret             
+  IL_0464 ldarg.2         
+  IL_0465 ldc.i4         2837 
+  IL_046a callvirt       EntityBase::GetTag<spec> token(0x2B00040A)
+  IL_046f stloc.2         
+  IL_0470 ldloc.2         
+  IL_0471 ldc.i4.1        
+  IL_0472 beq.s          IL_0481 
+  IL_0474 ldarg.2         
+  IL_0475 ldc.i4         2911 
+  IL_047a callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_047f brfalse.s      IL_048c 
+  IL_0481 ldstr          'GAMEPLAY_PlayErrors_REQ_ENOUGH_HEALTH' string token(0x7008A0AE)
+  IL_0486 call           GameStrings::Get token(0x06013C11)
+  IL_048b ret             
+  IL_048c ldloc.2         
+  IL_048d ldc.i4.2        
+  IL_048e bne.un.s       IL_049b 
+  IL_0490 ldstr          'GAMEPLAY_PlayErrors_REQ_ENOUGH_ARMOR' string token(0x7008A0FA)
+  IL_0495 call           GameStrings::Get token(0x06013C11)
+  IL_049a ret             
+  IL_049b ldloc.2         
+  IL_049c ldc.i4.3        
+  IL_049d bne.un.s       IL_04aa 
+  IL_049f ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_CORPSES' string token(0x7008A144)
+  IL_04a4 call           GameStrings::Get token(0x06013C11)
+  IL_04a9 ret             
+  IL_04aa ldloc.2         
+  IL_04ab ldc.i4.5        
+  IL_04ac bne.un.s       IL_04b9 
+  IL_04ae ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_ALT_TAVERN_COIN' string token(0x7008A194)
+  IL_04b3 call           GameStrings::Get token(0x06013C11)
+  IL_04b8 ret             
+  IL_04b9 ldarg.2         
+  IL_04ba callvirt       Entity::GetCard token(0x060137BF)
+  IL_04bf ldnull          
+  IL_04c0 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_04c5 brfalse.s      IL_04f7 
+  IL_04c7 ldarg.2         
+  IL_04c8 callvirt       Entity::GetCard token(0x060137BF)
+  IL_04cd callvirt       Card::GetActor token(0x06012DD6)
+  IL_04d2 ldnull          
+  IL_04d3 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_04d8 brfalse.s      IL_04f7 
+  IL_04da ldarg.2         
+  IL_04db callvirt       Entity::GetCard token(0x060137BF)
+  IL_04e0 callvirt       Card::GetActor token(0x06012DD6)
+  IL_04e5 callvirt       Actor::UseCoinManaGem token(0x06012945)
+  IL_04ea brfalse.s      IL_04f7 
+  IL_04ec ldstr          'GAMEPLAY_PlayErrors_REQ_ENOUGH_COIN' string token(0x7008A1F4)
+  IL_04f1 call           GameStrings::Get token(0x06013C11)
+  IL_04f6 ret             
+  IL_04f7 ldstr          'GAMEPLAY_PlayErrors_REQ_ENOUGH_MANA' string token(0x7008A23C)
+  IL_04fc call           GameStrings::Get token(0x06013C11)
+  IL_0501 ret             
+  IL_0502 ldarg.2         
+  IL_0503 callvirt       EntityBase::IsMinion token(0x060138DB)
+  IL_0508 brfalse.s      IL_0522 
+  IL_050a ldarg.2         
+  IL_050b callvirt       EntityBase::IsInteractableObject token(0x060138E2)
+  IL_0510 brfalse.s      IL_0522 
+  IL_0512 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_IF_AVAILABLE' string token(0x7008A284)
+  IL_0517 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_051c call           GameStrings::Format token(0x06013C12)
+  IL_0521 ret             
+  IL_0522 ldarg.2         
+  IL_0523 callvirt       EntityBase::IsMinion token(0x060138DB)
+  IL_0528 brtrue.s       IL_0535 
+  IL_052a ldarg.2         
+  IL_052b callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_0530 brfalse        IL_086f 
+  IL_0535 ldarg.2         
+  IL_0536 callvirt       EntityBase::GetZone token(0x06013922)
+  IL_053b ldc.i4.1        
+  IL_053c bne.un         IL_086f 
+  IL_0541 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_TO_ATTACK' string token(0x7008A2DC)
+  IL_0546 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_054b call           GameStrings::Format token(0x06013C12)
+  IL_0550 ret             
+  IL_0551 ldarg.2         
+  IL_0552 callvirt       EntityBase::IsHeroPower token(0x060138D4)
+  IL_0557 brfalse        IL_086f 
+  IL_055c ldarg.2         
+  IL_055d callvirt       EntityBase::GetZone token(0x06013922)
+  IL_0562 ldc.i4.1        
+  IL_0563 bne.un         IL_086f 
+  IL_0568 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_IF_AVAILABLE' string token(0x7008A284)
+  IL_056d call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0572 call           GameStrings::Format token(0x06013C12)
+  IL_0577 ret             
+  IL_0578 ldarg.2         
+  IL_0579 ldc.i4         1670 
+  IL_057e callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_0583 stloc.s        local(0x0005) 
+  IL_0585 ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_IN_COOLDOWN' string token(0x70085395)
+  IL_058a ldc.i4.1        
+  IL_058b newarr         System.Object token(0x01000001)
+  IL_0590 dup             
+  IL_0591 ldc.i4.0        
+  IL_0592 ldloc.s        local(0x0005) 
+  IL_0594 box            System.Int32 token(0x0100002C)
+  IL_0599 stelem.ref      
+  IL_059a call           GameStrings::Format token(0x06013C12)
+  IL_059f ret             
+  IL_05a0 ldstr          'GAMEPLAY_PlayErrors_REQ_LETTUCE_ABILITY_CANNOT_TARGET_OWNER' string token(0x7008A32E)
+  IL_05a5 call           GameStrings::Get token(0x06013C11)
+  IL_05aa ret             
+  IL_05ab ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_TAVERN_TIER_LEVEL_TO_PLAY' string token(0x7008A3A6)
+  IL_05b0 ldc.i4.1        
+  IL_05b1 newarr         System.Object token(0x01000001)
+  IL_05b6 dup             
+  IL_05b7 ldc.i4.0        
+  IL_05b8 ldarg.1         
+  IL_05b9 box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_05be stelem.ref      
+  IL_05bf call           GameStrings::Format token(0x06013C12)
+  IL_05c4 ret             
+  IL_05c5 ldstr          'GAMEPLAY_PlayErrors_REQ_CARD_TAVERN_TIER_LEVEL_TO_PLAY' string token(0x7008A41A)
+  IL_05ca call           GameStrings::Get token(0x06013C11)
+  IL_05cf ret             
+  IL_05d0 ldarg.2         
+  IL_05d1 ldc.i4         4947 
+  IL_05d6 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_05db brfalse.s      IL_05e8 
+  IL_05dd ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_EXHAUSTED_LOCATION_ULDIR_QUARANTINE' string token(0x7008A488)
+  IL_05e2 call           GameStrings::Get token(0x06013C11)
+  IL_05e7 ret             
+  IL_05e8 ldarg.2         
+  IL_05e9 callvirt       EntityBase::GetLocationCooldown token(0x060138EB)
+  IL_05ee stloc.3         
+  IL_05ef ldloc.3         
+  IL_05f0 ldc.i4.1        
+  IL_05f1 bne.un.s       IL_05fe 
+  IL_05f3 ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_EXHAUSTED_LOCATION' string token(0x7008A508)
+  IL_05f8 call           GameStrings::Get token(0x06013C11)
+  IL_05fd ret             
+  IL_05fe ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_EXHAUSTED_LOCATION_COOLDOWN' string token(0x7008A566)
+  IL_0603 ldc.i4.1        
+  IL_0604 newarr         System.Object token(0x01000001)
+  IL_0609 dup             
+  IL_060a ldc.i4.0        
+  IL_060b ldloc.3         
+  IL_060c box            System.Int32 token(0x0100002C)
+  IL_0611 stelem.ref      
+  IL_0612 call           GameStrings::Format token(0x06013C12)
+  IL_0617 ret             
+  IL_0618 ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_CORPSES' string token(0x7008A144)
+  IL_061d call           GameStrings::Get token(0x06013C11)
+  IL_0622 ret             
+  IL_0623 ldarg.3         
+  IL_0624 brfalse        IL_086f 
+  IL_0629 ldarg.3         
+  IL_062a callvirt       EntityBase::IsDormant token(0x060138CD)
+  IL_062f brfalse        IL_086f 
+  IL_0634 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_NOT_DORMANT' string token(0x7008A5D6)
+  IL_0639 call           GameStrings::Get token(0x06013C11)
+  IL_063e ret             
+  IL_063f ldarg.2         
+  IL_0640 callvirt       EntityBase::IsActivatableMinion token(0x060138DD)
+  IL_0645 brfalse        IL_086f 
+  IL_064a ldarg.2         
+  IL_064b callvirt       EntityBase::IsTitan token(0x060138DC)
+  IL_0650 brtrue.s       IL_065d 
+  IL_0652 ldstr          'GAMEPLAY_PlayErrors_REQ_ATTACKER_CAN_ATTACK' string token(0x7008A62C)
+  IL_0657 call           GameStrings::Get token(0x06013C11)
+  IL_065c ret             
+  IL_065d ldstr          'GAMEPLAY_PlayErrors_REQ_SUBCARD_IS_PLAYABLE_TITAN' string token(0x7008A684)
+  IL_0662 call           GameStrings::Get token(0x06013C11)
+  IL_0667 ret             
+  IL_0668 ldarg.2         
+  IL_0669 callvirt       EntityBase::IsActivatableMinion token(0x060138DD)
+  IL_066e brfalse.s      IL_069c 
+  IL_0670 ldarg.2         
+  IL_0671 callvirt       EntityBase::IsFrozen token(0x060138CC)
+  IL_0676 brfalse.s      IL_0683 
+  IL_0678 ldstr          'GAMEPLAY_PlayErrors_REQ_ATTACKER_NOT_FROZEN' string token(0x7008A6E8)
+  IL_067d call           GameStrings::Get token(0x06013C11)
+  IL_0682 ret             
+  IL_0683 ldarg.2         
+  IL_0684 callvirt       EntityBase::IsTitan token(0x060138DC)
+  IL_0689 brtrue.s       IL_0691 
+  IL_068b ldstr          'GAMEPLAY_PlayErrors_REQ_ATTACKER_CAN_ATTACK' string token(0x7008A62C)
+  IL_0690 ret             
+  IL_0691 ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_EXHAUSTED_ACTIVATE_TITAN' string token(0x7008A740)
+  IL_0696 call           GameStrings::Get token(0x06013C11)
+  IL_069b ret             
+  IL_069c ldarg.2         
+  IL_069d callvirt       EntityBase::IsGameModeButton token(0x060138D5)
+  IL_06a2 brfalse        IL_086f 
+  IL_06a7 ldarg.2         
+  IL_06a8 ldc.i4         4846 
+  IL_06ad callvirt       EntityBase::GetTag<spec> token(0x2B000392)
+  IL_06b2 ldc.i4.2        
+  IL_06b3 bne.un         IL_086f 
+  IL_06b8 ldarg.2         
+  IL_06b9 ldc.i4         225 
+  IL_06be callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_06c3 brtrue.s       IL_06d0 
+  IL_06c5 ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_EXHAUSTED_ACTIVATE_GAMEMODEBUTTON_DARK_GIFT' string token(0x7008A7AA)
+  IL_06ca call           GameStrings::Get token(0x06013C11)
+  IL_06cf ret             
+  IL_06d0 ldarg.2         
+  IL_06d1 callvirt       Entity::GetEntityDef token(0x060137BA)
+  IL_06d6 stloc.s        local(0x0006) 
+  IL_06d8 ldloc.s        local(0x0006) 
+  IL_06da brfalse        IL_086f 
+  IL_06df ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_EXHAUSTED_ACTIVATE_GAMEMODEBUTTON_DARK_GIFT_DISABLED' string token(0x7008A83B)
+  IL_06e4 ldc.i4.1        
+  IL_06e5 newarr         System.Object token(0x01000001)
+  IL_06ea dup             
+  IL_06eb ldc.i4.0        
+  IL_06ec ldloc.s        local(0x0006) 
+  IL_06ee ldc.i4.3        
+  IL_06ef callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_06f4 box            System.Int32 token(0x0100002C)
+  IL_06f9 stelem.ref      
+  IL_06fa call           GameStrings::Format token(0x06013C12)
+  IL_06ff ret             
+  IL_0700 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_MAX_COST' string token(0x7008A8DE)
+  IL_0705 ldc.i4.1        
+  IL_0706 newarr         System.Object token(0x01000001)
+  IL_070b dup             
+  IL_070c ldc.i4.0        
+  IL_070d ldarg.1         
+  IL_070e box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_0713 stelem.ref      
+  IL_0714 call           GameStrings::Format token(0x06013C12)
+  IL_0719 ret             
+  IL_071a ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_HAS_END_OF_TURN_POWER_TO_TRIGGER_THIS_TURN' string token(0x7008A92E)
+  IL_071f call           GameStrings::Get token(0x06013C11)
+  IL_0724 ret             
+  IL_0725 ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_GAME_TURN' string token(0x7008A9C3)
+  IL_072a ldc.i4.1        
+  IL_072b newarr         System.Object token(0x01000001)
+  IL_0730 dup             
+  IL_0731 ldc.i4.0        
+  IL_0732 ldarg.1         
+  IL_0733 box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_0738 stelem.ref      
+  IL_0739 call           GameStrings::Format token(0x06013C12)
+  IL_073e ret             
+  IL_073f ldarga.s       argument(0x0001) 
+  IL_0741 call           <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370>::get_Value token(0x0A00014D)
+  IL_0746 call           GameStrings::GetRaceNameBattlegrounds token(0x06013C37)
+  IL_074b stloc.s        local(0x0004) 
+  IL_074d call           GameMgr::Get token(0x06013AFF)
+  IL_0752 callvirt       GameMgr::IsBattlegrounds token(0x06013B5B)
+  IL_0757 brfalse.s      IL_076f 
+  IL_0759 ldstr          'GAMEPLAY_PlayErrors_REQ_ENEMY_MINION_OF_RACE_IN_PLAY_BG' string token(0x7008AA17)
+  IL_075e ldc.i4.1        
+  IL_075f newarr         System.Object token(0x01000001)
+  IL_0764 dup             
+  IL_0765 ldc.i4.0        
+  IL_0766 ldloc.s        local(0x0004) 
+  IL_0768 stelem.ref      
+  IL_0769 call           GameStrings::Format token(0x06013C12)
+  IL_076e ret             
+  IL_076f ldstr          'GAMEPLAY_PlayErrors_REQ_ENEMY_MINION_OF_RACE_IN_PLAY' string token(0x7008AA87)
+  IL_0774 ldc.i4.1        
+  IL_0775 newarr         System.Object token(0x01000001)
+  IL_077a dup             
+  IL_077b ldc.i4.0        
+  IL_077c ldloc.s        local(0x0004) 
+  IL_077e stelem.ref      
+  IL_077f call           GameStrings::Format token(0x06013C12)
+  IL_0784 ret             
+  IL_0785 ldarg.2         
+  IL_0786 ldc.i4         4257 
+  IL_078b callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0790 brfalse        IL_086f 
+  IL_0795 ldstr          'GAMEPLAY_PlayErrors_REQ_SOURCE_MUST_HAVE_TAG_CHARGES' string token(0x7008AAF1)
+  IL_079a call           GameStrings::Get token(0x06013C11)
+  IL_079f ret             
+  IL_07a0 ldarga.s       argument(0x0001) 
+  IL_07a2 call           <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370>::get_HasValue token(0x0A00014C)
+  IL_07a7 brfalse        IL_086f 
+  IL_07ac ldarg.1         
+  IL_07ad stloc.1         
+  IL_07ae ldc.i4.0        
+  IL_07af stloc.s        local(0x0007) 
+  IL_07b1 ldloca.s       local(0x0001) 
+  IL_07b3 call           <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370>::GetValueOrDefault token(0x0A000967)
+  IL_07b8 ldloc.s        local(0x0007) 
+  IL_07ba cgt             
+  IL_07bc ldc.i4.0        
+  IL_07bd ceq             
+  IL_07bf ldloca.s       local(0x0001) 
+  IL_07c1 call           <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370>::get_HasValue token(0x0A00014C)
+  IL_07c6 and             
+  IL_07c7 brtrue         IL_086f 
+  IL_07cc ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_HEALTH_LESS_THAN_EQUAL_MY_HEALTH' string token(0x7008AB5B)
+  IL_07d1 ldc.i4.1        
+  IL_07d2 newarr         System.Object token(0x01000001)
+  IL_07d7 dup             
+  IL_07d8 ldc.i4.0        
+  IL_07d9 ldarg.1         
+  IL_07da box            <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370> token(0x1B000056)
+  IL_07df stelem.ref      
+  IL_07e0 call           GameStrings::Format token(0x06013C12)
+  IL_07e5 ret             
+  IL_07e6 ldarg.2         
+  IL_07e7 callvirt       EntityBase::GetCardId token(0x06013947)
+  IL_07ec ldstr          'THO_005' string token(0x7007D9A4)
+  IL_07f1 call           System.String::op_Equality token(0x0A0000ED)
+  IL_07f6 brfalse.s      IL_080b 
+  IL_07f8 ldarg.3         
+  IL_07f9 ldc.i4         4355 
+  IL_07fe callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0803 brfalse.s      IL_080b 
+  IL_0805 ldstr          'This cannot be passed.' string token(0x7008ABDB)
+  IL_080a ret             
+  IL_080b ldarg.2         
+  IL_080c callvirt       EntityBase::GetCardId token(0x06013947)
+  IL_0811 ldstr          'THO_005' string token(0x7007D9A4)
+  IL_0816 call           System.String::op_Equality token(0x0A0000ED)
+  IL_081b brfalse.s      IL_0830 
+  IL_081d ldarg.3         
+  IL_081e ldc.i4         3179 
+  IL_0823 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0828 brfalse.s      IL_0830 
+  IL_082a ldstr          'Cannot pass cards the turn they are played.' string token(0x7008AC09)
+  IL_082f ret             
+  IL_0830 ldarga.s       argument(0x0001) 
+  IL_0832 call           <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370>::get_HasValue token(0x0A00014C)
+  IL_0837 brfalse.s      IL_086f 
+  IL_0839 ldarg.1         
+  IL_083a stloc.1         
+  IL_083b ldc.i4.0        
+  IL_083c stloc.s        local(0x0007) 
+  IL_083e ldloca.s       local(0x0001) 
+  IL_0840 call           <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370>::GetValueOrDefault token(0x0A000967)
+  IL_0845 ldloc.s        local(0x0007) 
+  IL_0847 cgt             
+  IL_0849 ldc.i4.0        
+  IL_084a ceq             
+  IL_084c ldloca.s       local(0x0001) 
+  IL_084e call           <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370>::get_HasValue token(0x0A00014C)
+  IL_0853 and             
+  IL_0854 brtrue.s       IL_086f 
+  IL_0856 ldc.i4         4876 
+  IL_085b ldarga.s       argument(0x0001) 
+  IL_085d call           <dnfile.mdtable.TypeSpecRow object at 0x7fb357d59370>::get_Value token(0x0A00014D)
+  IL_0862 bne.un.s       IL_086f 
+  IL_0864 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_NOT_HAVE_TAG_RALLY_CANT_BE_TRIGGERED' string token(0x7008AC61)
+  IL_0869 call           GameStrings::Get token(0x06013C11)
+  IL_086e ret             
+  IL_086f ldnull          
+  IL_0870 stloc.0         
+  IL_0871 ldsfld         PlayErrors::s_playErrorsMessages token(0x04004123)
+  IL_0876 ldarg.0         
+  IL_0877 ldloca.s       local(0x0000) 
+  IL_0879 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb357a84590>::TryGetValue token(0x0A00253A)
+  IL_087e brfalse.s      IL_0887 
+  IL_0880 ldloc.0         
+  IL_0881 call           GameStrings::Get token(0x06013C11)
+  IL_0886 ret             
+  IL_0887 ldstr          '[Unity Editor] Unknown play error ({0})' string token(0x7008ACEA)
+  IL_088c ldc.i4.1        
+  IL_088d newarr         System.Object token(0x01000001)
+  IL_0892 dup             
+  IL_0893 ldc.i4.0        
+  IL_0894 ldarg.0         
+  IL_0895 box            ErrorType token(0x02000C17)
+  IL_089a stelem.ref      
+  IL_089b call           PlayErrors::ErrorInEditorOnly token(0x06005D55)
+  IL_08a0 ret             

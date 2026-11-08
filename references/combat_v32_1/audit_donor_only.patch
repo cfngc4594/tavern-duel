@@ -1,0 +1,11 @@
+--- recorded/scripts/game.gd
++++ final/scripts/game.gd
+@@ -1106,7 +1106,7 @@
+ 			t.unit.death_pending = true
+ 	if is_instance_valid(native_damage):
+ 		var source: Dictionary={"kind":"damage"}
+-		if not _audio_combat_pair.is_empty():source={"kind":"combat","source_unit_id":_audio_combat_pair[0]}
++		if not _audio_combat_pair.is_empty():source={"kind":"combat","source_unit_id":_audio_combat_pair[1] if t.type=="unit" and int(t.unit.id)==int(_audio_combat_pair[0]) else _audio_combat_pair[0]}
+ 		elif not _audio_resolution.is_empty():source={"kind":"spell","card_id":_audio_resolution.get("key",""),"side":_audio_scope_sides.get(_audio_resolution.get("scope",""),-1)}
+ 		native_damage.record(t,int(amount),hp_before,int(health[t.side] if t.type=="hero" else t.unit.hp),source)
+ 

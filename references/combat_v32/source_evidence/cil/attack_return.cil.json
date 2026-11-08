@@ -1,0 +1,1246 @@
+{
+  "types": [
+    {
+      "type": "ZonePlay",
+      "token": "0x02000cda",
+      "fields": [
+        {
+          "name": "m_MaxSlots",
+          "token": "0x04004705",
+          "signature": "0608"
+        },
+        {
+          "name": "m_BigCardCenterOffset",
+          "token": "0x04004706",
+          "signature": "060c"
+        },
+        {
+          "name": "m_MagneticBeamSpell",
+          "token": "0x04004707",
+          "signature": "06128fb0"
+        },
+        {
+          "name": "DEFAULT_TRANSITION_TIME",
+          "token": "0x04004708",
+          "signature": "060c"
+        },
+        {
+          "name": "PHONE_CARD_SCALE",
+          "token": "0x04004709",
+          "signature": "060c"
+        },
+        {
+          "name": "PHONE_WIDTH_MODIFIERS",
+          "token": "0x0400470a",
+          "signature": "061d0c"
+        },
+        {
+          "name": "m_mousedOverSlot",
+          "token": "0x0400470b",
+          "signature": "0608"
+        },
+        {
+          "name": "m_lettuceAbilityReservedSlot",
+          "token": "0x0400470c",
+          "signature": "0608"
+        },
+        {
+          "name": "m_slotWidth",
+          "token": "0x0400470d",
+          "signature": "060c"
+        },
+        {
+          "name": "m_transitionTime",
+          "token": "0x0400470e",
+          "signature": "060c"
+        },
+        {
+          "name": "m_baseTransitionTime",
+          "token": "0x0400470f",
+          "signature": "060c"
+        },
+        {
+          "name": "m_transitionStyleOverride",
+          "token": "0x04004710",
+          "signature": "0611b31c"
+        },
+        {
+          "name": "m_magneticBeamSpellInstance",
+          "token": "0x04004711",
+          "signature": "06128fb0"
+        },
+        {
+          "name": "m_previousHeldCard",
+          "token": "0x04004712",
+          "signature": "0612c0009ebc"
+        },
+        {
+          "name": "m_defaultScale",
+          "token": "0x04004713",
+          "signature": "06115d"
+        }
+      ]
+    },
+    {
+      "type": "ActorAttackSpell",
+      "token": "0x02002478",
+      "fields": [
+        {
+          "name": "m_waitingToAct",
+          "token": "0x0400eb2d",
+          "signature": "0602"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "ZonePlay",
+      "method": "SetTransitionTime",
+      "token": "0x060065a8",
+      "rva": "0x1ef74f",
+      "signature": "2001010c",
+      "parameters": [
+        "transitionTime"
+      ],
+      "code_size": 8,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "stfld",
+          "operand": "ZonePlay::m_transitionTime",
+          "token": "token(0x0400470E)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ZonePlay",
+      "method": "ResetTransitionTime",
+      "token": "0x060065a9",
+      "rva": "0x1ef758",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 13,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "ldfld",
+          "operand": "ZonePlay::m_baseTransitionTime",
+          "token": "token(0x0400470F)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "stfld",
+          "operand": "ZonePlay::m_transitionTime",
+          "token": "token(0x0400470E)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ZonePlay",
+      "method": "UpdatePlayZoneScale",
+      "token": "0x060065c4",
+      "rva": "0x1f0794",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 374,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "GameState::Get",
+          "token": "token(0x06005589)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "brtrue.s",
+          "operand": "IL_000a",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "callvirt",
+          "operand": "GameState::GetFriendlySidePlayer",
+          "token": "token(0x060055B3)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "callvirt",
+          "operand": "GameState::GetOpposingSidePlayer",
+          "token": "token(0x060055B9)"
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "brfalse.s",
+          "operand": "IL_001e",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "brtrue.s",
+          "operand": "IL_001f",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "callvirt",
+          "operand": "Player::GetBattlefieldZone",
+          "token": "token(0x06005D96)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "callvirt",
+          "operand": "Player::GetBattlefieldZone",
+          "token": "token(0x06005D96)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "brtrue.s",
+          "operand": "IL_0041",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "brfalse.s",
+          "operand": "IL_0042",
+          "token": null
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "brfalse.s",
+          "operand": "IL_0056",
+          "token": null
+        },
+        {
+          "offset": "IL_004b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "brfalse.s",
+          "operand": "IL_0056",
+          "token": null
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0056",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0057",
+          "opcode": "ldfld",
+          "operand": "ZonePlay::m_defaultScale",
+          "token": "token(0x04004713)"
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_zero",
+          "token": "token(0x0A0000DD)"
+        },
+        {
+          "offset": "IL_0061",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Equality",
+          "token": "token(0x0A000504)"
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "brfalse.s",
+          "operand": "IL_007e",
+          "token": null
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0069",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006a",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_006f",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_0074",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_localScale",
+          "token": "token(0x0A00004A)"
+        },
+        {
+          "offset": "IL_0079",
+          "opcode": "stfld",
+          "operand": "ZonePlay::m_defaultScale",
+          "token": "token(0x04004713)"
+        },
+        {
+          "offset": "IL_007e",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0080",
+          "opcode": "ldfld",
+          "operand": "ZonePlay::m_defaultScale",
+          "token": "token(0x04004713)"
+        },
+        {
+          "offset": "IL_0085",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_zero",
+          "token": "token(0x0A0000DD)"
+        },
+        {
+          "offset": "IL_008a",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Equality",
+          "token": "token(0x0A000504)"
+        },
+        {
+          "offset": "IL_008f",
+          "opcode": "brfalse.s",
+          "operand": "IL_00a9",
+          "token": null
+        },
+        {
+          "offset": "IL_0091",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0093",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0095",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_009a",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_009f",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_localScale",
+          "token": "token(0x0A00004A)"
+        },
+        {
+          "offset": "IL_00a4",
+          "opcode": "stfld",
+          "operand": "ZonePlay::m_defaultScale",
+          "token": "token(0x04004713)"
+        },
+        {
+          "offset": "IL_00a9",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00aa",
+          "opcode": "callvirt",
+          "operand": "GameState::GetGameEntity",
+          "token": "token(0x060055A9)"
+        },
+        {
+          "offset": "IL_00af",
+          "opcode": "brtrue.s",
+          "operand": "IL_00b4",
+          "token": null
+        },
+        {
+          "offset": "IL_00b1",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b2",
+          "opcode": "br.s",
+          "operand": "IL_00c4",
+          "token": null
+        },
+        {
+          "offset": "IL_00b4",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b5",
+          "opcode": "callvirt",
+          "operand": "GameState::GetGameEntity",
+          "token": "token(0x060055A9)"
+        },
+        {
+          "offset": "IL_00ba",
+          "opcode": "ldc.i4",
+          "operand": "2017",
+          "token": null
+        },
+        {
+          "offset": "IL_00bf",
+          "opcode": "callvirt",
+          "operand": "EntityBase::GetTag",
+          "token": "token(0x060138A4)"
+        },
+        {
+          "offset": "IL_00c4",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_00c6",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_00c8",
+          "opcode": "brtrue.s",
+          "operand": "IL_00d2",
+          "token": null
+        },
+        {
+          "offset": "IL_00ca",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00cb",
+          "opcode": "ldfld",
+          "operand": "ZonePlay::m_MaxSlots",
+          "token": "token(0x04004705)"
+        },
+        {
+          "offset": "IL_00d0",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_00d2",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d3",
+          "opcode": "stloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_00d5",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d6",
+          "opcode": "call",
+          "operand": "InputManager::Get",
+          "token": "token(0x060059DB)"
+        },
+        {
+          "offset": "IL_00db",
+          "opcode": "callvirt",
+          "operand": "InputManager::GetHeldCard",
+          "token": "token(0x060059E3)"
+        },
+        {
+          "offset": "IL_00e0",
+          "opcode": "call",
+          "operand": "ZonePlay::DoesCardNeedSpaceOnBoard",
+          "token": "token(0x060065C3)"
+        },
+        {
+          "offset": "IL_00e5",
+          "opcode": "brfalse.s",
+          "operand": "IL_00ea",
+          "token": null
+        },
+        {
+          "offset": "IL_00e7",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00e8",
+          "opcode": "stloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_00ea",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00eb",
+          "opcode": "ldfld",
+          "operand": "Zone::m_cards",
+          "token": "token(0x040045FF)"
+        },
+        {
+          "offset": "IL_00f0",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fe36e581790>::get_Count",
+          "token": "token(0x0A0004C0)"
+        },
+        {
+          "offset": "IL_00f5",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_00f7",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00f8",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_00fa",
+          "opcode": "call",
+          "operand": "UnityEngine.Mathf::Max",
+          "token": "token(0x0A0001C7)"
+        },
+        {
+          "offset": "IL_00ff",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0101",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0103",
+          "opcode": "ldfld",
+          "operand": "Zone::m_cards",
+          "token": "token(0x040045FF)"
+        },
+        {
+          "offset": "IL_0108",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fe36e581790>::get_Count",
+          "token": "token(0x0A0004C0)"
+        },
+        {
+          "offset": "IL_010d",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_010f",
+          "opcode": "call",
+          "operand": "UnityEngine.Mathf::Max",
+          "token": "token(0x0A0001C7)"
+        },
+        {
+          "offset": "IL_0114",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0116",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0117",
+          "opcode": "ldfld",
+          "operand": "ZonePlay::m_MaxSlots",
+          "token": "token(0x04004705)"
+        },
+        {
+          "offset": "IL_011c",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_011e",
+          "opcode": "call",
+          "operand": "UnityEngine.Mathf::Max",
+          "token": "token(0x0A0001C7)"
+        },
+        {
+          "offset": "IL_0123",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0125",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0126",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_012b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_012c",
+          "opcode": "ldfld",
+          "operand": "ZonePlay::m_MaxSlots",
+          "token": "token(0x04004705)"
+        },
+        {
+          "offset": "IL_0131",
+          "opcode": "conv.r4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0132",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0134",
+          "opcode": "conv.r4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0135",
+          "opcode": "div",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0136",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0137",
+          "opcode": "ldfld",
+          "operand": "ZonePlay::m_defaultScale",
+          "token": "token(0x04004713)"
+        },
+        {
+          "offset": "IL_013c",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Multiply",
+          "token": "token(0x0A000B70)"
+        },
+        {
+          "offset": "IL_0141",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_localScale",
+          "token": "token(0x0A000166)"
+        },
+        {
+          "offset": "IL_0146",
+          "opcode": "call",
+          "operand": "GameMgr::Get",
+          "token": "token(0x06013AFF)"
+        },
+        {
+          "offset": "IL_014b",
+          "opcode": "callvirt",
+          "operand": "GameMgr::IsBattlegrounds",
+          "token": "token(0x06013B5B)"
+        },
+        {
+          "offset": "IL_0150",
+          "opcode": "brfalse.s",
+          "operand": "IL_0153",
+          "token": null
+        },
+        {
+          "offset": "IL_0152",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0153",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0155",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_015a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_015b",
+          "opcode": "ldfld",
+          "operand": "ZonePlay::m_MaxSlots",
+          "token": "token(0x04004705)"
+        },
+        {
+          "offset": "IL_0160",
+          "opcode": "conv.r4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0161",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0163",
+          "opcode": "conv.r4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0164",
+          "opcode": "div",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0165",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0166",
+          "opcode": "ldfld",
+          "operand": "ZonePlay::m_defaultScale",
+          "token": "token(0x04004713)"
+        },
+        {
+          "offset": "IL_016b",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Multiply",
+          "token": "token(0x0A000B70)"
+        },
+        {
+          "offset": "IL_0170",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_localScale",
+          "token": "token(0x0A000166)"
+        },
+        {
+          "offset": "IL_0175",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ZonePlay",
+      "method": ".ctor",
+      "token": "0x060065c8",
+      "rva": "0x1f0a28",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 84,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldc.i4.7",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "stfld",
+          "operand": "ZonePlay::m_MaxSlots",
+          "token": "token(0x04004705)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldc.r4",
+          "operand": "2.5",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "stfld",
+          "operand": "ZonePlay::m_BigCardCenterOffset",
+          "token": "token(0x04004706)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldc.i4.8",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "newarr",
+          "operand": "System.Single",
+          "token": "token(0x01000074)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldtoken",
+          "operand": "<PrivateImplementationDetails>::CE49D1D888EBA2E289D1FE8D3E7BCB65BD618D082D76A0DFC96B942B58AF8F2D",
+          "token": "token(0x04016672)"
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "call",
+          "operand": "System.Runtime.CompilerServices.RuntimeHelpers::InitializeArray",
+          "token": "token(0x0A000224)"
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "stfld",
+          "operand": "ZonePlay::PHONE_WIDTH_MODIFIERS",
+          "token": "token(0x0400470A)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "stfld",
+          "operand": "ZonePlay::m_mousedOverSlot",
+          "token": "token(0x0400470B)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "stfld",
+          "operand": "ZonePlay::m_lettuceAbilityReservedSlot",
+          "token": "token(0x0400470C)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "stfld",
+          "operand": "ZonePlay::m_transitionTime",
+          "token": "token(0x0400470E)"
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "stfld",
+          "operand": "ZonePlay::m_baseTransitionTime",
+          "token": "token(0x0400470F)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "call",
+          "operand": "Zone::.ctor",
+          "token": "token(0x060063B0)"
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ActorAttackSpell",
+      "method": "Start",
+      "token": "0x060117f8",
+      "rva": "0x51ff5d",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "Spell::Start",
+          "token": "token(0x060148FE)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ActorAttackSpell",
+      "method": ".ctor",
+      "token": "0x060117fd",
+      "rva": "0x51ffa4",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 14,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "stfld",
+          "operand": "ActorAttackSpell::m_waitingToAct",
+          "token": "token(0x0400EB2D)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "call",
+          "operand": "Spell::.ctor",
+          "token": "token(0x0601498E)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

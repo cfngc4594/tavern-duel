@@ -1,0 +1,119 @@
+
+TYPE RenderUtils 0x02002bb2
+FIELD 0x04011ecb MinRenderQueueValue SIG 0608
+FIELD 0x04011ecc MaxRenderQueueValue SIG 0608
+
+TYPE HutongGames.PlayMaker.Actions.ActorSetVisibilityRecursiveAction 0x02003044
+FIELD 0x040139d5 m_GameObject SIG 061295bd
+FIELD 0x040139d6 m_Visible SIG 061282c1
+FIELD 0x040139d7 m_IgnoreSpells SIG 061282c1
+FIELD 0x040139d8 m_ResetOnExit SIG 0602
+FIELD 0x040139d9 m_IncludeChildren SIG 0602
+FIELD 0x040139da m_IncludeParents SIG 0602
+FIELD 0x040139db m_initialVisibility SIG 06151281a10212808d02
+
+0x06014f23 RenderUtils::EnableRenderers(go,enable) RVA 0x629098 SIG 00020112808d02
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldc.i4.0        
+  IL_0003 call           RenderUtils::EnableRenderers token(0x06014F24)
+  IL_0008 ret             
+
+0x06014f24 RenderUtils::EnableRenderers(go,enable,includeInactive) RVA 0x6290a4 SIG 00030112808d0202
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.2         
+  IL_0002 callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B00001C)
+  IL_0007 stloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 brtrue.s       IL_000c 
+  IL_000b ret             
+  IL_000c ldloc.0         
+  IL_000d stloc.1         
+  IL_000e ldc.i4.0        
+  IL_000f stloc.2         
+  IL_0010 br.s           IL_001f 
+  IL_0012 ldloc.1         
+  IL_0013 ldloc.2         
+  IL_0014 ldelem.ref      
+  IL_0015 ldarg.1         
+  IL_0016 callvirt       UnityEngine.Renderer::set_enabled token(0x0A00022D)
+  IL_001b ldloc.2         
+  IL_001c ldc.i4.1        
+  IL_001d add             
+  IL_001e stloc.2         
+  IL_001f ldloc.2         
+  IL_0020 ldloc.1         
+  IL_0021 ldlen           
+  IL_0022 conv.i4         
+  IL_0023 blt.s          IL_0012 
+  IL_0025 ret             
+
+0x06014f26 RenderUtils::EnableRenderersAndColliders(go,enable) RVA 0x62910c SIG 00020112808d02
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00014A)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_000e brfalse.s      IL_0017 
+  IL_0010 ldloc.0         
+  IL_0011 ldarg.1         
+  IL_0012 callvirt       UnityEngine.Collider::set_enabled token(0x0A0001D6)
+  IL_0017 ldarg.0         
+  IL_0018 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000007)
+  IL_001d stloc.1         
+  IL_001e ldloc.1         
+  IL_001f ldnull          
+  IL_0020 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0025 brfalse.s      IL_002e 
+  IL_0027 ldloc.1         
+  IL_0028 ldarg.1         
+  IL_0029 callvirt       UnityEngine.Renderer::set_enabled token(0x0A00022D)
+  IL_002e ldarg.0         
+  IL_002f callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0034 callvirt       UnityEngine.Transform::GetEnumerator token(0x0A000502)
+  IL_0039 stloc.2         
+  IL_003a br.s           IL_0052 
+  IL_003c ldloc.2         
+  IL_003d callvirt       System.Collections.IEnumerator::get_Current token(0x0A0000F9)
+  IL_0042 castclass      UnityEngine.Transform token(0x01000029)
+  IL_0047 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_004c ldarg.1         
+  IL_004d call           RenderUtils::EnableRenderersAndColliders token(0x06014F26)
+  IL_0052 ldloc.2         
+  IL_0053 callvirt       System.Collections.IEnumerator::MoveNext token(0x0A000094)
+  IL_0058 brtrue.s       IL_003c 
+  IL_005a leave.s        IL_006d 
+  IL_005c ldloc.2         
+  IL_005d isinst         System.IDisposable token(0x01000037)
+  IL_0062 stloc.3         
+  IL_0063 ldloc.3         
+  IL_0064 brfalse.s      IL_006c 
+  IL_0066 ldloc.3         
+  IL_0067 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_006c endfinally      
+  IL_006d ret             
+
+0x06016a69 HutongGames.PlayMaker.Actions.ActorSetVisibilityRecursiveAction::OnEnter() RVA 0x698798 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ActorSetVisibilityRecursiveAction::m_GameObject token(0x040139D5)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0019 brfalse.s      IL_0031 
+  IL_001b ldarg.0         
+  IL_001c ldfld          HutongGames.PlayMaker.Actions.ActorSetVisibilityRecursiveAction::m_ResetOnExit token(0x040139D8)
+  IL_0021 brfalse.s      IL_002a 
+  IL_0023 ldarg.0         
+  IL_0024 ldloc.0         
+  IL_0025 call           HutongGames.PlayMaker.Actions.ActorSetVisibilityRecursiveAction::SaveInitialVisibility token(0x06016A6B)
+  IL_002a ldarg.0         
+  IL_002b ldloc.0         
+  IL_002c call           HutongGames.PlayMaker.Actions.ActorSetVisibilityRecursiveAction::SetVisibility token(0x06016A6E)
+  IL_0031 ldarg.0         
+  IL_0032 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0037 ret             

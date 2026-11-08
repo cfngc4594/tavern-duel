@@ -1,0 +1,50 @@
+{
+  "build": "37.0.0.255130.254477",
+  "final_target": {
+    "entry": "HighlightRender::SetupRenderObjects 0x0601527D IL011B-0134",
+    "call": "RenderTextureTracker.CreateNewTexture(width,height,16,(RenderTextureFormat)16,(RenderTextureReadWrite)0)",
+    "wrapper": "RenderTextureTracker::CreateNewTexture 0x06004591 forwards all five arguments directly to new RenderTexture(width,height,depth,format,readWrite)",
+    "format": "RenderTextureFormat.R8 (16)",
+    "readWrite": "RenderTextureReadWrite.Default (0)",
+    "depth": 16,
+    "filter": "not explicitly set",
+    "source": "v34_work/source_targeting/targeting_silhouette.cil.txt:1275-1283; v32_work/source_code/render_target_configuration.cil.txt:29-36"
+  },
+  "temporary_targets": {
+    "entry": "HighlightRender::CreateSilhouetteTexture 0x0601527A",
+    "call": "CommandBuffer.GetTemporaryRT(nameID,width,height,16,(FilterMode)1,(RenderTextureFormat)16)",
+    "member_reference": "0x0A0027C3",
+    "argument_count_excluding_this": 6,
+    "format": "RenderTextureFormat.R8 (16)",
+    "filter": "FilterMode.Bilinear (1)",
+    "depth": 16,
+    "readWrite": "not passed; native/managed six-argument overload default must be preserved in measurement",
+    "source": "v34_work/source_targeting/targeting_silhouette.cil.txt:824-839 and other eight same calls"
+  },
+  "no_observed_setters_in_audited_path": [
+    "wrapMode",
+    "wrapModeU",
+    "wrapModeV",
+    "wrapModeW",
+    "filterMode (final constructor target)",
+    "useMipMap",
+    "autoGenerateMips",
+    "antiAliasing",
+    "graphicsFormat",
+    "sRGB",
+    "anisoLevel",
+    "mipMapBias"
+  ],
+  "other_observed_operations": [
+    "Final DiscardContents before rebuilding",
+    "ClearRenderTarget(true,true,Color.clear) for passes",
+    "ReleaseTemporaryRT after use",
+    "Final target Destroy when component disabled"
+  ],
+  "measurement_notes": [
+    "Measure constructor target and CommandBuffer.GetTemporaryRT six-argument overload separately; RenderTexture.GetTemporary is not the source call.",
+    "Record active colorSpace, graphics API/backend, Unity version, actual graphicsFormat and supported fallback, not only requested R8.",
+    "If temporary object properties cannot be inspected, use a border-sensitive shader readback to identify actual addressing; do not infer from constructor target.",
+    "Mac Unity6000.3.10 measurement would resolve that environment, not by itself prove original Windows D3D native defaults across platforms. Audit worker does not access Mac or start GPU."
+  ]
+}

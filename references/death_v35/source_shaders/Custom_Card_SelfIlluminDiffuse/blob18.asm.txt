@@ -1,0 +1,102 @@
+// ISGN
+// SV_POSITION0: register0.xyzw systemvalue=1 componenttype=3
+// TEXCOORD0: register1.xy systemvalue=0 componenttype=3
+// TEXCOORD1: register2.xyz systemvalue=0 componenttype=3
+// NORMAL0: register3.xyz systemvalue=0 componenttype=3
+// OSGN
+// SV_TARGET0: register0.xyzw systemvalue=0 componenttype=3
+// SHDR
+// shader kind=0, model=4.0, length=691
+0002: customdata [raw]
+0020: dcl_constant_buffer cb0[11].xyzw
+0024: dcl_constant_buffer cb1[1024].xyzw
+0028: dcl_constant_buffer cb2[30].xyzw
+0032: dcl_constant_buffer cb3[28].xyzw
+0036: dcl_constant_buffer cb4[2].xyzw
+0040: dcl_sampler s0
+0043: dcl_sampler s1
+0046: dcl_resource t0, dimension=3,returntype=0x5555
+0050: dcl_resource t1, dimension=3,returntype=0x5555
+0054: dcl_input_ps v1.xy
+0057: dcl_input_ps v2.xyz
+0060: dcl_input_ps v3.xyz
+0063: dcl_output o0.xyzw
+0066: dcl_temps 6
+0068: sample_b r0.xyzw, v1.xyxx, t1.xyzw, s1, cb0[4].x
+0080: mul r0.xyzw, r0.xyzw, cb4[1].xyzw
+0088: add r1.xyz, v2.xyzx, -cb3[20].xyzx
+0097: add r2.xyz, v2.xyzx, -cb3[21].xyzx
+0106: add r3.xyz, v2.xyzx, -cb3[22].xyzx
+0115: add r4.xyz, v2.xyzx, -cb3[23].xyzx
+0124: dp3 r1.x, r1.xyzx, r1.xyzx
+0131: dp3 r1.y, r2.xyzx, r2.xyzx
+0138: dp3 r1.z, r3.xyzx, r3.xyzx
+0145: dp3 r1.w, r4.xyzx, r4.xyzx
+0152: lt r1.xyzw, r1.xyzw, cb3[24].xyzw
+0160: and r2.xyzw, r1.xyzw, l(1,1,1,1)
+0170: movc r1.xyz, r1.xyzx, l(-1,-1,-1,0), l(-0,-0,-0,0)
+0185: add r1.xyz, r1.xyzx, r2.yzwy
+0192: max r2.yzw, r1.xxyz, l(0,0,0,0)
+0202: dp4 r1.x, r2.xyzw, l(4,3,2,1)
+0212: add r1.x, -r1.x, l(4)
+0220: ftou r1.x, r1.x
+0225: ishl r1.x, r1.x, l(2.80259693e-45)
+0232: mul r1.yzw, v2.yyyy, cb3[1+r1.x].xxyz
+0242: mad r1.yzw, cb3[r1.x].xxyz, v2.xxxx, r1.yyzw
+0253: mad r1.yzw, cb3[2+r1.x].xxyz, v2.zzzz, r1.yyzw
+0265: add r1.xyz, r1.yzwy, cb3[3+r1.x].xyzx
+0275: dp3 r1.w, v3.xyzx, v3.xyzx
+0282: rsq r1.w, r1.w
+0287: mul r2.xyz, r1.wwww, v3.xyzx
+0294: sample_c_lz r1.x, r1.xyxx, t0.xxxx, s0, r1.z
+0305: add r1.y, -cb3[27].x, l(1)
+0314: mad r1.x, r1.x, cb3[27].x, r1.y
+0324: ge r1.y, l(0), r1.z
+0331: ge r1.z, r1.z, l(1)
+0338: or r1.y, r1.z, r1.y
+0345: movc r1.x, r1.y, l(1), r1.x
+0354: mul r1.x, r1.x, cb2[11].z
+0362: mul r1.xyz, r1.xxxx, cb0[6].xyzx
+0370: dp3_sat r1.w, r2.xyzx, cb0[5].xyzx
+0378: min r2.w, cb0[10].x, cb2[11].y
+0387: ftoi r2.w, r2.w
+0392: mov r3.xyzw, l(0,0,0,0)
+0400: loop 
+0401: uge r4.x, r3.w, r2.w
+0408: breakc r4.x
+0411: ushr r4.x, r3.w, l(2.80259693e-45)
+0418: and r4.y, r3.w, l(4.20389539e-45)
+0425: dp4 r4.x, cb2[12+r4.x].xyzw, icbr4.y.xyzw
+0436: ftoi r4.x, r4.x
+0441: mad r4.yzw, -v2.xxyz, cb1[r4.x].wwww, cb1[r4.x].xxyz
+0455: dp3 r5.x, r4.yzwy, r4.yzwy
+0462: max r5.x, r5.x, l(6.10351562e-05)
+0469: rsq r5.y, r5.x
+0474: mul r4.yzw, r4.yyzw, r5.yyyy
+0481: div r5.y, l(1,1,1,1), cb1[512+r4.x].x
+0494: mul r5.x, r5.x, l(25)
+0501: div r5.x, r5.x, r5.y
+0508: add r5.x, r5.x, l(1)
+0515: div r5.x, l(1,1,1,1), r5.x
+0525: dp3 r5.y, cb1[768+r4.x].xyzx, r4.yzwy
+0535: mad_sat r5.y, r5.y, cb1[512+r4.x].z, cb1[512+r4.x].w
+0550: mul r5.y, r5.y, r5.y
+0557: mul r5.x, r5.y, r5.x
+0564: mul r5.xyz, r5.xxxx, cb1[256+r4.x].xyzx
+0574: dp3_sat r4.x, r2.xyzx, r4.yzwy
+0581: mad r3.xyz, r5.xyzx, r4.xxxx, r3.xyzx
+0590: iadd r3.w, r3.w, l(1.40129846e-45)
+0597: endloop 
+0598: mad r1.xyz, r1.xyzx, r1.wwww, r3.xyzx
+0607: mov r2.x, abs(cb2[27].w)
+0614: mov r2.y, abs(cb2[28].w)
+0621: mov r2.z, abs(cb2[29].w)
+0628: log r2.xyz, r2.xyzx
+0633: mul r2.xyz, r2.xyzx, l(0.416666657,0.416666657,0.416666657,0)
+0643: exp r2.xyz, r2.xyzx
+0648: mad_sat r2.xyz, r2.xyzx, l(1.05499995,1.05499995,1.05499995,0), l(-0.0549999997,-0.0549999997,-0.0549999997,0)
+0663: add r1.xyz, r1.xyzx, r2.xyzx
+0670: add r1.xyz, r1.xyzx, cb4[0].xxxx
+0678: mul o0.xyz, r0.xyzx, r1.xyzx
+0685: mov o0.w, r0.w
+0690: ret 

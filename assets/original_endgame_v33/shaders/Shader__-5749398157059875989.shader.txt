@@ -1,0 +1,35 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/FX/FX_XPBar" {
+Properties {
+
+_MainTex ("Base (RGBA)", 2D) = "white" { }
+
+_NoiseTex ("Noise (RGB)", 2D) = "white" { }
+
+_NoiseScale1 ("Noise Scale 1", Float) = 1.0
+
+_NoiseScale2 ("Noise Scale 2", Float) = 2.0
+
+_Color ("Light Color", Color) = (0.6,0.6,0.6,1)
+
+_DarkColor ("Dark Color", Color) = (0.3,0.3,0.3,1)
+
+_Intensity ("Intensity", Float) = 1.0
+
+_Percent ("Bar Percent", Float) = 1.0
+
+_Uadd ("U Add", Float) = 1.0
+
+}
+SubShader {
+ Tags { "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 63826
+}
+}
+}

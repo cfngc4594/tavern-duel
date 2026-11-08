@@ -1,0 +1,2296 @@
+
+TYPE AttackSpellController 0x0200242f
+FIELD 0x0400e9f8 m_HeroInfo SIG 0612c00090b4
+FIELD 0x0400e9f9 m_AllyInfo SIG 0612c00090b8
+FIELD 0x0400e9fa m_ImpactStagingPoint SIG 060c
+FIELD 0x0400e9fb m_SourceImpactOffset SIG 060c
+FIELD 0x0400e9fc m_ImpactDefHandles SIG 061d12c000acc0
+FIELD 0x0400e9fd m_CriticalImpactDefHandles SIG 061d12c000acc0
+FIELD 0x0400e9fe m_DefaultImpactSpellPrefabHandle SIG 060e
+FIELD 0x0400e9ff PROPOSED_ATTACK_IMPACT_POINT_SCALAR SIG 060c
+FIELD 0x0400ea00 WINDFURY_REMINDER_WAIT_SEC SIG 060c
+FIELD 0x0400ea01 ATTACK_STATE_FALLBACK_SEC SIG 060c
+FIELD 0x0400ea02 FINISHER_DAMAGE_THRESHOLD SIG 0608
+FIELD 0x0400ea03 DEFAULT_SHATTER_SPELL SIG 060e
+FIELD 0x0400ea04 m_attackType SIG 0611c0009e08
+FIELD 0x0400ea05 m_sourceAttackSpell SIG 0612c000ac1c
+FIELD 0x0400ea06 m_finisherTrackingCoroutine SIG 06128171
+FIELD 0x0400ea07 m_birthFallbackCoroutine SIG 06128171
+FIELD 0x0400ea08 m_deathFallbackCoroutine SIG 06128171
+FIELD 0x0400ea09 MAX_FINISHER_DURATION SIG 061281d9
+FIELD 0x0400ea0a m_sourcePos SIG 06115d
+FIELD 0x0400ea0b m_sourceToTarget SIG 06115d
+FIELD 0x0400ea0c m_sourceFacing SIG 06115d
+FIELD 0x0400ea0d m_repeatProposed SIG 0602
+
+TYPE ActorAttackSpell 0x02002478
+FIELD 0x0400eb2d m_waitingToAct SIG 0602
+
+0x060115fb AttackSpellController::AddPowerSourceAndTargets(taskList) RVA 0x516994 SIG 20010212b0f0
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 callvirt       PowerTaskList::GetAttackType token(0x06005F98)
+  IL_0007 stfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_000c ldarg.0         
+  IL_000d ldarg.1         
+  IL_000e callvirt       PowerTaskList::IsRepeatProposedAttack token(0x06005F9C)
+  IL_0013 stfld          AttackSpellController::m_repeatProposed token(0x0400EA0D)
+  IL_0018 ldarg.0         
+  IL_0019 ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_001e brtrue.s       IL_0022 
+  IL_0020 ldc.i4.0        
+  IL_0021 ret             
+  IL_0022 ldarg.1         
+  IL_0023 callvirt       PowerTaskList::GetAttacker token(0x06005F99)
+  IL_0028 stloc.0         
+  IL_0029 ldloc.0         
+  IL_002a brfalse.s      IL_0038 
+  IL_002c ldarg.0         
+  IL_002d ldloc.0         
+  IL_002e callvirt       Entity::GetCard token(0x060137BF)
+  IL_0033 call           SpellController::SetSource token(0x060149BA)
+  IL_0038 ldarg.1         
+  IL_0039 callvirt       PowerTaskList::GetDefender token(0x06005F9A)
+  IL_003e stloc.1         
+  IL_003f ldloc.1         
+  IL_0040 brfalse.s      IL_004e 
+  IL_0042 ldarg.0         
+  IL_0043 ldloc.1         
+  IL_0044 callvirt       Entity::GetCard token(0x060137BF)
+  IL_0049 call           SpellController::AddTarget token(0x060149C0)
+  IL_004e ldc.i4.1        
+  IL_004f ret             
+
+0x060115fc AttackSpellController::OnProcessTaskList() RVA 0x5169f0 SIG 200001
+  IL_0000 call           Log::get_Gameplay token(0x06014E34)
+  IL_0005 ldstr          'AttackSpellController -- OnProcessTaskList' string token(0x70397237)
+  IL_000a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_000f callvirt       Logger::PrintDebug token(0x0A000617)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_001a ldc.i4.6        
+  IL_001b beq.s          IL_005f 
+  IL_001d ldarg.0         
+  IL_001e ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_0023 ldc.i4.7        
+  IL_0024 beq.s          IL_005f 
+  IL_0026 ldarg.0         
+  IL_0027 ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_002c ldc.i4.4        
+  IL_002d beq.s          IL_005f 
+  IL_002f ldarg.0         
+  IL_0030 ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_0035 ldc.i4.5        
+  IL_0036 beq.s          IL_005f 
+  IL_0038 ldarg.0         
+  IL_0039 ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_003e ldc.i4.8        
+  IL_003f beq.s          IL_005f 
+  IL_0041 ldarg.0         
+  IL_0042 ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_0047 ldc.i4.s       9 
+  IL_0049 beq.s          IL_005f 
+  IL_004b ldarg.0         
+  IL_004c ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_0051 ldc.i4.s       10 
+  IL_0053 beq.s          IL_005f 
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_005b ldc.i4.s       11 
+  IL_005d bne.un.s       IL_0066 
+  IL_005f ldarg.0         
+  IL_0060 call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_0065 ret             
+  IL_0066 ldarg.0         
+  IL_0067 ldfld          AttackSpellController::m_repeatProposed token(0x0400EA0D)
+  IL_006c brfalse.s      IL_0075 
+  IL_006e ldarg.0         
+  IL_006f call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_0074 ret             
+  IL_0075 ldarg.0         
+  IL_0076 call           SpellController::GetSource token(0x060149B8)
+  IL_007b stloc.0         
+  IL_007c ldloc.0         
+  IL_007d ldnull          
+  IL_007e call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0083 brtrue.s       IL_0093 
+  IL_0085 ldloc.0         
+  IL_0086 callvirt       Card::GetActor token(0x06012DD6)
+  IL_008b ldnull          
+  IL_008c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0091 brfalse.s      IL_009a 
+  IL_0093 ldarg.0         
+  IL_0094 call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_0099 ret             
+  IL_009a ldloc.0         
+  IL_009b callvirt       Card::GetEntity token(0x06012CC3)
+  IL_00a0 stloc.1         
+  IL_00a1 ldloc.1         
+  IL_00a2 brtrue.s       IL_00ab 
+  IL_00a4 ldarg.0         
+  IL_00a5 call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_00aa ret             
+  IL_00ab ldloc.0         
+  IL_00ac callvirt       Card::GetZone token(0x06012DE5)
+  IL_00b1 stloc.2         
+  IL_00b2 ldloc.2         
+  IL_00b3 ldnull          
+  IL_00b4 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00b9 brfalse.s      IL_00cc 
+  IL_00bb call           ZoneMgr::Get token(0x06006502)
+  IL_00c0 ldloc.0         
+  IL_00c1 callvirt       Card::GetControllerSide token(0x06012CC7)
+  IL_00c6 callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B000122)
+  IL_00cb stloc.2         
+  IL_00cc call           GameMgr::Get token(0x06013AFF)
+  IL_00d1 callvirt       GameMgr::IsBattlegrounds token(0x06013B5B)
+  IL_00d6 brtrue.s       IL_00f3 
+  IL_00d8 call           GameMgr::Get token(0x06013AFF)
+  IL_00dd callvirt       GameMgr::IsBattlegroundsTutorial token(0x06013B5D)
+  IL_00e2 brtrue.s       IL_00f3 
+  IL_00e4 call           GameMgr::Get token(0x06013AFF)
+  IL_00e9 callvirt       GameMgr::IsFriendlyBattlegrounds token(0x06013B63)
+  IL_00ee brfalse        IL_0308 
+  IL_00f3 ldloc.1         
+  IL_00f4 callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_00f9 brfalse        IL_0308 
+  IL_00fe ldloc.1         
+  IL_00ff call           FinisherGameplaySettings::GetFinisherGameplaySettings token(0x06001042)
+  IL_0104 stloc.s        local(0x0004) 
+  IL_0106 ldarg.0         
+  IL_0107 call           SpellController::GetTarget token(0x060149BF)
+  IL_010c stloc.s        local(0x0005) 
+  IL_010e ldloc.s        local(0x0005) 
+  IL_0110 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0115 stloc.s        local(0x0006) 
+  IL_0117 ldloc.1         
+  IL_0118 callvirt       Entity::IsControlledByOpposingSidePlayer token(0x060137E2)
+  IL_011d stloc.s        local(0x0007) 
+  IL_011f ldarg.0         
+  IL_0120 ldloc.1         
+  IL_0121 ldloc.s        local(0x0006) 
+  IL_0123 ldloc.s        local(0x0007) 
+  IL_0125 ldloc.s        local(0x0004) 
+  IL_0127 call           AttackSpellController::GetSpellPath token(0x06011628)
+  IL_012c stloc.s        local(0x0008) 
+  IL_012e ldloc.s        local(0x0008) 
+  IL_0130 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0135 brfalse        IL_0233 
+  IL_013a ldsfld         GameDbf::BattlegroundsFinisher token(0x04002812)
+  IL_013f ldc.i4.1        
+  IL_0140 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0e34590>::GetRecord token(0x0A000570)
+  IL_0145 callvirt       BattlegroundsFinisherDbfRecord::get_GameplaySettings token(0x0600303D)
+  IL_014a call           AssetReference::CreateFromAssetString token(0x0A000571)
+  IL_014f stloc.s        local(0x0009) 
+  IL_0151 call           AssetLoader::Get token(0x06012AFE)
+  IL_0156 ldloc.s        local(0x0009) 
+  IL_0158 ldc.i4.0        
+  IL_0159 callvirt       IAssetLoader::LoadAsset<spec> token(0x2B000128)
+  IL_015e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0e348f0>::get_Asset token(0x0A000573)
+  IL_0163 stloc.s        local(0x0004) 
+  IL_0165 ldloc.1         
+  IL_0166 ldc.i4         2348 
+  IL_016b callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_0170 stloc.s        local(0x000A) 
+  IL_0172 ldloc.s        local(0x0007) 
+  IL_0174 brfalse.s      IL_01a1 
+  IL_0176 call           Log::get_Spells token(0x06014E55)
+  IL_017b ldstr          'Finisher ID {0} is missing a small opponent finisher prefab entry in its gameplay settings. Using default finisher.' string token(0x7039728D)
+  IL_0180 ldloc.s        local(0x000A) 
+  IL_0182 box            System.Int32 token(0x0100002C)
+  IL_0187 call           System.String::Format token(0x0A0000B7)
+  IL_018c call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0191 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0196 ldloc.s        local(0x0004) 
+  IL_0198 ldfld          FinisherGameplaySettings::SmallOpponentPrefab token(0x04000C95)
+  IL_019d stloc.s        local(0x0008) 
+  IL_019f br.s           IL_01ca 
+  IL_01a1 call           Log::get_Spells token(0x06014E55)
+  IL_01a6 ldstr          'Finisher ID {0} is missing a small finisher prefab entry in its gameplay settings. Using default finisher.' string token(0x70397376)
+  IL_01ab ldloc.s        local(0x000A) 
+  IL_01ad box            System.Int32 token(0x0100002C)
+  IL_01b2 call           System.String::Format token(0x0A0000B7)
+  IL_01b7 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_01bc callvirt       Logger::PrintError token(0x0A000074)
+  IL_01c1 ldloc.s        local(0x0004) 
+  IL_01c3 ldfld          FinisherGameplaySettings::SmallPrefab token(0x04000C94)
+  IL_01c8 stloc.s        local(0x0008) 
+  IL_01ca ldloc.s        local(0x0008) 
+  IL_01cc call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_01d1 brfalse.s      IL_0233 
+  IL_01d3 ldloc.s        local(0x0007) 
+  IL_01d5 brtrue.s       IL_01de 
+  IL_01d7 ldstr          'Small' string token(0x7039744D)
+  IL_01dc br.s           IL_01e3 
+  IL_01de ldstr          'Small Opponent' string token(0x70397459)
+  IL_01e3 stloc.s        local(0x000B) 
+  IL_01e5 ldstr          'Missing Default Finisher Path' string token(0x70397477)
+  IL_01ea ldc.i4.7        
+  IL_01eb newarr         System.String token(0x01000006)
+  IL_01f0 dup             
+  IL_01f1 ldc.i4.0        
+  IL_01f2 ldstr          'Unable to get spellpath for the ' string token(0x703974B3)
+  IL_01f7 stelem.ref      
+  IL_01f8 dup             
+  IL_01f9 ldc.i4.1        
+  IL_01fa ldloc.s        local(0x000B) 
+  IL_01fc stelem.ref      
+  IL_01fd dup             
+  IL_01fe ldc.i4.2        
+  IL_01ff ldstr          ' Default Finisher. Make sure ' string token(0x703974F5)
+  IL_0204 stelem.ref      
+  IL_0205 dup             
+  IL_0206 ldc.i4.3        
+  IL_0207 ldloc.s        local(0x0009) 
+  IL_0209 callvirt       AssetReference::get_FileName token(0x0A003EF2)
+  IL_020e stelem.ref      
+  IL_020f dup             
+  IL_0210 ldc.i4.4        
+  IL_0211 ldstr          ' contains a prefab for ' string token(0x70397531)
+  IL_0216 stelem.ref      
+  IL_0217 dup             
+  IL_0218 ldc.i4.5        
+  IL_0219 ldloc.s        local(0x000B) 
+  IL_021b stelem.ref      
+  IL_021c dup             
+  IL_021d ldc.i4.6        
+  IL_021e ldstr          ' Prefab.' string token(0x70397561)
+  IL_0223 stelem.ref      
+  IL_0224 call           System.String::Concat token(0x0A0001E0)
+  IL_0229 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_022e call           Error::AddDevWarning token(0x06004E78)
+  IL_0233 ldarg.0         
+  IL_0234 ldarg.0         
+  IL_0235 ldloc.0         
+  IL_0236 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_023b ldloc.s        local(0x0008) 
+  IL_023d call           AttackSpellController::InstantiateFinisherSpell token(0x06011627)
+  IL_0242 stfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0247 ldarg.0         
+  IL_0248 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_024d ldnull          
+  IL_024e call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0253 brfalse        IL_02d9 
+  IL_0258 ldarg.0         
+  IL_0259 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_025e ldloc.0         
+  IL_025f callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0264 callvirt       Blizzard.T5.Game.Spells.SpellBase::SetSource token(0x0A000574)
+  IL_0269 ldarg.0         
+  IL_026a ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_026f ldloc.s        local(0x0005) 
+  IL_0271 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0276 callvirt       Blizzard.T5.Game.Spells.SpellBase::AddTarget token(0x0A000575)
+  IL_027b ldarg.0         
+  IL_027c ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0281 ldarg.0         
+  IL_0282 ldftn          AttackSpellController::OnBattlegroundsFinisherFinished token(0x0601160A)
+  IL_0288 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0ddd130>::.ctor token(0x0A00026C)
+  IL_028d ldloc.s        local(0x0004) 
+  IL_028f callvirt       Spell::AddFinishedCallback token(0x06014945)
+  IL_0294 ldarg.0         
+  IL_0295 ldarg.0         
+  IL_0296 ldarg.0         
+  IL_0297 ldarg.0         
+  IL_0298 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_029d call           AttackSpellController::EnsureFinisherCompletes token(0x06011609)
+  IL_02a2 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_02a7 stfld          AttackSpellController::m_finisherTrackingCoroutine token(0x0400EA06)
+  IL_02ac ldarg.0         
+  IL_02ad ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_02b2 isinst         SuperSpell token(0x02002B35)
+  IL_02b7 stloc.s        local(0x000C) 
+  IL_02b9 ldloc.s        local(0x000C) 
+  IL_02bb ldnull          
+  IL_02bc call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_02c1 brfalse.s      IL_02cd 
+  IL_02c3 ldloc.s        local(0x000C) 
+  IL_02c5 ldloc.s        local(0x0007) 
+  IL_02c7 callvirt       SuperSpell::ActivateFinisher token(0x06014B0C)
+  IL_02cc ret             
+  IL_02cd ldarg.0         
+  IL_02ce ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_02d3 callvirt       Blizzard.T5.Game.Spells.SpellBase::Activate token(0x0A000450)
+  IL_02d8 ret             
+  IL_02d9 ldloc.1         
+  IL_02da ldc.i4         2348 
+  IL_02df callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_02e4 stloc.s        local(0x000D) 
+  IL_02e6 call           Log::get_Spells token(0x06014E55)
+  IL_02eb ldstr          'Finisher ID {0} failed to instantiate finisher spell at {1}. No spell will be played.' string token(0x70397573)
+  IL_02f0 ldloc.s        local(0x000D) 
+  IL_02f2 box            System.Int32 token(0x0100002C)
+  IL_02f7 ldloc.s        local(0x0008) 
+  IL_02f9 call           System.String::Format token(0x0A0000D1)
+  IL_02fe call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0303 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0308 ldloc.2         
+  IL_0309 ldfld          Zone::m_Side token(0x040045FC)
+  IL_030e ldc.i4.1        
+  IL_030f ceq             
+  IL_0311 stloc.3         
+  IL_0312 ldarg.0         
+  IL_0313 ldarg.0         
+  IL_0314 ldloc.0         
+  IL_0315 ldloc.3         
+  IL_0316 call           AttackSpellController::GetSourceAttackSpell token(0x06011626)
+  IL_031b stfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0320 ldarg.0         
+  IL_0321 ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_0326 ldc.i4.3        
+  IL_0327 bne.un.s       IL_0351 
+  IL_0329 ldarg.0         
+  IL_032a ldloc.1         
+  IL_032b ldarg.0         
+  IL_032c ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0331 call           AttackSpellController::CancelAttackSpell token(0x06011625)
+  IL_0336 ldloc.0         
+  IL_0337 ldc.i4.0        
+  IL_0338 callvirt       Card::SetDoNotSort token(0x06012DF3)
+  IL_033d ldloc.2         
+  IL_033e callvirt       Zone::UpdateLayout token(0x0600639B)
+  IL_0343 ldloc.0         
+  IL_0344 ldc.i4.0        
+  IL_0345 callvirt       Card::EnableAttacking token(0x06012CF9)
+  IL_034a ldarg.0         
+  IL_034b call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_0350 ret             
+  IL_0351 ldarg.0         
+  IL_0352 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0357 ldnull          
+  IL_0358 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_035d brfalse.s      IL_0366 
+  IL_035f ldarg.0         
+  IL_0360 call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_0365 ret             
+  IL_0366 ldloc.0         
+  IL_0367 ldc.i4.1        
+  IL_0368 callvirt       Card::EnableAttacking token(0x06012CF9)
+  IL_036d ldloc.1         
+  IL_036e ldc.i4         373 
+  IL_0373 callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_0378 brfalse.s      IL_0385 
+  IL_037a ldloc.0         
+  IL_037b ldc.i4.s       13 
+  IL_037d callvirt       Card::ActivateActorSpell token(0x06012DA5)
+  IL_0382 pop             
+  IL_0383 br.s           IL_03a0 
+  IL_0385 ldloc.0         
+  IL_0386 callvirt       Card::ShouldShowImmuneVisuals token(0x06012D85)
+  IL_038b brtrue.s       IL_03a0 
+  IL_038d ldloc.0         
+  IL_038e callvirt       Card::GetActor token(0x06012DD6)
+  IL_0393 ldc.i4.s       13 
+  IL_0395 callvirt       Actor::GetSpellIfLoaded token(0x0601295F)
+  IL_039a call           SpellUtils::ActivateDeathIfNecessary token(0x06014ACC)
+  IL_039f pop             
+  IL_03a0 ldarg.0         
+  IL_03a1 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_03a6 ldarg.0         
+  IL_03a7 ldftn          AttackSpellController::OnSourceAttackStateStarted token(0x060115FD)
+  IL_03ad newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0cda090>::.ctor token(0x0A000D61)
+  IL_03b2 callvirt       Spell::AddStateStartedCallback token(0x0601494C)
+  IL_03b7 call           GameState::Get token(0x06005589)
+  IL_03bc ldc.i4.s       49 
+  IL_03be callvirt       GameState::GetBooleanGameOption token(0x060055AA)
+  IL_03c3 brfalse        IL_0456 
+  IL_03c8 ldarg.0         
+  IL_03c9 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_03ce ldc.i4.1        
+  IL_03cf callvirt       Spell::GetSpellStates token(0x06014941)
+  IL_03d4 stloc.s        local(0x000E) 
+  IL_03d6 ldloc.s        local(0x000E) 
+  IL_03d8 brfalse.s      IL_0456 
+  IL_03da ldloc.s        local(0x000E) 
+  IL_03dc callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5ff08a9af0>::GetEnumerator token(0x0A003EF3)
+  IL_03e1 stloc.s        local(0x000F) 
+  IL_03e3 br.s           IL_043d 
+  IL_03e5 ldloca.s       local(0x000F) 
+  IL_03e7 call           <dnfile.mdtable.TypeSpecRow object at 0x7f5ff08a9ca0>::get_Current token(0x0A003EF4)
+  IL_03ec stloc.s        local(0x0010) 
+  IL_03ee ldloc.s        local(0x0010) 
+  IL_03f0 callvirt       Blizzard.T5.Game.Spells.ISpellState::get_NumExternalAnimatedObjects token(0x0A003EF5)
+  IL_03f5 ldc.i4.0        
+  IL_03f6 ble.s          IL_043d 
+  IL_03f8 ldloc.s        local(0x0010) 
+  IL_03fa callvirt       Blizzard.T5.Game.Spells.ISpellState::get_ExternalAnimatedObjects token(0x0A003EF6)
+  IL_03ff callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5ff08a9e50>::GetEnumerator token(0x0A003EF7)
+  IL_0404 stloc.s        local(0x0011) 
+  IL_0406 br.s           IL_0426 
+  IL_0408 ldloc.s        local(0x0011) 
+  IL_040a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5ff08aa000>::get_Current token(0x0A003EF8)
+  IL_040f isinst         SpellStateAnimObject token(0x02002B26)
+  IL_0414 stloc.s        local(0x0012) 
+  IL_0416 ldloc.s        local(0x0012) 
+  IL_0418 brfalse.s      IL_0426 
+  IL_041a ldloc.s        local(0x0012) 
+  IL_041c ldc.r4         2.0 
+  IL_0421 stfld          SpellStateAnimObject::m_AnimSpeed token(0x04011CAD)
+  IL_0426 ldloc.s        local(0x0011) 
+  IL_0428 callvirt       System.Collections.IEnumerator::MoveNext token(0x0A000094)
+  IL_042d brtrue.s       IL_0408 
+  IL_042f leave.s        IL_043d 
+  IL_0431 ldloc.s        local(0x0011) 
+  IL_0433 brfalse.s      IL_043c 
+  IL_0435 ldloc.s        local(0x0011) 
+  IL_0437 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_043c endfinally      
+  IL_043d ldloca.s       local(0x000F) 
+  IL_043f call           <dnfile.mdtable.TypeSpecRow object at 0x7f5ff08a9ca0>::MoveNext token(0x0A003EF9)
+  IL_0444 brtrue.s       IL_03e5 
+  IL_0446 leave.s        IL_0456 
+  IL_0448 ldloca.s       local(0x000F) 
+  IL_044a constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f5ff08a9ca0> token(0x1B000F62)
+  IL_0450 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0455 endfinally      
+  IL_0456 ldloc.3         
+  IL_0457 brfalse.s      IL_04a9 
+  IL_0459 ldarg.0         
+  IL_045a ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_045f callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0464 ldc.i4.2        
+  IL_0465 beq.s          IL_0496 
+  IL_0467 ldarg.0         
+  IL_0468 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_046d callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0472 ldc.i4.3        
+  IL_0473 beq.s          IL_0496 
+  IL_0475 ldarg.0         
+  IL_0476 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_047b callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0480 ldc.i4.1        
+  IL_0481 beq.s          IL_04ea 
+  IL_0483 ldarg.0         
+  IL_0484 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0489 ldc.i4.1        
+  IL_048a callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_048f ldarg.0         
+  IL_0490 call           AttackSpellController::StartBirthFallback token(0x06011611)
+  IL_0495 ret             
+  IL_0496 ldarg.0         
+  IL_0497 call           AttackSpellController::StopBirthFallback token(0x06011612)
+  IL_049c ldarg.0         
+  IL_049d ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_04a2 ldc.i4.3        
+  IL_04a3 callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_04a8 ret             
+  IL_04a9 ldarg.0         
+  IL_04aa ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_04af callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_04b4 ldc.i4.2        
+  IL_04b5 beq.s          IL_04d8 
+  IL_04b7 ldarg.0         
+  IL_04b8 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_04bd callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_04c2 ldc.i4.3        
+  IL_04c3 beq.s          IL_04d8 
+  IL_04c5 ldarg.0         
+  IL_04c6 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_04cb ldc.i4.1        
+  IL_04cc callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_04d1 ldarg.0         
+  IL_04d2 call           AttackSpellController::StartBirthFallback token(0x06011611)
+  IL_04d7 ret             
+  IL_04d8 ldarg.0         
+  IL_04d9 call           AttackSpellController::StopBirthFallback token(0x06011612)
+  IL_04de ldarg.0         
+  IL_04df ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_04e4 ldc.i4.3        
+  IL_04e5 callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_04ea ret             
+
+0x060115fd AttackSpellController::OnSourceAttackStateStarted(spell,prevStateType,userData) RVA 0x516f04 SIG 20030112c000ac1c1182811c
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldc.i4.2        
+  IL_0009 bne.un.s       IL_0019 
+  IL_000b ldarg.0         
+  IL_000c call           AttackSpellController::StopBirthFallback token(0x06011612)
+  IL_0011 ldarg.1         
+  IL_0012 ldc.i4.3        
+  IL_0013 callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_0018 ret             
+  IL_0019 ldloc.0         
+  IL_001a ldc.i4.3        
+  IL_001b bne.un.s       IL_003c 
+  IL_001d ldarg.0         
+  IL_001e call           AttackSpellController::StopBirthFallback token(0x06011612)
+  IL_0023 ldarg.1         
+  IL_0024 ldarg.0         
+  IL_0025 ldftn          AttackSpellController::OnSourceAttackStateStarted token(0x060115FD)
+  IL_002b newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0cda090>::.ctor token(0x0A000D61)
+  IL_0030 callvirt       Spell::RemoveStateStartedCallback token(0x0601494E)
+  IL_0035 pop             
+  IL_0036 ldarg.0         
+  IL_0037 call           AttackSpellController::LaunchAttack token(0x060115FE)
+  IL_003c ret             
+
+0x060115fe AttackSpellController::LaunchAttack() RVA 0x516f50 SIG 200001
+  IL_0000 call           Log::get_Gameplay token(0x06014E34)
+  IL_0005 ldstr          'AttackSpellController -- LaunchAttack' string token(0x70397620)
+  IL_000a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_000f callvirt       Logger::PrintDebug token(0x0A000617)
+  IL_0014 ldarg.0         
+  IL_0015 call           SpellController::GetSource token(0x060149B8)
+  IL_001a stloc.0         
+  IL_001b ldloc.0         
+  IL_001c ldnull          
+  IL_001d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0022 brtrue.s       IL_0032 
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0030 brfalse.s      IL_0039 
+  IL_0032 ldarg.0         
+  IL_0033 call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_0038 ret             
+  IL_0039 ldloc.0         
+  IL_003a callvirt       Card::GetEntity token(0x06012CC3)
+  IL_003f stloc.1         
+  IL_0040 ldarg.0         
+  IL_0041 call           SpellController::GetTarget token(0x060149BF)
+  IL_0046 stloc.2         
+  IL_0047 ldloc.1         
+  IL_0048 brfalse.s      IL_0053 
+  IL_004a ldloc.2         
+  IL_004b ldnull          
+  IL_004c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0051 brfalse.s      IL_005a 
+  IL_0053 ldarg.0         
+  IL_0054 call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_0059 ret             
+  IL_005a ldarg.0         
+  IL_005b ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_0060 ldc.i4.2        
+  IL_0061 ceq             
+  IL_0063 stloc.3         
+  IL_0064 ldloc.3         
+  IL_0065 brfalse.s      IL_0082 
+  IL_0067 ldloc.1         
+  IL_0068 callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_006d brfalse.s      IL_0082 
+  IL_006f ldarg.0         
+  IL_0070 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0075 ldc.i4.2        
+  IL_0076 callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_007b ldarg.0         
+  IL_007c call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_0081 ret             
+  IL_0082 ldloc.1         
+  IL_0083 callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_0088 brfalse.s      IL_00cb 
+  IL_008a ldloc.1         
+  IL_008b ldc.i4         3211 
+  IL_0090 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0095 brfalse.s      IL_00cb 
+  IL_0097 ldarg.0         
+  IL_0098 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_009d callvirt       Blizzard.T5.Game.Spells.SpellBase::RemoveAllTargets token(0x0A00252B)
+  IL_00a2 ldarg.0         
+  IL_00a3 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_00a8 ldloc.2         
+  IL_00a9 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00ae callvirt       Blizzard.T5.Game.Spells.SpellBase::AddTarget token(0x0A000575)
+  IL_00b3 ldarg.0         
+  IL_00b4 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_00b9 ldarg.0         
+  IL_00ba ldftn          AttackSpellController::OnStaticHeroSourceAttackStateFinished token(0x06011607)
+  IL_00c0 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0e15400>::.ctor token(0x0A0004BF)
+  IL_00c5 callvirt       Spell::AddStateFinishedCallback token(0x06014948)
+  IL_00ca ret             
+  IL_00cb ldarg.0         
+  IL_00cc ldloc.0         
+  IL_00cd callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00d2 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_00d7 stfld          AttackSpellController::m_sourcePos token(0x0400EA0A)
+  IL_00dc ldarg.0         
+  IL_00dd ldloc.2         
+  IL_00de callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00e3 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_00e8 ldarg.0         
+  IL_00e9 ldfld          AttackSpellController::m_sourcePos token(0x0400EA0A)
+  IL_00ee call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_00f3 stfld          AttackSpellController::m_sourceToTarget token(0x0400EA0B)
+  IL_00f8 ldarg.0         
+  IL_00f9 call           AttackSpellController::ComputeImpactPos token(0x0601161D)
+  IL_00fe stloc.s        local(0x0004) 
+  IL_0100 ldloc.0         
+  IL_0101 ldloc.3         
+  IL_0102 ldc.i4.0        
+  IL_0103 ceq             
+  IL_0105 callvirt       Card::SetDoNotSort token(0x06012DF3)
+  IL_010a ldarg.0         
+  IL_010b ldloc.0         
+  IL_010c ldloc.1         
+  IL_010d ldloc.s        local(0x0004) 
+  IL_010f call           AttackSpellController::MoveSourceToTarget token(0x0601161A)
+  IL_0114 ldloc.1         
+  IL_0115 callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_011a brfalse.s      IL_0123 
+  IL_011c ldarg.0         
+  IL_011d ldloc.0         
+  IL_011e call           AttackSpellController::OrientSourceHeroToTarget token(0x0601161B)
+  IL_0123 ldloc.3         
+  IL_0124 brfalse.s      IL_0127 
+  IL_0126 ret             
+  IL_0127 ldloc.2         
+  IL_0128 ldc.i4.1        
+  IL_0129 callvirt       Card::SetDoNotSort token(0x06012DF3)
+  IL_012e ldarg.0         
+  IL_012f ldloc.2         
+  IL_0130 ldloc.1         
+  IL_0131 ldloc.s        local(0x0004) 
+  IL_0133 call           AttackSpellController::MoveTargetToSource token(0x0601161C)
+  IL_0138 ret             
+
+0x060115ff AttackSpellController::HasFinishAttackSpellOnDamage() RVA 0x517098 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellController::GetSource token(0x060149B8)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0012 
+  IL_0010 ldc.i4.0        
+  IL_0011 ret             
+  IL_0012 ldloc.0         
+  IL_0013 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0018 stloc.1         
+  IL_0019 ldloc.1         
+  IL_001a brtrue.s       IL_001e 
+  IL_001c ldc.i4.0        
+  IL_001d ret             
+  IL_001e ldloc.1         
+  IL_001f callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_0024 brtrue.s       IL_0032 
+  IL_0026 ldloc.1         
+  IL_0027 ldc.i4         470 
+  IL_002c callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0031 ret             
+  IL_0032 ldloc.1         
+  IL_0033 ldc.i4         3265 
+  IL_0038 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_003d brfalse.s      IL_0041 
+  IL_003f ldc.i4.1        
+  IL_0040 ret             
+  IL_0041 ldloc.1         
+  IL_0042 callvirt       Entity::GetController token(0x060137DE)
+  IL_0047 stloc.2         
+  IL_0048 ldloc.2         
+  IL_0049 brtrue.s       IL_004d 
+  IL_004b ldc.i4.0        
+  IL_004c ret             
+  IL_004d ldloc.2         
+  IL_004e callvirt       Entity::GetWeaponCard token(0x060137EC)
+  IL_0053 stloc.3         
+  IL_0054 ldloc.3         
+  IL_0055 ldnull          
+  IL_0056 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_005b brfalse.s      IL_005f 
+  IL_005d ldc.i4.0        
+  IL_005e ret             
+  IL_005f ldloc.3         
+  IL_0060 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0065 stloc.s        local(0x0004) 
+  IL_0067 ldloc.s        local(0x0004) 
+  IL_0069 brfalse.s      IL_0078 
+  IL_006b ldloc.s        local(0x0004) 
+  IL_006d ldc.i4         470 
+  IL_0072 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0077 ret             
+  IL_0078 ldc.i4.0        
+  IL_0079 ret             
+
+0x06011600 AttackSpellController::UpdateTargetOnMoveToTargetFinished(targetCard) RVA 0x517120 SIG 20010112c0009ebc
+  IL_0000 ldarg.1         
+  IL_0001 ldc.i4.0        
+  IL_0002 callvirt       Card::SetDoNotSort token(0x06012DF3)
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       Card::GetZone token(0x06012DE5)
+  IL_000d stloc.0         
+  IL_000e ldloc.0         
+  IL_000f ldnull          
+  IL_0010 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0015 brfalse.s      IL_005c 
+  IL_0017 ldarg.1         
+  IL_0018 callvirt       Card::GetPrevZone token(0x06012DE6)
+  IL_001d stloc.0         
+  IL_001e ldloc.0         
+  IL_001f ldnull          
+  IL_0020 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0025 brfalse.s      IL_0028 
+  IL_0027 ret             
+  IL_0028 ldarg.1         
+  IL_0029 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_002e callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_0033 brtrue.s       IL_005c 
+  IL_0035 call           Log::get_Spells token(0x06014E55)
+  IL_003a ldstr          'AttackSpellController.UpdateTargetOnMoveToTargetFinished() - Non-hero target ({0}) was moved from {1} to SETASIDE before the attack was resolved.' string token(0x7039766C)
+  IL_003f ldc.i4.2        
+  IL_0040 newarr         System.Object token(0x01000001)
+  IL_0045 dup             
+  IL_0046 ldc.i4.0        
+  IL_0047 ldarg.1         
+  IL_0048 callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_004d stelem.ref      
+  IL_004e dup             
+  IL_004f ldc.i4.1        
+  IL_0050 ldloc.0         
+  IL_0051 callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_0056 stelem.ref      
+  IL_0057 callvirt       Logger::PrintWarning token(0x0A00002E)
+  IL_005c ldloc.0         
+  IL_005d callvirt       Zone::UpdateLayout token(0x0600639B)
+  IL_0062 ret             
+
+0x06011601 AttackSpellController::OnMoveToTargetFinished() RVA 0x517190 SIG 200001
+  IL_0000 call           Log::get_Gameplay token(0x06014E34)
+  IL_0005 ldstr          'AttackSpellController -- OnMoveToTargetFinished' string token(0x70397791)
+  IL_000a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_000f callvirt       Logger::PrintDebug token(0x0A000617)
+  IL_0014 ldarg.0         
+  IL_0015 call           SpellController::GetSource token(0x060149B8)
+  IL_001a stloc.0         
+  IL_001b ldloc.0         
+  IL_001c callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0021 stloc.1         
+  IL_0022 ldarg.0         
+  IL_0023 call           SpellController::GetTarget token(0x060149BF)
+  IL_0028 stloc.2         
+  IL_0029 ldarg.0         
+  IL_002a ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_002f ldc.i4.2        
+  IL_0030 ceq             
+  IL_0032 stloc.3         
+  IL_0033 ldarg.0         
+  IL_0034 ldloc.0         
+  IL_0035 ldloc.2         
+  IL_0036 call           AttackSpellController::DoTasks token(0x06011602)
+  IL_003b ldloc.3         
+  IL_003c brtrue.s       IL_0046 
+  IL_003e ldarg.0         
+  IL_003f ldloc.0         
+  IL_0040 ldloc.2         
+  IL_0041 call           AttackSpellController::ActivateImpactEffects token(0x0601161F)
+  IL_0046 ldloc.1         
+  IL_0047 callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_004c brfalse.s      IL_0075 
+  IL_004e ldarg.0         
+  IL_004f ldloc.0         
+  IL_0050 call           AttackSpellController::MoveSourceHeroBack token(0x06011603)
+  IL_0055 ldarg.0         
+  IL_0056 ldloc.0         
+  IL_0057 call           AttackSpellController::OrientSourceHeroBack token(0x06011604)
+  IL_005c ldarg.0         
+  IL_005d ldloc.2         
+  IL_005e call           AttackSpellController::UpdateTargetOnMoveToTargetFinished token(0x06011600)
+  IL_0063 ldarg.0         
+  IL_0064 call           AttackSpellController::HasFinishAttackSpellOnDamage token(0x060115FF)
+  IL_0069 brfalse        IL_00f7 
+  IL_006e ldarg.0         
+  IL_006f call           AttackSpellController::FinishHeroAttack token(0x06011608)
+  IL_0074 ret             
+  IL_0075 ldloc.3         
+  IL_0076 brfalse.s      IL_007f 
+  IL_0078 ldarg.0         
+  IL_0079 call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_007e ret             
+  IL_007f ldloc.1         
+  IL_0080 callvirt       EntityBase::IsCutsceneEntity token(0x060138E8)
+  IL_0085 brtrue.s       IL_00a9 
+  IL_0087 ldloc.0         
+  IL_0088 ldc.i4.0        
+  IL_0089 callvirt       Card::SetDoNotSort token(0x06012DF3)
+  IL_008e ldloc.0         
+  IL_008f callvirt       Card::GetZone token(0x06012DE5)
+  IL_0094 stloc.s        local(0x0004) 
+  IL_0096 ldloc.s        local(0x0004) 
+  IL_0098 ldnull          
+  IL_0099 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_009e brfalse.s      IL_00b7 
+  IL_00a0 ldloc.s        local(0x0004) 
+  IL_00a2 callvirt       Zone::UpdateLayout token(0x0600639B)
+  IL_00a7 br.s           IL_00b7 
+  IL_00a9 ldarg.0         
+  IL_00aa ldloc.0         
+  IL_00ab call           AttackSpellController::MoveSourceHeroBack token(0x06011603)
+  IL_00b0 ldarg.0         
+  IL_00b1 ldloc.0         
+  IL_00b2 call           AttackSpellController::OrientSourceHeroBack token(0x06011604)
+  IL_00b7 ldarg.0         
+  IL_00b8 ldloc.2         
+  IL_00b9 call           AttackSpellController::UpdateTargetOnMoveToTargetFinished token(0x06011600)
+  IL_00be ldarg.0         
+  IL_00bf call           AttackSpellController::HasFinishAttackSpellOnDamage token(0x060115FF)
+  IL_00c4 brfalse.s      IL_00ce 
+  IL_00c6 ldarg.0         
+  IL_00c7 call           AttackSpellController::FinishAttackSpellController token(0x0601160E)
+  IL_00cc br.s           IL_00eb 
+  IL_00ce ldarg.0         
+  IL_00cf ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_00d4 ldarg.0         
+  IL_00d5 ldftn          AttackSpellController::OnMinionSourceAttackStateFinished token(0x0601160D)
+  IL_00db newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0e15400>::.ctor token(0x0A0004BF)
+  IL_00e0 callvirt       Spell::AddStateFinishedCallback token(0x06014948)
+  IL_00e5 ldarg.0         
+  IL_00e6 call           AttackSpellController::StartMinionDeathFallback token(0x06011614)
+  IL_00eb ldarg.0         
+  IL_00ec ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_00f1 ldc.i4.5        
+  IL_00f2 callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_00f7 ret             
+
+0x06011602 AttackSpellController::DoTasks(sourceCard,targetCard) RVA 0x517294 SIG 20020112c0009ebc12c0009ebc
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          SpellController::m_taskList token(0x04011C3A)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldfld          SpellController::m_taskList token(0x04011C3A)
+  IL_000f ldarg.1         
+  IL_0010 ldarg.2         
+  IL_0011 call           GameUtils::DoDamageTasks token(0x06014D0B)
+  IL_0016 ret             
+
+0x06011603 AttackSpellController::MoveSourceHeroBack(sourceCard) RVA 0x5172ac SIG 20010112c0009ebc
+  IL_0000 call           iTweenManager::Get token(0x0A000228)
+  IL_0005 callvirt       iTweenManager::GetTweenHashTable token(0x0A000229)
+  IL_000a stloc.0         
+  IL_000b ldloc.0         
+  IL_000c ldstr          'position' string token(0x700061EB)
+  IL_0011 ldarg.0         
+  IL_0012 ldfld          AttackSpellController::m_sourcePos token(0x0400EA0A)
+  IL_0017 box            UnityEngine.Vector3 token(0x01000017)
+  IL_001c callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0021 ldloc.0         
+  IL_0022 ldstr          'time' string token(0x70001972)
+  IL_0027 ldarg.0         
+  IL_0028 ldfld          AttackSpellController::m_HeroInfo token(0x0400E9F8)
+  IL_002d ldfld          HeroAttackDef::m_MoveBackDuration token(0x0400E9F2)
+  IL_0032 box            System.Single token(0x01000074)
+  IL_0037 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_003c ldloc.0         
+  IL_003d ldstr          'easetype' string token(0x700061FD)
+  IL_0042 ldarg.0         
+  IL_0043 ldfld          AttackSpellController::m_HeroInfo token(0x0400E9F8)
+  IL_0048 ldfld          HeroAttackDef::m_MoveBackEaseType token(0x0400E9F3)
+  IL_004d box            EaseType token(0x01000089)
+  IL_0052 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0057 ldloc.0         
+  IL_0058 ldstr          'oncomplete' string token(0x7000197C)
+  IL_005d ldstr          'OnHeroMoveBackFinished' string token(0x703977F1)
+  IL_0062 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0067 ldloc.0         
+  IL_0068 ldstr          'oncompletetarget' string token(0x7000CDCD)
+  IL_006d ldarg.0         
+  IL_006e call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0073 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0078 ldarg.1         
+  IL_0079 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_007e ldloc.0         
+  IL_007f call           iTween::MoveTo token(0x0A00022C)
+  IL_0084 ret             
+
+0x06011604 AttackSpellController::OrientSourceHeroBack(sourceCard) RVA 0x517340 SIG 20010112c0009ebc
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          AttackSpellController::m_sourceFacing token(0x0400EA0C)
+  IL_0006 call           UnityEngine.Quaternion::LookRotation token(0x0A00057D)
+  IL_000b stloc.0         
+  IL_000c call           iTweenManager::Get token(0x0A000228)
+  IL_0011 callvirt       iTweenManager::GetTweenHashTable token(0x0A000229)
+  IL_0016 stloc.1         
+  IL_0017 ldloc.1         
+  IL_0018 ldstr          'rotation' string token(0x700351E9)
+  IL_001d ldloca.s       local(0x0000) 
+  IL_001f call           UnityEngine.Quaternion::get_eulerAngles token(0x0A000B56)
+  IL_0024 box            UnityEngine.Vector3 token(0x01000017)
+  IL_0029 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_002e ldloc.1         
+  IL_002f ldstr          'time' string token(0x70001972)
+  IL_0034 ldarg.0         
+  IL_0035 ldfld          AttackSpellController::m_HeroInfo token(0x0400E9F8)
+  IL_003a ldfld          HeroAttackDef::m_OrientBackDuration token(0x0400E9F4)
+  IL_003f box            System.Single token(0x01000074)
+  IL_0044 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0049 ldloc.1         
+  IL_004a ldstr          'easetype' string token(0x700061FD)
+  IL_004f ldarg.0         
+  IL_0050 ldfld          AttackSpellController::m_HeroInfo token(0x0400E9F8)
+  IL_0055 ldfld          HeroAttackDef::m_OrientBackEaseType token(0x0400E9F5)
+  IL_005a box            EaseType token(0x01000089)
+  IL_005f callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0064 ldarg.1         
+  IL_0065 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_006a ldloc.1         
+  IL_006b call           iTween::RotateTo token(0x0A000C73)
+  IL_0070 ret             
+
+0x06011605 AttackSpellController::OnHeroMoveBackFinished() RVA 0x5173c0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellController::GetSource token(0x060149B8)
+  IL_0006 dup             
+  IL_0007 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_000c stloc.0         
+  IL_000d dup             
+  IL_000e ldc.i4.0        
+  IL_000f callvirt       Card::SetDoNotSort token(0x06012DF3)
+  IL_0014 ldc.i4.0        
+  IL_0015 callvirt       Card::EnableAttacking token(0x06012CF9)
+  IL_001a ldarg.0         
+  IL_001b call           AttackSpellController::HasFinishAttackSpellOnDamage token(0x060115FF)
+  IL_0020 brfalse.s      IL_0023 
+  IL_0022 ret             
+  IL_0023 ldloc.0         
+  IL_0024 callvirt       Entity::GetController token(0x060137DE)
+  IL_0029 callvirt       Player::IsLocalUser token(0x06005D60)
+  IL_002e brtrue.s       IL_003d 
+  IL_0030 ldarg.0         
+  IL_0031 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0036 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_003b brtrue.s       IL_0044 
+  IL_003d ldarg.0         
+  IL_003e call           AttackSpellController::FinishHeroAttack token(0x06011608)
+  IL_0043 ret             
+  IL_0044 ldarg.0         
+  IL_0045 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_004a ldarg.0         
+  IL_004b ldftn          AttackSpellController::OnHeroSourceAttackStateFinished token(0x06011606)
+  IL_0051 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0e15400>::.ctor token(0x0A0004BF)
+  IL_0056 callvirt       Spell::AddStateFinishedCallback token(0x06014948)
+  IL_005b ret             
+
+0x06011606 AttackSpellController::OnHeroSourceAttackStateFinished(spell,prevStateType,userData) RVA 0x517428 SIG 20030112c000ac1c1182811c
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0006 brfalse.s      IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.1         
+  IL_000a ldarg.0         
+  IL_000b ldftn          AttackSpellController::OnHeroSourceAttackStateFinished token(0x06011606)
+  IL_0011 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0e15400>::.ctor token(0x0A0004BF)
+  IL_0016 callvirt       Spell::RemoveStateFinishedCallback token(0x0601494A)
+  IL_001b pop             
+  IL_001c ldarg.0         
+  IL_001d call           AttackSpellController::FinishHeroAttack token(0x06011608)
+  IL_0022 ret             
+
+0x06011607 AttackSpellController::OnStaticHeroSourceAttackStateFinished(spell,prevStateType,userData) RVA 0x51744c SIG 20030112c000ac1c1182811c
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0006 brfalse.s      IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.1         
+  IL_000a ldarg.0         
+  IL_000b ldftn          AttackSpellController::OnStaticHeroSourceAttackStateFinished token(0x06011607)
+  IL_0011 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0e15400>::.ctor token(0x0A0004BF)
+  IL_0016 callvirt       Spell::RemoveStateFinishedCallback token(0x0601494A)
+  IL_001b pop             
+  IL_001c ldarg.0         
+  IL_001d callvirt       AttackSpellController::OnHeroMoveBackFinished token(0x06011605)
+  IL_0022 ret             
+
+0x06011608 AttackSpellController::FinishHeroAttack() RVA 0x517470 SIG 200001
+  IL_0000 call           Log::get_Gameplay token(0x06014E34)
+  IL_0005 ldstr          'AttackSpellController -- FinishHeroAttack' string token(0x7039781F)
+  IL_000a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_000f callvirt       Logger::PrintDebug token(0x0A000617)
+  IL_0014 ldarg.0         
+  IL_0015 call           SpellController::GetSource token(0x060149B8)
+  IL_001a stloc.0         
+  IL_001b ldloc.0         
+  IL_001c callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0021 stloc.1         
+  IL_0022 ldarg.0         
+  IL_0023 ldloc.1         
+  IL_0024 ldloc.0         
+  IL_0025 call           AttackSpellController::PlayWindfuryReminderIfPossible token(0x06011619)
+  IL_002a ldarg.0         
+  IL_002b call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_0030 ret             
+
+0x06011609 AttackSpellController::EnsureFinisherCompletes(spell) RVA 0x5174ad SIG 200112811112c000ac1c
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <EnsureFinisherCompletes>d__36::.ctor token(0x0601162F)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <EnsureFinisherCompletes>d__36::<>4__this token(0x0400EA12)
+  IL_000d dup             
+  IL_000e ldarg.1         
+  IL_000f stfld          <EnsureFinisherCompletes>d__36::spell token(0x0400EA13)
+  IL_0014 ret             
+
+0x0601160a AttackSpellController::OnBattlegroundsFinisherFinished(spell,favoriteFinisherRecordObject) RVA 0x5174c4 SIG 20020112c000ac1c1c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          AttackSpellController::m_finisherTrackingCoroutine token(0x0400EA06)
+  IL_0006 brfalse.s      IL_001b 
+  IL_0008 ldarg.0         
+  IL_0009 ldarg.0         
+  IL_000a ldfld          AttackSpellController::m_finisherTrackingCoroutine token(0x0400EA06)
+  IL_000f call           UnityEngine.MonoBehaviour::StopCoroutine token(0x0A0002A5)
+  IL_0014 ldarg.0         
+  IL_0015 ldnull          
+  IL_0016 stfld          AttackSpellController::m_finisherTrackingCoroutine token(0x0400EA06)
+  IL_001b ldarg.0         
+  IL_001c call           SpellController::GetSource token(0x060149B8)
+  IL_0021 stloc.0         
+  IL_0022 ldarg.0         
+  IL_0023 call           SpellController::GetTarget token(0x060149BF)
+  IL_0028 stloc.1         
+  IL_0029 ldarg.2         
+  IL_002a castclass      FinisherGameplaySettings token(0x02000268)
+  IL_002f stloc.2         
+  IL_0030 ldarg.0         
+  IL_0031 ldloc.2         
+  IL_0032 call           AttackSpellController::ActivateSpellForDestroyedHero token(0x06011629)
+  IL_0037 ldarg.0         
+  IL_0038 ldnull          
+  IL_0039 call           AttackSpellController::ActivateSpellDeathState token(0x0601160B)
+  IL_003e ldarg.0         
+  IL_003f callvirt       SpellController::OnFinishedTaskList token(0x060149CF)
+  IL_0044 ldloc.2         
+  IL_0045 ldfld          FinisherGameplaySettings::ShowImpactEffects token(0x04000CA0)
+  IL_004a brfalse.s      IL_0054 
+  IL_004c ldarg.0         
+  IL_004d ldloc.0         
+  IL_004e ldloc.1         
+  IL_004f call           AttackSpellController::ActivateImpactEffects token(0x0601161F)
+  IL_0054 ldarg.1         
+  IL_0055 callvirt       Blizzard.T5.Game.Spells.SpellBase::RemoveAllTargets token(0x0A00252B)
+  IL_005a call           BaconBoard::Get token(0x0600093F)
+  IL_005f stloc.3         
+  IL_0060 ldloc.3         
+  IL_0061 ldnull          
+  IL_0062 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0067 brfalse.s      IL_006f 
+  IL_0069 ldloc.3         
+  IL_006a callvirt       BaconBoard::FriendlyPlayerFinisherCalled token(0x0600095D)
+  IL_006f ldarg.0         
+  IL_0070 ldarg.0         
+  IL_0071 ldloc.2         
+  IL_0072 call           AttackSpellController::WaitThenDestroySpellAndFinish token(0x0601160C)
+  IL_0077 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_007c pop             
+  IL_007d ret             
+
+0x0601160b AttackSpellController::ActivateSpellDeathState(source) RVA 0x517550 SIG 20010112c0009ebc
+  IL_0000 ldarg.1         
+  IL_0001 stloc.0         
+  IL_0002 ldloc.0         
+  IL_0003 ldnull          
+  IL_0004 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0009 brfalse.s      IL_0012 
+  IL_000b ldarg.0         
+  IL_000c call           SpellController::GetSource token(0x060149B8)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0019 brfalse.s      IL_0053 
+  IL_001b ldloc.0         
+  IL_001c callvirt       Card::ShouldShowImmuneVisuals token(0x06012D85)
+  IL_0021 brtrue.s       IL_0053 
+  IL_0023 ldloc.0         
+  IL_0024 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0029 brfalse.s      IL_0046 
+  IL_002b ldloc.0         
+  IL_002c callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0031 ldc.i4         373 
+  IL_0036 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_003b brfalse.s      IL_0046 
+  IL_003d ldarg.0         
+  IL_003e ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_0043 ldc.i4.2        
+  IL_0044 beq.s          IL_0053 
+  IL_0046 ldloc.0         
+  IL_0047 callvirt       Card::GetActor token(0x06012DD6)
+  IL_004c ldc.i4.s       13 
+  IL_004e callvirt       Actor::ActivateSpellDeathState token(0x06012963)
+  IL_0053 ret             
+
+0x0601160c AttackSpellController::WaitThenDestroySpellAndFinish(finisherGameplaySettings) RVA 0x5175b0 SIG 20011281111289a0
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <WaitThenDestroySpellAndFinish>d__39::.ctor token(0x06011635)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <WaitThenDestroySpellAndFinish>d__39::<>4__this token(0x0400EA16)
+  IL_000d dup             
+  IL_000e ldarg.1         
+  IL_000f stfld          <WaitThenDestroySpellAndFinish>d__39::finisherGameplaySettings token(0x0400EA17)
+  IL_0014 ret             
+
+0x0601160d AttackSpellController::OnMinionSourceAttackStateFinished(spell,prevStateType,userData) RVA 0x5175c6 SIG 20030112c000ac1c1182811c
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0006 brfalse.s      IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a call           AttackSpellController::StopMinionDeathFallback token(0x06011615)
+  IL_000f ldarg.1         
+  IL_0010 ldarg.0         
+  IL_0011 ldftn          AttackSpellController::OnMinionSourceAttackStateFinished token(0x0601160D)
+  IL_0017 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0e15400>::.ctor token(0x0A0004BF)
+  IL_001c callvirt       Spell::RemoveStateFinishedCallback token(0x0601494A)
+  IL_0021 pop             
+  IL_0022 ldarg.0         
+  IL_0023 call           AttackSpellController::FinishAttackSpellController token(0x0601160E)
+  IL_0028 ret             
+
+0x0601160e AttackSpellController::FinishAttackSpellController() RVA 0x5175f0 SIG 200001
+  IL_0000 call           Log::get_Gameplay token(0x06014E34)
+  IL_0005 ldstr          'AttackSpellController -- FinishAttackSpellController' string token(0x70397873)
+  IL_000a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_000f callvirt       Logger::PrintDebug token(0x0A000617)
+  IL_0014 ldarg.0         
+  IL_0015 call           AttackSpellController::StopBirthFallback token(0x06011612)
+  IL_001a ldarg.0         
+  IL_001b call           AttackSpellController::StopMinionDeathFallback token(0x06011615)
+  IL_0020 ldarg.0         
+  IL_0021 call           SpellController::GetSource token(0x060149B8)
+  IL_0026 stloc.0         
+  IL_0027 ldloc.0         
+  IL_0028 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_002d stloc.1         
+  IL_002e ldloc.0         
+  IL_002f ldc.i4.0        
+  IL_0030 callvirt       Card::EnableAttacking token(0x06012CF9)
+  IL_0035 ldarg.0         
+  IL_0036 ldloc.1         
+  IL_0037 ldloc.0         
+  IL_0038 call           AttackSpellController::CanPlayWindfuryReminder token(0x06011618)
+  IL_003d brtrue.s       IL_0046 
+  IL_003f ldarg.0         
+  IL_0040 call           AttackSpellController::FinishEverything token(0x0601160F)
+  IL_0045 ret             
+  IL_0046 ldarg.0         
+  IL_0047 callvirt       SpellController::OnFinishedTaskList token(0x060149CF)
+  IL_004c ldarg.0         
+  IL_004d ldloc.0         
+  IL_004e call           AttackSpellController::ActivateSpellDeathState token(0x0601160B)
+  IL_0053 ldarg.0         
+  IL_0054 call           AttackSpellController::UpdateActivateCards token(0x06011610)
+  IL_0059 ldarg.0         
+  IL_005a ldarg.0         
+  IL_005b ldloc.1         
+  IL_005c ldloc.0         
+  IL_005d call           AttackSpellController::WaitThenPlayWindfuryReminder token(0x06011617)
+  IL_0062 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_0067 pop             
+  IL_0068 ret             
+
+0x0601160f AttackSpellController::FinishEverything() RVA 0x517665 SIG 200001
+  IL_0000 call           Log::get_Gameplay token(0x06014E34)
+  IL_0005 ldstr          'AttackSpellController -- FinishEverything' string token(0x703978DD)
+  IL_000a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_000f callvirt       Logger::PrintDebug token(0x0A000617)
+  IL_0014 ldarg.0         
+  IL_0015 call           AttackSpellController::StopBirthFallback token(0x06011612)
+  IL_001a ldarg.0         
+  IL_001b call           AttackSpellController::StopMinionDeathFallback token(0x06011615)
+  IL_0020 ldarg.0         
+  IL_0021 call           AttackSpellController::UpdateActivateCards token(0x06011610)
+  IL_0026 ldarg.0         
+  IL_0027 ldnull          
+  IL_0028 call           AttackSpellController::ActivateSpellDeathState token(0x0601160B)
+  IL_002d ldarg.0         
+  IL_002e callvirt       SpellController::OnFinishedTaskList token(0x060149CF)
+  IL_0033 ldarg.0         
+  IL_0034 callvirt       SpellController::OnFinished token(0x060149D0)
+  IL_0039 ret             
+
+0x06011610 AttackSpellController::UpdateActivateCards() RVA 0x5176a0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellController::GetSource token(0x060149B8)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0011 
+  IL_0010 ret             
+  IL_0011 ldloc.0         
+  IL_0012 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0017 stloc.1         
+  IL_0018 ldloc.1         
+  IL_0019 brfalse.s      IL_0028 
+  IL_001b ldloc.1         
+  IL_001c ldc.i4         4877 
+  IL_0021 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0026 brtrue.s       IL_0029 
+  IL_0028 ret             
+  IL_0029 ldloc.0         
+  IL_002a callvirt       Card::GetActor token(0x06012DD6)
+  IL_002f stloc.2         
+  IL_0030 ldloc.2         
+  IL_0031 ldnull          
+  IL_0032 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0037 brfalse.s      IL_003a 
+  IL_0039 ret             
+  IL_003a ldloc.0         
+  IL_003b ldc.i4.1        
+  IL_003c callvirt       Card::UpdateActorState token(0x06012DCD)
+  IL_0041 ldloc.2         
+  IL_0042 callvirt       Actor::SetCorrectStateForInteractableObjectSpell token(0x06012918)
+  IL_0047 ret             
+
+0x06011611 AttackSpellController::StartBirthFallback() RVA 0x5176f4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           AttackSpellController::StopBirthFallback token(0x06011612)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldarg.0         
+  IL_0009 call           AttackSpellController::WaitToForceBirthToIdle token(0x06011613)
+  IL_000e call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_0013 stfld          AttackSpellController::m_birthFallbackCoroutine token(0x0400EA07)
+  IL_0018 ret             
+
+0x06011612 AttackSpellController::StopBirthFallback() RVA 0x51770e SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          AttackSpellController::m_birthFallbackCoroutine token(0x0400EA07)
+  IL_0006 brfalse.s      IL_001b 
+  IL_0008 ldarg.0         
+  IL_0009 ldarg.0         
+  IL_000a ldfld          AttackSpellController::m_birthFallbackCoroutine token(0x0400EA07)
+  IL_000f call           UnityEngine.MonoBehaviour::StopCoroutine token(0x0A0002A5)
+  IL_0014 ldarg.0         
+  IL_0015 ldnull          
+  IL_0016 stfld          AttackSpellController::m_birthFallbackCoroutine token(0x0400EA07)
+  IL_001b ret             
+
+0x06011613 AttackSpellController::WaitToForceBirthToIdle() RVA 0x51772b SIG 2000128111
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <WaitToForceBirthToIdle>d__46::.ctor token(0x06011641)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <WaitToForceBirthToIdle>d__46::<>4__this token(0x0400EA1F)
+  IL_000d ret             
+
+0x06011614 AttackSpellController::StartMinionDeathFallback() RVA 0x51773a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           AttackSpellController::StopMinionDeathFallback token(0x06011615)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldarg.0         
+  IL_0009 call           AttackSpellController::WaitToForceMinionDeathToFinish token(0x06011616)
+  IL_000e call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_0013 stfld          AttackSpellController::m_deathFallbackCoroutine token(0x0400EA08)
+  IL_0018 ret             
+
+0x06011615 AttackSpellController::StopMinionDeathFallback() RVA 0x517754 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          AttackSpellController::m_deathFallbackCoroutine token(0x0400EA08)
+  IL_0006 brfalse.s      IL_001b 
+  IL_0008 ldarg.0         
+  IL_0009 ldarg.0         
+  IL_000a ldfld          AttackSpellController::m_deathFallbackCoroutine token(0x0400EA08)
+  IL_000f call           UnityEngine.MonoBehaviour::StopCoroutine token(0x0A0002A5)
+  IL_0014 ldarg.0         
+  IL_0015 ldnull          
+  IL_0016 stfld          AttackSpellController::m_deathFallbackCoroutine token(0x0400EA08)
+  IL_001b ret             
+
+0x06011616 AttackSpellController::WaitToForceMinionDeathToFinish() RVA 0x517771 SIG 2000128111
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <WaitToForceMinionDeathToFinish>d__49::.ctor token(0x06011647)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <WaitToForceMinionDeathToFinish>d__49::<>4__this token(0x0400EA22)
+  IL_000d ret             
+
+0x06011617 AttackSpellController::WaitThenPlayWindfuryReminder(entity,card) RVA 0x517780 SIG 200212811112c000a32012c0009ebc
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <WaitThenPlayWindfuryReminder>d__50::.ctor token(0x0601163B)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <WaitThenPlayWindfuryReminder>d__50::<>4__this token(0x0400EA1A)
+  IL_000d dup             
+  IL_000e ldarg.1         
+  IL_000f stfld          <WaitThenPlayWindfuryReminder>d__50::entity token(0x0400EA1B)
+  IL_0014 dup             
+  IL_0015 ldarg.2         
+  IL_0016 stfld          <WaitThenPlayWindfuryReminder>d__50::card token(0x0400EA1C)
+  IL_001b ret             
+
+0x06011618 AttackSpellController::CanPlayWindfuryReminder(entity,card) RVA 0x5177a0 SIG 20020212c000a32012c0009ebc
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       EntityBase::HasWindfury token(0x06013927)
+  IL_0006 brtrue.s       IL_000a 
+  IL_0008 ldc.i4.0        
+  IL_0009 ret             
+  IL_000a ldarg.1         
+  IL_000b callvirt       EntityBase::IsExhausted token(0x060138F9)
+  IL_0010 brfalse.s      IL_0014 
+  IL_0012 ldc.i4.0        
+  IL_0013 ret             
+  IL_0014 ldarg.1         
+  IL_0015 callvirt       EntityBase::GetZone token(0x06013922)
+  IL_001a ldc.i4.1        
+  IL_001b beq.s          IL_001f 
+  IL_001d ldc.i4.0        
+  IL_001e ret             
+  IL_001f ldarg.1         
+  IL_0020 callvirt       Entity::GetController token(0x060137DE)
+  IL_0025 callvirt       Player::IsCurrentPlayer token(0x06005D74)
+  IL_002a brtrue.s       IL_002e 
+  IL_002c ldc.i4.0        
+  IL_002d ret             
+  IL_002e ldarg.2         
+  IL_002f ldc.i4.s       49 
+  IL_0031 ldc.i4.1        
+  IL_0032 callvirt       Card::GetActorSpell token(0x06012DA4)
+  IL_0037 ldnull          
+  IL_0038 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_003d brfalse.s      IL_0041 
+  IL_003f ldc.i4.0        
+  IL_0040 ret             
+  IL_0041 ldc.i4.1        
+  IL_0042 ret             
+
+0x06011619 AttackSpellController::PlayWindfuryReminderIfPossible(entity,card) RVA 0x5177ef SIG 20020112c000a32012c0009ebc
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.2         
+  IL_0003 call           AttackSpellController::CanPlayWindfuryReminder token(0x06011618)
+  IL_0008 brtrue.s       IL_000b 
+  IL_000a ret             
+  IL_000b ldarg.2         
+  IL_000c ldc.i4.s       49 
+  IL_000e callvirt       Card::ActivateActorSpell token(0x06012DA5)
+  IL_0013 pop             
+  IL_0014 ret             
+
+0x0601161a AttackSpellController::MoveSourceToTarget(sourceCard,sourceEntity,impactPos) RVA 0x517808 SIG 20030112c0009ebc12c000a320115d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.3         
+  IL_0003 call           AttackSpellController::ComputeImpactOffset token(0x0601161E)
+  IL_0008 stloc.0         
+  IL_0009 ldarg.3         
+  IL_000a ldloc.0         
+  IL_000b call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0010 stloc.1         
+  IL_0011 ldc.r4         0.0 
+  IL_0016 stloc.2         
+  IL_0017 ldc.i4.s       21 
+  IL_0019 stloc.3         
+  IL_001a ldarg.2         
+  IL_001b callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_0020 brfalse.s      IL_003c 
+  IL_0022 ldarg.0         
+  IL_0023 ldfld          AttackSpellController::m_HeroInfo token(0x0400E9F8)
+  IL_0028 ldfld          HeroAttackDef::m_MoveToTargetDuration token(0x0400E9EE)
+  IL_002d stloc.2         
+  IL_002e ldarg.0         
+  IL_002f ldfld          AttackSpellController::m_HeroInfo token(0x0400E9F8)
+  IL_0034 ldfld          HeroAttackDef::m_MoveToTargetEaseType token(0x0400E9EF)
+  IL_0039 stloc.3         
+  IL_003a br.s           IL_0054 
+  IL_003c ldarg.0         
+  IL_003d ldfld          AttackSpellController::m_AllyInfo token(0x0400E9F9)
+  IL_0042 ldfld          AllyAttackDef::m_MoveToTargetDuration token(0x0400E9F6)
+  IL_0047 stloc.2         
+  IL_0048 ldarg.0         
+  IL_0049 ldfld          AttackSpellController::m_AllyInfo token(0x0400E9F9)
+  IL_004e ldfld          AllyAttackDef::m_MoveToTargetEaseType token(0x0400E9F7)
+  IL_0053 stloc.3         
+  IL_0054 call           iTweenManager::Get token(0x0A000228)
+  IL_0059 callvirt       iTweenManager::GetTweenHashTable token(0x0A000229)
+  IL_005e stloc.s        local(0x0004) 
+  IL_0060 ldloc.s        local(0x0004) 
+  IL_0062 ldstr          'position' string token(0x700061EB)
+  IL_0067 ldloc.1         
+  IL_0068 box            UnityEngine.Vector3 token(0x01000017)
+  IL_006d callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0072 ldloc.s        local(0x0004) 
+  IL_0074 ldstr          'time' string token(0x70001972)
+  IL_0079 ldloc.2         
+  IL_007a box            System.Single token(0x01000074)
+  IL_007f callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0084 ldloc.s        local(0x0004) 
+  IL_0086 ldstr          'easetype' string token(0x700061FD)
+  IL_008b ldloc.3         
+  IL_008c box            EaseType token(0x01000089)
+  IL_0091 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0096 ldloc.s        local(0x0004) 
+  IL_0098 ldstr          'oncomplete' string token(0x7000197C)
+  IL_009d ldstr          'OnMoveToTargetFinished' string token(0x70397931)
+  IL_00a2 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_00a7 ldloc.s        local(0x0004) 
+  IL_00a9 ldstr          'oncompletetarget' string token(0x7000CDCD)
+  IL_00ae ldarg.0         
+  IL_00af call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00b4 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_00b9 ldarg.1         
+  IL_00ba callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00bf ldloc.s        local(0x0004) 
+  IL_00c1 call           iTween::MoveTo token(0x0A00022C)
+  IL_00c6 ret             
+
+0x0601161b AttackSpellController::OrientSourceHeroToTarget(sourceCard) RVA 0x5178dc SIG 20010112c0009ebc
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0007 callvirt       UnityEngine.Transform::get_forward token(0x0A000D8A)
+  IL_000c stfld          AttackSpellController::m_sourceFacing token(0x0400EA0C)
+  IL_0011 ldarg.1         
+  IL_0012 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0017 ldarg.0         
+  IL_0018 ldfld          AttackSpellController::m_sourceToTarget token(0x0400EA0B)
+  IL_001d callvirt       UnityEngine.Transform::InverseTransformDirection token(0x0A000D77)
+  IL_0022 stloc.0         
+  IL_0023 ldarg.0         
+  IL_0024 ldfld          AttackSpellController::m_sourceFacing token(0x0400EA0C)
+  IL_0029 ldloc.0         
+  IL_002a call           UnityEngine.Vector3::Dot token(0x0A000D6A)
+  IL_002f ldc.r4         0.0 
+  IL_0034 bge.un.s       IL_003d 
+  IL_0036 ldloc.0         
+  IL_0037 call           UnityEngine.Vector3::op_UnaryNegation token(0x0A000D9C)
+  IL_003c stloc.0         
+  IL_003d ldloc.0         
+  IL_003e call           UnityEngine.Quaternion::LookRotation token(0x0A00057D)
+  IL_0043 stloc.1         
+  IL_0044 call           iTweenManager::Get token(0x0A000228)
+  IL_0049 callvirt       iTweenManager::GetTweenHashTable token(0x0A000229)
+  IL_004e stloc.2         
+  IL_004f ldloc.2         
+  IL_0050 ldstr          'rotation' string token(0x700351E9)
+  IL_0055 ldloca.s       local(0x0001) 
+  IL_0057 call           UnityEngine.Quaternion::get_eulerAngles token(0x0A000B56)
+  IL_005c box            UnityEngine.Vector3 token(0x01000017)
+  IL_0061 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0066 ldloc.2         
+  IL_0067 ldstr          'time' string token(0x70001972)
+  IL_006c ldarg.0         
+  IL_006d ldfld          AttackSpellController::m_HeroInfo token(0x0400E9F8)
+  IL_0072 ldfld          HeroAttackDef::m_OrientToTargetDuration token(0x0400E9F0)
+  IL_0077 box            System.Single token(0x01000074)
+  IL_007c callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0081 ldloc.2         
+  IL_0082 ldstr          'easetype' string token(0x700061FD)
+  IL_0087 ldarg.0         
+  IL_0088 ldfld          AttackSpellController::m_HeroInfo token(0x0400E9F8)
+  IL_008d ldfld          HeroAttackDef::m_OrientToTargetEaseType token(0x0400E9F1)
+  IL_0092 box            EaseType token(0x01000089)
+  IL_0097 callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_009c ldarg.1         
+  IL_009d callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00a2 ldloc.2         
+  IL_00a3 call           iTween::RotateTo token(0x0A000C73)
+  IL_00a8 ret             
+
+0x0601161c AttackSpellController::MoveTargetToSource(targetCard,sourceEntity,impactPos) RVA 0x517994 SIG 20030112c0009ebc12c000a320115d
+  IL_0000 ldc.r4         0.0 
+  IL_0005 stloc.0         
+  IL_0006 ldc.i4.s       21 
+  IL_0008 stloc.1         
+  IL_0009 ldarg.2         
+  IL_000a callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_000f brfalse.s      IL_002b 
+  IL_0011 ldarg.0         
+  IL_0012 ldfld          AttackSpellController::m_HeroInfo token(0x0400E9F8)
+  IL_0017 ldfld          HeroAttackDef::m_MoveToTargetDuration token(0x0400E9EE)
+  IL_001c stloc.0         
+  IL_001d ldarg.0         
+  IL_001e ldfld          AttackSpellController::m_HeroInfo token(0x0400E9F8)
+  IL_0023 ldfld          HeroAttackDef::m_MoveToTargetEaseType token(0x0400E9EF)
+  IL_0028 stloc.1         
+  IL_0029 br.s           IL_0043 
+  IL_002b ldarg.0         
+  IL_002c ldfld          AttackSpellController::m_AllyInfo token(0x0400E9F9)
+  IL_0031 ldfld          AllyAttackDef::m_MoveToTargetDuration token(0x0400E9F6)
+  IL_0036 stloc.0         
+  IL_0037 ldarg.0         
+  IL_0038 ldfld          AttackSpellController::m_AllyInfo token(0x0400E9F9)
+  IL_003d ldfld          AllyAttackDef::m_MoveToTargetEaseType token(0x0400E9F7)
+  IL_0042 stloc.1         
+  IL_0043 call           iTweenManager::Get token(0x0A000228)
+  IL_0048 callvirt       iTweenManager::GetTweenHashTable token(0x0A000229)
+  IL_004d stloc.2         
+  IL_004e ldloc.2         
+  IL_004f ldstr          'position' string token(0x700061EB)
+  IL_0054 ldarg.3         
+  IL_0055 box            UnityEngine.Vector3 token(0x01000017)
+  IL_005a callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_005f ldloc.2         
+  IL_0060 ldstr          'time' string token(0x70001972)
+  IL_0065 ldloc.0         
+  IL_0066 box            System.Single token(0x01000074)
+  IL_006b callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0070 ldloc.2         
+  IL_0071 ldstr          'easetype' string token(0x700061FD)
+  IL_0076 ldloc.1         
+  IL_0077 box            EaseType token(0x01000089)
+  IL_007c callvirt       System.Collections.Hashtable::Add token(0x0A00022B)
+  IL_0081 ldarg.1         
+  IL_0082 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0087 ldloc.2         
+  IL_0088 call           iTween::MoveTo token(0x0A00022C)
+  IL_008d ret             
+
+0x0601161d AttackSpellController::ComputeImpactPos() RVA 0x517a30 SIG 2000115d
+  IL_0000 ldc.r4         1.0 
+  IL_0005 stloc.0         
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_000c ldc.i4.2        
+  IL_000d bne.un.s       IL_0015 
+  IL_000f ldc.r4         0.5 
+  IL_0014 stloc.0         
+  IL_0015 ldloc.0         
+  IL_0016 ldarg.0         
+  IL_0017 ldfld          AttackSpellController::m_ImpactStagingPoint token(0x0400E9FA)
+  IL_001c mul             
+  IL_001d ldarg.0         
+  IL_001e ldfld          AttackSpellController::m_sourceToTarget token(0x0400EA0B)
+  IL_0023 call           UnityEngine.Vector3::op_Multiply token(0x0A000B70)
+  IL_0028 stloc.1         
+  IL_0029 ldarg.0         
+  IL_002a ldfld          AttackSpellController::m_sourcePos token(0x0400EA0A)
+  IL_002f ldloc.1         
+  IL_0030 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0035 ret             
+
+0x0601161e AttackSpellController::ComputeImpactOffset(sourceCard,impactPos) RVA 0x517a74 SIG 2002115d12c0009ebc115d
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          AttackSpellController::m_SourceImpactOffset token(0x0400E9FB)
+  IL_0006 ldc.r4         0.5 
+  IL_000b call           UnityEngine.Mathf::Approximately token(0x0A00220D)
+  IL_0010 brfalse.s      IL_0018 
+  IL_0012 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0017 ret             
+  IL_0018 ldarg.1         
+  IL_0019 callvirt       Card::GetActor token(0x06012DD6)
+  IL_001e ldc.i4.0        
+  IL_001f callvirt       Actor::GetMeshRenderer token(0x06012846)
+  IL_0024 ldnull          
+  IL_0025 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_002a brfalse.s      IL_0032 
+  IL_002c call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0031 ret             
+  IL_0032 ldarg.1         
+  IL_0033 callvirt       Card::GetActor token(0x06012DD6)
+  IL_0038 ldc.i4.0        
+  IL_0039 callvirt       Actor::GetMeshRenderer token(0x06012846)
+  IL_003e callvirt       UnityEngine.Renderer::get_bounds token(0x0A0000FD)
+  IL_0043 stloc.0         
+  IL_0044 ldloca.s       local(0x0000) 
+  IL_0046 ldarg.0         
+  IL_0047 ldfld          AttackSpellController::m_sourcePos token(0x0400EA0A)
+  IL_004c call           UnityEngine.Bounds::set_center token(0x0A000B0C)
+  IL_0051 ldloca.s       local(0x0001) 
+  IL_0053 ldarg.2         
+  IL_0054 ldloca.s       local(0x0000) 
+  IL_0056 call           UnityEngine.Bounds::get_center token(0x0A00035C)
+  IL_005b ldarg.2         
+  IL_005c call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_0061 call           UnityEngine.Ray::.ctor token(0x0A00220B)
+  IL_0066 ldloca.s       local(0x0000) 
+  IL_0068 ldloc.1         
+  IL_0069 ldloca.s       local(0x0002) 
+  IL_006b call           UnityEngine.Bounds::IntersectRay token(0x0A003EFA)
+  IL_0070 brtrue.s       IL_0078 
+  IL_0072 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0077 ret             
+  IL_0078 ldloca.s       local(0x0001) 
+  IL_007a call           UnityEngine.Ray::get_origin token(0x0A003EFB)
+  IL_007f ldloc.2         
+  IL_0080 ldloca.s       local(0x0001) 
+  IL_0082 call           UnityEngine.Ray::get_direction token(0x0A003EFC)
+  IL_0087 call           UnityEngine.Vector3::op_Multiply token(0x0A000B70)
+  IL_008c call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0091 stloc.3         
+  IL_0092 ldc.r4         2.0 
+  IL_0097 ldloca.s       local(0x0000) 
+  IL_0099 call           UnityEngine.Bounds::get_center token(0x0A00035C)
+  IL_009e call           UnityEngine.Vector3::op_Multiply token(0x0A000B70)
+  IL_00a3 ldloc.3         
+  IL_00a4 call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_00a9 ldloc.3         
+  IL_00aa call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_00af stloc.s        local(0x0004) 
+  IL_00b1 ldc.r4         0.5 
+  IL_00b6 ldloc.s        local(0x0004) 
+  IL_00b8 call           UnityEngine.Vector3::op_Multiply token(0x0A000B70)
+  IL_00bd ldarg.0         
+  IL_00be ldfld          AttackSpellController::m_SourceImpactOffset token(0x0400E9FB)
+  IL_00c3 ldloc.s        local(0x0004) 
+  IL_00c5 call           UnityEngine.Vector3::op_Multiply token(0x0A000B70)
+  IL_00ca call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_00cf ret             
+
+0x0601161f AttackSpellController::ActivateImpactEffects(sourceCard,targetCard) RVA 0x517b50 SIG 20020112c0009ebc12c0009ebc
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.2         
+  IL_0003 call           AttackSpellController::DetermineImpactSpellPrefab token(0x06011620)
+  IL_0008 stloc.0         
+  IL_0009 ldloc.0         
+  IL_000a call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_000f brfalse.s      IL_0012 
+  IL_0011 ret             
+  IL_0012 call           SpellManager::Get token(0x060149FC)
+  IL_0017 ldloc.0         
+  IL_0018 callvirt       SpellManager::GetSpell token(0x06014A01)
+  IL_001d dup             
+  IL_001e callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0023 ldnull          
+  IL_0024 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0029 dup             
+  IL_002a ldarg.1         
+  IL_002b callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0030 callvirt       Blizzard.T5.Game.Spells.SpellBase::SetSource token(0x0A000574)
+  IL_0035 dup             
+  IL_0036 ldarg.2         
+  IL_0037 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_003c callvirt       Blizzard.T5.Game.Spells.SpellBase::AddTarget token(0x0A000575)
+  IL_0041 ldarg.2         
+  IL_0042 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0047 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_004c stloc.1         
+  IL_004d dup             
+  IL_004e ldloc.1         
+  IL_004f callvirt       Blizzard.T5.Game.Spells.SpellBase::SetPosition token(0x0A00057B)
+  IL_0054 ldarg.0         
+  IL_0055 ldfld          AttackSpellController::m_sourceToTarget token(0x0400EA0B)
+  IL_005a call           UnityEngine.Quaternion::LookRotation token(0x0A00057D)
+  IL_005f stloc.2         
+  IL_0060 dup             
+  IL_0061 ldloc.2         
+  IL_0062 callvirt       Blizzard.T5.Game.Spells.SpellBase::SetOrientation token(0x0A00057E)
+  IL_0067 dup             
+  IL_0068 ldarg.0         
+  IL_0069 ldftn          AttackSpellController::OnImpactSpellStateFinished token(0x06011622)
+  IL_006f newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0e15400>::.ctor token(0x0A0004BF)
+  IL_0074 callvirt       Spell::AddStateFinishedCallback token(0x06014948)
+  IL_0079 callvirt       Blizzard.T5.Game.Spells.SpellBase::Activate token(0x0A000450)
+  IL_007e call           BaconBoard::Get token(0x0600093F)
+  IL_0083 stloc.3         
+  IL_0084 ldloc.3         
+  IL_0085 ldnull          
+  IL_0086 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_008b brfalse.s      IL_0095 
+  IL_008d ldloc.3         
+  IL_008e ldarg.1         
+  IL_008f ldarg.2         
+  IL_0090 callvirt       BaconBoard::CheckForHeroHeavyHitBoardEffects token(0x06000961)
+  IL_0095 ret             
+
+0x06011620 AttackSpellController::DetermineImpactSpellPrefab(sourceCard,targetCard) RVA 0x517bf4 SIG 20020e12c0009ebc12c0009ebc
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0006 callvirt       EntityBase::GetATK token(0x06013917)
+  IL_000b stloc.0         
+  IL_000c ldarg.0         
+  IL_000d ldarg.1         
+  IL_000e ldarg.2         
+  IL_000f call           AttackSpellController::WasAttackCriticalHit token(0x06011621)
+  IL_0014 brfalse.s      IL_0027 
+  IL_0016 ldarg.0         
+  IL_0017 ldfld          AttackSpellController::m_CriticalImpactDefHandles token(0x0400E9FD)
+  IL_001c brfalse.s      IL_0027 
+  IL_001e ldarg.0         
+  IL_001f ldfld          AttackSpellController::m_CriticalImpactDefHandles token(0x0400E9FD)
+  IL_0024 ldlen           
+  IL_0025 brtrue.s       IL_002f 
+  IL_0027 ldarg.0         
+  IL_0028 ldfld          AttackSpellController::m_ImpactDefHandles token(0x0400E9FC)
+  IL_002d br.s           IL_0035 
+  IL_002f ldarg.0         
+  IL_0030 ldfld          AttackSpellController::m_CriticalImpactDefHandles token(0x0400E9FD)
+  IL_0035 ldsfld         <>c::<>9__59_0 token(0x0400EA0F)
+  IL_003a dup             
+  IL_003b brtrue.s       IL_0054 
+  IL_003d pop             
+  IL_003e ldsfld         <>c::<>9 token(0x0400EA0E)
+  IL_0043 ldftn          <>c::<DetermineImpactSpellPrefab>b__59_0 token(0x0601162E)
+  IL_0049 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0e34aa0>::.ctor token(0x0A00057F)
+  IL_004e dup             
+  IL_004f stsfld         <>c::<>9__59_0 token(0x0400EA0F)
+  IL_0054 ldloc.0         
+  IL_0055 call           SpellUtils::GetAppropriateElementAccordingToRanges<spec> token(0x2B0000D3)
+  IL_005a stloc.1         
+  IL_005b ldloc.1         
+  IL_005c brfalse.s      IL_0072 
+  IL_005e ldloc.1         
+  IL_005f ldfld          SpellHandleValueRange::m_spellPrefabName token(0x04011CD8)
+  IL_0064 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0069 brtrue.s       IL_0072 
+  IL_006b ldloc.1         
+  IL_006c ldfld          SpellHandleValueRange::m_spellPrefabName token(0x04011CD8)
+  IL_0071 ret             
+  IL_0072 ldarg.0         
+  IL_0073 ldfld          AttackSpellController::m_DefaultImpactSpellPrefabHandle token(0x0400E9FE)
+  IL_0078 ret             
+
+0x06011621 AttackSpellController::WasAttackCriticalHit(sourceCard,targetCard) RVA 0x517c7c SIG 20020212c0009ebc12c0009ebc
+  IL_0000 ldc.i4.0        
+  IL_0001 stloc.0         
+  IL_0002 ldarg.1         
+  IL_0003 ldnull          
+  IL_0004 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0009 brtrue.s       IL_0014 
+  IL_000b ldarg.2         
+  IL_000c ldnull          
+  IL_000d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0012 brfalse.s      IL_0016 
+  IL_0014 ldloc.0         
+  IL_0015 ret             
+  IL_0016 ldarg.1         
+  IL_0017 callvirt       Card::GetControllerSide token(0x06012CC7)
+  IL_001c stloc.1         
+  IL_001d ldarg.2         
+  IL_001e callvirt       Card::GetControllerSide token(0x06012CC7)
+  IL_0023 stloc.2         
+  IL_0024 ldloc.1         
+  IL_0025 brfalse.s      IL_0050 
+  IL_0027 ldloc.2         
+  IL_0028 brfalse.s      IL_0050 
+  IL_002a ldloc.1         
+  IL_002b ldloc.2         
+  IL_002c beq.s          IL_004e 
+  IL_002e ldarg.1         
+  IL_002f callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0034 callvirt       EntityBase::IsLettuceMercenary token(0x060138DA)
+  IL_0039 brfalse.s      IL_004e 
+  IL_003b ldarg.1         
+  IL_003c callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0041 ldarg.2         
+  IL_0042 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0047 callvirt       Entity::IsMyLettuceRoleStrongAgainst token(0x0601387B)
+  IL_004c br.s           IL_004f 
+  IL_004e ldc.i4.0        
+  IL_004f stloc.0         
+  IL_0050 ldloc.0         
+  IL_0051 ret             
+
+0x06011622 AttackSpellController::OnImpactSpellStateFinished(spell,prevStateType,userData) RVA 0x1a0165 SIG 20030112c000ac1c1182811c
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0006 brfalse.s      IL_0009 
+  IL_0008 ret             
+  IL_0009 call           SpellManager::Get token(0x060149FC)
+  IL_000e ldarg.1         
+  IL_000f ldc.i4.0        
+  IL_0010 callvirt       SpellManager::ReleaseSpell token(0x06014A03)
+  IL_0015 pop             
+  IL_0016 ret             
+
+0x06011623 AttackSpellController::GetLostFrameTimeCatchUpSeconds() RVA 0x517cdc SIG 20000c
+  IL_0000 ldarg.0         
+  IL_0001 call           SpellController::GetSource token(0x060149B8)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_000e brfalse.s      IL_002b 
+  IL_0010 ldloc.0         
+  IL_0011 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0016 brfalse.s      IL_002b 
+  IL_0018 ldloc.0         
+  IL_0019 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_001e callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_0023 brfalse.s      IL_002b 
+  IL_0025 ldc.r4         0.0 
+  IL_002a ret             
+  IL_002b ldarg.0         
+  IL_002c call           SpellController::GetTarget token(0x060149BF)
+  IL_0031 stloc.1         
+  IL_0032 ldloc.1         
+  IL_0033 ldnull          
+  IL_0034 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0039 brfalse.s      IL_0056 
+  IL_003b ldloc.1         
+  IL_003c callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0041 brfalse.s      IL_0056 
+  IL_0043 ldloc.1         
+  IL_0044 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0049 callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_004e brfalse.s      IL_0056 
+  IL_0050 ldc.r4         0.0 
+  IL_0055 ret             
+  IL_0056 ldc.r4         0.800000011920929 
+  IL_005b ret             
+
+0x06011624 AttackSpellController::OnFinishedTaskList() RVA 0x517d44 SIG 200001
+  IL_0000 call           Log::get_Gameplay token(0x06014E34)
+  IL_0005 ldstr          'AttackSpellController -- OnFinishedTaskList' string token(0x7039795F)
+  IL_000a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_000f callvirt       Logger::PrintDebug token(0x0A000617)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          AttackSpellController::m_attackType token(0x0400EA04)
+  IL_001a ldc.i4.2        
+  IL_001b ceq             
+  IL_001d brtrue         IL_00dd 
+  IL_0022 ldarg.0         
+  IL_0023 call           SpellController::GetSource token(0x060149B8)
+  IL_0028 stloc.0         
+  IL_0029 ldloc.0         
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0030 brfalse        IL_00dd 
+  IL_0035 ldloc.0         
+  IL_0036 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_003b brfalse        IL_00dd 
+  IL_0040 ldloc.0         
+  IL_0041 ldc.i4.0        
+  IL_0042 callvirt       Card::SetDoNotSort token(0x06012DF3)
+  IL_0047 ldloc.0         
+  IL_0048 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_004d callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_0052 brtrue         IL_00dd 
+  IL_0057 ldloc.0         
+  IL_0058 callvirt       Card::GetZone token(0x06012DE5)
+  IL_005d stloc.1         
+  IL_005e ldloc.1         
+  IL_005f ldnull          
+  IL_0060 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0065 brfalse.s      IL_0093 
+  IL_0067 ldloc.1         
+  IL_0068 callvirt       Zone::UpdateLayout token(0x0600639B)
+  IL_006d ldarg.0         
+  IL_006e ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0073 ldnull          
+  IL_0074 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0079 brfalse.s      IL_0093 
+  IL_007b ldloc.1         
+  IL_007c ldfld          Zone::m_Side token(0x040045FC)
+  IL_0081 ldc.i4.1        
+  IL_0082 ceq             
+  IL_0084 stloc.2         
+  IL_0085 ldarg.0         
+  IL_0086 ldarg.0         
+  IL_0087 ldloc.0         
+  IL_0088 ldloc.2         
+  IL_0089 call           AttackSpellController::GetSourceAttackSpell token(0x06011626)
+  IL_008e stfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0093 ldarg.0         
+  IL_0094 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_0099 ldnull          
+  IL_009a call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_009f brfalse.s      IL_00dd 
+  IL_00a1 ldarg.0         
+  IL_00a2 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_00a7 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_00ac ldc.i4.1        
+  IL_00ad beq.s          IL_00cb 
+  IL_00af ldarg.0         
+  IL_00b0 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_00b5 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_00ba ldc.i4.2        
+  IL_00bb beq.s          IL_00cb 
+  IL_00bd ldarg.0         
+  IL_00be ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_00c3 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_00c8 ldc.i4.3        
+  IL_00c9 bne.un.s       IL_00dd 
+  IL_00cb ldarg.0         
+  IL_00cc ldloc.0         
+  IL_00cd callvirt       Card::GetEntity token(0x06012CC3)
+  IL_00d2 ldarg.0         
+  IL_00d3 ldfld          AttackSpellController::m_sourceAttackSpell token(0x0400EA05)
+  IL_00d8 call           AttackSpellController::CancelAttackSpell token(0x06011625)
+  IL_00dd ldarg.0         
+  IL_00de call           SpellController::OnFinishedTaskList token(0x060149CF)
+  IL_00e3 ret             
+
+0x06011625 AttackSpellController::CancelAttackSpell(sourceEntity,attackSpell) RVA 0x517e34 SIG 20020112c000a32012c000ac1c
+  IL_0000 ldarg.2         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000a 
+  IL_0009 ret             
+  IL_000a ldarg.1         
+  IL_000b brtrue.s       IL_0015 
+  IL_000d ldarg.2         
+  IL_000e ldc.i4.5        
+  IL_000f callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_0014 ret             
+  IL_0015 ldarg.1         
+  IL_0016 callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_001b brfalse.s      IL_0025 
+  IL_001d ldarg.2         
+  IL_001e ldc.i4.4        
+  IL_001f callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_0024 ret             
+  IL_0025 ldarg.2         
+  IL_0026 ldc.i4.5        
+  IL_0027 callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_002c ret             
+
+0x06011626 AttackSpellController::GetSourceAttackSpell(sourceCard,isSourceFriendly) RVA 0x517e64 SIG 200212c000ac1c12c0009ebc02
+  IL_0000 call           Log::get_Gameplay token(0x06014E34)
+  IL_0005 ldstr          'AttackSpellController -- GetSourceAttackSpell' string token(0x703979B7)
+  IL_000a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_000f callvirt       Logger::PrintDebug token(0x0A000617)
+  IL_0014 call           GameState::Get token(0x06005589)
+  IL_0019 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_001e ldc.i4         1424 
+  IL_0023 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0028 brfalse.s      IL_0044 
+  IL_002a ldarg.1         
+  IL_002b ldc.i4         155 
+  IL_0030 ldc.i4.1        
+  IL_0031 callvirt       Card::GetActorSpell token(0x06012DA4)
+  IL_0036 stloc.0         
+  IL_0037 ldloc.0         
+  IL_0038 ldnull          
+  IL_0039 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_003e brfalse.s      IL_005f 
+  IL_0040 ldloc.0         
+  IL_0041 stloc.1         
+  IL_0042 leave.s        IL_00b0 
+  IL_0044 ldarg.2         
+  IL_0045 brfalse.s      IL_0053 
+  IL_0047 ldarg.1         
+  IL_0048 ldc.i4.s       17 
+  IL_004a ldc.i4.1        
+  IL_004b callvirt       Card::GetActorSpell token(0x06012DA4)
+  IL_0050 stloc.1         
+  IL_0051 leave.s        IL_00b0 
+  IL_0053 ldarg.1         
+  IL_0054 ldc.i4.s       18 
+  IL_0056 ldc.i4.1        
+  IL_0057 callvirt       Card::GetActorSpell token(0x06012DA4)
+  IL_005c stloc.1         
+  IL_005d leave.s        IL_00b0 
+  IL_005f leave.s        IL_00ae 
+  IL_0061 stloc.2         
+  IL_0062 ldstr          'Uncaught exception while looking for Attack Spell in GetSourceAttackSpell ' string token(0x70397A13)
+  IL_0067 stloc.3         
+  IL_0068 ldloc.2         
+  IL_0069 brfalse.s      IL_0090 
+  IL_006b ldloc.3         
+  IL_006c ldstr          '\n{0}: {1}\n{2}' string token(0x7007A7AB)
+  IL_0071 ldloc.2         
+  IL_0072 callvirt       System.Exception::GetType token(0x0A000C25)
+  IL_0077 ldloc.2         
+  IL_0078 callvirt       System.Exception::get_Message token(0x0A000A59)
+  IL_007d ldloc.2         
+  IL_007e callvirt       System.Exception::get_StackTrace token(0x0A002203)
+  IL_0083 call           System.String::Format token(0x0A0000AF)
+  IL_0088 call           System.String::Concat token(0x0A0000C0)
+  IL_008d stloc.3         
+  IL_008e br.s           IL_009c 
+  IL_0090 ldloc.3         
+  IL_0091 ldstr          ', but no exception was captured.' string token(0x7007A7C7)
+  IL_0096 call           System.String::Concat token(0x0A0000C0)
+  IL_009b stloc.3         
+  IL_009c call           Log::get_Gameplay token(0x06014E34)
+  IL_00a1 ldloc.3         
+  IL_00a2 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_00a7 callvirt       Logger::PrintError token(0x0A000074)
+  IL_00ac leave.s        IL_00ae 
+  IL_00ae ldnull          
+  IL_00af ret             
+  IL_00b0 ldloc.1         
+  IL_00b1 ret             
+
+0x06011627 AttackSpellController::InstantiateFinisherSpell(sourceObject,spellPrefabName) RVA 0x517f34 SIG 200212c000ac1c12808d0e
+  IL_0000 call           Log::get_Gameplay token(0x06014E34)
+  IL_0005 ldstr          'AttackSpellController -- InstantiateFinisherSpell' string token(0x70397AAA)
+  IL_000a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_000f callvirt       Logger::PrintDebug token(0x0A000617)
+  IL_0014 ldarg.2         
+  IL_0015 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_001a brfalse.s      IL_001e 
+  IL_001c ldnull          
+  IL_001d ret             
+  IL_001e ldnull          
+  IL_001f stloc.0         
+  IL_0020 call           SpellManager::Get token(0x060149FC)
+  IL_0025 ldarg.2         
+  IL_0026 callvirt       SpellManager::GetSpell token(0x06014A01)
+  IL_002b stloc.0         
+  IL_002c leave.s        IL_007d 
+  IL_002e stloc.1         
+  IL_002f ldstr          'Uncaught exception while looking for a Spell in InstantiateFinisherSpell ' string token(0x70397B0E)
+  IL_0034 stloc.2         
+  IL_0035 ldloc.1         
+  IL_0036 brfalse.s      IL_005d 
+  IL_0038 ldloc.2         
+  IL_0039 ldstr          '\n{0}: {1}\n{2}' string token(0x7007A7AB)
+  IL_003e ldloc.1         
+  IL_003f callvirt       System.Exception::GetType token(0x0A000C25)
+  IL_0044 ldloc.1         
+  IL_0045 callvirt       System.Exception::get_Message token(0x0A000A59)
+  IL_004a ldloc.1         
+  IL_004b callvirt       System.Exception::get_StackTrace token(0x0A002203)
+  IL_0050 call           System.String::Format token(0x0A0000AF)
+  IL_0055 call           System.String::Concat token(0x0A0000C0)
+  IL_005a stloc.2         
+  IL_005b br.s           IL_0069 
+  IL_005d ldloc.2         
+  IL_005e ldstr          ', but no exception was captured.' string token(0x7007A7C7)
+  IL_0063 call           System.String::Concat token(0x0A0000C0)
+  IL_0068 stloc.2         
+  IL_0069 call           Log::get_Gameplay token(0x06014E34)
+  IL_006e ldloc.2         
+  IL_006f call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0074 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0079 ldnull          
+  IL_007a stloc.0         
+  IL_007b leave.s        IL_007d 
+  IL_007d ldloc.0         
+  IL_007e ldnull          
+  IL_007f call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0084 brfalse.s      IL_0088 
+  IL_0086 ldnull          
+  IL_0087 ret             
+  IL_0088 ldloc.0         
+  IL_0089 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_008e ldarg.1         
+  IL_008f callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0094 call           TransformUtil::AttachAndPreserveLocalTransform token(0x06015002)
+  IL_0099 ldloc.0         
+  IL_009a ret             
+
+0x06011628 AttackSpellController::GetSpellPath(sourceEntity,targetEntity,opponentFinisher,finisherSettings) RVA 0x517fec SIG 20040e12c000a32012c000a320021289a0
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       EntityBase::GetATK token(0x06013917)
+  IL_0006 ldarg.2         
+  IL_0007 callvirt       Entity::GetCurrentDefense token(0x060137DC)
+  IL_000c blt.s          IL_0079 
+  IL_000e call           GameState::Get token(0x06005589)
+  IL_0013 callvirt       GameState::CountPlayersAlive token(0x060055D2)
+  IL_0018 ldc.i4.1        
+  IL_0019 bne.un.s       IL_004a 
+  IL_001b ldarg.3         
+  IL_001c brfalse.s      IL_0034 
+  IL_001e ldarg.s        argument(0x0004) 
+  IL_0020 ldfld          FinisherGameplaySettings::FirstPlaceVictoryOpponentPrefab token(0x04000C9B)
+  IL_0025 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_002a brtrue.s       IL_0034 
+  IL_002c ldarg.s        argument(0x0004) 
+  IL_002e ldfld          FinisherGameplaySettings::FirstPlaceVictoryOpponentPrefab token(0x04000C9B)
+  IL_0033 ret             
+  IL_0034 ldarg.s        argument(0x0004) 
+  IL_0036 ldfld          FinisherGameplaySettings::FirstPlaceVictoryPrefab token(0x04000C9A)
+  IL_003b call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0040 brtrue.s       IL_004a 
+  IL_0042 ldarg.s        argument(0x0004) 
+  IL_0044 ldfld          FinisherGameplaySettings::FirstPlaceVictoryPrefab token(0x04000C9A)
+  IL_0049 ret             
+  IL_004a ldarg.3         
+  IL_004b brfalse.s      IL_0063 
+  IL_004d ldarg.s        argument(0x0004) 
+  IL_004f ldfld          FinisherGameplaySettings::LethalOpponentPrefab token(0x04000C99)
+  IL_0054 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0059 brtrue.s       IL_0063 
+  IL_005b ldarg.s        argument(0x0004) 
+  IL_005d ldfld          FinisherGameplaySettings::LethalOpponentPrefab token(0x04000C99)
+  IL_0062 ret             
+  IL_0063 ldarg.s        argument(0x0004) 
+  IL_0065 ldfld          FinisherGameplaySettings::LethalPrefab token(0x04000C98)
+  IL_006a call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_006f brtrue.s       IL_0079 
+  IL_0071 ldarg.s        argument(0x0004) 
+  IL_0073 ldfld          FinisherGameplaySettings::LethalPrefab token(0x04000C98)
+  IL_0078 ret             
+  IL_0079 ldarg.1         
+  IL_007a callvirt       EntityBase::GetATK token(0x06013917)
+  IL_007f ldc.i4.s       15 
+  IL_0081 blt.s          IL_00c2 
+  IL_0083 ldarg.3         
+  IL_0084 brfalse.s      IL_00a4 
+  IL_0086 ldarg.s        argument(0x0004) 
+  IL_0088 ldfld          FinisherGameplaySettings::LargeOpponentPrefab token(0x04000C97)
+  IL_008d call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0092 brfalse.s      IL_009c 
+  IL_0094 ldarg.s        argument(0x0004) 
+  IL_0096 ldfld          FinisherGameplaySettings::SmallOpponentPrefab token(0x04000C95)
+  IL_009b ret             
+  IL_009c ldarg.s        argument(0x0004) 
+  IL_009e ldfld          FinisherGameplaySettings::LargeOpponentPrefab token(0x04000C97)
+  IL_00a3 ret             
+  IL_00a4 ldarg.s        argument(0x0004) 
+  IL_00a6 ldfld          FinisherGameplaySettings::LargePrefab token(0x04000C96)
+  IL_00ab call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_00b0 brfalse.s      IL_00ba 
+  IL_00b2 ldarg.s        argument(0x0004) 
+  IL_00b4 ldfld          FinisherGameplaySettings::SmallPrefab token(0x04000C94)
+  IL_00b9 ret             
+  IL_00ba ldarg.s        argument(0x0004) 
+  IL_00bc ldfld          FinisherGameplaySettings::LargePrefab token(0x04000C96)
+  IL_00c1 ret             
+  IL_00c2 ldarg.3         
+  IL_00c3 brfalse.s      IL_00cd 
+  IL_00c5 ldarg.s        argument(0x0004) 
+  IL_00c7 ldfld          FinisherGameplaySettings::SmallOpponentPrefab token(0x04000C95)
+  IL_00cc ret             
+  IL_00cd ldarg.s        argument(0x0004) 
+  IL_00cf ldfld          FinisherGameplaySettings::SmallPrefab token(0x04000C94)
+  IL_00d4 ret             
+
+0x06011629 AttackSpellController::ActivateSpellForDestroyedHero(finisherSettings) RVA 0x5180d0 SIG 2001011289a0
+  IL_0000 ldarg.1         
+  IL_0001 ldfld          FinisherGameplaySettings::IgnoreDestroyPrefabs token(0x04000CA1)
+  IL_0006 brfalse.s      IL_0009 
+  IL_0008 ret             
+  IL_0009 call           GameState::Get token(0x06005589)
+  IL_000e callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_0013 callvirt       Entity::GetHero token(0x060137E8)
+  IL_0018 stloc.0         
+  IL_0019 call           GameState::Get token(0x06005589)
+  IL_001e callvirt       GameState::GetOpposingSidePlayer token(0x060055B9)
+  IL_0023 callvirt       Entity::GetHero token(0x060137E8)
+  IL_0028 stloc.1         
+  IL_0029 ldloc.0         
+  IL_002a callvirt       EntityBase::GetATK token(0x06013917)
+  IL_002f ldloc.1         
+  IL_0030 callvirt       Entity::GetCurrentDefense token(0x060137DC)
+  IL_0035 blt            IL_010c 
+  IL_003a ldc.i4.0        
+  IL_003b stloc.3         
+  IL_003c ldarg.1         
+  IL_003d ldfld          FinisherGameplaySettings::FirstPlaceVictoryDestroyOpponentPrefab token(0x04000C9F)
+  IL_0042 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0047 brtrue.s       IL_005f 
+  IL_0049 call           GameState::Get token(0x06005589)
+  IL_004e callvirt       GameState::CountPlayersAlive token(0x060055D2)
+  IL_0053 ldc.i4.1        
+  IL_0054 bne.un.s       IL_005f 
+  IL_0056 ldarg.1         
+  IL_0057 ldfld          FinisherGameplaySettings::FirstPlaceVictoryDestroyOpponentPrefab token(0x04000C9F)
+  IL_005c stloc.2         
+  IL_005d br.s           IL_007d 
+  IL_005f ldarg.1         
+  IL_0060 ldfld          FinisherGameplaySettings::DestroyOpponentPrefab token(0x04000C9D)
+  IL_0065 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_006a brtrue.s       IL_0075 
+  IL_006c ldarg.1         
+  IL_006d ldfld          FinisherGameplaySettings::DestroyOpponentPrefab token(0x04000C9D)
+  IL_0072 stloc.2         
+  IL_0073 br.s           IL_007d 
+  IL_0075 ldstr          'Bacon_EndRound_HeroImpact.prefab:34d052b6989dcea4c8b7d22adcb31368' string token(0x7001537B)
+  IL_007a stloc.2         
+  IL_007b ldc.i4.1        
+  IL_007c stloc.3         
+  IL_007d call           SpellManager::Get token(0x060149FC)
+  IL_0082 ldloc.2         
+  IL_0083 callvirt       SpellManager::GetSpell token(0x06014A01)
+  IL_0088 stloc.s        local(0x0004) 
+  IL_008a ldloc.s        local(0x0004) 
+  IL_008c ldnull          
+  IL_008d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0092 brfalse.s      IL_00a5 
+  IL_0094 ldstr          'Error [AttackSpellController] ActivateSpellForDestroyedHero spell could not be found for ' string token(0x70397BA3)
+  IL_0099 ldloc.2         
+  IL_009a call           System.String::Concat token(0x0A0000C0)
+  IL_009f call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_00a4 ret             
+  IL_00a5 ldloc.s        local(0x0004) 
+  IL_00a7 ldarg.0         
+  IL_00a8 ldftn          AttackSpellController::OnFinishedCallback token(0x0601162A)
+  IL_00ae newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5ff0ddd130>::.ctor token(0x0A00026C)
+  IL_00b3 callvirt       Spell::AddFinishedCallback token(0x06014944)
+  IL_00b8 ldloc.0         
+  IL_00b9 callvirt       Entity::GetCard token(0x060137BF)
+  IL_00be callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00c3 stloc.s        local(0x0005) 
+  IL_00c5 ldloc.1         
+  IL_00c6 callvirt       Entity::GetCard token(0x060137BF)
+  IL_00cb callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00d0 stloc.s        local(0x0006) 
+  IL_00d2 ldloc.s        local(0x0004) 
+  IL_00d4 ldloc.3         
+  IL_00d5 brtrue.s       IL_00db 
+  IL_00d7 ldloc.s        local(0x0005) 
+  IL_00d9 br.s           IL_00dd 
+  IL_00db ldloc.s        local(0x0006) 
+  IL_00dd callvirt       Blizzard.T5.Game.Spells.SpellBase::SetSource token(0x0A000574)
+  IL_00e2 ldloc.s        local(0x0004) 
+  IL_00e4 ldloc.3         
+  IL_00e5 brtrue.s       IL_00eb 
+  IL_00e7 ldloc.s        local(0x0006) 
+  IL_00e9 br.s           IL_00ed 
+  IL_00eb ldloc.s        local(0x0005) 
+  IL_00ed callvirt       Blizzard.T5.Game.Spells.SpellBase::AddTarget token(0x0A000575)
+  IL_00f2 ldloc.s        local(0x0004) 
+  IL_00f4 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00f9 ldloc.s        local(0x0006) 
+  IL_00fb callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0100 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0105 ldloc.s        local(0x0004) 
+  IL_0107 callvirt       Blizzard.T5.Game.Spells.SpellBase::Activate token(0x0A000450)
+  IL_010c ret             
+
+0x0601162a AttackSpellController::OnFinishedCallback(spell,userData) RVA 0x5181e9 SIG 20020112c000ac1c1c
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0007 brfalse.s      IL_0014 
+  IL_0009 ldarg.1         
+  IL_000a ldc.r4         5.0 
+  IL_000f call           UnityEngine.Object::Destroy token(0x0A000578)
+  IL_0014 ret             
+
+0x0601162b AttackSpellController::.ctor() RVA 0x5181ff SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         1.0 
+  IL_0006 stfld          AttackSpellController::m_ImpactStagingPoint token(0x0400E9FA)
+  IL_000b ldarg.0         
+  IL_000c ldc.r4         -0.25 
+  IL_0011 stfld          AttackSpellController::m_SourceImpactOffset token(0x0400E9FB)
+  IL_0016 ldarg.0         
+  IL_0017 ldc.r4         15.0 
+  IL_001c newobj         UnityEngine.WaitForSeconds::.ctor token(0x0A00016C)
+  IL_0021 stfld          AttackSpellController::MAX_FINISHER_DURATION token(0x0400EA09)
+  IL_0026 ldarg.0         
+  IL_0027 call           SpellController::.ctor token(0x060149DB)
+  IL_002c ret             
+
+0x060117f8 ActorAttackSpell::Start() RVA 0x51ff5d SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           Spell::Start token(0x060148FE)
+  IL_0006 ret             
+
+0x060117f9 ActorAttackSpell::OnBirth(prevStateType) RVA 0x51ff65 SIG 200101118281
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          ActorAttackSpell::m_waitingToAct token(0x0400EB2D)
+  IL_0007 ldarg.0         
+  IL_0008 ldarg.1         
+  IL_0009 call           Spell::OnBirth token(0x06014963)
+  IL_000e ret             
+
+0x060117fa ActorAttackSpell::OnAction(prevStateType) RVA 0x51ff75 SIG 200101118281
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 ldarg.1         
+  IL_0003 call           ActorAttackSpell::WaitThenDoAction token(0x060117FC)
+  IL_0008 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_000d pop             
+  IL_000e ret             
+
+0x060117fb ActorAttackSpell::StopWaitingToAct() RVA 0x51ff85 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.0        
+  IL_0002 stfld          ActorAttackSpell::m_waitingToAct token(0x0400EB2D)
+  IL_0007 ret             
+
+0x060117fc ActorAttackSpell::WaitThenDoAction(prevStateType) RVA 0x51ff8e SIG 2001128111118281
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <WaitThenDoAction>d__5::.ctor token(0x060117FF)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <WaitThenDoAction>d__5::<>4__this token(0x0400EB30)
+  IL_000d dup             
+  IL_000e ldarg.1         
+  IL_000f stfld          <WaitThenDoAction>d__5::prevStateType token(0x0400EB31)
+  IL_0014 ret             
+
+0x060117fd ActorAttackSpell::.ctor() RVA 0x51ffa4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          ActorAttackSpell::m_waitingToAct token(0x0400EB2D)
+  IL_0007 ldarg.0         
+  IL_0008 call           Spell::.ctor token(0x0601498E)
+  IL_000d ret             
+
+0x060117fe ActorAttackSpell::<>n__0(prevStateType) RVA 0x51ffb3 SIG 200101118281
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           Spell::OnAction token(0x06014965)
+  IL_0007 ret             

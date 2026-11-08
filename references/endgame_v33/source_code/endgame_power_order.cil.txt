@@ -1,0 +1,1730 @@
+
+TYPE GameState 0x02000b4a
+FIELD 0x04003c6b DEFAULT_SUBOPTION SIG 0608
+FIELD 0x04003c6c INDENT SIG 060e
+FIELD 0x04003c6d BLOCK_REPORT_START_SEC SIG 060c
+FIELD 0x04003c6e BLOCK_REPORT_INTERVAL_SEC SIG 060c
+FIELD 0x04003c6f s_instance SIG 0612ad28
+FIELD 0x04003c70 s_gameStateInitializedListeners SIG 061512490112ad94
+FIELD 0x04003c71 s_gameStateShutdownListeners SIG 061512490112ad98
+FIELD 0x04003c72 m_availableRacesInBattlegroundsExcludingAmalgam SIG 061512490111c000a980
+FIELD 0x04003c73 m_missingRacesInBattlegrounds SIG 061512490111c000a980
+FIELD 0x04003c74 m_inactiveRacesInBattlegrounds SIG 061512490111c000a980
+FIELD 0x04003c75 m_entityMap SIG 06151281a1020812c000a320
+FIELD 0x04003c76 m_playerMap SIG 06151281a1020812b060
+FIELD 0x04003c77 m_playerInfoMap SIG 06151281a1020812b17c
+FIELD 0x04003c78 m_gameEntity SIG 0612acc0
+FIELD 0x04003c79 m_removedFromGameEntities SIG 06151281dd0112c000a320
+FIELD 0x04003c7a m_removedFromGameEntityLog SIG 06151280f10108
+FIELD 0x04003c7b m_answeredChoiceIds SIG 06151280f10108
+FIELD 0x04003c7c m_createGamePhase SIG 0611ad30
+FIELD 0x04003c7d m_resetGamePhase SIG 0611ad34
+FIELD 0x04003c7e m_realTimeResetGame SIG 0612c0007d90
+FIELD 0x04003c7f m_realTimeGameOverTagChange SIG 0612c0007da4
+FIELD 0x04003c80 m_gameOver SIG 0602
+FIELD 0x04003c81 m_concedeRequested SIG 0602
+FIELD 0x04003c82 m_restartRequested SIG 0602
+FIELD 0x04003c83 m_maxSecretZoneSizePerPlayer SIG 0608
+FIELD 0x04003c84 m_maxSecretsPerPlayer SIG 0608
+FIELD 0x04003c85 m_maxQuestsPerPlayer SIG 0608
+FIELD 0x04003c86 m_maxFriendlySlotsPerPlayer SIG 0608
+FIELD 0x04003c87 m_responseMode SIG 0611ad2c
+FIELD 0x04003c88 m_lastInteractableObjectActor SIG 0612c0009cf8
+FIELD 0x04003c89 m_canTargetCardsInHand SIG 0602
+FIELD 0x04003c8a m_choicesMap SIG 06151281a1020812c0007d50
+FIELD 0x04003c8b m_queuedChoices SIG 06151281dd0112ad8c
+FIELD 0x04003c8c m_chosenEntities SIG 061512490112c000a320
+FIELD 0x04003c8d m_options SIG 0612c0007d34
+FIELD 0x04003c8e m_selectedOption SIG 0612ad88
+FIELD 0x04003c8f m_lastOptions SIG 0612c0007d34
+FIELD 0x04003c90 m_lastSelectedOption SIG 0612ad88
+FIELD 0x04003c91 m_coinHasSpawned SIG 0602
+FIELD 0x04003c92 m_friendlyCardBeingDrawn SIG 0612c0009ebc
+FIELD 0x04003c93 m_opponentCardBeingDrawn SIG 0612c0009ebc
+FIELD 0x04003c94 m_lastTurnRemindedOfFullHand SIG 0608
+FIELD 0x04003c95 m_usingFastActorTriggers SIG 0602
+FIELD 0x04003c96 m_createGameListeners SIG 061512490112ad9c
+FIELD 0x04003c97 m_optionsReceivedListeners SIG 061512490112ada0
+FIELD 0x04003c98 m_optionsSentListeners SIG 061512490112ada4
+FIELD 0x04003c99 m_optionRejectedListeners SIG 061512490112ada8
+FIELD 0x04003c9a m_entityChoicesReceivedListeners SIG 061512490112adac
+FIELD 0x04003c9b m_entitiesChosenReceivedListeners SIG 061512490112adb0
+FIELD 0x04003c9c m_currentPlayerChangedListeners SIG 061512490112adb4
+FIELD 0x04003c9d m_friendlyTurnStartedListeners SIG 061512490112adbc
+FIELD 0x04003c9e m_turnChangedListeners SIG 061512490112adb8
+FIELD 0x04003c9f m_spectatorNotifyListeners SIG 061512490112adc4
+FIELD 0x04003ca0 m_gameOverListeners SIG 061512490112adc8
+FIELD 0x04003ca1 m_heroChangedListeners SIG 061512490112adcc
+FIELD 0x04003ca2 m_busyStateChangedListeners SIG 061512490112add0
+FIELD 0x04003ca3 m_cantPlayListeners SIG 061512490112add4
+FIELD 0x04003ca4 m_damageCapChangedListeners SIG 061512490112add8
+FIELD 0x04003ca5 m_diabloFightPlayerIDChangedListeners SIG 061512490112addc
+FIELD 0x04003ca6 m_powerProcessor SIG 0612b110
+FIELD 0x04003ca7 m_reconnectIfStuckTimer SIG 060c
+FIELD 0x04003ca8 m_lastBlockedReportTimestamp SIG 060c
+FIELD 0x04003ca9 m_busy SIG 0602
+FIELD 0x04003caa m_mulliganBusy SIG 0602
+FIELD 0x04003cab m_serverBlockingSpells SIG 061512490112c000ac1c
+FIELD 0x04003cac m_serverBlockingSpellControllers SIG 061512490112c000ac4c
+FIELD 0x04003cad m_turnTimerUpdateListeners SIG 061512490112adc0
+FIELD 0x04003cae m_mulliganTimerUpdateListeners SIG 061512490112adc0
+FIELD 0x04003caf m_turnTimerUpdates SIG 06151281a1020812b288
+FIELD 0x04003cb0 m_waitForOpponentReconnectPopup SIG 0612c000b414
+FIELD 0x04003cb1 m_waitForOpponentReconnectPopupInfo SIG 0612c000b428
+FIELD 0x04003cb2 m_friendlyDrawCounter SIG 0608
+FIELD 0x04003cb3 m_opponentDrawCounter SIG 0608
+FIELD 0x04003cb4 m_lostFrameTimeTracker SIG 0612ae08
+FIELD 0x04003cb5 m_lostSlushTimeTracker SIG 0612ae0c
+FIELD 0x04003cb6 m_clientLostTimeCatchUpThreshold SIG 060c
+FIELD 0x04003cb7 m_useSlushTimeCatchUp SIG 0602
+FIELD 0x04003cb8 m_restrictClientLostTimeCatchUpToLowEndDevices SIG 0602
+FIELD 0x04003cb9 m_allowDeferredPowers SIG 0602
+FIELD 0x04003cba m_allowBatchedPowers SIG 0602
+FIELD 0x04003cbb m_allowDiamondCards SIG 0602
+FIELD 0x04003cbc m_allowSignatureCards SIG 0602
+FIELD 0x04003cbd m_battlegroundAllowBuddies SIG 0602
+FIELD 0x04003cbe m_battlegroundsAllowQuestRewards SIG 0602
+FIELD 0x04003cbf m_battlegroundsAllowTrinkets SIG 0602
+FIELD 0x04003cc0 m_battlegroundMinionPool SIG 060e
+FIELD 0x04003cc1 m_battlegroundDenyList SIG 060e
+FIELD 0x04003cc2 m_battlegroundHeroArmorTierList SIG 060e
+FIELD 0x04003cc3 m_battlegroundsPlayerAnomaly SIG 060e
+FIELD 0x04003cc4 m_printBattlegroundMinionPoolOnUpdate SIG 0602
+FIELD 0x04003cc5 m_printBattlegroundDenyListOnUpdate SIG 0602
+FIELD 0x04003cc6 m_printBattlegroundHeroArmorTierListUpdate SIG 0602
+FIELD 0x04003cc7 m_printBattlegroundsAnomalyUpdate SIG 0602
+FIELD 0x04003cc8 m_sendStuckSpellTelemetry SIG 0602
+FIELD 0x04003cc9 m_cornerSpellReplacementManager SIG 0612ac38
+
+TYPE PowerProcessor 0x02000c44
+FIELD 0x04004344 ATTACK_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x04004345 SECRET_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x04004346 SIDE_QUEST_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x04004347 SIGIL_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x04004348 OBJECTIVE_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x04004349 JOUST_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x0400434a REVEAL_CARD_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x0400434b TRIGGER_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x0400434c RESET_GAME_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x0400434d REWIND_GAME_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x0400434e SUB_SPELL_CONTROLLER_PREFAB_PATH SIG 060e
+FIELD 0x0400434f REWIND_CARD_ID SIG 060e
+FIELD 0x04004350 STARSHIP_LAUNCH_TRIGGER_DELAY SIG 060c
+FIELD 0x04004351 STARSHIP_LAUNCH_RAYNOR_TRIGGER_DELAY SIG 060c
+FIELD 0x04004352 m_nextTaskListId SIG 0608
+FIELD 0x04004353 m_buildingTaskList SIG 0602
+FIELD 0x04004354 m_totalSlushTime SIG 0608
+FIELD 0x04004355 m_currentTimeline SIG 0612b108
+FIELD 0x04004356 m_taskEventListeners SIG 061512490112b114
+FIELD 0x04004357 m_previousStack SIG 061512874d0112b0f0
+FIELD 0x04004358 m_deferredStack SIG 061512874d011512490112b0f0
+FIELD 0x04004359 m_subSpellOriginStack SIG 061512874d0112b0f0
+FIELD 0x0400435a m_delayedRealTimeTasks SIG 06151281dd0112b118
+FIELD 0x0400435b m_powerQueue SIG 0612b104
+FIELD 0x0400435c m_currentTaskList SIG 0612b0f0
+FIELD 0x0400435d m_previousTaskList SIG 0612b0f0
+FIELD 0x0400435e m_subSpellController SIG 0612c00091b0
+FIELD 0x0400435f m_historyBlocking SIG 0602
+FIELD 0x04004360 m_artificialPauseFromMetadata SIG 0602
+FIELD 0x04004361 m_historyBlockingTaskList SIG 0612b0f0
+FIELD 0x04004362 m_busyTaskList SIG 0612b0f0
+FIELD 0x04004363 m_earlyConcedeTaskList SIG 0612b0f0
+FIELD 0x04004364 m_handledFirstEarlyConcede SIG 0602
+FIELD 0x04004365 m_gameOverTaskList SIG 0612b0f0
+FIELD 0x04004366 m_powerHistoryTimeline SIG 061512490112b108
+FIELD 0x04004367 m_powerHistoryTimelineIdIndex SIG 06151281a1020808
+FIELD 0x04004368 m_powerHistoryFirstTaskList SIG 0612b0f0
+FIELD 0x04004369 m_powerHistoryLastTaskList SIG 0612b0f0
+FIELD 0x0400436a m_starshipLaunchTriggerTasks SIG 061512490112b0f0
+FIELD 0x0400436b m_IsWaitingForStarshipLandingDelay SIG 0602
+
+TYPE EntityBase 0x020028d2
+FIELD 0x0401015e DEFAULT_TAG_MAP_SIZE SIG 0608
+FIELD 0x0401015f m_tags SIG 0612c000a9b0
+FIELD 0x04010160 m_cachedTagsForDormant SIG 0612c000a9b0
+FIELD 0x04010161 m_tagLists SIG 0612c000a9b4
+FIELD 0x04010162 m_cardIdInternal SIG 060e
+FIELD 0x04010163 m_entityRaces SIG 061512490111c000a980
+FIELD 0x04010164 s_allowedClasses SIG 061512490111c000a968
+FIELD 0x04010165 s_raceSubsetToRaceTable SIG 0615124d0211c000a93011c000a980
+
+0x0600558c GameState::Update() RVA 0x18ddf1 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_lostFrameTimeTracker token(0x04003CB4)
+  IL_0006 callvirt       GameStateFrameTimeTracker::Update token(0x060057C9)
+  IL_000b ldarg.0         
+  IL_000c ldfld          GameState::m_lostSlushTimeTracker token(0x04003CB5)
+  IL_0011 callvirt       GameStateSlushTimeTracker::Update token(0x060057CF)
+  IL_0016 ldarg.0         
+  IL_0017 call           GameState::CheckReconnectIfStuck token(0x06005633)
+  IL_001c brfalse.s      IL_001f 
+  IL_001e ret             
+  IL_001f ldarg.0         
+  IL_0020 ldfld          GameState::m_powerProcessor token(0x04003CA6)
+  IL_0025 callvirt       PowerProcessor::ProcessPowerQueue token(0x06005FDA)
+  IL_002a ldarg.0         
+  IL_002b ldfld          GameState::m_lostFrameTimeTracker token(0x04003CB4)
+  IL_0030 ldc.r4         -0.016666999086737633 
+  IL_0035 callvirt       GameStateFrameTimeTracker::AdjustAccruedLostTime token(0x060057CA)
+  IL_003a ret             
+
+0x0600559c GameState::PrintBattlegroundMinionPoolOnUpdate() RVA 0x18df64 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_printBattlegroundMinionPoolOnUpdate token(0x04003CC4)
+  IL_0006 ret             
+
+0x0600559d GameState::PrintBattlegroundDenyListOnUpdate() RVA 0x18df6c SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_printBattlegroundDenyListOnUpdate token(0x04003CC5)
+  IL_0006 ret             
+
+0x0600559e GameState::SetPrintBattlegroundMinionPoolOnUpdate(isPrinting) RVA 0x18df74 SIG 20010102
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          GameState::m_printBattlegroundMinionPoolOnUpdate token(0x04003CC4)
+  IL_0007 ret             
+
+0x0600559f GameState::SetPrintBattlegroundDenyListOnUpdate(isPrinting) RVA 0x18df7d SIG 20010102
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          GameState::m_printBattlegroundDenyListOnUpdate token(0x04003CC5)
+  IL_0007 ret             
+
+0x060055a0 GameState::SetPrintBattlegroundHeroArmorTierListOnUpdate(isPrinting) RVA 0x18df86 SIG 20010102
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          GameState::m_printBattlegroundHeroArmorTierListUpdate token(0x04003CC6)
+  IL_0007 ret             
+
+0x060055a1 GameState::SetPrintBattlegroundAnomalyOnUpdate(isPrinting) RVA 0x18df8f SIG 20010102
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          GameState::m_printBattlegroundsAnomalyUpdate token(0x04003CC7)
+  IL_0007 ret             
+
+0x060055fb GameState::CheckRestartOnRealTimeGameOver() RVA 0x18ef04 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           GameState::WasRestartRequested token(0x060055F9)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldc.i4.1        
+  IL_000b stfld          GameState::m_gameOver token(0x04003C80)
+  IL_0010 ldarg.0         
+  IL_0011 ldnull          
+  IL_0012 stfld          GameState::m_realTimeGameOverTagChange token(0x04003C7F)
+  IL_0017 call           Network::Get token(0x0600EAAF)
+  IL_001c ldc.i4.1        
+  IL_001d callvirt       Network::DisconnectFromGameServer token(0x0600EC43)
+  IL_0022 call           NotificationManager::Get token(0x06014018)
+  IL_0027 callvirt       NotificationManager::DestroyAllNotificationsNowWithNoAnim token(0x06014047)
+  IL_002c call           ReconnectMgr::Get token(0x06014368)
+  IL_0031 ldc.i4.1        
+  IL_0032 callvirt       ReconnectMgr::SetBypassGameReconnect token(0x0601437E)
+  IL_0037 call           GameMgr::Get token(0x06013AFF)
+  IL_003c callvirt       GameMgr::RestartGame token(0x06013B28)
+  IL_0041 ret             
+
+0x060055fc GameState::IsGameOver() RVA 0x18ef52 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_gameOver token(0x04003C80)
+  IL_0006 ret             
+
+0x060055fd GameState::IsGameOverPending() RVA 0x18ef5a SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_realTimeGameOverTagChange token(0x04003C7F)
+  IL_0006 ldnull          
+  IL_0007 cgt.un          
+  IL_0009 ret             
+
+0x060055fe GameState::IsGameOverNowOrPending() RVA 0x18ef65 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 call           GameState::IsGameOver token(0x060055FC)
+  IL_0006 brfalse.s      IL_000a 
+  IL_0008 ldc.i4.1        
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b call           GameState::IsGameOverPending token(0x060055FD)
+  IL_0010 brfalse.s      IL_0014 
+  IL_0012 ldc.i4.1        
+  IL_0013 ret             
+  IL_0014 ldc.i4.0        
+  IL_0015 ret             
+
+0x060055ff GameState::GetRealTimeGameOverTagChange() RVA 0x18ef7c SIG 200012c0007da4
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_realTimeGameOverTagChange token(0x04003C7F)
+  IL_0006 ret             
+
+0x0600560d GameState::CanShowScoreScreen() RVA 0x18f224 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 ldfld          GameState::m_gameEntity token(0x04003C78)
+  IL_0007 call           GameState::HasScoreLabels token(0x0600560E)
+  IL_000c brfalse.s      IL_0010 
+  IL_000e ldc.i4.1        
+  IL_000f ret             
+  IL_0010 ldarg.0         
+  IL_0011 ldarg.0         
+  IL_0012 call           GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_0017 call           GameState::HasScoreLabels token(0x0600560E)
+  IL_001c brfalse.s      IL_0020 
+  IL_001e ldc.i4.1        
+  IL_001f ret             
+  IL_0020 ldc.i4.0        
+  IL_0021 ret             
+
+0x0600561a GameState::UpdateWaitForOpponentReconnectPopup(periodInSeconds) RVA 0x18f4d0 SIG 20010108
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_waitForOpponentReconnectPopupInfo token(0x04003CB1)
+  IL_0006 ldarg.1         
+  IL_0007 box            System.Int32 token(0x0100002C)
+  IL_000c stfld          PopupInfo::m_responseUserData token(0x0401281E)
+  IL_0011 ldarg.1         
+  IL_0012 ldc.i4.s       60 
+  IL_0014 div             
+  IL_0015 stloc.0         
+  IL_0016 ldarg.1         
+  IL_0017 ldc.i4.s       60 
+  IL_0019 rem             
+  IL_001a stloc.1         
+  IL_001b call           GameMgr::Get token(0x06013AFF)
+  IL_0020 callvirt       GameMgr::IsSpectator token(0x06013B10)
+  IL_0025 brtrue.s       IL_002e 
+  IL_0027 ldstr          'GLOBAL_WAIT_FOR_OPPONENT_RECONNECT' string token(0x7007EBB3)
+  IL_002c br.s           IL_0033 
+  IL_002e ldstr          'GLOBAL_WAIT_FOR_OPPONENT_RECONNECT_SPECTATOR' string token(0x7007EBF9)
+  IL_0033 stloc.2         
+  IL_0034 ldarg.0         
+  IL_0035 ldfld          GameState::m_waitForOpponentReconnectPopupInfo token(0x04003CB1)
+  IL_003a ldloc.2         
+  IL_003b call           GameStrings::Get token(0x06013C11)
+  IL_0040 ldloc.0         
+  IL_0041 box            System.Int32 token(0x0100002C)
+  IL_0046 ldloc.1         
+  IL_0047 box            System.Int32 token(0x0100002C)
+  IL_004c call           System.String::Format token(0x0A0000D1)
+  IL_0051 stfld          PopupInfo::m_text token(0x04012816)
+  IL_0056 ldarg.0         
+  IL_0057 ldfld          GameState::m_waitForOpponentReconnectPopup token(0x04003CB0)
+  IL_005c ldnull          
+  IL_005d call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0062 brfalse.s      IL_0075 
+  IL_0064 ldarg.0         
+  IL_0065 ldfld          GameState::m_waitForOpponentReconnectPopup token(0x04003CB0)
+  IL_006a ldarg.0         
+  IL_006b ldfld          GameState::m_waitForOpponentReconnectPopupInfo token(0x04003CB1)
+  IL_0070 callvirt       AlertPopup::UpdateInfo token(0x06015892)
+  IL_0075 ret             
+
+0x06005620 GameState::OnRealTimeGameOver(change) RVA 0x18f6d9 SIG 20010112c0007da4
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          GameState::m_realTimeGameOverTagChange token(0x04003C7F)
+  IL_0007 call           Network::ShouldBeConnectedToAurora token(0x0600EAE8)
+  IL_000c brfalse.s      IL_0020 
+  IL_000e call           Network::IsLoggedIn token(0x0600EADF)
+  IL_0013 brfalse.s      IL_0020 
+  IL_0015 call           BnetPresenceMgr::Get token(0x0601578A)
+  IL_001a ldnull          
+  IL_001b callvirt       BnetPresenceMgr::SetPresenceSpectatorJoinInfo token(0x060157A3)
+  IL_0020 call           SpectatorManager::Get token(0x06014416)
+  IL_0025 callvirt       SpectatorManager::OnRealTimeGameOver token(0x0601444A)
+  IL_002a ldarg.0         
+  IL_002b call           GameState::CheckRestartOnRealTimeGameOver token(0x060055FB)
+  IL_0030 ret             
+
+0x06005621 GameState::OnGameOver(playState) RVA 0x18f70c SIG 20010111c000a950
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          GameState::m_gameOver token(0x04003C80)
+  IL_0007 ldarg.0         
+  IL_0008 ldnull          
+  IL_0009 stfld          GameState::m_realTimeGameOverTagChange token(0x04003C7F)
+  IL_000e ldarg.0         
+  IL_000f ldfld          GameState::m_gameEntity token(0x04003C78)
+  IL_0014 ldarg.1         
+  IL_0015 callvirt       GameEntity::NotifyOfGameOver token(0x06005489)
+  IL_001a ldarg.0         
+  IL_001b ldarg.1         
+  IL_001c call           GameState::FireGameOverEvent token(0x06005687)
+  IL_0021 ldarg.0         
+  IL_0022 call           GameState::HideWaitForOpponentReconnectPopup token(0x06005619)
+  IL_0027 call           GameMgr::Get token(0x06013AFF)
+  IL_002c callvirt       GameMgr::get_LastGameData token(0x06013B1A)
+  IL_0031 ldarg.1         
+  IL_0032 callvirt       LastGameData::set_GameResult token(0x06013AEE)
+  IL_0037 ldarg.0         
+  IL_0038 call           GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_003d brfalse.s      IL_006b 
+  IL_003f ldarg.0         
+  IL_0040 call           GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_0045 callvirt       Entity::GetHero token(0x060137E8)
+  IL_004a brfalse.s      IL_006b 
+  IL_004c call           GameMgr::Get token(0x06013AFF)
+  IL_0051 callvirt       GameMgr::get_LastGameData token(0x06013B1A)
+  IL_0056 ldarg.0         
+  IL_0057 call           GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_005c callvirt       Entity::GetHero token(0x060137E8)
+  IL_0061 callvirt       Entity::GetRealTimePlayerLeaderboardPlace token(0x06013865)
+  IL_0066 callvirt       LastGameData::set_BattlegroundsLeaderboardPlace token(0x06013AF4)
+  IL_006b ret             
+
+0x06005632 GameState::CanProcessPowerQueue() RVA 0x18fb2c SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 call           GameState::IsBlockingPowerProcessor token(0x0600562F)
+  IL_0006 brfalse.s      IL_000a 
+  IL_0008 ldc.i4.0        
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b call           GameState::IsBusy token(0x060055DC)
+  IL_0010 brfalse.s      IL_0014 
+  IL_0012 ldc.i4.0        
+  IL_0013 ret             
+  IL_0014 ldarg.0         
+  IL_0015 call           GameState::MustWaitForChoices token(0x06005631)
+  IL_001a brfalse.s      IL_001e 
+  IL_001c ldc.i4.0        
+  IL_001d ret             
+  IL_001e ldarg.0         
+  IL_001f ldfld          GameState::m_powerProcessor token(0x04003CA6)
+  IL_0024 callvirt       PowerProcessor::GetCurrentTaskList token(0x06005FC1)
+  IL_0029 brfalse.s      IL_002d 
+  IL_002b ldc.i4.0        
+  IL_002c ret             
+  IL_002d ldarg.0         
+  IL_002e ldfld          GameState::m_powerProcessor token(0x04003CA6)
+  IL_0033 callvirt       PowerProcessor::GetPowerQueue token(0x06005FC2)
+  IL_0038 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ed61b0>::get_Count token(0x0A0022E7)
+  IL_003d brtrue.s       IL_0041 
+  IL_003f ldc.i4.0        
+  IL_0040 ret             
+  IL_0041 ldarg.0         
+  IL_0042 call           GameState::WasRestartRequested token(0x060055F9)
+  IL_0047 brfalse.s      IL_004b 
+  IL_0049 ldc.i4.0        
+  IL_004a ret             
+  IL_004b ldc.i4.1        
+  IL_004c ret             
+
+0x06005665 GameState::RegisterTurnTimerUpdateListener(callback) RVA 0x190689 SIG 20010212ad64
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldnull          
+  IL_0003 call           GameState::RegisterTurnTimerUpdateListener token(0x06005666)
+  IL_0008 ret             
+
+0x06005666 GameState::RegisterTurnTimerUpdateListener(callback,userData) RVA 0x190694 SIG 20020212ad641c
+  IL_0000 newobj         TurnTimerUpdateListener::.ctor token(0x0600579B)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6720>::SetCallback token(0x0A002358)
+  IL_000d ldloc.0         
+  IL_000e ldarg.2         
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6720>::SetUserData token(0x0A002359)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          GameState::m_turnTimerUpdateListeners token(0x04003CAD)
+  IL_001a ldloc.0         
+  IL_001b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee68d0>::Contains token(0x0A00235A)
+  IL_0020 brfalse.s      IL_0024 
+  IL_0022 ldc.i4.0        
+  IL_0023 ret             
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          GameState::m_turnTimerUpdateListeners token(0x04003CAD)
+  IL_002a ldloc.0         
+  IL_002b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee68d0>::Add token(0x0A00235B)
+  IL_0030 ldc.i4.1        
+  IL_0031 ret             
+
+0x06005667 GameState::UnregisterTurnTimerUpdateListener(callback) RVA 0x1906d2 SIG 20010212ad64
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldnull          
+  IL_0003 call           GameState::UnregisterTurnTimerUpdateListener token(0x06005668)
+  IL_0008 ret             
+
+0x06005668 GameState::UnregisterTurnTimerUpdateListener(callback,userData) RVA 0x1906dc SIG 20020212ad641c
+  IL_0000 newobj         TurnTimerUpdateListener::.ctor token(0x0600579B)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6720>::SetCallback token(0x0A002358)
+  IL_000d ldloc.0         
+  IL_000e ldarg.2         
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6720>::SetUserData token(0x0A002359)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          GameState::m_turnTimerUpdateListeners token(0x04003CAD)
+  IL_001a ldloc.0         
+  IL_001b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee68d0>::Remove token(0x0A00235C)
+  IL_0020 ret             
+
+0x06005669 GameState::RegisterMulliganTimerUpdateListener(callback) RVA 0x190709 SIG 20010212ad64
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldnull          
+  IL_0003 call           GameState::RegisterMulliganTimerUpdateListener token(0x0600566A)
+  IL_0008 ret             
+
+0x0600566a GameState::RegisterMulliganTimerUpdateListener(callback,userData) RVA 0x190714 SIG 20020212ad641c
+  IL_0000 newobj         TurnTimerUpdateListener::.ctor token(0x0600579B)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6720>::SetCallback token(0x0A002358)
+  IL_000d ldloc.0         
+  IL_000e ldarg.2         
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6720>::SetUserData token(0x0A002359)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          GameState::m_mulliganTimerUpdateListeners token(0x04003CAE)
+  IL_001a ldloc.0         
+  IL_001b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee68d0>::Contains token(0x0A00235A)
+  IL_0020 brfalse.s      IL_0024 
+  IL_0022 ldc.i4.0        
+  IL_0023 ret             
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          GameState::m_mulliganTimerUpdateListeners token(0x04003CAE)
+  IL_002a ldloc.0         
+  IL_002b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee68d0>::Add token(0x0A00235B)
+  IL_0030 ldc.i4.1        
+  IL_0031 ret             
+
+0x0600566b GameState::UnregisterMulliganTimerUpdateListener(callback) RVA 0x190752 SIG 20010212ad64
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldnull          
+  IL_0003 call           GameState::UnregisterMulliganTimerUpdateListener token(0x0600566C)
+  IL_0008 ret             
+
+0x0600566c GameState::UnregisterMulliganTimerUpdateListener(callback,userData) RVA 0x19075c SIG 20020212ad641c
+  IL_0000 newobj         TurnTimerUpdateListener::.ctor token(0x0600579B)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6720>::SetCallback token(0x0A002358)
+  IL_000d ldloc.0         
+  IL_000e ldarg.2         
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6720>::SetUserData token(0x0A002359)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          GameState::m_mulliganTimerUpdateListeners token(0x04003CAE)
+  IL_001a ldloc.0         
+  IL_001b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee68d0>::Remove token(0x0A00235C)
+  IL_0020 ret             
+
+0x0600566f GameState::RegisterGameOverListener(callback,userData) RVA 0x1907fc SIG 20020212ad6c1c
+  IL_0000 newobj         GameOverListener::.ctor token(0x0600579F)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6de0>::SetCallback token(0x0A002362)
+  IL_000d ldloc.0         
+  IL_000e ldarg.2         
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6de0>::SetUserData token(0x0A002363)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          GameState::m_gameOverListeners token(0x04003CA0)
+  IL_001a ldloc.0         
+  IL_001b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6f90>::Contains token(0x0A002364)
+  IL_0020 brfalse.s      IL_0024 
+  IL_0022 ldc.i4.0        
+  IL_0023 ret             
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          GameState::m_gameOverListeners token(0x04003CA0)
+  IL_002a ldloc.0         
+  IL_002b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6f90>::Add token(0x0A002365)
+  IL_0030 ldc.i4.1        
+  IL_0031 ret             
+
+0x06005670 GameState::UnregisterGameOverListener(callback,userData) RVA 0x19083c SIG 20020212ad6c1c
+  IL_0000 newobj         GameOverListener::.ctor token(0x0600579F)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6de0>::SetCallback token(0x0A002362)
+  IL_000d ldloc.0         
+  IL_000e ldarg.2         
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6de0>::SetUserData token(0x0A002363)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          GameState::m_gameOverListeners token(0x04003CA0)
+  IL_001a ldloc.0         
+  IL_001b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6f90>::Remove token(0x0A002366)
+  IL_0020 ret             
+
+0x06005683 GameState::FireTurnTimerUpdateEvent(update) RVA 0x190c40 SIG 20010112b288
+  IL_0000 ldnull          
+  IL_0001 stloc.0         
+  IL_0002 ldarg.0         
+  IL_0003 call           GameState::GetGameEntity token(0x060055A9)
+  IL_0008 brtrue.s       IL_0015 
+  IL_000a ldstr          'FireTurnTimerUpdateEvent - Turn timer update received before game entity created.' string token(0x7007F067)
+  IL_000f call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0014 ret             
+  IL_0015 ldarg.0         
+  IL_0016 call           GameState::GetGameEntity token(0x060055A9)
+  IL_001b callvirt       GameEntity::IsMulliganActiveRealTime token(0x0600546A)
+  IL_0020 brfalse.s      IL_0030 
+  IL_0022 ldarg.0         
+  IL_0023 ldfld          GameState::m_mulliganTimerUpdateListeners token(0x04003CAE)
+  IL_0028 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee68d0>::ToArray token(0x0A002382)
+  IL_002d stloc.0         
+  IL_002e br.s           IL_003c 
+  IL_0030 ldarg.0         
+  IL_0031 ldfld          GameState::m_turnTimerUpdateListeners token(0x04003CAD)
+  IL_0036 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee68d0>::ToArray token(0x0A002382)
+  IL_003b stloc.0         
+  IL_003c ldloc.0         
+  IL_003d stloc.1         
+  IL_003e ldc.i4.0        
+  IL_003f stloc.2         
+  IL_0040 br.s           IL_004f 
+  IL_0042 ldloc.1         
+  IL_0043 ldloc.2         
+  IL_0044 ldelem.ref      
+  IL_0045 ldarg.1         
+  IL_0046 callvirt       TurnTimerUpdateListener::Fire token(0x0600579A)
+  IL_004b ldloc.2         
+  IL_004c ldc.i4.1        
+  IL_004d add             
+  IL_004e stloc.2         
+  IL_004f ldloc.2         
+  IL_0050 ldloc.1         
+  IL_0051 ldlen           
+  IL_0052 conv.i4         
+  IL_0053 blt.s          IL_0042 
+  IL_0055 ret             
+
+0x06005687 GameState::FireGameOverEvent(playState) RVA 0x190d34 SIG 20010111c000a950
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_gameOverListeners token(0x04003CA0)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee6f90>::ToArray token(0x0A002386)
+  IL_000b stloc.0         
+  IL_000c ldc.i4.0        
+  IL_000d stloc.1         
+  IL_000e br.s           IL_001d 
+  IL_0010 ldloc.0         
+  IL_0011 ldloc.1         
+  IL_0012 ldelem.ref      
+  IL_0013 ldarg.1         
+  IL_0014 callvirt       GameOverListener::Fire token(0x0600579E)
+  IL_0019 ldloc.1         
+  IL_001a ldc.i4.1        
+  IL_001b add             
+  IL_001c stloc.1         
+  IL_001d ldloc.1         
+  IL_001e ldloc.0         
+  IL_001f ldlen           
+  IL_0020 conv.i4         
+  IL_0021 blt.s          IL_0010 
+  IL_0023 ret             
+
+0x060056c4 GameState::UpdateChoiceHighlights() RVA 0x191e2c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_choicesMap token(0x04003C8A)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee7b60>::get_Values token(0x0A002397)
+  IL_000b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef00b0>::GetEnumerator token(0x0A002398)
+  IL_0010 stloc.0         
+  IL_0011 br             IL_009f 
+  IL_0016 ldloca.s       local(0x0000) 
+  IL_0018 call           <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef0260>::get_Current token(0x0A002399)
+  IL_001d stloc.1         
+  IL_001e ldarg.0         
+  IL_001f ldloc.1         
+  IL_0020 callvirt       EntityChoices::get_Source token(0x0600EEC4)
+  IL_0025 call           GameState::GetEntity token(0x060055A7)
+  IL_002a stloc.2         
+  IL_002b ldloc.2         
+  IL_002c brfalse.s      IL_0045 
+  IL_002e ldloc.2         
+  IL_002f callvirt       Entity::GetCard token(0x060137BF)
+  IL_0034 stloc.3         
+  IL_0035 ldloc.3         
+  IL_0036 ldnull          
+  IL_0037 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_003c brfalse.s      IL_0045 
+  IL_003e ldloc.3         
+  IL_003f ldc.i4.0        
+  IL_0040 callvirt       Card::UpdateActorState token(0x06012DCD)
+  IL_0045 ldloc.1         
+  IL_0046 callvirt       EntityChoices::get_Entities token(0x0600EEC2)
+  IL_004b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f55111dbf20>::GetEnumerator token(0x0A000363)
+  IL_0050 stloc.s        local(0x0004) 
+  IL_0052 br.s           IL_0086 
+  IL_0054 ldloca.s       local(0x0004) 
+  IL_0056 call           <dnfile.mdtable.TypeSpecRow object at 0x7f55112066c0>::get_Current token(0x0A000364)
+  IL_005b stloc.s        local(0x0005) 
+  IL_005d ldarg.0         
+  IL_005e ldloc.s        local(0x0005) 
+  IL_0060 call           GameState::GetEntity token(0x060055A7)
+  IL_0065 stloc.s        local(0x0006) 
+  IL_0067 ldloc.s        local(0x0006) 
+  IL_0069 brfalse.s      IL_0086 
+  IL_006b ldloc.s        local(0x0006) 
+  IL_006d callvirt       Entity::GetCard token(0x060137BF)
+  IL_0072 stloc.s        local(0x0007) 
+  IL_0074 ldloc.s        local(0x0007) 
+  IL_0076 ldnull          
+  IL_0077 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_007c brtrue.s       IL_0086 
+  IL_007e ldloc.s        local(0x0007) 
+  IL_0080 ldc.i4.0        
+  IL_0081 callvirt       Card::UpdateActorState token(0x06012DCD)
+  IL_0086 ldloca.s       local(0x0004) 
+  IL_0088 call           <dnfile.mdtable.TypeSpecRow object at 0x7f55112066c0>::MoveNext token(0x0A000365)
+  IL_008d brtrue.s       IL_0054 
+  IL_008f leave.s        IL_009f 
+  IL_0091 ldloca.s       local(0x0004) 
+  IL_0093 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f55112066c0> token(0x1B0000FA)
+  IL_0099 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_009e endfinally      
+  IL_009f ldloca.s       local(0x0000) 
+  IL_00a1 call           <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef0260>::MoveNext token(0x0A00239A)
+  IL_00a6 brtrue         IL_0016 
+  IL_00ab leave.s        IL_00bb 
+  IL_00ad ldloca.s       local(0x0000) 
+  IL_00af constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef0260> token(0x1B0009C7)
+  IL_00b5 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_00ba endfinally      
+  IL_00bb ldarg.0         
+  IL_00bc ldfld          GameState::m_chosenEntities token(0x04003C8C)
+  IL_00c1 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f551107f740>::GetEnumerator token(0x0A001F2C)
+  IL_00c6 stloc.s        local(0x0008) 
+  IL_00c8 br.s           IL_00ea 
+  IL_00ca ldloca.s       local(0x0008) 
+  IL_00cc call           <dnfile.mdtable.TypeSpecRow object at 0x7f551107f8f0>::get_Current token(0x0A001F2D)
+  IL_00d1 callvirt       Entity::GetCard token(0x060137BF)
+  IL_00d6 stloc.s        local(0x0009) 
+  IL_00d8 ldloc.s        local(0x0009) 
+  IL_00da ldnull          
+  IL_00db call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00e0 brtrue.s       IL_00ea 
+  IL_00e2 ldloc.s        local(0x0009) 
+  IL_00e4 ldc.i4.0        
+  IL_00e5 callvirt       Card::UpdateActorState token(0x06012DCD)
+  IL_00ea ldloca.s       local(0x0008) 
+  IL_00ec call           <dnfile.mdtable.TypeSpecRow object at 0x7f551107f8f0>::MoveNext token(0x0A001F2E)
+  IL_00f1 brtrue.s       IL_00ca 
+  IL_00f3 leave.s        IL_0103 
+  IL_00f5 ldloca.s       local(0x0008) 
+  IL_00f7 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f551107f8f0> token(0x1B000892)
+  IL_00fd callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0102 endfinally      
+  IL_0103 ret             
+
+0x060056c5 GameState::UpdateHighlightsBasedOnSelection() RVA 0x191f64 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_selectedOption token(0x04003C8E)
+  IL_0006 ldfld          SelectedOption::m_target token(0x04003CDB)
+  IL_000b brfalse.s      IL_001f 
+  IL_000d ldarg.0         
+  IL_000e call           GameState::GetSelectedNetworkSubOption token(0x060056B3)
+  IL_0013 stloc.0         
+  IL_0014 ldloc.0         
+  IL_0015 brfalse.s      IL_003b 
+  IL_0017 ldarg.0         
+  IL_0018 ldloc.0         
+  IL_0019 call           GameState::UpdateTargetHighlights token(0x060056CB)
+  IL_001e ret             
+  IL_001f ldarg.0         
+  IL_0020 ldfld          GameState::m_selectedOption token(0x04003C8E)
+  IL_0025 ldfld          SelectedOption::m_sub token(0x04003CDA)
+  IL_002a ldc.i4.0        
+  IL_002b blt.s          IL_003b 
+  IL_002d ldarg.0         
+  IL_002e call           GameState::GetSelectedNetworkOption token(0x060056B2)
+  IL_0033 stloc.1         
+  IL_0034 ldarg.0         
+  IL_0035 ldloc.1         
+  IL_0036 call           GameState::UpdateSubOptionHighlights token(0x060056C8)
+  IL_003b ret             
+
+0x060056c6 GameState::UpdateOptionHighlights() RVA 0x191fac SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 ldfld          GameState::m_options token(0x04003C8D)
+  IL_0007 call           GameState::UpdateOptionHighlights token(0x060056C7)
+  IL_000c ret             
+
+0x060056c7 GameState::UpdateOptionHighlights(options) RVA 0x191fbc SIG 20010112c0007d34
+  IL_0000 ldarg.1         
+  IL_0001 brfalse.s      IL_000b 
+  IL_0003 ldarg.1         
+  IL_0004 callvirt       Options::get_List token(0x0600EE8A)
+  IL_0009 brtrue.s       IL_000c 
+  IL_000b ret             
+  IL_000c ldc.i4.0        
+  IL_000d stloc.0         
+  IL_000e br.s           IL_0056 
+  IL_0010 ldarg.1         
+  IL_0011 callvirt       Options::get_List token(0x0600EE8A)
+  IL_0016 ldloc.0         
+  IL_0017 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ed41a0>::get_Item token(0x0A00238C)
+  IL_001c stloc.1         
+  IL_001d ldloc.1         
+  IL_001e callvirt       Option::get_Type token(0x0600EE90)
+  IL_0023 ldc.i4.3        
+  IL_0024 bne.un.s       IL_0052 
+  IL_0026 ldarg.0         
+  IL_0027 ldloc.1         
+  IL_0028 callvirt       Option::get_Main token(0x0600EE92)
+  IL_002d callvirt       SubOption::get_ID token(0x0600EEA7)
+  IL_0032 call           GameState::GetEntity token(0x060055A7)
+  IL_0037 stloc.2         
+  IL_0038 ldloc.2         
+  IL_0039 brfalse.s      IL_0052 
+  IL_003b ldloc.2         
+  IL_003c callvirt       Entity::GetCard token(0x060137BF)
+  IL_0041 stloc.3         
+  IL_0042 ldloc.3         
+  IL_0043 ldnull          
+  IL_0044 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0049 brtrue.s       IL_0052 
+  IL_004b ldloc.3         
+  IL_004c ldc.i4.0        
+  IL_004d callvirt       Card::UpdateActorState token(0x06012DCD)
+  IL_0052 ldloc.0         
+  IL_0053 ldc.i4.1        
+  IL_0054 add             
+  IL_0055 stloc.0         
+  IL_0056 ldloc.0         
+  IL_0057 ldarg.1         
+  IL_0058 callvirt       Options::get_List token(0x0600EE8A)
+  IL_005d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ed41a0>::get_Count token(0x0A00238B)
+  IL_0062 blt.s          IL_0010 
+  IL_0064 ret             
+
+0x060056c8 GameState::UpdateSubOptionHighlights(option) RVA 0x192030 SIG 20010112c0007d38
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 callvirt       Option::get_Main token(0x0600EE92)
+  IL_0007 callvirt       SubOption::get_ID token(0x0600EEA7)
+  IL_000c call           GameState::GetEntity token(0x060055A7)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 brfalse.s      IL_002c 
+  IL_0015 ldloc.0         
+  IL_0016 callvirt       Entity::GetCard token(0x060137BF)
+  IL_001b stloc.1         
+  IL_001c ldloc.1         
+  IL_001d ldnull          
+  IL_001e call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0023 brfalse.s      IL_002c 
+  IL_0025 ldloc.1         
+  IL_0026 ldc.i4.0        
+  IL_0027 callvirt       Card::UpdateActorState token(0x06012DCD)
+  IL_002c ldarg.1         
+  IL_002d callvirt       Option::get_Subs token(0x0600EE94)
+  IL_0032 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ed4500>::GetEnumerator token(0x0A00239B)
+  IL_0037 stloc.2         
+  IL_0038 br.s           IL_006f 
+  IL_003a ldloca.s       local(0x0002) 
+  IL_003c call           <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef0410>::get_Current token(0x0A00239C)
+  IL_0041 stloc.3         
+  IL_0042 ldarg.0         
+  IL_0043 ldloc.3         
+  IL_0044 callvirt       SubOption::get_ID token(0x0600EEA7)
+  IL_0049 call           GameState::GetEntity token(0x060055A7)
+  IL_004e stloc.s        local(0x0004) 
+  IL_0050 ldloc.s        local(0x0004) 
+  IL_0052 brfalse.s      IL_006f 
+  IL_0054 ldloc.s        local(0x0004) 
+  IL_0056 callvirt       Entity::GetCard token(0x060137BF)
+  IL_005b stloc.s        local(0x0005) 
+  IL_005d ldloc.s        local(0x0005) 
+  IL_005f ldnull          
+  IL_0060 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0065 brtrue.s       IL_006f 
+  IL_0067 ldloc.s        local(0x0005) 
+  IL_0069 ldc.i4.0        
+  IL_006a callvirt       Card::UpdateActorState token(0x06012DCD)
+  IL_006f ldloca.s       local(0x0002) 
+  IL_0071 call           <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef0410>::MoveNext token(0x0A00239D)
+  IL_0076 brtrue.s       IL_003a 
+  IL_0078 leave.s        IL_0088 
+  IL_007a ldloca.s       local(0x0002) 
+  IL_007c constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef0410> token(0x1B0009C8)
+  IL_0082 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0087 endfinally      
+  IL_0088 ret             
+
+0x060056cb GameState::UpdateTargetHighlights(subOption) RVA 0x192304 SIG 20010112c0007d48
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 callvirt       SubOption::get_ID token(0x0600EEA7)
+  IL_0007 call           GameState::GetEntity token(0x060055A7)
+  IL_000c stloc.0         
+  IL_000d ldloc.0         
+  IL_000e brfalse.s      IL_0027 
+  IL_0010 ldloc.0         
+  IL_0011 callvirt       Entity::GetCard token(0x060137BF)
+  IL_0016 stloc.1         
+  IL_0017 ldloc.1         
+  IL_0018 ldnull          
+  IL_0019 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_001e brfalse.s      IL_0027 
+  IL_0020 ldloc.1         
+  IL_0021 ldc.i4.0        
+  IL_0022 callvirt       Card::UpdateActorState token(0x06012DCD)
+  IL_0027 ldarg.1         
+  IL_0028 callvirt       SubOption::get_Targets token(0x0600EEA9)
+  IL_002d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee7d10>::GetEnumerator token(0x0A002394)
+  IL_0032 stloc.2         
+  IL_0033 br.s           IL_007b 
+  IL_0035 ldloca.s       local(0x0002) 
+  IL_0037 call           <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee7ec0>::get_Current token(0x0A002395)
+  IL_003c stloc.3         
+  IL_003d ldloc.3         
+  IL_003e callvirt       TargetOption::get_PlayErrorInfo token(0x0600EEA2)
+  IL_0043 callvirt       PlayErrorInfo::IsValid token(0x0600EE9E)
+  IL_0048 brfalse.s      IL_007b 
+  IL_004a ldloc.3         
+  IL_004b callvirt       TargetOption::get_ID token(0x0600EEA0)
+  IL_0050 stloc.s        local(0x0004) 
+  IL_0052 ldarg.0         
+  IL_0053 ldloc.s        local(0x0004) 
+  IL_0055 call           GameState::GetEntity token(0x060055A7)
+  IL_005a stloc.s        local(0x0005) 
+  IL_005c ldloc.s        local(0x0005) 
+  IL_005e brfalse.s      IL_007b 
+  IL_0060 ldloc.s        local(0x0005) 
+  IL_0062 callvirt       Entity::GetCard token(0x060137BF)
+  IL_0067 stloc.s        local(0x0006) 
+  IL_0069 ldloc.s        local(0x0006) 
+  IL_006b ldnull          
+  IL_006c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0071 brtrue.s       IL_007b 
+  IL_0073 ldloc.s        local(0x0006) 
+  IL_0075 ldc.i4.0        
+  IL_0076 callvirt       Card::UpdateActorState token(0x06012DCD)
+  IL_007b ldloca.s       local(0x0002) 
+  IL_007d call           <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee7ec0>::MoveNext token(0x0A002396)
+  IL_0082 brtrue.s       IL_0035 
+  IL_0084 leave.s        IL_0094 
+  IL_0086 ldloca.s       local(0x0002) 
+  IL_0088 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f5510ee7ec0> token(0x1B0009C5)
+  IL_008e callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0093 endfinally      
+  IL_0094 ret             
+
+0x06005709 GameState::UpdateGameGuardianVars(gameGuardianVars) RVA 0x194598 SIG 200101128985
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldfld          PegasusGame.GameGuardianVars::HasClientLostFrameTimeCatchUpThreshold token(0x0A0023BE)
+  IL_0007 brtrue.s       IL_0010 
+  IL_0009 ldc.r4         0.0 
+  IL_000e br.s           IL_0016 
+  IL_0010 ldarg.1         
+  IL_0011 callvirt       PegasusGame.GameGuardianVars::get_ClientLostFrameTimeCatchUpThreshold token(0x0A0023BF)
+  IL_0016 stfld          GameState::m_clientLostTimeCatchUpThreshold token(0x04003CB6)
+  IL_001b ldarg.0         
+  IL_001c ldarg.1         
+  IL_001d ldfld          PegasusGame.GameGuardianVars::HasClientLostFrameTimeCatchUpUseSlush token(0x0A0023C0)
+  IL_0022 brtrue.s       IL_0027 
+  IL_0024 ldc.i4.0        
+  IL_0025 br.s           IL_002d 
+  IL_0027 ldarg.1         
+  IL_0028 callvirt       PegasusGame.GameGuardianVars::get_ClientLostFrameTimeCatchUpUseSlush token(0x0A0023C1)
+  IL_002d stfld          GameState::m_useSlushTimeCatchUp token(0x04003CB7)
+  IL_0032 ldarg.0         
+  IL_0033 ldarg.1         
+  IL_0034 ldfld          PegasusGame.GameGuardianVars::HasClientLostFrameTimeCatchUpLowEndOnly token(0x0A0023C2)
+  IL_0039 brtrue.s       IL_003e 
+  IL_003b ldc.i4.0        
+  IL_003c br.s           IL_0044 
+  IL_003e ldarg.1         
+  IL_003f callvirt       PegasusGame.GameGuardianVars::get_ClientLostFrameTimeCatchUpLowEndOnly token(0x0A0023C3)
+  IL_0044 stfld          GameState::m_restrictClientLostTimeCatchUpToLowEndDevices token(0x04003CB8)
+  IL_0049 ldarg.0         
+  IL_004a ldarg.1         
+  IL_004b ldfld          PegasusGame.GameGuardianVars::HasGameAllowDeferredPowers token(0x0A0023C4)
+  IL_0050 brtrue.s       IL_0055 
+  IL_0052 ldc.i4.1        
+  IL_0053 br.s           IL_005b 
+  IL_0055 ldarg.1         
+  IL_0056 callvirt       PegasusGame.GameGuardianVars::get_GameAllowDeferredPowers token(0x0A0023C5)
+  IL_005b stfld          GameState::m_allowDeferredPowers token(0x04003CB9)
+  IL_0060 ldarg.0         
+  IL_0061 ldarg.1         
+  IL_0062 ldfld          PegasusGame.GameGuardianVars::HasGameAllowBatchedPowers token(0x0A0023C6)
+  IL_0067 brtrue.s       IL_006c 
+  IL_0069 ldc.i4.1        
+  IL_006a br.s           IL_0072 
+  IL_006c ldarg.1         
+  IL_006d callvirt       PegasusGame.GameGuardianVars::get_GameAllowBatchedPowers token(0x0A0023C7)
+  IL_0072 stfld          GameState::m_allowBatchedPowers token(0x04003CBA)
+  IL_0077 ldarg.0         
+  IL_0078 ldarg.1         
+  IL_0079 ldfld          PegasusGame.GameGuardianVars::HasGameAllowDiamondCards token(0x0A0023C8)
+  IL_007e brtrue.s       IL_0083 
+  IL_0080 ldc.i4.1        
+  IL_0081 br.s           IL_0089 
+  IL_0083 ldarg.1         
+  IL_0084 callvirt       PegasusGame.GameGuardianVars::get_GameAllowDiamondCards token(0x0A0023C9)
+  IL_0089 stfld          GameState::m_allowDiamondCards token(0x04003CBB)
+  IL_008e ldarg.0         
+  IL_008f ldarg.1         
+  IL_0090 ldfld          PegasusGame.GameGuardianVars::HasGameAllowSignatureCards token(0x0A0023CA)
+  IL_0095 brtrue.s       IL_009a 
+  IL_0097 ldc.i4.1        
+  IL_0098 br.s           IL_00a0 
+  IL_009a ldarg.1         
+  IL_009b callvirt       PegasusGame.GameGuardianVars::get_GameAllowSignatureCards token(0x0A0023CB)
+  IL_00a0 stfld          GameState::m_allowSignatureCards token(0x04003CBC)
+  IL_00a5 ldarg.0         
+  IL_00a6 ldarg.1         
+  IL_00a7 ldfld          PegasusGame.GameGuardianVars::HasBattlegroundAllowBuddies token(0x0A0023CC)
+  IL_00ac brtrue.s       IL_00b1 
+  IL_00ae ldc.i4.1        
+  IL_00af br.s           IL_00b7 
+  IL_00b1 ldarg.1         
+  IL_00b2 callvirt       PegasusGame.GameGuardianVars::get_BattlegroundAllowBuddies token(0x0A0023CD)
+  IL_00b7 call           GameState::SetBattlegroundAllowBuddies token(0x06005706)
+  IL_00bc ldarg.0         
+  IL_00bd ldarg.1         
+  IL_00be ldfld          PegasusGame.GameGuardianVars::HasBattlegroundsAllowQuestRewards token(0x0A0023CE)
+  IL_00c3 brtrue.s       IL_00c8 
+  IL_00c5 ldc.i4.1        
+  IL_00c6 br.s           IL_00ce 
+  IL_00c8 ldarg.1         
+  IL_00c9 callvirt       PegasusGame.GameGuardianVars::get_BattlegroundsAllowQuestRewards token(0x0A0023CF)
+  IL_00ce call           GameState::SetBattlegroundsAllowQuestRewards token(0x06005707)
+  IL_00d3 ldarg.0         
+  IL_00d4 ldarg.1         
+  IL_00d5 ldfld          PegasusGame.GameGuardianVars::HasSendStuckGameBecauseOfSpellTelemetry token(0x0A0023D0)
+  IL_00da brtrue.s       IL_00df 
+  IL_00dc ldc.i4.1        
+  IL_00dd br.s           IL_00e5 
+  IL_00df ldarg.1         
+  IL_00e0 callvirt       PegasusGame.GameGuardianVars::get_SendStuckGameBecauseOfSpellTelemetry token(0x0A0023D1)
+  IL_00e5 stfld          GameState::m_sendStuckSpellTelemetry token(0x04003CC8)
+  IL_00ea ret             
+
+0x0600570a GameState::UpdateBattlegroundInfo(battlegroundMinionPoolDenyList) RVA 0x194690 SIG 200101128989
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldfld          PegasusGame.UpdateBattlegroundInfo::HasBattlegroundMinionPool token(0x0A0023D2)
+  IL_0007 brtrue.s       IL_0010 
+  IL_0009 ldstr          'Battleground minion pool not available' string token(0x70080074)
+  IL_000e br.s           IL_0016 
+  IL_0010 ldarg.1         
+  IL_0011 callvirt       PegasusGame.UpdateBattlegroundInfo::get_BattlegroundMinionPool token(0x0A0023D3)
+  IL_0016 stfld          GameState::m_battlegroundMinionPool token(0x04003CC0)
+  IL_001b ldarg.0         
+  IL_001c ldfld          GameState::m_printBattlegroundMinionPoolOnUpdate token(0x04003CC4)
+  IL_0021 brfalse.s      IL_003f 
+  IL_0023 call           Log::get_All token(0x06014E0E)
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          GameState::m_battlegroundMinionPool token(0x04003CC0)
+  IL_002e call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0033 callvirt       Logger::Print token(0x0A00013E)
+  IL_0038 ldarg.0         
+  IL_0039 ldc.i4.0        
+  IL_003a stfld          GameState::m_printBattlegroundMinionPoolOnUpdate token(0x04003CC4)
+  IL_003f ldarg.0         
+  IL_0040 ldarg.1         
+  IL_0041 ldfld          PegasusGame.UpdateBattlegroundInfo::HasBattlegroundDenyList token(0x0A0023D4)
+  IL_0046 brtrue.s       IL_004f 
+  IL_0048 ldstr          'Battle ground deny list not available' string token(0x700800C2)
+  IL_004d br.s           IL_0055 
+  IL_004f ldarg.1         
+  IL_0050 callvirt       PegasusGame.UpdateBattlegroundInfo::get_BattlegroundDenyList token(0x0A0023D5)
+  IL_0055 stfld          GameState::m_battlegroundDenyList token(0x04003CC1)
+  IL_005a ldarg.0         
+  IL_005b ldfld          GameState::m_printBattlegroundDenyListOnUpdate token(0x04003CC5)
+  IL_0060 brfalse.s      IL_007e 
+  IL_0062 call           Log::get_All token(0x06014E0E)
+  IL_0067 ldarg.0         
+  IL_0068 ldfld          GameState::m_battlegroundDenyList token(0x04003CC1)
+  IL_006d call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0072 callvirt       Logger::Print token(0x0A00013E)
+  IL_0077 ldarg.0         
+  IL_0078 ldc.i4.0        
+  IL_0079 stfld          GameState::m_printBattlegroundDenyListOnUpdate token(0x04003CC5)
+  IL_007e ret             
+
+0x0600570b GameState::UpdateBattlegroundArmorTierList(battlegroundHeroArmorTierList) RVA 0x19471c SIG 20010112898d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldfld          PegasusGame.GetBattlegroundHeroArmorTierList::HasBattlegroundHeroArmorTierList token(0x0A0023D6)
+  IL_0007 brtrue.s       IL_0010 
+  IL_0009 ldstr          'Battle ground hero armor tier list not available' string token(0x7008010E)
+  IL_000e br.s           IL_0016 
+  IL_0010 ldarg.1         
+  IL_0011 callvirt       PegasusGame.GetBattlegroundHeroArmorTierList::get_BattlegroundHeroArmorTierList token(0x0A0023D7)
+  IL_0016 stfld          GameState::m_battlegroundHeroArmorTierList token(0x04003CC2)
+  IL_001b ldarg.0         
+  IL_001c ldfld          GameState::m_printBattlegroundHeroArmorTierListUpdate token(0x04003CC6)
+  IL_0021 brfalse.s      IL_003f 
+  IL_0023 call           Log::get_All token(0x06014E0E)
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          GameState::m_battlegroundHeroArmorTierList token(0x04003CC2)
+  IL_002e call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0033 callvirt       Logger::Print token(0x0A00013E)
+  IL_0038 ldarg.0         
+  IL_0039 ldc.i4.0        
+  IL_003a stfld          GameState::m_printBattlegroundHeroArmorTierListUpdate token(0x04003CC6)
+  IL_003f ret             
+
+0x0600570c GameState::UpdateBattlegroundsPlayerAnomaly(battlegroundsPlayerAnomaly) RVA 0x194768 SIG 200101128991
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldfld          PegasusGame.GetBattlegroundsPlayerAnomaly::HasBattlegroundsAnomalyList token(0x0A0023D8)
+  IL_0007 brtrue.s       IL_0010 
+  IL_0009 ldstr          'Battlegrounds anomaly list not available' string token(0x70080170)
+  IL_000e br.s           IL_0016 
+  IL_0010 ldarg.1         
+  IL_0011 callvirt       PegasusGame.GetBattlegroundsPlayerAnomaly::get_BattlegroundsAnomalyList token(0x0A0023D9)
+  IL_0016 stfld          GameState::m_battlegroundsPlayerAnomaly token(0x04003CC3)
+  IL_001b ldarg.0         
+  IL_001c ldfld          GameState::m_printBattlegroundsAnomalyUpdate token(0x04003CC7)
+  IL_0021 brfalse.s      IL_003f 
+  IL_0023 call           Log::get_All token(0x06014E0E)
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          GameState::m_battlegroundsPlayerAnomaly token(0x04003CC3)
+  IL_002e call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0033 callvirt       Logger::Print token(0x0A00013E)
+  IL_0038 ldarg.0         
+  IL_0039 ldc.i4.0        
+  IL_003a stfld          GameState::m_printBattlegroundsAnomalyUpdate token(0x04003CC7)
+  IL_003f ret             
+
+0x06005716 GameState::OnTurnTimerUpdate(info) RVA 0x194b5c SIG 20010112c0007dec
+  IL_0000 newobj         TurnTimerUpdate::.ctor token(0x06006315)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       TurnTimerInfo::get_Seconds token(0x0600EFDD)
+  IL_000d callvirt       TurnTimerUpdate::SetSecondsRemaining token(0x06006310)
+  IL_0012 ldloc.0         
+  IL_0013 call           UnityEngine.Time::get_realtimeSinceStartup token(0x0A0004BB)
+  IL_0018 ldarg.1         
+  IL_0019 callvirt       TurnTimerInfo::get_Seconds token(0x0600EFDD)
+  IL_001e add             
+  IL_001f callvirt       TurnTimerUpdate::SetEndTimestamp token(0x06006312)
+  IL_0024 ldloc.0         
+  IL_0025 ldarg.1         
+  IL_0026 callvirt       TurnTimerInfo::get_Show token(0x0600EFE1)
+  IL_002b callvirt       TurnTimerUpdate::SetShow token(0x06006314)
+  IL_0030 ldarg.0         
+  IL_0031 call           GameState::IsMulliganManagerActive token(0x060055E0)
+  IL_0036 brfalse.s      IL_0050 
+  IL_0038 ldarg.0         
+  IL_0039 ldfld          GameState::m_gameEntity token(0x04003C78)
+  IL_003e brfalse.s      IL_0050 
+  IL_0040 ldarg.0         
+  IL_0041 ldc.i4.0        
+  IL_0042 call           GameState::GetBooleanGameOption token(0x060055AA)
+  IL_0047 brfalse.s      IL_0050 
+  IL_0049 ldloc.0         
+  IL_004a ldc.i4.1        
+  IL_004b callvirt       TurnTimerUpdate::SetShow token(0x06006314)
+  IL_0050 ldarg.0         
+  IL_0051 call           GameState::GetTurn token(0x060055C5)
+  IL_0056 stloc.1         
+  IL_0057 ldarg.1         
+  IL_0058 callvirt       TurnTimerInfo::get_Turn token(0x0600EFDF)
+  IL_005d ldloc.1         
+  IL_005e ble.s          IL_0073 
+  IL_0060 ldarg.0         
+  IL_0061 ldfld          GameState::m_turnTimerUpdates token(0x04003CAF)
+  IL_0066 ldarg.1         
+  IL_0067 callvirt       TurnTimerInfo::get_Turn token(0x0600EFDF)
+  IL_006c ldloc.0         
+  IL_006d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef1a00>::set_Item token(0x0A0023E0)
+  IL_0072 ret             
+  IL_0073 ldarg.0         
+  IL_0074 ldloc.0         
+  IL_0075 call           GameState::TriggerTurnTimerUpdate token(0x0600571D)
+  IL_007a ret             
+
+0x06005717 GameState::TriggerTurnTimerUpdateForTurn(turn) RVA 0x194be3 SIG 20010108
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 call           GameState::GetTurn token(0x060055C5)
+  IL_0007 ldarg.1         
+  IL_0008 call           GameState::OnTurnChanged_TurnTimer token(0x0600571C)
+  IL_000d ret             
+
+0x0600571d GameState::TriggerTurnTimerUpdate(update) RVA 0x194eb6 SIG 20010112b288
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           GameState::FireTurnTimerUpdateEvent token(0x06005683)
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       TurnTimerUpdate::GetSecondsRemaining token(0x0600630F)
+  IL_000d ldsfld         UnityEngine.Mathf::Epsilon token(0x0A0004BC)
+  IL_0012 ble.un.s       IL_0015 
+  IL_0014 ret             
+  IL_0015 ldarg.0         
+  IL_0016 call           GameState::OnTimeout token(0x060056DC)
+  IL_001b ret             
+
+0x0600572c GameState::UpdateCornerReplacements() RVA 0x195f74 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_cornerSpellReplacementManager token(0x04003CC9)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldfld          GameState::m_cornerSpellReplacementManager token(0x04003CC9)
+  IL_000f ldloca.s       local(0x0000) 
+  IL_0011 initobj        CornerReplacementContext token(0x02002AF4)
+  IL_0017 ldloc.0         
+  IL_0018 ldloca.s       local(0x0000) 
+  IL_001a initobj        CornerReplacementContext token(0x02002AF4)
+  IL_0020 ldloc.0         
+  IL_0021 callvirt       CornerSpellReplacementManager::UpdateCornerReplacements token(0x060052E8)
+  IL_0026 ret             
+
+0x0600572d GameState::ForceUpdateAllSubcards() RVA 0x195fa8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          GameState::m_entityMap token(0x04003C75)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f551107eb70>::get_Values token(0x0A0023A6)
+  IL_000b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef0c80>::GetEnumerator token(0x0A0023AB)
+  IL_0010 stloc.0         
+  IL_0011 br.s           IL_0068 
+  IL_0013 ldloca.s       local(0x0000) 
+  IL_0015 call           <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef0e30>::get_Current token(0x0A0023AC)
+  IL_001a stloc.1         
+  IL_001b ldloc.1         
+  IL_001c brfalse.s      IL_0068 
+  IL_001e ldloc.1         
+  IL_001f ldc.i4         316 
+  IL_0024 callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_0029 stloc.2         
+  IL_002a ldloc.2         
+  IL_002b brfalse.s      IL_0068 
+  IL_002d ldarg.0         
+  IL_002e ldloc.2         
+  IL_002f call           GameState::GetEntity token(0x060055A7)
+  IL_0034 stloc.3         
+  IL_0035 ldloc.3         
+  IL_0036 brfalse.s      IL_0068 
+  IL_0038 ldloc.3         
+  IL_0039 ldloc.1         
+  IL_003a callvirt       Entity::AddSubCard token(0x060137FF)
+  IL_003f brfalse.s      IL_0068 
+  IL_0041 call           Log::get_Gameplay token(0x06014E34)
+  IL_0046 ldstr          'Adding a missing subcard entity={0} parent={1} ' string token(0x7008193F)
+  IL_004b ldc.i4.2        
+  IL_004c newarr         System.Object token(0x01000001)
+  IL_0051 dup             
+  IL_0052 ldc.i4.0        
+  IL_0053 ldloc.1         
+  IL_0054 callvirt       System.Object::ToString token(0x0A00000C)
+  IL_0059 stelem.ref      
+  IL_005a dup             
+  IL_005b ldc.i4.1        
+  IL_005c ldloc.3         
+  IL_005d callvirt       System.Object::ToString token(0x0A00000C)
+  IL_0062 stelem.ref      
+  IL_0063 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0068 ldloca.s       local(0x0000) 
+  IL_006a call           <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef0e30>::MoveNext token(0x0A0023AD)
+  IL_006f brtrue.s       IL_0013 
+  IL_0071 leave.s        IL_0081 
+  IL_0073 ldloca.s       local(0x0000) 
+  IL_0075 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f5510ef0e30> token(0x1B0009CE)
+  IL_007b callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0080 endfinally      
+  IL_0081 ret             
+
+0x06005fce PowerProcessor::HasGameOverTaskList() RVA 0x1ccbd1 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PowerProcessor::m_gameOverTaskList token(0x04004365)
+  IL_0006 ldnull          
+  IL_0007 cgt.un          
+  IL_0009 ret             
+
+0x06005fda PowerProcessor::ProcessPowerQueue() RVA 0x1cd644 SIG 200001
+  IL_0000 br             IL_01a8 
+  IL_0005 ldarg.0         
+  IL_0006 ldfld          PowerProcessor::m_busyTaskList token(0x04004362)
+  IL_000b brfalse.s      IL_0016 
+  IL_000d ldarg.0         
+  IL_000e ldnull          
+  IL_000f stfld          PowerProcessor::m_busyTaskList token(0x04004362)
+  IL_0014 br.s           IL_007f 
+  IL_0016 ldarg.0         
+  IL_0017 ldfld          PowerProcessor::m_powerQueue token(0x0400435B)
+  IL_001c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ed61b0>::Peek token(0x0A0025F3)
+  IL_0021 stloc.0         
+  IL_0022 call           HistoryManager::Get token(0x060058F3)
+  IL_0027 ldnull          
+  IL_0028 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_002d brfalse.s      IL_005d 
+  IL_002f call           HistoryManager::Get token(0x060058F3)
+  IL_0034 callvirt       HistoryManager::IsShowingBigCard token(0x0600592E)
+  IL_0039 brfalse.s      IL_005d 
+  IL_003b ldarg.0         
+  IL_003c ldfld          PowerProcessor::m_historyBlockingTaskList token(0x04004361)
+  IL_0041 brfalse.s      IL_0054 
+  IL_0043 ldloc.0         
+  IL_0044 ldarg.0         
+  IL_0045 ldfld          PowerProcessor::m_historyBlockingTaskList token(0x04004361)
+  IL_004a callvirt       PowerTaskList::IsDescendantOfBlock token(0x06005F6D)
+  IL_004f brfalse        IL_01b7 
+  IL_0054 ldarg.0         
+  IL_0055 ldfld          PowerProcessor::m_historyBlockingTaskList token(0x04004361)
+  IL_005a brtrue.s       IL_0064 
+  IL_005c ret             
+  IL_005d ldarg.0         
+  IL_005e ldnull          
+  IL_005f stfld          PowerProcessor::m_historyBlockingTaskList token(0x04004361)
+  IL_0064 ldarg.0         
+  IL_0065 ldloc.0         
+  IL_0066 call           PowerProcessor::OnWillProcessTaskList token(0x06005FE4)
+  IL_006b call           GameState::Get token(0x06005589)
+  IL_0070 callvirt       GameState::IsBusy token(0x060055DC)
+  IL_0075 brfalse.s      IL_007f 
+  IL_0077 ldarg.0         
+  IL_0078 ldloc.0         
+  IL_0079 stfld          PowerProcessor::m_busyTaskList token(0x04004362)
+  IL_007e ret             
+  IL_007f ldarg.0         
+  IL_0080 call           PowerProcessor::CanEarlyConcede token(0x06005FF1)
+  IL_0085 brfalse        IL_0134 
+  IL_008a ldarg.0         
+  IL_008b ldfld          PowerProcessor::m_earlyConcedeTaskList token(0x04004363)
+  IL_0090 brtrue         IL_0122 
+  IL_0095 ldarg.0         
+  IL_0096 ldfld          PowerProcessor::m_handledFirstEarlyConcede token(0x04004364)
+  IL_009b brtrue         IL_0122 
+  IL_00a0 ldarg.0         
+  IL_00a1 call           PowerProcessor::DoEarlyConcedeVisuals token(0x06005FF2)
+  IL_00a6 ldarg.0         
+  IL_00a7 ldc.i4.1        
+  IL_00a8 stfld          PowerProcessor::m_handledFirstEarlyConcede token(0x04004364)
+  IL_00ad br.s           IL_0122 
+  IL_00af ldarg.0         
+  IL_00b0 ldarg.0         
+  IL_00b1 ldfld          PowerProcessor::m_powerQueue token(0x0400435B)
+  IL_00b6 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ed61b0>::Dequeue token(0x0A0025F4)
+  IL_00bb stfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_00c0 ldarg.0         
+  IL_00c1 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_00c6 callvirt       PowerTaskList::DebugDump token(0x06005FA9)
+  IL_00cb ldarg.0         
+  IL_00cc ldarg.0         
+  IL_00cd ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_00d2 call           PowerProcessor::CancelSpellsForEarlyConcede token(0x06005FF3)
+  IL_00d7 ldc.i4.0        
+  IL_00d8 stloc.1         
+  IL_00d9 call           GameState::Get token(0x06005589)
+  IL_00de callvirt       GameState::IsFinalWrapupStep token(0x060055E9)
+  IL_00e3 brfalse.s      IL_010d 
+  IL_00e5 call           GameState::Get token(0x06005589)
+  IL_00ea ldc.i4.s       50 
+  IL_00ec callvirt       GameState::GetBooleanGameOption token(0x060055AA)
+  IL_00f1 brfalse.s      IL_010d 
+  IL_00f3 ldarg.0         
+  IL_00f4 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_00f9 callvirt       PowerTaskList::IsSubSpellTaskList token(0x06005F8A)
+  IL_00fe brfalse.s      IL_010d 
+  IL_0100 ldarg.0         
+  IL_0101 ldarg.0         
+  IL_0102 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0107 call           PowerProcessor::DoSubSpellTaskListWithController token(0x06006000)
+  IL_010c stloc.1         
+  IL_010d ldloc.1         
+  IL_010e brtrue.s       IL_011b 
+  IL_0110 ldarg.0         
+  IL_0111 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0116 callvirt       PowerTaskList::DoEarlyConcedeTasks token(0x06005F90)
+  IL_011b ldarg.0         
+  IL_011c ldnull          
+  IL_011d stfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0122 ldarg.0         
+  IL_0123 ldfld          PowerProcessor::m_powerQueue token(0x0400435B)
+  IL_0128 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ed61b0>::get_Count token(0x0A0022E7)
+  IL_012d ldc.i4.0        
+  IL_012e bgt            IL_00af 
+  IL_0133 ret             
+  IL_0134 ldarg.0         
+  IL_0135 ldarg.0         
+  IL_0136 ldfld          PowerProcessor::m_powerQueue token(0x0400435B)
+  IL_013b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510ed61b0>::Dequeue token(0x0A0025F4)
+  IL_0140 stfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0145 ldarg.0         
+  IL_0146 ldfld          PowerProcessor::m_previousTaskList token(0x0400435D)
+  IL_014b brfalse.s      IL_017d 
+  IL_014d ldarg.0         
+  IL_014e ldfld          PowerProcessor::m_previousTaskList token(0x0400435D)
+  IL_0153 callvirt       PowerTaskList::GetOrigin token(0x06005F54)
+  IL_0158 ldarg.0         
+  IL_0159 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_015e callvirt       PowerTaskList::GetOrigin token(0x06005F54)
+  IL_0163 bne.un.s       IL_017d 
+  IL_0165 ldarg.0         
+  IL_0166 ldfld          PowerProcessor::m_previousTaskList token(0x0400435D)
+  IL_016b callvirt       PowerTaskList::GetParent token(0x06005F5E)
+  IL_0170 ldarg.0         
+  IL_0171 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0176 callvirt       PowerTaskList::GetParent token(0x06005F5E)
+  IL_017b beq.s          IL_0191 
+  IL_017d call           GameState::Get token(0x06005589)
+  IL_0182 callvirt       GameState::ResetFriendlyCardDrawCounter token(0x06005611)
+  IL_0187 call           GameState::Get token(0x06005589)
+  IL_018c callvirt       GameState::ResetOpponentCardDrawCounter token(0x06005614)
+  IL_0191 ldarg.0         
+  IL_0192 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0197 callvirt       PowerTaskList::DebugDump token(0x06005FA9)
+  IL_019c ldarg.0         
+  IL_019d call           PowerProcessor::OnProcessTaskList token(0x06005FEA)
+  IL_01a2 ldarg.0         
+  IL_01a3 call           PowerProcessor::StartCurrentTaskList token(0x06005FF4)
+  IL_01a8 call           GameState::Get token(0x06005589)
+  IL_01ad callvirt       GameState::CanProcessPowerQueue token(0x06005632)
+  IL_01b2 brtrue         IL_0005 
+  IL_01b7 ret             
+
+0x06005fe4 PowerProcessor::OnWillProcessTaskList(taskList) RVA 0x1ce148 SIG 20010112b0f0
+  IL_0000 call           ThinkEmoteManager::Get token(0x06006261)
+  IL_0005 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000a brfalse.s      IL_0016 
+  IL_000c call           ThinkEmoteManager::Get token(0x06006261)
+  IL_0011 callvirt       ThinkEmoteManager::NotifyOfActivity token(0x06006264)
+  IL_0016 ldarg.1         
+  IL_0017 callvirt       PowerTaskList::IsStartOfBlock token(0x06005F68)
+  IL_001c brfalse.s      IL_0069 
+  IL_001e ldarg.1         
+  IL_001f callvirt       PowerTaskList::GetBlockStart token(0x06005F5A)
+  IL_0024 callvirt       HistBlockStart::get_BlockType token(0x0600EF0A)
+  IL_0029 ldc.i4.7        
+  IL_002a bne.un.s       IL_0069 
+  IL_002c ldarg.1         
+  IL_002d ldc.i4.0        
+  IL_002e callvirt       PowerTaskList::GetSourceEntity token(0x06005F72)
+  IL_0033 stloc.0         
+  IL_0034 ldloc.0         
+  IL_0035 callvirt       Entity::GetController token(0x060137DE)
+  IL_003a callvirt       Player::IsOpposingSide token(0x06005D66)
+  IL_003f brfalse.s      IL_0069 
+  IL_0041 ldloc.0         
+  IL_0042 callvirt       EntityBase::GetCardId token(0x06013947)
+  IL_0047 stloc.1         
+  IL_0048 ldloc.1         
+  IL_0049 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_004e brfalse.s      IL_0058 
+  IL_0050 ldarg.0         
+  IL_0051 ldarg.1         
+  IL_0052 call           PowerProcessor::FindRevealedCardId token(0x06005FE9)
+  IL_0057 stloc.1         
+  IL_0058 call           GameState::Get token(0x06005589)
+  IL_005d callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0062 ldloc.1         
+  IL_0063 ldloc.0         
+  IL_0064 callvirt       GameEntity::NotifyOfOpponentWillPlayCard token(0x060054BB)
+  IL_0069 ret             
+
+0x06005fea PowerProcessor::OnProcessTaskList() RVA 0x1ce338 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0006 callvirt       PowerTaskList::IsStartOfBlock token(0x06005F68)
+  IL_000b brfalse        IL_03a5 
+  IL_0010 ldarg.0         
+  IL_0011 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0016 callvirt       PowerTaskList::GetBlockStart token(0x06005F5A)
+  IL_001b stloc.0         
+  IL_001c ldloc.0         
+  IL_001d callvirt       HistBlockStart::get_BlockType token(0x0600EF0A)
+  IL_0022 stloc.1         
+  IL_0023 ldloc.1         
+  IL_0024 ldc.i4.1        
+  IL_0025 sub             
+  IL_0026 switch         [IL_0135, IL_0314, IL_0294, IL_0314, IL_0314, IL_01a0, IL_004c] 
+  IL_0047 br             IL_0314 
+  IL_004c ldarg.0         
+  IL_004d ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0052 ldc.i4.0        
+  IL_0053 callvirt       PowerTaskList::GetSourceEntity token(0x06005F72)
+  IL_0058 stloc.2         
+  IL_0059 ldloc.2         
+  IL_005a callvirt       Entity::IsControlledByFriendlySidePlayer token(0x060137E1)
+  IL_005f brfalse.s      IL_0073 
+  IL_0061 call           GameState::Get token(0x06005589)
+  IL_0066 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_006b ldloc.2         
+  IL_006c callvirt       GameEntity::NotifyOfFriendlyPlayedCard token(0x060054BD)
+  IL_0071 br.s           IL_0083 
+  IL_0073 call           GameState::Get token(0x06005589)
+  IL_0078 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_007d ldloc.2         
+  IL_007e callvirt       GameEntity::NotifyOfOpponentPlayedCard token(0x060054BC)
+  IL_0083 ldloc.2         
+  IL_0084 callvirt       EntityBase::IsMinion token(0x060138DB)
+  IL_0089 brfalse.s      IL_00a0 
+  IL_008b call           GameState::Get token(0x06005589)
+  IL_0090 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0095 ldloc.2         
+  IL_0096 callvirt       GameEntity::NotifyOfMinionPlayed token(0x060054C1)
+  IL_009b br             IL_0314 
+  IL_00a0 ldloc.2         
+  IL_00a1 callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_00a6 brfalse.s      IL_00bd 
+  IL_00a8 call           GameState::Get token(0x06005589)
+  IL_00ad callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_00b2 ldloc.2         
+  IL_00b3 callvirt       GameEntity::NotifyOfHeroChanged token(0x060054C2)
+  IL_00b8 br             IL_0314 
+  IL_00bd ldloc.2         
+  IL_00be callvirt       EntityBase::IsWeapon token(0x060138E4)
+  IL_00c3 brfalse.s      IL_00da 
+  IL_00c5 call           GameState::Get token(0x06005589)
+  IL_00ca callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_00cf ldloc.2         
+  IL_00d0 callvirt       GameEntity::NotifyOfWeaponEquipped token(0x060054C3)
+  IL_00d5 br             IL_0314 
+  IL_00da ldloc.2         
+  IL_00db callvirt       EntityBase::IsSpell token(0x060138E3)
+  IL_00e0 brfalse.s      IL_0105 
+  IL_00e2 ldarg.0         
+  IL_00e3 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_00e8 ldc.i4.0        
+  IL_00e9 callvirt       PowerTaskList::GetTargetEntity token(0x06005F7A)
+  IL_00ee stloc.3         
+  IL_00ef call           GameState::Get token(0x06005589)
+  IL_00f4 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_00f9 ldloc.2         
+  IL_00fa ldloc.3         
+  IL_00fb callvirt       GameEntity::NotifyOfSpellPlayed token(0x060054C4)
+  IL_0100 br             IL_0314 
+  IL_0105 ldloc.2         
+  IL_0106 callvirt       EntityBase::IsHeroPower token(0x060138D4)
+  IL_010b brfalse        IL_0314 
+  IL_0110 ldarg.0         
+  IL_0111 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0116 ldc.i4.0        
+  IL_0117 callvirt       PowerTaskList::GetTargetEntity token(0x06005F7A)
+  IL_011c stloc.s        local(0x0004) 
+  IL_011e call           GameState::Get token(0x06005589)
+  IL_0123 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0128 ldloc.2         
+  IL_0129 ldloc.s        local(0x0004) 
+  IL_012b callvirt       GameEntity::NotifyOfHeroPowerUsed token(0x060054C5)
+  IL_0130 br             IL_0314 
+  IL_0135 ldarg.0         
+  IL_0136 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_013b callvirt       PowerTaskList::GetAttacker token(0x06005F99)
+  IL_0140 stloc.s        local(0x0005) 
+  IL_0142 ldnull          
+  IL_0143 stloc.s        local(0x0006) 
+  IL_0145 ldarg.0         
+  IL_0146 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_014b callvirt       PowerTaskList::GetAttackType token(0x06005F98)
+  IL_0150 stloc.s        local(0x0007) 
+  IL_0152 ldloc.s        local(0x0007) 
+  IL_0154 ldc.i4.1        
+  IL_0155 beq.s          IL_015e 
+  IL_0157 ldloc.s        local(0x0007) 
+  IL_0159 ldc.i4.3        
+  IL_015a beq.s          IL_016d 
+  IL_015c br.s           IL_017a 
+  IL_015e ldarg.0         
+  IL_015f ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0164 callvirt       PowerTaskList::GetDefender token(0x06005F9A)
+  IL_0169 stloc.s        local(0x0006) 
+  IL_016b br.s           IL_017a 
+  IL_016d ldarg.0         
+  IL_016e ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0173 callvirt       PowerTaskList::GetProposedDefender token(0x06005F9B)
+  IL_0178 stloc.s        local(0x0006) 
+  IL_017a ldloc.s        local(0x0005) 
+  IL_017c brfalse        IL_0314 
+  IL_0181 ldloc.s        local(0x0006) 
+  IL_0183 brfalse        IL_0314 
+  IL_0188 call           GameState::Get token(0x06005589)
+  IL_018d callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0192 ldloc.s        local(0x0005) 
+  IL_0194 ldloc.s        local(0x0006) 
+  IL_0196 callvirt       GameEntity::NotifyOfEntityAttacked token(0x060054C0)
+  IL_019b br             IL_0314 
+  IL_01a0 ldarg.0         
+  IL_01a1 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_01a6 callvirt       PowerTaskList::GetTaskList token(0x06005F6E)
+  IL_01ab callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f55110e6990>::GetEnumerator token(0x0A000D62)
+  IL_01b0 stloc.s        local(0x0008) 
+  IL_01b2 br             IL_0275 
+  IL_01b7 ldloca.s       local(0x0008) 
+  IL_01b9 call           <dnfile.mdtable.TypeSpecRow object at 0x7f55110e6b40>::get_Current token(0x0A000D63)
+  IL_01be callvirt       PowerTask::GetPower token(0x06005F27)
+  IL_01c3 stloc.s        local(0x0009) 
+  IL_01c5 ldloc.s        local(0x0009) 
+  IL_01c7 callvirt       PowerHistory::get_Type token(0x0600EF06)
+  IL_01cc ldc.i4.4        
+  IL_01cd bne.un         IL_0275 
+  IL_01d2 ldloc.s        local(0x0009) 
+  IL_01d4 isinst         HistTagChange token(0x02001F69)
+  IL_01d9 stloc.s        local(0x000A) 
+  IL_01db ldloc.s        local(0x000A) 
+  IL_01dd call           GameUtils::IsEntityDeathTagChange token(0x06014CF8)
+  IL_01e2 brfalse        IL_0275 
+  IL_01e7 call           GameState::Get token(0x06005589)
+  IL_01ec ldloc.s        local(0x000A) 
+  IL_01ee callvirt       HistTagChange::get_Entity token(0x0600EF69)
+  IL_01f3 callvirt       GameState::GetEntity token(0x060055A7)
+  IL_01f8 stloc.s        local(0x000B) 
+  IL_01fa ldloc.s        local(0x000B) 
+  IL_01fc callvirt       EntityBase::IsMinion token(0x060138DB)
+  IL_0201 brfalse.s      IL_0216 
+  IL_0203 call           GameState::Get token(0x06005589)
+  IL_0208 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_020d ldloc.s        local(0x000B) 
+  IL_020f callvirt       GameEntity::NotifyOfMinionDied token(0x060054C6)
+  IL_0214 br.s           IL_0275 
+  IL_0216 ldloc.s        local(0x000B) 
+  IL_0218 callvirt       EntityBase::IsHero token(0x060138D3)
+  IL_021d brfalse.s      IL_0232 
+  IL_021f call           GameState::Get token(0x06005589)
+  IL_0224 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0229 ldloc.s        local(0x000B) 
+  IL_022b callvirt       GameEntity::NotifyOfHeroDied token(0x060054C7)
+  IL_0230 br.s           IL_0275 
+  IL_0232 ldloc.s        local(0x000B) 
+  IL_0234 callvirt       EntityBase::IsWeapon token(0x060138E4)
+  IL_0239 brfalse.s      IL_0275 
+  IL_023b call           GameState::Get token(0x06005589)
+  IL_0240 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0245 ldloc.s        local(0x000B) 
+  IL_0247 callvirt       GameEntity::NotifyOfWeaponDestroyed token(0x060054C8)
+  IL_024c ldloc.s        local(0x000B) 
+  IL_024e callvirt       Entity::GetController token(0x060137DE)
+  IL_0253 stloc.s        local(0x000C) 
+  IL_0255 ldloc.s        local(0x000C) 
+  IL_0257 brfalse.s      IL_0275 
+  IL_0259 ldloc.s        local(0x000C) 
+  IL_025b callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0260 stloc.s        local(0x000D) 
+  IL_0262 ldloc.s        local(0x000D) 
+  IL_0264 ldnull          
+  IL_0265 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_026a brfalse.s      IL_0275 
+  IL_026c ldloc.s        local(0x000D) 
+  IL_026e ldloc.s        local(0x000B) 
+  IL_0270 callvirt       Card::NotifyOfWeaponDestroyed token(0x06012CD4)
+  IL_0275 ldloca.s       local(0x0008) 
+  IL_0277 call           <dnfile.mdtable.TypeSpecRow object at 0x7f55110e6b40>::MoveNext token(0x0A000D64)
+  IL_027c brtrue         IL_01b7 
+  IL_0281 leave          IL_0314 
+  IL_0286 ldloca.s       local(0x0008) 
+  IL_0288 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f55110e6b40> token(0x1B0003A8)
+  IL_028e callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0293 endfinally      
+  IL_0294 ldarg.0         
+  IL_0295 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_029a ldc.i4.0        
+  IL_029b callvirt       PowerTaskList::GetSourceEntity token(0x06005F72)
+  IL_02a0 stloc.s        local(0x000E) 
+  IL_02a2 ldarg.0         
+  IL_02a3 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_02a8 ldc.i4.0        
+  IL_02a9 callvirt       PowerTaskList::GetTargetEntity token(0x06005F7A)
+  IL_02ae stloc.s        local(0x000F) 
+  IL_02b0 ldloc.s        local(0x000E) 
+  IL_02b2 brtrue.s       IL_02b7 
+  IL_02b4 ldnull          
+  IL_02b5 br.s           IL_02be 
+  IL_02b7 ldloc.s        local(0x000E) 
+  IL_02b9 callvirt       Entity::GetController token(0x060137DE)
+  IL_02be dup             
+  IL_02bf brtrue.s       IL_02c5 
+  IL_02c1 pop             
+  IL_02c2 ldnull          
+  IL_02c3 br.s           IL_02ca 
+  IL_02c5 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_02ca stloc.s        local(0x0010) 
+  IL_02cc ldloc.s        local(0x0010) 
+  IL_02ce ldnull          
+  IL_02cf call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_02d4 brfalse.s      IL_0314 
+  IL_02d6 ldloc.s        local(0x000E) 
+  IL_02d8 callvirt       EntityBase::IsWeapon token(0x060138E4)
+  IL_02dd brfalse.s      IL_02ea 
+  IL_02df ldloc.s        local(0x0010) 
+  IL_02e1 ldloc.s        local(0x000E) 
+  IL_02e3 callvirt       Card::NotifyOfWeaponPlayed token(0x06012CD3)
+  IL_02e8 br.s           IL_0314 
+  IL_02ea ldloc.s        local(0x000E) 
+  IL_02ec callvirt       EntityBase::IsSpell token(0x060138E3)
+  IL_02f1 brfalse.s      IL_0300 
+  IL_02f3 ldloc.s        local(0x0010) 
+  IL_02f5 ldloc.s        local(0x000E) 
+  IL_02f7 ldloc.s        local(0x000F) 
+  IL_02f9 callvirt       Card::NotifyOfSpellPlayed token(0x06012CD7)
+  IL_02fe br.s           IL_0314 
+  IL_0300 ldloc.s        local(0x000E) 
+  IL_0302 callvirt       EntityBase::IsHeroPower token(0x060138D4)
+  IL_0307 brfalse.s      IL_0314 
+  IL_0309 ldloc.s        local(0x0010) 
+  IL_030b ldloc.s        local(0x000E) 
+  IL_030d ldloc.s        local(0x000F) 
+  IL_030f callvirt       Card::NotifyOfHeroPowerPlayed token(0x06012CD8)
+  IL_0314 ldloc.0         
+  IL_0315 callvirt       HistBlockStart::get_BlockType token(0x0600EF0A)
+  IL_031a ldc.i4.3        
+  IL_031b beq.s          IL_0326 
+  IL_031d ldloc.0         
+  IL_031e callvirt       HistBlockStart::get_BlockType token(0x0600EF0A)
+  IL_0323 ldc.i4.5        
+  IL_0324 bne.un.s       IL_03a5 
+  IL_0326 ldc.i4.0        
+  IL_0327 stloc.s        local(0x0011) 
+  IL_0329 br.s           IL_0396 
+  IL_032b ldloc.0         
+  IL_032c callvirt       HistBlockStart::get_EffectCardId token(0x0600EF12)
+  IL_0331 ldloc.s        local(0x0011) 
+  IL_0333 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5511206d50>::get_Item token(0x0A0003C1)
+  IL_0338 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_033d brfalse.s      IL_0390 
+  IL_033f ldarg.0         
+  IL_0340 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_0345 ldc.i4.1        
+  IL_0346 callvirt       PowerTaskList::GetSourceEntities token(0x06005F73)
+  IL_034b stloc.s        local(0x0012) 
+  IL_034d ldloc.s        local(0x0012) 
+  IL_034f brfalse.s      IL_0390 
+  IL_0351 ldloc.s        local(0x0011) 
+  IL_0353 ldloc.s        local(0x0012) 
+  IL_0355 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f551107f740>::get_Count token(0x0A001F2B)
+  IL_035a bge.s          IL_0390 
+  IL_035c ldloc.s        local(0x0012) 
+  IL_035e ldloc.s        local(0x0011) 
+  IL_0360 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f551107f740>::get_Item token(0x0A001F2A)
+  IL_0365 brfalse.s      IL_0390 
+  IL_0367 ldloc.0         
+  IL_0368 callvirt       HistBlockStart::get_EffectCardId token(0x0600EF12)
+  IL_036d ldloc.s        local(0x0011) 
+  IL_036f ldloc.s        local(0x0012) 
+  IL_0371 ldloc.s        local(0x0011) 
+  IL_0373 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f551107f740>::get_Item token(0x0A001F2A)
+  IL_0378 callvirt       EntityBase::GetCardId token(0x06013947)
+  IL_037d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5511206d50>::set_Item token(0x0A002607)
+  IL_0382 ldloc.0         
+  IL_0383 callvirt       HistBlockStart::get_IsEffectCardIdClientCached token(0x0600EF14)
+  IL_0388 ldloc.s        local(0x0011) 
+  IL_038a ldc.i4.1        
+  IL_038b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5510f07d40>::set_Item token(0x0A002608)
+  IL_0390 ldloc.s        local(0x0011) 
+  IL_0392 ldc.i4.1        
+  IL_0393 add             
+  IL_0394 stloc.s        local(0x0011) 
+  IL_0396 ldloc.s        local(0x0011) 
+  IL_0398 ldloc.0         
+  IL_0399 callvirt       HistBlockStart::get_EffectCardId token(0x0600EF12)
+  IL_039e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5511206d50>::get_Count token(0x0A000371)
+  IL_03a3 blt.s          IL_032b 
+  IL_03a5 ldarg.0         
+  IL_03a6 call           PowerProcessor::PrepareHistoryForCurrentTaskList token(0x06005FEB)
+  IL_03ab ldarg.0         
+  IL_03ac ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_03b1 callvirt       PowerTaskList::CreateArtificialHistoryTilesFromMetadata token(0x06005FA4)
+  IL_03b6 ret             
+
+0x0601392f EntityBase::IsCharacter() RVA 0x5c9267 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 call           EntityBase::IsHero token(0x060138D3)
+  IL_0006 brtrue.s       IL_000f 
+  IL_0008 ldarg.0         
+  IL_0009 call           EntityBase::IsMinion token(0x060138DB)
+  IL_000e ret             
+  IL_000f ldc.i4.1        
+  IL_0010 ret             
+
+0x0601394a EntityBase::OnUpdateCardId() RVA 0x4291 SIG 200001
+  IL_0000 ret             

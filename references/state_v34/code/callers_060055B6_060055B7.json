@@ -1,0 +1,178 @@
+[
+  {
+    "type": "MulliganManager",
+    "method": "ForceMulliganActive",
+    "token": "0x06005bdc",
+    "rva": "0x1af294",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0002",
+        "opcode": "stfld",
+        "operand": "MulliganManager::mulliganActive",
+        "token": "token(0x04003FCA)"
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldfld",
+        "operand": "MulliganManager::mulliganActive",
+        "token": "token(0x04003FCA)"
+      },
+      {
+        "offset": "IL_000d",
+        "opcode": "brfalse.s",
+        "operand": "IL_002a",
+        "token": null
+      },
+      {
+        "offset": "IL_000f",
+        "opcode": "call",
+        "operand": "GameState::Get",
+        "token": "token(0x06005589)"
+      },
+      {
+        "offset": "IL_0014",
+        "opcode": "callvirt",
+        "operand": "GameState::HideZzzEffects",
+        "token": "token(0x060055B6)"
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001a",
+        "opcode": "ldfld",
+        "operand": "MulliganManager::skipCardChoosing",
+        "token": "token(0x04003FE6)"
+      },
+      {
+        "offset": "IL_001f",
+        "opcode": "brtrue.s",
+        "operand": "IL_0048",
+        "token": null
+      },
+      {
+        "offset": "IL_0021",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "call",
+        "operand": "MulliganManager::EnableDamageCapFX",
+        "token": "token(0x06005BDB)"
+      },
+      {
+        "offset": "IL_0028",
+        "opcode": "br.s",
+        "operand": "IL_0048",
+        "token": null
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "call",
+        "operand": "GameState::Get",
+        "token": "token(0x06005589)"
+      },
+      {
+        "offset": "IL_002f",
+        "opcode": "callvirt",
+        "operand": "GameState::UnhideZzzEffects",
+        "token": "token(0x060055B7)"
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0035",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "call",
+        "operand": "MulliganManager::EnableDamageCapFX",
+        "token": "token(0x06005BDB)"
+      },
+      {
+        "offset": "IL_003b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "call",
+        "operand": "MulliganManager::DisableBaconMulliganElements",
+        "token": "token(0x06005BE3)"
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0042",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0043",
+        "opcode": "call",
+        "operand": "MulliganManager::HideRerollPopups",
+        "token": "token(0x06005C08)"
+      },
+      {
+        "offset": "IL_0048",
+        "opcode": "call",
+        "operand": "BnetBar::Get",
+        "token": "token(0x06001144)"
+      },
+      {
+        "offset": "IL_004d",
+        "opcode": "callvirt",
+        "operand": "BnetBar::RefreshCurrency",
+        "token": "token(0x0600114B)"
+      },
+      {
+        "offset": "IL_0052",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  }
+]

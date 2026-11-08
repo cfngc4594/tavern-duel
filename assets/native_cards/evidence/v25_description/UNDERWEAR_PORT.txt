@@ -1,0 +1,75 @@
+Original UberTextLineWrapper: source-derived port specification for these 30 base zhCN descriptions
+Source: linewrapper-rea.json methods 0x060000fb Wrap, 0x06000100 BreakStringIntoWords, 0x06000106 CanWrapBetween, 0x06000107 GetUnderwearBounds, 0x0600010a GetFinalContainerWidth, 0x0600010b IsUnderwearNeeded. Settings tokens resolved in wordwrapsettings-rea.json. These are actual CIL branches, not fitted visual formulas.
+
+Input W,H,uW,uH,flip are original serialized values. zhCN=9 has no per-component override.
+minion: W1.9500000476837158 H.8700000047683716 uW.25 uH.17000000178813934 flipfalse
+spell: W1.7000000476837158 H.8199999928474426 uW.25999999046325684 uH.1599999964237213 fliptrue
+NarrowW = W*(1-uW)
+LocaleAdjustedUnderwearH = H*(flip?uH:1-uH)
+
+Temporary measurement transform is NOT the final centered text transform:
+PrepareTextForUnderwear detaches text object parent, rotation identity, position(0,H*.25,0), scale(1,1,1).
+Wrap first saves original anchor and original local position. If underwear is needed, sets Unity TextAnchor=1 (UpperCenter). At end restores both (see RestoreTextMeshBackup). Thus AABB intersection must use these temporary anchored world-space bounds. Arbitrary centered Godot text bounds are not equivalent.
+
+GetUnderwearBounds:
+  size = (W*uW*.5, H*uH*.5, 1)  # Bounds.size, NOT extents
+  cy = flip ? (H*.5-H*uH*.5) : (-H*.5+H*uH*.5)
+  cx = W*.5 - W*.5*uW*.5
+  right = Bounds(center=(cx,cy,0),size=size)
+  left  = Bounds(center=(-cx,cy,0),size=size)
+
+IsUnderwearNeeded:
+  if !use: false
+  if !flip: true
+  # flip case: walk original token list; append tag-stripped token to measurement string;
+  # measure Renderer.bounds.size.x. If candidate >= W return true.
+  # Otherwise append original token to accumulated accepted string.
+  # After loop true if accepted string contains newline, else false.
+  # Therefore single-line spell that fits W does not get narrow first-line restriction.
+
+GetFinalContainerWidth(existingCompletedText,W,right,left):
+  SetText(existingCompletedText); bounds = Renderer.bounds
+  if flip:
+    h=bounds.size.y
+    return NarrowW if h-(H-h)*.2 < LocaleAdjustedUnderwearH else W
+  else:
+    return NarrowW if bounds.Intersects(right) or bounds.Intersects(left) else W
+
+Main Wrap (plain descriptions/no bullets/ellipsis path):
+  BreakStringIntoWords preserving rich markup, stripping tags only for measurement.
+  prepare temporary transform; calculate need and forbidden bounds; anchor UpperCenter if needed.
+  newText=''; actualLine=''; containerWidth=OriginalWidth
+  for each word:
+    strippedWord=RemoveTagsFromWord(word)
+    actualLine+=strippedWord
+    SetText(actualLine); candidateWidth=Renderer.bounds.size.x
+    if useUnderwear && needed:
+      containerWidth=GetFinalContainerWidth(newText,OriginalWidth,right,left)
+    if candidateWidth < containerWidth:  # strict <, equality wraps
+      if word contains newline:
+        actualLine = newline*(prior lineCount-1)+strippedWord
+      newText+=word
+    else:
+      # omitted bullet/ellipsis branches not exercised by these base strings
+      if newText.Length>0: newText+='\n'
+      newText+=word.TrimStart(' ')
+      actualLine = newline*(prior lineCount)+strippedWord
+  restore temporary anchor/position; postprocess richtext tag continuity; lineCount=LineCount(result)
+
+Bounds measurement requirement:
+Measured candidateLine includes leading newlines so Y progresses through layout; evaluating just visible chars loses original Underwear logic. The no-text bounds case must match Unity MeshRenderer.bounds, not an invented line height. Use sample runtime bounds or a verified Unity TextMesh layout model. This is the remaining precision dependency, not permission to disable Underwear.
+
+Chinese breaks for EXACT current105-character alphabet:
+Characters are digits0..6, slash, Chinese ideographs and 。 ， ：. No spaces/bullet/angle brackets after markup tokenization.
+For two visible plain chars left,right:
+- right in {'。','，','：'} -> cannot break
+- left in {'。','，'} -> can break
+- right Chinese (U+3000..U+D7AF, excluding punctuation forbidden above) -> can break
+- otherwise cannot break (keeps digits/slash with preceding token).
+This is a restricted equivalence to original CanWrapBetween for this alphabet, not a general Unicode line breaker.
+Raw-rich parsing preserves tags and marks their widths0; <b> is converted to material1 first. When the first Chinese follows a closing tag, original previous raw char is '>', and right Chinese permits break. Do not split <material=1> into rendered characters.
+Original BreakStringIntoWords preserves no-wrap directives [x], bullet/break directives [b]/[d], and punctuation sets outside this alphabet. Do not claim those supported by the restricted helper.
+
+Resize:
+Original ReduceText_CharSize starts at .05 and min.01, lineSpacing .9375 if multiline else0 for measuring; initial measured height subtracts Measure_IntraLine_Height = bounds('|\n|').height-2*bounds('|').height.
+While y>H or x>W: <=40 steps characterSize*=.95; if <=.01 set .01, wrap with ellipsis=true then stop. Otherwise rewrap at new characterSize, set lineSpacing .9375 if >1 lines else0, remeasure x,y (only INITIAL y subtracts intraLineHeight). End restore configured spacing (multiline .9375, single .75). Both fontSize40 and glyph atlas remain same while shrinking geometry.

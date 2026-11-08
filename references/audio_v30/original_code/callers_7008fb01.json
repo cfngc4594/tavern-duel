@@ -1,0 +1,148 @@
+[
+  {
+    "type": "PowerProcessor",
+    "method": "CreateAttackSpellController",
+    "token": "0x06006004",
+    "rva": "0x1cf94c",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldstr",
+        "operand": "'AttackSpellController.prefab:12acecc85ac575e43b87ec141b89269a'",
+        "token": "string token(0x7008FB01)"
+      },
+      {
+        "offset": "IL_0005",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "call",
+        "operand": "GameState::Get",
+        "token": "token(0x06005589)"
+      },
+      {
+        "offset": "IL_000b",
+        "opcode": "brfalse.s",
+        "operand": "IL_0039",
+        "token": null
+      },
+      {
+        "offset": "IL_000d",
+        "opcode": "call",
+        "operand": "GameState::Get",
+        "token": "token(0x06005589)"
+      },
+      {
+        "offset": "IL_0012",
+        "opcode": "callvirt",
+        "operand": "GameState::GetGameEntity",
+        "token": "token(0x060055A9)"
+      },
+      {
+        "offset": "IL_0017",
+        "opcode": "brfalse.s",
+        "operand": "IL_0039",
+        "token": null
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "call",
+        "operand": "GameState::Get",
+        "token": "token(0x06005589)"
+      },
+      {
+        "offset": "IL_001e",
+        "opcode": "callvirt",
+        "operand": "GameState::GetGameEntity",
+        "token": "token(0x060055A9)"
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0024",
+        "opcode": "callvirt",
+        "operand": "PowerTaskList::GetAttacker",
+        "token": "token(0x06005F99)"
+      },
+      {
+        "offset": "IL_0029",
+        "opcode": "callvirt",
+        "operand": "GameEntity::GetAttackSpellControllerOverride",
+        "token": "token(0x060054FE)"
+      },
+      {
+        "offset": "IL_002e",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002f",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0030",
+        "opcode": "call",
+        "operand": "System.String::IsNullOrEmpty",
+        "token": "token(0x0A0000B3)"
+      },
+      {
+        "offset": "IL_0035",
+        "opcode": "brtrue.s",
+        "operand": "IL_0039",
+        "token": null
+      },
+      {
+        "offset": "IL_0037",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0038",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0039",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003a",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003b",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "call",
+        "operand": "PowerProcessor::CreateSpellController<spec>",
+        "token": "token(0x2B000428)"
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  }
+]

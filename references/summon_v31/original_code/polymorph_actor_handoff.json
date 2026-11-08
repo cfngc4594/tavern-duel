@@ -1,0 +1,131 @@
+{
+  "build": "37.0.0.255130.254477",
+  "scope": "CS2_022 Polymorph replacing an existing ordinary in-play entity with CS2_tk1. No general transform implementation or source-client execution.",
+  "conclusion": "Do not route the existing in-play entity card-key change through StandardSpawn26/31. Original ordinary Play-to-Play actor replacement falls through to actor cleanup/state restoration, while the spell has its own transform impact asset.",
+  "evidence_tool": "Existing dnfile/dncil CIL fallback; this follow-up did not execute REA or original client.",
+  "method": "Card.OnActorChanged",
+  "token": "0x06012E38",
+  "conditions": [
+    "Ordinary non-Mercenary card",
+    "old Actor is non-null and differs from current Actor",
+    "m_prevZone and m_zone both ZonePlay",
+    "no unrelated deathrattle-return/secret transitions"
+  ],
+  "source_steps": [
+    {
+      "offset": "IL_1169–IL_1175",
+      "action": "If no earlier branch handled change, destroy oldActor if valid."
+    },
+    {
+      "offset": "IL_117A–IL_11B6",
+      "action": "For shown card in server zone1/7/3, call ActivateStateSpells(false). ZonePlay is covered by zone1."
+    },
+    {
+      "offset": "IL_11BB–IL_11BD",
+      "action": "Set m_actorReady=true."
+    },
+    {
+      "offset": "IL_11C2–IL_11D2",
+      "action": "ShowImpl if previously shown, otherwise HideImpl."
+    }
+  ],
+  "same_actor_note": "If oldActor equals currentActor and ordinary Play-to-Play is otherwise unhandled, IL1057–10F3 returns actorReady=true (side-change path can also refresh state spells), without StandardSpawn.",
+  "not_to_conflate": [
+    {
+      "branch": "No oldActor + no previous zone + current ZonePlay",
+      "offset": "IL_03B6–IL_0488",
+      "meaning": "Initial created minion can Hide + ActivateMinionSpawnEffects."
+    },
+    {
+      "branch": "No previous zone + current ZonePlay + oldActor==currentActor",
+      "offset": "IL_067D–IL_06BB",
+      "meaning": "New-spawn setup can ActivateMinionSpawnEffects."
+    },
+    {
+      "branch": "IsMercenary + current ZonePlay special handling",
+      "offset": "IL_0F9E–IL_1056",
+      "meaning": "May destroy old/hide new/ActivateMinionSpawnEffects; excluded for Sheep."
+    }
+  ],
+  "standard_spawn_method": {
+    "name": "Card.ActivateStandardSpawnMinionSpell",
+    "token": "0x06012DBB",
+    "friendly_spell_type": 26,
+    "opponent_spell_type": 31,
+    "completion": "OnSpellFinished_StandardSpawnCharacter",
+    "calls_character_play_effects": true
+  },
+  "polymorph_carddef": [
+    {
+      "card_id": "CS2_022",
+      "name": "变形术",
+      "carddef_guid": "b6160ac6598452b48aa9f26501e0c5e9",
+      "carddef_bundle": "carddef_base_global-244154c1-prefab-0.unity3d",
+      "carddef_path_id": -5679841957793983008,
+      "source": "../audio_assets_evidence/carddefs.json",
+      "suppress_play_sounds_on_summon": 0,
+      "effect_defs": {
+        "m_PlayEffectDef": {
+          "m_SpellPath": "ReuseFX_TransformImpact_Minion_Arcane_Super.prefab:440eed6d453960b49bad9e13d81151f4",
+          "m_SoundSpellPaths": [
+            "VO__Female_Dragon_TRIGGER_POLYMORPH_01.prefab:b9c625a2d02979d45857f3af0e270e15"
+          ]
+        },
+        "m_AttackEffectDef": {
+          "m_SpellPath": "",
+          "m_SoundSpellPaths": []
+        },
+        "m_DeathEffectDef": {
+          "m_SpellPath": "",
+          "m_SoundSpellPaths": []
+        }
+      },
+      "warning": "Each m_SoundSpellPaths entry is a layer, but a subclass can return no matching AudioSource. Hero-skin conditional VO is not universal spell SFX."
+    },
+    {
+      "card_id": "CS2_tk1",
+      "name": "绵羊",
+      "carddef_guid": "72a4752ca849a1f4bbcf822becfa2b67",
+      "carddef_bundle": "carddef_base_global-244154c1-prefab-1.unity3d",
+      "carddef_path_id": -5991436720606026392,
+      "source": "../audio_assets_evidence/carddefs.json",
+      "suppress_play_sounds_on_summon": 0,
+      "effect_defs": {
+        "m_PlayEffectDef": {
+          "m_SpellPath": "",
+          "m_SoundSpellPaths": [
+            "Play.prefab:22034a2cb6fdec24189cbed78967ad1c"
+          ]
+        },
+        "m_AttackEffectDef": {
+          "m_SpellPath": "",
+          "m_SoundSpellPaths": [
+            "Attack.prefab:678f67fdbb018d740ab6b1ffe1f3492d"
+          ]
+        },
+        "m_DeathEffectDef": {
+          "m_SpellPath": "",
+          "m_SoundSpellPaths": [
+            "Death.prefab:bb7b26e316e2fea4c9f1818f8d228cd1"
+          ]
+        }
+      },
+      "warning": "Each m_SoundSpellPaths entry is a layer, but a subclass can return no matching AudioSource. Hero-skin conditional VO is not universal spell SFX."
+    }
+  ],
+  "implementation_contract": {
+    "new_entity_token": "Keep separate from same entity card-definition replacement. Mirror Image is a new-entity case, not evidence for transforms.",
+    "existing_entity_transform": "Keep original unit id/slot; separate compatibility actor-replacement transition. Do not claim original Spawn26/31 glow or spawn duration, and do not trigger character play effect merely because a card key changed.",
+    "missing": "The original ReuseFX_TransformImpact_Minion_Arcane_Super full visual/timing graph is not decoded by this source follow-up. Any existing Godot Polymorph transition remains explicitly compatible, not original standard spawn."
+  },
+  "sources": [
+    {
+      "path": "v31_work/source_code/card_actor_spell.cil.txt",
+      "sha256": "6444284076f9c8b0c57cd78736aafd425675d48aea6ea2216e8e3d1d9eb6b4c8"
+    },
+    {
+      "path": "v30_work/audio_code_evidence/card_binding_roots.json",
+      "sha256": "c41192aea05475ab9a0ca5176d46cb4f0bafe104b2179aa0694d3f22dee9f66a"
+    }
+  ]
+}

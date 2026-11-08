@@ -1,0 +1,38 @@
+// ISGN
+// SV_VertexID0: register0.x systemvalue=6 componenttype=1
+// OSGN
+// SV_POSITION0: register0.xyzw systemvalue=1 componenttype=3
+// TEXCOORD0: register1.xy systemvalue=0 componenttype=3
+// TEXCOORD1: register2.xy systemvalue=0 componenttype=3
+// TEXCOORD2: register3.xy systemvalue=0 componenttype=3
+// TEXCOORD3: register4.xy systemvalue=0 componenttype=3
+// TEXCOORD4: register5.xy systemvalue=0 componenttype=3
+// SHDR
+// shader kind=1, model=4.0, length=193
+0002: dcl_constant_buffer cb0[132].xyzw
+0006: dcl_input_sgv v0.x, meta(6)
+0010: dcl_output_siv o0.xyzw, meta(1)
+0014: dcl_output o1.xy
+0017: dcl_output o2.xy
+0020: dcl_output o3.xy
+0023: dcl_output o4.xy
+0026: dcl_output o5.xy
+0029: dcl_temps 2
+0031: mov o0.zw, l(0,0,0,1)
+0039: ishl r0.x, v0.x, l(1.40129846e-45)
+0046: and r0.x, r0.x, l(2.80259693e-45)
+0053: and r0.z, v0.x, l(2.80259693e-45)
+0060: utof r0.xy, r0.xzxx
+0065: mad r0.zw, r0.xxxy, l(0,0,2,2), l(0,0,-1,-1)
+0080: mov o0.y, -r0.w
+0086: mov o0.x, r0.z
+0091: mov o1.xy, r0.xyxx
+0096: mad r0.zw, cb0[130].xxxy, cb0[131].xxxx, r0.xxxy
+0107: mad o2.xy, cb0[130].xyxx, l(0.5,0.5,0,0), r0.zwzz
+0120: mad r0.zw, -cb0[130].xxxy, cb0[131].xxxx, r0.xxxy
+0132: mad o3.xy, -cb0[130].xyxx, l(0.5,0.5,0,0), r0.zwzz
+0146: mul r1.xyzw, cb0[130].xyxy, l(0.5,0.5,0.5,0.5)
+0157: mad r1.xyzw, cb0[130].xyxy, cb0[131].xxxx, r1.xyzw
+0168: mad o4.xy, r1.xyxx, l(1,-1,0,0), r0.xyxx
+0180: mad o5.xy, r1.zwzz, l(-1,1,0,0), r0.xyxx
+0192: ret 

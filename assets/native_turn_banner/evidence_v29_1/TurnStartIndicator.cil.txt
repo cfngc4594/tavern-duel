@@ -1,0 +1,274 @@
+FIELDS [('m_explosionFX', 77467), ('m_godRays', 77468), ('m_labelTop', 77469), ('m_labelMiddle', 77470), ('m_labelBottom', 77471), ('m_reminderText', 77472), ('m_desiredDisplayDuration', 77473), ('m_desiredDelayDuration', 77474), ('DISAPPEAR_SCALE_VAL', 77475), ('START_SCALE_VAL', 77476), ('AFTER_PUNCH_SCALE_VAL', 77477), ('END_SCALE_VAL', 77478)]
+
+METHOD Start
+000c ldarg.0 None
+000d call 0xa000045 Component::get_gameObject
+0012 ldc.r4 0.0
+0017 ldc.r4 0.0
+001c call 0xa0009f7 iTween::FadeTo
+0021 ldarg.0 None
+0022 call 0xa000045 Component::get_gameObject
+0027 callvirt 0xa000164 GameObject::get_transform
+002c ldc.r4 -7.800000190734863
+0031 ldc.r4 8.199999809265137
+0036 ldc.r4 -5.0
+003b newobj 0xa00004c Vector3::.ctor
+0040 callvirt 0xa00020f Transform::set_position
+0045 ldarg.0 None
+0046 call 0xa000045 Component::get_gameObject
+004b callvirt 0xa000164 GameObject::get_transform
+0050 ldc.r4 90.0
+0055 ldc.r4 0.0
+005a ldc.r4 0.0
+005f newobj 0xa00004c Vector3::.ctor
+0064 callvirt 0xa00057a Transform::set_eulerAngles
+0069 ldarg.0 None
+006a call 0xa000045 Component::get_gameObject
+006f ldc.i4.0 None
+0070 callvirt 0xa000104 GameObject::SetActive
+0075 ldarg.0 None
+0076 ldstr 
+007b call 0x6016049 TurnStartIndicator::SetReminderText
+0080 ret None
+
+METHOD IsShown
+0001 ldarg.0 None
+0002 call 0xa000045 Component::get_gameObject
+0007 callvirt 0xa000362 GameObject::get_activeSelf
+000c ret None
+
+METHOD GetDesiredDelayDuration
+0001 ldarg.0 None
+0002 ldfld 0x4012ea2 TurnStartIndicator::m_desiredDelayDuration
+0007 ret None
+
+METHOD Show
+000c ldsfld 0x4011771 UniversalInputManager::UsePhoneUI
+0011 call 0xa000162 ::op_Implicit
+0016 brfalse.s 62
+0018 ldarg.0 None
+0019 call 0xa000045 Component::get_gameObject
+001e callvirt 0xa000164 GameObject::get_transform
+0023 ldc.r4 -7.800000190734863
+0028 ldc.r4 8.199999809265137
+002d ldc.r4 -4.199999809265137
+0032 newobj 0xa00004c Vector3::.ctor
+0037 callvirt 0xa00020f Transform::set_position
+003c br.s 98
+003e ldarg.0 None
+003f call 0xa000045 Component::get_gameObject
+0044 callvirt 0xa000164 GameObject::get_transform
+0049 ldc.r4 -7.800000190734863
+004e ldc.r4 8.199999809265137
+0053 ldc.r4 -5.0
+0058 newobj 0xa00004c Vector3::.ctor
+005d callvirt 0xa00020f Transform::set_position
+0062 ldarg.0 None
+0063 call 0xa000045 Component::get_gameObject
+0068 ldc.i4.1 None
+0069 callvirt 0xa000104 GameObject::SetActive
+006e ldarg.0 None
+006f ldfld 0x4012e9d TurnStartIndicator::m_labelTop
+0074 ldnull None
+0075 call 0xa00006d Object::op_Inequality
+007a brfalse.s 145
+007c ldarg.0 None
+007d ldfld 0x4012e9d TurnStartIndicator::m_labelTop
+0082 ldstr GAMEPLAY_YOUR_TURN
+0087 call 0x6013c11 GameStrings::Get
+008c callvirt 0xa0000ef UberText::set_Text
+0091 ldarg.0 None
+0092 ldfld 0x4012e9e TurnStartIndicator::m_labelMiddle
+0097 ldnull None
+0098 call 0xa00006d Object::op_Inequality
+009d brfalse.s 180
+009f ldarg.0 None
+00a0 ldfld 0x4012e9e TurnStartIndicator::m_labelMiddle
+00a5 ldstr GAMEPLAY_YOUR_TURN
+00aa call 0x6013c11 GameStrings::Get
+00af callvirt 0xa0000ef UberText::set_Text
+00b4 ldarg.0 None
+00b5 ldfld 0x4012e9f TurnStartIndicator::m_labelBottom
+00ba ldnull None
+00bb call 0xa00006d Object::op_Inequality
+00c0 brfalse.s 215
+00c2 ldarg.0 None
+00c3 ldfld 0x4012e9f TurnStartIndicator::m_labelBottom
+00c8 ldstr GAMEPLAY_YOUR_TURN
+00cd call 0x6013c11 GameStrings::Get
+00d2 callvirt 0xa0000ef UberText::set_Text
+00d7 ldarg.0 None
+00d8 call 0xa000045 Component::get_gameObject
+00dd ldc.r4 1.0
+00e2 ldc.r4 0.25
+00e7 call 0xa0009f7 iTween::FadeTo
+00ec ldarg.0 None
+00ed call 0xa000045 Component::get_gameObject
+00f2 callvirt 0xa000164 GameObject::get_transform
+00f7 ldc.r4 1.0
+00fc ldc.r4 1.0
+0101 ldc.r4 1.0
+0106 newobj 0xa00004c Vector3::.ctor
+010b callvirt 0xa000166 Transform::set_localScale
+0110 call 0xa000228 iTweenManager::Get
+0115 callvirt 0xa000229 iTweenManager::GetTweenHashTable
+011a stloc.0 None
+011b ldloc.0 None
+011c ldstr scale
+0121 ldc.r4 10.0
+0126 ldc.r4 10.0
+012b ldc.r4 10.0
+0130 newobj 0xa00004c Vector3::.ctor
+0135 box 0x1000017 ::Vector3
+013a callvirt 0xa00022b Hashtable::Add
+013f ldloc.0 None
+0140 ldstr time
+0145 ldc.r4 0.25
+014a box 0x1000074 ::Single
+014f callvirt 0xa00022b Hashtable::Add
+0154 ldloc.0 None
+0155 ldstr oncomplete
+015a ldstr PunchTurnStartInstance
+015f callvirt 0xa00022b Hashtable::Add
+0164 ldloc.0 None
+0165 ldstr oncompletetarget
+016a ldarg.0 None
+016b call 0xa000045 Component::get_gameObject
+0170 callvirt 0xa00022b Hashtable::Add
+0175 ldarg.0 None
+0176 call 0xa000045 Component::get_gameObject
+017b ldloc.0 None
+017c call 0xa00016b iTween::ScaleTo
+0181 call 0xa000228 iTweenManager::Get
+0186 callvirt 0xa000229 iTweenManager::GetTweenHashTable
+018b stloc.1 None
+018c ldloc.1 None
+018d ldstr position
+0192 ldarg.0 None
+0193 call 0xa000045 Component::get_gameObject
+0198 callvirt 0xa000164 GameObject::get_transform
+019d callvirt 0xa0000fb Transform::get_position
+01a2 ldc.r4 0.019999999552965164
+01a7 ldc.r4 0.019999999552965164
+01ac ldc.r4 0.019999999552965164
+01b1 newobj 0xa00004c Vector3::.ctor
+01b6 call 0xa0002fd Vector3::op_Addition
+01bb box 0x1000017 ::Vector3
+01c0 callvirt 0xa00022b Hashtable::Add
+01c5 ldloc.1 None
+01c6 ldstr time
+01cb ldarg.0 None
+01cc ldfld 0x4012ea1 TurnStartIndicator::m_desiredDisplayDuration
+01d1 box 0x1000074 ::Single
+01d6 callvirt 0xa00022b Hashtable::Add
+01db ldloc.1 None
+01dc ldstr oncomplete
+01e1 ldstr HideTurnStartInstance
+01e6 callvirt 0xa00022b Hashtable::Add
+01eb ldloc.1 None
+01ec ldstr oncompletetarget
+01f1 ldarg.0 None
+01f2 call 0xa000045 Component::get_gameObject
+01f7 callvirt 0xa00022b Hashtable::Add
+01fc ldarg.0 None
+01fd call 0xa000045 Component::get_gameObject
+0202 ldloc.1 None
+0203 call 0xa00022c iTween::MoveTo
+0208 ldarg.0 None
+0209 ldfld 0x4012e9b TurnStartIndicator::m_explosionFX
+020e callvirt MethodSpec 0xa00006c GameObject::GetComponent
+0213 callvirt 0xa000c61 ParticleSystem::Play
+0218 ret None
+
+METHOD PunchTurnStartInstance
+0001 ldarg.0 None
+0002 call 0xa000045 Component::get_gameObject
+0007 ldc.r4 9.800000190734863
+000c ldc.r4 9.800000190734863
+0011 ldc.r4 9.800000190734863
+0016 newobj 0xa00004c Vector3::.ctor
+001b ldc.r4 0.15000000596046448
+0020 call 0xa00022e iTween::ScaleTo
+0025 ret None
+
+METHOD HideTurnStartInstance
+000c ldarg.0 None
+000d call 0xa000045 Component::get_gameObject
+0012 ldc.r4 0.0
+0017 ldc.r4 0.25
+001c call 0xa0009f7 iTween::FadeTo
+0021 ldarg.0 None
+0022 call 0xa000045 Component::get_gameObject
+0027 ldc.i4.8 None
+0028 newarr 0x1000001 ::Object
+002d dup None
+002e ldc.i4.0 None
+002f ldstr scale
+0034 stelem.ref None
+0035 dup None
+0036 ldc.i4.1 None
+0037 ldc.r4 0.009999999776482582
+003c ldc.r4 0.009999999776482582
+0041 ldc.r4 0.009999999776482582
+0046 newobj 0xa00004c Vector3::.ctor
+004b box 0x1000017 ::Vector3
+0050 stelem.ref None
+0051 dup None
+0052 ldc.i4.2 None
+0053 ldstr time
+0058 stelem.ref None
+0059 dup None
+005a ldc.i4.3 None
+005b ldc.r4 0.25
+0060 box 0x1000074 ::Single
+0065 stelem.ref None
+0066 dup None
+0067 ldc.i4.4 None
+0068 ldstr oncomplete
+006d stelem.ref None
+006e dup None
+006f ldc.i4.5 None
+0070 ldstr DeactivateTurnStartInstance
+0075 stelem.ref None
+0076 dup None
+0077 ldc.i4.6 None
+0078 ldstr oncompletetarget
+007d stelem.ref None
+007e dup None
+007f ldc.i4.7 None
+0080 ldarg.0 None
+0081 call 0xa000045 Component::get_gameObject
+0086 stelem.ref None
+0087 call 0xa00016a iTween::Hash
+008c call 0xa00016b iTween::ScaleTo
+0091 ret None
+
+METHOD DeactivateTurnStartInstance
+0001 ldarg.0 None
+0002 call 0xa000045 Component::get_gameObject
+0007 ldc.i4.0 None
+0008 callvirt 0xa000104 GameObject::SetActive
+000d ret None
+
+METHOD SetReminderText
+0001 ldarg.0 None
+0002 ldfld 0x4012ea0 TurnStartIndicator::m_reminderText
+0007 ldnull None
+0008 call 0xa00006d Object::op_Inequality
+000d brfalse.s 27
+000f ldarg.0 None
+0010 ldfld 0x4012ea0 TurnStartIndicator::m_reminderText
+0015 ldarg.1 None
+0016 callvirt 0xa0000ef UberText::set_Text
+001b ret None
+
+METHOD .ctor
+0001 ldarg.0 None
+0002 ldc.r4 1.5
+0007 stfld 0x4012ea1 TurnStartIndicator::m_desiredDisplayDuration
+000c ldarg.0 None
+000d ldc.r4 1.0
+0012 stfld 0x4012ea2 TurnStartIndicator::m_desiredDelayDuration
+0017 ldarg.0 None
+0018 call 0xa000018 MonoBehaviour::.ctor
+001d ret None

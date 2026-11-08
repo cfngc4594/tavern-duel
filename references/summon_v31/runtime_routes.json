@@ -1,0 +1,4546 @@
+{
+  "schema_version": 1,
+  "build": "37.0.0.255130.254477",
+  "scope": "Ordinary non-premium non-elite shared visual routes. Cost bands use base EntityDef cost. Large included for diagnostic coverage. No client execution.",
+  "timing_semantics": [
+    "Times are continuous-time reconstruction; Unity/PlayMaker update scheduling can add frame quantization.",
+    "Parallel actions enter in source action index order. Explicit named events can transition before other actions finish.",
+    "AnimationPlaythroughAction starts playback then finishes immediately; PlayAnimation normally waits.",
+    "SpellFinishAction finishes Card callback without ending FSM; None-state SpellStateAction also finishes if necessary.",
+    "64-bit PPtr path IDs are decimal strings. Raw FSM files preserve original wrappers and unresolved serialized values.",
+    "Do not substitute m_MuscleClip.m_StopTime=1 when m_MuscleClipSize=0; duration estimates use actual legacy curve bounds."
+  ],
+  "selection": {
+    "friendly_hand": {
+      "cost_lt4": [
+        1,
+        2
+      ],
+      "cost_4_to6": [
+        22,
+        24
+      ],
+      "cost_ge7": [
+        23,
+        25
+      ]
+    },
+    "opponent_hand": {
+      "out_type": 1,
+      "in_types_by_same_cost_bands": [
+        42,
+        68,
+        69
+      ],
+      "all_in_types_share": "play_in_opponent"
+    },
+    "generated_spawn": {
+      "friendly": 26,
+      "opponent": 31,
+      "hand_out": false
+    }
+  },
+  "routes": {
+    "hand_out_small": {
+      "prefab": "Card_Hand_Ally_SummonOut.prefab:f447dff79e61341f1adda7916b4ddd85",
+      "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5900530254774599433",
+      "fsm_component": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "6520964117140668169",
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "finished_seconds_nominal": 1,
+      "source_file": "Card_Hand_Ally_SummonOut.prefab.fsm.json",
+      "source_sha256": "3deba15a5781b7185d537519672819053adb19db07640808d107fd5e9d34444d",
+      "state_enter_schedule": [
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 1,
+          "state_name": "BIRTH",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellInitActorVariables",
+              "params": {
+                "m_actorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObject": {
+                  "variable": "RootObject",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObjectMesh": {
+                  "file_id": 0,
+                  "path_id": "0"
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellCustomActorVariable",
+              "params": {
+                "m_objectName": "Highlight_Card_Plane",
+                "m_actorObject": {
+                  "variable": "Highlight_Card_Plane",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "ActorSetVisibility",
+              "params": {
+                "m_ActorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Visible": 1,
+                "m_IgnoreSpells": 0,
+                "m_ResetOnExit": false
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 11,
+          "state_name": "Dragon?",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SendEventBasedOnEntityTagAction",
+              "params": {
+                "m_spellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rangeEventArray": [
+                  {
+                    "serialized_custom_type": "HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction+ValueRangeEvent",
+                    "m_range": {
+                      "serialized_custom_type": "ValueRange",
+                      "m_minValue": 0,
+                      "m_maxValue": 0
+                    },
+                    "m_event": "noDragon"
+                  },
+                  {
+                    "serialized_custom_type": "HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction+ValueRangeEvent",
+                    "m_range": {
+                      "serialized_custom_type": "ValueRange",
+                      "m_minValue": 1,
+                      "m_maxValue": 1
+                    },
+                    "m_event": "Dragon"
+                  }
+                ],
+                "m_whichEntity": 5,
+                "m_tagToCheck": 114,
+                "m_tagToCheckOverride": 0
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 13,
+          "state_name": "Texture Swap - NoDragon",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SetMaterialTexture",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "8899442138007076617"
+                  }
+                },
+                "materialIndex": 0,
+                "material": {
+                  "serialized_type": 32,
+                  "pos": 0,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "namedTexture": "_MainTex",
+                "texture": {
+                  "serialized_type": 33,
+                  "pos": 1,
+                  "byte_size": 0,
+                  "bytes": []
+                }
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:8899442138007076617",
+              "target_object_name": "ScryLines"
+            },
+            {
+              "action_index": 1,
+              "class_name": "SetMaterialTexture",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "6034471933934894857"
+                  }
+                },
+                "materialIndex": 0,
+                "material": {
+                  "serialized_type": 32,
+                  "pos": 2,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "namedTexture": "_SecondTex",
+                "texture": {
+                  "serialized_type": 33,
+                  "pos": 3,
+                  "byte_size": 0,
+                  "bytes": []
+                }
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6034471933934894857",
+              "target_object_name": "ScryLines"
+            },
+            {
+              "action_index": 2,
+              "class_name": "SetMaterialTexture",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-5810669572538499319"
+                  }
+                },
+                "materialIndex": 0,
+                "material": {
+                  "serialized_type": 32,
+                  "pos": 4,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "namedTexture": "_MainTex",
+                "texture": {
+                  "serialized_type": 33,
+                  "pos": 5,
+                  "byte_size": 0,
+                  "bytes": []
+                }
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-5810669572538499319",
+              "target_object_name": "ScryLines"
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 4,
+          "state_name": "Is Diamond?",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SendEventBasedOnEntityTagAction",
+              "params": {
+                "m_spellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rangeEventArray": [
+                  {
+                    "serialized_custom_type": "HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction+ValueRangeEvent",
+                    "m_range": {
+                      "serialized_custom_type": "ValueRange",
+                      "m_minValue": 0,
+                      "m_maxValue": 0
+                    },
+                    "m_event": "isRegular"
+                  },
+                  {
+                    "serialized_custom_type": "HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction+ValueRangeEvent",
+                    "m_range": {
+                      "serialized_custom_type": "ValueRange",
+                      "m_minValue": 2,
+                      "m_maxValue": 2
+                    },
+                    "m_event": "isDiamond"
+                  },
+                  {
+                    "serialized_custom_type": "HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction+ValueRangeEvent",
+                    "m_range": {
+                      "serialized_custom_type": "ValueRange",
+                      "m_minValue": 1,
+                      "m_maxValue": 1
+                    },
+                    "m_event": "isPremium"
+                  }
+                ],
+                "m_whichEntity": 5,
+                "m_tagToCheck": 12,
+                "m_tagToCheckOverride": 0
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 7,
+          "state_name": "OnOff",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "ActivateGameObject",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-6355154311123566839"
+                  }
+                },
+                "activate": 1,
+                "recursive": 0,
+                "resetOnExit": false,
+                "everyFrame": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-6355154311123566839",
+              "target_object_name": "GameObjectContainer"
+            },
+            {
+              "action_index": 1,
+              "class_name": "ActivateGameObject",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "7252202869477605129"
+                  }
+                },
+                "activate": 0,
+                "recursive": 0,
+                "resetOnExit": false,
+                "everyFrame": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:7252202869477605129",
+              "target_object_name": "GameObjectContainer_Diamond"
+            },
+            {
+              "action_index": 2,
+              "class_name": "ActivateGameObject",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-9199105820885975287"
+                  }
+                },
+                "activate": 0,
+                "recursive": 0,
+                "resetOnExit": false,
+                "everyFrame": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-9199105820885975287",
+              "target_object_name": "GameObjectContainer_Premium"
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 5,
+          "state_name": "Regular",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "8899442138007076617"
+                  }
+                },
+                "toggle": 0,
+                "visible": 1,
+                "resetOnExit": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:8899442138007076617",
+              "target_object_name": "ScryLines"
+            },
+            {
+              "action_index": 1,
+              "class_name": "AnimationPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "8899442138007076617"
+                  }
+                },
+                "m_AnimName": "AllyInHandScryLines",
+                "m_PhoneAnimName": "",
+                "m_PlayMode": 4,
+                "m_CrossFadeSec": 0.0
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:5797133165393569247",
+                "path_id": "5797133165393569247",
+                "file": "animations/AllyInHandScryLines__5797133165393569247.json",
+                "curve_last_key_seconds": 1.350000023841858,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:8899442138007076617",
+              "target_object_name": "ScryLines"
+            },
+            {
+              "action_index": 2,
+              "class_name": "AnimationPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Actor",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "m_AnimName": "AllyInHandDeath",
+                "m_PhoneAnimName": "",
+                "m_PlayMode": 4,
+                "m_CrossFadeSec": 0.0
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:8416076160504651631",
+                "path_id": "8416076160504651631",
+                "file": "animations/AllyInHandDeath__8416076160504651631.json",
+                "curve_last_key_seconds": 0.25,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "AudioPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_VolumeScale": 1.0,
+                "m_OneShotClip": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_FinishedEvent": "",
+                "m_IsMinionSummonVO": false,
+                "m_IsKeywordVO": false,
+                "m_InstanceLimited": false,
+                "m_InstanceLimitedDuration": 0.0,
+                "m_InstanceLimitMaximum": 1,
+                "m_LimitMaxOutOption": 0
+              }
+            },
+            {
+              "action_index": 4,
+              "class_name": "ParticlePlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "6538087048048279305"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6538087048048279305",
+              "target_object_name": "FX_BlueRays"
+            },
+            {
+              "action_index": 5,
+              "class_name": "Wait",
+              "params": {
+                "time": 0.800000011920929,
+                "finishEvent": "",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 6,
+              "class_name": "AnimateFloat",
+              "params": {
+                "animCurve": {
+                  "curve": {
+                    "m_Curve": [
+                      1.0,
+                      0.0
+                    ],
+                    "m_PreInfinity": 2,
+                    "m_PostInfinity": 2,
+                    "m_RotationOrder": 4
+                  }
+                },
+                "floatVariable": {
+                  "variable": "HighlightIntensity",
+                  "default": 1.0
+                },
+                "finishEvent": "FINISHED",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 7,
+              "class_name": "SetMaterialFloat",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Highlight_Card_Plane",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "materialIndex": 0,
+                "material": {
+                  "serialized_type": 32,
+                  "pos": 2,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "namedFloat": "_Intensity",
+                "floatValue": {
+                  "variable": "HighlightIntensity",
+                  "default": 1.0
+                },
+                "everyFrame": true
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 1,
+          "state_index": 3,
+          "state_name": "Sub_Birth 3",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SetVisibilityRecursiveAction",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "RootObject",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "visible": 0,
+                "resetOnExit": false,
+                "includeChildren": true
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Highlight_Card_Plane",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "toggle": 0,
+                "visible": 0,
+                "resetOnExit": false
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "Wait",
+              "params": {
+                "time": 1.0,
+                "finishEvent": "",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "SpellFinishAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Delay": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 2,
+          "state_index": 2,
+          "state_name": "NONE",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "ActivateGameObject",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-6355154311123566839"
+                  }
+                },
+                "activate": 0,
+                "recursive": 0,
+                "resetOnExit": false,
+                "everyFrame": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-6355154311123566839",
+              "target_object_name": "GameObjectContainer"
+            },
+            {
+              "action_index": 2,
+              "class_name": "ActivateGameObject",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "7252202869477605129"
+                  }
+                },
+                "activate": 0,
+                "recursive": 0,
+                "resetOnExit": false,
+                "everyFrame": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:7252202869477605129",
+              "target_object_name": "GameObjectContainer_Diamond"
+            },
+            {
+              "action_index": 3,
+              "class_name": "ActivateGameObject",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-9199105820885975287"
+                  }
+                },
+                "activate": 0,
+                "recursive": 0,
+                "resetOnExit": false,
+                "everyFrame": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-9199105820885975287",
+              "target_object_name": "GameObjectContainer_Premium"
+            }
+          ]
+        }
+      ],
+      "disabled_actions": [],
+      "unresolved_serialized_parameters": [
+        {
+          "parameter_path": "state_enter_schedule[2].actions[0].params.material",
+          "serialized_type": 32,
+          "pos": 0
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[0].params.texture",
+          "serialized_type": 33,
+          "pos": 1
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[1].params.material",
+          "serialized_type": 32,
+          "pos": 2
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[1].params.texture",
+          "serialized_type": 33,
+          "pos": 3
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[2].params.material",
+          "serialized_type": 32,
+          "pos": 4
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[2].params.texture",
+          "serialized_type": 33,
+          "pos": 5
+        },
+        {
+          "parameter_path": "state_enter_schedule[5].actions[7].params.material",
+          "serialized_type": 32,
+          "pos": 2
+        }
+      ],
+      "execution_status": "Static event/curve schedule, not a complete PlayMaker interpreter. Any unresolved_serialized_parameters must be resolved from original raw fields before executing those actions; no placeholder is a zero/default authorization."
+    },
+    "hand_out_medium": {
+      "prefab": "Card_Hand_Ally_SummonOut_Medium_PM.prefab:7106ac4b00cca44a6a998fd151491481",
+      "root_key": "cab-865f43f611eb20762339650558784e7a:-7917689932185229882",
+      "fsm_component": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-0.unity3d",
+        "cab": "CAB-865f43f611eb20762339650558784e7a",
+        "path_id": "8385085178671179206",
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "finished_seconds_nominal": 1,
+      "source_file": "Card_Hand_Ally_SummonOut_Medium_PM.prefab.fsm.json",
+      "source_sha256": "a64f486e1b9327a4238952f7940e22b9f563b1f7647e4106f8bdea9ac0b014db",
+      "state_enter_schedule": [
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 1,
+          "state_name": "BIRTH",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellInitActorVariables",
+              "params": {
+                "m_actorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObject": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_rootObjectMesh": {
+                  "file_id": 0,
+                  "path_id": "0"
+                }
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "SpellCustomActorVariable",
+              "params": {
+                "m_objectName": "Highlight_Card_Plane",
+                "m_actorObject": {
+                  "variable": "Highlight_Card_Plane",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "ActorSetVisibility",
+              "params": {
+                "m_ActorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Visible": 1,
+                "m_IgnoreSpells": 0,
+                "m_ResetOnExit": false
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 6,
+          "state_name": "Dragon?",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SendEventBasedOnEntityTagAction",
+              "params": {
+                "m_spellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rangeEventArray": [
+                  {
+                    "serialized_custom_type": "HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction+ValueRangeEvent",
+                    "m_range": {
+                      "serialized_custom_type": "ValueRange",
+                      "m_minValue": 0,
+                      "m_maxValue": 0
+                    },
+                    "m_event": "noDragon"
+                  },
+                  {
+                    "serialized_custom_type": "HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction+ValueRangeEvent",
+                    "m_range": {
+                      "serialized_custom_type": "ValueRange",
+                      "m_minValue": 1,
+                      "m_maxValue": 1
+                    },
+                    "m_event": "Dragon"
+                  }
+                ],
+                "m_whichEntity": 5,
+                "m_tagToCheck": 114
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 5,
+          "state_name": "Texture Swap - NoDragon",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SetMaterialTexture",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "1259913617868694982"
+                  }
+                },
+                "materialIndex": 0,
+                "material": {
+                  "serialized_type": 32,
+                  "pos": 0,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "namedTexture": "_MainTex",
+                "texture": {
+                  "serialized_type": 33,
+                  "pos": 1,
+                  "byte_size": 0,
+                  "bytes": []
+                }
+              },
+              "target_object_key": "cab-865f43f611eb20762339650558784e7a:1259913617868694982",
+              "target_object_name": "ScryLines"
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 7,
+          "state_name": "State 1",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "1259913617868694982"
+                  }
+                },
+                "toggle": 0,
+                "visible": 1,
+                "resetOnExit": false
+              },
+              "target_object_key": "cab-865f43f611eb20762339650558784e7a:1259913617868694982",
+              "target_object_name": "ScryLines"
+            },
+            {
+              "action_index": 1,
+              "class_name": "AnimationPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "1259913617868694982"
+                  }
+                },
+                "m_AnimName": "AllyInHandScryLines",
+                "m_PhoneAnimName": "",
+                "m_PlayMode": 4,
+                "m_CrossFadeSec": 0.0
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:5797133165393569247",
+                "path_id": "5797133165393569247",
+                "file": "animations/AllyInHandScryLines__5797133165393569247.json",
+                "curve_last_key_seconds": 1.350000023841858,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-865f43f611eb20762339650558784e7a:1259913617868694982",
+              "target_object_name": "ScryLines"
+            },
+            {
+              "action_index": 2,
+              "class_name": "AnimationPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Actor",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "m_AnimName": "AllyInHandDeath",
+                "m_PhoneAnimName": "",
+                "m_PlayMode": 4,
+                "m_CrossFadeSec": 0.0
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:8416076160504651631",
+                "path_id": "8416076160504651631",
+                "file": "animations/AllyInHandDeath__8416076160504651631.json",
+                "curve_last_key_seconds": 0.25,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-6423421601965955642"
+                  }
+                },
+                "animName": "AllyInHandGlowOn",
+                "playMode": 0,
+                "blendTime": 0.0,
+                "finishEvent": "",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:5019375880658226514",
+                "path_id": "5019375880658226514",
+                "file": "animations/AllyInHandGlowOn__5019375880658226514.json",
+                "curve_last_key_seconds": 1.1166666746139526,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-865f43f611eb20762339650558784e7a:-6423421601965955642",
+              "target_object_name": "flashPlane"
+            },
+            {
+              "action_index": 4,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "5370805469513885126"
+                  }
+                },
+                "animName": "AllyInHandRaysUp",
+                "playMode": 0,
+                "blendTime": 0.0,
+                "finishEvent": "",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-7396112192722396626",
+                "path_id": "-7396112192722396626",
+                "file": "animations/AllyInHandRaysUp__-7396112192722396626.json",
+                "curve_last_key_seconds": 0.9166666865348816,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-865f43f611eb20762339650558784e7a:5370805469513885126",
+              "target_object_name": "ScryingRays"
+            },
+            {
+              "action_index": 5,
+              "class_name": "AudioPlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_VolumeScale": 1.0,
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_FinishedEvent": ""
+              }
+            },
+            {
+              "action_index": 6,
+              "class_name": "Wait",
+              "params": {
+                "time": 0.800000011920929,
+                "finishEvent": "",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 7,
+              "class_name": "AnimateFloat",
+              "params": {
+                "animCurve": {
+                  "curve": {
+                    "m_Curve": [
+                      1.0,
+                      0.0
+                    ],
+                    "m_PreInfinity": 2,
+                    "m_PostInfinity": 2,
+                    "m_RotationOrder": 4
+                  }
+                },
+                "floatVariable": {
+                  "serialized_type": 15,
+                  "pos": 58,
+                  "byte_size": 23,
+                  "bytes": [
+                    0,
+                    0,
+                    128,
+                    63,
+                    1,
+                    72,
+                    105,
+                    103,
+                    104,
+                    108,
+                    105,
+                    103,
+                    104,
+                    116,
+                    73,
+                    110,
+                    116,
+                    101,
+                    110,
+                    115,
+                    105,
+                    116,
+                    121
+                  ]
+                },
+                "finishEvent": "FINISHED",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 8,
+              "class_name": "SetMaterialFloat",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Highlight_Card_Plane",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "materialIndex": 0,
+                "material": {
+                  "serialized_type": 32,
+                  "pos": 1,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "namedFloat": "_Intensity",
+                "floatValue": {
+                  "serialized_type": 15,
+                  "pos": 95,
+                  "byte_size": 23,
+                  "bytes": [
+                    0,
+                    0,
+                    128,
+                    63,
+                    1,
+                    72,
+                    105,
+                    103,
+                    104,
+                    108,
+                    105,
+                    103,
+                    104,
+                    116,
+                    73,
+                    110,
+                    116,
+                    101,
+                    110,
+                    115,
+                    105,
+                    116,
+                    121
+                  ]
+                },
+                "everyFrame": true
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 1,
+          "state_index": 3,
+          "state_name": "Sub_Birth 2",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "ActorSetVisibility",
+              "params": {
+                "m_ActorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Visible": 0,
+                "m_IgnoreSpells": 0,
+                "m_ResetOnExit": false
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SetVisibilityRecursiveAction",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-7917689932185229882"
+                  }
+                },
+                "visible": 0,
+                "resetOnExit": false,
+                "includeChildren": true
+              },
+              "target_object_key": "cab-865f43f611eb20762339650558784e7a:-7917689932185229882",
+              "target_object_name": "Card_Hand_Ally_SummonOut_Medium_PM"
+            },
+            {
+              "action_index": 2,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Highlight_Card_Plane",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "toggle": 0,
+                "visible": 0,
+                "resetOnExit": false
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "Wait",
+              "params": {
+                "time": 1.0,
+                "finishEvent": "FINISHED",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 4,
+              "class_name": "SpellFinishAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Delay": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 2,
+          "state_index": 2,
+          "state_name": "NONE",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "disabled_actions": [
+        {
+          "state_index": 4,
+          "action_index": 1,
+          "class_name": "SetMaterialTexture"
+        },
+        {
+          "state_index": 4,
+          "action_index": 2,
+          "class_name": "SetMaterialTexture"
+        },
+        {
+          "state_index": 5,
+          "action_index": 1,
+          "class_name": "SetMaterialTexture"
+        },
+        {
+          "state_index": 5,
+          "action_index": 2,
+          "class_name": "SetMaterialTexture"
+        }
+      ],
+      "unresolved_serialized_parameters": [
+        {
+          "parameter_path": "state_enter_schedule[2].actions[0].params.material",
+          "serialized_type": 32,
+          "pos": 0
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[0].params.texture",
+          "serialized_type": 33,
+          "pos": 1
+        },
+        {
+          "parameter_path": "state_enter_schedule[3].actions[7].params.floatVariable",
+          "serialized_type": 15,
+          "pos": 58
+        },
+        {
+          "parameter_path": "state_enter_schedule[3].actions[8].params.material",
+          "serialized_type": 32,
+          "pos": 1
+        },
+        {
+          "parameter_path": "state_enter_schedule[3].actions[8].params.floatValue",
+          "serialized_type": 15,
+          "pos": 95
+        }
+      ],
+      "execution_status": "Static event/curve schedule, not a complete PlayMaker interpreter. Any unresolved_serialized_parameters must be resolved from original raw fields before executing those actions; no placeholder is a zero/default authorization."
+    },
+    "hand_out_large": {
+      "prefab": "Card_Hand_Ally_SummonOut_Large_PM.prefab:63559754071884703af9071e7c579d38",
+      "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6984486464726419539",
+      "fsm_component": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8944992473620625325",
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "finished_seconds_nominal": 0.9166666865348816,
+      "source_file": "Card_Hand_Ally_SummonOut_Large_PM.prefab.fsm.json",
+      "source_sha256": "e2ff19733f0b82028a09580b69b31e70df2e7474d083bf1bcb380662a603f6f0",
+      "state_enter_schedule": [
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 1,
+          "state_name": "BIRTH",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellInitActorVariables",
+              "params": {
+                "m_actorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObject": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_rootObjectMesh": {
+                  "file_id": 0,
+                  "path_id": "0"
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellCustomActorVariable",
+              "params": {
+                "m_objectName": "Highlight_Card_Plane",
+                "m_actorObject": {
+                  "variable": "Highlight_Card_Plane",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "ActorSetVisibility",
+              "params": {
+                "m_ActorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Visible": 1,
+                "m_IgnoreSpells": 0,
+                "m_ResetOnExit": false
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 4,
+          "state_name": "Dragon?",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SendEventBasedOnEntityTagAction",
+              "params": {
+                "m_spellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rangeEventArray": [
+                  {
+                    "serialized_custom_type": "HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction+ValueRangeEvent",
+                    "m_range": {
+                      "serialized_custom_type": "ValueRange",
+                      "m_minValue": 0,
+                      "m_maxValue": 0
+                    },
+                    "m_event": "noDragon"
+                  },
+                  {
+                    "serialized_custom_type": "HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction+ValueRangeEvent",
+                    "m_range": {
+                      "serialized_custom_type": "ValueRange",
+                      "m_minValue": 1,
+                      "m_maxValue": 1
+                    },
+                    "m_event": "Dragon"
+                  }
+                ],
+                "m_whichEntity": 5,
+                "m_tagToCheck": 114
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 6,
+          "state_name": "Texture Swap - NoDragon",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SetMaterialTexture",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "3909178588233975891"
+                  }
+                },
+                "materialIndex": 0,
+                "material": {
+                  "serialized_type": 32,
+                  "pos": 0,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "namedTexture": "_MainTex",
+                "texture": {
+                  "serialized_type": 33,
+                  "pos": 1,
+                  "byte_size": 0,
+                  "bytes": []
+                }
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:3909178588233975891",
+              "target_object_name": "ScryLines_Lrg"
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 7,
+          "state_name": "State 1",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "3909178588233975891"
+                  }
+                },
+                "toggle": 0,
+                "visible": 1,
+                "resetOnExit": true
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:3909178588233975891",
+              "target_object_name": "ScryLines_Lrg"
+            },
+            {
+              "action_index": 1,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "3909178588233975891"
+                  }
+                },
+                "animName": "AllyInHandScryLines",
+                "playMode": 0,
+                "blendTime": 0.0,
+                "finishEvent": "",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:5797133165393569247",
+                "path_id": "5797133165393569247",
+                "file": "animations/AllyInHandScryLines__5797133165393569247.json",
+                "curve_last_key_seconds": 1.350000023841858,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:3909178588233975891",
+              "target_object_name": "ScryLines_Lrg"
+            },
+            {
+              "action_index": 2,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Actor",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "animName": "AllyInHandDeath",
+                "playMode": 0,
+                "blendTime": 0.0,
+                "finishEvent": "",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:8416076160504651631",
+                "path_id": "8416076160504651631",
+                "file": "animations/AllyInHandDeath__8416076160504651631.json",
+                "curve_last_key_seconds": 0.25,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "6477706495622039635"
+                  }
+                },
+                "animName": "AllyInHandGlowOn",
+                "playMode": 0,
+                "blendTime": 0.0,
+                "finishEvent": "",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:5019375880658226514",
+                "path_id": "5019375880658226514",
+                "file": "animations/AllyInHandGlowOn__5019375880658226514.json",
+                "curve_last_key_seconds": 1.1166666746139526,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6477706495622039635",
+              "target_object_name": "flashPlane"
+            },
+            {
+              "action_index": 4,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-6122840698518648749"
+                  }
+                },
+                "animName": "AllyInHandRaysUp",
+                "playMode": 0,
+                "blendTime": 0.0,
+                "finishEvent": "FINISHED",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-7396112192722396626",
+                "path_id": "-7396112192722396626",
+                "file": "animations/AllyInHandRaysUp__-7396112192722396626.json",
+                "curve_last_key_seconds": 0.9166666865348816,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-6122840698518648749",
+              "target_object_name": "ScryingRays"
+            },
+            {
+              "action_index": 5,
+              "class_name": "Wait",
+              "params": {
+                "time": 1.0,
+                "finishEvent": "",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 6,
+              "class_name": "AudioPlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_VolumeScale": 1.0,
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_FinishedEvent": ""
+              }
+            },
+            {
+              "action_index": 7,
+              "class_name": "AnimateFloat",
+              "params": {
+                "animCurve": {
+                  "curve": {
+                    "m_Curve": [
+                      1.0,
+                      0.0
+                    ],
+                    "m_PreInfinity": 2,
+                    "m_PostInfinity": 2,
+                    "m_RotationOrder": 4
+                  }
+                },
+                "floatVariable": {
+                  "serialized_type": 15,
+                  "pos": 68,
+                  "byte_size": 23,
+                  "bytes": [
+                    0,
+                    0,
+                    128,
+                    63,
+                    1,
+                    72,
+                    105,
+                    103,
+                    104,
+                    108,
+                    105,
+                    103,
+                    104,
+                    116,
+                    73,
+                    110,
+                    116,
+                    101,
+                    110,
+                    115,
+                    105,
+                    116,
+                    121
+                  ]
+                },
+                "finishEvent": "FINISHED",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 8,
+              "class_name": "SetMaterialFloat",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Highlight_Card_Plane",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "materialIndex": 0,
+                "material": {
+                  "serialized_type": 32,
+                  "pos": 1,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "namedFloat": "_Intensity",
+                "floatValue": {
+                  "serialized_type": 15,
+                  "pos": 105,
+                  "byte_size": 23,
+                  "bytes": [
+                    0,
+                    0,
+                    128,
+                    63,
+                    1,
+                    72,
+                    105,
+                    103,
+                    104,
+                    108,
+                    105,
+                    103,
+                    104,
+                    116,
+                    73,
+                    110,
+                    116,
+                    101,
+                    110,
+                    115,
+                    105,
+                    116,
+                    121
+                  ]
+                },
+                "everyFrame": true
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.9166666865348816,
+          "state_index": 3,
+          "state_name": "Sub_Birth 2",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "ActorSetVisibility",
+              "params": {
+                "m_ActorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Visible": 0,
+                "m_IgnoreSpells": 0,
+                "m_ResetOnExit": false
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Highlight_Card_Plane",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "toggle": 0,
+                "visible": 0,
+                "resetOnExit": false
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "SetVisibilityRecursiveAction",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "6984486464726419539"
+                  }
+                },
+                "visible": 0,
+                "resetOnExit": false,
+                "includeChildren": true
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6984486464726419539",
+              "target_object_name": "Card_Hand_Ally_SummonOut_Large_PM"
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.9166666865348816,
+          "state_index": 2,
+          "state_name": "NONE",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "disabled_actions": [
+        {
+          "state_index": 5,
+          "action_index": 1,
+          "class_name": "SetMaterialTexture"
+        },
+        {
+          "state_index": 5,
+          "action_index": 2,
+          "class_name": "SetMaterialTexture"
+        },
+        {
+          "state_index": 6,
+          "action_index": 1,
+          "class_name": "SetMaterialTexture"
+        },
+        {
+          "state_index": 6,
+          "action_index": 2,
+          "class_name": "SetMaterialTexture"
+        }
+      ],
+      "finish_note": "First explicit FINISHED wins: RaysUp end approximately0.9166666865 precedes Highlight AnimateFloat end1.0; Sub_Birth2 then NONE triggers FinishIfNecessary. No extra cleanup wait.",
+      "unresolved_serialized_parameters": [
+        {
+          "parameter_path": "state_enter_schedule[2].actions[0].params.material",
+          "serialized_type": 32,
+          "pos": 0
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[0].params.texture",
+          "serialized_type": 33,
+          "pos": 1
+        },
+        {
+          "parameter_path": "state_enter_schedule[3].actions[7].params.floatVariable",
+          "serialized_type": 15,
+          "pos": 68
+        },
+        {
+          "parameter_path": "state_enter_schedule[3].actions[8].params.material",
+          "serialized_type": 32,
+          "pos": 1
+        },
+        {
+          "parameter_path": "state_enter_schedule[3].actions[8].params.floatValue",
+          "serialized_type": 15,
+          "pos": 105
+        }
+      ],
+      "execution_status": "Static event/curve schedule, not a complete PlayMaker interpreter. Any unresolved_serialized_parameters must be resolved from original raw fields before executing those actions; no placeholder is a zero/default authorization."
+    },
+    "hand_out_hidden": {
+      "prefab": "Card_Hidden_SummonOut.prefab:7293a69287e574d4ea07c6b8a9c189d6",
+      "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:3317922090085793659",
+      "fsm_component": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "7325558530808233851",
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "finished_seconds_nominal": 0.8499999940395355,
+      "source_file": "Card_Hidden_SummonOut.prefab.fsm.json",
+      "source_sha256": "a902de20f924097287ec40d84c5a7ad934f33493175cfb910b1fe16187722608",
+      "state_enter_schedule": [
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 1,
+          "state_name": "Birth State",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellInitActorVariables",
+              "params": {
+                "m_actorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObject": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_rootObjectMesh": {
+                  "file_id": 0,
+                  "path_id": "0"
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "AnimationPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "2302479511609491323"
+                  }
+                },
+                "m_AnimName": "Card_Hidden_GlowOn",
+                "m_PhoneAnimName": "",
+                "m_PlayMode": 4,
+                "m_CrossFadeSec": 0.30000001192092896
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-5851539571647414230",
+                "path_id": "-5851539571647414230",
+                "file": "animations/Card_Hidden_GlowOn__-5851539571647414230.json",
+                "curve_last_key_seconds": 0.6666666865348816,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:2302479511609491323",
+              "target_object_name": "HiddenCard_Glow_Quad"
+            },
+            {
+              "action_index": 3,
+              "class_name": "Wait",
+              "params": {
+                "time": 0.5,
+                "finishEvent": "",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 4,
+              "class_name": "iTweenMoveTo",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Actor",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "id": "",
+                "transformPosition": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "vectorPosition": {
+                  "serialized_type": 28,
+                  "pos": 15,
+                  "byte_size": 13,
+                  "bytes": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    192,
+                    64,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "time": 0.4000000059604645,
+                "delay": 0.0,
+                "speed": 0.0,
+                "space": 1,
+                "easeType": 1,
+                "loopType": 0,
+                "orientToPath": 0,
+                "lookAtObject": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "lookAtVector": {
+                  "serialized_type": 28,
+                  "pos": 57,
+                  "byte_size": 13,
+                  "bytes": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                  ]
+                },
+                "lookTime": 0.0,
+                "axis": 0,
+                "moveToPath": 0,
+                "lookAhead": 0.0,
+                "transforms": [],
+                "vectors": [],
+                "reverse": 0,
+                "startEvent": "",
+                "finishEvent": "",
+                "realTime": 0,
+                "stopOnExit": 0,
+                "loopDontFinish": 1
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.5,
+          "state_index": 2,
+          "state_name": "Birth SubState",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "ActorSetVisibility",
+              "params": {
+                "m_ActorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Visible": 0,
+                "m_IgnoreSpells": 1,
+                "m_ResetOnExit": false
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "ParticlePlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "5201848174202404731"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5201848174202404731",
+              "target_object_name": "FX_RedRays"
+            },
+            {
+              "action_index": 2,
+              "class_name": "AnimationPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "2302479511609491323"
+                  }
+                },
+                "m_AnimName": "Card_Hiddon_GlowOut",
+                "m_PhoneAnimName": "",
+                "m_PlayMode": 4,
+                "m_CrossFadeSec": 0.30000001192092896
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:1906666818377116392",
+                "path_id": "1906666818377116392",
+                "file": "animations/Card_Hiddon_GlowOut__1906666818377116392.json",
+                "curve_last_key_seconds": 0.3499999940395355,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:2302479511609491323",
+              "target_object_name": "HiddenCard_Glow_Quad"
+            },
+            {
+              "action_index": 3,
+              "class_name": "Wait",
+              "params": {
+                "time": 0.3499999940395355,
+                "finishEvent": "",
+                "realTime": false
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.8499999940395355,
+          "state_index": 4,
+          "state_name": "State 1",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "Wait",
+              "params": {
+                "time": 1.25,
+                "finishEvent": "",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellFinishAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Delay": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 2.0999999940395355,
+          "state_index": 3,
+          "state_name": "None State",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "disabled_actions": [],
+      "unresolved_serialized_parameters": [
+        {
+          "parameter_path": "state_enter_schedule[0].actions[4].params.vectorPosition",
+          "serialized_type": 28,
+          "pos": 15
+        },
+        {
+          "parameter_path": "state_enter_schedule[0].actions[4].params.lookAtVector",
+          "serialized_type": 28,
+          "pos": 57
+        }
+      ],
+      "execution_status": "Static event/curve schedule, not a complete PlayMaker interpreter. Any unresolved_serialized_parameters must be resolved from original raw fields before executing those actions; no placeholder is a zero/default authorization."
+    },
+    "play_in_small": {
+      "prefab": "Card_Play_Ally_SummonIn.prefab:786da6b44c25c46d39459e873d237292",
+      "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-7134822941844890496",
+      "fsm_component": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-4394157977634202496",
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "finished_seconds_nominal": 0.5,
+      "source_file": "Card_Play_Ally_SummonIn.prefab.fsm.json",
+      "source_sha256": "cf4c80911b3ebe045f12a8591e5bd9f50fa84dd1ab9d51c8712e56d7eeb10308",
+      "state_enter_schedule": [
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 1,
+          "state_name": "BIRTH",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellInitActorVariables",
+              "params": {
+                "m_actorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObject": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_rootObjectMesh": {
+                  "file_id": 0,
+                  "path_id": "0"
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "AnimationPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Actor",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "m_AnimName": "AllyInPlaySpawn",
+                "m_PhoneAnimName": "",
+                "m_PlayMode": 4,
+                "m_CrossFadeSec": 0.0
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8105555823431109035",
+                "path_id": "-8105555823431109035",
+                "file": "animations/AllyInPlaySpawn__-8105555823431109035.json",
+                "curve_last_key_seconds": 0.48333337903022766,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "ParticlePlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-18238306004689792"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-18238306004689792",
+              "target_object_name": "FX_EdgeMotes"
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 4,
+          "state_name": "wait",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "Wait",
+              "params": {
+                "time": 0.5,
+                "finishEvent": "",
+                "realTime": false
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.5,
+          "state_index": 2,
+          "state_name": "Kill Dust, Play Sound",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "AudioPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_VolumeScale": 1.0,
+                "m_OneShotClip": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_FinishedEvent": "",
+                "m_IsMinionSummonVO": false,
+                "m_IsKeywordVO": false,
+                "m_InstanceLimited": false,
+                "m_InstanceLimitedDuration": 0.0,
+                "m_InstanceLimitMaximum": 1,
+                "m_LimitMaxOutOption": 0
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "ParticlePlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-6620779850417365888"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-6620779850417365888",
+              "target_object_name": "FX_Dust1_new"
+            },
+            {
+              "action_index": 2,
+              "class_name": "SpellFinishAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Delay": 0.0
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "ParticleStopAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-18238306004689792"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-18238306004689792",
+              "target_object_name": "FX_EdgeMotes"
+            },
+            {
+              "action_index": 4,
+              "class_name": "ParticlePlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "9016756839510580352"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:9016756839510580352",
+              "target_object_name": "FX_EdgeLandMotes"
+            },
+            {
+              "action_index": 5,
+              "class_name": "Wait",
+              "params": {
+                "time": 2.0,
+                "finishEvent": "",
+                "realTime": false
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 2.5,
+          "state_index": 3,
+          "state_name": "NONE",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "disabled_actions": [],
+      "unresolved_serialized_parameters": [],
+      "execution_status": "Static event/curve schedule, not a complete PlayMaker interpreter. Any unresolved_serialized_parameters must be resolved from original raw fields before executing those actions; no placeholder is a zero/default authorization."
+    },
+    "play_in_medium": {
+      "prefab": "Card_Play_Ally_SummonIn_Medium_PM.prefab:b66403dbb17e349b7a74ccac69286f92",
+      "root_key": "cab-824a57d31e8915d6162164fd62a4305d:5281707505601633298",
+      "fsm_component": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-4.unity3d",
+        "cab": "CAB-824a57d31e8915d6162164fd62a4305d",
+        "path_id": "-6285828585279628270",
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "finished_seconds_nominal": 0.366666704416275,
+      "source_file": "Card_Play_Ally_SummonIn_Medium_PM.prefab.fsm.json",
+      "source_sha256": "58f110acc5ebd97a2d6d0029266f24935a023b48e000d71fc8e1853f5579c0bd",
+      "state_enter_schedule": [
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 1,
+          "state_name": "BIRTH",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellInitActorVariables",
+              "params": {
+                "m_actorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObject": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_rootObjectMesh": {
+                  "file_id": 0,
+                  "path_id": "0"
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Actor",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "animName": "AllyInPlaySpawn_Med",
+                "playMode": 0,
+                "blendTime": 0.0,
+                "finishEvent": "Action",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:8227446253133355781",
+                "path_id": "8227446253133355781",
+                "file": "animations/AllyInPlaySpawn_Med__8227446253133355781.json",
+                "curve_last_key_seconds": 0.366666704416275,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              }
+            },
+            {
+              "action_index": 5,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-3351224058537157614"
+                  }
+                },
+                "animName": "AllyInPlay_SummonGlow_Med",
+                "playMode": 4,
+                "blendTime": 0.0,
+                "finishEvent": "",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-2383b5c717aaff16696e50e98a949e4c:3450923678883561226",
+                "path_id": "3450923678883561226",
+                "file": "animations/AllyInPlay_SummonGlow_Med__3450923678883561226.json",
+                "curve_last_key_seconds": 0.8833333253860474,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614",
+              "target_object_name": "SummonRing_Med"
+            },
+            {
+              "action_index": 6,
+              "class_name": "InvokeMethod",
+              "params": {
+                "gameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "behaviour": "CameraShaker",
+                "methodName": "StartShake",
+                "delay": 0.3499999940395355,
+                "repeating": 0,
+                "repeatDelay": 1.0,
+                "cancelOnExit": 0
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.366666704416275,
+          "state_index": 3,
+          "state_name": "Kill Dust, Play Sound",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "AudioPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_VolumeScale": 1.0,
+                "m_OneShotClip": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_FinishedEvent": "",
+                "m_IsMinionSummonVO": false,
+                "m_IsKeywordVO": false,
+                "m_InstanceLimited": false,
+                "m_InstanceLimitedDuration": 0.0,
+                "m_InstanceLimitMaximum": 1,
+                "m_LimitMaxOutOption": 0
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.366666704416275,
+          "state_index": 2,
+          "state_name": "NONE",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "ParticlePlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-8450156401545552878"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878",
+              "target_object_name": "FX_Dust1_Med"
+            },
+            {
+              "action_index": 2,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-8450156401545552878"
+                  }
+                },
+                "toggle": 0,
+                "visible": 1,
+                "resetOnExit": true
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878",
+              "target_object_name": "FX_Dust1_Med"
+            },
+            {
+              "action_index": 3,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-3351224058537157614"
+                  }
+                },
+                "toggle": 0,
+                "visible": 1,
+                "resetOnExit": true
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614",
+              "target_object_name": "SummonRing_Med"
+            },
+            {
+              "action_index": 4,
+              "class_name": "SetParent",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-8450156401545552878"
+                  }
+                },
+                "parent": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "worldPositionStays": 1,
+                "resetLocalPosition": 0,
+                "resetLocalRotation": 0,
+                "resetLocalScale": 0,
+                "changeToParentLayer": 0
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878",
+              "target_object_name": "FX_Dust1_Med"
+            },
+            {
+              "action_index": 5,
+              "class_name": "SetParent",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-3351224058537157614"
+                  }
+                },
+                "parent": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "worldPositionStays": 1,
+                "resetLocalPosition": 0,
+                "resetLocalRotation": 0,
+                "resetLocalScale": 0,
+                "changeToParentLayer": 0
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614",
+              "target_object_name": "SummonRing_Med"
+            },
+            {
+              "action_index": 6,
+              "class_name": "Wait",
+              "params": {
+                "time": 2.5,
+                "finishEvent": "",
+                "realTime": false
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 2.866666704416275,
+          "state_index": 4,
+          "state_name": "Reset",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-8450156401545552878"
+                  }
+                },
+                "toggle": 0,
+                "visible": 0,
+                "resetOnExit": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878",
+              "target_object_name": "FX_Dust1_Med"
+            },
+            {
+              "action_index": 1,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-3351224058537157614"
+                  }
+                },
+                "toggle": 0,
+                "visible": 0,
+                "resetOnExit": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614",
+              "target_object_name": "SummonRing_Med"
+            },
+            {
+              "action_index": 2,
+              "class_name": "SetParent",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-8450156401545552878"
+                  }
+                },
+                "parent": {
+                  "file_id": 0,
+                  "path_id": "3122365760464313362"
+                },
+                "worldPositionStays": 1,
+                "resetLocalPosition": 0,
+                "resetLocalRotation": 0,
+                "resetLocalScale": 0,
+                "changeToParentLayer": 0
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878",
+              "target_object_name": "FX_Dust1_Med"
+            },
+            {
+              "action_index": 3,
+              "class_name": "SetParent",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-3351224058537157614"
+                  }
+                },
+                "parent": {
+                  "file_id": 0,
+                  "path_id": "3122365760464313362"
+                },
+                "worldPositionStays": 0,
+                "resetLocalPosition": 0,
+                "resetLocalRotation": 0,
+                "resetLocalScale": 0,
+                "changeToParentLayer": 0
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614",
+              "target_object_name": "SummonRing_Med"
+            },
+            {
+              "action_index": 4,
+              "class_name": "SetPosition",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-8450156401545552878"
+                  }
+                },
+                "vector": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "x": 0.0,
+                "y": 0.4000000059604645,
+                "z": -0.13041700422763824,
+                "space": 1,
+                "everyFrame": false,
+                "lateUpdate": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878",
+              "target_object_name": "FX_Dust1_Med"
+            },
+            {
+              "action_index": 5,
+              "class_name": "SetPosition",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-3351224058537157614"
+                  }
+                },
+                "vector": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "x": 0.013346400111913681,
+                "y": 0.024066569283604622,
+                "z": 0.06994867324829102,
+                "space": 1,
+                "everyFrame": false,
+                "lateUpdate": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614",
+              "target_object_name": "SummonRing_Med"
+            }
+          ]
+        }
+      ],
+      "disabled_actions": [
+        {
+          "state_index": 1,
+          "action_index": 3,
+          "class_name": "particleEmitterOnOff"
+        },
+        {
+          "state_index": 1,
+          "action_index": 4,
+          "class_name": "ParticlePlayAction"
+        },
+        {
+          "state_index": 3,
+          "action_index": 1,
+          "class_name": "particleEmitterOnOff"
+        },
+        {
+          "state_index": 3,
+          "action_index": 2,
+          "class_name": "Wait"
+        }
+      ],
+      "unresolved_serialized_parameters": [],
+      "execution_status": "Static event/curve schedule, not a complete PlayMaker interpreter. Any unresolved_serialized_parameters must be resolved from original raw fields before executing those actions; no placeholder is a zero/default authorization."
+    },
+    "play_in_large": {
+      "prefab": "Card_Play_Ally_SummonIn_Large_PM.prefab:513cb0dd369e94392a07ca635673e08d",
+      "root_key": "cab-824a57d31e8915d6162164fd62a4305d:-4994409425251311099",
+      "fsm_component": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-4.unity3d",
+        "cab": "CAB-824a57d31e8915d6162164fd62a4305d",
+        "path_id": "6855863801349825029",
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "finished_seconds_nominal": 0.366666704416275,
+      "source_file": "Card_Play_Ally_SummonIn_Large_PM.prefab.fsm.json",
+      "source_sha256": "ef4275f65b41100d36df429771290d5572f8bfd0f32336ffb7439d8a4787d2b3",
+      "state_enter_schedule": [
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 1,
+          "state_name": "BIRTH",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellInitActorVariables",
+              "params": {
+                "m_actorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObject": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_rootObjectMesh": {
+                  "file_id": 0,
+                  "path_id": "0"
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Actor",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "animName": "AllyInPlaySpawn_Med",
+                "playMode": 0,
+                "blendTime": 0.0,
+                "finishEvent": "Action",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:8227446253133355781",
+                "path_id": "8227446253133355781",
+                "file": "animations/AllyInPlaySpawn_Med__8227446253133355781.json",
+                "curve_last_key_seconds": 0.366666704416275,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "ParticlePlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-3028280032139320827"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-3028280032139320827",
+              "target_object_name": "FX_Dust1_Lrg"
+            },
+            {
+              "action_index": 5,
+              "class_name": "InvokeMethod",
+              "params": {
+                "gameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "behaviour": "CameraShaker",
+                "methodName": "StartShake",
+                "delay": 0.3499999940395355,
+                "repeating": 0,
+                "repeatDelay": 1.0,
+                "cancelOnExit": 0
+              }
+            },
+            {
+              "action_index": 6,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-8388383993393487355"
+                  }
+                },
+                "animName": "AllyInPlay_SummonGlow_Lrg",
+                "playMode": 0,
+                "blendTime": 0.0,
+                "finishEvent": "",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-907c0df8b1c3d7d0df449c59093c1279:7740412063734414069",
+                "path_id": "7740412063734414069",
+                "file": "animations/AllyInPlay_SummonGlow_Lrg__7740412063734414069.json",
+                "curve_last_key_seconds": 2.5,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-8388383993393487355",
+              "target_object_name": "SummonGlow_Lrg"
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.366666704416275,
+          "state_index": 3,
+          "state_name": "Kill Dust, Play Sound",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "AudioPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_VolumeScale": 1.0,
+                "m_OneShotClip": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_FinishedEvent": "",
+                "m_IsMinionSummonVO": false,
+                "m_IsKeywordVO": false,
+                "m_InstanceLimited": false,
+                "m_InstanceLimitedDuration": 0.0,
+                "m_InstanceLimitMaximum": 1,
+                "m_LimitMaxOutOption": 0
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.366666704416275,
+          "state_index": 2,
+          "state_name": "NONE",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "TwoColorInterpolateAction",
+              "params": {
+                "color1": {
+                  "serialized_type": 25,
+                  "pos": 0,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "color2": {
+                  "serialized_type": 25,
+                  "pos": 1,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "time": 2.5,
+                "storeColor": {
+                  "serialized_type": 25,
+                  "pos": 2,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "finishEvent": "",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "SetMaterialColor",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "2652619807472771589"
+                  }
+                },
+                "materialIndex": 0,
+                "material": {
+                  "serialized_type": 32,
+                  "pos": 0,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "namedColor": "_TintColor",
+                "color": {
+                  "serialized_type": 25,
+                  "pos": 3,
+                  "byte_size": 0,
+                  "bytes": []
+                },
+                "everyFrame": true
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:2652619807472771589",
+              "target_object_name": "SummonRingCracks_Lrg"
+            },
+            {
+              "action_index": 3,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-3028280032139320827"
+                  }
+                },
+                "toggle": 0,
+                "visible": 1,
+                "resetOnExit": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-3028280032139320827",
+              "target_object_name": "FX_Dust1_Lrg"
+            },
+            {
+              "action_index": 4,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "2652619807472771589"
+                  }
+                },
+                "toggle": 0,
+                "visible": 1,
+                "resetOnExit": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:2652619807472771589",
+              "target_object_name": "SummonRingCracks_Lrg"
+            },
+            {
+              "action_index": 5,
+              "class_name": "SetVisibility",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-8388383993393487355"
+                  }
+                },
+                "toggle": 0,
+                "visible": 1,
+                "resetOnExit": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-8388383993393487355",
+              "target_object_name": "SummonGlow_Lrg"
+            },
+            {
+              "action_index": 6,
+              "class_name": "SetParent",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-3028280032139320827"
+                  }
+                },
+                "parent": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "worldPositionStays": 1,
+                "resetLocalPosition": 0,
+                "resetLocalRotation": 0,
+                "resetLocalScale": 0,
+                "changeToParentLayer": 0
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-3028280032139320827",
+              "target_object_name": "FX_Dust1_Lrg"
+            },
+            {
+              "action_index": 7,
+              "class_name": "SetParent",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "2652619807472771589"
+                  }
+                },
+                "parent": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "worldPositionStays": 1,
+                "resetLocalPosition": 0,
+                "resetLocalRotation": 0,
+                "resetLocalScale": 0,
+                "changeToParentLayer": 0
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:2652619807472771589",
+              "target_object_name": "SummonRingCracks_Lrg"
+            },
+            {
+              "action_index": 8,
+              "class_name": "Wait",
+              "params": {
+                "time": 3.5,
+                "finishEvent": "",
+                "realTime": false
+              }
+            },
+            {
+              "action_index": 9,
+              "class_name": "RemoveAfterDelayAction",
+              "params": {
+                "gameObjectList": {
+                  "variable": "list",
+                  "object_references": [
+                    {
+                      "file_id": 0,
+                      "path_id": "-8388383993393487355"
+                    },
+                    {
+                      "file_id": 0,
+                      "path_id": "2652619807472771589"
+                    },
+                    {
+                      "file_id": 0,
+                      "path_id": "-3028280032139320827"
+                    }
+                  ]
+                },
+                "waitTime": 3.5999999046325684
+              },
+              "resolved_from": "large_cleanup_array_evidence.json"
+            }
+          ]
+        }
+      ],
+      "disabled_actions": [
+        {
+          "state_index": 1,
+          "action_index": 4,
+          "class_name": "particleEmitterOnOff"
+        },
+        {
+          "state_index": 3,
+          "action_index": 1,
+          "class_name": "SpellFinishAction"
+        },
+        {
+          "state_index": 3,
+          "action_index": 2,
+          "class_name": "particleEmitterOnOff"
+        },
+        {
+          "state_index": 3,
+          "action_index": 3,
+          "class_name": "Wait"
+        },
+        {
+          "state_index": 4,
+          "action_index": 0,
+          "class_name": "SetVisibility"
+        }
+      ],
+      "tail_cleanup": {
+        "delay_after_none_realtime": 3.5999999046325684,
+        "targets": [
+          {
+            "path_id": "-8388383993393487355",
+            "name": "SummonGlow_Lrg"
+          },
+          {
+            "path_id": "2652619807472771589",
+            "name": "SummonRingCracks_Lrg"
+          },
+          {
+            "path_id": "-3028280032139320827",
+            "name": "FX_Dust1_Lrg"
+          }
+        ]
+      },
+      "tail_note": "NONE Wait3.5 has no explicit finish event and RemoveAfterDelayAction never calls FsmStateAction.Finish. It spawns an independent coroutine using WaitForSecondsRealtime3.5999999046325684 then destroys the three objects in tail_cleanup. Do not invent a state4 transition from the3.5s wait. SetMaterialColor everyFrame=true also persists; in_finished is unaffected.",
+      "unresolved_serialized_parameters": [
+        {
+          "parameter_path": "state_enter_schedule[2].actions[1].params.color1",
+          "serialized_type": 25,
+          "pos": 0
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[1].params.color2",
+          "serialized_type": 25,
+          "pos": 1
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[1].params.storeColor",
+          "serialized_type": 25,
+          "pos": 2
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[2].params.material",
+          "serialized_type": 32,
+          "pos": 0
+        },
+        {
+          "parameter_path": "state_enter_schedule[2].actions[2].params.color",
+          "serialized_type": 25,
+          "pos": 3
+        }
+      ],
+      "execution_status": "Static event/curve schedule, not a complete PlayMaker interpreter. Any unresolved_serialized_parameters must be resolved from original raw fields before executing those actions; no placeholder is a zero/default authorization."
+    },
+    "play_in_opponent": {
+      "prefab": "Card_Play_Ally_SummonIn_Opponent.prefab:b68ecaea3f52740beac5429761699e02",
+      "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-5504954194274176513",
+      "fsm_component": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "5469982392525107711",
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "finished_seconds_nominal": 0.4300000071525574,
+      "source_file": "Card_Play_Ally_SummonIn_Opponent.prefab.fsm.json",
+      "source_sha256": "df78631b3fa50df9fbe0a8747041c837d4dae21d42321aaebb3110adfd88f132",
+      "state_enter_schedule": [
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 1,
+          "state_name": "BIRTH",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellInitActorVariables",
+              "params": {
+                "m_actorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObject": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_rootObjectMesh": {
+                  "file_id": 0,
+                  "path_id": "0"
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "AnimationPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "variable": "Actor",
+                    "default": {
+                      "file_id": 0,
+                      "path_id": "0"
+                    }
+                  }
+                },
+                "m_AnimName": "AllyInPlaySpawn",
+                "m_PhoneAnimName": "",
+                "m_PlayMode": 4,
+                "m_CrossFadeSec": 0.0
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8105555823431109035",
+                "path_id": "-8105555823431109035",
+                "file": "animations/AllyInPlaySpawn__-8105555823431109035.json",
+                "curve_last_key_seconds": 0.48333337903022766,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "ParticlePlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "5594884208522736127"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5594884208522736127",
+              "target_object_name": "FX_EdgeMotes"
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 4,
+          "state_name": "wait",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "Wait",
+              "params": {
+                "time": 0.4300000071525574,
+                "finishEvent": "FINISHED",
+                "realTime": false
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.4300000071525574,
+          "state_index": 2,
+          "state_name": "Kill Dust, Play Sound",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "AudioPlaythroughAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_VolumeScale": 1.0,
+                "m_OneShotClip": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_FinishedEvent": "",
+                "m_IsMinionSummonVO": false,
+                "m_IsKeywordVO": false,
+                "m_InstanceLimited": false,
+                "m_InstanceLimitedDuration": 0.0,
+                "m_InstanceLimitMaximum": 1,
+                "m_LimitMaxOutOption": 0
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "ParticlePlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-2807441509357669889"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2807441509357669889",
+              "target_object_name": "FX_Dust1_Med"
+            },
+            {
+              "action_index": 2,
+              "class_name": "SpellFinishAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Delay": 0.0
+              }
+            },
+            {
+              "action_index": 3,
+              "class_name": "ParticleStopAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "5594884208522736127"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5594884208522736127",
+              "target_object_name": "FX_EdgeMotes"
+            },
+            {
+              "action_index": 4,
+              "class_name": "ParticlePlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "141865491118141951"
+                  }
+                },
+                "m_IncludeChildren": 0
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:141865491118141951",
+              "target_object_name": "FX_EdgeLandMotes"
+            },
+            {
+              "action_index": 5,
+              "class_name": "Wait",
+              "params": {
+                "time": 2.0,
+                "finishEvent": "",
+                "realTime": false
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 2.4300000071525574,
+          "state_index": 3,
+          "state_name": "NONE",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "disabled_actions": [],
+      "unresolved_serialized_parameters": [],
+      "execution_status": "Static event/curve schedule, not a complete PlayMaker interpreter. Any unresolved_serialized_parameters must be resolved from original raw fields before executing those actions; no placeholder is a zero/default authorization."
+    },
+    "spawn_friendly": {
+      "prefab": "Card_Play_Ally_Spawn_Minion.prefab:fd6035c3a26bd4d69817ff4f21436fe9",
+      "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-7906393475875793379",
+      "fsm_component": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-5185303495612688867",
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "finished_seconds_nominal": 0.6833333373069763,
+      "source_file": "Card_Play_Ally_Spawn_Minion.prefab.fsm.json",
+      "source_sha256": "5cae24843c6ec43220b8d3d86fa0fb17d80b5b801f338d3551d602eefffa4029",
+      "state_enter_schedule": [
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 1,
+          "state_name": "Birth State",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellInitActorVariables",
+              "params": {
+                "m_actorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObject": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_rootObjectMesh": {
+                  "file_id": 0,
+                  "path_id": "0"
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "3526570297683023389"
+                  }
+                },
+                "animName": "AllyInPlay_SummonMinionGlowFadeIn",
+                "playMode": 4,
+                "blendTime": 0.0,
+                "finishEvent": "",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:2585133873067500320",
+                "path_id": "2585133873067500320",
+                "file": "animations/AllyInPlay_SummonMinionGlowFadeIn__2585133873067500320.json",
+                "curve_last_key_seconds": 0.6833333373069763,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:3526570297683023389",
+              "target_object_name": "SummonMinion_quad"
+            },
+            {
+              "action_index": 3,
+              "class_name": "AudioPlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_VolumeScale": 1.0,
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "file_id": 0,
+                  "path_id": "-1309217977194182999"
+                },
+                "m_FinishedEvent": ""
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.6833333373069763,
+          "state_index": 2,
+          "state_name": "Birth Sub-State",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellFinishAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Delay": 0.0
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "3526570297683023389"
+                  }
+                },
+                "animName": "AllyInPlay_SummonMinionGlowFadeOut",
+                "playMode": 4,
+                "blendTime": 0.0,
+                "finishEvent": "FINISHED",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-3179693561874771139",
+                "path_id": "-3179693561874771139",
+                "file": "animations/AllyInPlay_SummonMinionGlowFadeOut__-3179693561874771139.json",
+                "curve_last_key_seconds": 0.3499999940395355,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:3526570297683023389",
+              "target_object_name": "SummonMinion_quad"
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 1.0333333313465118,
+          "state_index": 3,
+          "state_name": "None State",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "disabled_actions": [],
+      "finish_note": "General gate=max(FadeIn clip completion,AudioPlayAction template source inactive). Here template clip=null/playOnAwake=false and explicit OneShotSound uses PlayClip(createNewSource=true), so fresh ordinary route nominally gates only on FadeIn. Card.OnSpellFinished_StandardSpawnCharacter performs Actor.Show and readiness.",
+      "unresolved_serialized_parameters": [],
+      "execution_status": "Static event/curve schedule, not a complete PlayMaker interpreter. Any unresolved_serialized_parameters must be resolved from original raw fields before executing those actions; no placeholder is a zero/default authorization."
+    },
+    "spawn_opponent": {
+      "prefab": "Card_Play_Ally_Spawn_Minion_Opponent.prefab:ff1a0c7b2b7534ea883711094aa170e5",
+      "root_key": "cab-824a57d31e8915d6162164fd62a4305d:510435917143766593",
+      "fsm_component": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-4.unity3d",
+        "cab": "CAB-824a57d31e8915d6162164fd62a4305d",
+        "path_id": "-3303108949569472959",
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "finished_seconds_nominal": 0.6833333373069763,
+      "source_file": "Card_Play_Ally_Spawn_Minion_Opponent.prefab.fsm.json",
+      "source_sha256": "322166db8d61b66f2ba40d14113e3aae6a177d7cf2ec96cb1e2ee21d383e9b6a",
+      "state_enter_schedule": [
+        {
+          "at_seconds_nominal": 0,
+          "state_index": 1,
+          "state_name": "Birth State",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellInitActorVariables",
+              "params": {
+                "m_actorObject": {
+                  "variable": "Actor",
+                  "default": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_rootObject": {
+                  "file_id": 0,
+                  "path_id": "0"
+                },
+                "m_rootObjectMesh": {
+                  "file_id": 0,
+                  "path_id": "0"
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-2944531682885798335"
+                  }
+                },
+                "animName": "AllyInPlay_SummonMinionGlowFadeIn",
+                "playMode": 4,
+                "blendTime": 0.0,
+                "finishEvent": "",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:2585133873067500320",
+                "path_id": "2585133873067500320",
+                "file": "animations/AllyInPlay_SummonMinionGlowFadeIn__2585133873067500320.json",
+                "curve_last_key_seconds": 0.6833333373069763,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-2944531682885798335",
+              "target_object_name": "SummonMinion_quad"
+            },
+            {
+              "action_index": 3,
+              "class_name": "AudioPlayAction",
+              "params": {
+                "m_GameObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_VolumeScale": 1.0,
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "file_id": 11,
+                  "path_id": "-1309217977194182999"
+                },
+                "m_FinishedEvent": ""
+              }
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 0.6833333373069763,
+          "state_index": 2,
+          "state_name": "Birth Sub-State",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            },
+            {
+              "action_index": 1,
+              "class_name": "SpellFinishAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                },
+                "m_Delay": 0.0
+              }
+            },
+            {
+              "action_index": 2,
+              "class_name": "PlayAnimation",
+              "params": {
+                "gameObject": {
+                  "owner_option": 1,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "-2944531682885798335"
+                  }
+                },
+                "animName": "AllyInPlay_SummonMinionGlowFadeOut",
+                "playMode": 4,
+                "blendTime": 0.0,
+                "finishEvent": "FINISHED",
+                "loopEvent": "",
+                "stopOnExit": false
+              },
+              "clip": {
+                "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-3179693561874771139",
+                "path_id": "-3179693561874771139",
+                "file": "animations/AllyInPlay_SummonMinionGlowFadeOut__-3179693561874771139.json",
+                "curve_last_key_seconds": 0.3499999940395355,
+                "duration_evidence": "legacy_curve_bounds_reconstruction",
+                "native_clip_length_measured": false
+              },
+              "target_object_key": "cab-824a57d31e8915d6162164fd62a4305d:-2944531682885798335",
+              "target_object_name": "SummonMinion_quad"
+            }
+          ]
+        },
+        {
+          "at_seconds_nominal": 1.0333333313465118,
+          "state_index": 3,
+          "state_name": "None State",
+          "parallel_actions": true,
+          "actions": [
+            {
+              "action_index": 0,
+              "class_name": "SpellStateAction",
+              "params": {
+                "m_SpellObject": {
+                  "owner_option": 0,
+                  "game_object": {
+                    "file_id": 0,
+                    "path_id": "0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "disabled_actions": [],
+      "finish_note": "General gate=max(FadeIn clip completion,AudioPlayAction template source inactive). Here template clip=null/playOnAwake=false and explicit OneShotSound uses PlayClip(createNewSource=true), so fresh ordinary route nominally gates only on FadeIn. Card.OnSpellFinished_StandardSpawnCharacter performs Actor.Show and readiness.",
+      "unresolved_serialized_parameters": [],
+      "execution_status": "Static event/curve schedule, not a complete PlayMaker interpreter. Any unresolved_serialized_parameters must be resolved from original raw fields before executing those actions; no placeholder is a zero/default authorization."
+    }
+  },
+  "clip_index": {
+    "AllyInHandGlowOn": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:5019375880658226514",
+      "path_id": "5019375880658226514",
+      "file": "animations/AllyInHandGlowOn__5019375880658226514.json",
+      "curve_last_key_seconds": 1.1166666746139526,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHandRaysUp": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-7396112192722396626",
+      "path_id": "-7396112192722396626",
+      "file": "animations/AllyInHandRaysUp__-7396112192722396626.json",
+      "curve_last_key_seconds": 0.9166666865348816,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHandScryLines": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:5797133165393569247",
+      "path_id": "5797133165393569247",
+      "file": "animations/AllyInHandScryLines__5797133165393569247.json",
+      "curve_last_key_seconds": 1.350000023841858,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHandScryLines_Forge": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:3193666490973657264",
+      "path_id": "3193666490973657264",
+      "file": "animations/AllyInHandScryLines_Forge__3193666490973657264.json",
+      "curve_last_key_seconds": 0.4333333373069763,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlay_SummonGlow_Med": {
+      "key": "cab-2383b5c717aaff16696e50e98a949e4c:3450923678883561226",
+      "path_id": "3450923678883561226",
+      "file": "animations/AllyInPlay_SummonGlow_Med__3450923678883561226.json",
+      "curve_last_key_seconds": 0.8833333253860474,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyAttack_FXDust1": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-1728722340989957542",
+      "path_id": "-1728722340989957542",
+      "file": "animations/AllyAttack_FXDust1__-1728722340989957542.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyAttack_DEATH_FXDust1": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:100862295179257391",
+      "path_id": "100862295179257391",
+      "file": "animations/AllyAttack_DEATH_FXDust1__100862295179257391.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHandScaleDown": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2323862074385052318",
+      "path_id": "-2323862074385052318",
+      "file": "animations/AllyInHandScaleDown__-2323862074385052318.json",
+      "curve_last_key_seconds": 0.16666670143604279,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHandBloom": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:264973487343358161",
+      "path_id": "264973487343358161",
+      "file": "animations/AllyInHandBloom__264973487343358161.json",
+      "curve_last_key_seconds": 0.25,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHandDeath": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:8416076160504651631",
+      "path_id": "8416076160504651631",
+      "file": "animations/AllyInHandDeath__8416076160504651631.json",
+      "curve_last_key_seconds": 0.25,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHandBirth": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-6769522740775458667",
+      "path_id": "-6769522740775458667",
+      "file": "animations/AllyInHandBirth__-6769522740775458667.json",
+      "curve_last_key_seconds": 0.1666666716337204,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHand_FlipOver": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:5036257152445274912",
+      "path_id": "5036257152445274912",
+      "file": "animations/AllyInHand_FlipOver__5036257152445274912.json",
+      "curve_last_key_seconds": 0.5,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHand_Construction": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2952370145264234392",
+      "path_id": "-2952370145264234392",
+      "file": "animations/AllyInHand_Construction__-2952370145264234392.json",
+      "curve_last_key_seconds": 1.5833333730697632,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHand_Burn": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-7996625858616647693",
+      "path_id": "-7996625858616647693",
+      "file": "animations/AllyInHand_Burn__-7996625858616647693.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHandBirthFast": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-6566622693148862617",
+      "path_id": "-6566622693148862617",
+      "file": "animations/AllyInHandBirthFast__-6566622693148862617.json",
+      "curve_last_key_seconds": 0.05000000074505806,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHandDeathFast": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-1761750313043821925",
+      "path_id": "-1761750313043821925",
+      "file": "animations/AllyInHandDeathFast__-1761750313043821925.json",
+      "curve_last_key_seconds": 0.11666666716337204,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "Secret_AbilityEchoOut": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-5090095166920369231",
+      "path_id": "-5090095166920369231",
+      "file": "animations/Secret_AbilityEchoOut__-5090095166920369231.json",
+      "curve_last_key_seconds": 0.6666666865348816,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "Secret_AbilityEchoFade": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-6556865095146590020",
+      "path_id": "-6556865095146590020",
+      "file": "animations/Secret_AbilityEchoFade__-6556865095146590020.json",
+      "curve_last_key_seconds": 0.3499999940395355,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlayScaleUp": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-5501285819176600382",
+      "path_id": "-5501285819176600382",
+      "file": "animations/AllyInPlayScaleUp__-5501285819176600382.json",
+      "curve_last_key_seconds": 0.016666680574417114,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlaySpawn": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8105555823431109035",
+      "path_id": "-8105555823431109035",
+      "file": "animations/AllyInPlaySpawn__-8105555823431109035.json",
+      "curve_last_key_seconds": 0.48333337903022766,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "Actor_Summon_In": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:604508740063643258",
+      "path_id": "604508740063643258",
+      "file": "animations/Actor_Summon_In__604508740063643258.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlay_Wiggle": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:7335413375684494219",
+      "path_id": "7335413375684494219",
+      "file": "animations/AllyInPlay_Wiggle__7335413375684494219.json",
+      "curve_last_key_seconds": 0.4166666865348816,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlay_Frozen": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-1408473656105995036",
+      "path_id": "-1408473656105995036",
+      "file": "animations/AllyInPlay_Frozen__-1408473656105995036.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlay_ReadyAttack": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:6038358408291223302",
+      "path_id": "6038358408291223302",
+      "file": "animations/AllyInPlay_ReadyAttack__6038358408291223302.json",
+      "curve_last_key_seconds": 0.25,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlay_FinishAttack": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-4501150883399441419",
+      "path_id": "-4501150883399441419",
+      "file": "animations/AllyInPlay_FinishAttack__-4501150883399441419.json",
+      "curve_last_key_seconds": 0.30000001192092896,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyAttack_IMPACT_Hit": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8690970655133980686",
+      "path_id": "-8690970655133980686",
+      "file": "animations/AllyAttack_IMPACT_Hit__-8690970655133980686.json",
+      "curve_last_key_seconds": 0.4833333194255829,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlaySpawn_Med": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:8227446253133355781",
+      "path_id": "8227446253133355781",
+      "file": "animations/AllyInPlaySpawn_Med__8227446253133355781.json",
+      "curve_last_key_seconds": 0.366666704416275,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "Jaraxxus_RiseUp": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:5824189889796913908",
+      "path_id": "5824189889796913908",
+      "file": "animations/Jaraxxus_RiseUp__5824189889796913908.json",
+      "curve_last_key_seconds": 2.200000047683716,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlaySpawn_sound": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:6837353064543536075",
+      "path_id": "6837353064543536075",
+      "file": "animations/AllyInPlaySpawn_sound__6837353064543536075.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlay_Wiggle_AnimEvents": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:87032847113375407",
+      "path_id": "87032847113375407",
+      "file": "animations/AllyInPlay_Wiggle_AnimEvents__87032847113375407.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "Jaraxxus_SlamDown": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-5710669959295752865",
+      "path_id": "-5710669959295752865",
+      "file": "animations/Jaraxxus_SlamDown__-5710669959295752865.json",
+      "curve_last_key_seconds": 1.0833333730697632,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlaySpawnReverse": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-7236054671270084819",
+      "path_id": "-7236054671270084819",
+      "file": "animations/AllyInPlaySpawnReverse__-7236054671270084819.json",
+      "curve_last_key_seconds": 0.8999999761581421,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlay_Death": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:4247831752093950514",
+      "path_id": "4247831752093950514",
+      "file": "animations/AllyInPlay_Death__4247831752093950514.json",
+      "curve_last_key_seconds": 0.3333333432674408,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlaySpawnReverseFast": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-1786644038521911704",
+      "path_id": "-1786644038521911704",
+      "file": "animations/AllyInPlaySpawnReverseFast__-1786644038521911704.json",
+      "curve_last_key_seconds": 0.8999999761581421,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlaySpawnFast": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-3070144315079237285",
+      "path_id": "-3070144315079237285",
+      "file": "animations/AllyInPlaySpawnFast__-3070144315079237285.json",
+      "curve_last_key_seconds": 0.23333333432674408,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "Idle": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:1859935291475392047",
+      "path_id": "1859935291475392047",
+      "file": "animations/Idle__1859935291475392047.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "small0": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:-6361972691733187091",
+      "path_id": "-6361972691733187091",
+      "file": "animations/small0__-6361972691733187091.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "small90": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:2537514851740681286",
+      "path_id": "2537514851740681286",
+      "file": "animations/small90__2537514851740681286.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "small180": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:-4247770699793257674",
+      "path_id": "-4247770699793257674",
+      "file": "animations/small180__-4247770699793257674.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "small270": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:1937444020163359275",
+      "path_id": "1937444020163359275",
+      "file": "animations/small270__1937444020163359275.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "medium0": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:8706797851732248255",
+      "path_id": "8706797851732248255",
+      "file": "animations/medium0__8706797851732248255.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "medium90": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:3296524171931998334",
+      "path_id": "3296524171931998334",
+      "file": "animations/medium90__3296524171931998334.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "medium180": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:-3279824503272414787",
+      "path_id": "-3279824503272414787",
+      "file": "animations/medium180__-3279824503272414787.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "medium270": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:-8665219064006921157",
+      "path_id": "-8665219064006921157",
+      "file": "animations/medium270__-8665219064006921157.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "large0": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:6439913629219880962",
+      "path_id": "6439913629219880962",
+      "file": "animations/large0__6439913629219880962.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "large90": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:-480045577255147482",
+      "path_id": "-480045577255147482",
+      "file": "animations/large90__-480045577255147482.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "large180": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:-6203913048773074875",
+      "path_id": "-6203913048773074875",
+      "file": "animations/large180__-6203913048773074875.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "large270": {
+      "key": "cab-66e7137de3b79380e05eb711ae004556:-5769163256222125436",
+      "path_id": "-5769163256222125436",
+      "file": "animations/large270__-5769163256222125436.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "DiamondCard_SummontOuts_Caustics": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-5034814339789155364",
+      "path_id": "-5034814339789155364",
+      "file": "animations/DiamondCard_SummontOuts_Caustics__-5034814339789155364.json",
+      "curve_last_key_seconds": null,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInHandScryLines_Diamond": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-3070262961890629853",
+      "path_id": "-3070262961890629853",
+      "file": "animations/AllyInHandScryLines_Diamond__-3070262961890629853.json",
+      "curve_last_key_seconds": 1.1833332777023315,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlay_SummonGlow_Lrg": {
+      "key": "cab-907c0df8b1c3d7d0df449c59093c1279:7740412063734414069",
+      "path_id": "7740412063734414069",
+      "file": "animations/AllyInPlay_SummonGlow_Lrg__7740412063734414069.json",
+      "curve_last_key_seconds": 2.5,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlay_SummonMinionGlowFadeIn": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:2585133873067500320",
+      "path_id": "2585133873067500320",
+      "file": "animations/AllyInPlay_SummonMinionGlowFadeIn__2585133873067500320.json",
+      "curve_last_key_seconds": 0.6833333373069763,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "AllyInPlay_SummonMinionGlowFadeOut": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-3179693561874771139",
+      "path_id": "-3179693561874771139",
+      "file": "animations/AllyInPlay_SummonMinionGlowFadeOut__-3179693561874771139.json",
+      "curve_last_key_seconds": 0.3499999940395355,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "Card_Hidden_GlowOn": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:-5851539571647414230",
+      "path_id": "-5851539571647414230",
+      "file": "animations/Card_Hidden_GlowOn__-5851539571647414230.json",
+      "curve_last_key_seconds": 0.6666666865348816,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    },
+    "Card_Hiddon_GlowOut": {
+      "key": "cab-69c88b234dfa427e02d1fcee9337ae34:1906666818377116392",
+      "path_id": "1906666818377116392",
+      "file": "animations/Card_Hiddon_GlowOut__1906666818377116392.json",
+      "curve_last_key_seconds": 0.3499999940395355,
+      "duration_evidence": "legacy_curve_bounds_reconstruction",
+      "native_clip_length_measured": false
+    }
+  }
+}

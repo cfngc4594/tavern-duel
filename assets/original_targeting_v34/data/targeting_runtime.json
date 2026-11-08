@@ -1,0 +1,116 @@
+{
+  "build": "37.0.0.255130.254477",
+  "evidence": "targeting_all.cil.json; targeting_coroutines.cil.json; constants.json",
+  "constants": {
+    "MAX_TARGET_ARROW_LINKS": 15,
+    "LINK_Y_LENGTH": 1.0,
+    "LENGTH_BETWEEN_LINKS": 1.2000000476837158,
+    "LINK_PARABOLA_HEIGHT_NORMAL": 1.5,
+    "LINK_PARABOLA_HEIGHT_MERCENARIES": 0.4000000059604645,
+    "LINK_ANIMATION_SPEED": 0.5,
+    "STARTING_X_ROTATION_FOR_DEFAULT_ARROW": 300.0,
+    "FRIENDLY_HERO_ORIGIN_Z_OFFSET": 1.0,
+    "LINK_FADE_OFFSET": -1.2000000476837158
+  },
+  "root_labels": {
+    "arrow_bullseye": "cab-69c88b234dfa427e02d1fcee9337ae34:-8531056074620168224",
+    "arrow_link": "cab-69c88b234dfa427e02d1fcee9337ae34:-2832711485509629749",
+    "damage_indicator": "cab-69c88b234dfa427e02d1fcee9337ae34:-4278571874702059566"
+  },
+  "space": {
+    "coordinates": "original Unity world; board=XZ, height=+Y",
+    "endpoint": "reticle root world position = input hit point; NOT automatically snapped to target center",
+    "yaw_degrees": "atan2(endpoint.x-origin.x,endpoint.z-origin.z)*57.295780181884766",
+    "root_rotation": [
+      0,
+      "yaw",
+      0
+    ],
+    "links_local_axis": "local negative Z runs from endpoint toward source; local Y is parabola elevation; local X=0",
+    "distance": "sqrt((origin.x-end.x)^2+(origin.z-end.z)^2); Y difference ignored",
+    "world_link_rotation": [
+      "180-atan(2*a*(z-mid))*RAD2DEG",
+      "reticle.localEulerAngles.y",
+      0
+    ],
+    "tip_initial_local_z": -0.34883952140808105,
+    "tip_rotation": [
+      "degrees(atan(2*a*(tip_z-mid))) modulo 360",
+      180,
+      0
+    ],
+    "tip_position": [
+      0,
+      "a*(tip_z-mid)^2+height",
+      "retain tip_z"
+    ],
+    "projection_boundary": "Projection into Godot screen/world is compatibility mapping; use measured board camera or explicit adapter, never treat source units as pixels."
+  },
+  "geometry": {
+    "allocated_links": 15,
+    "active_count": "floor(distance/1.2)+1, but 1 becomes 0. Iterates only 15 allocated objects.",
+    "mid": "-distance/2",
+    "a": "-height/(mid*mid)",
+    "link_z": "-1.2*(i+1)+offset",
+    "link_y": "a*(link_z-mid)^2+height",
+    "first_link_alpha": "if z>-1.2 then pow(z/-1.2,6) else 1",
+    "last_link_alpha": "pow(offset/1.2,2); first-index branch takes precedence",
+    "alpha_clamp": [
+      0,
+      1
+    ],
+    "phase_advance": "offset += deltaTime*0.5; if offset>1.2 offset-=1.2 (one subtraction, not modulo loop)",
+    "phase_reset": "No reset in CreateTargetArrow, DestroyTargetArrow, ActivateArrow; retained manager phase across uses.",
+    "zero_links": "disable all links; tip localEuler=(300,180,0); return without phase advance or resetting tip local Y."
+  },
+  "visibility": {
+    "create": "ActivateArrow(true), ShowBullseye(false), UpdateArrowPosition",
+    "valid_hover": "InputManager.ShowBullseyeIfNeeded queries GameState.IsValidOptionTarget(card.entity,false), then ShowBullseye(true)",
+    "invalid_or_empty_hover": "ShowBullseye(false)",
+    "tip_on_valid_hover": true,
+    "default_ring_only": "ShowBullseye toggles TargetArrow_TargetMesh renderers. Does not hide TargetArrow_ArrowMesh.",
+    "invalid_click": "DoNetworkOptionTarget: IsValidTarget false -> GetErrorForTarget/GetErrorParamForTarget -> PlayErrors.DisplayPlayError -> return false. No Destroy, mana prediction, SetTarget, or SendOption.",
+    "valid_commit": "DestroyFriendlyTargetArrow(false) before SetSelectedOptionTarget/SendOption",
+    "cancel": "CancelTargetMode: CancelAttack audio -> DestroyFriendlyTargetArrow(true) -> source Card.NotifyTargetingCanceled; clear origin, sourceEntityID=-1, cursor Show, ActivateArrow(false), ShowDamageIndicator(false), OnEndTargeting callback. InputManager then CancelCurrentOptionMode.",
+    "invalid_no_color_change": "No default-arrow valid/invalid color change in inspected source."
+  },
+  "origin": {
+    "local_spell": "sourceEntity.GetHero().GetCard().transform.position; if friendly hero z += 1",
+    "local_attack": "sourceEntity.GetCard().transform.position; friendly hero z += 1",
+    "use_hand_or_deck_or_zero": "hand-zone position; enemy/friendly chosen by arrow type",
+    "remote_enemy": "same base origin rule without friendly hero +1; endpoint each XYZ = Lerp(current reticle point,remote point,0.1) per frame",
+    "static": "origin supplied, remote position target, uses same Lerp0.1 branch; bullseyeAlwaysOn=true. No reset of bullseyeAlwaysOn in default CreateTargetArrow found. Static path is used separately, do not silently infer reset."
+  },
+  "damage_text": {
+    "spell_held_caller": {
+      "token": "0x06005a13",
+      "showDamageIndicatorText": true,
+      "showArrow": true,
+      "overrideText": null,
+      "useHandAsOrigin": "source.GetHero()==null",
+      "isAttackArrow": false
+    },
+    "ordinary_attack_caller": {
+      "token": "0x06005a2f",
+      "showDamageIndicatorText": false,
+      "showArrow": true,
+      "isAttackArrow": true,
+      "note": "enabled only for LettuceAbility or activated tag4089 branch, not ordinary hero/minion attack"
+    },
+    "battlecry_caller": {
+      "token": "0x06005a25",
+      "showDamageIndicatorText": true,
+      "showArrow": "not touch",
+      "isAttackArrow": false
+    },
+    "text_empty": "SetDamageText coroutine sets text and calls indicator.Show(false) if null/empty",
+    "mouse_position": "reticle root + z0.75 (not source entity). Scale2.5",
+    "touch_position": "source origin + offset; touch options differ",
+    "text_source": "Entity.GetTargetingArrowText->CardTextBuilder.GetTargetingArrowText; per-card metadata must be verified, do not substitute attack/damage numbers."
+  },
+  "limits": [
+    "No original client execution or gameplay observation used. CIL+serialized source is static evidence.",
+    "DefaultArrow closure only; HunterReticle, QuestionMark and GruntyReticle are other actual source branches but not required by current ordinary card pool.",
+    "PlayErrors speech/audio/content depends on current rule error and source data; invalid UI timing beyond this call chain not inferred."
+  ]
+}

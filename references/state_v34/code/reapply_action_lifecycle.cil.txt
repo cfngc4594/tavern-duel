@@ -1,0 +1,635 @@
+
+TYPE <WaitThenChangeFsmState>d__151 0x02002b0d
+FIELD 0x04011c1b <>1__state SIG 0608
+FIELD 0x04011c1c <>t__builder SIG 0611871d
+FIELD 0x04011c1d token SIG 06118731
+FIELD 0x04011c1e <>4__this SIG 0612c000ac1c
+FIELD 0x04011c1f stateType SIG 06118281
+FIELD 0x04011c20 <>u__1 SIG 0611872d
+
+TYPE HutongGames.PlayMaker.Actions.AudioPlayClipAction 0x02003052
+FIELD 0x04013a1f m_ParentObject SIG 061295bd
+FIELD 0x04013a20 m_Sound SIG 06129ec5
+FIELD 0x04013a21 m_Volume SIG 06128aa1
+FIELD 0x04013a22 m_Pitch SIG 06128aa1
+FIELD 0x04013a23 m_SpatialBlend SIG 06128aa1
+FIELD 0x04013a24 m_Category SIG 0611c000be78
+FIELD 0x04013a25 m_Delay SIG 060c
+FIELD 0x04013a26 m_TemplateSource SIG 06128351
+FIELD 0x04013a27 m_IsMinionSummonVO SIG 0602
+FIELD 0x04013a28 m_IsKeywordVO SIG 0602
+FIELD 0x04013a29 m_SkipSuppressEntitySoundCheck SIG 0602
+FIELD 0x04013a2a m_InstanceLimited SIG 0602
+FIELD 0x04013a2b m_InstanceLimitedDuration SIG 060c
+FIELD 0x04013a2c m_InstanceLimitMaximum SIG 0608
+FIELD 0x04013a2d m_LimitMaxOutOption SIG 0611c000ab08
+FIELD 0x04013a2e m_DelayTime SIG 060c
+
+TYPE HutongGames.PlayMaker.Actions.AudioPlaythroughAction 0x02003056
+FIELD 0x04013a45 m_GameObject SIG 061295bd
+FIELD 0x04013a46 m_VolumeScale SIG 06128aa1
+FIELD 0x04013a47 m_OneShotClip SIG 06129ec5
+FIELD 0x04013a48 m_Delay SIG 060c
+FIELD 0x04013a49 m_OneShotSound SIG 06129ec5
+FIELD 0x04013a4a m_FinishedEvent SIG 06129ef1
+FIELD 0x04013a4b m_IsMinionSummonVO SIG 0602
+FIELD 0x04013a4c m_IsKeywordVO SIG 0602
+FIELD 0x04013a4d m_InstanceLimited SIG 0602
+FIELD 0x04013a4e m_InstanceLimitedDuration SIG 060c
+FIELD 0x04013a4f m_InstanceLimitMaximum SIG 0608
+FIELD 0x04013a50 m_LimitMaxOutOption SIG 0611c000ab08
+FIELD 0x04013a51 m_DelayTime SIG 060c
+
+0x06014999 <WaitThenChangeFsmState>d__151::MoveNext() RVA 0x614e3c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitThenChangeFsmState>d__151::<>1__state token(0x04011C1B)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <WaitThenChangeFsmState>d__151::<>4__this token(0x04011C1E)
+  IL_000d stloc.1         
+  IL_000e ldloc.0         
+  IL_000f brfalse.s      IL_0051 
+  IL_0011 br.s           IL_0074 
+  IL_0013 ldc.i4.8        
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          <WaitThenChangeFsmState>d__151::token token(0x04011C1D)
+  IL_001a call           Cysharp.Threading.Tasks.UniTask::Yield token(0x0A002462)
+  IL_001f stloc.3         
+  IL_0020 ldloca.s       local(0x0003) 
+  IL_0022 call           Cysharp.Threading.Tasks.UniTask::GetAwaiter token(0x0A00103B)
+  IL_0027 stloc.2         
+  IL_0028 ldloca.s       local(0x0002) 
+  IL_002a call           Awaiter::get_IsCompleted token(0x0A00103C)
+  IL_002f brtrue.s       IL_006d 
+  IL_0031 ldarg.0         
+  IL_0032 ldc.i4.0        
+  IL_0033 dup             
+  IL_0034 stloc.0         
+  IL_0035 stfld          <WaitThenChangeFsmState>d__151::<>1__state token(0x04011C1B)
+  IL_003a ldarg.0         
+  IL_003b ldloc.2         
+  IL_003c stfld          <WaitThenChangeFsmState>d__151::<>u__1 token(0x04011C20)
+  IL_0041 ldarg.0         
+  IL_0042 ldflda         <WaitThenChangeFsmState>d__151::<>t__builder token(0x04011C1C)
+  IL_0047 ldloca.s       local(0x0002) 
+  IL_0049 ldarg.0         
+  IL_004a call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::AwaitUnsafeOnCompleted<spec> token(0x2B000968)
+  IL_004f leave.s        IL_00c6 
+  IL_0051 ldarg.0         
+  IL_0052 ldfld          <WaitThenChangeFsmState>d__151::<>u__1 token(0x04011C20)
+  IL_0057 stloc.2         
+  IL_0058 ldarg.0         
+  IL_0059 ldflda         <WaitThenChangeFsmState>d__151::<>u__1 token(0x04011C20)
+  IL_005e initobj        Awaiter token(0x010001CB)
+  IL_0064 ldarg.0         
+  IL_0065 ldc.i4.m1       
+  IL_0066 dup             
+  IL_0067 stloc.0         
+  IL_0068 stfld          <WaitThenChangeFsmState>d__151::<>1__state token(0x04011C1B)
+  IL_006d ldloca.s       local(0x0002) 
+  IL_006f call           Awaiter::GetResult token(0x0A00103E)
+  IL_0074 ldloc.1         
+  IL_0075 ldfld          Spell::m_fsmReady token(0x04011C15)
+  IL_007a brfalse.s      IL_0013 
+  IL_007c ldloc.1         
+  IL_007d ldfld          Spell::m_activeStateType token(0x04011C08)
+  IL_0082 ldarg.0         
+  IL_0083 ldfld          <WaitThenChangeFsmState>d__151::stateType token(0x04011C1F)
+  IL_0088 beq.s          IL_008c 
+  IL_008a leave.s        IL_00b3 
+  IL_008c ldloc.1         
+  IL_008d ldarg.0         
+  IL_008e ldfld          <WaitThenChangeFsmState>d__151::stateType token(0x04011C1F)
+  IL_0093 call           Spell::ChangeFsmStateNow token(0x06014970)
+  IL_0098 leave.s        IL_00b3 
+  IL_009a stloc.s        local(0x0004) 
+  IL_009c ldarg.0         
+  IL_009d ldc.i4.s       -2 
+  IL_009f stfld          <WaitThenChangeFsmState>d__151::<>1__state token(0x04011C1B)
+  IL_00a4 ldarg.0         
+  IL_00a5 ldflda         <WaitThenChangeFsmState>d__151::<>t__builder token(0x04011C1C)
+  IL_00aa ldloc.s        local(0x0004) 
+  IL_00ac call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::SetException token(0x0A00103F)
+  IL_00b1 leave.s        IL_00c6 
+  IL_00b3 ldarg.0         
+  IL_00b4 ldc.i4.s       -2 
+  IL_00b6 stfld          <WaitThenChangeFsmState>d__151::<>1__state token(0x04011C1B)
+  IL_00bb ldarg.0         
+  IL_00bc ldflda         <WaitThenChangeFsmState>d__151::<>t__builder token(0x04011C1C)
+  IL_00c1 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::SetResult token(0x0A001040)
+  IL_00c6 ret             
+
+0x0601499a <WaitThenChangeFsmState>d__151::SetStateMachine(stateMachine) RVA 0x614f20 SIG 200101128725
+  IL_0000 ldarg.0         
+  IL_0001 ldflda         <WaitThenChangeFsmState>d__151::<>t__builder token(0x04011C1C)
+  IL_0006 ldarg.1         
+  IL_0007 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::SetStateMachine token(0x0A001042)
+  IL_000c ret             
+
+0x06016aad HutongGames.PlayMaker.Actions.AudioPlayClipAction::Reset() RVA 0x699b68 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_ParentObject token(0x04013A1F)
+  IL_0007 ldarg.0         
+  IL_0008 ldnull          
+  IL_0009 stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Sound token(0x04013A20)
+  IL_000e ldarg.0         
+  IL_000f ldc.r4         1.0 
+  IL_0014 call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A0058F9)
+  IL_0019 stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Volume token(0x04013A21)
+  IL_001e ldarg.0         
+  IL_001f ldc.r4         1.0 
+  IL_0024 call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A0058F9)
+  IL_0029 stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Pitch token(0x04013A22)
+  IL_002e ldarg.0         
+  IL_002f ldc.r4         0.0 
+  IL_0034 call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A0058F9)
+  IL_0039 stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_SpatialBlend token(0x04013A23)
+  IL_003e ldarg.0         
+  IL_003f ldc.i4.1        
+  IL_0040 stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Category token(0x04013A24)
+  IL_0045 ldarg.0         
+  IL_0046 ldnull          
+  IL_0047 stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_TemplateSource token(0x04013A26)
+  IL_004c ldarg.0         
+  IL_004d ldc.r4         0.0 
+  IL_0052 stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Delay token(0x04013A25)
+  IL_0057 ldarg.0         
+  IL_0058 ldc.r4         0.0 
+  IL_005d stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_DelayTime token(0x04013A2E)
+  IL_0062 ret             
+
+0x06016aae HutongGames.PlayMaker.Actions.AudioPlayClipAction::OnEnter() RVA 0x699bd7 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Delay token(0x04013A25)
+  IL_0006 ldc.r4         0.0 
+  IL_000b ble.un.s       IL_0027 
+  IL_000d ldarg.0         
+  IL_000e ldarg.0         
+  IL_000f ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Delay token(0x04013A25)
+  IL_0014 stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_DelayTime token(0x04013A2E)
+  IL_0019 ldarg.0         
+  IL_001a ldarg.0         
+  IL_001b call           HutongGames.PlayMaker.Actions.AudioPlayClipAction::Delay token(0x06016AB0)
+  IL_0020 call           HutongGames.PlayMaker.FsmStateAction::StartCoroutine token(0x0A0058FB)
+  IL_0025 pop             
+  IL_0026 ret             
+  IL_0027 ldarg.0         
+  IL_0028 call           HutongGames.PlayMaker.Actions.AudioPlayClipAction::Play token(0x06016AAF)
+  IL_002d ret             
+
+0x06016aaf HutongGames.PlayMaker.Actions.AudioPlayClipAction::Play() RVA 0x699c08 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Sound token(0x04013A20)
+  IL_0006 brtrue.s       IL_000f 
+  IL_0008 ldarg.0         
+  IL_0009 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_IsKeywordVO token(0x04013A28)
+  IL_0015 brfalse.s      IL_0034 
+  IL_0017 call           GameState::Get token(0x06005589)
+  IL_001c brfalse.s      IL_0034 
+  IL_001e call           GameState::Get token(0x06005589)
+  IL_0023 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0028 ldc.i4         2636 
+  IL_002d callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0032 br.s           IL_0035 
+  IL_0034 ldc.i4.0        
+  IL_0035 stloc.0         
+  IL_0036 ldarg.0         
+  IL_0037 call           HutongGames.PlayMaker.Actions.AudioPlayClipAction::GetActor token(0x06016AB1)
+  IL_003c stloc.1         
+  IL_003d ldarg.0         
+  IL_003e ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_SkipSuppressEntitySoundCheck token(0x04013A29)
+  IL_0043 brtrue.s       IL_006f 
+  IL_0045 ldloc.1         
+  IL_0046 ldnull          
+  IL_0047 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_004c brfalse.s      IL_006f 
+  IL_004e ldloc.1         
+  IL_004f callvirt       Actor::GetEntity token(0x0601280E)
+  IL_0054 brfalse.s      IL_006f 
+  IL_0056 ldloc.1         
+  IL_0057 callvirt       Actor::GetEntity token(0x0601280E)
+  IL_005c ldc.i4         3093 
+  IL_0061 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0066 brfalse.s      IL_006f 
+  IL_0068 ldarg.0         
+  IL_0069 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_006e ret             
+  IL_006f ldarg.0         
+  IL_0070 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_IsMinionSummonVO token(0x04013A27)
+  IL_0075 brfalse.s      IL_00ab 
+  IL_0077 ldloc.0         
+  IL_0078 brtrue.s       IL_00ab 
+  IL_007a call           GameState::Get token(0x06005589)
+  IL_007f brfalse.s      IL_00a4 
+  IL_0081 ldloc.1         
+  IL_0082 ldnull          
+  IL_0083 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0088 brfalse.s      IL_00ab 
+  IL_008a ldloc.1         
+  IL_008b callvirt       Actor::GetEntity token(0x0601280E)
+  IL_0090 brfalse.s      IL_00ab 
+  IL_0092 ldloc.1         
+  IL_0093 callvirt       Actor::GetEntity token(0x0601280E)
+  IL_0098 ldc.i4         1458 
+  IL_009d callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_00a2 brfalse.s      IL_00ab 
+  IL_00a4 ldarg.0         
+  IL_00a5 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_00aa ret             
+  IL_00ab newobj         SoundPlayClipArgs::.ctor token(0x06014812)
+  IL_00b0 stloc.2         
+  IL_00b1 ldloc.2         
+  IL_00b2 ldarg.0         
+  IL_00b3 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_TemplateSource token(0x04013A26)
+  IL_00b8 stfld          SoundPlayClipArgs::m_templateSource token(0x04011AA3)
+  IL_00bd ldloc.2         
+  IL_00be ldarg.0         
+  IL_00bf ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Sound token(0x04013A20)
+  IL_00c4 callvirt       HutongGames.PlayMaker.FsmObject::get_Value token(0x0A0058FF)
+  IL_00c9 isinst         SoundDef token(0x02002ABE)
+  IL_00ce stfld          SoundPlayClipArgs::m_def token(0x04011AA4)
+  IL_00d3 ldarg.0         
+  IL_00d4 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Volume token(0x04013A21)
+  IL_00d9 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_00de brtrue.s       IL_00f6 
+  IL_00e0 ldloc.2         
+  IL_00e1 ldarg.0         
+  IL_00e2 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Volume token(0x04013A21)
+  IL_00e7 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_00ec newobj         <dnfile.mdtable.TypeSpecRow object at 0x7ff0b3ffcc50>::.ctor token(0x0A0011DF)
+  IL_00f1 stfld          SoundPlayClipArgs::m_volume token(0x04011AA6)
+  IL_00f6 ldarg.0         
+  IL_00f7 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Pitch token(0x04013A22)
+  IL_00fc callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_0101 brtrue.s       IL_0119 
+  IL_0103 ldloc.2         
+  IL_0104 ldarg.0         
+  IL_0105 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Pitch token(0x04013A22)
+  IL_010a callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_010f newobj         <dnfile.mdtable.TypeSpecRow object at 0x7ff0b3ffcc50>::.ctor token(0x0A0011DF)
+  IL_0114 stfld          SoundPlayClipArgs::m_pitch token(0x04011AA7)
+  IL_0119 ldarg.0         
+  IL_011a ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_SpatialBlend token(0x04013A23)
+  IL_011f callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_0124 brtrue.s       IL_013c 
+  IL_0126 ldloc.2         
+  IL_0127 ldarg.0         
+  IL_0128 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_SpatialBlend token(0x04013A23)
+  IL_012d callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_0132 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7ff0b3ffcc50>::.ctor token(0x0A0011DF)
+  IL_0137 stfld          SoundPlayClipArgs::m_spatialBlend token(0x04011AA8)
+  IL_013c ldarg.0         
+  IL_013d ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Category token(0x04013A24)
+  IL_0142 brfalse.s      IL_0155 
+  IL_0144 ldloc.2         
+  IL_0145 ldarg.0         
+  IL_0146 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Category token(0x04013A24)
+  IL_014b newobj         <dnfile.mdtable.TypeSpecRow object at 0x7ff0b3a8ec30>::.ctor token(0x0A004D8A)
+  IL_0150 stfld          SoundPlayClipArgs::m_category token(0x04011AA9)
+  IL_0155 ldloc.2         
+  IL_0156 ldarg.0         
+  IL_0157 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_015c ldarg.0         
+  IL_015d ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_ParentObject token(0x04013A1F)
+  IL_0162 callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0167 stfld          SoundPlayClipArgs::m_parentObject token(0x04011AAA)
+  IL_016c newobj         SoundOptions::.ctor token(0x060147BC)
+  IL_0171 dup             
+  IL_0172 ldarg.0         
+  IL_0173 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_InstanceLimited token(0x04013A2A)
+  IL_0178 callvirt       SoundOptions::set_InstanceLimited token(0x060147B3)
+  IL_017d dup             
+  IL_017e ldarg.0         
+  IL_017f ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_InstanceLimitedDuration token(0x04013A2B)
+  IL_0184 callvirt       SoundOptions::set_InstanceTimeLimit token(0x060147B5)
+  IL_0189 dup             
+  IL_018a ldarg.0         
+  IL_018b ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_InstanceLimitMaximum token(0x04013A2C)
+  IL_0190 callvirt       SoundOptions::set_MaxInstancesOfThisSound token(0x060147B7)
+  IL_0195 dup             
+  IL_0196 ldarg.0         
+  IL_0197 ldfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_LimitMaxOutOption token(0x04013A2D)
+  IL_019c callvirt       SoundOptions::set_LimitMaxingOutOption token(0x060147B9)
+  IL_01a1 stloc.3         
+  IL_01a2 call           SoundManager::Get token(0x06014710)
+  IL_01a7 ldloc.2         
+  IL_01a8 ldc.i4.1        
+  IL_01a9 ldloc.3         
+  IL_01aa callvirt       SoundManager::PlayClip token(0x06014735)
+  IL_01af pop             
+  IL_01b0 ldarg.0         
+  IL_01b1 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_01b6 ret             
+
+0x06016ab0 HutongGames.PlayMaker.Actions.AudioPlayClipAction::Delay() RVA 0x699dcb SIG 2000128111
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <Delay>d__19::.ctor token(0x06016AB3)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <Delay>d__19::<>4__this token(0x04013A31)
+  IL_000d ret             
+
+0x06016ab1 HutongGames.PlayMaker.Actions.AudioPlayClipAction::GetActor() RVA 0x699ddc SIG 200012c0009cf8
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_0006 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B0001E0)
+  IL_000b stloc.0         
+  IL_000c ldloc.0         
+  IL_000d ldnull          
+  IL_000e call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0013 brfalse.s      IL_0031 
+  IL_0015 ldarg.0         
+  IL_0016 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_001b call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B000C1A)
+  IL_0020 stloc.1         
+  IL_0021 ldloc.1         
+  IL_0022 ldnull          
+  IL_0023 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0028 brfalse.s      IL_0031 
+  IL_002a ldloc.1         
+  IL_002b callvirt       Card::GetActor token(0x06012DD6)
+  IL_0030 stloc.0         
+  IL_0031 ldloc.0         
+  IL_0032 ret             
+
+0x06016ab2 HutongGames.PlayMaker.Actions.AudioPlayClipAction::.ctor() RVA 0x699e1b SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_InstanceLimitMaximum token(0x04013A2C)
+  IL_0007 ldarg.0         
+  IL_0008 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00406B)
+  IL_000d ret             
+
+0x06016ac7 HutongGames.PlayMaker.Actions.AudioPlaythroughAction::Reset() RVA 0x69a276 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_GameObject token(0x04013A45)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.r4         1.0 
+  IL_000d call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A0058F9)
+  IL_0012 stfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_VolumeScale token(0x04013A46)
+  IL_0017 ldarg.0         
+  IL_0018 ldnull          
+  IL_0019 stfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_OneShotClip token(0x04013A47)
+  IL_001e ldarg.0         
+  IL_001f ldc.r4         0.0 
+  IL_0024 stfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_Delay token(0x04013A48)
+  IL_0029 ldarg.0         
+  IL_002a ldc.r4         0.0 
+  IL_002f stfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_DelayTime token(0x04013A51)
+  IL_0034 ldarg.0         
+  IL_0035 ldnull          
+  IL_0036 stfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_OneShotSound token(0x04013A49)
+  IL_003b ret             
+
+0x06016ac8 HutongGames.PlayMaker.Actions.AudioPlaythroughAction::OnEnter() RVA 0x69a2b3 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_Delay token(0x04013A48)
+  IL_0006 ldc.r4         0.0 
+  IL_000b ble.un.s       IL_0027 
+  IL_000d ldarg.0         
+  IL_000e ldarg.0         
+  IL_000f ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_Delay token(0x04013A48)
+  IL_0014 stfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_DelayTime token(0x04013A51)
+  IL_0019 ldarg.0         
+  IL_001a ldarg.0         
+  IL_001b call           HutongGames.PlayMaker.Actions.AudioPlaythroughAction::Delay token(0x06016ACB)
+  IL_0020 call           HutongGames.PlayMaker.FsmStateAction::StartCoroutine token(0x0A0058FB)
+  IL_0025 pop             
+  IL_0026 ret             
+  IL_0027 ldarg.0         
+  IL_0028 call           HutongGames.PlayMaker.Actions.AudioPlaythroughAction::Play token(0x06016ACA)
+  IL_002d ret             
+
+0x06016ac9 HutongGames.PlayMaker.Actions.AudioPlaythroughAction::GetSource() RVA 0x69a2e4 SIG 2000128351
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_GameObject token(0x04013A45)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0019 brfalse.s      IL_001d 
+  IL_001b ldnull          
+  IL_001c ret             
+  IL_001d ldloc.0         
+  IL_001e callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0001AF)
+  IL_0023 ret             
+
+0x06016aca HutongGames.PlayMaker.Actions.AudioPlaythroughAction::Play() RVA 0x69a314 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.AudioPlaythroughAction::GetSource token(0x06016AC9)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0028 
+  IL_0010 ldarg.0         
+  IL_0011 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0016 ldarg.0         
+  IL_0017 ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_FinishedEvent token(0x04013A4A)
+  IL_001c callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A00590F)
+  IL_0021 ldarg.0         
+  IL_0022 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0027 ret             
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_IsKeywordVO token(0x04013A4C)
+  IL_002e brfalse.s      IL_004d 
+  IL_0030 call           GameState::Get token(0x06005589)
+  IL_0035 brfalse.s      IL_004d 
+  IL_0037 call           GameState::Get token(0x06005589)
+  IL_003c callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0041 ldc.i4         2636 
+  IL_0046 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_004b br.s           IL_004e 
+  IL_004d ldc.i4.0        
+  IL_004e stloc.1         
+  IL_004f ldarg.0         
+  IL_0050 ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_IsMinionSummonVO token(0x04013A4B)
+  IL_0055 brfalse.s      IL_00a0 
+  IL_0057 ldloc.1         
+  IL_0058 brtrue.s       IL_00a0 
+  IL_005a ldarg.0         
+  IL_005b call           HutongGames.PlayMaker.Actions.AudioPlaythroughAction::GetActor token(0x06016ACC)
+  IL_0060 stloc.s        local(0x0004) 
+  IL_0062 ldloc.s        local(0x0004) 
+  IL_0064 ldnull          
+  IL_0065 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_006a brfalse.s      IL_00a0 
+  IL_006c ldloc.s        local(0x0004) 
+  IL_006e callvirt       Actor::GetEntity token(0x0601280E)
+  IL_0073 brfalse.s      IL_00a0 
+  IL_0075 ldloc.s        local(0x0004) 
+  IL_0077 callvirt       Actor::GetEntity token(0x0601280E)
+  IL_007c ldc.i4         1458 
+  IL_0081 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0086 brfalse.s      IL_00a0 
+  IL_0088 ldarg.0         
+  IL_0089 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_008e ldarg.0         
+  IL_008f ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_FinishedEvent token(0x04013A4A)
+  IL_0094 callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A00590F)
+  IL_0099 ldarg.0         
+  IL_009a call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_009f ret             
+  IL_00a0 call           TeammateBoardViewer::Get token(0x06006135)
+  IL_00a5 ldnull          
+  IL_00a6 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00ab brfalse.s      IL_0103 
+  IL_00ad ldarg.0         
+  IL_00ae call           HutongGames.PlayMaker.Actions.AudioPlaythroughAction::GetActor token(0x06016ACC)
+  IL_00b3 stloc.s        local(0x0005) 
+  IL_00b5 ldarg.0         
+  IL_00b6 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_00bb call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B000C1B)
+  IL_00c0 stloc.s        local(0x0006) 
+  IL_00c2 call           TeammateBoardViewer::Get token(0x06006135)
+  IL_00c7 callvirt       TeammateBoardViewer::IsViewingTeammate token(0x06006136)
+  IL_00cc brtrue.s       IL_0103 
+  IL_00ce ldloc.s        local(0x0005) 
+  IL_00d0 ldnull          
+  IL_00d1 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00d6 brfalse.s      IL_00e1 
+  IL_00d8 ldloc.s        local(0x0005) 
+  IL_00da callvirt       Actor::IsTeammateActor token(0x06012909)
+  IL_00df brtrue.s       IL_00eb 
+  IL_00e1 ldloc.s        local(0x0006) 
+  IL_00e3 ldnull          
+  IL_00e4 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00e9 brfalse.s      IL_0103 
+  IL_00eb ldarg.0         
+  IL_00ec call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_00f1 ldarg.0         
+  IL_00f2 ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_FinishedEvent token(0x04013A4A)
+  IL_00f7 callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A00590F)
+  IL_00fc ldarg.0         
+  IL_00fd call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0102 ret             
+  IL_0103 newobj         SoundOptions::.ctor token(0x060147BC)
+  IL_0108 dup             
+  IL_0109 ldarg.0         
+  IL_010a ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_InstanceLimited token(0x04013A4D)
+  IL_010f callvirt       SoundOptions::set_InstanceLimited token(0x060147B3)
+  IL_0114 dup             
+  IL_0115 ldarg.0         
+  IL_0116 ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_InstanceLimitedDuration token(0x04013A4E)
+  IL_011b callvirt       SoundOptions::set_InstanceTimeLimit token(0x060147B5)
+  IL_0120 dup             
+  IL_0121 ldarg.0         
+  IL_0122 ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_InstanceLimitMaximum token(0x04013A4F)
+  IL_0127 callvirt       SoundOptions::set_MaxInstancesOfThisSound token(0x060147B7)
+  IL_012c dup             
+  IL_012d ldarg.0         
+  IL_012e ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_LimitMaxOutOption token(0x04013A50)
+  IL_0133 callvirt       SoundOptions::set_LimitMaxingOutOption token(0x060147B9)
+  IL_0138 stloc.2         
+  IL_0139 ldarg.0         
+  IL_013a ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_OneShotSound token(0x04013A49)
+  IL_013f callvirt       HutongGames.PlayMaker.FsmObject::get_Value token(0x0A0058FF)
+  IL_0144 isinst         SoundDef token(0x02002ABE)
+  IL_0149 stloc.3         
+  IL_014a ldloc.3         
+  IL_014b ldnull          
+  IL_014c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0151 brfalse.s      IL_0187 
+  IL_0153 ldarg.0         
+  IL_0154 ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_VolumeScale token(0x04013A46)
+  IL_0159 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_015e brtrue.s       IL_0176 
+  IL_0160 call           SoundManager::Get token(0x06014710)
+  IL_0165 ldloc.0         
+  IL_0166 ldarg.0         
+  IL_0167 ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_VolumeScale token(0x04013A46)
+  IL_016c callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_0171 callvirt       SoundManager::SetVolume token(0x06014726)
+  IL_0176 call           SoundManager::Get token(0x06014710)
+  IL_017b ldloc.0         
+  IL_017c ldnull          
+  IL_017d ldnull          
+  IL_017e ldloc.2         
+  IL_017f callvirt       SoundManager::Play token(0x06014719)
+  IL_0184 pop             
+  IL_0185 br.s           IL_01e5 
+  IL_0187 newobj         SoundPlayClipArgs::.ctor token(0x06014812)
+  IL_018c stloc.s        local(0x0007) 
+  IL_018e ldloc.s        local(0x0007) 
+  IL_0190 ldloc.0         
+  IL_0191 stfld          SoundPlayClipArgs::m_templateSource token(0x04011AA3)
+  IL_0196 ldloc.s        local(0x0007) 
+  IL_0198 ldloc.3         
+  IL_0199 stfld          SoundPlayClipArgs::m_def token(0x04011AA4)
+  IL_019e ldarg.0         
+  IL_019f ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_VolumeScale token(0x04013A46)
+  IL_01a4 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_01a9 brtrue.s       IL_01c2 
+  IL_01ab ldloc.s        local(0x0007) 
+  IL_01ad ldarg.0         
+  IL_01ae ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_VolumeScale token(0x04013A46)
+  IL_01b3 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_01b8 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7ff0b3ffcc50>::.ctor token(0x0A0011DF)
+  IL_01bd stfld          SoundPlayClipArgs::m_volume token(0x04011AA6)
+  IL_01c2 ldloc.s        local(0x0007) 
+  IL_01c4 ldloc.0         
+  IL_01c5 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_01ca stfld          SoundPlayClipArgs::m_parentObject token(0x04011AAA)
+  IL_01cf call           SoundManager::Get token(0x06014710)
+  IL_01d4 brfalse.s      IL_01e5 
+  IL_01d6 call           SoundManager::Get token(0x06014710)
+  IL_01db ldloc.s        local(0x0007) 
+  IL_01dd ldc.i4.1        
+  IL_01de ldloc.2         
+  IL_01df callvirt       SoundManager::PlayClip token(0x06014735)
+  IL_01e4 pop             
+  IL_01e5 ldarg.0         
+  IL_01e6 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_01eb ldarg.0         
+  IL_01ec ldfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_FinishedEvent token(0x04013A4A)
+  IL_01f1 callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A00590F)
+  IL_01f6 ldarg.0         
+  IL_01f7 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_01fc ret             
+
+0x06016acb HutongGames.PlayMaker.Actions.AudioPlaythroughAction::Delay() RVA 0x69a51d SIG 2000128111
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <Delay>d__17::.ctor token(0x06016ACE)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <Delay>d__17::<>4__this token(0x04013A54)
+  IL_000d ret             
+
+0x06016acc HutongGames.PlayMaker.Actions.AudioPlaythroughAction::GetActor() RVA 0x69a52c SIG 200012c0009cf8
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_0006 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B0001E0)
+  IL_000b stloc.0         
+  IL_000c ldloc.0         
+  IL_000d ldnull          
+  IL_000e call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0013 brfalse.s      IL_0031 
+  IL_0015 ldarg.0         
+  IL_0016 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_001b call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B000C1A)
+  IL_0020 stloc.1         
+  IL_0021 ldloc.1         
+  IL_0022 ldnull          
+  IL_0023 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0028 brfalse.s      IL_0031 
+  IL_002a ldloc.1         
+  IL_002b callvirt       Card::GetActor token(0x06012DD6)
+  IL_0030 stloc.0         
+  IL_0031 ldloc.0         
+  IL_0032 ret             
+
+0x06016acd HutongGames.PlayMaker.Actions.AudioPlaythroughAction::.ctor() RVA 0x69a56b SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_InstanceLimitMaximum token(0x04013A4F)
+  IL_0007 ldarg.0         
+  IL_0008 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00406B)
+  IL_000d ret             

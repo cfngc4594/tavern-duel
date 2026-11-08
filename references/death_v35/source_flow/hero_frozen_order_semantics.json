@@ -1,0 +1,35 @@
+{
+  "scope": "Read-only post-freeze v35 hero Frozen ordering clarification. No code/GPU changes.",
+  "zone_path": {
+    "hero_included": true,
+    "proof": [
+      "EntityBase.IsCharacter 0x0601392f = IsHero OR IsMinion",
+      "GameUtils.IsCharacterDeathTagChange 0x06014cf9 requires ZONE49->GRAVEYARD4 and IsCharacter",
+      "DeathSpellController.AddDeadCardsToTargetList 0x0601164f; CanAddTarget 0x06011650 only suppressDeathEffects exclusion",
+      "DeathSpellController.OnProcessTaskList 0x0601164e invokes selected character VO before base at IL003c",
+      "SpellController.OnProcessTaskList 0x060149ce -> OnFinishedTaskList 0x060149cf -> PowerProcessor.OnSpellControllerFinishedTaskList 0x06006002 -> DoCurrentTaskList",
+      "Card.Check_HeroToGraveyard 0x06012e28 checks ZoneHero/ZoneGraveyard then directly calls DoCardDeathVisuals at IL001b",
+      "Actor.DoCardDeathVisuals 0x06012966 includes active type14 (excluded types127,5,35,150,7 only)"
+    ],
+    "ordering": "Selected character-VO activation precedes the Frozen Death caused by that same death-wave zone update. This does not promise audible sample start before particle start or a fixed time offset.",
+    "wait_seconds": 0,
+    "exceptions": [
+      "Suppressed character effect/sound",
+      "Hero custom death override controller tag2722",
+      "Game option39 can defer CardSoundSpell activation",
+      "No requirement that a hero win voice selection when minions share the death wave"
+    ]
+  },
+  "playstate_path": {
+    "method": "GameEntity.BlowUpHero 0x060054f2",
+    "ordering": [
+      "IL001c Actor.ActivateAllSpellsDeathStates 0x06012965",
+      "IL0024 GameEntity.ActivateSpellForDestroyedHero 0x060054f3"
+    ],
+    "meaning": "Active Frozen is also eligible for Death immediately on this independent terminal body path, with no .3 second minion delay.",
+    "no_vo_here": true
+  },
+  "cross_path_boundary": "Original ZONE/BLOCK_DEATH versus PLAYSTATE packet order and interval is not supplied. Static CIL cannot guarantee that the first-ever hero Frozen Death is always after VO: PLAYSTATE BlowUpHero could already have caused it.",
+  "integration_advice": "If the offline handoff intentionally represents ZONE->GRAVEYARD, order the already-selected character VO activation before that handoff. Keep terminal music/jingle/audio.begin under its own source chain; do not reorder all terminal audio based on the VO conclusion. Preserve declared atomic bridge and unknown source-packet interval.",
+  "qa_oracle": "hero_frozen_order_oracle.cil.json / .txt contain exact instructions and source hashes, independent from developer probes."
+}

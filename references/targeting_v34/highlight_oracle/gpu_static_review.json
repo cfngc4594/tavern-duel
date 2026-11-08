@@ -1,0 +1,148 @@
+{
+  "scope": "Independent static review only; no production edits or GPU run. Actual GPU gate remains pending.",
+  "source_build": "37.0.0.255130.254477",
+  "godot_engine_source": "4.6.3-stable GLES3",
+  "reviewed_files": [
+    {
+      "path": "v34_work/source_targeting/adapter_draft/native_target_highlight_gpu.gd",
+      "sha256": "c3463fc6289af684a971dd435548e1cb800298390edd4ec96fae800974bfcf44"
+    },
+    {
+      "path": "v34_work/source_targeting/adapter_draft/shaders/native_target_highlight_constant.gdshader",
+      "sha256": "efe33904677c88f62b528c3a5d1fd4fa8ebe6dc501e8d4e65594d92f9f63cb37"
+    },
+    {
+      "path": "v34_work/source_targeting/adapter_draft/shaders/native_target_highlight_mask_blend.gdshader",
+      "sha256": "f832739b1345d30843e6f15fdacc6331e9b507b392c83a88ceb6aa3fc756f716"
+    },
+    {
+      "path": "v34_work/source_targeting/adapter_draft/shaders/native_target_highlight_multisample.gdshader",
+      "sha256": "6da6bc609e635e40e6fa918db3f8cea312e8b4283957f4e570c2748a874d07ac"
+    },
+    {
+      "path": "v34_work/source_targeting/adapter_draft/shaders/native_target_highlight_multisample_blend.gdshader",
+      "sha256": "619ff39bc08b93feed8c186fb8987dd471dbb6807a45b142eb06c9b28ee6293b"
+    }
+  ],
+  "checks": [
+    {
+      "check": "source_pass_schedule",
+      "status": "verified_static",
+      "finding": "Five constant replacements plus five scalar passes match source sequence and dependencies."
+    },
+    {
+      "check": "main_texel_size",
+      "status": "verified_static",
+      "finding": "All four taps use main texture reciprocal dimensions, including MaskBlend blend taps."
+    },
+    {
+      "check": "mask_blend_arithmetic",
+      "status": "corrected_verified_static",
+      "finding": "Separate .3 products now match source expression shape; backend MAD/FMA rounding remains unproved."
+    },
+    {
+      "check": "rgba8_quantization",
+      "status": "verified_engine_source",
+      "finding": "All ten viewports transparent_bg=true and use_hdr_2d=false, forcing GL_RGBA8; opaque noHDR would be GL_RGB10_A2."
+    },
+    {
+      "check": "source_scalar_state",
+      "status": "verified_static",
+      "finding": "Unshaded blend_disabled numeric output; canvas disables culling/depth. No MSAA or mips. Replacement alpha is irrelevant to red-only pipeline."
+    },
+    {
+      "check": "source_zclip",
+      "status": "verified_static",
+      "finding": "Source signed camera bounds clipped before ortho canvas conversion. XY clipping delegated to viewport GPU clip."
+    },
+    {
+      "check": "dependency_order",
+      "status": "verified_engine_source",
+      "finding": "Nested viewport10 parent ->1 deepest gives render1 ->10 ->main parent in same draw, every stage UPDATE_ONCE."
+    },
+    {
+      "check": "half_pixel_and_y",
+      "status": "verified_engine_source",
+      "finding": "Full ColorRect boundaries and unsnapped UVs give pixel centers; normal canvas+raw readback no additional Y flip; both snapping flags false."
+    },
+    {
+      "check": "numeric_color",
+      "status": "verified_engine_source",
+      "finding": "Custom unshaded Canvas COLOR writes direct frag_color, no color bridge; no source_color hints on samplers."
+    },
+    {
+      "check": "precision",
+      "status": "verified_engine_source",
+      "finding": "Godot4.6.3 shader compiler defaults float/int/samplers highp. Source float32 ortho constants and operations copied; CPU projection float64->Vector2f boundary declared."
+    },
+    {
+      "check": "dimensions_1_to_256",
+      "status": "verified_scalar",
+      "finding": "Exhaustive size n=1..256 at float32 factors .3/.5/.92: draft float64 product then truncation equals source float32 product then truncation in all768cases."
+    },
+    {
+      "check": "native_unity_wrap",
+      "status": "measured_scoped_environment",
+      "finding": "Exact source API probes in Unity6000.3.10f1 Metal/Gamma: final ClampUVW/Bilinear and temporary ClampUV. TemporaryW/managedproperties unclaimed; originalWindowsD3D not measured."
+    },
+    {
+      "check": "dynamic_surface_membership",
+      "status": "requires_runtime_qa",
+      "finding": "Attachment route map includes exact Highlight-tag eligibility, but actual live selected source keys/visibility/removal must be captured."
+    },
+    {
+      "check": "generation_lifetime",
+      "status": "requires_runtime_qa",
+      "finding": "Generation callback and UPDATE_ONCE present. Verify two changing generations and bounded retained resources, including actor destruction."
+    },
+    {
+      "check": "actual_gpu_scalar_and_raster",
+      "status": "actual_scalar_verified_raster_boundary",
+      "finding": "80QA targets read independently;40constant exact,40scalar reproduced by Mesa25.0.7 backend model. Ideal sourcefinal<=1byte. No originalclient raster identity."
+    },
+    {
+      "check": "final_composition",
+      "status": "separate_boundary",
+      "finding": "Scalar validation does not prove original source-alpha output merger or final board shader compatibility."
+    }
+  ],
+  "qa_tools": [
+    "compare_gpu_pass_captures.py",
+    "GPU_CAPTURE_SPEC.md",
+    "gpu_capture_manifest.template.json",
+    "test_gpu_capture_harness.py"
+  ],
+  "harness_selftest": {
+    "scope": "Synthetic unit tests only. No GPU execution or actual GPU capture.",
+    "passed": true,
+    "tests": [
+      "synthetic_input_not_accepted_as_gpu",
+      "all_five_scalar_outputs_compared",
+      "source_size_factors_respected",
+      "wrong_input_size_uniform_detected",
+      "opaque_10bit_viewport_detected",
+      "stale_generation_metadata_detected",
+      "numeric_error_detected_at_actual_pixel"
+    ],
+    "test_count": 7
+  },
+  "post_capture_findings": [
+    {
+      "check": "actual_gpu80_targets",
+      "status": "verified_compatibility_backend",
+      "report": "gold-second-capture/RESULT.md",
+      "finding": "40constant levels exact;40scalar stages reproduced byte-exact by independently modeled Mesa25.0.7 sampler/rounding plus MaskBlend addition reassociation inference. Original ideal final error<=1byte retained."
+    },
+    {
+      "check": "unity_RT_wrap",
+      "status": "measured_scoped_environment",
+      "report": "source_addressing_evidence.json",
+      "finding": "FinalClampUVW+bilinear and temporaryClampUV independently verified from exactAPI scripts/PNGs. No inference for temporaryW or managedfields."
+    },
+    {
+      "check": "final_dynamic_RT_sampler",
+      "status": "static_correction_verified",
+      "finding": "Dedicated dynamic shader changes only MainTex toClamp; FlareTexRepeat and old baked route preserved. Hash andcomparison in dynamic_final_sampler_review.json; finalonboard QA remains separate."
+    }
+  ]
+}

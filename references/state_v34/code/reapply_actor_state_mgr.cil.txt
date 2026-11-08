@@ -1,0 +1,131 @@
+
+TYPE ActorStateMgr 0x02002aef
+FIELD 0x04011b69 m_ObjectContainer SIG 0612808d
+FIELD 0x04011b6a m_actorStateMap SIG 06151281a10211c000abb01512490112c000abb8
+FIELD 0x04011b6b m_activeStateType SIG 0611c000abb0
+FIELD 0x04011b6c m_shown SIG 0602
+FIELD 0x04011b6d m_HighlightState SIG 0612c000b0c0
+FIELD 0x04011b6e m_initialHighlightRenderQueue SIG 0608
+
+0x0601489c ActorStateMgr::ShowStateMgr() RVA 0x6114cc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ActorStateMgr::m_shown token(0x04011B6C)
+  IL_0006 brfalse.s      IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldc.i4.1        
+  IL_000b stfld          ActorStateMgr::m_shown token(0x04011B6C)
+  IL_0010 ldarg.0         
+  IL_0011 call           ActorStateMgr::ShowImpl token(0x060148A2)
+  IL_0016 ret             
+
+0x0601489d ActorStateMgr::HideStateMgr() RVA 0x6114e4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ActorStateMgr::m_shown token(0x04011B6C)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldc.i4.0        
+  IL_000b stfld          ActorStateMgr::m_shown token(0x04011B6C)
+  IL_0010 ldarg.0         
+  IL_0011 call           ActorStateMgr::HideImpl token(0x060148A3)
+  IL_0016 ret             
+
+0x0601489e ActorStateMgr::RefreshStateMgr() RVA 0x6114fc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ActorStateMgr::m_HighlightState token(0x04011B6D)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000b brfalse.s      IL_0018 
+  IL_000d ldarg.0         
+  IL_000e ldfld          ActorStateMgr::m_HighlightState token(0x04011B6D)
+  IL_0013 callvirt       HighlightState::SetDirty token(0x0601528F)
+  IL_0018 ret             
+
+0x060148a2 ActorStateMgr::ShowImpl() RVA 0x611648 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ActorStateMgr::m_HighlightState token(0x04011B6D)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000b brfalse.s      IL_001f 
+  IL_000d ldarg.0         
+  IL_000e ldfld          ActorStateMgr::m_HighlightState token(0x04011B6D)
+  IL_0013 ldarg.0         
+  IL_0014 ldfld          ActorStateMgr::m_activeStateType token(0x04011B6B)
+  IL_0019 callvirt       HighlightState::ChangeState token(0x06015293)
+  IL_001e pop             
+  IL_001f ldarg.0         
+  IL_0020 ldfld          ActorStateMgr::m_activeStateType token(0x04011B6B)
+  IL_0025 brfalse.s      IL_0041 
+  IL_0027 ldarg.0         
+  IL_0028 ldfld          ActorStateMgr::m_ObjectContainer token(0x04011B69)
+  IL_002d ldnull          
+  IL_002e call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0033 brfalse.s      IL_0041 
+  IL_0035 ldarg.0         
+  IL_0036 ldfld          ActorStateMgr::m_ObjectContainer token(0x04011B69)
+  IL_003b ldc.i4.1        
+  IL_003c callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_0041 ldarg.0         
+  IL_0042 call           ActorStateMgr::GetActiveStateList token(0x06014897)
+  IL_0047 stloc.0         
+  IL_0048 ldloc.0         
+  IL_0049 brfalse.s      IL_0079 
+  IL_004b ldloc.0         
+  IL_004c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f7033b0b770>::GetEnumerator token(0x0A004E5C)
+  IL_0051 stloc.1         
+  IL_0052 br.s           IL_0060 
+  IL_0054 ldloca.s       local(0x0001) 
+  IL_0056 call           <dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30>::get_Current token(0x0A004E5D)
+  IL_005b callvirt       ActorState::ShowState token(0x0601488F)
+  IL_0060 ldloca.s       local(0x0001) 
+  IL_0062 call           <dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30>::MoveNext token(0x0A004E5E)
+  IL_0067 brtrue.s       IL_0054 
+  IL_0069 leave.s        IL_0079 
+  IL_006b ldloca.s       local(0x0001) 
+  IL_006d constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30> token(0x1B0012BC)
+  IL_0073 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0078 endfinally      
+  IL_0079 ret             
+
+0x060148a3 ActorStateMgr::HideImpl() RVA 0x6116e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ActorStateMgr::m_HighlightState token(0x04011B6D)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000b brfalse.s      IL_001a 
+  IL_000d ldarg.0         
+  IL_000e ldfld          ActorStateMgr::m_HighlightState token(0x04011B6D)
+  IL_0013 ldc.i4.0        
+  IL_0014 callvirt       HighlightState::ChangeState token(0x06015293)
+  IL_0019 pop             
+  IL_001a ldarg.0         
+  IL_001b call           ActorStateMgr::GetActiveStateList token(0x06014897)
+  IL_0020 stloc.0         
+  IL_0021 ldloc.0         
+  IL_0022 brfalse.s      IL_0052 
+  IL_0024 ldloc.0         
+  IL_0025 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f7033b0b770>::GetEnumerator token(0x0A004E5C)
+  IL_002a stloc.1         
+  IL_002b br.s           IL_0039 
+  IL_002d ldloca.s       local(0x0001) 
+  IL_002f call           <dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30>::get_Current token(0x0A004E5D)
+  IL_0034 callvirt       ActorState::HideState token(0x06014890)
+  IL_0039 ldloca.s       local(0x0001) 
+  IL_003b call           <dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30>::MoveNext token(0x0A004E5E)
+  IL_0040 brtrue.s       IL_002d 
+  IL_0042 leave.s        IL_0052 
+  IL_0044 ldloca.s       local(0x0001) 
+  IL_0046 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30> token(0x1B0012BC)
+  IL_004c callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0051 endfinally      
+  IL_0052 ldarg.0         
+  IL_0053 ldfld          ActorStateMgr::m_activeStateType token(0x04011B6B)
+  IL_0058 brfalse.s      IL_0074 
+  IL_005a ldarg.0         
+  IL_005b ldfld          ActorStateMgr::m_ObjectContainer token(0x04011B69)
+  IL_0060 ldnull          
+  IL_0061 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0066 brfalse.s      IL_0074 
+  IL_0068 ldarg.0         
+  IL_0069 ldfld          ActorStateMgr::m_ObjectContainer token(0x04011B69)
+  IL_006e ldc.i4.0        
+  IL_006f callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_0074 ret             

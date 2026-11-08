@@ -1,0 +1,289 @@
+
+TYPE HutongGames.PlayMaker.Actions.EaseColor 0x0200002d
+FIELD 0x0400010a fromValue SIG 061281d9
+FIELD 0x0400010b toValue SIG 061281d9
+FIELD 0x0400010c colorVariable SIG 061281d9
+FIELD 0x0400010d finishInNextStep SIG 0602
+
+0x060000f0 HutongGames.PlayMaker.Actions.EaseColor::Reset() RVA 0x77d7 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.EaseFsmAction::Reset token(0x060000FA)
+  IL_0006 ldarg.0         
+  IL_0007 ldnull          
+  IL_0008 stfld          HutongGames.PlayMaker.Actions.EaseColor::colorVariable token(0x0400010C)
+  IL_000d ldarg.0         
+  IL_000e ldnull          
+  IL_000f stfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_0014 ldarg.0         
+  IL_0015 ldnull          
+  IL_0016 stfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_001b ldarg.0         
+  IL_001c ldc.i4.0        
+  IL_001d stfld          HutongGames.PlayMaker.Actions.EaseColor::finishInNextStep token(0x0400010D)
+  IL_0022 ret             
+
+0x060000f1 HutongGames.PlayMaker.Actions.EaseColor::OnEnter() RVA 0x77fc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.EaseFsmAction::OnEnter token(0x060000FB)
+  IL_0006 ldarg.0         
+  IL_0007 ldc.i4.4        
+  IL_0008 newarr         System.Single token(0x0100002D)
+  IL_000d stfld          HutongGames.PlayMaker.Actions.EaseFsmAction::fromFloats token(0x04000120)
+  IL_0012 ldarg.0         
+  IL_0013 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::fromFloats token(0x04000120)
+  IL_0018 ldc.i4.0        
+  IL_0019 ldarg.0         
+  IL_001a ldfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_001f callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_0024 ldfld          UnityEngine.Color::r token(0x0A0000B1)
+  IL_0029 stelem.r4       
+  IL_002a ldarg.0         
+  IL_002b ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::fromFloats token(0x04000120)
+  IL_0030 ldc.i4.1        
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_0037 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_003c ldfld          UnityEngine.Color::g token(0x0A0000B2)
+  IL_0041 stelem.r4       
+  IL_0042 ldarg.0         
+  IL_0043 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::fromFloats token(0x04000120)
+  IL_0048 ldc.i4.2        
+  IL_0049 ldarg.0         
+  IL_004a ldfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_004f callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_0054 ldfld          UnityEngine.Color::b token(0x0A0000B3)
+  IL_0059 stelem.r4       
+  IL_005a ldarg.0         
+  IL_005b ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::fromFloats token(0x04000120)
+  IL_0060 ldc.i4.3        
+  IL_0061 ldarg.0         
+  IL_0062 ldfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_0067 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_006c ldfld          UnityEngine.Color::a token(0x0A000017)
+  IL_0071 stelem.r4       
+  IL_0072 ldarg.0         
+  IL_0073 ldc.i4.4        
+  IL_0074 newarr         System.Single token(0x0100002D)
+  IL_0079 stfld          HutongGames.PlayMaker.Actions.EaseFsmAction::toFloats token(0x04000121)
+  IL_007e ldarg.0         
+  IL_007f ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::toFloats token(0x04000121)
+  IL_0084 ldc.i4.0        
+  IL_0085 ldarg.0         
+  IL_0086 ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_008b callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_0090 ldfld          UnityEngine.Color::r token(0x0A0000B1)
+  IL_0095 stelem.r4       
+  IL_0096 ldarg.0         
+  IL_0097 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::toFloats token(0x04000121)
+  IL_009c ldc.i4.1        
+  IL_009d ldarg.0         
+  IL_009e ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_00a3 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_00a8 ldfld          UnityEngine.Color::g token(0x0A0000B2)
+  IL_00ad stelem.r4       
+  IL_00ae ldarg.0         
+  IL_00af ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::toFloats token(0x04000121)
+  IL_00b4 ldc.i4.2        
+  IL_00b5 ldarg.0         
+  IL_00b6 ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_00bb callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_00c0 ldfld          UnityEngine.Color::b token(0x0A0000B3)
+  IL_00c5 stelem.r4       
+  IL_00c6 ldarg.0         
+  IL_00c7 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::toFloats token(0x04000121)
+  IL_00cc ldc.i4.3        
+  IL_00cd ldarg.0         
+  IL_00ce ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_00d3 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_00d8 ldfld          UnityEngine.Color::a token(0x0A000017)
+  IL_00dd stelem.r4       
+  IL_00de ldarg.0         
+  IL_00df ldc.i4.4        
+  IL_00e0 newarr         System.Single token(0x0100002D)
+  IL_00e5 stfld          HutongGames.PlayMaker.Actions.EaseFsmAction::resultFloats token(0x04000122)
+  IL_00ea ldarg.0         
+  IL_00eb ldc.i4.0        
+  IL_00ec stfld          HutongGames.PlayMaker.Actions.EaseColor::finishInNextStep token(0x0400010D)
+  IL_00f1 ldarg.0         
+  IL_00f2 ldfld          HutongGames.PlayMaker.Actions.EaseColor::colorVariable token(0x0400010C)
+  IL_00f7 ldarg.0         
+  IL_00f8 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::reverse token(0x04000116)
+  IL_00fd callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0102 brtrue.s       IL_012b 
+  IL_0104 ldarg.0         
+  IL_0105 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::reverse token(0x04000116)
+  IL_010a callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A0000C6)
+  IL_010f brtrue.s       IL_011e 
+  IL_0111 ldarg.0         
+  IL_0112 ldfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_0117 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_011c br.s           IL_0136 
+  IL_011e ldarg.0         
+  IL_011f ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_0124 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_0129 br.s           IL_0136 
+  IL_012b ldarg.0         
+  IL_012c ldfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_0131 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_0136 callvirt       HutongGames.PlayMaker.FsmColor::set_Value token(0x0A0000B7)
+  IL_013b ret             
+
+0x060000f2 HutongGames.PlayMaker.Actions.EaseColor::OnExit() RVA 0x7944 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.EaseFsmAction::OnExit token(0x060000FC)
+  IL_0006 ret             
+
+0x060000f3 HutongGames.PlayMaker.Actions.EaseColor::OnUpdate() RVA 0x794c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.EaseFsmAction::OnUpdate token(0x060000FD)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.EaseColor::colorVariable token(0x0400010C)
+  IL_000c callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0011 brtrue.s       IL_004b 
+  IL_0013 ldarg.0         
+  IL_0014 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::isRunning token(0x04000126)
+  IL_0019 brfalse.s      IL_004b 
+  IL_001b ldarg.0         
+  IL_001c ldfld          HutongGames.PlayMaker.Actions.EaseColor::colorVariable token(0x0400010C)
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::resultFloats token(0x04000122)
+  IL_0027 ldc.i4.0        
+  IL_0028 ldelem.r4       
+  IL_0029 ldarg.0         
+  IL_002a ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::resultFloats token(0x04000122)
+  IL_002f ldc.i4.1        
+  IL_0030 ldelem.r4       
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::resultFloats token(0x04000122)
+  IL_0037 ldc.i4.2        
+  IL_0038 ldelem.r4       
+  IL_0039 ldarg.0         
+  IL_003a ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::resultFloats token(0x04000122)
+  IL_003f ldc.i4.3        
+  IL_0040 ldelem.r4       
+  IL_0041 newobj         UnityEngine.Color::.ctor token(0x0A0000B6)
+  IL_0046 callvirt       HutongGames.PlayMaker.FsmColor::set_Value token(0x0A0000B7)
+  IL_004b ldarg.0         
+  IL_004c ldfld          HutongGames.PlayMaker.Actions.EaseColor::finishInNextStep token(0x0400010D)
+  IL_0051 brfalse.s      IL_0072 
+  IL_0053 ldarg.0         
+  IL_0054 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0059 ldarg.0         
+  IL_005a ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::finishEvent token(0x04000117)
+  IL_005f brfalse.s      IL_0072 
+  IL_0061 ldarg.0         
+  IL_0062 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0067 ldarg.0         
+  IL_0068 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::finishEvent token(0x04000117)
+  IL_006d callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A0000B9)
+  IL_0072 ldarg.0         
+  IL_0073 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::finishAction token(0x04000123)
+  IL_0078 brfalse        IL_01e7 
+  IL_007d ldarg.0         
+  IL_007e ldfld          HutongGames.PlayMaker.Actions.EaseColor::finishInNextStep token(0x0400010D)
+  IL_0083 brtrue         IL_01e7 
+  IL_0088 ldarg.0         
+  IL_0089 ldfld          HutongGames.PlayMaker.Actions.EaseColor::colorVariable token(0x0400010C)
+  IL_008e callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0093 brtrue         IL_01e0 
+  IL_0098 ldarg.0         
+  IL_0099 ldfld          HutongGames.PlayMaker.Actions.EaseColor::colorVariable token(0x0400010C)
+  IL_009e ldarg.0         
+  IL_009f ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::reverse token(0x04000116)
+  IL_00a4 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_00a9 brtrue.s       IL_00dc 
+  IL_00ab ldarg.0         
+  IL_00ac ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::reverse token(0x04000116)
+  IL_00b1 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A0000C6)
+  IL_00b6 brtrue.s       IL_00ca 
+  IL_00b8 ldarg.0         
+  IL_00b9 ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_00be callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_00c3 ldfld          UnityEngine.Color::r token(0x0A0000B1)
+  IL_00c8 br.s           IL_00ec 
+  IL_00ca ldarg.0         
+  IL_00cb ldfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_00d0 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_00d5 ldfld          UnityEngine.Color::r token(0x0A0000B1)
+  IL_00da br.s           IL_00ec 
+  IL_00dc ldarg.0         
+  IL_00dd ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_00e2 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_00e7 ldfld          UnityEngine.Color::r token(0x0A0000B1)
+  IL_00ec ldarg.0         
+  IL_00ed ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::reverse token(0x04000116)
+  IL_00f2 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_00f7 brtrue.s       IL_012a 
+  IL_00f9 ldarg.0         
+  IL_00fa ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::reverse token(0x04000116)
+  IL_00ff callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A0000C6)
+  IL_0104 brtrue.s       IL_0118 
+  IL_0106 ldarg.0         
+  IL_0107 ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_010c callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_0111 ldfld          UnityEngine.Color::g token(0x0A0000B2)
+  IL_0116 br.s           IL_013a 
+  IL_0118 ldarg.0         
+  IL_0119 ldfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_011e callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_0123 ldfld          UnityEngine.Color::g token(0x0A0000B2)
+  IL_0128 br.s           IL_013a 
+  IL_012a ldarg.0         
+  IL_012b ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_0130 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_0135 ldfld          UnityEngine.Color::g token(0x0A0000B2)
+  IL_013a ldarg.0         
+  IL_013b ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::reverse token(0x04000116)
+  IL_0140 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0145 brtrue.s       IL_0178 
+  IL_0147 ldarg.0         
+  IL_0148 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::reverse token(0x04000116)
+  IL_014d callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A0000C6)
+  IL_0152 brtrue.s       IL_0166 
+  IL_0154 ldarg.0         
+  IL_0155 ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_015a callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_015f ldfld          UnityEngine.Color::b token(0x0A0000B3)
+  IL_0164 br.s           IL_0188 
+  IL_0166 ldarg.0         
+  IL_0167 ldfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_016c callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_0171 ldfld          UnityEngine.Color::b token(0x0A0000B3)
+  IL_0176 br.s           IL_0188 
+  IL_0178 ldarg.0         
+  IL_0179 ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_017e callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_0183 ldfld          UnityEngine.Color::b token(0x0A0000B3)
+  IL_0188 ldarg.0         
+  IL_0189 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::reverse token(0x04000116)
+  IL_018e callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0193 brtrue.s       IL_01c6 
+  IL_0195 ldarg.0         
+  IL_0196 ldfld          HutongGames.PlayMaker.Actions.EaseFsmAction::reverse token(0x04000116)
+  IL_019b callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A0000C6)
+  IL_01a0 brtrue.s       IL_01b4 
+  IL_01a2 ldarg.0         
+  IL_01a3 ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_01a8 callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_01ad ldfld          UnityEngine.Color::a token(0x0A000017)
+  IL_01b2 br.s           IL_01d6 
+  IL_01b4 ldarg.0         
+  IL_01b5 ldfld          HutongGames.PlayMaker.Actions.EaseColor::fromValue token(0x0400010A)
+  IL_01ba callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_01bf ldfld          UnityEngine.Color::a token(0x0A000017)
+  IL_01c4 br.s           IL_01d6 
+  IL_01c6 ldarg.0         
+  IL_01c7 ldfld          HutongGames.PlayMaker.Actions.EaseColor::toValue token(0x0400010B)
+  IL_01cc callvirt       HutongGames.PlayMaker.FsmColor::get_Value token(0x0A0000B0)
+  IL_01d1 ldfld          UnityEngine.Color::a token(0x0A000017)
+  IL_01d6 newobj         UnityEngine.Color::.ctor token(0x0A0000B6)
+  IL_01db callvirt       HutongGames.PlayMaker.FsmColor::set_Value token(0x0A0000B7)
+  IL_01e0 ldarg.0         
+  IL_01e1 ldc.i4.1        
+  IL_01e2 stfld          HutongGames.PlayMaker.Actions.EaseColor::finishInNextStep token(0x0400010D)
+  IL_01e7 ret             
+
+0x060000f4 HutongGames.PlayMaker.Actions.EaseColor::.ctor() RVA 0x7b40 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.EaseFsmAction::.ctor token(0x0600011E)
+  IL_0006 ret             

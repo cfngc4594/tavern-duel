@@ -1,0 +1,40 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hero/Particle/Particle Additive + 1" {
+Properties {
+
+_Color ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_ColorMul ("Color Multiplier", Float) = 2.0
+
+_MainTex ("Base Map", 2D) = "white" { }
+
+_GlowColor ("Glow Color", Color) = (1,1,1,1)
+
+_GlowIntensity ("Glow Intensity", Float) = 0.0
+
+_GlowAddMul ("Glow Add/Multiply", Range(0, 1)) = 0.0
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent+99" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent+99" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 24386
+}
+ Pass {
+ Name "GlowTransparent"
+  Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "GlowTransparent" "QUEUE" = "Transparent+99" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 116191
+}
+}
+}

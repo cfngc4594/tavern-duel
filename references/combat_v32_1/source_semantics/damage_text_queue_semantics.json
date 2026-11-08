@@ -1,0 +1,28 @@
+{
+  "source_build": "37.0.0.255130.254477",
+  "serialized_m_RenderQueue": 10,
+  "renderer_sortingOrder": 10,
+  "material_renderQueue": 3010,
+  "shader_default_renderQueue": 3000,
+  "original_shader_tag": "Transparent",
+  "shader_tag_file": "v32_1_work/source_damage_assets/assets/shaders/Shader__29.json",
+  "shader_tag_paths": [
+    ".m_ParsedForm.m_SubShaders[0].m_Passes[0].m_State.m_Tags.tags[0]",
+    ".m_ParsedForm.m_SubShaders[0].m_Tags.tags[0]"
+  ],
+  "material_formula": "Clamp(cachedOriginalMaterialRenderQueue + m_value,1,5000)",
+  "methods": {
+    "renderer_and_queries": "UberTextRendering.SetRenderQueueIncrement 0x060001f1",
+    "query_enable": "IncrementRenderQueueMaterialProperty.SetValue 0x06000158",
+    "material_apply": "IncrementRenderQueueMaterialProperty.DoApplyToMaterial 0x06000159 IL000d..0014 cache original; IL0019..0036 add/clamp/set",
+    "clamp_constants": "UberTextMaterialProperty..cctor 0x06000141",
+    "material_creation": "UberTextMaterial..ctor 0x06000124 new Material(original shader) then Query.ApplyToMaterial"
+  },
+  "evidence": [
+    "damage_text_queue_property.cil.json",
+    "damage_text_queue_limits.cil.json",
+    "damage_ubertext_runtime.cil.json"
+  ],
+  "not_a_visual_fudge": "The increment10 is applied independently to both Renderer.sortingOrder and the shader-derived material renderQueue. Do not arbitrarily add another sortingOrder or Z offset. The original queue is cached once, so repeat apply does not accumulate increments.",
+  "queue_mapping_note": "Original Shader29 tag is QUEUE=Transparent; its standard Unity queue is3000. The managed method does not hardcode3000: it reads the freshly created shader material renderQueue once and adds10."
+}

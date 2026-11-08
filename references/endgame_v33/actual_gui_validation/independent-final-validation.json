@@ -1,0 +1,129 @@
+{
+  "passed": true,
+  "original_runtime_checks": 125,
+  "original_runtime_failures_unchanged": [
+    "seat0-win dispatch matches independent source spell37/38/39 oracle",
+    "seat0-lose dispatch matches independent source spell37/38/39 oracle",
+    "seat0-tie dispatch matches independent source spell37/38/39 oracle",
+    "seat1-win dispatch matches independent source spell37/38/39 oracle",
+    "seat1-lose dispatch matches independent source spell37/38/39 oracle",
+    "seat1-tie dispatch matches independent source spell37/38/39 oracle"
+  ],
+  "independent_dispatch_checks": [
+    {
+      "case": "seat0-win",
+      "actual": [
+        {
+          "side": 1,
+          "spell_type": 37
+        }
+      ],
+      "source": [
+        {
+          "side": 1,
+          "spell_type": 37
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "seat0-lose",
+      "actual": [
+        {
+          "side": 0,
+          "spell_type": 38
+        }
+      ],
+      "source": [
+        {
+          "side": 0,
+          "spell_type": 38
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "seat0-tie",
+      "actual": [
+        {
+          "side": 1,
+          "spell_type": 39
+        },
+        {
+          "side": 0,
+          "spell_type": 38
+        }
+      ],
+      "source": [
+        {
+          "side": 1,
+          "spell_type": 39
+        },
+        {
+          "side": 0,
+          "spell_type": 38
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "seat1-win",
+      "actual": [
+        {
+          "side": 1,
+          "spell_type": 37
+        }
+      ],
+      "source": [
+        {
+          "side": 1,
+          "spell_type": 37
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "seat1-lose",
+      "actual": [
+        {
+          "side": 0,
+          "spell_type": 38
+        }
+      ],
+      "source": [
+        {
+          "side": 0,
+          "spell_type": 38
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "seat1-tie",
+      "actual": [
+        {
+          "side": 1,
+          "spell_type": 39
+        },
+        {
+          "side": 0,
+          "spell_type": 38
+        }
+      ],
+      "source": [
+        {
+          "side": 1,
+          "spell_type": 39
+        },
+        {
+          "side": 0,
+          "spell_type": 38
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "remaining_runtime_failures": [],
+  "source_oracle_sha256": "d29d9c6cb6fb56b38d86dcca43e5648c6c0778579d3ef524b7ebe576c2925899",
+  "explanation": "The original GDScript Array/Dictionary equality compares runtime integers with JSON-parser floats. This external check accepts only finite integral numeric values (never strings/bools), compares every side/spell entry and order, and preserves all original FAIL messages. It does not modify production or the recorded frames."
+}

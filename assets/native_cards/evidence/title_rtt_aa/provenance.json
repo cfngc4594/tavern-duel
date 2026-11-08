@@ -1,0 +1,34 @@
+{
+  "shader": "Hidden/TextAntialiasing",
+  "path_id": "3442879436887144160",
+  "library_source": "libfile_d7c1faf0d5148191b73587cd7a984ebb",
+  "metal_source_lines": "18801-18958",
+  "metal_bytes": 5778,
+  "metal_sha256": "c1bfa04967a8714fa0831c69dfdae562ed4b0a5368ca088de83d6b30c61faac9",
+  "formula": {
+    "rgb": "center_rt.rgb * vertex_color.rgb * _Color.rgb",
+    "alpha": "sum(four diagonal rt alpha samples) * _Edge * vertex_color.a * _Color.a",
+    "offsets": "(+-_OffsetX,+-_OffsetY) BEFORE MainTex_ST",
+    "center_alpha_used": false,
+    "explicit_shader_clamp": false
+  },
+  "managed_parameters_from_parallel_agent": {
+    "offset_texels": 0.5,
+    "edge": 0.5
+  },
+  "original_render_state": {
+    "srcBlend": 5,
+    "dstBlend": 10,
+    "srcBlendAlpha": 5,
+    "dstBlendAlpha": 10,
+    "zWrite": 0,
+    "zTest": 4,
+    "culling": 2
+  },
+  "compatibility_shader_status": "Not yet tested or integrated by author; supplied to module agent for actual RT-size binding and GUI validation",
+  "known_boundary": [
+    "Godot framebuffer blend alpha may differ from original SrcAlpha/OneMinusSrcAlpha alpha equation",
+    "Compatibility sample uses cull_disabled for existing Godot converted mesh; original CullBack",
+    "RT color-space/sampling and original RTT byte parity require separate validation"
+  ]
+}

@@ -1,0 +1,7 @@
+extends "res://scripts/game.gd"
+func _ready():pass
+func _process(_dt):pass
+func play_sound(_kind):pass
+func _event(_name):pass
+func _update_interaction(_allow:bool=true):pass
+func _exit_tree():pass

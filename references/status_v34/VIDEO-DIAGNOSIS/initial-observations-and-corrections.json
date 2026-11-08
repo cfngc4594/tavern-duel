@@ -1,0 +1,45 @@
+{
+  "status": "actual_pixel_failure",
+  "input_checkpoint": "df198c9b71c7ef391094194f778bf235190dcb3d776f8bbb1007cbb79e3eba67",
+  "original_avi": "status.avi",
+  "source_frames": [
+    73,
+    74,
+    75,
+    76,
+    77,
+    78
+  ],
+  "raw_extract_mapping": {
+    "raw-frame-01.png": 73,
+    "raw-frame-02.png": 74,
+    "raw-frame-03.png": 75,
+    "raw-frame-04.png": 76,
+    "raw-frame-05.png": 77,
+    "raw-frame-06.png": 78
+  },
+  "clean_postdraw_reference": "frame-075.png",
+  "observations": [
+    "Verified: friendly Yeti gold outline changes between original AVI75 and76 while its eligibility should remain active; owner pixel comparison raw03/raw04 finds2628changedpixels>40 in Yeti ROI.",
+    "PNG filenameframe075 has timeline.draw_frame76, so it corresponds to the restored AVI76, not same-frame disagreement.",
+    "State/resource/orphan assertions passed but do not establish stable pixel output."
+  ],
+  "unproven": [
+    "Rootcause of Yeti outline change: source state, original animation, depth, material, pipeline, or capture behavior not yet established."
+  ],
+  "restrictions": "Do not modify input hashes or discard original video/failures. No new GUI started until coordinated.",
+  "corrections": [
+    {
+      "claim": "Lower-right card/atlas debris",
+      "correction": "Withdrawn. ROI1000,600–1600,900 is the same original wooden board prop in PNG andAVI. Comparison savedright-bottom-comparison.png."
+    },
+    {
+      "claim": "Both hero outlines synchronously disappear",
+      "correction": "Withdrawn. Independent raw03/raw04 hero0/hero1 andrightlowROI arebyte-identical. OnlyYeti change established."
+    },
+    {
+      "claim": "PNG differs fromAVI atsameframe",
+      "correction": "Withdrawn: PNGlabel75 captureddraw76, compareactualindex notfilename."
+    }
+  ]
+}

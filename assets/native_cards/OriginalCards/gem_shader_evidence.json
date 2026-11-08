@@ -1,0 +1,72 @@
+{
+  "clientVersion": "37.0.0.255130.254477",
+  "shaderPathId": "9099378368919310605",
+  "shaderAsset": "CAB-c394926ba464822396a05cbfae08a8b3",
+  "sourceBundle": "/workspace/shared/hearthstone_official_assets/client/Data/OSX/essential_base_global-shader-0.unity3d",
+  "sourceBundleSha256": "977fcca0ff8837376307ea0a5c185b767a8b6adeffa6f1ada7732fad5d283f3c",
+  "sourceShaderName": "Hero/Diffuse/DiffuseAlphaMaskScroller",
+  "sourceState": {
+    "rtBlend0": {
+      "srcBlend": {
+        "val": 1.0,
+        "name": "<noninit>"
+      },
+      "destBlend": {
+        "val": 0.0,
+        "name": "<noninit>"
+      },
+      "srcBlendAlpha": {
+        "val": 1.0,
+        "name": "<noninit>"
+      },
+      "destBlendAlpha": {
+        "val": 0.0,
+        "name": "<noninit>"
+      },
+      "blendOp": {
+        "val": 0.0,
+        "name": "<noninit>"
+      },
+      "blendOpAlpha": {
+        "val": 0.0,
+        "name": "<noninit>"
+      },
+      "colMask": {
+        "val": 15.0,
+        "name": "<noninit>"
+      }
+    },
+    "zWrite": {
+      "val": 1.0,
+      "name": "<noninit>"
+    },
+    "zTest": {
+      "val": 4.0,
+      "name": "<noninit>"
+    },
+    "culling": {
+      "val": 2.0,
+      "name": "<noninit>"
+    },
+    "m_Tags": {
+      "tags": [
+        [
+          "CardAlpha",
+          "true"
+        ],
+        [
+          "RenderPipeline",
+          "UniversalPipeline"
+        ],
+        [
+          "RenderType",
+          "Opaque"
+        ]
+      ]
+    }
+  },
+  "vertexMetal": "#include <metal_stdlib>\n#include <metal_texture>\nusing namespace metal;\nstruct VGlobals_Type\n{\n    float4 _MainLightColor;\n    float4 _Time;\n    float4 hlslcc_mtx4x4unity_MatrixVP[4];\n};\n\nstruct UnityPerDraw_Type\n{\n    float4 hlslcc_mtx4x4unity_ObjectToWorld[4];\n    float4 hlslcc_mtx4x4unity_WorldToObject[4];\n    float4 unity_LODFade;\n    float4 unity_WorldTransformParams;\n    float4 unity_RenderingLayer;\n    float4 unity_LightData;\n    float4 unity_LightIndices[2];\n    float4 unity_ProbesOcclusion;\n    float4 unity_SpecCube0_HDR;\n    float4 unity_SpecCube1_HDR;\n    float4 unity_SpecCube0_BoxMax;\n    float4 unity_SpecCube0_BoxMin;\n    float4 unity_SpecCube0_ProbePosition;\n    float4 unity_SpecCube0_Rotation;\n    float4 unity_SpecCube1_BoxMax;\n    float4 unity_SpecCube1_BoxMin;\n    float4 unity_SpecCube1_ProbePosition;\n    float4 unity_SpecCube1_Rotation;\n    float4 unity_LightmapST;\n    float4 unity_DynamicLightmapST;\n    float4 unity_SHAr;\n    float4 unity_SHAg;\n    float4 unity_SHAb;\n    float4 unity_SHBr;\n    float4 unity_SHBg;\n    float4 unity_SHBb;\n    float4 unity_SHC;\n    float4 unity_RendererBounds_Min;\n    float4 unity_RendererBounds_Max;\n    float4 hlslcc_mtx4x4unity_MatrixPreviousM[4];\n    float4 hlslcc_mtx4x4unity_MatrixPreviousMI[4];\n    float4 unity_MotionVectorsParams;\n    float4 unity_SpriteColor;\n    float4 unity_SpriteProps;\n};\n\nstruct UnityPerMaterial_Type\n{\n    float _Intensity;\n    float4 _TintColor;\n    float4 _tint;\n    float4 _Fade;\n    float4 _MainTex_ST;\n    float _YSpeed;\n    float _XSpeed;\n    float _ScaleX;\n    float _ScaleY;\n    float _LightingBlend;\n};\n\nstruct Mtl_VertexIn\n{\n    float4 POSITION0 [[ attribute(0) ]] ;\n    float2 TEXCOORD0 [[ attribute(1) ]] ;\n};\n\nstruct Mtl_VertexOut\n{\n    float4 mtl_Position [[ position, invariant ]];\n    float4 TEXCOORD0 [[ user(TEXCOORD0) ]];\n    float4 COLOR0 [[ user(COLOR0) ]];\n};\n\nvertex Mtl_VertexOut xlatMtlMain(\n    constant VGlobals_Type& VGlobals [[ buffer(0) ]],\n    constant UnityPerDraw_Type& UnityPerDraw [[ buffer(1) ]],\n    constant UnityPerMaterial_Type& UnityPerMaterial [[ buffer(2) ]],\n    Mtl_VertexIn input [[ stage_in ]])\n{\n    Mtl_VertexOut output;\n    float4 u_xlat0;\n    float4 u_xlat1;\n    u_xlat0 = input.POSITION0.yyyy * UnityPerDraw.hlslcc_mtx4x4unity_ObjectToWorld[1];\n    u_xlat0 = fma(UnityPerDraw.hlslcc_mtx4x4unity_ObjectToWorld[0], input.POSITION0.xxxx, u_xlat0);\n    u_xlat0 = fma(UnityPerDraw.hlslcc_mtx4x4unity_ObjectToWorld[2], input.POSITION0.zzzz, u_xlat0);\n    u_xlat0 = u_xlat0 + UnityPerDraw.hlslcc_mtx4x4unity_ObjectToWorld[3];\n    u_xlat1 = u_xlat0.yyyy * VGlobals.hlslcc_mtx4x4unity_MatrixVP[1];\n    u_xlat1 = fma(VGlobals.hlslcc_mtx4x4unity_MatrixVP[0], u_xlat0.xxxx, u_xlat1);\n    u_xlat1 = fma(VGlobals.hlslcc_mtx4x4unity_MatrixVP[2], u_xlat0.zzzz, u_xlat1);\n    output.mtl_Position = fma(VGlobals.hlslcc_mtx4x4unity_MatrixVP[3], u_xlat0.wwww, u_xlat1);\n    u_xlat0.xy = VGlobals._Time.xx * float2(UnityPerMaterial._XSpeed, UnityPerMaterial._YSpeed);\n    output.TEXCOORD0.zw = fma(input.TEXCOORD0.xy, float2(UnityPerMaterial._ScaleX, UnityPerMaterial._ScaleY), u_xlat0.xy);\n    output.TEXCOORD0.xy = fma(input.TEXCOORD0.xy, UnityPerMaterial._MainTex_ST.xy, UnityPerMaterial._MainTex_ST.zw);\n    u_xlat0.x = abs(UnityPerDraw.unity_SHAr.w);\n    u_xlat0.y = abs(UnityPerDraw.unity_SHAg.w);\n    u_xlat0.z = abs(UnityPerDraw.unity_SHAb.w);\n    u_xlat0.xyz = log2(u_xlat0.xyz);\n    u_xlat0.xyz = u_xlat0.xyz * float3(0.416666657, 0.416666657, 0.416666657);\n    u_xlat0.xyz = exp2(u_xlat0.xyz);\n    u_xlat0.xyz = fma(u_xlat0.xyz, float3(1.05499995, 1.05499995, 1.05499995), float3(-0.0549999997, -0.0549999997, -0.0549999997));\n    u_xlat0.xyz = clamp(u_xlat0.xyz, 0.0f, 1.0f);\n    u_xlat0.xyz = u_xlat0.xyz + VGlobals._MainLightColor.xyz;\n    u_xlat0.xyz = u_xlat0.xyz + float3(-1.0, -1.0, -1.0);\n    u_xlat0.w = 0.0;\n    u_xlat0 = fma(float4(UnityPerMaterial._LightingBlend), u_xlat0, float4(1.0, 1.0, 1.0, 1.0));\n    output.COLOR0 = u_xlat0 * UnityPerMaterial._TintColor;\n    return output;\n}\n",
+  "fragmentMetal": "#include <metal_stdlib>\n#include <metal_texture>\nusing namespace metal;\nconstant uint32_t rp_output_remap_mask [[ function_constant(1) ]];\nconstant const uint rp_output_remap_0 = (rp_output_remap_mask >> 0) & 0xF;\nstruct FGlobals_Type\n{\n    float2 _GlobalMipBias;\n};\n\nstruct UnityPerMaterial_Type\n{\n    float _Intensity;\n    float4 _TintColor;\n    float4 _tint;\n    float4 _Fade;\n    float4 _MainTex_ST;\n    float _YSpeed;\n    float _XSpeed;\n    float _ScaleX;\n    float _ScaleY;\n    float _LightingBlend;\n};\n\nstruct Mtl_FragmentIn\n{\n    float4 TEXCOORD0 [[ user(TEXCOORD0) ]] ;\n    float4 COLOR0 [[ user(COLOR0) ]] ;\n};\n\nstruct Mtl_FragmentOut\n{\n    float4 SV_Target0 [[ color(rp_output_remap_0) ]];\n};\n\nfragment Mtl_FragmentOut xlatMtlMain(\n    constant FGlobals_Type& FGlobals [[ buffer(0) ]],\n    constant UnityPerMaterial_Type& UnityPerMaterial [[ buffer(1) ]],\n    sampler sampler_MainTex [[ sampler (0) ]],\n    texture2d<float, access::sample > _MainTex [[ texture(0) ]] ,\n    texture2d<float, access::sample > _ScrollingTex [[ texture(1) ]] ,\n    Mtl_FragmentIn input [[ stage_in ]])\n{\n    Mtl_FragmentOut output;\n    float4 u_xlat0;\n    float4 u_xlat1;\n    u_xlat0.x = _ScrollingTex.sample(sampler_MainTex, input.TEXCOORD0.zw, bias(FGlobals._GlobalMipBias.xyxx.x)).x;\n    u_xlat0.xyz = u_xlat0.xxx * UnityPerMaterial._tint.xyz;\n    u_xlat1 = _MainTex.sample(sampler_MainTex, input.TEXCOORD0.xy, bias(FGlobals._GlobalMipBias.xyxx.x));\n    u_xlat0.xyz = u_xlat0.xyz * u_xlat1.www;\n    u_xlat0.xyz = u_xlat0.xyz * float3(1.5, 1.5, 1.5);\n    u_xlat0.xyz = fma(u_xlat0.xyz, float3(UnityPerMaterial._Intensity), u_xlat1.xyz);\n    u_xlat0.xyz = u_xlat0.xyz * UnityPerMaterial._Fade.xyz;\n    u_xlat0.w = 1.0;\n    output.SV_Target0 = u_xlat0 * input.COLOR0;\n    return output;\n}\n",
+  "interpretation": "MainTex.a is the scrolling color mask, not coverage. The selected original opaque pass uses One/Zero blending and writes depth. RGB includes original scroll tint, intensity and fade. Vertex data color/normal is not read by this shader.",
+  "translationLimit": "Built-in pipeline light and SH globals replace URP globals. This is a verified selected-material translation, not blanket custom-shader parity."
+}

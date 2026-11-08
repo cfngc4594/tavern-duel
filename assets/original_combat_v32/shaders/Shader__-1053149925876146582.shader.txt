@@ -1,0 +1,30 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hero/Unlit/Unlit_Cutout" {
+Properties {
+
+_Color ("Color", Color) = (1,1,1,1)
+
+_MainTex ("Texture", 2D) = "white" { }
+
+_Cutoff ("Base Alpha cutoff", Range(0, 1)) = 0.5
+
+_offsetU ("U Offset", Float) = 0.0
+
+_offsetV ("V Offset", Float) = 0.0
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+  GpuProgramID 48783
+}
+}
+}

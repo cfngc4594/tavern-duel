@@ -1,0 +1,4789 @@
+{
+  "types": [
+    {
+      "type": "RenderCommandWithPass",
+      "token": "0x02000d17",
+      "fields": [
+        {
+          "name": "Command",
+          "token": "0x0400488c",
+          "signature": "0611c000b204"
+        },
+        {
+          "name": "ShaderPass",
+          "token": "0x0400488d",
+          "signature": "0608"
+        }
+      ]
+    },
+    {
+      "type": "RenderCommand",
+      "token": "0x02002c81",
+      "fields": [
+        {
+          "name": "Renderer",
+          "token": "0x04012526",
+          "signature": "061280d1"
+        },
+        {
+          "name": "Material",
+          "token": "0x04012527",
+          "signature": "061280b9"
+        },
+        {
+          "name": "MeshIndex",
+          "token": "0x04012528",
+          "signature": "0608"
+        },
+        {
+          "name": "passIndex",
+          "token": "0x04012529",
+          "signature": "0608"
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandLists",
+      "token": "0x02002c82",
+      "fields": [
+        {
+          "name": "OpaqueRenderCommands",
+          "token": "0x0401252a",
+          "signature": "061512490111c000b204"
+        },
+        {
+          "name": "TransparentRenderCommands",
+          "token": "0x0401252b",
+          "signature": "061512490111c000b204"
+        },
+        {
+          "name": "foundPasses",
+          "token": "0x0401252c",
+          "signature": "061d08"
+        },
+        {
+          "name": "matPool",
+          "token": "0x0401252d",
+          "signature": "06151249011280b9"
+        },
+        {
+          "name": "s_lightModeTag",
+          "token": "0x0401252e",
+          "signature": "061195f5"
+        },
+        {
+          "name": "s_defaultLightModeTag",
+          "token": "0x0401252f",
+          "signature": "061195f5"
+        },
+        {
+          "name": "s_lightModesToInclude",
+          "token": "0x04012530",
+          "signature": "061d1195f5"
+        },
+        {
+          "name": "s_RTTCreateCommands",
+          "token": "0x04012531",
+          "signature": "0611899d"
+        }
+      ]
+    },
+    {
+      "type": "RenderToTextureUtils",
+      "token": "0x02002c85",
+      "fields": [
+        {
+          "name": "s_RTTRenderCamera",
+          "token": "0x04012534",
+          "signature": "0611899d"
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandListPool",
+      "token": "0x02002c86",
+      "fields": [
+        {
+          "name": "s_commandListPool",
+          "token": "0x04012535",
+          "signature": "0615129a6d0112c000b208"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "RenderCommandLists",
+      "method": ".ctor",
+      "token": "0x060154a2",
+      "rva": "0x646c0d",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 53,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldc.i4.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "newarr",
+          "operand": "System.Int32",
+          "token": "token(0x0100002C)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "stfld",
+          "operand": "RenderCommandLists::foundPasses",
+          "token": "token(0x0401252C)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldc.i4.5",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f2905ca40>::.ctor",
+          "token": "token(0x0A005194)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "stfld",
+          "operand": "RenderCommandLists::matPool",
+          "token": "token(0x0401252D)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "call",
+          "operand": "System.Object::.ctor",
+          "token": "token(0x0A000003)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::.ctor",
+          "token": "token(0x0A0027DB)"
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "stfld",
+          "operand": "RenderCommandLists::OpaqueRenderCommands",
+          "token": "token(0x0401252A)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::.ctor",
+          "token": "token(0x0A0027DB)"
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "stfld",
+          "operand": "RenderCommandLists::TransparentRenderCommands",
+          "token": "token(0x0401252B)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandLists",
+      "method": "Clear",
+      "token": "0x060154a3",
+      "rva": "0x646c43",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 23,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::OpaqueRenderCommands",
+          "token": "token(0x0401252A)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::Clear",
+          "token": "token(0x0A005100)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::TransparentRenderCommands",
+          "token": "token(0x0401252B)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::Clear",
+          "token": "token(0x0A005100)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandLists",
+      "method": "SortRenderCommands",
+      "token": "0x060154a4",
+      "rva": "0x646c5c",
+      "signature": "20020811c000b20411c000b204",
+      "parameters": [
+        "a",
+        "b"
+      ],
+      "code_size": 72,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Renderer::get_sortingOrder",
+          "token": "token(0x0A0027EB)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Renderer::get_sortingOrder",
+          "token": "token(0x0A0027EB)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "bne.un.s",
+          "operand": "IL_0030",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Material",
+          "token": "token(0x04012527)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Material::get_renderQueue",
+          "token": "token(0x0A00216E)"
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Material",
+          "token": "token(0x04012527)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Material::get_renderQueue",
+          "token": "token(0x0A00216E)"
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "sub",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Renderer::get_sortingOrder",
+          "token": "token(0x0A0027EB)"
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Renderer::get_sortingOrder",
+          "token": "token(0x0A0027EB)"
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "sub",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandLists",
+      "method": "AppendRenderCommands",
+      "token": "0x060154a5",
+      "rva": "0x646cb0",
+      "signature": "20030112808d0212c000b210",
+      "parameters": [
+        "objectToDraw",
+        "includeInactiveRenderers",
+        "overrides"
+      ],
+      "code_size": 17,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::GetComponentsInChildren<spec>",
+          "token": "token(0x2B00001C)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "RenderCommandLists::AppendRenderCommands",
+          "token": "token(0x060154A6)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandLists",
+      "method": "AppendRenderCommands",
+      "token": "0x060154a6",
+      "rva": "0x646cd0",
+      "signature": "2002011d1280d112c000b210",
+      "parameters": [
+        "toDraw",
+        "overrides"
+      ],
+      "code_size": 1013,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldsflda",
+          "operand": "RenderCommandLists::s_RTTCreateCommands",
+          "token": "token(0x04012531)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "call",
+          "operand": "Unity.Profiling.ProfilerMarker::Auto",
+          "token": "token(0x0A0025B8)"
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "br",
+          "operand": "IL_03ad",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldelem.ref",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "brfalse.s",
+          "operand": "IL_007b",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c410>::TryGetValue",
+          "token": "token(0x0A005195)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "brfalse.s",
+          "operand": "IL_007b",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c830>::GetEnumerator",
+          "token": "token(0x0A0050E1)"
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "stloc.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "br.s",
+          "operand": "IL_0062",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c980>::get_Current",
+          "token": "token(0x0A0050E2)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ldfld",
+          "operand": "MaterialOveride::meshIndex",
+          "token": "token(0x04012532)"
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "bne.un.s",
+          "operand": "IL_0062",
+          "token": null
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c830>::get_Count",
+          "token": "token(0x0A005196)"
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "ble.s",
+          "operand": "IL_006b",
+          "token": null
+        },
+        {
+          "offset": "IL_0056",
+          "opcode": "ldstr",
+          "operand": "'Multiple overrides passed when a global override is active. This is not supported'",
+          "token": "string token(0x703F8C11)"
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "call",
+          "operand": "UnityEngine.Debug::LogError",
+          "token": "token(0x0A0000C1)"
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "leave.s",
+          "operand": "IL_007b",
+          "token": null
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_0064",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c980>::MoveNext",
+          "token": "token(0x0A0050E3)"
+        },
+        {
+          "offset": "IL_0069",
+          "opcode": "brtrue.s",
+          "operand": "IL_003a",
+          "token": null
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "leave.s",
+          "operand": "IL_007b",
+          "token": null
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_006f",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c980>",
+          "token": "token(0x1B00133B)"
+        },
+        {
+          "offset": "IL_0075",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_007a",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007b",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_007d",
+          "opcode": "brfalse.s",
+          "operand": "IL_0099",
+          "token": null
+        },
+        {
+          "offset": "IL_007f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0080",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::matPool",
+          "token": "token(0x0401252D)"
+        },
+        {
+          "offset": "IL_0085",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0087",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0088",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c830>::get_Item",
+          "token": "token(0x0A005197)"
+        },
+        {
+          "offset": "IL_008d",
+          "opcode": "ldfld",
+          "operand": "MaterialOveride::materialToUse",
+          "token": "token(0x04012533)"
+        },
+        {
+          "offset": "IL_0092",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f2905ca40>::Add",
+          "token": "token(0x0A00099F)"
+        },
+        {
+          "offset": "IL_0097",
+          "opcode": "br.s",
+          "operand": "IL_010d",
+          "token": null
+        },
+        {
+          "offset": "IL_0099",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_009a",
+          "opcode": "call",
+          "operand": "Blizzard.T5.MaterialService.Extensions.RendererExtension::HasCustomMaterials",
+          "token": "token(0x0A005198)"
+        },
+        {
+          "offset": "IL_009f",
+          "opcode": "brfalse.s",
+          "operand": "IL_00b0",
+          "token": null
+        },
+        {
+          "offset": "IL_00a1",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a2",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a3",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::matPool",
+          "token": "token(0x0401252D)"
+        },
+        {
+          "offset": "IL_00a8",
+          "opcode": "call",
+          "operand": "Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterialsToExistingList",
+          "token": "token(0x0A005199)"
+        },
+        {
+          "offset": "IL_00ad",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ae",
+          "opcode": "br.s",
+          "operand": "IL_010d",
+          "token": null
+        },
+        {
+          "offset": "IL_00b0",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b1",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b2",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::matPool",
+          "token": "token(0x0401252D)"
+        },
+        {
+          "offset": "IL_00b7",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Renderer::GetSharedMaterials",
+          "token": "token(0x0A000D7A)"
+        },
+        {
+          "offset": "IL_00bc",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00bd",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::matPool",
+          "token": "token(0x0401252D)"
+        },
+        {
+          "offset": "IL_00c2",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f2905ca40>::GetEnumerator",
+          "token": "token(0x0A000D4E)"
+        },
+        {
+          "offset": "IL_00c7",
+          "opcode": "stloc.s",
+          "operand": "local(0x0009)",
+          "token": null
+        },
+        {
+          "offset": "IL_00c9",
+          "opcode": "br.s",
+          "operand": "IL_00f4",
+          "token": null
+        },
+        {
+          "offset": "IL_00cb",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0009)",
+          "token": null
+        },
+        {
+          "offset": "IL_00cd",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28f62030>::get_Current",
+          "token": "token(0x0A000D4F)"
+        },
+        {
+          "offset": "IL_00d2",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d3",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_00d8",
+          "opcode": "brfalse.s",
+          "operand": "IL_00f4",
+          "token": null
+        },
+        {
+          "offset": "IL_00da",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00db",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::matPool",
+          "token": "token(0x0401252D)"
+        },
+        {
+          "offset": "IL_00e0",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f2905ca40>::Clear",
+          "token": "token(0x0A0050FB)"
+        },
+        {
+          "offset": "IL_00e5",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00e6",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00e7",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::matPool",
+          "token": "token(0x0401252D)"
+        },
+        {
+          "offset": "IL_00ec",
+          "opcode": "call",
+          "operand": "Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterialsToExistingList",
+          "token": "token(0x0A005199)"
+        },
+        {
+          "offset": "IL_00f1",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00f2",
+          "opcode": "leave.s",
+          "operand": "IL_010d",
+          "token": null
+        },
+        {
+          "offset": "IL_00f4",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0009)",
+          "token": null
+        },
+        {
+          "offset": "IL_00f6",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28f62030>::MoveNext",
+          "token": "token(0x0A000D50)"
+        },
+        {
+          "offset": "IL_00fb",
+          "opcode": "brtrue.s",
+          "operand": "IL_00cb",
+          "token": null
+        },
+        {
+          "offset": "IL_00fd",
+          "opcode": "leave.s",
+          "operand": "IL_010d",
+          "token": null
+        },
+        {
+          "offset": "IL_00ff",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0009)",
+          "token": null
+        },
+        {
+          "offset": "IL_0101",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28f62030>",
+          "token": "token(0x1B0003A4)"
+        },
+        {
+          "offset": "IL_0107",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_010c",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_010d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_010e",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::matPool",
+          "token": "token(0x0401252D)"
+        },
+        {
+          "offset": "IL_0113",
+          "opcode": "stloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_0115",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0116",
+          "opcode": "isinst",
+          "operand": "UnityEngine.MeshRenderer",
+          "token": "token(0x01000021)"
+        },
+        {
+          "offset": "IL_011b",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_011c",
+          "opcode": "stloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_011e",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_0123",
+          "opcode": "brfalse.s",
+          "operand": "IL_0172",
+          "token": null
+        },
+        {
+          "offset": "IL_0125",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0126",
+          "opcode": "stloc.s",
+          "operand": "local(0x000A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0128",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0129",
+          "opcode": "stloc.s",
+          "operand": "local(0x000B)",
+          "token": null
+        },
+        {
+          "offset": "IL_012b",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_012c",
+          "opcode": "stloc.s",
+          "operand": "local(0x000C)",
+          "token": null
+        },
+        {
+          "offset": "IL_012e",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_012f",
+          "opcode": "ldloca.s",
+          "operand": "local(0x000B)",
+          "token": null
+        },
+        {
+          "offset": "IL_0131",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::TryGetComponent<spec>",
+          "token": "token(0x2B0009DD)"
+        },
+        {
+          "offset": "IL_0136",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0137",
+          "opcode": "brtrue.s",
+          "operand": "IL_0143",
+          "token": null
+        },
+        {
+          "offset": "IL_0139",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_013a",
+          "opcode": "ldloca.s",
+          "operand": "local(0x000C)",
+          "token": null
+        },
+        {
+          "offset": "IL_013c",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::TryGetComponent<spec>",
+          "token": "token(0x2B0009DE)"
+        },
+        {
+          "offset": "IL_0141",
+          "opcode": "stloc.s",
+          "operand": "local(0x000A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0143",
+          "opcode": "brfalse.s",
+          "operand": "IL_0163",
+          "token": null
+        },
+        {
+          "offset": "IL_0145",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000B)",
+          "token": null
+        },
+        {
+          "offset": "IL_0147",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.MeshFilter::get_sharedMesh",
+          "token": "token(0x0A000DA8)"
+        },
+        {
+          "offset": "IL_014c",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_0151",
+          "opcode": "brfalse.s",
+          "operand": "IL_0163",
+          "token": null
+        },
+        {
+          "offset": "IL_0153",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000B)",
+          "token": null
+        },
+        {
+          "offset": "IL_0155",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.MeshFilter::get_sharedMesh",
+          "token": "token(0x0A000DA8)"
+        },
+        {
+          "offset": "IL_015a",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Mesh::get_subMeshCount",
+          "token": "token(0x0A0027DC)"
+        },
+        {
+          "offset": "IL_015f",
+          "opcode": "stloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_0161",
+          "opcode": "br.s",
+          "operand": "IL_0191",
+          "token": null
+        },
+        {
+          "offset": "IL_0163",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0165",
+          "opcode": "brfalse.s",
+          "operand": "IL_0191",
+          "token": null
+        },
+        {
+          "offset": "IL_0167",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_0169",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f2905ca40>::get_Count",
+          "token": "token(0x0A0001D3)"
+        },
+        {
+          "offset": "IL_016e",
+          "opcode": "stloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_0170",
+          "opcode": "br.s",
+          "operand": "IL_0191",
+          "token": null
+        },
+        {
+          "offset": "IL_0172",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0173",
+          "opcode": "isinst",
+          "operand": "UnityEngine.SkinnedMeshRenderer",
+          "token": "token(0x010002BD)"
+        },
+        {
+          "offset": "IL_0178",
+          "opcode": "stloc.s",
+          "operand": "local(0x000D)",
+          "token": null
+        },
+        {
+          "offset": "IL_017a",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000D)",
+          "token": null
+        },
+        {
+          "offset": "IL_017c",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_0181",
+          "opcode": "brfalse.s",
+          "operand": "IL_0191",
+          "token": null
+        },
+        {
+          "offset": "IL_0183",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000D)",
+          "token": null
+        },
+        {
+          "offset": "IL_0185",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.SkinnedMeshRenderer::get_sharedMesh",
+          "token": "token(0x0A0027DD)"
+        },
+        {
+          "offset": "IL_018a",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Mesh::get_subMeshCount",
+          "token": "token(0x0A0027DC)"
+        },
+        {
+          "offset": "IL_018f",
+          "opcode": "stloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_0191",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0192",
+          "opcode": "stloc.s",
+          "operand": "local(0x000E)",
+          "token": null
+        },
+        {
+          "offset": "IL_0194",
+          "opcode": "br",
+          "operand": "IL_0395",
+          "token": null
+        },
+        {
+          "offset": "IL_0199",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000E)",
+          "token": null
+        },
+        {
+          "offset": "IL_019b",
+          "opcode": "stloc.s",
+          "operand": "local(0x000F)",
+          "token": null
+        },
+        {
+          "offset": "IL_019d",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000F)",
+          "token": null
+        },
+        {
+          "offset": "IL_019f",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_01a1",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f2905ca40>::get_Count",
+          "token": "token(0x0A0001D3)"
+        },
+        {
+          "offset": "IL_01a6",
+          "opcode": "blt.s",
+          "operand": "IL_01ab",
+          "token": null
+        },
+        {
+          "offset": "IL_01a8",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01a9",
+          "opcode": "stloc.s",
+          "operand": "local(0x000F)",
+          "token": null
+        },
+        {
+          "offset": "IL_01ab",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_01ad",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000F)",
+          "token": null
+        },
+        {
+          "offset": "IL_01af",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f2905ca40>::get_Item",
+          "token": "token(0x0A0009A1)"
+        },
+        {
+          "offset": "IL_01b4",
+          "opcode": "stloc.s",
+          "operand": "local(0x0010)",
+          "token": null
+        },
+        {
+          "offset": "IL_01b6",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_01b8",
+          "opcode": "brtrue.s",
+          "operand": "IL_0201",
+          "token": null
+        },
+        {
+          "offset": "IL_01ba",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_01bc",
+          "opcode": "brfalse.s",
+          "operand": "IL_0201",
+          "token": null
+        },
+        {
+          "offset": "IL_01be",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_01c0",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c830>::GetEnumerator",
+          "token": "token(0x0A0050E1)"
+        },
+        {
+          "offset": "IL_01c5",
+          "opcode": "stloc.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_01c7",
+          "opcode": "br.s",
+          "operand": "IL_01e8",
+          "token": null
+        },
+        {
+          "offset": "IL_01c9",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_01cb",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c980>::get_Current",
+          "token": "token(0x0A0050E2)"
+        },
+        {
+          "offset": "IL_01d0",
+          "opcode": "stloc.s",
+          "operand": "local(0x0012)",
+          "token": null
+        },
+        {
+          "offset": "IL_01d2",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0012)",
+          "token": null
+        },
+        {
+          "offset": "IL_01d4",
+          "opcode": "ldfld",
+          "operand": "MaterialOveride::meshIndex",
+          "token": "token(0x04012532)"
+        },
+        {
+          "offset": "IL_01d9",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000E)",
+          "token": null
+        },
+        {
+          "offset": "IL_01db",
+          "opcode": "bne.un.s",
+          "operand": "IL_01e8",
+          "token": null
+        },
+        {
+          "offset": "IL_01dd",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0012)",
+          "token": null
+        },
+        {
+          "offset": "IL_01df",
+          "opcode": "ldfld",
+          "operand": "MaterialOveride::materialToUse",
+          "token": "token(0x04012533)"
+        },
+        {
+          "offset": "IL_01e4",
+          "opcode": "stloc.s",
+          "operand": "local(0x0010)",
+          "token": null
+        },
+        {
+          "offset": "IL_01e6",
+          "opcode": "leave.s",
+          "operand": "IL_0201",
+          "token": null
+        },
+        {
+          "offset": "IL_01e8",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_01ea",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c980>::MoveNext",
+          "token": "token(0x0A0050E3)"
+        },
+        {
+          "offset": "IL_01ef",
+          "opcode": "brtrue.s",
+          "operand": "IL_01c9",
+          "token": null
+        },
+        {
+          "offset": "IL_01f1",
+          "opcode": "leave.s",
+          "operand": "IL_0201",
+          "token": null
+        },
+        {
+          "offset": "IL_01f3",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_01f5",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a7c980>",
+          "token": "token(0x1B00133B)"
+        },
+        {
+          "offset": "IL_01fb",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0200",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0201",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0202",
+          "opcode": "stloc.s",
+          "operand": "local(0x0013)",
+          "token": null
+        },
+        {
+          "offset": "IL_0204",
+          "opcode": "br.s",
+          "operand": "IL_0216",
+          "token": null
+        },
+        {
+          "offset": "IL_0206",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0207",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::foundPasses",
+          "token": "token(0x0401252C)"
+        },
+        {
+          "offset": "IL_020c",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0013)",
+          "token": null
+        },
+        {
+          "offset": "IL_020e",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_020f",
+          "opcode": "stelem.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0210",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0013)",
+          "token": null
+        },
+        {
+          "offset": "IL_0212",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0213",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0214",
+          "opcode": "stloc.s",
+          "operand": "local(0x0013)",
+          "token": null
+        },
+        {
+          "offset": "IL_0216",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0013)",
+          "token": null
+        },
+        {
+          "offset": "IL_0218",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0219",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::foundPasses",
+          "token": "token(0x0401252C)"
+        },
+        {
+          "offset": "IL_021e",
+          "opcode": "ldlen",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_021f",
+          "opcode": "conv.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0220",
+          "opcode": "blt.s",
+          "operand": "IL_0206",
+          "token": null
+        },
+        {
+          "offset": "IL_0222",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0223",
+          "opcode": "stloc.s",
+          "operand": "local(0x0011)",
+          "token": null
+        },
+        {
+          "offset": "IL_0225",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0226",
+          "opcode": "stloc.s",
+          "operand": "local(0x0014)",
+          "token": null
+        },
+        {
+          "offset": "IL_0228",
+          "opcode": "br",
+          "operand": "IL_02b3",
+          "token": null
+        },
+        {
+          "offset": "IL_022d",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0010)",
+          "token": null
+        },
+        {
+          "offset": "IL_022f",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Material::get_shader",
+          "token": "token(0x0A0009EB)"
+        },
+        {
+          "offset": "IL_0234",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0014)",
+          "token": null
+        },
+        {
+          "offset": "IL_0236",
+          "opcode": "ldsfld",
+          "operand": "RenderCommandLists::s_lightModeTag",
+          "token": "token(0x0401252E)"
+        },
+        {
+          "offset": "IL_023b",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Shader::FindPassTagValue",
+          "token": "token(0x0A00519A)"
+        },
+        {
+          "offset": "IL_0240",
+          "opcode": "stloc.s",
+          "operand": "local(0x0015)",
+          "token": null
+        },
+        {
+          "offset": "IL_0242",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0015)",
+          "token": null
+        },
+        {
+          "offset": "IL_0244",
+          "opcode": "ldsfld",
+          "operand": "UnityEngine.Rendering.ShaderTagId::none",
+          "token": "token(0x0A00519B)"
+        },
+        {
+          "offset": "IL_0249",
+          "opcode": "call",
+          "operand": "UnityEngine.Rendering.ShaderTagId::op_Equality",
+          "token": "token(0x0A00519C)"
+        },
+        {
+          "offset": "IL_024e",
+          "opcode": "brfalse.s",
+          "operand": "IL_0257",
+          "token": null
+        },
+        {
+          "offset": "IL_0250",
+          "opcode": "ldsfld",
+          "operand": "RenderCommandLists::s_defaultLightModeTag",
+          "token": "token(0x0401252F)"
+        },
+        {
+          "offset": "IL_0255",
+          "opcode": "stloc.s",
+          "operand": "local(0x0015)",
+          "token": null
+        },
+        {
+          "offset": "IL_0257",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0258",
+          "opcode": "stloc.s",
+          "operand": "local(0x0016)",
+          "token": null
+        },
+        {
+          "offset": "IL_025a",
+          "opcode": "br.s",
+          "operand": "IL_0296",
+          "token": null
+        },
+        {
+          "offset": "IL_025c",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0015)",
+          "token": null
+        },
+        {
+          "offset": "IL_025e",
+          "opcode": "ldsfld",
+          "operand": "RenderCommandLists::s_lightModesToInclude",
+          "token": "token(0x04012530)"
+        },
+        {
+          "offset": "IL_0263",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0016)",
+          "token": null
+        },
+        {
+          "offset": "IL_0265",
+          "opcode": "ldelem",
+          "operand": "UnityEngine.Rendering.ShaderTagId",
+          "token": "token(0x0100057D)"
+        },
+        {
+          "offset": "IL_026a",
+          "opcode": "call",
+          "operand": "UnityEngine.Rendering.ShaderTagId::op_Equality",
+          "token": "token(0x0A00519C)"
+        },
+        {
+          "offset": "IL_026f",
+          "opcode": "brfalse.s",
+          "operand": "IL_0290",
+          "token": null
+        },
+        {
+          "offset": "IL_0271",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0272",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::foundPasses",
+          "token": "token(0x0401252C)"
+        },
+        {
+          "offset": "IL_0277",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0016)",
+          "token": null
+        },
+        {
+          "offset": "IL_0279",
+          "opcode": "ldelem.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_027a",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_027b",
+          "opcode": "bne.un.s",
+          "operand": "IL_0290",
+          "token": null
+        },
+        {
+          "offset": "IL_027d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_027e",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::foundPasses",
+          "token": "token(0x0401252C)"
+        },
+        {
+          "offset": "IL_0283",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0016)",
+          "token": null
+        },
+        {
+          "offset": "IL_0285",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0014)",
+          "token": null
+        },
+        {
+          "offset": "IL_0287",
+          "opcode": "stelem.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0288",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0011)",
+          "token": null
+        },
+        {
+          "offset": "IL_028a",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_028b",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_028c",
+          "opcode": "stloc.s",
+          "operand": "local(0x0011)",
+          "token": null
+        },
+        {
+          "offset": "IL_028e",
+          "opcode": "br.s",
+          "operand": "IL_02a1",
+          "token": null
+        },
+        {
+          "offset": "IL_0290",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0016)",
+          "token": null
+        },
+        {
+          "offset": "IL_0292",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0293",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0294",
+          "opcode": "stloc.s",
+          "operand": "local(0x0016)",
+          "token": null
+        },
+        {
+          "offset": "IL_0296",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0016)",
+          "token": null
+        },
+        {
+          "offset": "IL_0298",
+          "opcode": "ldsfld",
+          "operand": "RenderCommandLists::s_lightModesToInclude",
+          "token": "token(0x04012530)"
+        },
+        {
+          "offset": "IL_029d",
+          "opcode": "ldlen",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_029e",
+          "opcode": "conv.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_029f",
+          "opcode": "blt.s",
+          "operand": "IL_025c",
+          "token": null
+        },
+        {
+          "offset": "IL_02a1",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0011)",
+          "token": null
+        },
+        {
+          "offset": "IL_02a3",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02a4",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::foundPasses",
+          "token": "token(0x0401252C)"
+        },
+        {
+          "offset": "IL_02a9",
+          "opcode": "ldlen",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02aa",
+          "opcode": "conv.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02ab",
+          "opcode": "beq.s",
+          "operand": "IL_02c1",
+          "token": null
+        },
+        {
+          "offset": "IL_02ad",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0014)",
+          "token": null
+        },
+        {
+          "offset": "IL_02af",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02b0",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02b1",
+          "opcode": "stloc.s",
+          "operand": "local(0x0014)",
+          "token": null
+        },
+        {
+          "offset": "IL_02b3",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0014)",
+          "token": null
+        },
+        {
+          "offset": "IL_02b5",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0010)",
+          "token": null
+        },
+        {
+          "offset": "IL_02b7",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Material::get_passCount",
+          "token": "token(0x0A0027E1)"
+        },
+        {
+          "offset": "IL_02bc",
+          "opcode": "blt",
+          "operand": "IL_022d",
+          "token": null
+        },
+        {
+          "offset": "IL_02c1",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0010)",
+          "token": null
+        },
+        {
+          "offset": "IL_02c3",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Material::get_renderQueue",
+          "token": "token(0x0A00216E)"
+        },
+        {
+          "offset": "IL_02c8",
+          "opcode": "ldc.i4",
+          "operand": "3000",
+          "token": null
+        },
+        {
+          "offset": "IL_02cd",
+          "opcode": "bge.s",
+          "operand": "IL_0330",
+          "token": null
+        },
+        {
+          "offset": "IL_02cf",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02d0",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::foundPasses",
+          "token": "token(0x0401252C)"
+        },
+        {
+          "offset": "IL_02d5",
+          "opcode": "stloc.s",
+          "operand": "local(0x0017)",
+          "token": null
+        },
+        {
+          "offset": "IL_02d7",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02d8",
+          "opcode": "stloc.s",
+          "operand": "local(0x0018)",
+          "token": null
+        },
+        {
+          "offset": "IL_02da",
+          "opcode": "br.s",
+          "operand": "IL_0326",
+          "token": null
+        },
+        {
+          "offset": "IL_02dc",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0017)",
+          "token": null
+        },
+        {
+          "offset": "IL_02de",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0018)",
+          "token": null
+        },
+        {
+          "offset": "IL_02e0",
+          "opcode": "ldelem.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02e1",
+          "opcode": "stloc.s",
+          "operand": "local(0x0019)",
+          "token": null
+        },
+        {
+          "offset": "IL_02e3",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0019)",
+          "token": null
+        },
+        {
+          "offset": "IL_02e5",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02e6",
+          "opcode": "beq.s",
+          "operand": "IL_0320",
+          "token": null
+        },
+        {
+          "offset": "IL_02e8",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02e9",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::OpaqueRenderCommands",
+          "token": "token(0x0401252A)"
+        },
+        {
+          "offset": "IL_02ee",
+          "opcode": "ldloca.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_02f0",
+          "opcode": "initobj",
+          "operand": "RenderCommand",
+          "token": "token(0x02002C81)"
+        },
+        {
+          "offset": "IL_02f6",
+          "opcode": "ldloca.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_02f8",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02f9",
+          "opcode": "stfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_02fe",
+          "opcode": "ldloca.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0300",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0010)",
+          "token": null
+        },
+        {
+          "offset": "IL_0302",
+          "opcode": "stfld",
+          "operand": "RenderCommand::Material",
+          "token": "token(0x04012527)"
+        },
+        {
+          "offset": "IL_0307",
+          "opcode": "ldloca.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0309",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000E)",
+          "token": null
+        },
+        {
+          "offset": "IL_030b",
+          "opcode": "stfld",
+          "operand": "RenderCommand::MeshIndex",
+          "token": "token(0x04012528)"
+        },
+        {
+          "offset": "IL_0310",
+          "opcode": "ldloca.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0312",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0019)",
+          "token": null
+        },
+        {
+          "offset": "IL_0314",
+          "opcode": "stfld",
+          "operand": "RenderCommand::passIndex",
+          "token": "token(0x04012529)"
+        },
+        {
+          "offset": "IL_0319",
+          "opcode": "ldloc.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_031b",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::Add",
+          "token": "token(0x0A0027DE)"
+        },
+        {
+          "offset": "IL_0320",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0018)",
+          "token": null
+        },
+        {
+          "offset": "IL_0322",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0323",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0324",
+          "opcode": "stloc.s",
+          "operand": "local(0x0018)",
+          "token": null
+        },
+        {
+          "offset": "IL_0326",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0018)",
+          "token": null
+        },
+        {
+          "offset": "IL_0328",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0017)",
+          "token": null
+        },
+        {
+          "offset": "IL_032a",
+          "opcode": "ldlen",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_032b",
+          "opcode": "conv.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_032c",
+          "opcode": "blt.s",
+          "operand": "IL_02dc",
+          "token": null
+        },
+        {
+          "offset": "IL_032e",
+          "opcode": "br.s",
+          "operand": "IL_038f",
+          "token": null
+        },
+        {
+          "offset": "IL_0330",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0331",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::foundPasses",
+          "token": "token(0x0401252C)"
+        },
+        {
+          "offset": "IL_0336",
+          "opcode": "stloc.s",
+          "operand": "local(0x0017)",
+          "token": null
+        },
+        {
+          "offset": "IL_0338",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0339",
+          "opcode": "stloc.s",
+          "operand": "local(0x0018)",
+          "token": null
+        },
+        {
+          "offset": "IL_033b",
+          "opcode": "br.s",
+          "operand": "IL_0387",
+          "token": null
+        },
+        {
+          "offset": "IL_033d",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0017)",
+          "token": null
+        },
+        {
+          "offset": "IL_033f",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0018)",
+          "token": null
+        },
+        {
+          "offset": "IL_0341",
+          "opcode": "ldelem.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0342",
+          "opcode": "stloc.s",
+          "operand": "local(0x001B)",
+          "token": null
+        },
+        {
+          "offset": "IL_0344",
+          "opcode": "ldloc.s",
+          "operand": "local(0x001B)",
+          "token": null
+        },
+        {
+          "offset": "IL_0346",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0347",
+          "opcode": "beq.s",
+          "operand": "IL_0381",
+          "token": null
+        },
+        {
+          "offset": "IL_0349",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_034a",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::TransparentRenderCommands",
+          "token": "token(0x0401252B)"
+        },
+        {
+          "offset": "IL_034f",
+          "opcode": "ldloca.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0351",
+          "opcode": "initobj",
+          "operand": "RenderCommand",
+          "token": "token(0x02002C81)"
+        },
+        {
+          "offset": "IL_0357",
+          "opcode": "ldloca.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0359",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_035a",
+          "opcode": "stfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_035f",
+          "opcode": "ldloca.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0361",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0010)",
+          "token": null
+        },
+        {
+          "offset": "IL_0363",
+          "opcode": "stfld",
+          "operand": "RenderCommand::Material",
+          "token": "token(0x04012527)"
+        },
+        {
+          "offset": "IL_0368",
+          "opcode": "ldloca.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_036a",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000E)",
+          "token": null
+        },
+        {
+          "offset": "IL_036c",
+          "opcode": "stfld",
+          "operand": "RenderCommand::MeshIndex",
+          "token": "token(0x04012528)"
+        },
+        {
+          "offset": "IL_0371",
+          "opcode": "ldloca.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0373",
+          "opcode": "ldloc.s",
+          "operand": "local(0x001B)",
+          "token": null
+        },
+        {
+          "offset": "IL_0375",
+          "opcode": "stfld",
+          "operand": "RenderCommand::passIndex",
+          "token": "token(0x04012529)"
+        },
+        {
+          "offset": "IL_037a",
+          "opcode": "ldloc.s",
+          "operand": "local(0x001A)",
+          "token": null
+        },
+        {
+          "offset": "IL_037c",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::Add",
+          "token": "token(0x0A0027DE)"
+        },
+        {
+          "offset": "IL_0381",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0018)",
+          "token": null
+        },
+        {
+          "offset": "IL_0383",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0384",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0385",
+          "opcode": "stloc.s",
+          "operand": "local(0x0018)",
+          "token": null
+        },
+        {
+          "offset": "IL_0387",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0018)",
+          "token": null
+        },
+        {
+          "offset": "IL_0389",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0017)",
+          "token": null
+        },
+        {
+          "offset": "IL_038b",
+          "opcode": "ldlen",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_038c",
+          "opcode": "conv.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_038d",
+          "opcode": "blt.s",
+          "operand": "IL_033d",
+          "token": null
+        },
+        {
+          "offset": "IL_038f",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000E)",
+          "token": null
+        },
+        {
+          "offset": "IL_0391",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0392",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0393",
+          "opcode": "stloc.s",
+          "operand": "local(0x000E)",
+          "token": null
+        },
+        {
+          "offset": "IL_0395",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000E)",
+          "token": null
+        },
+        {
+          "offset": "IL_0397",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_0399",
+          "opcode": "blt",
+          "operand": "IL_0199",
+          "token": null
+        },
+        {
+          "offset": "IL_039e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_039f",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::matPool",
+          "token": "token(0x0401252D)"
+        },
+        {
+          "offset": "IL_03a4",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f2905ca40>::Clear",
+          "token": "token(0x0A0050FB)"
+        },
+        {
+          "offset": "IL_03a9",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03aa",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03ab",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03ac",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03ad",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03ae",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03af",
+          "opcode": "ldlen",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03b0",
+          "opcode": "conv.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03b1",
+          "opcode": "blt",
+          "operand": "IL_0014",
+          "token": null
+        },
+        {
+          "offset": "IL_03b6",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03b7",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::OpaqueRenderCommands",
+          "token": "token(0x0401252A)"
+        },
+        {
+          "offset": "IL_03bc",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03bd",
+          "opcode": "ldftn",
+          "operand": "RenderCommandLists::SortRenderCommands",
+          "token": "token(0x060154A4)"
+        },
+        {
+          "offset": "IL_03c3",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db16a0>::.ctor",
+          "token": "token(0x0A0027E4)"
+        },
+        {
+          "offset": "IL_03c8",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::Sort",
+          "token": "token(0x0A0027E5)"
+        },
+        {
+          "offset": "IL_03cd",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03ce",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::TransparentRenderCommands",
+          "token": "token(0x0401252B)"
+        },
+        {
+          "offset": "IL_03d3",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03d4",
+          "opcode": "ldftn",
+          "operand": "RenderCommandLists::SortRenderCommands",
+          "token": "token(0x060154A4)"
+        },
+        {
+          "offset": "IL_03da",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db16a0>::.ctor",
+          "token": "token(0x0A0027E4)"
+        },
+        {
+          "offset": "IL_03df",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::Sort",
+          "token": "token(0x0A0027E5)"
+        },
+        {
+          "offset": "IL_03e4",
+          "opcode": "leave.s",
+          "operand": "IL_03f4",
+          "token": null
+        },
+        {
+          "offset": "IL_03e6",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_03e8",
+          "opcode": "constrained.",
+          "operand": "AutoScope",
+          "token": "token(0x010002AD)"
+        },
+        {
+          "offset": "IL_03ee",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_03f3",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_03f4",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandLists",
+      "method": ".cctor",
+      "token": "0x060154a7",
+      "rva": "0x647138",
+      "signature": "000001",
+      "parameters": [],
+      "code_size": 108,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldstr",
+          "operand": "'LightMode'",
+          "token": "string token(0x703F8CB6)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "newobj",
+          "operand": "UnityEngine.Rendering.ShaderTagId::.ctor",
+          "token": "token(0x0A0040CB)"
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "stsfld",
+          "operand": "RenderCommandLists::s_lightModeTag",
+          "token": "token(0x0401252E)"
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldstr",
+          "operand": "'SRPDefaultUnlit'",
+          "token": "string token(0x703A144E)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "newobj",
+          "operand": "UnityEngine.Rendering.ShaderTagId::.ctor",
+          "token": "token(0x0A0040CB)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "stsfld",
+          "operand": "RenderCommandLists::s_defaultLightModeTag",
+          "token": "token(0x0401252F)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ldc.i4.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "newarr",
+          "operand": "UnityEngine.Rendering.ShaderTagId",
+          "token": "token(0x0100057D)"
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldstr",
+          "operand": "'SRPDefaultUnlit'",
+          "token": "string token(0x703A144E)"
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "newobj",
+          "operand": "UnityEngine.Rendering.ShaderTagId::.ctor",
+          "token": "token(0x0A0040CB)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "stelem",
+          "operand": "UnityEngine.Rendering.ShaderTagId",
+          "token": "token(0x0100057D)"
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldstr",
+          "operand": "'UniversalForward'",
+          "token": "string token(0x703A146E)"
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "newobj",
+          "operand": "UnityEngine.Rendering.ShaderTagId::.ctor",
+          "token": "token(0x0A0040CB)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "stelem",
+          "operand": "UnityEngine.Rendering.ShaderTagId",
+          "token": "token(0x0100057D)"
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "ldstr",
+          "operand": "'LightweightForward'",
+          "token": "string token(0x703F8CCA)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "newobj",
+          "operand": "UnityEngine.Rendering.ShaderTagId::.ctor",
+          "token": "token(0x0A0040CB)"
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "stelem",
+          "operand": "UnityEngine.Rendering.ShaderTagId",
+          "token": "token(0x0100057D)"
+        },
+        {
+          "offset": "IL_0057",
+          "opcode": "stsfld",
+          "operand": "RenderCommandLists::s_lightModesToInclude",
+          "token": "token(0x04012530)"
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldstr",
+          "operand": "'RTT_CreateCommands'",
+          "token": "string token(0x703F8CF0)"
+        },
+        {
+          "offset": "IL_0061",
+          "opcode": "newobj",
+          "operand": "Unity.Profiling.ProfilerMarker::.ctor",
+          "token": "token(0x0A002461)"
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "stsfld",
+          "operand": "RenderCommandLists::s_RTTCreateCommands",
+          "token": "token(0x04012531)"
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderToTextureUtils",
+      "method": "CalcRendererBounds",
+      "token": "0x060154ab",
+      "rva": "0x647200",
+      "signature": "00011181851d1280d1",
+      "parameters": [
+        "toInclude"
+      ],
+      "code_size": 71,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "initobj",
+          "operand": "UnityEngine.Bounds",
+          "token": "token(0x01000061)"
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "br.s",
+          "operand": "IL_003f",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldelem.ref",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "call",
+          "operand": "UnityEngine.Bounds::get_size",
+          "token": "token(0x0A0003DA)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_zero",
+          "token": "token(0x0A0000DD)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Equality",
+          "token": "token(0x0A000504)"
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "brfalse.s",
+          "operand": "IL_002e",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Renderer::get_bounds",
+          "token": "token(0x0A0000FD)"
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "br.s",
+          "operand": "IL_003b",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Renderer::get_bounds",
+          "token": "token(0x0A0000FD)"
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "call",
+          "operand": "UnityEngine.Bounds::Encapsulate",
+          "token": "token(0x0A000AF8)"
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ldlen",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "conv.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "blt.s",
+          "operand": "IL_000e",
+          "token": null
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderToTextureUtils",
+      "method": "DrawCommand",
+      "token": "0x060154ac",
+      "rva": "0x647254",
+      "signature": "000301128ae511833d11c000b204",
+      "parameters": [
+        "cmd",
+        "cullingMask",
+        "command"
+      ],
+      "code_size": 78,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_layer",
+          "token": "token(0x0A0002A2)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldc.i4.s",
+          "operand": "31",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "and",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "shl",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "call",
+          "operand": "UnityEngine.LayerMask::op_Implicit",
+          "token": "token(0x0A0010E2)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "and",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "brtrue.s",
+          "operand": "IL_0021",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Renderer::get_enabled",
+          "token": "token(0x0A000D18)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "brtrue.s",
+          "operand": "IL_002f",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Material",
+          "token": "token(0x04012527)"
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::MeshIndex",
+          "token": "token(0x04012528)"
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::passIndex",
+          "token": "token(0x04012529)"
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Rendering.CommandBuffer::DrawRenderer",
+          "token": "token(0x0A0027CA)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderToTextureUtils",
+      "method": "DrawCommandReplacement",
+      "token": "0x060154ad",
+      "rva": "0x6472b0",
+      "signature": "000601128ae511833d11c000b2041280b90e0e",
+      "parameters": [
+        "cmd",
+        "cullingMask",
+        "command",
+        "replacementShaderMaterial",
+        "replacementTag",
+        "replacementVal"
+      ],
+      "code_size": 90,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_layer",
+          "token": "token(0x0A0002A2)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldc.i4.s",
+          "operand": "31",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "and",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "shl",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "call",
+          "operand": "UnityEngine.LayerMask::op_Implicit",
+          "token": "token(0x0A0010E2)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "and",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "brtrue.s",
+          "operand": "IL_0021",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Renderer::get_enabled",
+          "token": "token(0x0A000D18)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "brtrue.s",
+          "operand": "IL_002f",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Material",
+          "token": "token(0x04012527)"
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Material::GetTag",
+          "token": "token(0x0A0027DF)"
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "call",
+          "operand": "System.String::op_Equality",
+          "token": "token(0x0A0000ED)"
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "brfalse.s",
+          "operand": "IL_0059",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::Renderer",
+          "token": "token(0x04012526)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "ldfld",
+          "operand": "RenderCommand::MeshIndex",
+          "token": "token(0x04012528)"
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Rendering.CommandBuffer::DrawRenderer",
+          "token": "token(0x0A0050F8)"
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderToTextureUtils",
+      "method": "RenderCamera",
+      "token": "0x060154ae",
+      "rva": "0x647318",
+      "signature": "000601128ae512831511c000b22012c000b2081280c90e",
+      "parameters": [
+        "cmd",
+        "rt",
+        "camera",
+        "renderCommands",
+        "replacementShader",
+        "replacementTag"
+      ],
+      "code_size": 361,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldsflda",
+          "operand": "RenderToTextureUtils::s_RTTRenderCamera",
+          "token": "token(0x04012534)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "call",
+          "operand": "Unity.Profiling.ProfilerMarker::Auto",
+          "token": "token(0x0A0025B8)"
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "UnityEngine.Rendering.RenderTargetIdentifier::op_Implicit",
+          "token": "token(0x0A0027CB)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Rendering.CommandBuffer::SetRenderTarget",
+          "token": "token(0x0A004071)"
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldarga.s",
+          "operand": "argument(0x0002)",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "call",
+          "operand": "LightWeightCamera::get_worldToCameraMatrix",
+          "token": "token(0x060154B8)"
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldarga.s",
+          "operand": "argument(0x0002)",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "call",
+          "operand": "LightWeightCamera::get_projectionMatrix",
+          "token": "token(0x060154BA)"
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Rendering.CommandBuffer::SetViewProjectionMatrices",
+          "token": "token(0x0A0027C8)"
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldfld",
+          "operand": "LightWeightCamera::backgroundColor",
+          "token": "token(0x04012539)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Rendering.CommandBuffer::ClearRenderTarget",
+          "token": "token(0x0A0027C7)"
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "brfalse",
+          "operand": "IL_00de",
+          "token": null
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "newobj",
+          "operand": "UnityEngine.Material::.ctor",
+          "token": "token(0x0A000060)"
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0050",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Material::GetTag",
+          "token": "token(0x0A0027DF)"
+        },
+        {
+          "offset": "IL_0056",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0057",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::OpaqueRenderCommands",
+          "token": "token(0x0401252A)"
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::GetEnumerator",
+          "token": "token(0x0A0027D4)"
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0063",
+          "opcode": "br.s",
+          "operand": "IL_0080",
+          "token": null
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>::get_Current",
+          "token": "token(0x0A0027D5)"
+        },
+        {
+          "offset": "IL_006c",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_006e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006f",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0070",
+          "opcode": "ldfld",
+          "operand": "LightWeightCamera::cullingMask",
+          "token": "token(0x0401253A)"
+        },
+        {
+          "offset": "IL_0075",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0077",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0078",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_007a",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007b",
+          "opcode": "call",
+          "operand": "RenderToTextureUtils::DrawCommandReplacement",
+          "token": "token(0x060154AD)"
+        },
+        {
+          "offset": "IL_0080",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_0082",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>::MoveNext",
+          "token": "token(0x0A0027D6)"
+        },
+        {
+          "offset": "IL_0087",
+          "opcode": "brtrue.s",
+          "operand": "IL_0065",
+          "token": null
+        },
+        {
+          "offset": "IL_0089",
+          "opcode": "leave.s",
+          "operand": "IL_0099",
+          "token": null
+        },
+        {
+          "offset": "IL_008b",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_008d",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>",
+          "token": "token(0x1B000AB9)"
+        },
+        {
+          "offset": "IL_0093",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0098",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0099",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_009a",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::TransparentRenderCommands",
+          "token": "token(0x0401252B)"
+        },
+        {
+          "offset": "IL_009f",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::GetEnumerator",
+          "token": "token(0x0A0027D4)"
+        },
+        {
+          "offset": "IL_00a4",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a5",
+          "opcode": "br.s",
+          "operand": "IL_00c2",
+          "token": null
+        },
+        {
+          "offset": "IL_00a7",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_00a9",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>::get_Current",
+          "token": "token(0x0A0027D5)"
+        },
+        {
+          "offset": "IL_00ae",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_00b0",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b1",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b2",
+          "opcode": "ldfld",
+          "operand": "LightWeightCamera::cullingMask",
+          "token": "token(0x0401253A)"
+        },
+        {
+          "offset": "IL_00b7",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_00b9",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ba",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_00bc",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00bd",
+          "opcode": "call",
+          "operand": "RenderToTextureUtils::DrawCommandReplacement",
+          "token": "token(0x060154AD)"
+        },
+        {
+          "offset": "IL_00c2",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_00c4",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>::MoveNext",
+          "token": "token(0x0A0027D6)"
+        },
+        {
+          "offset": "IL_00c9",
+          "opcode": "brtrue.s",
+          "operand": "IL_00a7",
+          "token": null
+        },
+        {
+          "offset": "IL_00cb",
+          "opcode": "leave",
+          "operand": "IL_0168",
+          "token": null
+        },
+        {
+          "offset": "IL_00d0",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_00d2",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>",
+          "token": "token(0x1B000AB9)"
+        },
+        {
+          "offset": "IL_00d8",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_00dd",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00de",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00df",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::OpaqueRenderCommands",
+          "token": "token(0x0401252A)"
+        },
+        {
+          "offset": "IL_00e4",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::GetEnumerator",
+          "token": "token(0x0A0027D4)"
+        },
+        {
+          "offset": "IL_00e9",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ea",
+          "opcode": "br.s",
+          "operand": "IL_0103",
+          "token": null
+        },
+        {
+          "offset": "IL_00ec",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_00ee",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>::get_Current",
+          "token": "token(0x0A0027D5)"
+        },
+        {
+          "offset": "IL_00f3",
+          "opcode": "stloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_00f5",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00f6",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00f7",
+          "opcode": "ldfld",
+          "operand": "LightWeightCamera::cullingMask",
+          "token": "token(0x0401253A)"
+        },
+        {
+          "offset": "IL_00fc",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_00fe",
+          "opcode": "call",
+          "operand": "RenderToTextureUtils::DrawCommand",
+          "token": "token(0x060154AC)"
+        },
+        {
+          "offset": "IL_0103",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_0105",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>::MoveNext",
+          "token": "token(0x0A0027D6)"
+        },
+        {
+          "offset": "IL_010a",
+          "opcode": "brtrue.s",
+          "operand": "IL_00ec",
+          "token": null
+        },
+        {
+          "offset": "IL_010c",
+          "opcode": "leave.s",
+          "operand": "IL_011c",
+          "token": null
+        },
+        {
+          "offset": "IL_010e",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_0110",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>",
+          "token": "token(0x1B000AB9)"
+        },
+        {
+          "offset": "IL_0116",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_011b",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_011c",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_011d",
+          "opcode": "ldfld",
+          "operand": "RenderCommandLists::TransparentRenderCommands",
+          "token": "token(0x0401252B)"
+        },
+        {
+          "offset": "IL_0122",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db1340>::GetEnumerator",
+          "token": "token(0x0A0027D4)"
+        },
+        {
+          "offset": "IL_0127",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0128",
+          "opcode": "br.s",
+          "operand": "IL_0141",
+          "token": null
+        },
+        {
+          "offset": "IL_012a",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_012c",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>::get_Current",
+          "token": "token(0x0A0027D5)"
+        },
+        {
+          "offset": "IL_0131",
+          "opcode": "stloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_0133",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0134",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0135",
+          "opcode": "ldfld",
+          "operand": "LightWeightCamera::cullingMask",
+          "token": "token(0x0401253A)"
+        },
+        {
+          "offset": "IL_013a",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_013c",
+          "opcode": "call",
+          "operand": "RenderToTextureUtils::DrawCommand",
+          "token": "token(0x060154AC)"
+        },
+        {
+          "offset": "IL_0141",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_0143",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>::MoveNext",
+          "token": "token(0x0A0027D6)"
+        },
+        {
+          "offset": "IL_0148",
+          "opcode": "brtrue.s",
+          "operand": "IL_012a",
+          "token": null
+        },
+        {
+          "offset": "IL_014a",
+          "opcode": "leave.s",
+          "operand": "IL_0168",
+          "token": null
+        },
+        {
+          "offset": "IL_014c",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_014e",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28db14f0>",
+          "token": "token(0x1B000AB9)"
+        },
+        {
+          "offset": "IL_0154",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0159",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_015a",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_015c",
+          "opcode": "constrained.",
+          "operand": "AutoScope",
+          "token": "token(0x010002AD)"
+        },
+        {
+          "offset": "IL_0162",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0167",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0168",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderToTextureUtils",
+      "method": ".cctor",
+      "token": "0x060154af",
+      "rva": "0x64750c",
+      "signature": "000001",
+      "parameters": [],
+      "code_size": 16,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldstr",
+          "operand": "'RTT_RenderCamera'",
+          "token": "string token(0x703F8D16)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "newobj",
+          "operand": "Unity.Profiling.ProfilerMarker::.ctor",
+          "token": "token(0x0A002461)"
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "stsfld",
+          "operand": "RenderToTextureUtils::s_RTTRenderCamera",
+          "token": "token(0x04012534)"
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandListPool",
+      "method": "Get",
+      "token": "0x060154b0",
+      "rva": "0x64751d",
+      "signature": "000012c000b208",
+      "parameters": [],
+      "code_size": 11,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldsfld",
+          "operand": "RenderCommandListPool::s_commandListPool",
+          "token": "token(0x04012535)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a888f0>::Get",
+          "token": "token(0x0A0051A1)"
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandListPool",
+      "method": "Get",
+      "token": "0x060154b1",
+      "rva": "0x647529",
+      "signature": "000212c000b2081d1280d112c000b210",
+      "parameters": [
+        "toDraw",
+        "overrides"
+      ],
+      "code_size": 14,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "RenderCommandListPool::Get",
+          "token": "token(0x060154B0)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "callvirt",
+          "operand": "RenderCommandLists::AppendRenderCommands",
+          "token": "token(0x060154A6)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandListPool",
+      "method": "Get",
+      "token": "0x060154b2",
+      "rva": "0x647538",
+      "signature": "000312c000b20812808d0212c000b210",
+      "parameters": [
+        "objectToDraw",
+        "includeInactiveRenderers",
+        "overrides"
+      ],
+      "code_size": 15,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "RenderCommandListPool::Get",
+          "token": "token(0x060154B0)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "callvirt",
+          "operand": "RenderCommandLists::AppendRenderCommands",
+          "token": "token(0x060154A5)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandListPool",
+      "method": "Release",
+      "token": "0x060154b3",
+      "rva": "0x647548",
+      "signature": "00010112c000b208",
+      "parameters": [
+        "list"
+      ],
+      "code_size": 15,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "brfalse.s",
+          "operand": "IL_000e",
+          "token": null
+        },
+        {
+          "offset": "IL_0003",
+          "opcode": "ldsfld",
+          "operand": "RenderCommandListPool::s_commandListPool",
+          "token": "token(0x04012535)"
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a888f0>::Release",
+          "token": "token(0x0A0051A2)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "RenderCommandListPool",
+      "method": ".cctor",
+      "token": "0x060154b4",
+      "rva": "0x647558",
+      "signature": "000001",
+      "parameters": [],
+      "code_size": 29,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldsfld",
+          "operand": "<>c::<>9",
+          "token": "token(0x04012536)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldftn",
+          "operand": "<>c::<.cctor>b__6_0",
+          "token": "token(0x060154B7)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a88aa0>::.ctor",
+          "token": "token(0x0A0051A3)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5f28a888f0>::.ctor",
+          "token": "token(0x0A0051A4)"
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "stsfld",
+          "operand": "RenderCommandListPool::s_commandListPool",
+          "token": "token(0x04012535)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

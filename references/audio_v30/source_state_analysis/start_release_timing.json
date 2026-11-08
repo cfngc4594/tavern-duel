@@ -1,0 +1,962 @@
+{
+  "notes": [
+    "DoStartSpellAction0x06014B1B activates Action when usable and subscribes finish callback; OnStartSpellActionFinished0x06014B1C then activates Death. false DeathAfterAllMissilesFire is not a wait-until-impact instruction.",
+    "This table describes Start Action completion only. Parent invokes DoStartSpellAction according to SpawnAll/SpawnInSequence scheduling.",
+    "Do not immediately release/cancel Frostbolt Action at commit: doing so skips its required .5-second codeVolume fade."
+  ],
+  "source": "spell_fsm_decoded.json + audio_code_evidence/fsm_volume_actions.cil.json + binding.cil.json 0x06014B1B/0x06014B1C",
+  "cards": {
+    "CS2_029": {
+      "action_state_index": 2,
+      "action_state_name": "ActionState",
+      "fixed_delay_before_action_finished_sec": 0,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "ActionState AudioPlaythroughAction delay0 finishes immediately (does not await clip). FINISHED enters ActionFinish, whose SpellFinishAction delay0 notifies completion immediately; parallel .01-second light curve does not gate that notification.",
+      "source_component_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": 6778989452209898892,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "AudioPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": -7886685854098963060
+                }
+              }
+            },
+            "m_VolumeScale": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 1.0
+            },
+            "m_OneShotClip": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "UnityEngine.AudioClip",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              }
+            },
+            "m_Delay": 0.0,
+            "m_OneShotSound": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              }
+            },
+            "m_FinishedEvent": "",
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": true,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    },
+    "CS2_024": {
+      "action_state_index": 2,
+      "action_state_name": "ActionState",
+      "fixed_delay_before_action_finished_sec": 0.5,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "ActionState AudioVolumeFadeAction action_index5 must finish .5-second fade before implicit FINISHED transitions to ActionFinish; SpellFinishAction delay0 then ends Action.",
+      "source_component_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -8643223142898677733,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "ParticleStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 5048955407332460571
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          }
+        },
+        {
+          "index": 2,
+          "class_name": "ParticleStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": -3588386665580017637
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          }
+        },
+        {
+          "index": 3,
+          "class_name": "ParticleStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": -8073032198505117669
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          }
+        },
+        {
+          "index": 4,
+          "class_name": "ParticleStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 4240314677899806747
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          }
+        },
+        {
+          "index": 5,
+          "class_name": "AudioVolumeFadeAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": -6214495337008478181
+                }
+              }
+            },
+            "m_FadeTime": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.5
+            },
+            "m_TargetVolume": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            },
+            "m_StopWhenDone": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 1
+            },
+            "m_RealTime": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": true,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    },
+    "CS2_022": {
+      "action_state_index": 6,
+      "action_state_name": "Action",
+      "fixed_delay_before_action_finished_sec": 0,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "Action state directly runs SpellFinishAction with delay0. No fixed wait, no audio completion wait, and no impact-completion dependency in this Start Action.",
+      "source_component_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -7833996871583541132,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_Delay": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": true,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    },
+    "EX1_277": {
+      "action_state_index": 6,
+      "action_state_name": "Action",
+      "fixed_delay_before_action_finished_sec": 0,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "Action state directly runs SpellFinishAction with delay0. No fixed wait, no audio completion wait, and no impact-completion dependency in this Start Action.",
+      "source_component_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": -7833996871583541132,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_Delay": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": true,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    },
+    "CS2_057": {
+      "action_state_index": 6,
+      "action_state_name": "Action",
+      "fixed_delay_before_action_finished_sec": 0,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "Action state directly runs SpellFinishAction with delay0. No fixed wait, no audio completion wait, and no impact-completion dependency in this Start Action.",
+      "source_component_ref": {
+        "bundle": "initial_base_global-41caf0cf-prefab-6.unity3d",
+        "cab": "CAB-6250080dacfbb0ebe4fb54dcd648911a",
+        "path_id": -8038510748177281442,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_Delay": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": true,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    },
+    "CS2_061": {
+      "action_state_index": 6,
+      "action_state_name": "Action",
+      "fixed_delay_before_action_finished_sec": 0,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "Action state directly runs SpellFinishAction with delay0. No fixed wait, no audio completion wait, and no impact-completion dependency in this Start Action.",
+      "source_component_ref": {
+        "bundle": "initial_base_global-41caf0cf-prefab-6.unity3d",
+        "cab": "CAB-6250080dacfbb0ebe4fb54dcd648911a",
+        "path_id": -8038510748177281442,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_Delay": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": false,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    },
+    "CS2_063": {
+      "action_state_index": 6,
+      "action_state_name": "Action",
+      "fixed_delay_before_action_finished_sec": 0,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "Action state directly runs SpellFinishAction with delay0. No fixed wait, no audio completion wait, and no impact-completion dependency in this Start Action.",
+      "source_component_ref": {
+        "bundle": "initial_base_global-41caf0cf-prefab-6.unity3d",
+        "cab": "CAB-6250080dacfbb0ebe4fb54dcd648911a",
+        "path_id": -8038510748177281442,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_Delay": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": true,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    },
+    "EX1_302": {
+      "action_state_index": 6,
+      "action_state_name": "Action",
+      "fixed_delay_before_action_finished_sec": 0,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "Action state directly runs SpellFinishAction with delay0. No fixed wait, no audio completion wait, and no impact-completion dependency in this Start Action.",
+      "source_component_ref": {
+        "bundle": "initial_base_global-41caf0cf-prefab-6.unity3d",
+        "cab": "CAB-6250080dacfbb0ebe4fb54dcd648911a",
+        "path_id": -8038510748177281442,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_Delay": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": true,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    },
+    "EX1_308": {
+      "action_state_index": 6,
+      "action_state_name": "Action",
+      "fixed_delay_before_action_finished_sec": 0,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "Action state directly runs SpellFinishAction with delay0. No fixed wait, no audio completion wait, and no impact-completion dependency in this Start Action.",
+      "source_component_ref": {
+        "bundle": "initial_base_global-41caf0cf-prefab-6.unity3d",
+        "cab": "CAB-6250080dacfbb0ebe4fb54dcd648911a",
+        "path_id": -8038510748177281442,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_Delay": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": true,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    },
+    "NEW1_003": {
+      "action_state_index": 6,
+      "action_state_name": "Action",
+      "fixed_delay_before_action_finished_sec": 0,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "Action state directly runs SpellFinishAction with delay0. No fixed wait, no audio completion wait, and no impact-completion dependency in this Start Action.",
+      "source_component_ref": {
+        "bundle": "initial_base_global-41caf0cf-prefab-6.unity3d",
+        "cab": "CAB-6250080dacfbb0ebe4fb54dcd648911a",
+        "path_id": -8038510748177281442,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_Delay": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": false,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    },
+    "CS2_034": {
+      "action_state_index": 2,
+      "action_state_name": "ActionState",
+      "fixed_delay_before_action_finished_sec": 0,
+      "frame_quantization": "State/FSM scheduling still applies; zero means no fixed timer, not a guaranteed same native frame.",
+      "basis": "ActionState AudioPlaythroughAction delay0 finishes immediately (does not await clip). FINISHED enters ActionFinish, whose SpellFinishAction delay0 notifies completion immediately; parallel .01-second light curve does not gate that notification.",
+      "source_component_ref": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": 1793577957286404385,
+        "guid": null,
+        "class_name": "PlayMakerFSM"
+      },
+      "enabled_actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "AudioPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 4021792312328446241
+                }
+              }
+            },
+            "m_VolumeScale": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 1.0
+            },
+            "m_OneShotClip": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "UnityEngine.AudioClip",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              }
+            },
+            "m_Delay": 0.0,
+            "m_OneShotSound": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              }
+            },
+            "m_FinishedEvent": "",
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          }
+        }
+      ],
+      "death_after_all_missiles_fire": true,
+      "death_state_timing_is_additional": "Existing release row primary_timing is relative to Death entry and is added after this Action-completion gate."
+    }
+  }
+}

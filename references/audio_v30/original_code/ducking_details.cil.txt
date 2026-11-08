@@ -1,0 +1,257 @@
+
+TYPE DuckState 0x02002ac9
+FIELD 0x04011a60 m_trigger SIG 061c
+FIELD 0x04011a61 m_triggerCategory SIG 0611c000be78
+FIELD 0x04011a62 m_duckedDef SIG 0612c000ab64
+FIELD 0x04011a63 m_mode SIG 0611c000ab20
+FIELD 0x04011a64 m_tweenName SIG 060e
+FIELD 0x04011a65 m_volume SIG 060c
+
+TYPE <>c__DisplayClass175_0 0x02002acc
+FIELD 0x04011a69 state SIG 0612c000ab24
+FIELD 0x04011a6a <>4__this SIG 0612c000ab00
+FIELD 0x04011a6b duckedDef SIG 0612c000ab64
+
+TYPE <>c__DisplayClass177_0 0x02002acd
+FIELD 0x04011a6c state SIG 0612c000ab24
+FIELD 0x04011a6d <>4__this SIG 0612c000ab00
+FIELD 0x04011a6e duckedDef SIG 0612c000ab64
+
+TYPE SoundDataTables 0x02002ada
+FIELD 0x04011aa0 s_categoryEnabledOptionMap SIG 06151281a10211c000be7811c000a70c
+FIELD 0x04011aa1 s_categoryVolumeOptionMap SIG 06151281a10211c000be7811c000a70c
+FIELD 0x04011aa2 s_optionVolumeMaxMap SIG 06151281a10211c000a70c0c
+
+TYPE SoundCategory 0x02002f9e
+FIELD 0x04013661 value__ SIG 0608
+FIELD 0x04013662 NONE SIG 0611c000be78
+FIELD 0x04013663 FX SIG 0611c000be78
+FIELD 0x04013664 MUSIC SIG 0611c000be78
+FIELD 0x04013665 VO SIG 0611c000be78
+FIELD 0x04013666 SPECIAL_VO SIG 0611c000be78
+FIELD 0x04013667 SPECIAL_CARD SIG 0611c000be78
+FIELD 0x04013668 AMBIENCE SIG 0611c000be78
+FIELD 0x04013669 SPECIAL_MUSIC SIG 0611c000be78
+FIELD 0x0401366a TRIGGER_VO SIG 0611c000be78
+FIELD 0x0401366b HERO_MUSIC SIG 0611c000be78
+FIELD 0x0401366c BOSS_VO SIG 0611c000be78
+FIELD 0x0401366d RESET_GAME SIG 0611c000be78
+FIELD 0x0401366e TRIGGER_SFX SIG 0611c000be78
+FIELD 0x0401366f SPECIAL_SFX SIG 0611c000be78
+
+0x060147ca DuckState::SetTrigger(trigger) RVA 0x60e95c SIG 2001011c
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          DuckState::m_trigger token(0x04011A60)
+  IL_0007 ldarg.1         
+  IL_0008 isinst         UnityEngine.AudioSource token(0x010000D4)
+  IL_000d stloc.0         
+  IL_000e ldloc.0         
+  IL_000f ldnull          
+  IL_0010 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0015 brfalse.s      IL_0028 
+  IL_0017 ldarg.0         
+  IL_0018 call           SoundManager::Get token(0x06014710)
+  IL_001d ldloc.0         
+  IL_001e callvirt       SoundManager::GetCategory token(0x06014728)
+  IL_0023 stfld          DuckState::m_triggerCategory token(0x04011A61)
+  IL_0028 ret             
+
+0x060147cb DuckState::IsTrigger(trigger) RVA 0x60e991 SIG 2001021c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          DuckState::m_trigger token(0x04011A60)
+  IL_0006 ldarg.1         
+  IL_0007 ceq             
+  IL_0009 ret             
+
+0x060147cc DuckState::IsTriggerAlive() RVA 0x60e99c SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          DuckState::m_trigger token(0x04011A60)
+  IL_0006 call           Blizzard.T5.Core.Utils.GeneralUtils::IsObjectAlive token(0x0A004DE2)
+  IL_000b ret             
+
+0x060147cd DuckState::GetTriggerCategory() RVA 0x60e9a9 SIG 200011c000be78
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          DuckState::m_triggerCategory token(0x04011A61)
+  IL_0006 ret             
+
+0x060147ce DuckState::GetDuckedDef() RVA 0x60e9b1 SIG 200012c000ab64
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          DuckState::m_duckedDef token(0x04011A62)
+  IL_0006 ret             
+
+0x060147cf DuckState::SetDuckedDef(def) RVA 0x60e9b9 SIG 20010112c000ab64
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          DuckState::m_duckedDef token(0x04011A62)
+  IL_0007 ret             
+
+0x060147d0 DuckState::GetMode() RVA 0x60e9c2 SIG 200011c000ab20
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          DuckState::m_mode token(0x04011A63)
+  IL_0006 ret             
+
+0x060147d1 DuckState::SetMode(mode) RVA 0x60e9ca SIG 20010111c000ab20
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          DuckState::m_mode token(0x04011A63)
+  IL_0007 ret             
+
+0x060147d2 DuckState::GetTweenName() RVA 0x60e9d3 SIG 20000e
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          DuckState::m_tweenName token(0x04011A64)
+  IL_0006 ret             
+
+0x060147d3 DuckState::SetTweenName(name) RVA 0x60e9db SIG 2001010e
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          DuckState::m_tweenName token(0x04011A64)
+  IL_0007 ret             
+
+0x060147d4 DuckState::GetVolume() RVA 0x60e9e4 SIG 20000c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          DuckState::m_volume token(0x04011A65)
+  IL_0006 ret             
+
+0x060147d5 DuckState::SetVolume(volume) RVA 0x60e9ec SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          DuckState::m_volume token(0x04011A65)
+  IL_0007 ret             
+
+0x060147d6 DuckState::.ctor() RVA 0x60e9f5 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         1.0 
+  IL_0006 stfld          DuckState::m_volume token(0x04011A65)
+  IL_000b ldarg.0         
+  IL_000c call           System.Object::.ctor token(0x0A000003)
+  IL_0011 ret             
+
+0x060147db <>c__DisplayClass175_0::.ctor() RVA 0x3159 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ret             
+
+0x060147dc <>c__DisplayClass175_0::<AnimateBeginningDuckState>b__0(amount) RVA 0x60ea24 SIG 2001011c
+  IL_0000 ldarg.1         
+  IL_0001 unbox.any      System.Single token(0x01000074)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <>c__DisplayClass175_0::state token(0x04011A69)
+  IL_000d ldloc.0         
+  IL_000e callvirt       DuckState::SetVolume token(0x060147D5)
+  IL_0013 ldarg.0         
+  IL_0014 ldfld          <>c__DisplayClass175_0::<>4__this token(0x04011A6A)
+  IL_0019 ldarg.0         
+  IL_001a ldfld          <>c__DisplayClass175_0::duckedDef token(0x04011A6B)
+  IL_001f ldfld          SoundDuckedCategoryDef::m_Category token(0x04011A9A)
+  IL_0024 call           SoundManager::UpdateCategoryVolume token(0x06014768)
+  IL_0029 ret             
+
+0x060147dd <>c__DisplayClass175_0::<AnimateBeginningDuckState>b__1(e) RVA 0x60ea5a SIG 2001011c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <>c__DisplayClass175_0::<>4__this token(0x04011A6A)
+  IL_0006 ldarg.1         
+  IL_0007 call           SoundManager::OnDuckStateBeginningComplete token(0x06014787)
+  IL_000c ret             
+
+0x060147de <>c__DisplayClass177_0::.ctor() RVA 0x3159 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ret             
+
+0x060147df <>c__DisplayClass177_0::<AnimateRestoringDuckState>b__0(amount) RVA 0x60ea68 SIG 2001011c
+  IL_0000 ldarg.1         
+  IL_0001 unbox.any      System.Single token(0x01000074)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <>c__DisplayClass177_0::state token(0x04011A6C)
+  IL_000d ldloc.0         
+  IL_000e callvirt       DuckState::SetVolume token(0x060147D5)
+  IL_0013 ldarg.0         
+  IL_0014 ldfld          <>c__DisplayClass177_0::<>4__this token(0x04011A6D)
+  IL_0019 ldarg.0         
+  IL_001a ldfld          <>c__DisplayClass177_0::duckedDef token(0x04011A6E)
+  IL_001f ldfld          SoundDuckedCategoryDef::m_Category token(0x04011A9A)
+  IL_0024 call           SoundManager::UpdateCategoryVolume token(0x06014768)
+  IL_0029 ret             
+
+0x060147e0 <>c__DisplayClass177_0::<AnimateRestoringDuckState>b__1(e) RVA 0x60ea9e SIG 2001011c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <>c__DisplayClass177_0::<>4__this token(0x04011A6D)
+  IL_0006 ldarg.1         
+  IL_0007 call           SoundManager::OnDuckStateRestoringComplete token(0x06014789)
+  IL_000c ret             
+
+0x06014811 SoundDataTables::.cctor() RVA 0x60f278 SIG 000001
+  IL_0000 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::.ctor token(0x0A004DF0)
+  IL_0005 dup             
+  IL_0006 ldc.i4.2        
+  IL_0007 ldc.i4.3        
+  IL_0008 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_000d dup             
+  IL_000e ldc.i4.7        
+  IL_000f ldc.i4.3        
+  IL_0010 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_0015 dup             
+  IL_0016 ldc.i4.s       9 
+  IL_0018 ldc.i4.3        
+  IL_0019 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_001e stsfld         SoundDataTables::s_categoryEnabledOptionMap token(0x04011AA0)
+  IL_0023 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::.ctor token(0x0A004DF0)
+  IL_0028 dup             
+  IL_0029 ldc.i4.2        
+  IL_002a ldc.i4.8        
+  IL_002b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_0030 dup             
+  IL_0031 ldc.i4.7        
+  IL_0032 ldc.i4.8        
+  IL_0033 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_0038 dup             
+  IL_0039 ldc.i4.s       9 
+  IL_003b ldc.i4.8        
+  IL_003c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_0041 dup             
+  IL_0042 ldc.i4.6        
+  IL_0043 ldc.i4.s       9 
+  IL_0045 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_004a dup             
+  IL_004b ldc.i4.3        
+  IL_004c ldc.i4.s       10 
+  IL_004e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_0053 dup             
+  IL_0054 ldc.i4.4        
+  IL_0055 ldc.i4.s       10 
+  IL_0057 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_005c dup             
+  IL_005d ldc.i4.8        
+  IL_005e ldc.i4.s       10 
+  IL_0060 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_0065 dup             
+  IL_0066 ldc.i4.s       10 
+  IL_0068 ldc.i4.s       10 
+  IL_006a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_006f dup             
+  IL_0070 ldc.i4.1        
+  IL_0071 ldc.i4.s       11 
+  IL_0073 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_0078 dup             
+  IL_0079 ldc.i4.5        
+  IL_007a ldc.i4.s       11 
+  IL_007c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_0081 dup             
+  IL_0082 ldc.i4.s       12 
+  IL_0084 ldc.i4.s       11 
+  IL_0086 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_008b dup             
+  IL_008c ldc.i4.s       13 
+  IL_008e ldc.i4.s       11 
+  IL_0090 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109d9eb40>::Add token(0x0A004DF1)
+  IL_0095 stsfld         SoundDataTables::s_categoryVolumeOptionMap token(0x04011AA1)
+  IL_009a newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f2109da8fb0>::.ctor token(0x0A004DF2)
+  IL_009f dup             
+  IL_00a0 ldc.i4.8        
+  IL_00a1 ldc.r4         0.5 
+  IL_00a6 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2109da8fb0>::Add token(0x0A004DF3)
+  IL_00ab stsfld         SoundDataTables::s_optionVolumeMaxMap token(0x04011AA2)
+  IL_00b0 ret             

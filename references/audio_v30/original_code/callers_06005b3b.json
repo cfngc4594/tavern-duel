@@ -1,0 +1,210 @@
+[
+  {
+    "type": "ManaCrystalMgr",
+    "method": "Reset",
+    "token": "0x06005b34",
+    "rva": "0x1ac020",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "call",
+        "operand": "UnityEngine.MonoBehaviour::StopAllCoroutines",
+        "token": "token(0x0A000268)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldfld",
+        "operand": "ManaCrystalMgr::m_permanentCrystals",
+        "token": "token(0x04003F29)"
+      },
+      {
+        "offset": "IL_000d",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f837288c6e0>::get_Count",
+        "token": "token(0x0A0024E4)"
+      },
+      {
+        "offset": "IL_0012",
+        "opcode": "call",
+        "operand": "ManaCrystalMgr::DestroyManaCrystals",
+        "token": "token(0x06005B3B)"
+      },
+      {
+        "offset": "IL_0017",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0018",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "ldfld",
+        "operand": "ManaCrystalMgr::m_temporaryCrystals",
+        "token": "token(0x04003F2A)"
+      },
+      {
+        "offset": "IL_001e",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f837288c6e0>::get_Count",
+        "token": "token(0x0A0024E4)"
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "call",
+        "operand": "ManaCrystalMgr::DestroyTempManaCrystals",
+        "token": "token(0x06005B3C)"
+      },
+      {
+        "offset": "IL_0028",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0029",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "ldfld",
+        "operand": "ManaCrystalMgr::m_additionalOverloadedCrystalsOwedThisTurn",
+        "token": "token(0x04003F31)"
+      },
+      {
+        "offset": "IL_002f",
+        "opcode": "call",
+        "operand": "ManaCrystalMgr::UnlockCrystals",
+        "token": "token(0x06005B48)"
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0035",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "ldfld",
+        "operand": "ManaCrystalMgr::m_additionalOverloadedCrystalsOwedNextTurn",
+        "token": "token(0x04003F30)"
+      },
+      {
+        "offset": "IL_003b",
+        "opcode": "call",
+        "operand": "ManaCrystalMgr::ReclaimCrystalsOwedForOverload",
+        "token": "token(0x06005B47)"
+      },
+      {
+        "offset": "IL_0040",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0042",
+        "opcode": "stfld",
+        "operand": "ManaCrystalMgr::m_manaCrystalType",
+        "token": "token(0x04003F28)"
+      },
+      {
+        "offset": "IL_0047",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "type": "Player",
+    "method": "DestroyManaCrystal",
+    "token": "0x06005daf",
+    "rva": "0x1bfaf3",
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "call",
+        "operand": "Player::IsFriendlySide",
+        "token": "token(0x06005D65)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "brtrue.s",
+        "operand": "IL_0009",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "call",
+        "operand": "ManaCrystalMgr::Get",
+        "token": "token(0x06005B33)"
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000f",
+        "opcode": "callvirt",
+        "operand": "ManaCrystalMgr::DestroyManaCrystals",
+        "token": "token(0x06005B3B)"
+      },
+      {
+        "offset": "IL_0014",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  }
+]

@@ -1,0 +1,788 @@
+{
+  "schema_version": 1,
+  "title": "2014 classic-era practice roster and legal Mage match deck",
+  "patch": "1.0.0.5834",
+  "build": 5834,
+  "patch_date": "2014-06-30",
+  "version_policy": "Every card value and localization is extracted from the same archived 5834 CardDefs.xml; current card library is identity-only corroboration.",
+  "source_commit": "f1f95c620ce6e103c5974e169cac3bf7410281ae",
+  "source_commit_url": "https://github.com/HearthSim/hsdata/commit/f1f95c620ce6e103c5974e169cac3bf7410281ae",
+  "card_count": 17,
+  "collectible_minion_count": 12,
+  "collectible_spell_count": 3,
+  "token_count": 2,
+  "notes": [
+    "Blizzard 20.0 patch notes call the 2021 Classic historical target 1.0.0.5832. This artifact explicitly pins the actual HearthSim archive build 5834 rather than relabeling it.",
+    "The original eleven selected cards have no gameplay/localization field differences between builds 5506 and 5834. The six normal-match additions are independently extracted from 5834 only.",
+    "Harvest Golem and Damaged Golem have no Mech tribe tag in this June 2014 archive. River Crocolisk is a Beast. Do not add later tribe changes.",
+    "Spell schools did not exist in this build. Do not label the spells with modern formal school tags.",
+    "The historical CardDefs entity ID attributes are all zero; numeric dbf_id values come from the same commit manifest-cards.csv.",
+    "text_raw retains Blizzard formatting and $ spell-damage markers; text removes only these presentation markers. Cards without ability text have an empty string.",
+    "Elven Archer can target either hero or any other minion, friendly or enemy, but cannot target itself. Spell damage does not increase a minion Battlecry.",
+    "The ability payloads encode the intended implementation of the archived printed card effects; archived client Power GUIDs alone are not executable server scripts.",
+    "Normal matches add five non-legendary neutral collectibles to permit a legal thirty-card Mage deck (fifteen distinct cards, two copies each). The original eleven practice records are preserved unchanged.",
+    "GAME_005 is a non-collectible neutral spell with zero default cost. Its archive has no COST, CLASS, COLLECTIBLE or RARITY tags; normalized cost/class/collectible use the game defaults and source_rarity_enum remains null. Its temporary mana semantics are interpreted from the archived printed effect; opening-flow rules are documented separately."
+  ],
+  "cards": [
+    {
+      "id": "CS2_179",
+      "dbf_id": 635,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 2,
+      "cost": 4,
+      "attack": 3,
+      "health": 5,
+      "race": null,
+      "name": {
+        "enUS": "Sen'jin Shieldmasta",
+        "zhCN": "森金持盾卫士"
+      },
+      "text_raw": {
+        "enUS": "<b>Taunt</b>",
+        "zhCN": "<b>嘲讽</b>"
+      },
+      "text": {
+        "enUS": "Taunt",
+        "zhCN": "嘲讽"
+      },
+      "keywords": [
+        "TAUNT"
+      ],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "taunt",
+        "rule": "Enemy attacks must target an attackable Taunt minion first. Does not constrain spells or Battlecries."
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L7715-L7775",
+      "source_lines": [
+        7715,
+        7775
+      ],
+      "official_library_url": "https://hearthstone.blizzard.com/en-us/cards/635-senjin-shieldmasta",
+      "official_library_status": "Page identity verified; dynamic card data unavailable to text reader, and not used for historical values."
+    },
+    {
+      "id": "CS2_189",
+      "dbf_id": 389,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 1,
+      "cost": 1,
+      "attack": 1,
+      "health": 1,
+      "race": null,
+      "name": {
+        "enUS": "Elven Archer",
+        "zhCN": "精灵弓箭手"
+      },
+      "text_raw": {
+        "enUS": "<b>Battlecry:</b> Deal 1 damage.",
+        "zhCN": "<b>战吼：</b>造成1点伤害。"
+      },
+      "text": {
+        "enUS": "Battlecry: Deal 1 damage.",
+        "zhCN": "战吼：造成1点伤害。"
+      },
+      "keywords": [
+        "BATTLECRY"
+      ],
+      "play_requirements": [
+        {
+          "id": 9,
+          "name": "REQ_NONSELF_TARGET",
+          "param": ""
+        },
+        {
+          "id": 22,
+          "name": "REQ_TARGET_IF_AVAILABLE",
+          "param": ""
+        }
+      ],
+      "implementation": {
+        "kind": "battlecry_damage",
+        "amount": 1,
+        "target": "any_other_character",
+        "can_target_friendly": true,
+        "can_target_enemy": true,
+        "cannot_target_self": true,
+        "spell_damage_scaling": false
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L8131-L8207",
+      "source_lines": [
+        8131,
+        8207
+      ],
+      "official_library_url": "https://hearthstone.blizzard.com/en-us/cards/389-elven-archer",
+      "official_library_status": "Page identity verified; dynamic card data unavailable to text reader, and not used for historical values."
+    },
+    {
+      "id": "EX1_015",
+      "dbf_id": 284,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 2,
+      "cost": 2,
+      "attack": 1,
+      "health": 1,
+      "race": null,
+      "name": {
+        "enUS": "Novice Engineer",
+        "zhCN": "工程师学徒"
+      },
+      "text_raw": {
+        "enUS": "<b>Battlecry:</b> Draw a card.",
+        "zhCN": "<b>战吼：</b>抽一张牌。"
+      },
+      "text": {
+        "enUS": "Battlecry: Draw a card.",
+        "zhCN": "战吼：抽一张牌。"
+      },
+      "keywords": [
+        "BATTLECRY"
+      ],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "battlecry_draw",
+        "amount": 1,
+        "player": "controller"
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L11311-L11371",
+      "source_lines": [
+        11311,
+        11371
+      ],
+      "official_library_url": "https://hearthstone.blizzard.com/en-us/cards/284-novice-engineer",
+      "official_library_status": "Page identity verified; dynamic card data unavailable to text reader, and not used for historical values."
+    },
+    {
+      "id": "EX1_556",
+      "dbf_id": 778,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "CLASSIC",
+      "source_card_set_enum": 3,
+      "source_rarity_enum": 1,
+      "cost": 3,
+      "attack": 2,
+      "health": 3,
+      "race": null,
+      "name": {
+        "enUS": "Harvest Golem",
+        "zhCN": "麦田傀儡"
+      },
+      "text_raw": {
+        "enUS": "<b>Deathrattle:</b> Summon a 2/1 Damaged Golem.",
+        "zhCN": "<b>亡语：</b>召唤一个2/1的损坏的傀儡。"
+      },
+      "text": {
+        "enUS": "Deathrattle: Summon a 2/1 Damaged Golem.",
+        "zhCN": "亡语：召唤一个2/1的损坏的傀儡。"
+      },
+      "keywords": [
+        "DEATHRATTLE"
+      ],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "deathrattle_summon",
+        "summon_card_id": "skele21",
+        "amount": 1,
+        "player": "controller",
+        "board_slot_required": true
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L24037-L24093",
+      "source_lines": [
+        24037,
+        24093
+      ],
+      "official_library_url": "https://hearthstone.blizzard.com/en-us/cards/778-harvest-golem",
+      "official_library_status": "Page identity verified; dynamic card data unavailable to text reader, and not used for historical values."
+    },
+    {
+      "id": "CS2_124",
+      "dbf_id": 289,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 2,
+      "cost": 3,
+      "attack": 3,
+      "health": 1,
+      "race": null,
+      "name": {
+        "enUS": "Wolfrider",
+        "zhCN": "狼骑兵"
+      },
+      "text_raw": {
+        "enUS": "<b>Charge</b>",
+        "zhCN": "<b>冲锋</b>"
+      },
+      "text": {
+        "enUS": "Charge",
+        "zhCN": "冲锋"
+      },
+      "keywords": [
+        "CHARGE"
+      ],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "charge",
+        "rule": "May attack immediately, including heroes. Still obeys Taunt and one attack per turn."
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L6579-L6638",
+      "source_lines": [
+        6579,
+        6638
+      ],
+      "official_library_url": "https://hearthstone.blizzard.com/en-us/cards/289/",
+      "official_library_status": "Page identity verified; dynamic card data unavailable to text reader, and not used for historical values."
+    },
+    {
+      "id": "CS2_182",
+      "dbf_id": 90,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 1,
+      "cost": 4,
+      "attack": 4,
+      "health": 5,
+      "race": null,
+      "name": {
+        "enUS": "Chillwind Yeti",
+        "zhCN": "冰风雪人"
+      },
+      "text_raw": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "text": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "keywords": [],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "none"
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L7872-L7915",
+      "source_lines": [
+        7872,
+        7915
+      ],
+      "official_library_url": "https://hearthstone.blizzard.com/en-us/cards/90-chillwind-yeti",
+      "official_library_status": "Page identity verified; dynamic card data unavailable to text reader, and not used for historical values."
+    },
+    {
+      "id": "CS2_120",
+      "dbf_id": 1369,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 2,
+      "cost": 2,
+      "attack": 2,
+      "health": 3,
+      "race": "BEAST",
+      "name": {
+        "enUS": "River Crocolisk",
+        "zhCN": "淡水鳄"
+      },
+      "text_raw": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "text": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "keywords": [],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "none"
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L6381-L6422",
+      "source_lines": [
+        6381,
+        6422
+      ],
+      "official_library_url": "https://hearthstone.blizzard.com/en-us/cards/1369-river-crocolisk",
+      "official_library_status": "Page identity verified; dynamic card data unavailable to text reader, and not used for historical values."
+    },
+    {
+      "id": "CS2_024",
+      "dbf_id": 662,
+      "collectible": true,
+      "kind": "spell",
+      "class": "MAGE",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 1,
+      "cost": 2,
+      "attack": null,
+      "health": null,
+      "race": null,
+      "name": {
+        "enUS": "Frostbolt",
+        "zhCN": "寒冰箭"
+      },
+      "text_raw": {
+        "enUS": "Deal $3 damage to a character and <b>Freeze</b> it.",
+        "zhCN": "对一个角色造成$3点伤害，并使其<b>冻结</b>。"
+      },
+      "text": {
+        "enUS": "Deal 3 damage to a character and Freeze it.",
+        "zhCN": "对一个角色造成3点伤害，并使其冻结。"
+      },
+      "keywords": [
+        "FREEZE"
+      ],
+      "play_requirements": [
+        {
+          "id": 11,
+          "name": "REQ_TARGET_TO_PLAY",
+          "param": ""
+        }
+      ],
+      "implementation": {
+        "kind": "damage_and_freeze",
+        "amount": 3,
+        "target": "any_character",
+        "can_target_friendly": true,
+        "can_target_enemy": true,
+        "spell_damage_scaling": true
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L2166-L2230",
+      "source_lines": [
+        2166,
+        2230
+      ],
+      "official_library_url": "https://hearthstone.blizzard.com/en-us/cards/662-frostbolt",
+      "official_library_status": "Page identity verified; dynamic card data unavailable to text reader, and not used for historical values."
+    },
+    {
+      "id": "CS2_029",
+      "dbf_id": 315,
+      "collectible": true,
+      "kind": "spell",
+      "class": "MAGE",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 2,
+      "cost": 4,
+      "attack": null,
+      "health": null,
+      "race": null,
+      "name": {
+        "enUS": "Fireball",
+        "zhCN": "火球术"
+      },
+      "text_raw": {
+        "enUS": "Deal $6 damage.",
+        "zhCN": "造成$6点伤害。"
+      },
+      "text": {
+        "enUS": "Deal 6 damage.",
+        "zhCN": "造成6点伤害。"
+      },
+      "keywords": [],
+      "play_requirements": [
+        {
+          "id": 11,
+          "name": "REQ_TARGET_TO_PLAY",
+          "param": ""
+        }
+      ],
+      "implementation": {
+        "kind": "damage",
+        "amount": 6,
+        "target": "any_character",
+        "can_target_friendly": true,
+        "can_target_enemy": true,
+        "spell_damage_scaling": true
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L2476-L2539",
+      "source_lines": [
+        2476,
+        2539
+      ],
+      "official_library_url": "https://hearthstone.blizzard.com/en-us/cards/315-fireball",
+      "official_library_status": "Page identity verified; dynamic card data unavailable to text reader, and not used for historical values."
+    },
+    {
+      "id": "CS2_023",
+      "dbf_id": 555,
+      "collectible": true,
+      "kind": "spell",
+      "class": "MAGE",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 2,
+      "cost": 3,
+      "attack": null,
+      "health": null,
+      "race": null,
+      "name": {
+        "enUS": "Arcane Intellect",
+        "zhCN": "奥术智慧"
+      },
+      "text_raw": {
+        "enUS": "Draw 2 cards.",
+        "zhCN": "抽两张牌。"
+      },
+      "text": {
+        "enUS": "Draw 2 cards.",
+        "zhCN": "抽两张牌。"
+      },
+      "keywords": [],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "draw",
+        "amount": 2,
+        "player": "controller"
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L2105-L2165",
+      "source_lines": [
+        2105,
+        2165
+      ],
+      "official_library_url": "https://hearthstone.blizzard.com/en-us/cards/555-arcane-intellect",
+      "official_library_status": "Page identity verified; dynamic card data unavailable to text reader, and not used for historical values."
+    },
+    {
+      "id": "skele21",
+      "dbf_id": 471,
+      "collectible": false,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "CLASSIC",
+      "source_card_set_enum": 3,
+      "source_rarity_enum": 1,
+      "cost": 1,
+      "attack": 2,
+      "health": 1,
+      "race": null,
+      "name": {
+        "enUS": "Damaged Golem",
+        "zhCN": "损坏的傀儡"
+      },
+      "text_raw": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "text": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "keywords": [],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "none"
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L31820-L31843",
+      "source_lines": [
+        31820,
+        31843
+      ],
+      "official_library_url": null,
+      "official_library_status": "Token page unavailable; historical archive is authoritative."
+    },
+    {
+      "id": "CS2_125",
+      "dbf_id": 1182,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 1,
+      "cost": 3,
+      "attack": 3,
+      "health": 3,
+      "race": "BEAST",
+      "name": {
+        "enUS": "Ironfur Grizzly",
+        "zhCN": "铁鬃灰熊"
+      },
+      "text_raw": {
+        "enUS": "<b>Taunt</b>",
+        "zhCN": "<b>嘲讽</b>"
+      },
+      "text": {
+        "enUS": "Taunt",
+        "zhCN": "嘲讽"
+      },
+      "keywords": [
+        "TAUNT"
+      ],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "taunt",
+        "rule": "Enemy attacks must target an attackable Taunt minion first. Does not constrain spells or Battlecries."
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L6639-L6699",
+      "source_lines": [
+        6639,
+        6699
+      ],
+      "official_library_url": null,
+      "official_library_status": "Not used for this extension; identity and historical values verified against exact archived 5834 XML and same-commit numeric ID manifest."
+    },
+    {
+      "id": "EX1_396",
+      "dbf_id": 700,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "CLASSIC",
+      "source_card_set_enum": 3,
+      "source_rarity_enum": 1,
+      "cost": 4,
+      "attack": 1,
+      "health": 7,
+      "race": null,
+      "name": {
+        "enUS": "Mogu'shan Warden",
+        "zhCN": "魔古山守望者"
+      },
+      "text_raw": {
+        "enUS": "<b>Taunt</b>",
+        "zhCN": "<b>嘲讽</b>"
+      },
+      "text": {
+        "enUS": "Taunt",
+        "zhCN": "嘲讽"
+      },
+      "keywords": [
+        "TAUNT"
+      ],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "taunt",
+        "rule": "Enemy attacks must target an attackable Taunt minion first. Does not constrain spells or Battlecries."
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L21828-L21884",
+      "source_lines": [
+        21828,
+        21884
+      ],
+      "official_library_url": null,
+      "official_library_status": "Not used for this extension; identity and historical values verified against exact archived 5834 XML and same-commit numeric ID manifest."
+    },
+    {
+      "id": "CS2_172",
+      "dbf_id": 216,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 2,
+      "cost": 2,
+      "attack": 3,
+      "health": 2,
+      "race": "BEAST",
+      "name": {
+        "enUS": "Bloodfen Raptor",
+        "zhCN": "血沼迅猛龙"
+      },
+      "text_raw": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "text": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "keywords": [],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "none"
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L7609-L7653",
+      "source_lines": [
+        7609,
+        7653
+      ],
+      "official_library_url": null,
+      "official_library_status": "Not used for this extension; identity and historical values verified against exact archived 5834 XML and same-commit numeric ID manifest."
+    },
+    {
+      "id": "CS2_200",
+      "dbf_id": 1686,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 2,
+      "cost": 6,
+      "attack": 6,
+      "health": 7,
+      "race": null,
+      "name": {
+        "enUS": "Boulderfist Ogre",
+        "zhCN": "石拳食人魔"
+      },
+      "text_raw": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "text": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "keywords": [],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "none"
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L8328-L8368",
+      "source_lines": [
+        8328,
+        8368
+      ],
+      "official_library_url": null,
+      "official_library_status": "Not used for this extension; identity and historical values verified against exact archived 5834 XML and same-commit numeric ID manifest."
+    },
+    {
+      "id": "CS2_186",
+      "dbf_id": 712,
+      "collectible": true,
+      "kind": "minion",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": 1,
+      "cost": 7,
+      "attack": 7,
+      "health": 7,
+      "race": null,
+      "name": {
+        "enUS": "War Golem",
+        "zhCN": "作战傀儡"
+      },
+      "text_raw": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "text": {
+        "enUS": "",
+        "zhCN": ""
+      },
+      "keywords": [],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "none"
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L7916-L7959",
+      "source_lines": [
+        7916,
+        7959
+      ],
+      "official_library_url": null,
+      "official_library_status": "Not used for this extension; identity and historical values verified against exact archived 5834 XML and same-commit numeric ID manifest."
+    },
+    {
+      "id": "GAME_005",
+      "dbf_id": 1746,
+      "collectible": false,
+      "kind": "spell",
+      "class": "NEUTRAL",
+      "historical_set": "BASIC",
+      "source_card_set_enum": 2,
+      "source_rarity_enum": null,
+      "cost": 0,
+      "attack": null,
+      "health": null,
+      "race": null,
+      "name": {
+        "enUS": "The Coin",
+        "zhCN": "幸运币"
+      },
+      "text_raw": {
+        "enUS": "Gain 1 Mana Crystal this turn only.",
+        "zhCN": "在本回合中，获得一个法力水晶。"
+      },
+      "text": {
+        "enUS": "Gain 1 Mana Crystal this turn only.",
+        "zhCN": "在本回合中，获得一个法力水晶。"
+      },
+      "keywords": [],
+      "play_requirements": [],
+      "implementation": {
+        "kind": "temporary_mana",
+        "amount": 1,
+        "player": "controller",
+        "expires": "end_of_current_turn",
+        "maximum_usable_mana": 10,
+        "permanent_crystals_unchanged": true,
+        "starting_card": "second_player_after_mulligan"
+      },
+      "source_url": "https://github.com/HearthSim/hsdata/blob/f1f95c620ce6e103c5974e169cac3bf7410281ae/CardDefs.xml#L28384-L28417",
+      "source_lines": [
+        28384,
+        28417
+      ],
+      "official_library_url": null,
+      "official_library_status": "Not used for this extension; identity and historical values verified against exact archived 5834 XML and same-commit numeric ID manifest."
+    }
+  ],
+  "token_minion_count": 1,
+  "token_spell_count": 1,
+  "practice_roster_card_ids": [
+    "CS2_179",
+    "CS2_189",
+    "EX1_015",
+    "EX1_556",
+    "CS2_124",
+    "CS2_182",
+    "CS2_120",
+    "CS2_024",
+    "CS2_029",
+    "CS2_023",
+    "skele21"
+  ],
+  "normal_match_deck": {
+    "class": "MAGE",
+    "size": 30,
+    "copies_per_card": 2,
+    "card_ids": [
+      "CS2_189",
+      "EX1_015",
+      "CS2_120",
+      "CS2_172",
+      "CS2_024",
+      "EX1_556",
+      "CS2_124",
+      "CS2_125",
+      "CS2_023",
+      "CS2_179",
+      "CS2_182",
+      "EX1_396",
+      "CS2_029",
+      "CS2_200",
+      "CS2_186"
+    ],
+    "generated_cards_excluded": [
+      "skele21",
+      "GAME_005"
+    ]
+  }
+}

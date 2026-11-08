@@ -1,0 +1,30 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hero/Unlit/Unlit_Fresnel" {
+Properties {
+
+_Color ("Color", Color) = (0.5,0.5,0.5,1)
+
+_MainTex ("Texture", 2D) = "white" { }
+
+_FresnelColor ("Fresnel Color", Color) = (1,0,0,1)
+
+_FresnelWidth ("Fresnel Width", Float) = 0.75
+
+_FresnelIntensity ("Fresnel Intensity", Float) = 1.0
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 16953
+}
+}
+Fall back "Utility/HearthstoneFallbackDiffuse"
+}

@@ -1,0 +1,44 @@
+{
+  "build": "37.0.0.255130.254477",
+  "source": "ScreenEffectParameters..cctor 06015175; FullScreenEffectsPass.RecordRenderGraph 060162a7",
+  "preset": {
+    "type": 7,
+    "pass_location": 1,
+    "time": 0.5,
+    "ease": 19,
+    "blur": {
+      "amount": 1,
+      "brightness": 0.5,
+      "blend": 1
+    },
+    "vignette": 0.4000000059604645,
+    "desaturate": 0.5,
+    "blend_to_color": {
+      "amount": 0
+    }
+  },
+  "clock": "Time.time scaled",
+  "animated_fields": [
+    "Blur.Blend",
+    "Vignette.Amount",
+    "Desaturate.Amount",
+    "BlendToColor.Amount"
+  ],
+  "pass_runtime_transform": {
+    "desaturation_uniform": "pow(1 - current.Desaturate.Amount, 3) when BlurEnabled",
+    "vignette_uniform": "1 - pow(1 - current.Vignette.Amount, 3) when BlurEnabled",
+    "blur_brightness": 1,
+    "blur_offsets": [
+      1,
+      1.149999976158142,
+      1.2999999523162842
+    ],
+    "blur_long_edge": 2048,
+    "blur_second_reduction": 0.5,
+    "blur_graphics_format": 8,
+    "blur_filter_mode": 1
+  },
+  "material_bindings_file": "background_material_bindings.json",
+  "cil": "endgame_background_pass.cil.json",
+  "report": "RESULT_BACKGROUND_SOURCE.md"
+}

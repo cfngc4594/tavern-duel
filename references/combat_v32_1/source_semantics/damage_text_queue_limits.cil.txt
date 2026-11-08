@@ -1,0 +1,44 @@
+
+TYPE UberTextMaterialProperty 0x02000017
+FIELD 0x040000e9 Name SIG 060e
+FIELD 0x040000ea m_enabled SIG 0602
+FIELD 0x040000eb MinRenderQueueValue SIG 0608
+FIELD 0x040000ec MaxRenderQueueValue SIG 0608
+
+0x0600013c UberTextMaterialProperty::.ctor(name) RVA 0x85db SIG 2001010e
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A0000D0)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 stfld          UberTextMaterialProperty::Name token(0x040000E9)
+  IL_000d ldarg.0         
+  IL_000e ldc.i4.0        
+  IL_000f stfld          UberTextMaterialProperty::m_enabled token(0x040000EA)
+  IL_0014 ret             
+
+0x0600013d UberTextMaterialProperty::ApplyToMaterial(material) RVA 0x85f1 SIG 2001011231
+  IL_0000 ldarg.1         
+  IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A000029)
+  IL_0006 brfalse.s      IL_0010 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          UberTextMaterialProperty::m_enabled token(0x040000EA)
+  IL_000e brtrue.s       IL_0011 
+  IL_0010 ret             
+  IL_0011 ldarg.0         
+  IL_0012 ldarg.1         
+  IL_0013 callvirt       UberTextMaterialProperty::DoApplyToMaterial token(0x0600013E)
+  IL_0018 ret             
+
+0x0600013e UberTextMaterialProperty::DoApplyToMaterial(material) RVA 0x62f6 SIG 2001011231
+  IL_0000 ret             
+
+0x0600013f UberTextMaterialProperty::Equals(materialProperty) RVA 0x0 SIG 200102125c
+
+0x06000140 UberTextMaterialProperty::CopyTo(dest) RVA 0x0 SIG 200101125c
+
+0x06000141 UberTextMaterialProperty::.cctor() RVA 0x860b SIG 000001
+  IL_0000 ldc.i4.1        
+  IL_0001 stsfld         UberTextMaterialProperty::MinRenderQueueValue token(0x040000EB)
+  IL_0006 ldc.i4         5000 
+  IL_000b stsfld         UberTextMaterialProperty::MaxRenderQueueValue token(0x040000EC)
+  IL_0010 ret             

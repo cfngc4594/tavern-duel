@@ -1,0 +1,36 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hidden/TextOutline_Unlit" {
+Properties {
+
+_MainTex ("Font Texture", 2D) = "white" { }
+
+_Color ("Text Color", Color) = (1,1,1,1)
+
+_OutlineColor ("Outline Color", Color) = (0,0,0,1)
+
+_OutlineOffsetX ("OutlineOffsetX", Float) = 0.009999999776482582
+
+_OutlineOffsetY ("OutlineOffsetY", Float) = 0.004999999888241291
+
+_TexelSizeX ("TexelSizeX", Float) = 0.004999999888241291
+
+_TexelSizeY ("TexelSizeY", Float) = 0.004999999888241291
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ LOD 10
+ Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" }
+ Pass {
+  LOD 10
+  Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" }
+ ZWrite Off
+  GpuProgramID 4169
+}
+}
+}

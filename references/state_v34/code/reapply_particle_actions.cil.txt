@@ -1,0 +1,841 @@
+
+TYPE HutongGames.PlayMaker.Actions.SetVisibility 0x02000017
+FIELD 0x0400008c gameObject SIG 061280a1
+FIELD 0x0400008d toggle SIG 061280c9
+FIELD 0x0400008e visible SIG 061280c9
+FIELD 0x0400008f resetOnExit SIG 0602
+FIELD 0x04000090 initialVisibility SIG 0602
+
+TYPE HutongGames.PlayMaker.Actions.ParticleClearAction 0x0200002e
+FIELD 0x040000f4 m_GameObject SIG 061280a1
+FIELD 0x040000f5 m_IncludeChildren SIG 061280c9
+
+TYPE HutongGames.PlayMaker.Actions.ParticleEmitAction 0x0200002f
+FIELD 0x040000f6 m_GameObject SIG 061280a1
+FIELD 0x040000f7 m_Count SIG 061280c1
+FIELD 0x040000f8 m_IncludeChildren SIG 061280c9
+
+TYPE HutongGames.PlayMaker.Actions.ParticlePauseAction 0x02000031
+FIELD 0x04000100 m_GameObject SIG 061280a1
+FIELD 0x04000101 m_IncludeChildren SIG 061280c9
+
+TYPE HutongGames.PlayMaker.Actions.ParticlePlayAction 0x02000032
+FIELD 0x04000102 m_GameObject SIG 061280a1
+FIELD 0x04000103 m_IncludeChildren SIG 061280c9
+
+TYPE HutongGames.PlayMaker.Actions.ParticleSimulateAction 0x02000033
+FIELD 0x04000104 m_GameObject SIG 061280a1
+FIELD 0x04000105 m_TimeToFastForwardTo SIG 06128109
+FIELD 0x04000106 m_IncludeChildren SIG 061280c9
+
+TYPE HutongGames.PlayMaker.Actions.ParticleStopAction 0x02000034
+FIELD 0x04000107 m_GameObject SIG 061280a1
+FIELD 0x04000108 m_IncludeChildren SIG 061280c9
+
+TYPE HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction 0x0200003b
+FIELD 0x04000122 gameObject SIG 061280a1
+FIELD 0x04000123 visible SIG 061280c9
+FIELD 0x04000124 resetOnExit SIG 0602
+FIELD 0x04000125 includeChildren SIG 0602
+FIELD 0x04000126 m_initialVisibility SIG 0615120d0212812902
+
+TYPE HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction 0x0200003c
+FIELD 0x04000127 gameObject SIG 061280a1
+FIELD 0x04000128 visible SIG 061280c9
+FIELD 0x04000129 m_Delay SIG 06128109
+FIELD 0x0400012a includeChildren SIG 0602
+FIELD 0x0400012b m_initialVisibility SIG 0615120d0212812902
+FIELD 0x0400012c m_timerSec SIG 060c
+
+0x06000084 HutongGames.PlayMaker.Actions.SetVisibility::Reset() RVA 0x46b3 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.SetVisibility::gameObject token(0x0400008C)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.SetVisibility::toggle token(0x0400008D)
+  IL_0013 ldarg.0         
+  IL_0014 ldc.i4.0        
+  IL_0015 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_001a stfld          HutongGames.PlayMaker.Actions.SetVisibility::visible token(0x0400008E)
+  IL_001f ldarg.0         
+  IL_0020 ldc.i4.1        
+  IL_0021 stfld          HutongGames.PlayMaker.Actions.SetVisibility::resetOnExit token(0x0400008F)
+  IL_0026 ldarg.0         
+  IL_0027 ldc.i4.0        
+  IL_0028 stfld          HutongGames.PlayMaker.Actions.SetVisibility::initialVisibility token(0x04000090)
+  IL_002d ret             
+
+0x06000085 HutongGames.PlayMaker.Actions.SetVisibility::OnEnter() RVA 0x46e2 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          HutongGames.PlayMaker.Actions.SetVisibility::gameObject token(0x0400008C)
+  IL_000d callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0012 call           HutongGames.PlayMaker.Actions.SetVisibility::DoSetVisibility token(0x06000086)
+  IL_0017 ldarg.0         
+  IL_0018 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_001d ret             
+
+0x06000086 HutongGames.PlayMaker.Actions.SetVisibility::DoSetVisibility(go) RVA 0x4704 SIG 2001011280dd
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18a990>::UpdateCache token(0x0A00009A)
+  IL_0007 brtrue.s       IL_000a 
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b ldarg.0         
+  IL_000c call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18a990>::get_renderer token(0x0A00009B)
+  IL_0011 callvirt       UnityEngine.Renderer::get_enabled token(0x0A0000B8)
+  IL_0016 stfld          HutongGames.PlayMaker.Actions.SetVisibility::initialVisibility token(0x04000090)
+  IL_001b ldarg.0         
+  IL_001c ldfld          HutongGames.PlayMaker.Actions.SetVisibility::toggle token(0x0400008D)
+  IL_0021 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0026 brtrue.s       IL_003f 
+  IL_0028 ldarg.0         
+  IL_0029 call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18a990>::get_renderer token(0x0A00009B)
+  IL_002e ldarg.0         
+  IL_002f ldfld          HutongGames.PlayMaker.Actions.SetVisibility::visible token(0x0400008E)
+  IL_0034 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0039 callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_003e ret             
+  IL_003f ldarg.0         
+  IL_0040 call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18a990>::get_renderer token(0x0A00009B)
+  IL_0045 ldarg.0         
+  IL_0046 call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18a990>::get_renderer token(0x0A00009B)
+  IL_004b callvirt       UnityEngine.Renderer::get_enabled token(0x0A0000B8)
+  IL_0050 ldc.i4.0        
+  IL_0051 ceq             
+  IL_0053 callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_0058 ret             
+
+0x06000087 HutongGames.PlayMaker.Actions.SetVisibility::OnExit() RVA 0x4769 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.SetVisibility::resetOnExit token(0x0400008F)
+  IL_0006 brfalse.s      IL_000e 
+  IL_0008 ldarg.0         
+  IL_0009 call           HutongGames.PlayMaker.Actions.SetVisibility::ResetVisibility token(0x06000088)
+  IL_000e ret             
+
+0x06000088 HutongGames.PlayMaker.Actions.SetVisibility::ResetVisibility() RVA 0x4779 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18a990>::get_renderer token(0x0A00009B)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Inequality token(0x0A0000AB)
+  IL_000c brfalse.s      IL_001f 
+  IL_000e ldarg.0         
+  IL_000f call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18a990>::get_renderer token(0x0A00009B)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          HutongGames.PlayMaker.Actions.SetVisibility::initialVisibility token(0x04000090)
+  IL_001a callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_001f ret             
+
+0x06000089 HutongGames.PlayMaker.Actions.SetVisibility::.ctor() RVA 0x3ba4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18a990>::.ctor token(0x0A0000A2)
+  IL_0006 ret             
+
+0x060000de HutongGames.PlayMaker.Actions.ParticleClearAction::Reset() RVA 0x5d5b SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.ParticleClearAction::m_GameObject token(0x040000F4)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.ParticleClearAction::m_IncludeChildren token(0x040000F5)
+  IL_0013 ret             
+
+0x060000df HutongGames.PlayMaker.Actions.ParticleClearAction::OnEnter() RVA 0x5d70 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticleClearAction::m_GameObject token(0x040000F4)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldloc.0         
+  IL_0023 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0028 stloc.1         
+  IL_0029 ldloc.1         
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0030 brfalse.s      IL_0049 
+  IL_0032 ldstr          'ParticlePlayAction.OnEnter() - GameObject {0} has no ParticleSystem component' string token(0x700009F3)
+  IL_0037 ldloc.0         
+  IL_0038 call           System.String::Format token(0x0A00011B)
+  IL_003d call           UnityEngine.Debug::LogWarning token(0x0A0000F5)
+  IL_0042 ldarg.0         
+  IL_0043 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0048 ret             
+  IL_0049 ldloc.1         
+  IL_004a ldarg.0         
+  IL_004b ldfld          HutongGames.PlayMaker.Actions.ParticleClearAction::m_IncludeChildren token(0x040000F5)
+  IL_0050 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0055 callvirt       UnityEngine.ParticleSystem::Clear token(0x0A00011C)
+  IL_005a ldarg.0         
+  IL_005b call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0060 ret             
+
+0x060000e0 HutongGames.PlayMaker.Actions.ParticleClearAction::.ctor() RVA 0x36eb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0006 ret             
+
+0x060000e1 HutongGames.PlayMaker.Actions.ParticleEmitAction::Reset() RVA 0x5ddd SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.ParticleEmitAction::m_GameObject token(0x040000F6)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.s       10 
+  IL_000a call           HutongGames.PlayMaker.FsmInt::op_Implicit token(0x0A00006C)
+  IL_000f stfld          HutongGames.PlayMaker.Actions.ParticleEmitAction::m_Count token(0x040000F7)
+  IL_0014 ret             
+
+0x060000e2 HutongGames.PlayMaker.Actions.ParticleEmitAction::OnEnter() RVA 0x5df4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticleEmitAction::m_GameObject token(0x040000F6)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldarg.0         
+  IL_0023 ldfld          HutongGames.PlayMaker.Actions.ParticleEmitAction::m_IncludeChildren token(0x040000F8)
+  IL_0028 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_002d brfalse.s      IL_0038 
+  IL_002f ldarg.0         
+  IL_0030 ldloc.0         
+  IL_0031 call           HutongGames.PlayMaker.Actions.ParticleEmitAction::EmitParticlesRecurse token(0x060000E4)
+  IL_0036 br.s           IL_003f 
+  IL_0038 ldarg.0         
+  IL_0039 ldloc.0         
+  IL_003a call           HutongGames.PlayMaker.Actions.ParticleEmitAction::EmitParticles token(0x060000E3)
+  IL_003f ldarg.0         
+  IL_0040 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0045 ret             
+
+0x060000e3 HutongGames.PlayMaker.Actions.ParticleEmitAction::EmitParticles(go) RVA 0x5e48 SIG 2001011280dd
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_000e brfalse.s      IL_0021 
+  IL_0010 ldstr          'ParticleEmitAction.OnEnter() - GameObject {0} has no ParticleSystem component' string token(0x70000A90)
+  IL_0015 ldarg.1         
+  IL_0016 call           System.String::Format token(0x0A00011B)
+  IL_001b call           UnityEngine.Debug::LogWarning token(0x0A0000F5)
+  IL_0020 ret             
+  IL_0021 ldloc.0         
+  IL_0022 ldarg.0         
+  IL_0023 ldfld          HutongGames.PlayMaker.Actions.ParticleEmitAction::m_Count token(0x040000F7)
+  IL_0028 callvirt       HutongGames.PlayMaker.FsmInt::get_Value token(0x0A000079)
+  IL_002d callvirt       UnityEngine.ParticleSystem::Emit token(0x0A00011D)
+  IL_0032 ret             
+
+0x060000e4 HutongGames.PlayMaker.Actions.ParticleEmitAction::EmitParticlesRecurse(go) RVA 0x5e88 SIG 2001011280dd
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Inequality token(0x0A0000AB)
+  IL_000e brfalse.s      IL_0021 
+  IL_0010 ldloc.0         
+  IL_0011 ldarg.0         
+  IL_0012 ldfld          HutongGames.PlayMaker.Actions.ParticleEmitAction::m_Count token(0x040000F7)
+  IL_0017 callvirt       HutongGames.PlayMaker.FsmInt::get_Value token(0x0A000079)
+  IL_001c callvirt       UnityEngine.ParticleSystem::Emit token(0x0A00011D)
+  IL_0021 ldarg.1         
+  IL_0022 callvirt       UnityEngine.GameObject::get_transform token(0x0A00008E)
+  IL_0027 callvirt       UnityEngine.Transform::GetEnumerator token(0x0A00011E)
+  IL_002c stloc.1         
+  IL_002d br.s           IL_0047 
+  IL_002f ldloc.1         
+  IL_0030 callvirt       System.Collections.IEnumerator::get_Current token(0x0A00011F)
+  IL_0035 castclass      UnityEngine.Transform token(0x01000047)
+  IL_003a stloc.2         
+  IL_003b ldarg.0         
+  IL_003c ldloc.2         
+  IL_003d callvirt       UnityEngine.Component::get_gameObject token(0x0A000120)
+  IL_0042 call           HutongGames.PlayMaker.Actions.ParticleEmitAction::EmitParticlesRecurse token(0x060000E4)
+  IL_0047 ldloc.1         
+  IL_0048 callvirt       System.Collections.IEnumerator::MoveNext token(0x0A0000D1)
+  IL_004d brtrue.s       IL_002f 
+  IL_004f leave.s        IL_0062 
+  IL_0051 ldloc.1         
+  IL_0052 isinst         System.IDisposable token(0x01000027)
+  IL_0057 stloc.3         
+  IL_0058 ldloc.3         
+  IL_0059 brfalse.s      IL_0061 
+  IL_005b ldloc.3         
+  IL_005c callvirt       System.IDisposable::Dispose token(0x0A000051)
+  IL_0061 endfinally      
+  IL_0062 ret             
+
+0x060000e5 HutongGames.PlayMaker.Actions.ParticleEmitAction::.ctor() RVA 0x36eb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0006 ret             
+
+0x060000ea HutongGames.PlayMaker.Actions.ParticlePauseAction::Reset() RVA 0x5fd9 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.ParticlePauseAction::m_GameObject token(0x04000100)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.ParticlePauseAction::m_IncludeChildren token(0x04000101)
+  IL_0013 ret             
+
+0x060000eb HutongGames.PlayMaker.Actions.ParticlePauseAction::OnEnter() RVA 0x5ff0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticlePauseAction::m_GameObject token(0x04000100)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldloc.0         
+  IL_0023 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0028 stloc.1         
+  IL_0029 ldloc.1         
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0030 brfalse.s      IL_0049 
+  IL_0032 ldstr          'ParticlePauseAction.OnEnter() - GameObject {0} has no ParticleSystem component' string token(0x70000B2D)
+  IL_0037 ldloc.0         
+  IL_0038 call           System.String::Format token(0x0A00011B)
+  IL_003d call           UnityEngine.Debug::LogWarning token(0x0A0000F5)
+  IL_0042 ldarg.0         
+  IL_0043 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0048 ret             
+  IL_0049 ldloc.1         
+  IL_004a ldarg.0         
+  IL_004b ldfld          HutongGames.PlayMaker.Actions.ParticlePauseAction::m_IncludeChildren token(0x04000101)
+  IL_0050 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0055 callvirt       UnityEngine.ParticleSystem::Pause token(0x0A000122)
+  IL_005a ldarg.0         
+  IL_005b call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0060 ret             
+
+0x060000ec HutongGames.PlayMaker.Actions.ParticlePauseAction::.ctor() RVA 0x36eb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0006 ret             
+
+0x060000ed HutongGames.PlayMaker.Actions.ParticlePlayAction::Reset() RVA 0x605d SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_GameObject token(0x04000102)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_0013 ret             
+
+0x060000ee HutongGames.PlayMaker.Actions.ParticlePlayAction::OnEnter() RVA 0x6074 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_GameObject token(0x04000102)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldloc.0         
+  IL_0023 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0028 stloc.1         
+  IL_0029 ldloc.1         
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0030 brfalse.s      IL_005c 
+  IL_0032 ldarg.0         
+  IL_0033 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_0038 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_003d brtrue.s       IL_005c 
+  IL_003f ldstr          'ParticlePlayAction.OnEnter() - {0} has no ParticleSystem component. Owner={1}' string token(0x70000BCC)
+  IL_0044 ldloc.0         
+  IL_0045 ldarg.0         
+  IL_0046 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A0000D3)
+  IL_004b call           System.String::Format token(0x0A000123)
+  IL_0050 call           UnityEngine.Debug::LogWarning token(0x0A0000F5)
+  IL_0055 ldarg.0         
+  IL_0056 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_005b ret             
+  IL_005c ldloc.1         
+  IL_005d ldnull          
+  IL_005e call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0063 brfalse.s      IL_00a1 
+  IL_0065 ldarg.0         
+  IL_0066 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_006b callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0070 brfalse.s      IL_00a1 
+  IL_0072 ldloc.0         
+  IL_0073 callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B00000C)
+  IL_0078 stloc.2         
+  IL_0079 ldc.i4.0        
+  IL_007a stloc.3         
+  IL_007b br.s           IL_0094 
+  IL_007d ldloc.2         
+  IL_007e ldloc.3         
+  IL_007f ldelem.ref      
+  IL_0080 ldarg.0         
+  IL_0081 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_0086 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_008b callvirt       UnityEngine.ParticleSystem::Play token(0x0A0000EA)
+  IL_0090 ldloc.3         
+  IL_0091 ldc.i4.1        
+  IL_0092 add             
+  IL_0093 stloc.3         
+  IL_0094 ldloc.3         
+  IL_0095 ldloc.2         
+  IL_0096 ldlen           
+  IL_0097 conv.i4         
+  IL_0098 blt.s          IL_007d 
+  IL_009a ldarg.0         
+  IL_009b call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00a0 ret             
+  IL_00a1 ldloc.1         
+  IL_00a2 ldarg.0         
+  IL_00a3 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_00a8 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_00ad callvirt       UnityEngine.ParticleSystem::Play token(0x0A0000EA)
+  IL_00b2 ldarg.0         
+  IL_00b3 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00b8 ret             
+
+0x060000ef HutongGames.PlayMaker.Actions.ParticlePlayAction::.ctor() RVA 0x36eb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0006 ret             
+
+0x060000f0 HutongGames.PlayMaker.Actions.ParticleSimulateAction::Reset() RVA 0x6139 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.ParticleSimulateAction::m_GameObject token(0x04000104)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.r4         0.0 
+  IL_000d call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A000083)
+  IL_0012 stfld          HutongGames.PlayMaker.Actions.ParticleSimulateAction::m_TimeToFastForwardTo token(0x04000105)
+  IL_0017 ldarg.0         
+  IL_0018 ldc.i4.0        
+  IL_0019 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_001e stfld          HutongGames.PlayMaker.Actions.ParticleSimulateAction::m_IncludeChildren token(0x04000106)
+  IL_0023 ret             
+
+0x060000f1 HutongGames.PlayMaker.Actions.ParticleSimulateAction::OnEnter() RVA 0x6160 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticleSimulateAction::m_GameObject token(0x04000104)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_001c 
+  IL_001b ret             
+  IL_001c ldloc.0         
+  IL_001d callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0022 stloc.1         
+  IL_0023 ldloc.1         
+  IL_0024 ldnull          
+  IL_0025 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_002a brfalse.s      IL_003d 
+  IL_002c ldstr          'ParticleSimulateAction.OnEnter() - GameObject {0} has no ParticleSystem component' string token(0x70000C69)
+  IL_0031 ldloc.0         
+  IL_0032 call           System.String::Format token(0x0A00011B)
+  IL_0037 call           UnityEngine.Debug::LogWarning token(0x0A0000F5)
+  IL_003c ret             
+  IL_003d ldloc.1         
+  IL_003e ldarg.0         
+  IL_003f ldfld          HutongGames.PlayMaker.Actions.ParticleSimulateAction::m_TimeToFastForwardTo token(0x04000105)
+  IL_0044 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000086)
+  IL_0049 ldarg.0         
+  IL_004a ldfld          HutongGames.PlayMaker.Actions.ParticleSimulateAction::m_IncludeChildren token(0x04000106)
+  IL_004f callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0054 callvirt       UnityEngine.ParticleSystem::Simulate token(0x0A000125)
+  IL_0059 ret             
+
+0x060000f2 HutongGames.PlayMaker.Actions.ParticleSimulateAction::.ctor() RVA 0x36eb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0006 ret             
+
+0x060000f3 HutongGames.PlayMaker.Actions.ParticleStopAction::Reset() RVA 0x61c6 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_GameObject token(0x04000107)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_IncludeChildren token(0x04000108)
+  IL_0013 ret             
+
+0x060000f4 HutongGames.PlayMaker.Actions.ParticleStopAction::OnEnter() RVA 0x61dc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_GameObject token(0x04000107)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldloc.0         
+  IL_0023 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0028 stloc.1         
+  IL_0029 ldloc.1         
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0030 brfalse.s      IL_0056 
+  IL_0032 ldarg.0         
+  IL_0033 ldfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_IncludeChildren token(0x04000108)
+  IL_0038 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_003d brtrue.s       IL_0056 
+  IL_003f ldstr          'ParticleStopAction.OnEnter() - GameObject {0} has no ParticleSystem component' string token(0x70000D0E)
+  IL_0044 ldloc.0         
+  IL_0045 call           System.String::Format token(0x0A00011B)
+  IL_004a call           UnityEngine.Debug::LogWarning token(0x0A0000F5)
+  IL_004f ldarg.0         
+  IL_0050 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0055 ret             
+  IL_0056 ldloc.1         
+  IL_0057 ldnull          
+  IL_0058 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_005d brfalse.s      IL_0096 
+  IL_005f ldarg.0         
+  IL_0060 ldfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_IncludeChildren token(0x04000108)
+  IL_0065 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_006a brfalse.s      IL_0096 
+  IL_006c ldloc.0         
+  IL_006d callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B00000C)
+  IL_0072 stloc.2         
+  IL_0073 ldc.i4.0        
+  IL_0074 stloc.3         
+  IL_0075 br.s           IL_008e 
+  IL_0077 ldloc.2         
+  IL_0078 ldloc.3         
+  IL_0079 ldelem.ref      
+  IL_007a ldarg.0         
+  IL_007b ldfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_IncludeChildren token(0x04000108)
+  IL_0080 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0085 callvirt       UnityEngine.ParticleSystem::Stop token(0x0A000126)
+  IL_008a ldloc.3         
+  IL_008b ldc.i4.1        
+  IL_008c add             
+  IL_008d stloc.3         
+  IL_008e ldloc.3         
+  IL_008f ldloc.2         
+  IL_0090 ldlen           
+  IL_0091 conv.i4         
+  IL_0092 blt.s          IL_0077 
+  IL_0094 br.s           IL_00a7 
+  IL_0096 ldloc.1         
+  IL_0097 ldarg.0         
+  IL_0098 ldfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_IncludeChildren token(0x04000108)
+  IL_009d callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_00a2 callvirt       UnityEngine.ParticleSystem::Stop token(0x0A000126)
+  IL_00a7 ldarg.0         
+  IL_00a8 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00ad ret             
+
+0x060000f5 HutongGames.PlayMaker.Actions.ParticleStopAction::.ctor() RVA 0x36eb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0006 ret             
+
+0x06000111 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::Reset() RVA 0x673d SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::gameObject token(0x04000122)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::visible token(0x04000123)
+  IL_0013 ldarg.0         
+  IL_0014 ldc.i4.1        
+  IL_0015 stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::resetOnExit token(0x04000124)
+  IL_001a ldarg.0         
+  IL_001b ldc.i4.0        
+  IL_001c stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::includeChildren token(0x04000125)
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::m_initialVisibility token(0x04000126)
+  IL_0027 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b710>::Clear token(0x0A00012B)
+  IL_002c ret             
+
+0x06000112 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::OnEnter() RVA 0x676c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::gameObject token(0x04000122)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldarg.0         
+  IL_0023 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::includeChildren token(0x04000125)
+  IL_0028 brfalse.s      IL_0071 
+  IL_002a ldloc.0         
+  IL_002b callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B000010)
+  IL_0030 stloc.1         
+  IL_0031 ldloc.1         
+  IL_0032 brfalse.s      IL_00a9 
+  IL_0034 ldloc.1         
+  IL_0035 stloc.2         
+  IL_0036 ldc.i4.0        
+  IL_0037 stloc.3         
+  IL_0038 br.s           IL_0069 
+  IL_003a ldloc.2         
+  IL_003b ldloc.3         
+  IL_003c ldelem.ref      
+  IL_003d stloc.s        local(0x0004) 
+  IL_003f ldarg.0         
+  IL_0040 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::m_initialVisibility token(0x04000126)
+  IL_0045 ldloc.s        local(0x0004) 
+  IL_0047 ldloc.s        local(0x0004) 
+  IL_0049 callvirt       UnityEngine.Renderer::get_enabled token(0x0A0000B8)
+  IL_004e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b710>::set_Item token(0x0A00012C)
+  IL_0053 ldloc.s        local(0x0004) 
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::visible token(0x04000123)
+  IL_005b callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0060 callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_0065 ldloc.3         
+  IL_0066 ldc.i4.1        
+  IL_0067 add             
+  IL_0068 stloc.3         
+  IL_0069 ldloc.3         
+  IL_006a ldloc.2         
+  IL_006b ldlen           
+  IL_006c conv.i4         
+  IL_006d blt.s          IL_003a 
+  IL_006f br.s           IL_00a9 
+  IL_0071 ldloc.0         
+  IL_0072 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000A)
+  IL_0077 stloc.s        local(0x0005) 
+  IL_0079 ldloc.s        local(0x0005) 
+  IL_007b ldnull          
+  IL_007c call           UnityEngine.Object::op_Inequality token(0x0A0000AB)
+  IL_0081 brfalse.s      IL_00a9 
+  IL_0083 ldarg.0         
+  IL_0084 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::m_initialVisibility token(0x04000126)
+  IL_0089 ldloc.s        local(0x0005) 
+  IL_008b ldloc.s        local(0x0005) 
+  IL_008d callvirt       UnityEngine.Renderer::get_enabled token(0x0A0000B8)
+  IL_0092 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b710>::set_Item token(0x0A00012C)
+  IL_0097 ldloc.s        local(0x0005) 
+  IL_0099 ldarg.0         
+  IL_009a ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::visible token(0x04000123)
+  IL_009f callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_00a4 callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_00a9 ldarg.0         
+  IL_00aa call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00af ret             
+
+0x06000113 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::OnExit() RVA 0x6828 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::resetOnExit token(0x04000124)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::m_initialVisibility token(0x04000126)
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b710>::GetEnumerator token(0x0A00012D)
+  IL_0014 stloc.0         
+  IL_0015 br.s           IL_003d 
+  IL_0017 ldloca.s       local(0x0000) 
+  IL_0019 call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b8c0>::get_Current token(0x0A00012E)
+  IL_001e stloc.1         
+  IL_001f ldloca.s       local(0x0001) 
+  IL_0021 call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18ba70>::get_Key token(0x0A00012F)
+  IL_0026 stloc.2         
+  IL_0027 ldloc.2         
+  IL_0028 ldnull          
+  IL_0029 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_002e brtrue.s       IL_003d 
+  IL_0030 ldloc.2         
+  IL_0031 ldloca.s       local(0x0001) 
+  IL_0033 call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18ba70>::get_Value token(0x0A000130)
+  IL_0038 callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_003d ldloca.s       local(0x0000) 
+  IL_003f call           <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b8c0>::MoveNext token(0x0A000131)
+  IL_0044 brtrue.s       IL_0017 
+  IL_0046 leave.s        IL_0056 
+  IL_0048 ldloca.s       local(0x0000) 
+  IL_004a constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b8c0> token(0x1B000013)
+  IL_0050 callvirt       System.IDisposable::Dispose token(0x0A000051)
+  IL_0055 endfinally      
+  IL_0056 ret             
+
+0x06000114 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::.ctor() RVA 0x689c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b710>::.ctor token(0x0A000132)
+  IL_0006 stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::m_initialVisibility token(0x04000126)
+  IL_000b ldarg.0         
+  IL_000c call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0011 ret             
+
+0x06000115 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::Reset() RVA 0x68af SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::gameObject token(0x04000127)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::visible token(0x04000128)
+  IL_0013 ldarg.0         
+  IL_0014 ldc.r4         0.0 
+  IL_0019 call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A000083)
+  IL_001e stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_Delay token(0x04000129)
+  IL_0023 ldarg.0         
+  IL_0024 ldc.i4.0        
+  IL_0025 stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::includeChildren token(0x0400012A)
+  IL_002a ldarg.0         
+  IL_002b ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_initialVisibility token(0x0400012B)
+  IL_0030 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b710>::Clear token(0x0A00012B)
+  IL_0035 ret             
+
+0x06000116 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::OnEnter() RVA 0x68e6 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         0.0 
+  IL_0006 stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_timerSec token(0x0400012C)
+  IL_000b ret             
+
+0x06000117 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::OnUpdate() RVA 0x68f4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_timerSec token(0x0400012C)
+  IL_0007 call           UnityEngine.Time::get_deltaTime token(0x0A000089)
+  IL_000c add             
+  IL_000d stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_timerSec token(0x0400012C)
+  IL_0012 ldarg.0         
+  IL_0013 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_Delay token(0x04000129)
+  IL_0018 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A000091)
+  IL_001d brtrue.s       IL_002c 
+  IL_001f ldarg.0         
+  IL_0020 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_Delay token(0x04000129)
+  IL_0025 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000086)
+  IL_002a br.s           IL_0031 
+  IL_002c ldc.r4         0.0 
+  IL_0031 stloc.0         
+  IL_0032 ldarg.0         
+  IL_0033 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_timerSec token(0x0400012C)
+  IL_0038 ldloc.0         
+  IL_0039 bge.un.s       IL_003c 
+  IL_003b ret             
+  IL_003c ldarg.0         
+  IL_003d call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0042 ldarg.0         
+  IL_0043 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::gameObject token(0x04000127)
+  IL_0048 callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_004d stloc.1         
+  IL_004e ldloc.1         
+  IL_004f ldnull          
+  IL_0050 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0055 brfalse.s      IL_005e 
+  IL_0057 ldarg.0         
+  IL_0058 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_005d ret             
+  IL_005e ldarg.0         
+  IL_005f ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::includeChildren token(0x0400012A)
+  IL_0064 brfalse.s      IL_00b2 
+  IL_0066 ldloc.1         
+  IL_0067 callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B000010)
+  IL_006c stloc.2         
+  IL_006d ldloc.2         
+  IL_006e brfalse.s      IL_00ea 
+  IL_0070 ldloc.2         
+  IL_0071 stloc.3         
+  IL_0072 ldc.i4.0        
+  IL_0073 stloc.s        local(0x0004) 
+  IL_0075 br.s           IL_00a9 
+  IL_0077 ldloc.3         
+  IL_0078 ldloc.s        local(0x0004) 
+  IL_007a ldelem.ref      
+  IL_007b stloc.s        local(0x0005) 
+  IL_007d ldarg.0         
+  IL_007e ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_initialVisibility token(0x0400012B)
+  IL_0083 ldloc.s        local(0x0005) 
+  IL_0085 ldloc.s        local(0x0005) 
+  IL_0087 callvirt       UnityEngine.Renderer::get_enabled token(0x0A0000B8)
+  IL_008c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b710>::set_Item token(0x0A00012C)
+  IL_0091 ldloc.s        local(0x0005) 
+  IL_0093 ldarg.0         
+  IL_0094 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::visible token(0x04000128)
+  IL_0099 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_009e callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_00a3 ldloc.s        local(0x0004) 
+  IL_00a5 ldc.i4.1        
+  IL_00a6 add             
+  IL_00a7 stloc.s        local(0x0004) 
+  IL_00a9 ldloc.s        local(0x0004) 
+  IL_00ab ldloc.3         
+  IL_00ac ldlen           
+  IL_00ad conv.i4         
+  IL_00ae blt.s          IL_0077 
+  IL_00b0 br.s           IL_00ea 
+  IL_00b2 ldloc.1         
+  IL_00b3 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000A)
+  IL_00b8 stloc.s        local(0x0006) 
+  IL_00ba ldloc.s        local(0x0006) 
+  IL_00bc ldnull          
+  IL_00bd call           UnityEngine.Object::op_Inequality token(0x0A0000AB)
+  IL_00c2 brfalse.s      IL_00ea 
+  IL_00c4 ldarg.0         
+  IL_00c5 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_initialVisibility token(0x0400012B)
+  IL_00ca ldloc.s        local(0x0006) 
+  IL_00cc ldloc.s        local(0x0006) 
+  IL_00ce callvirt       UnityEngine.Renderer::get_enabled token(0x0A0000B8)
+  IL_00d3 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b710>::set_Item token(0x0A00012C)
+  IL_00d8 ldloc.s        local(0x0006) 
+  IL_00da ldarg.0         
+  IL_00db ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::visible token(0x04000128)
+  IL_00e0 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_00e5 callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_00ea ldarg.0         
+  IL_00eb call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00f0 ret             
+
+0x06000118 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::.ctor() RVA 0x69f1 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f265a18b710>::.ctor token(0x0A000132)
+  IL_0006 stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveDelayAction::m_initialVisibility token(0x0400012B)
+  IL_000b ldarg.0         
+  IL_000c call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0011 ret             

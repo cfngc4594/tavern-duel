@@ -1,0 +1,22 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hero/Diffuse/Diffuse_Transparent" {
+Properties {
+
+_Color ("Main Color", Color) = (1,1,1,1)
+
+_MainTex ("Base (RGB) Trans (A)", 2D) = "white" { }
+
+}
+SubShader {
+ Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+  GpuProgramID 13514
+}
+}
+}

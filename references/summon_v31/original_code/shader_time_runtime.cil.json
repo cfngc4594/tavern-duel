@@ -1,0 +1,562 @@
+{
+  "types": [
+    {
+      "type": "ShaderTime",
+      "token": "0x02002ca3",
+      "fields": [
+        {
+          "name": "m_maxTime",
+          "token": "0x040125a0",
+          "signature": "060c"
+        },
+        {
+          "name": "m_time",
+          "token": "0x040125a1",
+          "signature": "060c"
+        },
+        {
+          "name": "m_enabled",
+          "token": "0x040125a2",
+          "signature": "0602"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "ShaderTime",
+      "method": "Initialize",
+      "token": "0x06015543",
+      "rva": "0x6490df",
+      "signature": "200115128109011281a51281a9",
+      "parameters": [
+        "serviceLocator"
+      ],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "newobj",
+          "operand": "<Initialize>d__6::.ctor",
+          "token": "token(0x0601554A)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ShaderTime",
+      "method": "GetDependencies",
+      "token": "0x06015544",
+      "rva": "0x635459",
+      "signature": "20001d128179",
+      "parameters": [],
+      "code_size": 20,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "newarr",
+          "operand": "System.Type",
+          "token": "token(0x0100005E)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldtoken",
+          "operand": "IGraphicsManager",
+          "token": "token(0x0100015B)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "System.Type::GetTypeFromHandle",
+          "token": "token(0x0A00010D)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "stelem.ref",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ShaderTime",
+      "method": "Shutdown",
+      "token": "0x06015545",
+      "rva": "0x6490e7",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 16,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldstr",
+          "operand": "'_ShaderTime'",
+          "token": "string token(0x703F95AF)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "call",
+          "operand": "UnityEngine.Shader::SetGlobalFloat",
+          "token": "token(0x0A0051D4)"
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ShaderTime",
+      "method": "Update",
+      "token": "0x06015546",
+      "rva": "0x6490f8",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 13,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "ShaderTime::UpdateShaderAnimationTime",
+          "token": "token(0x06015547)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "call",
+          "operand": "ShaderTime::UpdateGyro",
+          "token": "token(0x06015548)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ShaderTime",
+      "method": "UpdateShaderAnimationTime",
+      "token": "0x06015547",
+      "rva": "0x649108",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 119,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "ShaderTime::m_enabled",
+          "token": "token(0x040125A2)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_0015",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "stfld",
+          "operand": "ShaderTime::m_time",
+          "token": "token(0x040125A1)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "br.s",
+          "operand": "IL_0066",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldfld",
+          "operand": "ShaderTime::m_time",
+          "token": "token(0x040125A1)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "call",
+          "operand": "UnityEngine.Time::get_deltaTime",
+          "token": "token(0x0A00096D)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldc.r4",
+          "operand": "20.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "div",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "stfld",
+          "operand": "ShaderTime::m_time",
+          "token": "token(0x040125A1)"
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldfld",
+          "operand": "ShaderTime::m_time",
+          "token": "token(0x040125A1)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ldfld",
+          "operand": "ShaderTime::m_maxTime",
+          "token": "token(0x040125A0)"
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ble.un.s",
+          "operand": "IL_0066",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "ldfld",
+          "operand": "ShaderTime::m_time",
+          "token": "token(0x040125A1)"
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "ldfld",
+          "operand": "ShaderTime::m_maxTime",
+          "token": "token(0x040125A0)"
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "sub",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "stfld",
+          "operand": "ShaderTime::m_time",
+          "token": "token(0x040125A1)"
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "ldfld",
+          "operand": "ShaderTime::m_time",
+          "token": "token(0x040125A1)"
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "bgt.un.s",
+          "operand": "IL_0066",
+          "token": null
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldc.r4",
+          "operand": "9.999999747378752e-05",
+          "token": null
+        },
+        {
+          "offset": "IL_0061",
+          "opcode": "stfld",
+          "operand": "ShaderTime::m_time",
+          "token": "token(0x040125A1)"
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "ldstr",
+          "operand": "'_ShaderTime'",
+          "token": "string token(0x703F95AF)"
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006c",
+          "opcode": "ldfld",
+          "operand": "ShaderTime::m_time",
+          "token": "token(0x040125A1)"
+        },
+        {
+          "offset": "IL_0071",
+          "opcode": "call",
+          "operand": "UnityEngine.Shader::SetGlobalFloat",
+          "token": "token(0x0A0051D4)"
+        },
+        {
+          "offset": "IL_0076",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ShaderTime",
+      "method": "UpdateGyro",
+      "token": "0x06015548",
+      "rva": "0x64918c",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 28,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "UnityEngine.Input::get_gyro",
+          "token": "token(0x0A000CD7)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Gyroscope::get_gravity",
+          "token": "token(0x0A0051D5)"
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector4::op_Implicit",
+          "token": "token(0x0A000D9E)"
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldstr",
+          "operand": "'_Gyroscope'",
+          "token": "string token(0x703F95C7)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "call",
+          "operand": "UnityEngine.Shader::SetGlobalVector",
+          "token": "token(0x0A0051D6)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ShaderTime",
+      "method": ".ctor",
+      "token": "0x06015549",
+      "rva": "0x6491b4",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 25,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldc.r4",
+          "operand": "65535.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stfld",
+          "operand": "ShaderTime::m_maxTime",
+          "token": "token(0x040125A0)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "stfld",
+          "operand": "ShaderTime::m_enabled",
+          "token": "token(0x040125A2)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "call",
+          "operand": "System.Object::.ctor",
+          "token": "token(0x0A000003)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Obsolete/Pegasus/DiffuseMaskUVOffsetUnlit" {
+Properties {
+
+_Color ("_Color", Color) = (0.301961,1,0.215686,0.298039)
+
+_Diffuse ("_Diffuse", 2D) = "black" { }
+
+_Mask ("_Mask", 2D) = "black" { }
+
+_ErodeTile ("_ErodeTile", Float) = 1.0
+
+_Amount ("_Amount", Float) = 1.0
+
+_power ("_power", Float) = 5.0
+
+_Strength ("_Strength", Float) = 0.0
+
+_Brightness ("_Brightness", Range(0, 10)) = 3.5449728965759277
+
+_YSpeed ("_YSpeed", Float) = 0.10000000149011612
+
+_XSpeed ("_XSpeed", Float) = 2.0
+
+_XSpeedDiffuse ("_XSpeedDiffuse", Float) = 0.0
+
+_YSpeedDiffuse ("_YSpeedDiffuse", Float) = -0.5
+
+_OffsetX ("_OffsetX", Float) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+  GpuProgramID 24309
+}
+}
+}

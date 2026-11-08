@@ -1,0 +1,58 @@
+{
+  "card_id": "EX1_301",
+  "carddef_ref": {
+    "guid": "37fca40aaacf43e439881f51dbab9e87",
+    "bundle": "carddef_base_global-775a814d-prefab-1.unity3d",
+    "path_id": -2304601902898990557
+  },
+  "evidence": {
+    "m_PlayEffectDef": {
+      "m_SpellPath": "",
+      "m_SoundSpellPaths": [
+        "Play.prefab:cde707cb7b332e04c9d2657d8b22d87b"
+      ]
+    },
+    "m_AdditionalPlayEffectDefs": [],
+    "m_TriggerEffectDefs": [],
+    "m_SubOptionEffectDefs": [],
+    "m_ResetGameEffectDefs": [],
+    "m_SubSpellEffectDefs": [],
+    "m_SpellTableOverrides": [],
+    "m_CustomSummonSpellPath": "",
+    "m_CustomSpawnSpellPath": "",
+    "m_CustomDeathSpellPath": "",
+    "m_CustomKeywordSpellPath": ""
+  },
+  "direct_card_voice_events": {
+    "m_PlayEffectDef": {
+      "m_SpellPath": "",
+      "m_SoundSpellPaths": [
+        "Play.prefab:cde707cb7b332e04c9d2657d8b22d87b"
+      ]
+    },
+    "m_AttackEffectDef": {
+      "m_SpellPath": "",
+      "m_SoundSpellPaths": [
+        "Attack.prefab:4ced896682e702240a109d817d4285f5"
+      ]
+    },
+    "m_DeathEffectDef": {
+      "m_SpellPath": "",
+      "m_SoundSpellPaths": [
+        "Death.prefab:989d47c89582ec24596606696981e4cb"
+      ]
+    }
+  },
+  "conclusion": "No card-specific visual or trigger spell binding for mana-crystal destruction exists in this CardDef. This does not by itself rule out a shared global ManaCrystal update sound. No replacement sound may be inferred by filename.",
+  "scope": "Only this card pool; no gameplay rules changed.",
+  "shared_binding": {
+    "confirmed": true,
+    "source_asset_evidence": "mana_crystal_asset_search.json",
+    "audio_bindings": "mana_destroy_audio_bindings.json",
+    "code_evidence": "../audio_code_evidence/mana_crystal_events.cil.json",
+    "scope": "Only local friendly-side mana-crystal display destruction; Player.DestroyManaCrystal returns immediately on opposing side.",
+    "delay_after_gem_destroy_action_sec": 0.5,
+    "delay_basis": "Explicit iTweenShakePosition finishEvent FINISHED, not concurrent animation duration.",
+    "clip": "mana_crystal_expend.wav:56dc0c11d98cdae4795ea38a39f3150c"
+  }
+}

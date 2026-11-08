@@ -1,0 +1,48 @@
+extends SceneTree
+# Isolated material-state fixture; does not write production renderer/shaders.
+var output='/workspace/shared/godot_v25/cull-probe'
+func _initialize():call_deferred('run')
+func collect(node,result):
+	result.append(node)
+	for child in node.get_children():collect(child,result)
+func run():
+	DirAccess.make_dir_recursive_absolute(output)
+	var game=load('res://main.tscn').instantiate();game.startup_mode='normal';root.add_child(game)
+	await process_frame;game.set_process(false);game.sound_enabled=false;game._ensure_card_face_textures()
+	await create_timer(3).timeout
+	var renderer=game.native_card_renderer;var results={};var images=[]
+	for key in ['CS2_182','CS2_061']:
+		var vp=renderer.cards[key].viewport;var all=[];collect(vp,all);var selected;var camera
+		for node in all:
+			if node is Camera3D:camera=node
+			if node is MeshInstance3D:
+				var mat=node.get_active_material(0)
+				var is_name=mat is ShaderMaterial and 'Hidden/TextAntialiasing' in mat.shader.code
+				node.visible=is_name
+				if is_name:selected=node
+		if selected==null:push_error('No name material '+key);quit(2);return
+		var original=selected.get_active_material(0)
+		var original_mesh=selected.mesh;var flipped=ArrayMesh.new();var arrays=original_mesh.surface_get_arrays(0);var indices=arrays[Mesh.ARRAY_INDEX]
+		for n in range(0,indices.size(),3):
+			var hold=indices[n+1];indices[n+1]=indices[n+2];indices[n+2]=hold
+		arrays[Mesh.ARRAY_INDEX]=indices;flipped.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays);flipped.surface_set_material(0,original)
+		for side in ['front','back']:
+			camera.position.y=7.0 if side=='front' else -7.0;camera.rotation_degrees.x=-90.0 if side=='front' else 90.0
+			for mode in ['cull_disabled','cull_back','cull_back_flipped']:
+				selected.mesh=flipped if mode=='cull_back_flipped' else original_mesh
+				var mat=original.duplicate();var shader=Shader.new();shader.code=original.shader.code.replace('cull_disabled','cull_back' if mode=='cull_back_flipped' else mode);mat.shader=shader;selected.set_surface_override_material(0,mat)
+				vp.render_target_update_mode=SubViewport.UPDATE_ALWAYS
+				await process_frame;await process_frame;await RenderingServer.frame_post_draw
+				var im=vp.get_texture().get_image();var coverage=0;var alpha_sum=0.0
+				for y in range(im.get_height()):
+					for x in range(im.get_width()):
+						var a=im.get_pixel(x,y).a;alpha_sum+=a
+						if a>0.01:coverage+=1
+				var label=key+'_'+side+'_'+mode;im.save_png(output+'/'+label+'.png');results[label]={'pixels_alpha_gt_001':coverage,'sum_alpha':alpha_sum};images.append({'label':label,'image':im})
+		vp.render_target_update_mode=SubViewport.UPDATE_DISABLED
+	var file=FileAccess.open(output+'/result.json',FileAccess.WRITE);file.store_string(JSON.stringify(results,'  '));file.close();print('CULL_PROBE ',JSON.stringify(results))
+	var overlay=CanvasLayer.new();overlay.layer=100;root.add_child(overlay);var bg=ColorRect.new();bg.color=Color('17202c');bg.size=Vector2(1600,900);overlay.add_child(bg)
+	for i in range(images.size()):
+		var item=images[i];var sprite=Sprite2D.new();sprite.texture=ImageTexture.create_from_image(item.image);sprite.centered=false;sprite.position=Vector2((i%6)*260,40+(i/6)*420);sprite.scale=Vector2.ONE*0.7;overlay.add_child(sprite)
+		var label=Label.new();label.text=item.label+'\ncoverage '+str(results[item.label].pixels_alpha_gt_001);label.position=sprite.position;label.add_theme_font_size_override('font_size',12);overlay.add_child(label)
+	await process_frame;await RenderingServer.frame_post_draw;root.get_texture().get_image().save_png(output+'/comparison.png');quit(0)

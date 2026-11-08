@@ -1,0 +1,103 @@
+{
+  "build": "37.0.0.255130.254477",
+  "conclusion": "Preserve serialized prefab root local position, rotation and scale for these state attachments. Specifically taunt original root (-0.483978271484375,0.095947265625,0) is not zeroed by its Birth path.",
+  "taunt": {
+    "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:4450909134831995449",
+    "serialized_transform": {
+      "m_GameObject": {
+        "m_FileID": 0,
+        "m_PathID": 4450909134831995449
+      },
+      "m_LocalRotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "m_LocalPosition": {
+        "x": -0.483978271484375,
+        "y": 0.095947265625,
+        "z": 0.0
+      },
+      "m_LocalScale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "m_Children": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 2617788451706096185
+        }
+      ],
+      "m_Father": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      }
+    },
+    "source_initial": null,
+    "source_assignment_on_current_path": false,
+    "fsm_position_or_source_actions": []
+  },
+  "chain": [
+    {
+      "method": "TagVisualConfiguration state function TAUNT",
+      "evidence": "trigger_config_selected.json TAUNT190 added selects state function TAUNT rather than generic ActivateSpellState"
+    },
+    {
+      "method": "Actor.ActivateTaunt",
+      "token": "0x06012951",
+      "effect": "Current regular/non-stealth/non-immune branch calls ActivateSpellBirthState(8); no SetSource."
+    },
+    {
+      "method": "Actor.ActivateSpellBirthState",
+      "token": "0x06012961",
+      "effect": "GetSpell(type8), ActivateState(Birth1); no SetSource."
+    },
+    {
+      "method": "SpellTable.GetSpell -> SpellManager.CreateSpell",
+      "tokens": [
+        "0x06014a9f",
+        "0x06014a06"
+      ],
+      "effect": "InstantiatePrefab(assetRef,options0); no placement or source assignment."
+    },
+    {
+      "method": "AssetLoader.OnInstantiatePrefabResultHandler",
+      "token": "0x06012af8",
+      "effect": "UsePrefabPosition=true chooses options0; false chooses2. Confirms call option0 is prefab-position mode, not spawn-position override."
+    },
+    {
+      "method": "Actor.LoadSpell -> TransformUtil.AttachAndPreserveLocalTransform",
+      "tokens": [
+        "0x0601294c",
+        "0x06015002"
+      ],
+      "effect": "Capture local TransformProps, assign parent, CopyLocal all transform props. Parent is Actor identity child Spells."
+    },
+    {
+      "method": "Spell.OnBirth -> UpdateTransform -> UpdatePosition",
+      "tokens": [
+        "0x06014963",
+        "0x06014917",
+        "0x06014918"
+      ],
+      "effect": "Tries SetPositionFromLocation with location2, setParent=false."
+    },
+    {
+      "method": "SpellUtils.GetSpellLocationObject -> FindSourceAutoObjectForSpell",
+      "tokens": [
+        "0x06014ab8",
+        "0x06014ad0"
+      ],
+      "effect": "location2 uses source auto object. GetSource returns null and GetSourceCard returns null, so FindSourceAutoObjectForSpell IL000e-0018 returns null."
+    },
+    {
+      "method": "SpellUtils.SetPositionFromLocation",
+      "token": "0x06014ab9",
+      "effect": "Null transform branch IL0007-0011 returns false. Does not set transform.position."
+    }
+  ],
+  "generic_status_difference": "TagVisualConfiguration.ActivateSpellState sets source only AFTER ActivateState/ActivateStateIfNecessary. This is not the taunt actor-state-function path. Do not infer location2 unconditionally zeros root.",
+  "evidence_file": "code/root_placement_and_hybrid_methods.json"
+}

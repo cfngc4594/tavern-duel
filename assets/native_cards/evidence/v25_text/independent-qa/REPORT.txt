@@ -1,0 +1,30 @@
+Independent Text Roles native sample QA — 2026-11-02 13:58 UTC
+
+Schema and inputs verified:
+Body115 entries/197 TextMesh measurements; GLEI74 and Belwe65 each12 entries/2 measurements. All three fontSHA values match both returned TTF and cloud original extracted TTF. All visible glyphs available, all glyph UV rectangles have nonzero alpha and correct rotation-adjusted dimensions. Body atlas512x512; digit atlases256x256. Never mix roles or prior size46 UVs.
+Newline is intentionally unavailable CharacterInfo; it is a line break, not missing visible text. Space available advance11 and may have no ink. No visible-glyph failures.
+
+Native layout values (characterSize1, font40 BlizzardGlobal):
+TTF units512,hhea ascent502,descent-113,gap0.
+L=4.8046875; ascent=3.921875. Even EMPTY text has native bounds heightL and width0.
+| heightL. |\n| height8.408203125 at lineSpacing.75 and9.30908203125 at.9375.
+intraLineHeight=H(two-line)-2*H(single)=-1.201171875 at.75 and-.30029296875 at.9375.
+Line advance=L*spacing:3.603515625 at.75;4.50439453125 at.9375.
+For n lines,H=L*(1+(n-1)*spacing). Width=max(sum glyph advances per line)*.1.
+MiddleCenter baseline first=-ascent+H/2; UpperCenter baseline first=-ascent. Descend each line byL*spacing. Horizontally center each line using its summed advances. Scale all local-unit values by chosen characterSize (original initial.05).
+All197 recorded body bounds match this formula with maximum absolute error4.58e-6world; no outliers. This includes both anchors, both line spacings, original full plain texts, hand-wrapped diagnostic versions, pipe/newline/empty baselines.
+
+Native screenshot cross-check (no fitting or visual tuning):
+Inverse camera-project each pixel, construct glyph quads using CharacterInfo min/max and those exact hhea baseline equations, preserve four UV corners, sample actual atlas bilinearly, and simulate defaultTextMesh diagnostic alpha blend. Four body captures MSE2.97e-7..3.25e-7,MAE.0001855...0002000,max alpha error<=.006463. Alpha centroid coordinates agree within.012pixels.
+These measurements support the baseline and linebox equations in the actual sampled Unity runtime, rather than leaving them unverified Godot proxies.
+
+Digit role verification:
+GLEI74 units1024/ascent900/descent-124/gap6: L7.443359375,asc6.50390625,MiddleCenter baseline=-2.7822265625 atchar1. Native digits screenshot reconstruction MSE1.03e-7,MAE.00006395.
+Belwe65 global comparison: L7.896484375,asc6.357177734375,baseline=-2.408935546875; MSE1.21e-7,MAE.00007430.
+Independent fontmapping catalog chain selects GLEI74 for zhCN; Belwe remains a global comparison, not the preferred zhCN rendering.
+
+Boundaries:
+Actual Unity6000.3.10f1 AppleM3/Metal sampling, not original game screenshots. MeshFilter absent and no native mesh vertices exported. Baseline/linebox equivalence supported by actual native bounds and quantitative images, not fabricated vertex extraction. Original ascent mode unavailable; actual importer mode is retained/exported, not asserted identical. Partial original fallback chains are not recreated; sampled primary fonts cover all required visible glyphs.
+Alpha-squared is only the defaultTextMesh diagnostic RT blend model. It must NOT be applied to raw coverage passed to original recovered bold8tap or outline9tap material. This probe does not execute those original shader materials or verify original rich text wrap/resize control flow. It provides the metrics needed for that independent implementation.
+
+Evidence: validation.json and verify.py alongside this report. Input role glyphs.json/atlas/actual screenshots are retained unchanged.

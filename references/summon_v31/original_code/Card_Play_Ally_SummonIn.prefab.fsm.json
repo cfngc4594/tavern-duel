@@ -1,0 +1,532 @@
+{
+  "card_id": "__shared__",
+  "prefab": "Card_Play_Ally_SummonIn.prefab:786da6b44c25c46d39459e873d237292",
+  "route": "root",
+  "component": {
+    "bundle": "essential_base_global-prefab-0.unity3d",
+    "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+    "path_id": -4394157977634202496,
+    "guid": null,
+    "class_name": "PlayMakerFSM"
+  },
+  "states": [
+    {
+      "name": "State 1",
+      "state_index": 0,
+      "name_resolves_here": true,
+      "is_sequence": false,
+      "transitions": [],
+      "actions": [],
+      "entry_paths": []
+    },
+    {
+      "name": "BIRTH",
+      "state_index": 1,
+      "name_resolves_here": true,
+      "is_sequence": false,
+      "transitions": [
+        {
+          "fsmEvent": {
+            "name": "FINISHED",
+            "isSystemEvent": 1,
+            "isGlobal": 1
+          },
+          "toState": "wait",
+          "linkStyle": 0,
+          "linkConstraint": 0,
+          "linkTarget": 0,
+          "colorIndex": 0
+        }
+      ],
+      "actions": [
+        {
+          "index": 0,
+          "class_name": "SpellInitActorVariables",
+          "enabled": true,
+          "params": {
+            "m_actorObject": {
+              "useVariable": 1,
+              "name": "Actor",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              }
+            },
+            "m_rootObject": {
+              "useVariable": 1,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              }
+            },
+            "m_rootObjectMesh": {
+              "useVariable": 1,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              }
+            }
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "index": 2,
+          "class_name": "AnimationPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 1,
+                "name": "Actor",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_AnimName": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": "AllyInPlaySpawn"
+            },
+            "m_PhoneAnimName": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": ""
+            },
+            "m_PlayMode": 4,
+            "m_CrossFadeSec": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          }
+        },
+        {
+          "index": 3,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": -18238306004689792
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          }
+        }
+      ],
+      "entry_paths": [
+        [
+          "Birth",
+          "BIRTH"
+        ]
+      ]
+    },
+    {
+      "name": "Kill Dust, Play Sound",
+      "state_index": 2,
+      "name_resolves_here": true,
+      "is_sequence": false,
+      "transitions": [
+        {
+          "fsmEvent": {
+            "name": "FINISHED",
+            "isSystemEvent": 1,
+            "isGlobal": 1
+          },
+          "toState": "NONE",
+          "linkStyle": 0,
+          "linkConstraint": 0,
+          "linkTarget": 0,
+          "colorIndex": 0
+        }
+      ],
+      "actions": [
+        {
+          "index": 0,
+          "class_name": "AudioPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_VolumeScale": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 1.0
+            },
+            "m_OneShotClip": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "UnityEngine.AudioClip",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              }
+            },
+            "m_Delay": 0.0,
+            "m_OneShotSound": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              }
+            },
+            "m_FinishedEvent": "",
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          }
+        },
+        {
+          "index": 1,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": -6620779850417365888
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          }
+        },
+        {
+          "index": 2,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            },
+            "m_Delay": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          }
+        },
+        {
+          "index": 3,
+          "class_name": "ParticleStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": -18238306004689792
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          }
+        },
+        {
+          "index": 4,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 9016756839510580352
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          }
+        },
+        {
+          "index": 5,
+          "class_name": "Wait",
+          "enabled": true,
+          "params": {
+            "time": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 2.0
+            },
+            "finishEvent": "",
+            "realTime": false
+          }
+        }
+      ],
+      "entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "wait",
+          "FINISHED",
+          "Kill Dust, Play Sound"
+        ]
+      ]
+    },
+    {
+      "name": "NONE",
+      "state_index": 3,
+      "name_resolves_here": true,
+      "is_sequence": false,
+      "transitions": [],
+      "actions": [
+        {
+          "index": 0,
+          "class_name": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            }
+          }
+        }
+      ],
+      "entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "wait",
+          "FINISHED",
+          "Kill Dust, Play Sound",
+          "FINISHED",
+          "NONE"
+        ],
+        [
+          "None",
+          "NONE"
+        ]
+      ]
+    },
+    {
+      "name": "wait",
+      "state_index": 4,
+      "name_resolves_here": true,
+      "is_sequence": false,
+      "transitions": [
+        {
+          "fsmEvent": {
+            "name": "FINISHED",
+            "isSystemEvent": 1,
+            "isGlobal": 1
+          },
+          "toState": "Kill Dust, Play Sound",
+          "linkStyle": 0,
+          "linkConstraint": 0,
+          "linkTarget": 0,
+          "colorIndex": 0
+        }
+      ],
+      "actions": [
+        {
+          "index": 0,
+          "class_name": "Wait",
+          "enabled": true,
+          "params": {
+            "time": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.5
+            },
+            "finishEvent": "",
+            "realTime": false
+          }
+        }
+      ],
+      "entry_paths": [
+        [
+          "Birth",
+          "BIRTH",
+          "FINISHED",
+          "wait"
+        ]
+      ]
+    }
+  ],
+  "globalTransitions": [
+    {
+      "fsmEvent": {
+        "name": "Birth",
+        "isSystemEvent": 0,
+        "isGlobal": 1
+      },
+      "toState": "BIRTH",
+      "linkStyle": 0,
+      "linkConstraint": 0,
+      "linkTarget": 0,
+      "colorIndex": 0
+    },
+    {
+      "fsmEvent": {
+        "name": "None",
+        "isSystemEvent": 0,
+        "isGlobal": 1
+      },
+      "toState": "NONE",
+      "linkStyle": 0,
+      "linkConstraint": 0,
+      "linkTarget": 0,
+      "colorIndex": 0
+    }
+  ]
+}

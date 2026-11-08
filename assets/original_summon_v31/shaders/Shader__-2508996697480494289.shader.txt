@@ -1,0 +1,38 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Card/Unlit_Portrait" {
+Properties {
+
+_Color ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_MainTex ("Main Texture", 2D) = "white" { }
+
+_SecondTex ("Second Texture (uses 2nd UV set)", 2D) = "white" { }
+
+_SecondTint ("Second Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_BlendIntensity ("Blend Intensity", Float) = 2.0
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "CardAlpha" = "true" "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "CardAlpha" = "true" "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 37877
+}
+ Pass {
+ Name "ShadowCaster"
+  LOD 300
+  Tags { "CardAlpha" = "true" "Highlight" = "true" "LIGHTMODE" = "SHADOWCASTER" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ ZTest Less
+ Cull Off
+  GpuProgramID 83544
+}
+}
+Fall back "Utility/HearthstoneFallbackDiffuse"
+}

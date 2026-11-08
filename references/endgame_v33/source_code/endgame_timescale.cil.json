@@ -1,0 +1,299 @@
+{
+  "types": [
+    {
+      "type": "Gameplay",
+      "token": "0x02000b84",
+      "fields": [
+        {
+          "name": "s_instance",
+          "token": "0x04003cff",
+          "signature": "0612ae10"
+        },
+        {
+          "name": "m_unloading",
+          "token": "0x04003d00",
+          "signature": "0602"
+        },
+        {
+          "name": "m_lastFatalBnetErrorInfo",
+          "token": "0x04003d01",
+          "signature": "061283f9"
+        },
+        {
+          "name": "m_handleLastFatalBnetErrorNow",
+          "token": "0x04003d02",
+          "signature": "0602"
+        },
+        {
+          "name": "m_boardProgress",
+          "token": "0x04003d03",
+          "signature": "060c"
+        },
+        {
+          "name": "m_nameBanners",
+          "token": "0x04003d04",
+          "signature": "061512490112b044"
+        },
+        {
+          "name": "m_nameBannerGamePlayPhone",
+          "token": "0x04003d05",
+          "signature": "0612b044"
+        },
+        {
+          "name": "m_numBannersRequested",
+          "token": "0x04003d06",
+          "signature": "0608"
+        },
+        {
+          "name": "m_cardDrawStandIn",
+          "token": "0x04003d07",
+          "signature": "0612c0009cf8"
+        },
+        {
+          "name": "m_boardLayout",
+          "token": "0x04003d08",
+          "signature": "0612c0009ea4"
+        },
+        {
+          "name": "m_baconFavoriteBoardSkin",
+          "token": "0x04003d09",
+          "signature": "0608"
+        },
+        {
+          "name": "m_baconTeammateFavoriteBoardSkin",
+          "token": "0x04003d0a",
+          "signature": "0608"
+        },
+        {
+          "name": "m_loadingBaconBoard",
+          "token": "0x04003d0b",
+          "signature": "0602"
+        },
+        {
+          "name": "m_criticalAssetsLoaded",
+          "token": "0x04003d0c",
+          "signature": "0602"
+        },
+        {
+          "name": "m_hasReportedGameContext",
+          "token": "0x04003d0d",
+          "signature": "0602"
+        },
+        {
+          "name": "m_pingedActorsList",
+          "token": "0x04003d0e",
+          "signature": "061512490112c0009cf8"
+        },
+        {
+          "name": "m_queuedPowerHistory",
+          "token": "0x04003d0f",
+          "signature": "06151281dd011512490112c0007d74"
+        },
+        {
+          "name": "m_originalTimeScale",
+          "token": "0x04003d10",
+          "signature": "06151181bd010c"
+        },
+        {
+          "name": "m_inputCamera",
+          "token": "0x04003d11",
+          "signature": "061280e9"
+        },
+        {
+          "name": "m_prefabContext",
+          "token": "0x04003d12",
+          "signature": "0612b13c"
+        },
+        {
+          "name": "m_taskTokenSource",
+          "token": "0x04003d13",
+          "signature": "06128749"
+        },
+        {
+          "name": "m_pausePowerTokenSource",
+          "token": "0x04003d14",
+          "signature": "06128749"
+        },
+        {
+          "name": "m_waitForOpponentTokenSource",
+          "token": "0x04003d15",
+          "signature": "06128749"
+        },
+        {
+          "name": "m_stateTokenSource",
+          "token": "0x04003d16",
+          "signature": "06128749"
+        },
+        {
+          "name": "m_lettuceAbilityTokenSource",
+          "token": "0x04003d17",
+          "signature": "06128749"
+        },
+        {
+          "name": "m_cheatManager",
+          "token": "0x04003d18",
+          "signature": "0612c000ad7c"
+        },
+        {
+          "name": "m_prefabInstanceLoaderTracker",
+          "token": "0x04003d19",
+          "signature": "0612b138"
+        },
+        {
+          "name": "s_gameplayProcessNetworkMarker",
+          "token": "0x04003d1a",
+          "signature": "0611899d"
+        },
+        {
+          "name": "s_gameplayGameStateUpdateMarker",
+          "token": "0x04003d1b",
+          "signature": "0611899d"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "Gameplay",
+      "method": "SaveOriginalTimeScale",
+      "token": "0x06005840",
+      "rva": "0x199cc7",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 22,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::Get",
+          "token": "token(0x0A000581)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::GetGameTimeScale",
+          "token": "token(0x0A00245E)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f428b05c860>::.ctor",
+          "token": "token(0x0A0011DF)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "stfld",
+          "operand": "Gameplay::m_originalTimeScale",
+          "token": "token(0x04003D10)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "Gameplay",
+      "method": "RestoreOriginalTimeScale",
+      "token": "0x06005841",
+      "rva": "0x199cde",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 48,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldflda",
+          "operand": "Gameplay::m_originalTimeScale",
+          "token": "token(0x04003D10)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f428b05c860>::get_HasValue",
+          "token": "token(0x0A001044)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "brfalse.s",
+          "operand": "IL_002f",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::Get",
+          "token": "token(0x0A000581)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldflda",
+          "operand": "Gameplay::m_originalTimeScale",
+          "token": "token(0x04003D10)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f428b05c860>::get_Value",
+          "token": "token(0x0A001045)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "conv.r4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Core.Time.TimeScaleMgr::SetGameTimeScale",
+          "token": "token(0x0A000582)"
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldflda",
+          "operand": "Gameplay::m_originalTimeScale",
+          "token": "token(0x04003D10)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "initobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f428b05c860>",
+          "token": "token(0x1B000478)"
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

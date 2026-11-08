@@ -1,0 +1,1093 @@
+{
+  "types": [
+    {
+      "type": "HutongGames.PlayMaker.Actions.AnimateFloatV2",
+      "token": "0x02000022",
+      "fields": [
+        {
+          "name": "floatVariable",
+          "token": "0x04000089",
+          "signature": "0612809d"
+        },
+        {
+          "name": "animCurve",
+          "token": "0x0400008a",
+          "signature": "061281ed"
+        },
+        {
+          "name": "calculation",
+          "token": "0x0400008b",
+          "signature": "06118090"
+        },
+        {
+          "name": "finishInNextStep",
+          "token": "0x0400008c",
+          "signature": "0602"
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.ScaleTime",
+      "token": "0x02000301",
+      "fields": [
+        {
+          "name": "timeScale",
+          "token": "0x04000eff",
+          "signature": "0612809d"
+        },
+        {
+          "name": "adjustFixedDeltaTime",
+          "token": "0x04000f00",
+          "signature": "06128205"
+        },
+        {
+          "name": "everyFrame",
+          "token": "0x04000f01",
+          "signature": "0602"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "HutongGames.PlayMaker.Actions.AnimateFloatV2",
+      "method": "Reset",
+      "token": "0x060000bf",
+      "rva": "0x4f1e",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 25,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::Reset",
+          "token": "token(0x060000C4)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "newobj",
+          "operand": "HutongGames.PlayMaker.FsmFloat::.ctor",
+          "token": "token(0x0A0000C3)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.NamedVariable::set_UseVariable",
+          "token": "token(0x0A0000AF)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::floatVariable",
+          "token": "token(0x04000089)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AnimateFloatV2",
+      "method": "OnEnter",
+      "token": "0x060000c0",
+      "rva": "0x4f38",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 140,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::OnEnter",
+          "token": "token(0x060000C5)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::finishInNextStep",
+          "token": "token(0x0400008C)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "newarr",
+          "operand": "System.Single",
+          "token": "token(0x0100002D)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::resultFloats",
+          "token": "token(0x0400009C)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "newarr",
+          "operand": "System.Single",
+          "token": "token(0x0100002D)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::fromFloats",
+          "token": "token(0x0400009D)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::fromFloats",
+          "token": "token(0x0400009D)"
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::floatVariable",
+          "token": "token(0x04000089)"
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.NamedVariable::get_IsNone",
+          "token": "token(0x0A00003B)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "brtrue.s",
+          "operand": "IL_0046",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::floatVariable",
+          "token": "token(0x04000089)"
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::get_Value",
+          "token": "token(0x0A000034)"
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "br.s",
+          "operand": "IL_004b",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_004b",
+          "opcode": "stelem.r4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "newarr",
+          "operand": "Calculation",
+          "token": "token(0x02000024)"
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::calculations",
+          "token": "token(0x0400009B)"
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::calculations",
+          "token": "token(0x0400009B)"
+        },
+        {
+          "offset": "IL_005e",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::calculation",
+          "token": "token(0x0400008B)"
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "stelem.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "newarr",
+          "operand": "UnityEngine.AnimationCurve",
+          "token": "token(0x0100000B)"
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::curves",
+          "token": "token(0x0400009A)"
+        },
+        {
+          "offset": "IL_0072",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0073",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::curves",
+          "token": "token(0x0400009A)"
+        },
+        {
+          "offset": "IL_0078",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0079",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007a",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::animCurve",
+          "token": "token(0x0400008A)"
+        },
+        {
+          "offset": "IL_007f",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.FsmAnimationCurve::curve",
+          "token": "token(0x0A0000B4)"
+        },
+        {
+          "offset": "IL_0084",
+          "opcode": "stelem.ref",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0085",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0086",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::Init",
+          "token": "token(0x060000C6)"
+        },
+        {
+          "offset": "IL_008b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AnimateFloatV2",
+      "method": "OnExit",
+      "token": "0x060000c1",
+      "rva": "0x4b1c",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 1,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AnimateFloatV2",
+      "method": "OnUpdate",
+      "token": "0x060000c2",
+      "rva": "0x4fd0",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 149,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::OnUpdate",
+          "token": "token(0x060000C7)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::floatVariable",
+          "token": "token(0x04000089)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.NamedVariable::get_IsNone",
+          "token": "token(0x0A00003B)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "brtrue.s",
+          "operand": "IL_002e",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::isRunning",
+          "token": "token(0x040000A0)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "brfalse.s",
+          "operand": "IL_002e",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::floatVariable",
+          "token": "token(0x04000089)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::resultFloats",
+          "token": "token(0x0400009C)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ldelem.r4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::set_Value",
+          "token": "token(0x0A0000C0)"
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::finishInNextStep",
+          "token": "token(0x0400008C)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "brfalse.s",
+          "operand": "IL_005d",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::looping",
+          "token": "token(0x040000A1)"
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "brtrue.s",
+          "operand": "IL_005d",
+          "token": null
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::Finish",
+          "token": "token(0x0A0000B8)"
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::finishEvent",
+          "token": "token(0x04000091)"
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "brfalse.s",
+          "operand": "IL_005d",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::get_Fsm",
+          "token": "token(0x0A00002B)"
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::finishEvent",
+          "token": "token(0x04000091)"
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.Fsm::Event",
+          "token": "token(0x0A0000B9)"
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005e",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::finishAction",
+          "token": "token(0x0400009F)"
+        },
+        {
+          "offset": "IL_0063",
+          "opcode": "brfalse.s",
+          "operand": "IL_0094",
+          "token": null
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::finishInNextStep",
+          "token": "token(0x0400008C)"
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "brtrue.s",
+          "operand": "IL_0094",
+          "token": null
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006e",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::floatVariable",
+          "token": "token(0x04000089)"
+        },
+        {
+          "offset": "IL_0073",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.NamedVariable::get_IsNone",
+          "token": "token(0x0A00003B)"
+        },
+        {
+          "offset": "IL_0078",
+          "opcode": "brtrue.s",
+          "operand": "IL_008d",
+          "token": null
+        },
+        {
+          "offset": "IL_007a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007b",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::floatVariable",
+          "token": "token(0x04000089)"
+        },
+        {
+          "offset": "IL_0080",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0081",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::resultFloats",
+          "token": "token(0x0400009C)"
+        },
+        {
+          "offset": "IL_0086",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0087",
+          "opcode": "ldelem.r4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0088",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::set_Value",
+          "token": "token(0x0A0000C0)"
+        },
+        {
+          "offset": "IL_008d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008e",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008f",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFloatV2::finishInNextStep",
+          "token": "token(0x0400008C)"
+        },
+        {
+          "offset": "IL_0094",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.AnimateFloatV2",
+      "method": ".ctor",
+      "token": "0x060000c3",
+      "rva": "0x4d7d",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.Actions.AnimateFsmAction::.ctor",
+          "token": "token(0x060000CC)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.ScaleTime",
+      "method": "Reset",
+      "token": "0x06000d97",
+      "rva": "0x31474",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 36,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmFloat::op_Implicit",
+          "token": "token(0x0A0000DA)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.ScaleTime::timeScale",
+          "token": "token(0x04000EFF)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmBool::op_Implicit",
+          "token": "token(0x0A0000D1)"
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.ScaleTime::adjustFixedDeltaTime",
+          "token": "token(0x04000F00)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.ScaleTime::everyFrame",
+          "token": "token(0x04000F01)"
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.ScaleTime",
+      "method": "OnEnter",
+      "token": "0x06000d98",
+      "rva": "0x31499",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 21,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.Actions.ScaleTime::DoTimeScale",
+          "token": "token(0x06000D9A)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.ScaleTime::everyFrame",
+          "token": "token(0x04000F01)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "brtrue.s",
+          "operand": "IL_0014",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::Finish",
+          "token": "token(0x0A0000B8)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.ScaleTime",
+      "method": "OnUpdate",
+      "token": "0x06000d99",
+      "rva": "0x314af",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.Actions.ScaleTime::DoTimeScale",
+          "token": "token(0x06000D9A)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.ScaleTime",
+      "method": "DoTimeScale",
+      "token": "0x06000d9a",
+      "rva": "0x314b7",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 46,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.ScaleTime::timeScale",
+          "token": "token(0x04000EFF)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::get_Value",
+          "token": "token(0x0A000034)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "UnityEngine.Time::set_timeScale",
+          "token": "token(0x0A00053A)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.ScaleTime::adjustFixedDeltaTime",
+          "token": "token(0x04000F00)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmBool::get_Value",
+          "token": "token(0x0A0000C6)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "brfalse.s",
+          "operand": "IL_002d",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldc.r4",
+          "operand": "0.019999999552965164",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "call",
+          "operand": "UnityEngine.Time::get_timeScale",
+          "token": "token(0x0A000537)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "mul",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "call",
+          "operand": "UnityEngine.Time::set_fixedDeltaTime",
+          "token": "token(0x0A00053B)"
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.ScaleTime",
+      "method": ".ctor",
+      "token": "0x06000d9b",
+      "rva": "0x4f16",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::.ctor",
+          "token": "token(0x0A0000C2)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

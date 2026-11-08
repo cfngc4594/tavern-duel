@@ -1,0 +1,43 @@
+{
+  "status": "source_equation_matches_existing_outline_branch_under_recorded_conditions",
+  "source_shader": {
+    "key": "v32-win-globalgamemanagers.assets:29",
+    "name": "Hidden/TextOutline_Unlit",
+    "locale": "zhCN",
+    "locale_enum": 9,
+    "rich_text": true,
+    "outline": true,
+    "bold": false,
+    "selection_evidence": "damage_runtime_constants.json and damage_ubertext_runtime.cil.*: zhCN=9, thTH=15. Only locale15 uses 2pass; richText=true does not select NoVertColor."
+  },
+  "source_shader_object_sha256": "bae1837b8bae3b1d10b80c48bc490edfa2cabc7264ee1eb05af33596dc559482",
+  "vertex_dxbc_sha256": "9f41eeff69b70fb2b23f2dc4cd8cd718706fc539258b099e7850e0cc470f4f8b",
+  "fragment_dxbc_sha256": "6ae4cd441b6dd207a56fbdab72d80442a9bf95c8af96a208ee8364657b238a04",
+  "original_alpha_equation": "saturate(sum of 9 atlas alpha taps) * vertexColor.a * _Color.a",
+  "original_rgb_equation": "centerAtlasAlpha * (vertexColor.rgb * _Color.rgb - _OutlineColor.rgb) + _OutlineColor.rgb",
+  "tap_offsets": "center; four diagonal (+/-0.600000024*outlineX, +/-0.600000024*outlineY); (+/-outlineX,0); (0,+/-outlineY)",
+  "compared_file": "/workspace/scratch/bb17e9e89c3a/v32_work/TavernDuel/assets/native_cards/source_glyph_spatial.gdshader",
+  "compared_file_sha256": "304586df79d2144be24d07bad50d40a66b02c070e734abb8e861e58dab363b35",
+  "conditions": [
+    "text_tint represents vertexColor * _Color",
+    "_MainTex_ST is (1,1,0,0), as applicable to dynamic glyph atlas",
+    "atlas_texel * outline_texels equals original _OutlineOffsetX/Y",
+    "Original sample_b uses _GlobalMipBias. A no-mipmap glyph atlas has no selectable lower mip.",
+    "Existing mask_backend_inverse is a separate Godot backend color conversion, not part of original shader equation."
+  ],
+  "original_render_state": {
+    "Cull": 2,
+    "ZWrite": 0,
+    "ZTest": 4,
+    "RGBBlend": [
+      5,
+      10
+    ],
+    "AlphaBlend": [
+      5,
+      10
+    ]
+  },
+  "godot_render_state_caveat": "blend_mix matches original RGB factors, but Godot target-alpha factors can differ. A transparent offscreen/capture route must apply the existing source-alpha blend bridge. Direct RGB over an opaque board is not changed by target-alpha write factors.",
+  "scope": "Static source compiled equation and state comparison. Does not claim final glyph atlas rasterization, pixel placement, or framebuffer pixels have been runtime-validated."
+}

@@ -1,0 +1,35 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hero/Particle/FX Particle Additive Alpha 2Layer" {
+Properties {
+
+_Color ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_MainTex ("Texture", 2D) = "white" { }
+
+_AlphaNoise ("Alpha Noise Texture", 2D) = "white" { }
+
+_AlphaIntensity ("Alpha Intensity", Float) = 0.5
+
+_Scale ("Alpha Noise Scale", Float) = 1.0
+
+_USpeed ("Alpha Noise U Speed", Float) = 1.0
+
+_VSpeed ("Alpha Noise V Speed", Float) = 1.0
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 11961
+}
+}
+}

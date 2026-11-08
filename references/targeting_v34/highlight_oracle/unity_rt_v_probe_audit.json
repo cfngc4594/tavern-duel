@@ -1,0 +1,73 @@
+{
+  "environment": {
+    "unityVersion": "6000.3.10f1",
+    "graphicsAPI": "Metal",
+    "graphicsDevice": "Apple M3",
+    "activeColorSpace": "Gamma",
+    "projectColorSpace": "Gamma"
+  },
+  "checks": {
+    "exact_temporary_six_argument_overload": true,
+    "no_source_wrap_assignment": true,
+    "no_gettemporary_substitution": true,
+    "actual_graphics_device_guard": true,
+    "sample_shader_v_axis": true,
+    "sample_coords": true,
+    "edge_strip_clamp": true,
+    "pattern_top_high_bottom_low": true
+  },
+  "all_passed": true,
+  "edge_rgba_pixels": [
+    [
+      51,
+      0,
+      0,
+      255
+    ],
+    [
+      51,
+      0,
+      0,
+      255
+    ],
+    [
+      204,
+      0,
+      0,
+      255
+    ],
+    [
+      204,
+      0,
+      0,
+      255
+    ]
+  ],
+  "source_files": [
+    {
+      "file": "v34_work/unity_rt_v_probe/extracted/TemporaryRTVProbe.cs",
+      "sha256": "2d95237c20fe2b1b71b60496f42a46c33e50dbd6fdcf635c9dd89aecc9bc0e7f"
+    },
+    {
+      "file": "v34_work/unity_rt_v_probe/extracted/RTProbeSampleV.shader",
+      "sha256": "449738415b067a201f82b8f58467073e002b55ab0ff137ae3bd08ae9c58abfe1"
+    },
+    {
+      "file": "v34_work/unity_rt_v_probe/extracted/RTProbePatternV.shader",
+      "sha256": "c6c84a6c5e81f725d111de96ae7b1aa38e6fe9c640a1092832a3a0a4ead9cf96"
+    },
+    {
+      "file": "v34_work/unity_rt_v_probe/extracted/temporary-v-edge.json",
+      "sha256": "d0585053759f3d62c4f02fcb934e99109121968e14cfaee9673105f62d3e615d"
+    },
+    {
+      "file": "v34_work/unity_rt_v_probe/extracted/temporary-v-edge-samples.png",
+      "sha256": "aeceec4930399b2fd3a3571cde312a7b67b5aba1965ece740fe7b08c8f8b0414"
+    },
+    {
+      "file": "v34_work/unity_rt_v_probe/extracted/temporary-v-pattern.png",
+      "sha256": "57a3958c85b4df2b2e29bd17b79bb7cbd72373975e23b094c8deec6ab5fb3c75"
+    }
+  ],
+  "conclusion": "Exact source CommandBuffer six-argument temporary R8 path uses Clamp V in measured Unity6000.3.10f1 Metal/Gamma environment. Combined with U probe, both sampled2D axes are measuredClamp. TemporaryW and managedproperties are not inferred. Audit worker only read supplied artifacts."
+}

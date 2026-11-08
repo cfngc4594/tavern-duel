@@ -1,0 +1,1216 @@
+
+TYPE CameraShaker 0x02002be3
+FIELD 0x04011fa4 m_Amount SIG 06115d
+FIELD 0x04011fa5 m_IntensityCurve SIG 06128501
+FIELD 0x04011fa6 m_Hold SIG 0602
+FIELD 0x04011fa7 m_HoldAtSec SIG 060c
+FIELD 0x04011fa8 m_IsOverride SIG 0602
+
+TYPE HighlightExclude 0x02002c29
+FIELD 0x040121eb ExcludeChildren SIG 0602
+
+TYPE OffScreenRenderFX 0x02002c45
+FIELD 0x04012311 ObjectToRender SIG 0612808d
+FIELD 0x04012312 UseBounds SIG 0602
+FIELD 0x04012313 RenderResolutionX SIG 0608
+FIELD 0x04012314 RenderResolutionY SIG 0608
+FIELD 0x04012315 AboveClip SIG 060c
+FIELD 0x04012316 BelowClip SIG 060c
+FIELD 0x04012317 ForceSize SIG 060c
+FIELD 0x04012318 CameraRect SIG 061141
+FIELD 0x04012319 offscreenFXCamera SIG 061280e9
+FIELD 0x0401231a offscreenFXCameraGO SIG 0612808d
+FIELD 0x0401231b tempRenderBuffer SIG 06128315
+FIELD 0x0401231c IgnoreLayer SIG 0608
+FIELD 0x0401231d Yoffset SIG 060c
+FIELD 0x0401231e RenderBounds SIG 06118185
+FIELD 0x0401231f s_Yoffset SIG 060c
+FIELD 0x04012320 s_Xoffset SIG 060c
+
+TYPE ParticlePlaybackSpeed 0x02002c4b
+FIELD 0x04012331 m_ParticlePlaybackSpeed SIG 060c
+FIELD 0x04012332 m_RestoreSpeedOnDisable SIG 0602
+FIELD 0x04012333 m_PreviousPlaybackSpeed SIG 060c
+FIELD 0x04012334 m_OrgPlaybackSpeed SIG 06151281a1021282790c
+FIELD 0x04012335 m_ParticleSystems SIG 0615124901128279
+
+TYPE PlayNewParticles 0x02002c4f
+FIELD 0x04012345 m_Target SIG 0612808d
+FIELD 0x04012346 m_Target2 SIG 0612808d
+FIELD 0x04012347 m_Target3 SIG 0612808d
+FIELD 0x04012348 m_Target4 SIG 0612808d
+
+TYPE RotateOverTime 0x02002c90
+FIELD 0x04012553 RotateSpeedX SIG 060c
+FIELD 0x04012554 RotateSpeedY SIG 060c
+FIELD 0x04012555 RotateSpeedZ SIG 060c
+FIELD 0x04012556 RandomStartX SIG 0602
+FIELD 0x04012557 RandomStartY SIG 0602
+FIELD 0x04012558 RandomStartZ SIG 0602
+
+TYPE ScrollingUVs 0x02002c98
+FIELD 0x0401257c materialIndex SIG 0608
+FIELD 0x0401257d uvAnimationRate SIG 061175
+FIELD 0x0401257e m_material SIG 061280b9
+FIELD 0x0401257f m_offset SIG 061175
+FIELD 0x04012580 m_renderer SIG 061280d1
+
+TYPE SelfAnimUtils 0x02002c99
+
+TYPE SetRenderQue 0x02002c9c
+FIELD 0x04012584 queue SIG 0608
+FIELD 0x04012585 includeChildren SIG 0602
+FIELD 0x04012586 queues SIG 061d08
+FIELD 0x04012587 m_Renderer SIG 061280d1
+
+TYPE Spinner 0x02002cab
+FIELD 0x040125bf SpeedX SIG 060c
+FIELD 0x040125c0 SpeedY SIG 060c
+
+0x0601508c CameraShaker::StartShake() RVA 0x62f47c SIG 200001
+  IL_0000 ldloca.s       local(0x0000) 
+  IL_0002 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f8015c50830> token(0x1B000478)
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          CameraShaker::m_Hold token(0x04011FA6)
+  IL_000e brfalse.s      IL_001d 
+  IL_0010 ldloca.s       local(0x0000) 
+  IL_0012 ldarg.0         
+  IL_0013 ldfld          CameraShaker::m_HoldAtSec token(0x04011FA7)
+  IL_0018 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8015c50830>::.ctor token(0x0A0011DF)
+  IL_001d call           UnityEngine.Camera::get_main token(0x0A000580)
+  IL_0022 ldarg.0         
+  IL_0023 ldfld          CameraShaker::m_Amount token(0x04011FA4)
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          CameraShaker::m_IntensityCurve token(0x04011FA5)
+  IL_002e ldloc.0         
+  IL_002f ldarg.0         
+  IL_0030 ldfld          CameraShaker::m_IsOverride token(0x04011FA8)
+  IL_0035 call           CameraShakeMgr::Shake token(0x06015081)
+  IL_003a ret             
+
+0x0601508d CameraShaker::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             
+
+0x06015270 HighlightExclude::.ctor() RVA 0x638a49 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          HighlightExclude::ExcludeChildren token(0x040121EB)
+  IL_0007 ldarg.0         
+  IL_0008 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_000d ret             
+
+0x060152ff OffScreenRenderFX::Start() RVA 0x63cc5c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          OffScreenRenderFX::UseBounds token(0x04012312)
+  IL_0006 brfalse.s      IL_0020 
+  IL_0008 ldarg.0         
+  IL_0009 call           UnityEngine.Component::GetComponent<spec> token(0x2B0001F9)
+  IL_000e callvirt       UnityEngine.MeshFilter::get_mesh token(0x0A000056)
+  IL_0013 stloc.0         
+  IL_0014 ldarg.0         
+  IL_0015 ldloc.0         
+  IL_0016 callvirt       UnityEngine.Mesh::get_bounds token(0x0A000B6F)
+  IL_001b stfld          OffScreenRenderFX::RenderBounds token(0x0401231E)
+  IL_0020 ldarg.0         
+  IL_0021 ldsfld         OffScreenRenderFX::s_Yoffset token(0x0401231F)
+  IL_0026 stfld          OffScreenRenderFX::Yoffset token(0x0401231D)
+  IL_002b ldsfld         OffScreenRenderFX::s_Yoffset token(0x0401231F)
+  IL_0030 ldc.r4         10.0 
+  IL_0035 add             
+  IL_0036 stsfld         OffScreenRenderFX::s_Yoffset token(0x0401231F)
+  IL_003b ldarg.0         
+  IL_003c call           OffScreenRenderFX::PositionObjectToRender token(0x06015306)
+  IL_0041 ldarg.0         
+  IL_0042 call           OffScreenRenderFX::CreateCamera token(0x06015301)
+  IL_0047 ldarg.0         
+  IL_0048 call           OffScreenRenderFX::CreateRenderTexture token(0x06015304)
+  IL_004d ldarg.0         
+  IL_004e call           OffScreenRenderFX::SetupCamera token(0x06015302)
+  IL_0053 ldarg.0         
+  IL_0054 call           OffScreenRenderFX::SetupMaterial token(0x06015305)
+  IL_0059 ldarg.0         
+  IL_005a call           UnityEngine.Component::GetComponent<spec> token(0x2B000024)
+  IL_005f ldc.i4.1        
+  IL_0060 callvirt       UnityEngine.Renderer::set_enabled token(0x0A00022D)
+  IL_0065 ret             
+
+0x06015300 OffScreenRenderFX::OnDestroy() RVA 0x63ccce SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          OffScreenRenderFX::tempRenderBuffer token(0x0401231B)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_000c brfalse.s      IL_0026 
+  IL_000e ldarg.0         
+  IL_000f ldfld          OffScreenRenderFX::tempRenderBuffer token(0x0401231B)
+  IL_0014 callvirt       UnityEngine.RenderTexture::IsCreated token(0x0A0050F3)
+  IL_0019 brfalse.s      IL_0026 
+  IL_001b ldarg.0         
+  IL_001c ldfld          OffScreenRenderFX::tempRenderBuffer token(0x0401231B)
+  IL_0021 call           UnityEngine.RenderTexture::ReleaseTemporary token(0x0A004060)
+  IL_0026 ret             
+
+0x06015301 OffScreenRenderFX::CreateCamera() RVA 0x63ccf8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          OffScreenRenderFX::offscreenFXCameraGO token(0x0401231A)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_007c 
+  IL_000e ldarg.0         
+  IL_000f ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0014 ldnull          
+  IL_0015 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_001a brfalse.s      IL_0027 
+  IL_001c ldarg.0         
+  IL_001d ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0022 call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_0027 ldarg.0         
+  IL_0028 newobj         UnityEngine.GameObject::.ctor token(0x0A000583)
+  IL_002d stfld          OffScreenRenderFX::offscreenFXCameraGO token(0x0401231A)
+  IL_0032 ldarg.0         
+  IL_0033 ldarg.0         
+  IL_0034 ldfld          OffScreenRenderFX::offscreenFXCameraGO token(0x0401231A)
+  IL_0039 callvirt       UnityEngine.GameObject::AddComponent<spec> token(0x2B0002B5)
+  IL_003e stfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0043 ldarg.0         
+  IL_0044 ldfld          OffScreenRenderFX::offscreenFXCameraGO token(0x0401231A)
+  IL_0049 ldarg.0         
+  IL_004a call           UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_004f ldstr          '_OffScreenFXCamera' string token(0x703F7865)
+  IL_0054 call           System.String::Concat token(0x0A0000C0)
+  IL_0059 callvirt       UnityEngine.Object::set_name token(0x0A000050)
+  IL_005e ldarg.0         
+  IL_005f ldfld          OffScreenRenderFX::offscreenFXCameraGO token(0x0401231A)
+  IL_0064 ldc.i4.s       61 
+  IL_0066 call           Blizzard.T5.Core.Utils.GameObjectUtils::SetHideFlags token(0x0A00112E)
+  IL_006b call           UniversalInputManager::Get token(0x060145BB)
+  IL_0070 ldarg.0         
+  IL_0071 ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0076 callvirt       UniversalInputManager::AddIgnoredCamera token(0x060145E6)
+  IL_007b pop             
+  IL_007c ret             
+
+0x06015302 OffScreenRenderFX::SetupCamera() RVA 0x63cd84 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0006 ldc.i4.1        
+  IL_0007 callvirt       UnityEngine.Camera::set_orthographic token(0x0A001122)
+  IL_000c ldarg.0         
+  IL_000d call           OffScreenRenderFX::UpdateOffScreenCamera token(0x06015303)
+  IL_0012 ldarg.0         
+  IL_0013 ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0018 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_001d ldarg.0         
+  IL_001e call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0023 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_002e ldarg.0         
+  IL_002f ldfld          OffScreenRenderFX::AboveClip token(0x04012315)
+  IL_0034 neg             
+  IL_0035 callvirt       UnityEngine.Camera::set_nearClipPlane token(0x0A001123)
+  IL_003a ldarg.0         
+  IL_003b ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0040 ldarg.0         
+  IL_0041 ldfld          OffScreenRenderFX::BelowClip token(0x04012316)
+  IL_0046 callvirt       UnityEngine.Camera::set_farClipPlane token(0x0A001124)
+  IL_004b ldarg.0         
+  IL_004c ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0051 ldarg.0         
+  IL_0052 ldfld          OffScreenRenderFX::tempRenderBuffer token(0x0401231B)
+  IL_0057 callvirt       UnityEngine.Camera::set_targetTexture token(0x0A000584)
+  IL_005c ldarg.0         
+  IL_005d ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0062 call           UnityEngine.Camera::get_main token(0x0A000580)
+  IL_0067 callvirt       UnityEngine.Camera::get_depth token(0x0A001125)
+  IL_006c ldc.r4         1.0 
+  IL_0071 sub             
+  IL_0072 callvirt       UnityEngine.Camera::set_depth token(0x0A001126)
+  IL_0077 ldarg.0         
+  IL_0078 ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_007d call           UnityEngine.Color::get_black token(0x0A000989)
+  IL_0082 callvirt       UnityEngine.Camera::set_backgroundColor token(0x0A001127)
+  IL_0087 ldarg.0         
+  IL_0088 ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_008d ldc.i4.2        
+  IL_008e callvirt       UnityEngine.Camera::set_clearFlags token(0x0A001128)
+  IL_0093 ldarg.0         
+  IL_0094 ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0099 ldarg.0         
+  IL_009a ldfld          OffScreenRenderFX::CameraRect token(0x04012318)
+  IL_009f callvirt       UnityEngine.Camera::set_rect token(0x0A00510F)
+  IL_00a4 ldarg.0         
+  IL_00a5 ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_00aa ldc.i4.1        
+  IL_00ab callvirt       UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_00b0 ldarg.0         
+  IL_00b1 ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_00b6 ldc.i4.0        
+  IL_00b7 callvirt       UnityEngine.Camera::set_allowHDR token(0x0A00112B)
+  IL_00bc ret             
+
+0x06015303 OffScreenRenderFX::UpdateOffScreenCamera() RVA 0x63ce50 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          OffScreenRenderFX::ObjectToRender token(0x04012311)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_000f 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          OffScreenRenderFX::ForceSize token(0x04012317)
+  IL_0015 ldc.r4         0.0 
+  IL_001a bne.un.s       IL_005c 
+  IL_001c ldarg.0         
+  IL_001d call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0022 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0027 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_002c stloc.0         
+  IL_002d ldarg.0         
+  IL_002e ldfld          OffScreenRenderFX::UseBounds token(0x04012312)
+  IL_0033 brfalse.s      IL_0048 
+  IL_0035 ldloc.0         
+  IL_0036 ldarg.0         
+  IL_0037 ldflda         OffScreenRenderFX::RenderBounds token(0x0401231E)
+  IL_003c call           UnityEngine.Bounds::get_size token(0x0A0003DA)
+  IL_0041 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0046 mul             
+  IL_0047 stloc.0         
+  IL_0048 ldarg.0         
+  IL_0049 ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_004e ldloc.0         
+  IL_004f ldc.r4         2.0 
+  IL_0054 div             
+  IL_0055 callvirt       UnityEngine.Camera::set_orthographicSize token(0x0A001132)
+  IL_005a br.s           IL_006d 
+  IL_005c ldarg.0         
+  IL_005d ldfld          OffScreenRenderFX::offscreenFXCamera token(0x04012319)
+  IL_0062 ldarg.0         
+  IL_0063 ldfld          OffScreenRenderFX::ForceSize token(0x04012317)
+  IL_0068 callvirt       UnityEngine.Camera::set_orthographicSize token(0x0A001132)
+  IL_006d ldarg.0         
+  IL_006e ldfld          OffScreenRenderFX::offscreenFXCameraGO token(0x0401231A)
+  IL_0073 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0078 ldarg.0         
+  IL_0079 ldfld          OffScreenRenderFX::ObjectToRender token(0x04012311)
+  IL_007e callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0083 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0088 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_008d ldarg.0         
+  IL_008e ldfld          OffScreenRenderFX::offscreenFXCameraGO token(0x0401231A)
+  IL_0093 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0098 ldarg.0         
+  IL_0099 ldfld          OffScreenRenderFX::ObjectToRender token(0x04012311)
+  IL_009e callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_00a3 callvirt       UnityEngine.Transform::get_rotation token(0x0A000B4F)
+  IL_00a8 callvirt       UnityEngine.Transform::set_rotation token(0x0A000B50)
+  IL_00ad ldarg.0         
+  IL_00ae ldfld          OffScreenRenderFX::offscreenFXCameraGO token(0x0401231A)
+  IL_00b3 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_00b8 ldc.r4         90.0 
+  IL_00bd ldc.r4         180.0 
+  IL_00c2 ldc.r4         0.0 
+  IL_00c7 callvirt       UnityEngine.Transform::Rotate token(0x0A00112D)
+  IL_00cc ret             
+
+0x06015304 OffScreenRenderFX::CreateRenderTexture() RVA 0x63cf29 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 ldfld          OffScreenRenderFX::RenderResolutionX token(0x04012313)
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          OffScreenRenderFX::RenderResolutionY token(0x04012314)
+  IL_000d ldc.i4.s       24 
+  IL_000f call           UnityEngine.RenderTexture::GetTemporary token(0x0A004061)
+  IL_0014 stfld          OffScreenRenderFX::tempRenderBuffer token(0x0401231B)
+  IL_0019 ret             
+
+0x06015305 OffScreenRenderFX::SetupMaterial() RVA 0x63cf44 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000007)
+  IL_000b call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x0A000222)
+  IL_0010 ldarg.0         
+  IL_0011 ldfld          OffScreenRenderFX::tempRenderBuffer token(0x0401231B)
+  IL_0016 callvirt       UnityEngine.Material::set_mainTexture token(0x0A0000AE)
+  IL_001b ret             
+
+0x06015306 OffScreenRenderFX::PositionObjectToRender() RVA 0x63cf64 SIG 200001
+  IL_0000 call           UnityEngine.Vector3::get_up token(0x0A0000E4)
+  IL_0005 ldarg.0         
+  IL_0006 ldfld          OffScreenRenderFX::Yoffset token(0x0401231D)
+  IL_000b call           UnityEngine.Vector3::op_Multiply token(0x0A0000DF)
+  IL_0010 stloc.0         
+  IL_0011 call           UnityEngine.Vector3::get_right token(0x0A0000DE)
+  IL_0016 ldsfld         OffScreenRenderFX::s_Xoffset token(0x04012320)
+  IL_001b call           UnityEngine.Vector3::op_Multiply token(0x0A0000DF)
+  IL_0020 stloc.1         
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          OffScreenRenderFX::ObjectToRender token(0x04012311)
+  IL_0027 ldnull          
+  IL_0028 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_002d brfalse.s      IL_0067 
+  IL_002f ldarg.0         
+  IL_0030 ldfld          OffScreenRenderFX::ObjectToRender token(0x04012311)
+  IL_0035 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_003a dup             
+  IL_003b callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0040 ldloc.0         
+  IL_0041 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0046 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_004b ldarg.0         
+  IL_004c ldfld          OffScreenRenderFX::ObjectToRender token(0x04012311)
+  IL_0051 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0056 dup             
+  IL_0057 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_005c ldloc.1         
+  IL_005d call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0062 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0067 ret             
+
+0x06015307 OffScreenRenderFX::.ctor() RVA 0x63cfd8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          OffScreenRenderFX::UseBounds token(0x04012312)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4         256 
+  IL_000d stfld          OffScreenRenderFX::RenderResolutionX token(0x04012313)
+  IL_0012 ldarg.0         
+  IL_0013 ldc.i4         256 
+  IL_0018 stfld          OffScreenRenderFX::RenderResolutionY token(0x04012314)
+  IL_001d ldarg.0         
+  IL_001e ldc.r4         1.0 
+  IL_0023 stfld          OffScreenRenderFX::AboveClip token(0x04012315)
+  IL_0028 ldarg.0         
+  IL_0029 ldc.r4         1.0 
+  IL_002e stfld          OffScreenRenderFX::BelowClip token(0x04012316)
+  IL_0033 ldarg.0         
+  IL_0034 ldc.r4         0.0 
+  IL_0039 ldc.r4         0.0 
+  IL_003e ldc.r4         1.0 
+  IL_0043 ldc.r4         1.0 
+  IL_0048 newobj         UnityEngine.Rect::.ctor token(0x0A000027)
+  IL_004d stfld          OffScreenRenderFX::CameraRect token(0x04012318)
+  IL_0052 ldarg.0         
+  IL_0053 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0058 ret             
+
+0x06015308 OffScreenRenderFX::.cctor() RVA 0x63d03d SIG 000001
+  IL_0000 ldc.r4         250.0 
+  IL_0005 stsfld         OffScreenRenderFX::s_Yoffset token(0x0401231F)
+  IL_000a ldc.r4         250.0 
+  IL_000f stsfld         OffScreenRenderFX::s_Xoffset token(0x04012320)
+  IL_0014 ret             
+
+0x06015313 ParticlePlaybackSpeed::Start() RVA 0x63d796 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           ParticlePlaybackSpeed::Init token(0x06015317)
+  IL_0006 ret             
+
+0x06015314 ParticlePlaybackSpeed::Update() RVA 0x63d7a0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ParticlePlaybackSpeed::m_ParticlePlaybackSpeed token(0x04012331)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          ParticlePlaybackSpeed::m_PreviousPlaybackSpeed token(0x04012333)
+  IL_000c bne.un.s       IL_000f 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldarg.0         
+  IL_0011 ldfld          ParticlePlaybackSpeed::m_ParticlePlaybackSpeed token(0x04012331)
+  IL_0016 stfld          ParticlePlaybackSpeed::m_PreviousPlaybackSpeed token(0x04012333)
+  IL_001b ldc.i4.0        
+  IL_001c stloc.0         
+  IL_001d br.s           IL_0067 
+  IL_001f ldarg.0         
+  IL_0020 ldfld          ParticlePlaybackSpeed::m_ParticleSystems token(0x04012335)
+  IL_0025 ldloc.0         
+  IL_0026 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f801580d8b0>::get_Item token(0x0A005111)
+  IL_002b stloc.1         
+  IL_002c ldloc.1         
+  IL_002d call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0032 brfalse.s      IL_004e 
+  IL_0034 ldloc.1         
+  IL_0035 callvirt       UnityEngine.ParticleSystem::get_main token(0x0A000F82)
+  IL_003a stloc.2         
+  IL_003b ldloca.s       local(0x0002) 
+  IL_003d ldarg.0         
+  IL_003e ldfld          ParticlePlaybackSpeed::m_ParticlePlaybackSpeed token(0x04012331)
+  IL_0043 call           MainModule::set_simulationSpeed token(0x0A00511B)
+  IL_0048 ldloc.0         
+  IL_0049 ldc.i4.1        
+  IL_004a add             
+  IL_004b stloc.0         
+  IL_004c br.s           IL_0067 
+  IL_004e ldarg.0         
+  IL_004f ldfld          ParticlePlaybackSpeed::m_OrgPlaybackSpeed token(0x04012334)
+  IL_0054 ldloc.1         
+  IL_0055 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8015721fa0>::Remove token(0x0A00511C)
+  IL_005a pop             
+  IL_005b ldarg.0         
+  IL_005c ldfld          ParticlePlaybackSpeed::m_ParticleSystems token(0x04012335)
+  IL_0061 ldloc.0         
+  IL_0062 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f801580d8b0>::RemoveAt token(0x0A00511D)
+  IL_0067 ldloc.0         
+  IL_0068 ldarg.0         
+  IL_0069 ldfld          ParticlePlaybackSpeed::m_ParticleSystems token(0x04012335)
+  IL_006e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f801580d8b0>::get_Count token(0x0A005110)
+  IL_0073 blt.s          IL_001f 
+  IL_0075 ret             
+
+0x06015315 ParticlePlaybackSpeed::OnDisable() RVA 0x63d824 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ParticlePlaybackSpeed::m_RestoreSpeedOnDisable token(0x04012332)
+  IL_0006 brfalse.s      IL_005f 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          ParticlePlaybackSpeed::m_OrgPlaybackSpeed token(0x04012334)
+  IL_000e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8015721fa0>::GetEnumerator token(0x0A00511E)
+  IL_0013 stloc.0         
+  IL_0014 br.s           IL_0046 
+  IL_0016 ldloca.s       local(0x0000) 
+  IL_0018 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8015722150>::get_Current token(0x0A00511F)
+  IL_001d stloc.1         
+  IL_001e ldloca.s       local(0x0001) 
+  IL_0020 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8015722300>::get_Key token(0x0A005120)
+  IL_0025 stloc.2         
+  IL_0026 ldloca.s       local(0x0001) 
+  IL_0028 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8015722300>::get_Value token(0x0A005121)
+  IL_002d stloc.3         
+  IL_002e ldloc.2         
+  IL_002f call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0034 brfalse.s      IL_0046 
+  IL_0036 ldloc.2         
+  IL_0037 callvirt       UnityEngine.ParticleSystem::get_main token(0x0A000F82)
+  IL_003c stloc.s        local(0x0004) 
+  IL_003e ldloca.s       local(0x0004) 
+  IL_0040 ldloc.3         
+  IL_0041 call           MainModule::set_simulationSpeed token(0x0A00511B)
+  IL_0046 ldloca.s       local(0x0000) 
+  IL_0048 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8015722150>::MoveNext token(0x0A005122)
+  IL_004d brtrue.s       IL_0016 
+  IL_004f leave.s        IL_005f 
+  IL_0051 ldloca.s       local(0x0000) 
+  IL_0053 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8015722150> token(0x1B001347)
+  IL_0059 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_005e endfinally      
+  IL_005f ldarg.0         
+  IL_0060 ldc.r4         -10000000.0 
+  IL_0065 stfld          ParticlePlaybackSpeed::m_PreviousPlaybackSpeed token(0x04012333)
+  IL_006a ldarg.0         
+  IL_006b ldfld          ParticlePlaybackSpeed::m_ParticleSystems token(0x04012335)
+  IL_0070 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f801580d8b0>::Clear token(0x0A004210)
+  IL_0075 ldarg.0         
+  IL_0076 ldfld          ParticlePlaybackSpeed::m_OrgPlaybackSpeed token(0x04012334)
+  IL_007b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8015721fa0>::Clear token(0x0A005123)
+  IL_0080 ret             
+
+0x06015316 ParticlePlaybackSpeed::OnEnable() RVA 0x63d796 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           ParticlePlaybackSpeed::Init token(0x06015317)
+  IL_0006 ret             
+
+0x06015317 ParticlePlaybackSpeed::Init() RVA 0x63d8c4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ParticlePlaybackSpeed::m_ParticleSystems token(0x04012335)
+  IL_0006 brtrue.s       IL_0015 
+  IL_0008 ldarg.0         
+  IL_0009 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f801580d8b0>::.ctor token(0x0A00420B)
+  IL_000e stfld          ParticlePlaybackSpeed::m_ParticleSystems token(0x04012335)
+  IL_0013 br.s           IL_0020 
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          ParticlePlaybackSpeed::m_ParticleSystems token(0x04012335)
+  IL_001b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f801580d8b0>::Clear token(0x0A004210)
+  IL_0020 ldarg.0         
+  IL_0021 ldfld          ParticlePlaybackSpeed::m_OrgPlaybackSpeed token(0x04012334)
+  IL_0026 brtrue.s       IL_0035 
+  IL_0028 ldarg.0         
+  IL_0029 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f8015721fa0>::.ctor token(0x0A005124)
+  IL_002e stfld          ParticlePlaybackSpeed::m_OrgPlaybackSpeed token(0x04012334)
+  IL_0033 br.s           IL_0040 
+  IL_0035 ldarg.0         
+  IL_0036 ldfld          ParticlePlaybackSpeed::m_OrgPlaybackSpeed token(0x04012334)
+  IL_003b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8015721fa0>::Clear token(0x0A005123)
+  IL_0040 ldarg.0         
+  IL_0041 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0046 callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B0007AC)
+  IL_004b stloc.0         
+  IL_004c ldc.i4.0        
+  IL_004d stloc.1         
+  IL_004e br.s           IL_007e 
+  IL_0050 ldloc.0         
+  IL_0051 ldloc.1         
+  IL_0052 ldelem.ref      
+  IL_0053 stloc.2         
+  IL_0054 ldarg.0         
+  IL_0055 ldfld          ParticlePlaybackSpeed::m_OrgPlaybackSpeed token(0x04012334)
+  IL_005a ldloc.2         
+  IL_005b ldloc.2         
+  IL_005c callvirt       UnityEngine.ParticleSystem::get_main token(0x0A000F82)
+  IL_0061 stloc.3         
+  IL_0062 ldloca.s       local(0x0003) 
+  IL_0064 call           MainModule::get_simulationSpeed token(0x0A005125)
+  IL_0069 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8015721fa0>::Add token(0x0A005126)
+  IL_006e ldarg.0         
+  IL_006f ldfld          ParticlePlaybackSpeed::m_ParticleSystems token(0x04012335)
+  IL_0074 ldloc.2         
+  IL_0075 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f801580d8b0>::Add token(0x0A00420E)
+  IL_007a ldloc.1         
+  IL_007b ldc.i4.1        
+  IL_007c add             
+  IL_007d stloc.1         
+  IL_007e ldloc.1         
+  IL_007f ldloc.0         
+  IL_0080 ldlen           
+  IL_0081 conv.i4         
+  IL_0082 blt.s          IL_0050 
+  IL_0084 ret             
+
+0x06015318 ParticlePlaybackSpeed::.ctor() RVA 0x63d955 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         1.0 
+  IL_0006 stfld          ParticlePlaybackSpeed::m_ParticlePlaybackSpeed token(0x04012331)
+  IL_000b ldarg.0         
+  IL_000c ldc.i4.1        
+  IL_000d stfld          ParticlePlaybackSpeed::m_RestoreSpeedOnDisable token(0x04012332)
+  IL_0012 ldarg.0         
+  IL_0013 ldc.r4         1.0 
+  IL_0018 stfld          ParticlePlaybackSpeed::m_PreviousPlaybackSpeed token(0x04012333)
+  IL_001d ldarg.0         
+  IL_001e call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0023 ret             
+
+0x06015326 PlayNewParticles::PlayNewParticles3() RVA 0x63db31 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayNewParticles::m_Target token(0x04012345)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_000f 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          PlayNewParticles::m_Target token(0x04012345)
+  IL_0015 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0002B4)
+  IL_001a callvirt       UnityEngine.ParticleSystem::Play token(0x0A000C61)
+  IL_001f ret             
+
+0x06015327 PlayNewParticles::StopNewParticles3() RVA 0x63db52 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayNewParticles::m_Target token(0x04012345)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_000f 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          PlayNewParticles::m_Target token(0x04012345)
+  IL_0015 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0002B4)
+  IL_001a callvirt       UnityEngine.ParticleSystem::Stop token(0x0A000D19)
+  IL_001f ret             
+
+0x06015328 PlayNewParticles::PlayNewParticles3andChilds() RVA 0x63db73 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayNewParticles::m_Target2 token(0x04012346)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_000f 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          PlayNewParticles::m_Target2 token(0x04012346)
+  IL_0015 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0002B4)
+  IL_001a ldc.i4.1        
+  IL_001b callvirt       UnityEngine.ParticleSystem::Play token(0x0A004233)
+  IL_0020 ret             
+
+0x06015329 PlayNewParticles::StopNewParticles3andChilds() RVA 0x63db95 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayNewParticles::m_Target2 token(0x04012346)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_000f 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          PlayNewParticles::m_Target2 token(0x04012346)
+  IL_0015 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0002B4)
+  IL_001a ldc.i4.1        
+  IL_001b callvirt       UnityEngine.ParticleSystem::Stop token(0x0A005127)
+  IL_0020 ret             
+
+0x0601532a PlayNewParticles::PlayNewParticles3andChilds2() RVA 0x63dbb7 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayNewParticles::m_Target3 token(0x04012347)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_000f 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          PlayNewParticles::m_Target3 token(0x04012347)
+  IL_0015 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0002B4)
+  IL_001a ldc.i4.1        
+  IL_001b callvirt       UnityEngine.ParticleSystem::Play token(0x0A004233)
+  IL_0020 ret             
+
+0x0601532b PlayNewParticles::StopNewParticles3andChilds2() RVA 0x63dbd9 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayNewParticles::m_Target3 token(0x04012347)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_000f 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          PlayNewParticles::m_Target3 token(0x04012347)
+  IL_0015 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0002B4)
+  IL_001a ldc.i4.1        
+  IL_001b callvirt       UnityEngine.ParticleSystem::Stop token(0x0A005127)
+  IL_0020 ret             
+
+0x0601532c PlayNewParticles::PlayNewParticles3andChilds3() RVA 0x63dbfb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayNewParticles::m_Target4 token(0x04012348)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_000f 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          PlayNewParticles::m_Target4 token(0x04012348)
+  IL_0015 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0002B4)
+  IL_001a ldc.i4.1        
+  IL_001b callvirt       UnityEngine.ParticleSystem::Play token(0x0A004233)
+  IL_0020 ret             
+
+0x0601532d PlayNewParticles::StopNewParticles3andChilds3() RVA 0x63dc1d SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayNewParticles::m_Target4 token(0x04012348)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_000f 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          PlayNewParticles::m_Target4 token(0x04012348)
+  IL_0015 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0002B4)
+  IL_001a ldc.i4.1        
+  IL_001b callvirt       UnityEngine.ParticleSystem::Stop token(0x0A005127)
+  IL_0020 ret             
+
+0x0601532e PlayNewParticles::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             
+
+0x060154d2 RotateOverTime::Start() RVA 0x647c88 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          RotateOverTime::RandomStartX token(0x04012556)
+  IL_0006 brfalse.s      IL_0024 
+  IL_0008 ldarg.0         
+  IL_0009 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_000e call           UnityEngine.Vector3::get_left token(0x0A0000E2)
+  IL_0013 ldc.i4.0        
+  IL_0014 ldc.i4         360 
+  IL_0019 call           UnityEngine.Random::Range token(0x0A000433)
+  IL_001e conv.r4         
+  IL_001f callvirt       UnityEngine.Transform::Rotate token(0x0A0003C3)
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          RotateOverTime::RandomStartY token(0x04012557)
+  IL_002a brfalse.s      IL_0048 
+  IL_002c ldarg.0         
+  IL_002d call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0032 call           UnityEngine.Vector3::get_up token(0x0A0000E4)
+  IL_0037 ldc.i4.0        
+  IL_0038 ldc.i4         360 
+  IL_003d call           UnityEngine.Random::Range token(0x0A000433)
+  IL_0042 conv.r4         
+  IL_0043 callvirt       UnityEngine.Transform::Rotate token(0x0A0003C3)
+  IL_0048 ldarg.0         
+  IL_0049 ldfld          RotateOverTime::RandomStartZ token(0x04012558)
+  IL_004e brfalse.s      IL_006c 
+  IL_0050 ldarg.0         
+  IL_0051 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0056 call           UnityEngine.Vector3::get_forward token(0x0A0000E7)
+  IL_005b ldc.i4.0        
+  IL_005c ldc.i4         360 
+  IL_0061 call           UnityEngine.Random::Range token(0x0A000433)
+  IL_0066 conv.r4         
+  IL_0067 callvirt       UnityEngine.Transform::Rotate token(0x0A0003C3)
+  IL_006c ret             
+
+0x060154d3 RotateOverTime::Update() RVA 0x647d04 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 call           UnityEngine.Vector3::get_left token(0x0A0000E2)
+  IL_000b call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+  IL_0010 ldarg.0         
+  IL_0011 ldfld          RotateOverTime::RotateSpeedX token(0x04012553)
+  IL_0016 mul             
+  IL_0017 ldc.i4.1        
+  IL_0018 callvirt       UnityEngine.Transform::Rotate token(0x0A0051AB)
+  IL_001d ldarg.0         
+  IL_001e call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0023 call           UnityEngine.Vector3::get_up token(0x0A0000E4)
+  IL_0028 call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+  IL_002d ldarg.0         
+  IL_002e ldfld          RotateOverTime::RotateSpeedY token(0x04012554)
+  IL_0033 mul             
+  IL_0034 ldc.i4.1        
+  IL_0035 callvirt       UnityEngine.Transform::Rotate token(0x0A0051AB)
+  IL_003a ldarg.0         
+  IL_003b call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0040 call           UnityEngine.Vector3::get_forward token(0x0A0000E7)
+  IL_0045 call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+  IL_004a ldarg.0         
+  IL_004b ldfld          RotateOverTime::RotateSpeedZ token(0x04012555)
+  IL_0050 mul             
+  IL_0051 ldc.i4.1        
+  IL_0052 callvirt       UnityEngine.Transform::Rotate token(0x0A0051AB)
+  IL_0057 ret             
+
+0x060154d4 RotateOverTime::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             
+
+0x06015503 ScrollingUVs::Start() RVA 0x648546 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 call           UnityEngine.Component::GetComponent<spec> token(0x2B000024)
+  IL_0007 stfld          ScrollingUVs::m_renderer token(0x04012580)
+  IL_000c ldarg.0         
+  IL_000d ldarg.0         
+  IL_000e ldfld          ScrollingUVs::m_renderer token(0x04012580)
+  IL_0013 ldarg.0         
+  IL_0014 ldfld          ScrollingUVs::materialIndex token(0x0401257C)
+  IL_0019 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x0A0002C2)
+  IL_001e stfld          ScrollingUVs::m_material token(0x0401257E)
+  IL_0023 ret             
+
+0x06015504 ScrollingUVs::LateUpdate() RVA 0x64856c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ScrollingUVs::m_renderer token(0x04012580)
+  IL_0006 callvirt       UnityEngine.Renderer::get_enabled token(0x0A000D18)
+  IL_000b brtrue.s       IL_000e 
+  IL_000d ret             
+  IL_000e ldarg.0         
+  IL_000f ldfld          ScrollingUVs::m_material token(0x0401257E)
+  IL_0014 ldnull          
+  IL_0015 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001a brfalse.s      IL_0033 
+  IL_001c ldarg.0         
+  IL_001d ldarg.0         
+  IL_001e ldfld          ScrollingUVs::m_renderer token(0x04012580)
+  IL_0023 ldarg.0         
+  IL_0024 ldfld          ScrollingUVs::materialIndex token(0x0401257C)
+  IL_0029 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x0A0002C2)
+  IL_002e stfld          ScrollingUVs::m_material token(0x0401257E)
+  IL_0033 ldarg.0         
+  IL_0034 ldarg.0         
+  IL_0035 ldfld          ScrollingUVs::m_offset token(0x0401257F)
+  IL_003a ldarg.0         
+  IL_003b ldfld          ScrollingUVs::uvAnimationRate token(0x0401257D)
+  IL_0040 call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+  IL_0045 call           UnityEngine.Vector2::op_Multiply token(0x0A000AF5)
+  IL_004a call           UnityEngine.Vector2::op_Addition token(0x0A000DA4)
+  IL_004f stfld          ScrollingUVs::m_offset token(0x0401257F)
+  IL_0054 ldarg.0         
+  IL_0055 ldfld          ScrollingUVs::m_material token(0x0401257E)
+  IL_005a ldstr          '_MainTex' string token(0x700003AB)
+  IL_005f ldarg.0         
+  IL_0060 ldfld          ScrollingUVs::m_offset token(0x0401257F)
+  IL_0065 callvirt       UnityEngine.Material::SetTextureOffset token(0x0A000318)
+  IL_006a ret             
+
+0x06015505 ScrollingUVs::.ctor() RVA 0x6485e3 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         1.0 
+  IL_0006 ldc.r4         1.0 
+  IL_000b newobj         UnityEngine.Vector2::.ctor token(0x0A00004E)
+  IL_0010 stfld          ScrollingUVs::uvAnimationRate token(0x0401257D)
+  IL_0015 ldarg.0         
+  IL_0016 call           UnityEngine.Vector2::get_zero token(0x0A000238)
+  IL_001b stfld          ScrollingUVs::m_offset token(0x0401257F)
+  IL_0020 ldarg.0         
+  IL_0021 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0026 ret             
+
+0x06015506 SelfAnimUtils::PrintLog(message) RVA 0x64860b SIG 2001010e
+  IL_0000 ldarg.1         
+  IL_0001 call           UnityEngine.Debug::Log token(0x0A0001D7)
+  IL_0006 ret             
+
+0x06015507 SelfAnimUtils::PrintLogWarning(message) RVA 0x648613 SIG 2001010e
+  IL_0000 ldarg.1         
+  IL_0001 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0006 ret             
+
+0x06015508 SelfAnimUtils::PrintLogError(message) RVA 0x64861b SIG 2001010e
+  IL_0000 ldarg.1         
+  IL_0001 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0006 ret             
+
+0x06015509 SelfAnimUtils::PlayAnimation() RVA 0x648624 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldloca.s       local(0x0000) 
+  IL_0003 call           UnityEngine.Component::TryGetComponent<spec> token(0x2B00095B)
+  IL_0008 brfalse.s      IL_0011 
+  IL_000a ldloc.0         
+  IL_000b callvirt       UnityEngine.Animation::Play token(0x0A0002F2)
+  IL_0010 pop             
+  IL_0011 ret             
+
+0x0601550a SelfAnimUtils::StopAnimation() RVA 0x648644 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldloca.s       local(0x0000) 
+  IL_0003 call           UnityEngine.Component::TryGetComponent<spec> token(0x2B00095B)
+  IL_0008 brfalse.s      IL_0010 
+  IL_000a ldloc.0         
+  IL_000b callvirt       UnityEngine.Animation::Stop token(0x0A000C6C)
+  IL_0010 ret             
+
+0x0601550b SelfAnimUtils::ActivateHierarchy() RVA 0x5806c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.i4.1        
+  IL_0007 callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_000c ret             
+
+0x0601550c SelfAnimUtils::DeactivateHierarchy() RVA 0x5807a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.i4.0        
+  IL_0007 callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_000c ret             
+
+0x0601550d SelfAnimUtils::DestroyHierarchy() RVA 0x72b0e SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_000b ret             
+
+0x0601550e SelfAnimUtils::FadeIn(FadeSec) RVA 0x648661 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.r4         1.0 
+  IL_000b ldarg.1         
+  IL_000c call           iTween::FadeTo token(0x0A0009F7)
+  IL_0011 ret             
+
+0x0601550f SelfAnimUtils::FadeOut(FadeSec) RVA 0x648674 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.r4         0.0 
+  IL_000b ldarg.1         
+  IL_000c call           iTween::FadeTo token(0x0A0009F7)
+  IL_0011 ret             
+
+0x06015510 SelfAnimUtils::SetAlphaHierarchy(alpha) RVA 0x648688 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::GetComponentsInChildren<spec> token(0x2B00016F)
+  IL_0006 stloc.0         
+  IL_0007 ldc.i4.0        
+  IL_0008 stloc.1         
+  IL_0009 br.s           IL_003b 
+  IL_000b ldloc.0         
+  IL_000c ldloc.1         
+  IL_000d ldelem.ref      
+  IL_000e call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x0A000222)
+  IL_0013 stloc.2         
+  IL_0014 ldloc.2         
+  IL_0015 ldstr          '_Color' string token(0x70005D88)
+  IL_001a callvirt       UnityEngine.Material::HasProperty token(0x0A00039A)
+  IL_001f brfalse.s      IL_0037 
+  IL_0021 ldloc.2         
+  IL_0022 callvirt       UnityEngine.Material::get_color token(0x0A0009E9)
+  IL_0027 stloc.3         
+  IL_0028 ldloca.s       local(0x0003) 
+  IL_002a ldarg.1         
+  IL_002b stfld          UnityEngine.Color::a token(0x0A00039E)
+  IL_0030 ldloc.2         
+  IL_0031 ldloc.3         
+  IL_0032 callvirt       UnityEngine.Material::set_color token(0x0A0009ED)
+  IL_0037 ldloc.1         
+  IL_0038 ldc.i4.1        
+  IL_0039 add             
+  IL_003a stloc.1         
+  IL_003b ldloc.1         
+  IL_003c ldloc.0         
+  IL_003d ldlen           
+  IL_003e conv.i4         
+  IL_003f blt.s          IL_000b 
+  IL_0041 ret             
+
+0x06015511 SelfAnimUtils::PlayDefaultSound() RVA 0x6486d8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldloca.s       local(0x0000) 
+  IL_0003 call           UnityEngine.Component::TryGetComponent<spec> token(0x2B0009E2)
+  IL_0008 brtrue.s       IL_0020 
+  IL_000a ldstr          'SelfAnimUtils.PlayDefaultSound() - Tried to play the AudioSource on {0} but it has no AudioSource. You need an AudioSource to use this function.' string token(0x703F8E52)
+  IL_000f ldarg.0         
+  IL_0010 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0015 call           System.String::Format token(0x0A0000B7)
+  IL_001a call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_001f ret             
+  IL_0020 call           SoundManager::Get token(0x06014710)
+  IL_0025 brtrue.s       IL_002e 
+  IL_0027 ldloc.0         
+  IL_0028 callvirt       UnityEngine.AudioSource::Play token(0x0A0036D8)
+  IL_002d ret             
+  IL_002e call           SoundManager::Get token(0x06014710)
+  IL_0033 ldloc.0         
+  IL_0034 ldnull          
+  IL_0035 ldnull          
+  IL_0036 ldnull          
+  IL_0037 callvirt       SoundManager::Play token(0x06014719)
+  IL_003c pop             
+  IL_003d ret             
+
+0x06015512 SelfAnimUtils::PlaySound(clip) RVA 0x648724 SIG 20010112c000aaf8
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_001f 
+  IL_0009 ldstr          'SelfAnimUtils.PlayDefaultSound() - No clip was given when trying to play the AudioSource on {0}. You need a clip to use this function.' string token(0x703F8F75)
+  IL_000e ldarg.0         
+  IL_000f call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0014 call           System.String::Format token(0x0A0000B7)
+  IL_0019 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_001e ret             
+  IL_001f ldarg.0         
+  IL_0020 ldloca.s       local(0x0000) 
+  IL_0022 call           UnityEngine.Component::TryGetComponent<spec> token(0x2B0009E2)
+  IL_0027 brtrue.s       IL_0040 
+  IL_0029 ldstr          'SelfAnimUtils.PlayDefaultSound() - Tried to play clip {0} on {1} but it has no AudioSource. You need an AudioSource to use this function.' string token(0x703F9084)
+  IL_002e ldarg.1         
+  IL_002f ldarg.0         
+  IL_0030 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0035 call           System.String::Format token(0x0A0000D1)
+  IL_003a call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_003f ret             
+  IL_0040 call           SoundManager::Get token(0x06014710)
+  IL_0045 brtrue.s       IL_0061 
+  IL_0047 ldstr          'TargetAnimutils2: SoundManager is null attempting to play {0}' string token(0x703F9199)
+  IL_004c ldc.i4.1        
+  IL_004d newarr         System.Object token(0x01000001)
+  IL_0052 dup             
+  IL_0053 ldc.i4.0        
+  IL_0054 ldarg.1         
+  IL_0055 ldfld          SoundDef::m_AudioClip token(0x04011A0B)
+  IL_005a stelem.ref      
+  IL_005b call           UnityEngine.Debug::LogErrorFormat token(0x0A000168)
+  IL_0060 ret             
+  IL_0061 call           SoundManager::Get token(0x06014710)
+  IL_0066 ldloc.0         
+  IL_0067 ldarg.1         
+  IL_0068 ldc.r4         1.0 
+  IL_006d ldnull          
+  IL_006e callvirt       SoundManager::PlayOneShot token(0x0601471B)
+  IL_0073 pop             
+  IL_0074 ret             
+
+0x06015513 SelfAnimUtils::RandomRotationX() RVA 0x6487a5 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.r4         0.0 
+  IL_000b ldc.r4         360.0 
+  IL_0010 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0015 call           TransformUtil::SetEulerAngleX token(0x06014FDE)
+  IL_001a ret             
+
+0x06015514 SelfAnimUtils::RandomRotationY() RVA 0x6487c1 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.r4         0.0 
+  IL_000b ldc.r4         360.0 
+  IL_0010 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0015 call           TransformUtil::SetEulerAngleY token(0x06014FDF)
+  IL_001a ret             
+
+0x06015515 SelfAnimUtils::RandomRotationZ() RVA 0x6487dd SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.r4         0.0 
+  IL_000b ldc.r4         360.0 
+  IL_0010 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0015 call           TransformUtil::SetEulerAngleZ token(0x06014FE0)
+  IL_001a ret             
+
+0x06015516 SelfAnimUtils::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             
+
+0x0601551c SetRenderQue::Awake() RVA 0x64886d SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 call           UnityEngine.Component::GetComponent<spec> token(0x2B000024)
+  IL_0007 stfld          SetRenderQue::m_Renderer token(0x04012587)
+  IL_000c ret             
+
+0x0601551d SetRenderQue::Start() RVA 0x64887c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          SetRenderQue::includeChildren token(0x04012585)
+  IL_0006 brfalse.s      IL_003f 
+  IL_0008 ldarg.0         
+  IL_0009 call           UnityEngine.Component::GetComponentsInChildren<spec> token(0x2B00016F)
+  IL_000e stloc.0         
+  IL_000f ldc.i4.0        
+  IL_0010 stloc.1         
+  IL_0011 br.s           IL_0037 
+  IL_0013 ldloc.0         
+  IL_0014 ldloc.1         
+  IL_0015 ldelem.ref      
+  IL_0016 stloc.2         
+  IL_0017 ldloc.2         
+  IL_0018 ldnull          
+  IL_0019 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001e brtrue.s       IL_0033 
+  IL_0020 ldloc.2         
+  IL_0021 dup             
+  IL_0022 callvirt       UnityEngine.Renderer::get_sortingOrder token(0x0A0027EB)
+  IL_0027 ldarg.0         
+  IL_0028 ldfld          SetRenderQue::queue token(0x04012584)
+  IL_002d add             
+  IL_002e callvirt       UnityEngine.Renderer::set_sortingOrder token(0x0A000995)
+  IL_0033 ldloc.1         
+  IL_0034 ldc.i4.1        
+  IL_0035 add             
+  IL_0036 stloc.1         
+  IL_0037 ldloc.1         
+  IL_0038 ldloc.0         
+  IL_0039 ldlen           
+  IL_003a conv.i4         
+  IL_003b blt.s          IL_0013 
+  IL_003d br.s           IL_0066 
+  IL_003f ldarg.0         
+  IL_0040 ldfld          SetRenderQue::m_Renderer token(0x04012587)
+  IL_0045 ldnull          
+  IL_0046 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_004b brfalse.s      IL_004e 
+  IL_004d ret             
+  IL_004e ldarg.0         
+  IL_004f ldfld          SetRenderQue::m_Renderer token(0x04012587)
+  IL_0054 dup             
+  IL_0055 callvirt       UnityEngine.Renderer::get_sortingOrder token(0x0A0027EB)
+  IL_005a ldarg.0         
+  IL_005b ldfld          SetRenderQue::queue token(0x04012584)
+  IL_0060 add             
+  IL_0061 callvirt       UnityEngine.Renderer::set_sortingOrder token(0x0A000995)
+  IL_0066 ldarg.0         
+  IL_0067 call           SetRenderQue::Run token(0x0601551E)
+  IL_006c ret             
+
+0x0601551e SetRenderQue::Run() RVA 0x6488f8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          SetRenderQue::queues token(0x04012586)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldfld          SetRenderQue::m_Renderer token(0x04012587)
+  IL_000f ldnull          
+  IL_0010 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0015 brfalse.s      IL_0018 
+  IL_0017 ret             
+  IL_0018 ldarg.0         
+  IL_0019 ldfld          SetRenderQue::m_Renderer token(0x04012587)
+  IL_001e call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetSharedMaterials token(0x0A000CA2)
+  IL_0023 stloc.0         
+  IL_0024 ldloc.0         
+  IL_0025 brtrue.s       IL_0028 
+  IL_0027 ret             
+  IL_0028 ldloc.0         
+  IL_0029 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8015d00da0>::get_Count token(0x0A0001D3)
+  IL_002e stloc.1         
+  IL_002f ldc.i4.0        
+  IL_0030 stloc.2         
+  IL_0031 br             IL_00cb 
+  IL_0036 ldarg.0         
+  IL_0037 ldfld          SetRenderQue::queues token(0x04012586)
+  IL_003c ldloc.2         
+  IL_003d ldelem.i4       
+  IL_003e stloc.3         
+  IL_003f ldloc.3         
+  IL_0040 brfalse        IL_00c7 
+  IL_0045 ldloc.3         
+  IL_0046 ldarg.0         
+  IL_0047 ldfld          SetRenderQue::queue token(0x04012584)
+  IL_004c beq.s          IL_00c7 
+  IL_004e ldarg.0         
+  IL_004f ldfld          SetRenderQue::m_Renderer token(0x04012587)
+  IL_0054 ldloc.2         
+  IL_0055 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetSharedMaterial token(0x0A000FF2)
+  IL_005a stloc.s        local(0x0004) 
+  IL_005c ldloc.s        local(0x0004) 
+  IL_005e ldnull          
+  IL_005f call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0064 brtrue.s       IL_00c7 
+  IL_0066 ldloc.3         
+  IL_0067 ldc.i4.0        
+  IL_0068 bge.s          IL_00a1 
+  IL_006a ldstr          "WARNING: Using negative renderQueue for {0}'s {1} (renderQueue = {2})" string token(0x703F927F)
+  IL_006f ldarg.0         
+  IL_0070 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0075 callvirt       UnityEngine.Transform::get_root token(0x0A0050AB)
+  IL_007a callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_007f ldarg.0         
+  IL_0080 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0085 callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_008a ldarg.0         
+  IL_008b ldfld          SetRenderQue::queues token(0x04012586)
+  IL_0090 ldloc.2         
+  IL_0091 ldelem.i4       
+  IL_0092 box            System.Int32 token(0x0100002C)
+  IL_0097 call           System.String::Format token(0x0A0000AF)
+  IL_009c call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_00a1 ldloc.s        local(0x0004) 
+  IL_00a3 newobj         UnityEngine.Material::.ctor token(0x0A0000EA)
+  IL_00a8 stloc.s        local(0x0005) 
+  IL_00aa ldloc.s        local(0x0005) 
+  IL_00ac dup             
+  IL_00ad callvirt       UnityEngine.Material::get_renderQueue token(0x0A00216E)
+  IL_00b2 ldloc.3         
+  IL_00b3 add             
+  IL_00b4 callvirt       UnityEngine.Material::set_renderQueue token(0x0A001133)
+  IL_00b9 ldarg.0         
+  IL_00ba ldfld          SetRenderQue::m_Renderer token(0x04012587)
+  IL_00bf ldloc.2         
+  IL_00c0 ldloc.s        local(0x0005) 
+  IL_00c2 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::SetMaterial token(0x0A00006E)
+  IL_00c7 ldloc.2         
+  IL_00c8 ldc.i4.1        
+  IL_00c9 add             
+  IL_00ca stloc.2         
+  IL_00cb ldloc.2         
+  IL_00cc ldarg.0         
+  IL_00cd ldfld          SetRenderQue::queues token(0x04012586)
+  IL_00d2 ldlen           
+  IL_00d3 conv.i4         
+  IL_00d4 bge.s          IL_00dd 
+  IL_00d6 ldloc.2         
+  IL_00d7 ldloc.1         
+  IL_00d8 blt            IL_0036 
+  IL_00dd ret             
+
+0x0601551f SetRenderQue::.ctor() RVA 0x6489e2 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          SetRenderQue::queue token(0x04012584)
+  IL_0007 ldarg.0         
+  IL_0008 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_000d ret             
+
+0x06015569 Spinner::Update() RVA 0x6497bb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 call           UnityEngine.Vector3::get_right token(0x0A0000DE)
+  IL_000b call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+  IL_0010 ldarg.0         
+  IL_0011 ldfld          Spinner::SpeedX token(0x040125BF)
+  IL_0016 mul             
+  IL_0017 callvirt       UnityEngine.Transform::Rotate token(0x0A0003C3)
+  IL_001c ldarg.0         
+  IL_001d call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0022 call           UnityEngine.Vector3::get_up token(0x0A0000E4)
+  IL_0027 call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+  IL_002c ldarg.0         
+  IL_002d ldfld          Spinner::SpeedY token(0x040125C0)
+  IL_0032 mul             
+  IL_0033 ldc.i4.0        
+  IL_0034 callvirt       UnityEngine.Transform::Rotate token(0x0A0051AB)
+  IL_0039 ret             
+
+0x0601556a Spinner::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             

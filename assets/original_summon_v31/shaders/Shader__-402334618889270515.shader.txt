@@ -1,0 +1,144 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "FX/CommonFX" {
+Properties {
+
+[KeywordEnum (RGBA, RGBR, AAAA, MAKEBW)] _TextureType ("Main Texture type", Float) = 1.0
+
+_Color ("Color", Color) = (1,1,1,1)
+
+_MainTex ("MainTex", 2D) = "white" { }
+
+_ColorMul ("Color Multiplier", Float) = 1.0
+
+_ColorAdd ("Color Additive", Float) = 0.0
+
+_AlphaMul ("Alpha Multiplier", Float) = 1.0
+
+[Toggle] _PremultipliedRGBTexture ("Premultiplied RGB Texture", Float) = 1.0
+
+[KeywordEnum(NONE, RAMP, LOOKUP)] _Coloring ("COLORIZING", Float) = 0.0
+
+_WhiteColor ("White point color", Color) = (1,1,1,0)
+
+_MidColor ("Middle point color", Color) = (1,1,1,0)
+
+_LastColor ("Black point color", Color) = (1,1,0,0)
+
+_MiddlePointPos ("Middle point position", Range(0, 1)) = 0.800000011920929
+
+_LookupTex ("Lookup texture", 2D) = "white" { }
+
+_LookupLine ("Lookup ramp number", Range(0, 31)) = 0.0
+
+[Toggle] _Scrolling ("SCROLLING", Float) = 0.0
+
+_ScrollingSpeed ("Main Texture Scrolling Speed (XY)", Vector) = (0.5,0.5,0,0)
+
+[Toggle] _SwapUV ("Rotate UV by 90 degree", Range(0, 1)) = 0.0
+
+[Toggle] _ClampUV ("Clamp UV", Range(0, 1)) = 0.0
+
+[KeywordEnum(NONE, NoiseUV, Add, Mask, Reflection, Flowmap)] _SecondTexture ("SECOND TEXTURE", Float) = 0.0
+
+[KeywordEnum(RGBA, RGBR, AAAA, MAKEBW)] _SecondTextureType ("Second Texture type", Float) = 1.0
+
+_Color2 ("Second Tex Color", Color) = (1,1,1,1)
+
+_ColorMul2 ("Second Tex Color Multiplier", Float) = 1.0
+
+_SecondTex ("Second Tex", 2D) = "bump" { }
+
+_SecondTexSpeed_NoiseForce ("Speed (XY), Noise Force(ZW) ", Vector) = (0.5,0.5,0.5,0.5)
+
+[Toggle] _SecondTexRotation ("ROTATION", Float) = 0.0
+
+_SecondTexRotSpeed ("Rotation Speed", Float) = 0.0
+
+_SecondTexInitRot ("Initial Rotation", Float) = 0.0
+
+[Toggle] _SecondTexClampUV ("Clamp UV", Range(0, 1)) = 0.0
+
+[Toggle] _SecondTexSwapUV ("Rotate UV by 90 degree", Range(0, 1)) = 0.0
+
+[Toggle] _SecondTexGlobalUV ("Global UV coordinates", Range(0, 1)) = 0.0
+
+[KeywordEnum(NONE, MAINALPHA, SECONDALPHA)] _Dissolve ("DISSOLVE", Float) = 0.0
+
+_DissolveFactor ("Dissolve Factor", Range(0, 1)) = 0.0
+
+_DissolveSmoothness ("Dissolve Smoothness", Range(0, 1)) = 0.10000000149011612
+
+_MinAlpha ("Min Alpha", Float) = 0.0
+
+[Toggle] _IgnoreVertexAlpha ("Ignore Vertex Alpha", Float) = 0.0
+
+[Toggle] _Fresnel ("FRESNEL", Float) = 0.0
+
+_FresnelPower ("Fresnel Power", Float) = 1.0
+
+_FresnelFrontColor ("Fresnel Front color", Color) = (1,1,1,0)
+
+_FresnelFrontColorMultiplier ("Fresnel Front Color Multiplier", Float) = 1.0
+
+_FresnelBorderColor ("Fresnel Side Color", Color) = (1,1,1,1)
+
+_FresnelBorderColorMultiplier ("Fresnel Side Color Multiplier", Float) = 1.0
+
+[Toggle] _FresnelBlend ("Fresnel Mul/Add blend", Float) = 0.0
+
+_GlowColor ("Glow Color", Color) = (1,1,1,1)
+
+_GlowIntensity ("Glow Intensity", Float) = 0.0
+
+_GlowAddMul ("Glow Add/Multiply", Range(0, 1)) = 0.0
+
+[Toggle] _DistanceFadeout ("DISTANCE FADEOUT", Range(0, 1)) = 0.0
+
+[PowerSlider(3.0)] _FadeoutDistance ("fadeout distance", Range(0.01, 1)) = 0.30000001192092896
+
+_FadeoutY ("fadeout Y position", Range(-1, 1)) = -0.05999999865889549
+
+[Toggle] _VertexMask ("VERTEX MASK", Range(0, 1)) = 0.0
+
+_VertexMaskAlphaMul ("Alpha Multiplier", Float) = 1.0
+
+_VertexMaskUVScaleOffset ("UV Scale(XY), Offset(ZW) ", Vector) = (1,1,0,0)
+
+_VertexMaskLinearGradient ("Linear alpha gradient. AlphaMul for UV=(0,0),(1,0),(0,1),(1,1)", Vector) = (1,1,1,1)
+
+[Toggle] _ZWrite ("Z Write", Range(0, 1)) = 0.0
+
+[Enum(UnityEngine.Rendering.CullMode)] _Culling ("Culling", Float) = 0.0
+
+[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlendOutline ("Source Blend mode", Float) = 1.0
+
+[Enum(UnityEngine.Rendering.BlendMode)] _DstBlendOutline ("Destination Blend mode", Float) = 10.0
+
+_Offset1 ("Z Offset 1", Float) = 0.0
+
+_Offset2 ("Z Offset 2", Float) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+ Name "FORWARD"
+  Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "SRPDEFAULTUNLIT" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 14482
+}
+ Pass {
+ Name "GlowTransparent"
+  Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "GlowTransparent" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 126751
+}
+}
+CustomEditor "CommonFXGUI"
+}

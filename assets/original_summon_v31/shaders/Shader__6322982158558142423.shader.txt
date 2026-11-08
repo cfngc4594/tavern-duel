@@ -1,0 +1,40 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Card/Unlit_Desaturate_2Texture2uv" {
+Properties {
+
+_Color ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_MainTex ("Main Texture", 2D) = "white" { }
+
+_SecondTex ("Second Texture", 2D) = "white" { }
+
+_SecondTint ("Second Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_BlendIntensity ("Blend Intensity", Float) = 2.0
+
+_DarkColor ("Dark Color", Color) = (0.3,0.3,0.3,1)
+
+_Desaturate ("Desaturate", Float) = 1.0
+
+_Contrast ("Contrast", Float) = 1.0
+
+_Intensity ("Intensity", Float) = 1.0
+
+_AvgLum ("Average Luminosity", Color) = (0.5,0.5,0.5,1)
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 50751
+}
+}
+Fall back "Utility/HearthstoneFallbackDiffuse"
+}

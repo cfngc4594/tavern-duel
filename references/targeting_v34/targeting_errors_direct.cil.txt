@@ -1,0 +1,572 @@
+
+TYPE GameEntity 0x02000b30
+FIELD 0x04003be8 s_booleanOptions SIG 06151281a10211ad2002
+FIELD 0x04003be9 s_stringOptions SIG 06151281a10211ad200e
+FIELD 0x04003bea m_preloadedSounds SIG 06151281a1020e128351
+FIELD 0x04003beb m_preloadsNeeded SIG 0608
+FIELD 0x04003bec m_realTimeTurn SIG 0608
+FIELD 0x04003bed m_realTimeStep SIG 0608
+FIELD 0x04003bee m_endOfGameSpell SIG 0612c000ac1c
+FIELD 0x04003bef DefaultEmoteHandlerReference SIG 060e
+FIELD 0x04003bf0 BattlegroundsEmoteHandlerReference SIG 060e
+FIELD 0x04003bf1 EnemyEmoteHandlerReference SIG 060e
+FIELD 0x04003bf2 m_destroyHeroTrackingCoroutine SIG 06128171
+FIELD 0x04003bf3 MAX_DESTROY_HERO_TIME SIG 061281d9
+FIELD 0x04003bf4 PetEarlyExitDelaySeconds SIG 060c
+FIELD 0x04003bf5 <Uuid>k__BackingField SIG 060e
+FIELD 0x04003bf6 <OnLoadActions>k__BackingField SIG 061512490112c0007d8c
+FIELD 0x04003bf7 s_coroutines SIG 061235
+FIELD 0x04003bf8 m_gameOptions SIG 0612ad24
+FIELD 0x04003bf9 m_inputBlockerCount SIG 0608
+
+TYPE GameplayErrorManager 0x02000b8e
+FIELD 0x04003d46 GAMEPLAY_ERROR_MANAGER_DATA SIG 06128135
+FIELD 0x04003d47 UI_NO_CAN_DO SIG 06128135
+FIELD 0x04003d48 <Data>k__BackingField SIG 0612ae40
+FIELD 0x04003d49 m_dataAssetHandle SIG 061512812501128121
+FIELD 0x04003d4a s_messageInstance SIG 0612ae30
+FIELD 0x04003d4b m_errorDisplayStyle SIG 061287c1
+FIELD 0x04003d4c m_message SIG 060e
+FIELD 0x04003d4d m_displaySecsLeft SIG 060c
+FIELD 0x04003d4e m_uberText SIG 06128169
+
+TYPE PlayErrors 0x02000c16
+FIELD 0x04004123 s_playErrorsMessages SIG 06151281a10211b05c0e
+
+0x06005476 GameEntity::NotifyOfPlayError(error,errorParam,errorSource) RVA 0x27d75 SIG 20030211b05c151181bd010812c000a320
+  IL_0000 ldc.i4.0        
+  IL_0001 ret             
+
+0x06005513 GameEntity::.cctor() RVA 0x18d2e2 SIG 000001
+  IL_0000 call           GameEntity::InitBooleanOptions token(0x06005441)
+  IL_0005 stsfld         GameEntity::s_booleanOptions token(0x04003BE8)
+  IL_000a call           GameEntity::InitStringOptions token(0x06005442)
+  IL_000f stsfld         GameEntity::s_stringOptions token(0x04003BE9)
+  IL_0014 ret             
+
+0x06005874 GameplayErrorManager::DisplayMessage(message) RVA 0x19a624 SIG 2001010e
+  IL_0000 ldarg.0         
+  IL_0001 call           GameplayErrorManager::LoadUbertextIfNeeded token(0x06005873)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 stfld          GameplayErrorManager::m_message token(0x04003D4C)
+  IL_000d ldarg.0         
+  IL_000e ldarg.1         
+  IL_000f callvirt       System.String::get_Length token(0x0A000314)
+  IL_0014 conv.r4         
+  IL_0015 ldc.r4         0.10000000149011612 
+  IL_001a mul             
+  IL_001b stfld          GameplayErrorManager::m_displaySecsLeft token(0x04003D4D)
+  IL_0020 call           CollectionManager::Get token(0x06000DE6)
+  IL_0025 callvirt       CollectionManager::IsInEditMode token(0x06000E4F)
+  IL_002a brtrue.s       IL_0038 
+  IL_002c call           CollectionManager::Get token(0x06000DE6)
+  IL_0031 callvirt       CollectionManager::IsInEditTeamMode token(0x06000ED7)
+  IL_0036 brfalse.s      IL_0059 
+  IL_0038 ldsfld         GameplayErrorManager::s_messageInstance token(0x04003D4A)
+  IL_003d callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0042 ldarg.0         
+  IL_0043 call           GameplayErrorManager::get_Data token(0x0600586C)
+  IL_0048 ldfld          GameplayErrorManagerData::m_messagePositionInCollectionManager token(0x04003D55)
+  IL_004d call           <dnfile.mdtable.TypeSpecRow object at 0x7f28f9766000>::op_Implicit token(0x0A0003D9)
+  IL_0052 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0057 br.s           IL_00c1 
+  IL_0059 call           TeammateBoardViewer::Get token(0x06006135)
+  IL_005e ldnull          
+  IL_005f call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0064 brfalse.s      IL_00a2 
+  IL_0066 call           TeammateBoardViewer::Get token(0x06006135)
+  IL_006b callvirt       TeammateBoardViewer::IsViewingTeammate token(0x06006136)
+  IL_0070 brfalse.s      IL_00a2 
+  IL_0072 ldsfld         GameplayErrorManager::s_messageInstance token(0x04003D4A)
+  IL_0077 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_007c ldarg.0         
+  IL_007d call           GameplayErrorManager::get_Data token(0x0600586C)
+  IL_0082 ldfld          GameplayErrorManagerData::m_messagePositionInGame token(0x04003D54)
+  IL_0087 call           <dnfile.mdtable.TypeSpecRow object at 0x7f28f9766000>::op_Implicit token(0x0A0003D9)
+  IL_008c call           TeammateBoardViewer::Get token(0x06006135)
+  IL_0091 callvirt       TeammateBoardViewer::GetTeammateBoardPosition token(0x0600615B)
+  IL_0096 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_009b callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_00a0 br.s           IL_00c1 
+  IL_00a2 ldsfld         GameplayErrorManager::s_messageInstance token(0x04003D4A)
+  IL_00a7 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00ac ldarg.0         
+  IL_00ad call           GameplayErrorManager::get_Data token(0x0600586C)
+  IL_00b2 ldfld          GameplayErrorManagerData::m_messagePositionInGame token(0x04003D54)
+  IL_00b7 call           <dnfile.mdtable.TypeSpecRow object at 0x7f28f9766000>::op_Implicit token(0x0A0003D9)
+  IL_00bc callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_00c1 ldarg.0         
+  IL_00c2 ldfld          GameplayErrorManager::m_uberText token(0x04003D4E)
+  IL_00c7 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00cc callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_00d1 ldarg.0         
+  IL_00d2 call           GameplayErrorManager::get_Data token(0x0600586C)
+  IL_00d7 ldfld          GameplayErrorManagerData::m_mobileTextAdjustment token(0x04003D56)
+  IL_00dc call           <dnfile.mdtable.TypeSpecRow object at 0x7f28f9766000>::op_Implicit token(0x0A0003D9)
+  IL_00e1 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_00e6 ldsfld         GameplayErrorManager::s_messageInstance token(0x04003D4A)
+  IL_00eb ldarg.0         
+  IL_00ec ldfld          GameplayErrorManager::m_message token(0x04003D4C)
+  IL_00f1 ldarg.0         
+  IL_00f2 ldfld          GameplayErrorManager::m_displaySecsLeft token(0x04003D4D)
+  IL_00f7 callvirt       GameplayErrorCloud::ShowMessage token(0x06005861)
+  IL_00fc call           SoundManager::Get token(0x06014710)
+  IL_0101 ldsfld         GameplayErrorManager::UI_NO_CAN_DO token(0x04003D47)
+  IL_0106 callvirt       SoundManager::LoadAndPlay token(0x0601472C)
+  IL_010b ret             
+
+0x06005877 GameplayErrorManager::.cctor() RVA 0x19a75b SIG 000001
+  IL_0000 ldstr          'GameplayErrorManagerData.asset:689ac0a55b106ef48b4d1237cdaa189e' string token(0x700836CE)
+  IL_0005 newobj         AssetReference::.ctor token(0x0A00016D)
+  IL_000a stsfld         GameplayErrorManager::GAMEPLAY_ERROR_MANAGER_DATA token(0x04003D46)
+  IL_000f ldstr          'UI_no_can_do.prefab:7b1a22774f818544387c0f2ca4fea02c' string token(0x7008374E)
+  IL_0014 newobj         AssetReference::.ctor token(0x0A00016D)
+  IL_0019 stsfld         GameplayErrorManager::UI_NO_CAN_DO token(0x04003D47)
+  IL_001e ret             
+
+0x06005d53 PlayErrors::DisplayTauntErrorEffects() RVA 0x1bdbb5 SIG 000001
+  IL_0000 call           PlayErrors::CanShowMinionTauntError token(0x06005D52)
+  IL_0005 brfalse.s      IL_0024 
+  IL_0007 call           GameState::Get token(0x06005589)
+  IL_000c callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_0011 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0016 dup             
+  IL_0017 brtrue.s       IL_001c 
+  IL_0019 pop             
+  IL_001a br.s           IL_0024 
+  IL_001c ldc.i4.s       26 
+  IL_001e call           Card::PlayEmote token(0x06012D5F)
+  IL_0023 pop             
+  IL_0024 call           GameState::Get token(0x06005589)
+  IL_0029 callvirt       GameState::ShowEnemyTauntCharacters token(0x06005600)
+  IL_002e ret             
+
+0x06005d56 PlayErrors::.cctor() RVA 0x1be498 SIG 000001
+  IL_0000 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::.ctor token(0x0A00253B)
+  IL_0005 dup             
+  IL_0006 ldc.i4.1        
+  IL_0007 ldstr          'GAMEPLAY_PlayErrors_REQ_MINION_TARGET' string token(0x7008AD3A)
+  IL_000c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0011 dup             
+  IL_0012 ldc.i4         160 
+  IL_0017 ldstr          'GAMEPLAY_PlayErrors_REQ_SPELL_TARGET' string token(0x7008AD86)
+  IL_001c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0021 dup             
+  IL_0022 ldc.i4.2        
+  IL_0023 ldstr          'GAMEPLAY_PlayErrors_REQ_FRIENDLY_TARGET' string token(0x7008ADD0)
+  IL_0028 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_002d dup             
+  IL_002e ldc.i4.3        
+  IL_002f ldstr          'GAMEPLAY_PlayErrors_REQ_ENEMY_TARGET' string token(0x7008AE20)
+  IL_0034 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0039 dup             
+  IL_003a ldc.i4.4        
+  IL_003b ldstr          'GAMEPLAY_PlayErrors_REQ_DAMAGED_TARGET' string token(0x7008AE6A)
+  IL_0040 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0045 dup             
+  IL_0046 ldc.i4.5        
+  IL_0047 ldstr          'GAMEPLAY_PlayErrors_REQ_MAX_SECRETS' string token(0x70089A80)
+  IL_004c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0051 dup             
+  IL_0052 ldc.i4.6        
+  IL_0053 ldstr          'GAMEPLAY_PlayErrors_REQ_FROZEN_TARGET' string token(0x7008AEB8)
+  IL_0058 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_005d dup             
+  IL_005e ldc.i4.7        
+  IL_005f ldstr          'GAMEPLAY_PlayErrors_REQ_CHARGE_TARGET' string token(0x7008AF04)
+  IL_0064 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0069 dup             
+  IL_006a ldc.i4.8        
+  IL_006b ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_MAX_ATTACK' string token(0x70089978)
+  IL_0070 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0075 dup             
+  IL_0076 ldc.i4.s       9 
+  IL_0078 ldstr          'GAMEPLAY_PlayErrors_REQ_NONSELF_TARGET' string token(0x7008AF50)
+  IL_007d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0082 dup             
+  IL_0083 ldc.i4.s       10 
+  IL_0085 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_WITH_RACE' string token(0x700899CC)
+  IL_008a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_008f dup             
+  IL_0090 ldc.i4.s       11 
+  IL_0092 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_TO_PLAY' string token(0x7008AF9E)
+  IL_0097 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_009c dup             
+  IL_009d ldc.i4.s       12 
+  IL_009f ldstr          'GAMEPLAY_PlayErrors_REQ_NUM_MINION_SLOTS' string token(0x7008AFEC)
+  IL_00a4 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_00a9 dup             
+  IL_00aa ldc.i4         163 
+  IL_00af ldstr          'GAMEPLAY_PlayErrors_REQ_NUM_ENEMY_MINION_SLOTS' string token(0x7008B03E)
+  IL_00b4 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_00b9 dup             
+  IL_00ba ldc.i4.s       13 
+  IL_00bc ldstr          'GAMEPLAY_PlayErrors_REQ_WEAPON_EQUIPPED' string token(0x7008B09C)
+  IL_00c1 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_00c6 dup             
+  IL_00c7 ldc.i4.s       15 
+  IL_00c9 ldstr          'GAMEPLAY_PlayErrors_REQ_YOUR_TURN' string token(0x7008B0EC)
+  IL_00ce callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_00d3 dup             
+  IL_00d4 ldc.i4.s       16 
+  IL_00d6 ldstr          'GAMEPLAY_PlayErrors_REQ_NONSTEALTH_ENEMY_TARGET' string token(0x7008B130)
+  IL_00db callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_00e0 dup             
+  IL_00e1 ldc.i4.s       17 
+  IL_00e3 ldstr          'GAMEPLAY_PlayErrors_REQ_HERO_TARGET' string token(0x7008B190)
+  IL_00e8 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_00ed dup             
+  IL_00ee ldc.i4.s       18 
+  IL_00f0 ldstr          'GAMEPLAY_PlayErrors_REQ_SECRET_ZONE_CAP' string token(0x70089B0E)
+  IL_00f5 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_00fa dup             
+  IL_00fb ldc.i4.s       19 
+  IL_00fd ldstr          'GAMEPLAY_PlayErrors_REQ_MINION_CAP_IF_TARGET_AVAILABLE' string token(0x7008B1D8)
+  IL_0102 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0107 dup             
+  IL_0108 ldc.i4.s       20 
+  IL_010a ldstr          'GAMEPLAY_PlayErrors_REQ_MINION_CAP' string token(0x7008B246)
+  IL_010f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0114 dup             
+  IL_0115 ldc.i4.s       21 
+  IL_0117 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_ATTACKED_THIS_TURN' string token(0x7008B28C)
+  IL_011c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0121 dup             
+  IL_0122 ldc.i4.s       22 
+  IL_0124 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_IF_AVAILABLE' string token(0x7008A284)
+  IL_0129 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_012e dup             
+  IL_012f ldc.i4.s       23 
+  IL_0131 ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_ENEMY_MINIONS' string token(0x70089B5E)
+  IL_0136 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_013b dup             
+  IL_013c ldc.i4.s       24 
+  IL_013e ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_FOR_COMBO' string token(0x7008B2F0)
+  IL_0143 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0148 dup             
+  IL_0149 ldc.i4.s       25 
+  IL_014b ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_EXHAUSTED_ACTIVATE' string token(0x7008B342)
+  IL_0150 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0155 dup             
+  IL_0156 ldc.i4.s       26 
+  IL_0158 ldstr          'GAMEPLAY_PlayErrors_REQ_UNIQUE_SECRET' string token(0x7008B3A0)
+  IL_015d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0162 dup             
+  IL_0163 ldc.i4.s       28 
+  IL_0165 ldstr          'GAMEPLAY_PlayErrors_REQ_CAN_BE_ATTACKED' string token(0x7008B3EC)
+  IL_016a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_016f dup             
+  IL_0170 ldc.i4.s       29 
+  IL_0172 ldstr          'GAMEPLAY_PlayErrors_REQ_ACTION_PWR_IS_MASTER_PWR' string token(0x7008B43C)
+  IL_0177 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_017c dup             
+  IL_017d ldc.i4.s       30 
+  IL_017f ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_MAGNET' string token(0x7008B49E)
+  IL_0184 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0189 dup             
+  IL_018a ldc.i4.s       31 
+  IL_018c ldstr          'GAMEPLAY_PlayErrors_REQ_ATTACK_GREATER_THAN_0' string token(0x7008B4EA)
+  IL_0191 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0196 dup             
+  IL_0197 ldc.i4.s       32 
+  IL_0199 ldstr          'GAMEPLAY_PlayErrors_REQ_ATTACKER_NOT_FROZEN' string token(0x7008A6E8)
+  IL_019e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_01a3 dup             
+  IL_01a4 ldc.i4.s       33 
+  IL_01a6 ldstr          'GAMEPLAY_PlayErrors_REQ_HERO_OR_MINION_TARGET' string token(0x7008B546)
+  IL_01ab callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_01b0 dup             
+  IL_01b1 ldc.i4.s       34 
+  IL_01b3 ldstr          'GAMEPLAY_PlayErrors_REQ_CAN_BE_TARGETED_BY_SPELLS' string token(0x7008B5A2)
+  IL_01b8 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_01bd dup             
+  IL_01be ldc.i4.s       35 
+  IL_01c0 ldstr          'GAMEPLAY_PlayErrors_REQ_SUBCARD_IS_PLAYABLE' string token(0x7008B606)
+  IL_01c5 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_01ca dup             
+  IL_01cb ldc.i4.s       36 
+  IL_01cd ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_FOR_NO_COMBO' string token(0x7008B65E)
+  IL_01d2 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_01d7 dup             
+  IL_01d8 ldc.i4.s       37 
+  IL_01da ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_MINION_JUST_PLAYED' string token(0x7008B6B6)
+  IL_01df callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_01e4 dup             
+  IL_01e5 ldc.i4.s       38 
+  IL_01e7 ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_EXHAUSTED_HERO_POWER' string token(0x7008B714)
+  IL_01ec callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_01f1 dup             
+  IL_01f2 ldc.i4.s       39 
+  IL_01f4 ldstr          'GAMEPLAY_PlayErrors_REQ_CAN_BE_TARGETED_BY_OPPONENTS' string token(0x7008B776)
+  IL_01f9 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_01fe dup             
+  IL_01ff ldc.i4.s       40 
+  IL_0201 ldstr          'GAMEPLAY_PlayErrors_REQ_ATTACKER_CAN_ATTACK' string token(0x7008A62C)
+  IL_0206 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_020b dup             
+  IL_020c ldc.i4.s       41 
+  IL_020e ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_MIN_ATTACK' string token(0x70089CA4)
+  IL_0213 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0218 dup             
+  IL_0219 ldc.i4.s       42 
+  IL_021b ldstr          'GAMEPLAY_PlayErrors_REQ_CAN_BE_TARGETED_BY_HERO_POWERS' string token(0x7008B7E0)
+  IL_0220 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0225 dup             
+  IL_0226 ldc.i4.s       43 
+  IL_0228 ldstr          'GAMEPLAY_PlayErrors_REQ_ENEMY_TARGET_NOT_IMMUNE' string token(0x7008B84E)
+  IL_022d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0232 dup             
+  IL_0233 ldc.i4         156 
+  IL_0238 ldstr          'GAMEPLAY_PlayErrors_REQ_ENEMY_TARGET_NOT_IMMUNE_TO_FIRE_SPELLS' string token(0x7008B8AE)
+  IL_023d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0242 dup             
+  IL_0243 ldc.i4.s       44 
+  IL_0245 ldstr          'GAMEPLAY_PlayErrors_REQ_ENTIRE_ENTOURAGE_NOT_IN_PLAY' string token(0x7008B92C)
+  IL_024a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_024f dup             
+  IL_0250 ldc.i4.s       45 
+  IL_0252 ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_TOTAL_MINIONS' string token(0x70089F1A)
+  IL_0257 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_025c dup             
+  IL_025d ldc.i4.s       46 
+  IL_025f ldstr          'GAMEPLAY_PlayErrors_REQ_MUST_TARGET_TAUNTER' string token(0x7008B996)
+  IL_0264 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0269 dup             
+  IL_026a ldc.i4.s       47 
+  IL_026c ldstr          'GAMEPLAY_PlayErrors_REQ_UNDAMAGED_TARGET' string token(0x7008B9EE)
+  IL_0271 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0276 dup             
+  IL_0277 ldc.i4.s       48 
+  IL_0279 ldstr          'GAMEPLAY_PlayErrors_REQ_CAN_BE_TARGETED_BY_BATTLECRIES' string token(0x7008BA40)
+  IL_027e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0283 dup             
+  IL_0284 ldc.i4.s       49 
+  IL_0286 ldstr          'GAMEPLAY_PlayErrors_REQ_STEADY_SHOT' string token(0x7008BAAE)
+  IL_028b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0290 dup             
+  IL_0291 ldc.i4.s       50 
+  IL_0293 ldstr          'GAMEPLAY_PlayErrors_REQ_MINION_OR_ENEMY_HERO' string token(0x7008BAF6)
+  IL_0298 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_029d dup             
+  IL_029e ldc.i4.s       51 
+  IL_02a0 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_IF_AVAILABLE_AND_DRAGON_IN_HAND' string token(0x7008BB50)
+  IL_02a5 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_02aa dup             
+  IL_02ab ldc.i4.s       100 
+  IL_02ad ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_IF_AVAILABLE_AND_PLAYER_HEALTH_CHANGED_THIS_TURN' string token(0x7008BBCE)
+  IL_02b2 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_02b7 dup             
+  IL_02b8 ldc.i4.s       52 
+  IL_02ba ldstr          'GAMEPLAY_PlayErrors_REQ_LEGENDARY_TARGET' string token(0x7008BC6F)
+  IL_02bf callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_02c4 dup             
+  IL_02c5 ldc.i4.s       123 
+  IL_02c7 ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_LEGENDARY_TARGET' string token(0x7008BCC1)
+  IL_02cc callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_02d1 dup             
+  IL_02d2 ldc.i4.s       53 
+  IL_02d4 ldstr          'GAMEPLAY_PlayErrors_REQ_FRIENDLY_MINION_DIED_THIS_TURN' string token(0x7008BD1B)
+  IL_02d9 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_02de dup             
+  IL_02df ldc.i4.s       54 
+  IL_02e1 ldstr          'GAMEPLAY_PlayErrors_REQ_FRIENDLY_MINION_DIED_THIS_GAME' string token(0x7008BD89)
+  IL_02e6 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_02eb dup             
+  IL_02ec ldc.i4.s       90 
+  IL_02ee ldstr          'GAMEPLAY_PlayErrors_REQ_MINION_DIED_THIS_GAME' string token(0x7008BDF7)
+  IL_02f3 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_02f8 dup             
+  IL_02f9 ldc.i4.s       55 
+  IL_02fb ldstr          'GAMEPLAY_PlayErrors_REQ_ENEMY_WEAPON_EQUIPPED' string token(0x7008BE53)
+  IL_0300 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0305 dup             
+  IL_0306 ldc.i4.s       56 
+  IL_0308 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_IF_AVAILABLE_AND_MINIMUM_FRIENDLY_MINIONS' string token(0x7008BEAF)
+  IL_030d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0312 dup             
+  IL_0313 ldc.i4.s       57 
+  IL_0315 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_WITH_BATTLECRY' string token(0x7008BF42)
+  IL_031a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_031f dup             
+  IL_0320 ldc.i4.s       58 
+  IL_0322 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_WITH_DEATHRATTLE' string token(0x7008BF9E)
+  IL_0327 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_032c dup             
+  IL_032d ldc.i4.s       59 
+  IL_032f ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_IF_AVAILABLE_AND_MINIMUM_FRIENDLY_SECRETS' string token(0x7008BFFE)
+  IL_0334 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0339 dup             
+  IL_033a ldc.i4.s       62 
+  IL_033c ldstr          'GAMEPLAY_PlayErrors_REQ_STEALTHED_TARGET' string token(0x7008C091)
+  IL_0341 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0346 dup             
+  IL_0347 ldc.i4.s       63 
+  IL_0349 ldstr          'GAMEPLAY_PlayErrors_REQ_MINION_SLOT_OR_MANA_CRYSTAL_SLOT' string token(0x7008C0E3)
+  IL_034e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0353 dup             
+  IL_0354 ldc.i4.s       64 
+  IL_0356 ldstr          'GAMEPLAY_PlayErrors_REQ_MAX_QUESTS' string token(0x70089AC8)
+  IL_035b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0360 dup             
+  IL_0361 ldc.i4.s       65 
+  IL_0363 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_IF_AVAILABE_AND_ELEMENTAL_PLAYED_LAST_TURN' string token(0x7008C155)
+  IL_0368 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_036d dup             
+  IL_036e ldc.i4.s       66 
+  IL_0370 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_NOT_VAMPIRE' string token(0x7008C1EA)
+  IL_0375 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_037a dup             
+  IL_037b ldc.i4.s       67 
+  IL_037d ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_NOT_DAMAGEABLE_ONLY_BY_WEAPONS' string token(0x7008C240)
+  IL_0382 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0387 dup             
+  IL_0388 ldc.i4.s       68 
+  IL_038a ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_DISABLED_HERO_POWER' string token(0x7008C2BC)
+  IL_038f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0394 dup             
+  IL_0395 ldc.i4.s       69 
+  IL_0397 ldstr          'GAMEPLAY_PlayErrors_REQ_MUST_PLAY_OTHER_CARD_FIRST' string token(0x7008C31C)
+  IL_039c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_03a1 dup             
+  IL_03a2 ldc.i4.s       70 
+  IL_03a4 ldstr          'GAMEPLAY_PlayErrors_REQ_HAND_NOT_FULL' string token(0x7008C382)
+  IL_03a9 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_03ae dup             
+  IL_03af ldc.i4.s       72 
+  IL_03b1 ldstr          'GAMEPLAY_PlayErrors_REQ_CAN_BE_TARGETED_BY_COMBOS' string token(0x7008C3CE)
+  IL_03b6 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_03bb dup             
+  IL_03bc ldc.i4.s       73 
+  IL_03be ldstr          'GAMEPLAY_PlayErrors_REQ_CANNOT_PLAY_THIS' string token(0x7008C432)
+  IL_03c3 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_03c8 dup             
+  IL_03c9 ldc.i4.s       74 
+  IL_03cb ldstr          'GAMEPLAY_PlayErrors_REQ_FRIENDLY_MINIONS_OF_RACE_DIED_THIS_GAME' string token(0x7008C484)
+  IL_03d0 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_03d5 dup             
+  IL_03d6 ldc.i4.s       77 
+  IL_03d8 ldstr          'GAMEPLAY_PlayErrors_REQ_OPPONENT_PLAYED_CARDS_THIS_GAME' string token(0x7008C504)
+  IL_03dd callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_03e2 dup             
+  IL_03e3 ldc.i4.s       80 
+  IL_03e5 ldstr          'GAMEPLAY_PlayErrors_REQ_FRIENDLY_MINION_OF_RACE_DIED_THIS_TURN' string token(0x7008C574)
+  IL_03ea callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_03ef dup             
+  IL_03f0 ldc.i4.s       82 
+  IL_03f2 ldstr          'GAMEPLAY_PlayErrors_REQ_FRIENDLY_MINION_OF_RACE_IN_HAND' string token(0x7008C5F2)
+  IL_03f7 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_03fc dup             
+  IL_03fd ldc.i4.s       86 
+  IL_03ff ldstr          'GAMEPLAY_PlayErrors_REQ_FRIENDLY_DEATHRATTLE_MINION_DIED_THIS_GAME' string token(0x7008C662)
+  IL_0404 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0409 dup             
+  IL_040a ldc.i4.s       89 
+  IL_040c ldstr          'GAMEPLAY_PlayErrors_REQ_FRIENDLY_REBORN_MINION_DIED_THIS_GAME' string token(0x7008C6E9)
+  IL_0411 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0416 dup             
+  IL_0417 ldc.i4.s       78 
+  IL_0419 ldstr          'GAMEPLAY_PlayErrors_REQ_CANNOT_PLAY_THIS' string token(0x7008C432)
+  IL_041e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0423 dup             
+  IL_0424 ldc.i4.s       92 
+  IL_0426 ldstr          'GAMEPLAY_PlayErrors_REQ_CANNOT_PLAY_THIS' string token(0x7008C432)
+  IL_042b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0430 dup             
+  IL_0431 ldc.i4.s       103 
+  IL_0433 ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_MINION_DORMANT' string token(0x70089EC4)
+  IL_0438 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_043d dup             
+  IL_043e ldc.i4.s       104 
+  IL_0440 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_NOT_UNTOUCHABLE' string token(0x7008C765)
+  IL_0445 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_044a dup             
+  IL_044b ldc.i4.s       110 
+  IL_044d ldstr          'GAMEPLAY_PlayErrors_REQ_TWO_OF_A_KIND' string token(0x7008C7C3)
+  IL_0452 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0457 dup             
+  IL_0458 ldc.i4.s       116 
+  IL_045a ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_NOT_HAVE_TAG' string token(0x7008C80F)
+  IL_045f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0464 dup             
+  IL_0465 ldc.i4.s       117 
+  IL_0467 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_MUST_HAVE_TAG' string token(0x7008C867)
+  IL_046c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_0471 dup             
+  IL_0472 ldc.i4.s       111 
+  IL_0474 ldstr          'GAMEPLAY_PlayErrors_REQ_HAS_OVERLOADED_MANA' string token(0x7008C8C1)
+  IL_0479 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_047e dup             
+  IL_047f ldc.i4.s       119 
+  IL_0481 ldstr          'GAMEPLAY_PlayErrors_REQ_TRADEABLE' string token(0x7008C919)
+  IL_0486 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_048b dup             
+  IL_048c ldc.i4         162 
+  IL_0491 ldstr          'GAMEPLAY_PlayErrors_REQ_PREPARE' string token(0x7008C95D)
+  IL_0496 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_049b dup             
+  IL_049c ldc.i4         166 
+  IL_04a1 ldstr          'GAMEPLAY_PlayErrors_REQ_DISGUISED' string token(0x7008C99D)
+  IL_04a6 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_04ab dup             
+  IL_04ac ldc.i4         168 
+  IL_04b1 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_HAS_BONUS_EFFECT' string token(0x7008C9E1)
+  IL_04b6 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_04bb dup             
+  IL_04bc ldc.i4         128 
+  IL_04c1 ldstr          'GAMEPLAY_PlayErrors_REQ_MINIMUM_TAVERN_TIER_LEVEL_TO_PLAY' string token(0x7008A3A6)
+  IL_04c6 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_04cb dup             
+  IL_04cc ldc.i4         129 
+  IL_04d1 ldstr          'GAMEPLAY_PlayErrors_REQ_CARD_TAVERN_TIER_LEVEL_TO_PLAY' string token(0x7008A41A)
+  IL_04d6 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_04db dup             
+  IL_04dc ldc.i4         130 
+  IL_04e1 ldstr          'GAMEPLAY_PlayErrors_REQ_NOT_EXHAUSTED_LOCATION' string token(0x7008A508)
+  IL_04e6 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_04eb dup             
+  IL_04ec ldc.i4         131 
+  IL_04f1 ldstr          'GAMEPLAY_PlayErrors_REQ_LOCATION_TARGET' string token(0x7008CA41)
+  IL_04f6 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_04fb dup             
+  IL_04fc ldc.i4         132 
+  IL_0501 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_SILVER_HAND_RECRUIT' string token(0x7008CA91)
+  IL_0506 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_050b dup             
+  IL_050c ldc.i4         134 
+  IL_0511 ldstr          'GAMEPLAY_PlayErrors_REQ_LOCATION_OR_MINION_TARGET' string token(0x7008CAF7)
+  IL_0516 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_051b dup             
+  IL_051c ldc.i4         135 
+  IL_0521 ldstr          'GAMEPLAY_PlayErrors_REQ_CAN_BE_TARGETED_BY_LOCATIONS' string token(0x7008CB5B)
+  IL_0526 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_052b dup             
+  IL_052c ldc.i4         138 
+  IL_0531 ldstr          'GAMEPLAY_PlayErrors_REQ_HAS_PLAYED_SPELL_THIS_GAME' string token(0x7008CBC5)
+  IL_0536 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_053b dup             
+  IL_053c ldc.i4         141 
+  IL_0541 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_IS_NON_TITAN' string token(0x7008CC2B)
+  IL_0546 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_054b dup             
+  IL_054c ldc.i4         143 
+  IL_0551 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_EXACT_ATTACK' string token(0x70089CF8)
+  IL_0556 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_055b dup             
+  IL_055c ldc.i4         148 
+  IL_0561 ldstr          'GAMEPLAY_PlayErrors_REQ_FRIENDLY_TAUNT_MINION_DIED_THIS_GAME' string token(0x70089F76)
+  IL_0566 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_056b dup             
+  IL_056c ldc.i4         155 
+  IL_0571 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_NOT_IN_PLAY' string token(0x7008CC83)
+  IL_0576 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_057b dup             
+  IL_057c ldc.i4         164 
+  IL_0581 ldstr          'GAMEPLAY_PlayErrors_REQ_TARGET_WITH_SPELL_SCHOOL' string token(0x70089A1E)
+  IL_0586 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_058b dup             
+  IL_058c ldc.i4         999 
+  IL_0591 ldstr          'GAMEPLAY_PlayErrors_REQ_DRAG_TO_PLAY' string token(0x7008CCD9)
+  IL_0596 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f28f9454560>::Add token(0x0A00253C)
+  IL_059b stsfld         PlayErrors::s_playErrorsMessages token(0x04004123)
+  IL_05a0 ret             

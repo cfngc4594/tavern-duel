@@ -1,0 +1,38 @@
+extends SceneTree
+func vec(d: Dictionary)->Vector3:return Vector3(d.x,d.y,d.z)
+func trs(chain: Array)->Transform3D:
+ var t:=Transform3D.IDENTITY
+ for d in chain:
+  var q: Dictionary=d.m_LocalRotation
+  t=t*Transform3D(Basis(Quaternion(q.x,q.y,q.z,q.w)).scaled(vec(d.m_LocalScale)),vec(d.m_LocalPosition))
+ return t
+func vertices(d: Dictionary)->PackedVector3Array:
+ var v:=PackedVector3Array()
+ for a in d.vertices:v.append(Vector3(a[0],a[1],a[2]))
+ return v
+func indices(tris: Array)->PackedInt32Array:
+ var ix:=PackedInt32Array()
+ for t in tris:
+  for i in t:ix.append(int(i))
+ return ix
+func _init():
+ var spec: Dictionary=JSON.parse_string(FileAccess.get_file_as_string('res://cpu_fixture.json'))
+ var h=load('res://native_target_highlight.gd').new()
+ h.diagnostic_directory=ProjectSettings.globalize_path('res://cpu_passes')
+ var plane:=ArrayMesh.new()
+ var a:=[];a.resize(Mesh.ARRAY_MAX);a[Mesh.ARRAY_VERTEX]=vertices(spec.plane);a[Mesh.ARRAY_INDEX]=indices(spec.plane.triangles[0]);plane.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,a)
+ var body: Array=[]
+ for tri in spec.body.triangles:body.append({'vertices':vertices(spec.body),'indices':indices(tri),'transform':trs(spec.body_chain)})
+ var start:=Time.get_ticks_msec()
+ var r: Dictionary=h._build_mask(body,trs(spec.plane_chain),plane,1.,1.)
+ var img: Image=r.image
+ var occupied:=0;var total:=0.0;var maximum:=0
+ for value in img.get_data():
+  if value>0:occupied+=1
+  total+=value;maximum=maxi(maximum,value)
+ r.audit['occupied_pixels']=occupied;r.audit['max_unorm8']=maximum;r.audit['sum_unorm8']=total;r.audit['elapsed_ms']=Time.get_ticks_msec()-start;r.audit['middle_pixel']=img.get_pixel(img.get_width()/2,img.get_height()/2).r
+ img.save_png('res://cpu_source_mask.png')
+ var f:=FileAccess.open('res://cpu_result.json',FileAccess.WRITE);f.store_string(JSON.stringify(r.audit,'  '));f.close()
+ print(JSON.stringify(r.audit));h.free()
+ if occupied<=0 or occupied>=img.get_width()*img.get_height():quit(1)
+ else:quit(0)

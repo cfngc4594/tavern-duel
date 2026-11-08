@@ -1,0 +1,554 @@
+Read-only source oracle; no production edits or GPU. Assembly-CSharp.dll SHA256 7f81d2ab2277958dea4351c41812921a00ee263a6a7abf1a5cfb4eb0794f26e5
+
+SOURCE v33_work/source_code/endgame_power_order.cil.json
+0x0601392f EntityBase::IsCharacter
+  IL_0000 ldarg.0         
+  IL_0001 call           EntityBase::IsHero token(0x060138D3)
+  IL_0006 brtrue.s       IL_000f 
+  IL_0008 ldarg.0         
+  IL_0009 call           EntityBase::IsMinion token(0x060138DB)
+  IL_000e ret             
+  IL_000f ldc.i4.1        
+  IL_0010 ret             
+
+SOURCE v33_work/source_code/hero_endgame_dispatch.cil.json
+0x060054f2 GameEntity::BlowUpHero
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000b 
+  IL_0009 ldnull          
+  IL_000a ret             
+  IL_000b ldarg.1         
+  IL_000c callvirt       Card::GetActor token(0x06012DD6)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0019 brfalse.s      IL_0021 
+  IL_001b ldloc.0         
+  IL_001c callvirt       Actor::ActivateAllSpellsDeathStates token(0x06012965)
+  IL_0021 ldarg.0         
+  IL_0022 ldarg.1         
+  IL_0023 ldarg.2         
+  IL_0024 callvirt       GameEntity::ActivateSpellForDestroyedHero token(0x060054F3)
+  IL_0029 call           Gameplay::Get token(0x060057DC)
+  IL_002e ldarg.0         
+  IL_002f ldarg.1         
+  IL_0030 call           GameEntity::HideOtherElements token(0x060054F7)
+  IL_0035 callvirt       UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_003a pop             
+  IL_003b ret             
+
+SOURCE v35_work/source_death_flow/death_controllers.cil.json
+0x0601164e DeathSpellController::OnProcessTaskList
+  IL_0000 ldarg.0         
+  IL_0001 call           DeathSpellController::PickDeathSoundCardIndex token(0x06011651)
+  IL_0006 stloc.0         
+  IL_0007 ldc.i4.0        
+  IL_0008 stloc.1         
+  IL_0009 br.s           IL_002d 
+  IL_000b ldarg.0         
+  IL_000c ldfld          SpellController::m_targets token(0x04011C39)
+  IL_0011 ldloc.1         
+  IL_0012 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f907fc79d30>::get_Item token(0x0A0004C1)
+  IL_0017 stloc.2         
+  IL_0018 ldloc.1         
+  IL_0019 ldloc.0         
+  IL_001a beq.s          IL_0023 
+  IL_001c ldloc.2         
+  IL_001d ldc.i4.1        
+  IL_001e callvirt       Card::SuppressDeathSounds token(0x06012D01)
+  IL_0023 ldloc.2         
+  IL_0024 callvirt       Card::ActivateCharacterDeathEffects token(0x06012D53)
+  IL_0029 ldloc.1         
+  IL_002a ldc.i4.1        
+  IL_002b add             
+  IL_002c stloc.1         
+  IL_002d ldloc.1         
+  IL_002e ldarg.0         
+  IL_002f ldfld          SpellController::m_targets token(0x04011C39)
+  IL_0034 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f907fc79d30>::get_Count token(0x0A0004C0)
+  IL_0039 blt.s          IL_000b 
+  IL_003b ldarg.0         
+  IL_003c call           SpellController::OnProcessTaskList token(0x060149CE)
+  IL_0041 ret             
+
+SOURCE v35_work/source_death_flow/death_controllers.cil.json
+0x0601164f DeathSpellController::AddDeadCardsToTargetList
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          SpellController::m_taskList token(0x04011C3A)
+  IL_0006 callvirt       PowerTaskList::GetTaskList token(0x06005F6E)
+  IL_000b stloc.0         
+  IL_000c ldc.i4.0        
+  IL_000d stloc.1         
+  IL_000e br.s           IL_0068 
+  IL_0010 ldloc.0         
+  IL_0011 ldloc.1         
+  IL_0012 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f907fb369c0>::get_Item token(0x0A00243F)
+  IL_0017 callvirt       PowerTask::GetPower token(0x06005F27)
+  IL_001c stloc.2         
+  IL_001d ldloc.2         
+  IL_001e callvirt       PowerHistory::get_Type token(0x0600EF06)
+  IL_0023 ldc.i4.4        
+  IL_0024 bne.un.s       IL_0064 
+  IL_0026 ldloc.2         
+  IL_0027 isinst         HistTagChange token(0x02001F69)
+  IL_002c stloc.3         
+  IL_002d ldloc.3         
+  IL_002e call           GameUtils::IsCharacterDeathTagChange token(0x06014CF9)
+  IL_0033 brfalse.s      IL_0064 
+  IL_0035 call           GameState::Get token(0x06005589)
+  IL_003a ldloc.3         
+  IL_003b callvirt       HistTagChange::get_Entity token(0x0600EF69)
+  IL_0040 callvirt       GameState::GetEntity token(0x060055A7)
+  IL_0045 stloc.s        local(0x0004) 
+  IL_0047 ldloc.s        local(0x0004) 
+  IL_0049 callvirt       Entity::GetCard token(0x060137BF)
+  IL_004e stloc.s        local(0x0005) 
+  IL_0050 ldarg.0         
+  IL_0051 ldloc.s        local(0x0004) 
+  IL_0053 ldloc.s        local(0x0005) 
+  IL_0055 call           DeathSpellController::CanAddTarget token(0x06011650)
+  IL_005a brfalse.s      IL_0064 
+  IL_005c ldarg.0         
+  IL_005d ldloc.s        local(0x0005) 
+  IL_005f call           SpellController::AddTarget token(0x060149C0)
+  IL_0064 ldloc.1         
+  IL_0065 ldc.i4.1        
+  IL_0066 add             
+  IL_0067 stloc.1         
+  IL_0068 ldloc.1         
+  IL_0069 ldloc.0         
+  IL_006a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f907fb369c0>::get_Count token(0x0A0023EC)
+  IL_006f blt.s          IL_0010 
+  IL_0071 ret             
+
+SOURCE v35_work/source_death_flow/death_controllers.cil.json
+0x06011650 DeathSpellController::CanAddTarget
+  IL_0000 ldarg.2         
+  IL_0001 callvirt       Card::WillSuppressDeathEffects token(0x06012CFE)
+  IL_0006 brfalse.s      IL_000a 
+  IL_0008 ldc.i4.0        
+  IL_0009 ret             
+  IL_000a ldc.i4.1        
+  IL_000b ret             
+
+SOURCE v35_work/source_death_flow/death_controllers.cil.json
+0x060149ce SpellController::OnProcessTaskList
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       SpellController::OnFinishedTaskList token(0x060149CF)
+  IL_0006 ldarg.0         
+  IL_0007 callvirt       SpellController::OnFinished token(0x060149D0)
+  IL_000c ret             
+
+SOURCE v35_work/source_death_flow/death_controllers.cil.json
+0x060149cf SpellController::OnFinishedTaskList
+  IL_0000 call           GameState::Get token(0x06005589)
+  IL_0005 brfalse.s      IL_0013 
+  IL_0007 call           GameState::Get token(0x06005589)
+  IL_000c ldarg.0         
+  IL_000d callvirt       GameState::RemoveServerBlockingSpellController token(0x0600562D)
+  IL_0012 pop             
+  IL_0013 ldarg.0         
+  IL_0014 ldc.i4.0        
+  IL_0015 stfld          SpellController::m_processingTaskList token(0x04011C3C)
+  IL_001a ldarg.0         
+  IL_001b call           SpellController::FireFinishedTaskListCallbacks token(0x060149D8)
+  IL_0020 ldarg.0         
+  IL_0021 ldfld          SpellController::m_pendingFinish token(0x04011C3D)
+  IL_0026 brfalse.s      IL_0035 
+  IL_0028 ldarg.0         
+  IL_0029 ldc.i4.0        
+  IL_002a stfld          SpellController::m_pendingFinish token(0x04011C3D)
+  IL_002f ldarg.0         
+  IL_0030 callvirt       SpellController::OnFinished token(0x060149D0)
+  IL_0035 ret             
+
+SOURCE v35_work/source_death_flow/death_queue_gates.cil.json
+0x06014cf9 GameUtils::IsCharacterDeathTagChange
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       HistTagChange::get_Tag token(0x0600EF6B)
+  IL_0006 ldc.i4.s       49 
+  IL_0008 beq.s          IL_000c 
+  IL_000a ldc.i4.0        
+  IL_000b ret             
+  IL_000c ldarg.0         
+  IL_000d callvirt       HistTagChange::get_Value token(0x0600EF6D)
+  IL_0012 ldc.i4.4        
+  IL_0013 beq.s          IL_0017 
+  IL_0015 ldc.i4.0        
+  IL_0016 ret             
+  IL_0017 call           GameState::Get token(0x06005589)
+  IL_001c ldarg.0         
+  IL_001d callvirt       HistTagChange::get_Entity token(0x0600EF69)
+  IL_0022 callvirt       GameState::GetEntity token(0x060055A7)
+  IL_0027 stloc.0         
+  IL_0028 ldloc.0         
+  IL_0029 brtrue.s       IL_002d 
+  IL_002b ldc.i4.0        
+  IL_002c ret             
+  IL_002d ldloc.0         
+  IL_002e callvirt       EntityBase::IsCharacter token(0x0601392F)
+  IL_0033 brtrue.s       IL_0037 
+  IL_0035 ldc.i4.0        
+  IL_0036 ret             
+  IL_0037 ldc.i4.1        
+  IL_0038 ret             
+
+SOURCE v35_work/source_death_flow/death_queue_gates.cil.json
+0x06006002 PowerProcessor::OnSpellControllerFinishedTaskList
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       SpellController::DetachPowerTaskList token(0x060149CA)
+  IL_0006 pop             
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          PowerProcessor::m_currentTaskList token(0x0400435C)
+  IL_000d brtrue.s       IL_0010 
+  IL_000f ret             
+  IL_0010 ldarg.0         
+  IL_0011 call           PowerProcessor::DoCurrentTaskList token(0x06005FF5)
+  IL_0016 ret             
+
+SOURCE v35_work/source_death_flow/death_entrypoints.cil.json
+0x06012e28 Card::Check_HeroToGraveyard
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0006 isinst         ZoneHero token(0x02000CC4)
+  IL_000b brfalse.s      IL_0032 
+  IL_000d ldarg.0         
+  IL_000e ldfld          Card::m_zone token(0x0400FA68)
+  IL_0013 isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0018 brfalse.s      IL_0032 
+  IL_001a ldarg.1         
+  IL_001b callvirt       Actor::DoCardDeathVisuals token(0x06012966)
+  IL_0020 ldarg.0         
+  IL_0021 call           Card::DeactivateCustomKeywordEffect token(0x06012D59)
+  IL_0026 ldarg.2         
+  IL_0027 ldc.i4.1        
+  IL_0028 stind.i1        
+  IL_0029 ldarg.0         
+  IL_002a ldc.i4.1        
+  IL_002b stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0030 ldc.i4.1        
+  IL_0031 ret             
+  IL_0032 ldc.i4.0        
+  IL_0033 ret             
+
+SOURCE v35_work/source_death_flow/death_entrypoints.cil.json
+0x06012965 Actor::ActivateAllSpellsDeathStates
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Actor::m_useSharedSpellTable token(0x0400F773)
+  IL_0006 brfalse.s      IL_0054 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          Actor::m_ownedSpells token(0x0400F774)
+  IL_000e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbc8d63bc50>::get_Values token(0x0A0042DE)
+  IL_0013 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbc8d63be00>::GetEnumerator token(0x0A0042DF)
+  IL_0018 stloc.0         
+  IL_0019 br.s           IL_003b 
+  IL_001b ldloca.s       local(0x0000) 
+  IL_001d call           <dnfile.mdtable.TypeSpecRow object at 0x7fbc8d63bfb0>::get_Current token(0x0A0042E0)
+  IL_0022 stloc.1         
+  IL_0023 ldloc.1         
+  IL_0024 ldnull          
+  IL_0025 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_002a brfalse.s      IL_003b 
+  IL_002c ldloc.1         
+  IL_002d callvirt       Blizzard.T5.Game.Spells.SpellBase::IsActive token(0x0A002633)
+  IL_0032 brfalse.s      IL_003b 
+  IL_0034 ldloc.1         
+  IL_0035 ldc.i4.5        
+  IL_0036 callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_003b ldloca.s       local(0x0000) 
+  IL_003d call           <dnfile.mdtable.TypeSpecRow object at 0x7fbc8d63bfb0>::MoveNext token(0x0A0042E2)
+  IL_0042 brtrue.s       IL_001b 
+  IL_0044 leave.s        IL_00b3 
+  IL_0046 ldloca.s       local(0x0000) 
+  IL_0048 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fbc8d63bfb0> token(0x1B001030)
+  IL_004e callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0053 endfinally      
+  IL_0054 ldarg.0         
+  IL_0055 ldfld          Actor::m_localSpellTable token(0x0400F775)
+  IL_005a ldnull          
+  IL_005b call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0060 brfalse.s      IL_00b3 
+  IL_0062 ldarg.0         
+  IL_0063 ldfld          Actor::m_localSpellTable token(0x0400F775)
+  IL_0068 ldfld          SpellTable::m_Table token(0x04011CCF)
+  IL_006d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbc8d650350>::GetEnumerator token(0x0A004309)
+  IL_0072 stloc.2         
+  IL_0073 br.s           IL_009a 
+  IL_0075 ldloca.s       local(0x0002) 
+  IL_0077 call           <dnfile.mdtable.TypeSpecRow object at 0x7fbc8d651940>::get_Current token(0x0A00430A)
+  IL_007c ldfld          SpellTableEntry::m_Spell token(0x04011CCD)
+  IL_0081 stloc.3         
+  IL_0082 ldloc.3         
+  IL_0083 ldnull          
+  IL_0084 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0089 brtrue.s       IL_009a 
+  IL_008b ldloc.3         
+  IL_008c callvirt       Blizzard.T5.Game.Spells.SpellBase::IsActive token(0x0A002633)
+  IL_0091 brfalse.s      IL_009a 
+  IL_0093 ldloc.3         
+  IL_0094 ldc.i4.5        
+  IL_0095 callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_009a ldloca.s       local(0x0002) 
+  IL_009c call           <dnfile.mdtable.TypeSpecRow object at 0x7fbc8d651940>::MoveNext token(0x0A00430B)
+  IL_00a1 brtrue.s       IL_0075 
+  IL_00a3 leave.s        IL_00b3 
+  IL_00a5 ldloca.s       local(0x0002) 
+  IL_00a7 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fbc8d651940> token(0x1B00103F)
+  IL_00ad callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_00b2 endfinally      
+  IL_00b3 ret             
+
+SOURCE v35_work/source_death_flow/death_entrypoints.cil.json
+0x06012966 Actor::DoCardDeathVisuals
+  IL_0000 ldtoken        SpellType token(0x010000A1)
+  IL_0005 call           System.Type::GetTypeFromHandle token(0x0A00010D)
+  IL_000a call           System.Enum::GetValues token(0x0A000AE0)
+  IL_000f callvirt       System.Array::GetEnumerator token(0x0A000AE1)
+  IL_0014 stloc.0         
+  IL_0015 br.s           IL_004d 
+  IL_0017 ldloc.0         
+  IL_0018 callvirt       System.Collections.IEnumerator::get_Current token(0x0A0000F9)
+  IL_001d unbox.any      SpellType token(0x010000A1)
+  IL_0022 stloc.1         
+  IL_0023 ldarg.0         
+  IL_0024 ldloc.1         
+  IL_0025 call           Actor::IsSpellActive token(0x06012962)
+  IL_002a brfalse.s      IL_004d 
+  IL_002c ldloc.1         
+  IL_002d ldc.i4.s       127 
+  IL_002f beq.s          IL_004d 
+  IL_0031 ldloc.1         
+  IL_0032 ldc.i4.5        
+  IL_0033 beq.s          IL_004d 
+  IL_0035 ldloc.1         
+  IL_0036 ldc.i4.s       35 
+  IL_0038 beq.s          IL_004d 
+  IL_003a ldloc.1         
+  IL_003b ldc.i4         150 
+  IL_0040 beq.s          IL_004d 
+  IL_0042 ldloc.1         
+  IL_0043 ldc.i4.7        
+  IL_0044 beq.s          IL_004d 
+  IL_0046 ldarg.0         
+  IL_0047 ldloc.1         
+  IL_0048 call           Actor::ActivateSpellDeathState token(0x06012963)
+  IL_004d ldloc.0         
+  IL_004e callvirt       System.Collections.IEnumerator::MoveNext token(0x0A000094)
+  IL_0053 brtrue.s       IL_0017 
+  IL_0055 leave.s        IL_0068 
+  IL_0057 ldloc.0         
+  IL_0058 isinst         System.IDisposable token(0x01000037)
+  IL_005d stloc.2         
+  IL_005e ldloc.2         
+  IL_005f brfalse.s      IL_0067 
+  IL_0061 ldloc.2         
+  IL_0062 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0067 endfinally      
+  IL_0068 ret             
+
+SOURCE v35_work/source_death_flow/death_entrypoints.cil.json
+0x06012d53 Card::ActivateCharacterDeathEffects
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Card::m_suppressDeathEffects token(0x0400FA83)
+  IL_0006 brfalse.s      IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a call           Card::IsHeroUsingDeathSpellOverride token(0x06012D55)
+  IL_000f brfalse.s      IL_0012 
+  IL_0011 ret             
+  IL_0012 ldarg.0         
+  IL_0013 ldfld          Card::m_suppressDeathSounds token(0x0400FA84)
+  IL_0018 brtrue.s       IL_0020 
+  IL_001a ldarg.0         
+  IL_001b call           Card::ForceActivateDeathSoundSpells token(0x06012D54)
+  IL_0020 ldarg.0         
+  IL_0021 ldc.i4.0        
+  IL_0022 stfld          Card::m_suppressDeathSounds token(0x0400FA84)
+  IL_0027 ldarg.0         
+  IL_0028 call           Card::DeactivateLifetimeEffects token(0x06012D57)
+  IL_002d ret             
+
+SOURCE v35_work/source_death_flow/death_entrypoints.cil.json
+0x06012d55 Card::IsHeroUsingDeathSpellOverride
+  IL_0000 ldarg.0         
+  IL_0001 call           Card::GetEntity token(0x06012CC3)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 brtrue.s       IL_000c 
+  IL_000a ldc.i4.0        
+  IL_000b ret             
+  IL_000c ldloc.0         
+  IL_000d callvirt       EntityBase::GetCardType token(0x060138F5)
+  IL_0012 ldc.i4.3        
+  IL_0013 beq.s          IL_0017 
+  IL_0015 ldc.i4.0        
+  IL_0016 ret             
+  IL_0017 ldloc.0         
+  IL_0018 callvirt       Entity::GetController token(0x060137DE)
+  IL_001d ldc.i4         2722 
+  IL_0022 callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_0027 ldc.i4.0        
+  IL_0028 cgt.un          
+  IL_002a ret             
+
+SOURCE v35_work/source_death_flow/death_entrypoints.cil.json
+0x060054f3 GameEntity::ActivateSpellForDestroyedHero
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000b 
+  IL_0009 ldnull          
+  IL_000a ret             
+  IL_000b call           GameState::Get token(0x06005589)
+  IL_0010 callvirt       GameState::GetOpposingSidePlayer token(0x060055B9)
+  IL_0015 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_001a stloc.0         
+  IL_001b call           GameState::Get token(0x06005589)
+  IL_0020 callvirt       GameState::GetFriendlySidePlayer token(0x060055B3)
+  IL_0025 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_002a stloc.1         
+  IL_002b ldarg.2         
+  IL_002c ldc.i4.s       39 
+  IL_002e bne.un.s       IL_007e 
+  IL_0030 ldarg.1         
+  IL_0031 ldloc.1         
+  IL_0032 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0037 brfalse.s      IL_0042 
+  IL_0039 ldarg.1         
+  IL_003a ldc.i4.s       38 
+  IL_003c callvirt       Card::ActivateActorSpell token(0x06012DA5)
+  IL_0041 ret             
+  IL_0042 ldarg.1         
+  IL_0043 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0048 dup             
+  IL_0049 brtrue.s       IL_004f 
+  IL_004b pop             
+  IL_004c ldnull          
+  IL_004d br.s           IL_0054 
+  IL_004f call           EntityBase::GetCardId token(0x06013947)
+  IL_0054 call           GameUtils::GetCardRecord token(0x06014CB5)
+  IL_0059 stloc.s        local(0x0007) 
+  IL_005b ldarg.1         
+  IL_005c ldloc.0         
+  IL_005d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0062 brfalse.s      IL_0076 
+  IL_0064 ldloc.s        local(0x0007) 
+  IL_0066 call           RewardUtils::IsShopPremiumHeroSkin token(0x060104B9)
+  IL_006b brfalse.s      IL_0076 
+  IL_006d ldarg.1         
+  IL_006e ldc.i4.s       37 
+  IL_0070 callvirt       Card::ActivateActorSpell token(0x06012DA5)
+  IL_0075 ret             
+  IL_0076 ldarg.1         
+  IL_0077 ldarg.2         
+  IL_0078 callvirt       Card::ActivateActorSpell token(0x06012DA5)
+  IL_007d ret             
+  IL_007e ldarg.1         
+  IL_007f callvirt       Card::GetController token(0x06012CC6)
+  IL_0084 stloc.2         
+  IL_0085 ldloc.2         
+  IL_0086 ldc.i4         2722 
+  IL_008b callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_0090 stloc.3         
+  IL_0091 call           DeathSpellConfig::Get token(0x060148BA)
+  IL_0096 ldloc.3         
+  IL_0097 callvirt       DeathSpellConfig::GetSpell token(0x060148BC)
+  IL_009c stloc.s        local(0x0004) 
+  IL_009e ldloc.s        local(0x0004) 
+  IL_00a0 ldnull          
+  IL_00a1 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00a6 brfalse.s      IL_00e7 
+  IL_00a8 ldloc.s        local(0x0004) 
+  IL_00aa ldarg.1         
+  IL_00ab callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00b0 callvirt       Blizzard.T5.Game.Spells.SpellBase::SetSource token(0x0A000574)
+  IL_00b5 ldloc.s        local(0x0004) 
+  IL_00b7 ldarg.0         
+  IL_00b8 ldftn          GameEntity::OnFriendlyHeroDestroyed token(0x060054F4)
+  IL_00be newobj         <dnfile.mdtable.TypeSpecRow object at 0x7fbc8db31940>::.ctor token(0x0A00026C)
+  IL_00c3 callvirt       Spell::AddFinishedCallback token(0x06014944)
+  IL_00c8 ldarg.0         
+  IL_00c9 ldloc.s        local(0x0004) 
+  IL_00cb ldarg.0         
+  IL_00cc ldloc.s        local(0x0004) 
+  IL_00ce call           GameEntity::EnsureHeroDestroyedCompletes token(0x060054F5)
+  IL_00d3 callvirt       UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_00d8 stfld          GameEntity::m_destroyHeroTrackingCoroutine token(0x04003BF2)
+  IL_00dd ldloc.s        local(0x0004) 
+  IL_00df callvirt       Blizzard.T5.Game.Spells.SpellBase::Activate token(0x0A000450)
+  IL_00e4 ldloc.s        local(0x0004) 
+  IL_00e6 ret             
+  IL_00e7 ldarg.1         
+  IL_00e8 ldloc.0         
+  IL_00e9 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00ee brtrue.s       IL_00f3 
+  IL_00f0 ldloc.0         
+  IL_00f1 br.s           IL_00f4 
+  IL_00f3 ldloc.1         
+  IL_00f4 ldarg.1         
+  IL_00f5 ldloc.0         
+  IL_00f6 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00fb brtrue.s       IL_0104 
+  IL_00fd ldc.i4         276 
+  IL_0102 br.s           IL_0109 
+  IL_0104 ldc.i4         275 
+  IL_0109 stloc.s        local(0x0005) 
+  IL_010b ldloc.s        local(0x0005) 
+  IL_010d ldc.i4.1        
+  IL_010e callvirt       Card::GetActorSpell token(0x06012DA4)
+  IL_0113 stloc.s        local(0x0006) 
+  IL_0115 ldloc.s        local(0x0006) 
+  IL_0117 ldnull          
+  IL_0118 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_011d brfalse        IL_01a6 
+  IL_0122 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7fbc8db3d9a0>::.ctor token(0x0A0002EB)
+  IL_0127 stloc.s        local(0x0008) 
+  IL_0129 ldloc.2         
+  IL_012a callvirt       Player::GetBattlefieldZone token(0x06005D96)
+  IL_012f callvirt       Zone::GetCards token(0x06006374)
+  IL_0134 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbc8db6ddc0>::GetEnumerator token(0x0A0011BA)
+  IL_0139 stloc.s        local(0x0009) 
+  IL_013b br.s           IL_0179 
+  IL_013d ldloca.s       local(0x0009) 
+  IL_013f call           <dnfile.mdtable.TypeSpecRow object at 0x7fbc8da8b4a0>::get_Current token(0x0A0011BB)
+  IL_0144 stloc.s        local(0x000A) 
+  IL_0146 ldloc.s        local(0x000A) 
+  IL_0148 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_014d stloc.s        local(0x000B) 
+  IL_014f ldloc.s        local(0x000B) 
+  IL_0151 callvirt       Entity::GetController token(0x060137DE)
+  IL_0156 ldloc.2         
+  IL_0157 bne.un.s       IL_0179 
+  IL_0159 ldloc.s        local(0x000B) 
+  IL_015b callvirt       EntityBase::IsMinion token(0x060138DB)
+  IL_0160 brtrue.s       IL_016b 
+  IL_0162 ldloc.s        local(0x000B) 
+  IL_0164 callvirt       EntityBase::IsLocation token(0x060138E5)
+  IL_0169 brfalse.s      IL_0179 
+  IL_016b ldloc.s        local(0x0008) 
+  IL_016d ldloc.s        local(0x000A) 
+  IL_016f callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0174 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbc8db3d9a0>::Add token(0x0A0002F8)
+  IL_0179 ldloca.s       local(0x0009) 
+  IL_017b call           <dnfile.mdtable.TypeSpecRow object at 0x7fbc8da8b4a0>::MoveNext token(0x0A0011BC)
+  IL_0180 brtrue.s       IL_013d 
+  IL_0182 leave.s        IL_0192 
+  IL_0184 ldloca.s       local(0x0009) 
+  IL_0186 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fbc8da8b4a0> token(0x1B0004DE)
+  IL_018c callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0191 endfinally      
+  IL_0192 ldloc.s        local(0x0006) 
+  IL_0194 ldloc.s        local(0x0008) 
+  IL_0196 callvirt       Blizzard.T5.Game.Spells.SpellBase::AddTargets token(0x0A0022D4)
+  IL_019b ldloc.s        local(0x0006) 
+  IL_019d ldc.i4.3        
+  IL_019e callvirt       Blizzard.T5.Game.Spells.SpellBase::ActivateState token(0x0A0002FF)
+  IL_01a3 ldloc.s        local(0x0006) 
+  IL_01a5 ret             
+  IL_01a6 ldarg.1         
+  IL_01a7 ldarg.2         
+  IL_01a8 callvirt       Card::ActivateActorSpell token(0x06012DA5)
+  IL_01ad ret             

@@ -1,0 +1,1130 @@
+
+TYPE HutongGames.PlayMaker.ActionHelpers 0x02000008
+FIELD 0x0400002b mousePickInfo SIG 06114d
+FIELD 0x0400002c mousePickRaycastTime SIG 060c
+FIELD 0x0400002d mousePickDistanceUsed SIG 060c
+FIELD 0x0400002e mousePickLayerMaskUsed SIG 0608
+FIELD 0x0400002f colon SIG 060e
+
+0x0600004e HutongGames.PlayMaker.ActionHelpers::get_WhiteTexture() RVA 0x3829 SIG 00001251
+  IL_0000 call           UnityEngine.Texture2D::get_whiteTexture token(0x0A000016)
+  IL_0005 ret             
+
+0x0600004f HutongGames.PlayMaker.ActionHelpers::BlendColor(blendMode,c1,c2) RVA 0x3830 SIG 00031155115d11551155
+  IL_0000 ldarg.0         
+  IL_0001 switch         [IL_0014, IL_0022, IL_0036] 
+  IL_0012 br.s           IL_006a 
+  IL_0014 ldarg.1         
+  IL_0015 ldarg.2         
+  IL_0016 ldarg.2         
+  IL_0017 ldfld          UnityEngine.Color::a token(0x0A000017)
+  IL_001c call           UnityEngine.Color::Lerp token(0x0A000018)
+  IL_0021 ret             
+  IL_0022 ldarg.1         
+  IL_0023 ldarg.1         
+  IL_0024 ldarg.2         
+  IL_0025 call           UnityEngine.Color::op_Multiply token(0x0A000019)
+  IL_002a ldarg.2         
+  IL_002b ldfld          UnityEngine.Color::a token(0x0A000017)
+  IL_0030 call           UnityEngine.Color::Lerp token(0x0A000018)
+  IL_0035 ret             
+  IL_0036 call           UnityEngine.Color::get_white token(0x0A00001A)
+  IL_003b call           UnityEngine.Color::get_white token(0x0A00001A)
+  IL_0040 ldarg.1         
+  IL_0041 call           UnityEngine.Color::op_Subtraction token(0x0A00001B)
+  IL_0046 call           UnityEngine.Color::get_white token(0x0A00001A)
+  IL_004b ldarg.2         
+  IL_004c call           UnityEngine.Color::op_Subtraction token(0x0A00001B)
+  IL_0051 call           UnityEngine.Color::op_Multiply token(0x0A000019)
+  IL_0056 call           UnityEngine.Color::op_Subtraction token(0x0A00001B)
+  IL_005b stloc.0         
+  IL_005c ldarg.1         
+  IL_005d ldloc.0         
+  IL_005e ldarg.2         
+  IL_005f ldfld          UnityEngine.Color::a token(0x0A000017)
+  IL_0064 call           UnityEngine.Color::Lerp token(0x0A000018)
+  IL_0069 ret             
+  IL_006a newobj         System.ArgumentOutOfRangeException::.ctor token(0x0A00001C)
+  IL_006f throw           
+
+0x06000050 HutongGames.PlayMaker.ActionHelpers::IsVisible(go) RVA 0x38ac SIG 0001021269
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_0007 brfalse.s      IL_000b 
+  IL_0009 ldc.i4.0        
+  IL_000a ret             
+  IL_000b ldarg.0         
+  IL_000c callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000001)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Inequality token(0x0A00001F)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldloc.0         
+  IL_001c callvirt       UnityEngine.Renderer::get_isVisible token(0x0A000020)
+  IL_0021 ret             
+  IL_0022 ldc.i4.0        
+  IL_0023 ret             
+
+0x06000051 HutongGames.PlayMaker.ActionHelpers::IsVisible(go,camera,useBounds) RVA 0x38dc SIG 0003021269127902
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_0007 brtrue.s       IL_0011 
+  IL_0009 ldarg.1         
+  IL_000a call           UnityEngine.Object::op_Implicit token(0x0A000021)
+  IL_000f brtrue.s       IL_0013 
+  IL_0011 ldc.i4.0        
+  IL_0012 ret             
+  IL_0013 ldarg.0         
+  IL_0014 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000001)
+  IL_0019 stloc.0         
+  IL_001a ldloc.0         
+  IL_001b ldnull          
+  IL_001c call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_0021 brfalse.s      IL_0025 
+  IL_0023 ldc.i4.0        
+  IL_0024 ret             
+  IL_0025 ldarg.2         
+  IL_0026 brfalse.s      IL_003a 
+  IL_0028 ldarg.1         
+  IL_0029 call           UnityEngine.GeometryUtility::CalculateFrustumPlanes token(0x0A000022)
+  IL_002e ldloc.0         
+  IL_002f callvirt       UnityEngine.Renderer::get_bounds token(0x0A000023)
+  IL_0034 call           UnityEngine.GeometryUtility::TestPlanesAABB token(0x0A000024)
+  IL_0039 ret             
+  IL_003a ldarg.1         
+  IL_003b ldarg.0         
+  IL_003c callvirt       UnityEngine.GameObject::get_transform token(0x0A000025)
+  IL_0041 callvirt       UnityEngine.Transform::get_position token(0x0A000026)
+  IL_0046 callvirt       UnityEngine.Camera::WorldToViewportPoint token(0x0A000027)
+  IL_004b stloc.1         
+  IL_004c ldloc.1         
+  IL_004d ldfld          UnityEngine.Vector3::z token(0x0A000028)
+  IL_0052 ldc.r4         0.0 
+  IL_0057 ble.un.s       IL_008e 
+  IL_0059 ldloc.1         
+  IL_005a ldfld          UnityEngine.Vector3::x token(0x0A000029)
+  IL_005f ldc.r4         0.0 
+  IL_0064 ble.un.s       IL_008e 
+  IL_0066 ldloc.1         
+  IL_0067 ldfld          UnityEngine.Vector3::x token(0x0A000029)
+  IL_006c ldc.r4         1.0 
+  IL_0071 bge.un.s       IL_008e 
+  IL_0073 ldloc.1         
+  IL_0074 ldfld          UnityEngine.Vector3::y token(0x0A00002A)
+  IL_0079 ldc.r4         0.0 
+  IL_007e ble.un.s       IL_008e 
+  IL_0080 ldloc.1         
+  IL_0081 ldfld          UnityEngine.Vector3::y token(0x0A00002A)
+  IL_0086 ldc.r4         1.0 
+  IL_008b clt             
+  IL_008d ret             
+  IL_008e ldc.i4.0        
+  IL_008f ret             
+
+0x06000052 HutongGames.PlayMaker.ActionHelpers::GetOwnerDefault(action,ownerDefault) RVA 0x3978 SIG 0002126912808512808d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A00002C)
+  IL_000c ret             
+
+0x06000053 HutongGames.PlayMaker.ActionHelpers::GetGameObjectFsm(go,fsmName) RVA 0x3988 SIG 000212809112690e
+  IL_0000 ldarg.1         
+  IL_0001 call           System.String::IsNullOrEmpty token(0x0A00002D)
+  IL_0006 brtrue.s       IL_004c 
+  IL_0008 ldarg.0         
+  IL_0009 callvirt       UnityEngine.GameObject::GetComponents<spec> token(0x2B000002)
+  IL_000e stloc.0         
+  IL_000f ldc.i4.0        
+  IL_0010 stloc.1         
+  IL_0011 br.s           IL_002b 
+  IL_0013 ldloc.0         
+  IL_0014 ldloc.1         
+  IL_0015 ldelem.ref      
+  IL_0016 stloc.2         
+  IL_0017 ldloc.2         
+  IL_0018 callvirt       PlayMakerFSM::get_FsmName token(0x0A00002F)
+  IL_001d ldarg.1         
+  IL_001e call           System.String::op_Equality token(0x0A000030)
+  IL_0023 brfalse.s      IL_0027 
+  IL_0025 ldloc.2         
+  IL_0026 ret             
+  IL_0027 ldloc.1         
+  IL_0028 ldc.i4.1        
+  IL_0029 add             
+  IL_002a stloc.1         
+  IL_002b ldloc.1         
+  IL_002c ldloc.0         
+  IL_002d ldlen           
+  IL_002e conv.i4         
+  IL_002f blt.s          IL_0013 
+  IL_0031 ldstr          'Could not find FSM: ' string token(0x70000001)
+  IL_0036 ldarg.1         
+  IL_0037 ldstr          ' on GameObject: ' string token(0x7000002B)
+  IL_003c ldarg.0         
+  IL_003d callvirt       UnityEngine.Object::get_name token(0x0A000031)
+  IL_0042 call           System.String::Concat token(0x0A000032)
+  IL_0047 call           UnityEngine.Debug::LogWarning token(0x0A000033)
+  IL_004c ldarg.0         
+  IL_004d callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000003)
+  IL_0052 ret             
+
+0x06000054 HutongGames.PlayMaker.ActionHelpers::GetRandomWeightedIndex(weights) RVA 0x39e8 SIG 0001081d12809d
+  IL_0000 ldc.r4         0.0 
+  IL_0005 stloc.0         
+  IL_0006 ldarg.0         
+  IL_0007 stloc.2         
+  IL_0008 ldc.i4.0        
+  IL_0009 stloc.3         
+  IL_000a br.s           IL_001f 
+  IL_000c ldloc.2         
+  IL_000d ldloc.3         
+  IL_000e ldelem.ref      
+  IL_000f stloc.s        local(0x0004) 
+  IL_0011 ldloc.0         
+  IL_0012 ldloc.s        local(0x0004) 
+  IL_0014 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0019 add             
+  IL_001a stloc.0         
+  IL_001b ldloc.3         
+  IL_001c ldc.i4.1        
+  IL_001d add             
+  IL_001e stloc.3         
+  IL_001f ldloc.3         
+  IL_0020 ldloc.2         
+  IL_0021 ldlen           
+  IL_0022 conv.i4         
+  IL_0023 blt.s          IL_000c 
+  IL_0025 ldc.r4         0.0 
+  IL_002a ldloc.0         
+  IL_002b call           UnityEngine.Random::Range token(0x0A000035)
+  IL_0030 stloc.1         
+  IL_0031 ldc.i4.0        
+  IL_0032 stloc.s        local(0x0005) 
+  IL_0034 br.s           IL_0057 
+  IL_0036 ldloc.1         
+  IL_0037 ldarg.0         
+  IL_0038 ldloc.s        local(0x0005) 
+  IL_003a ldelem.ref      
+  IL_003b callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0040 bge.un.s       IL_0045 
+  IL_0042 ldloc.s        local(0x0005) 
+  IL_0044 ret             
+  IL_0045 ldloc.1         
+  IL_0046 ldarg.0         
+  IL_0047 ldloc.s        local(0x0005) 
+  IL_0049 ldelem.ref      
+  IL_004a callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_004f sub             
+  IL_0050 stloc.1         
+  IL_0051 ldloc.s        local(0x0005) 
+  IL_0053 ldc.i4.1        
+  IL_0054 add             
+  IL_0055 stloc.s        local(0x0005) 
+  IL_0057 ldloc.s        local(0x0005) 
+  IL_0059 ldarg.0         
+  IL_005a ldlen           
+  IL_005b conv.i4         
+  IL_005c blt.s          IL_0036 
+  IL_005e ldc.i4.m1       
+  IL_005f ret             
+
+0x06000055 HutongGames.PlayMaker.ActionHelpers::AddAnimationClip(go,animClip) RVA 0x3a54 SIG 00020112691280a9
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_0007 brfalse.s      IL_000a 
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000004)
+  IL_0010 stloc.0         
+  IL_0011 ldloc.0         
+  IL_0012 ldnull          
+  IL_0013 call           UnityEngine.Object::op_Inequality token(0x0A00001F)
+  IL_0018 brfalse.s      IL_0027 
+  IL_001a ldloc.0         
+  IL_001b ldarg.1         
+  IL_001c ldarg.1         
+  IL_001d callvirt       UnityEngine.Object::get_name token(0x0A000031)
+  IL_0022 callvirt       UnityEngine.Animation::AddClip token(0x0A000036)
+  IL_0027 ret             
+
+0x06000056 HutongGames.PlayMaker.ActionHelpers::HasAnimationFinished(anim,prevTime,currentTime) RVA 0x3a88 SIG 0003021280ad0c0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.AnimationState::get_wrapMode token(0x0A000037)
+  IL_0006 ldc.i4.2        
+  IL_0007 beq.s          IL_0012 
+  IL_0009 ldarg.0         
+  IL_000a callvirt       UnityEngine.AnimationState::get_wrapMode token(0x0A000037)
+  IL_000f ldc.i4.4        
+  IL_0010 bne.un.s       IL_0014 
+  IL_0012 ldc.i4.0        
+  IL_0013 ret             
+  IL_0014 ldarg.0         
+  IL_0015 callvirt       UnityEngine.AnimationState::get_wrapMode token(0x0A000037)
+  IL_001a brfalse.s      IL_0025 
+  IL_001c ldarg.0         
+  IL_001d callvirt       UnityEngine.AnimationState::get_wrapMode token(0x0A000037)
+  IL_0022 ldc.i4.1        
+  IL_0023 bne.un.s       IL_003d 
+  IL_0025 ldarg.1         
+  IL_0026 ldc.r4         0.0 
+  IL_002b ble.un.s       IL_003d 
+  IL_002d ldarga.s       argument(0x0002) 
+  IL_002f ldc.r4         0.0 
+  IL_0034 call           System.Single::Equals token(0x0A000038)
+  IL_0039 brfalse.s      IL_003d 
+  IL_003b ldc.i4.1        
+  IL_003c ret             
+  IL_003d ldarg.1         
+  IL_003e ldarg.0         
+  IL_003f callvirt       UnityEngine.AnimationState::get_length token(0x0A000039)
+  IL_0044 bge.un.s       IL_0053 
+  IL_0046 ldarg.2         
+  IL_0047 ldarg.0         
+  IL_0048 callvirt       UnityEngine.AnimationState::get_length token(0x0A000039)
+  IL_004d clt.un          
+  IL_004f ldc.i4.0        
+  IL_0050 ceq             
+  IL_0052 ret             
+  IL_0053 ldc.i4.0        
+  IL_0054 ret             
+
+0x06000057 HutongGames.PlayMaker.ActionHelpers::GetPosition(fsmGameObject,fsmVector3) RVA 0x3aec SIG 0002116d1280b91280c1
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       HutongGames.PlayMaker.FsmGameObject::get_Value token(0x0A00003A)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Inequality token(0x0A00001F)
+  IL_000c brfalse.s      IL_0041 
+  IL_000e ldarg.1         
+  IL_000f callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A00003B)
+  IL_0014 brfalse.s      IL_0028 
+  IL_0016 ldarg.0         
+  IL_0017 callvirt       HutongGames.PlayMaker.FsmGameObject::get_Value token(0x0A00003A)
+  IL_001c callvirt       UnityEngine.GameObject::get_transform token(0x0A000025)
+  IL_0021 callvirt       UnityEngine.Transform::get_position token(0x0A000026)
+  IL_0026 br.s           IL_003e 
+  IL_0028 ldarg.0         
+  IL_0029 callvirt       HutongGames.PlayMaker.FsmGameObject::get_Value token(0x0A00003A)
+  IL_002e callvirt       UnityEngine.GameObject::get_transform token(0x0A000025)
+  IL_0033 ldarg.1         
+  IL_0034 callvirt       HutongGames.PlayMaker.FsmVector3::get_Value token(0x0A00003C)
+  IL_0039 callvirt       UnityEngine.Transform::TransformPoint token(0x0A00003D)
+  IL_003e stloc.0         
+  IL_003f br.s           IL_0048 
+  IL_0041 ldarg.1         
+  IL_0042 callvirt       HutongGames.PlayMaker.FsmVector3::get_Value token(0x0A00003C)
+  IL_0047 stloc.0         
+  IL_0048 ldloc.0         
+  IL_0049 ret             
+
+0x06000058 HutongGames.PlayMaker.ActionHelpers::GetDeviceAcceleration() RVA 0x3b42 SIG 0000116d
+  IL_0000 call           UnityEngine.Input::get_acceleration token(0x0A00003E)
+  IL_0005 ret             
+
+0x06000059 HutongGames.PlayMaker.ActionHelpers::GetMousePosition() RVA 0x3b49 SIG 0000116d
+  IL_0000 call           UnityEngine.Input::get_mousePosition token(0x0A00003F)
+  IL_0005 ret             
+
+0x0600005a HutongGames.PlayMaker.ActionHelpers::AnyKeyDown() RVA 0x3b50 SIG 000002
+  IL_0000 call           UnityEngine.Input::get_anyKeyDown token(0x0A000040)
+  IL_0005 ret             
+
+0x0600005b HutongGames.PlayMaker.ActionHelpers::IsMouseOver(gameObject,distance,layerMask) RVA 0x3b57 SIG 00030212690c08
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_0007 brfalse.s      IL_000b 
+  IL_0009 ldc.i4.0        
+  IL_000a ret             
+  IL_000b ldarg.0         
+  IL_000c ldarg.1         
+  IL_000d ldarg.2         
+  IL_000e call           HutongGames.PlayMaker.ActionHelpers::MouseOver token(0x0600005D)
+  IL_0013 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_0018 ret             
+
+0x0600005c HutongGames.PlayMaker.ActionHelpers::MousePick(distance,layerMask) RVA 0x3b71 SIG 0002114d0c08
+  IL_0000 ldsflda        HutongGames.PlayMaker.ActionHelpers::mousePickRaycastTime token(0x0400002C)
+  IL_0005 call           UnityEngine.Time::get_frameCount token(0x0A000041)
+  IL_000a conv.r4         
+  IL_000b call           System.Single::Equals token(0x0A000038)
+  IL_0010 brfalse.s      IL_0022 
+  IL_0012 ldsfld         HutongGames.PlayMaker.ActionHelpers::mousePickDistanceUsed token(0x0400002D)
+  IL_0017 ldarg.0         
+  IL_0018 blt.s          IL_0022 
+  IL_001a ldsfld         HutongGames.PlayMaker.ActionHelpers::mousePickLayerMaskUsed token(0x0400002E)
+  IL_001f ldarg.1         
+  IL_0020 beq.s          IL_0029 
+  IL_0022 ldarg.0         
+  IL_0023 ldarg.1         
+  IL_0024 call           HutongGames.PlayMaker.ActionHelpers::DoMousePick token(0x0600005E)
+  IL_0029 ldsfld         HutongGames.PlayMaker.ActionHelpers::mousePickInfo token(0x0400002B)
+  IL_002e ret             
+
+0x0600005d HutongGames.PlayMaker.ActionHelpers::MouseOver(distance,layerMask) RVA 0x3ba4 SIG 000212690c08
+  IL_0000 ldsflda        HutongGames.PlayMaker.ActionHelpers::mousePickRaycastTime token(0x0400002C)
+  IL_0005 call           UnityEngine.Time::get_frameCount token(0x0A000041)
+  IL_000a conv.r4         
+  IL_000b call           System.Single::Equals token(0x0A000038)
+  IL_0010 brfalse.s      IL_0022 
+  IL_0012 ldsfld         HutongGames.PlayMaker.ActionHelpers::mousePickDistanceUsed token(0x0400002D)
+  IL_0017 ldarg.0         
+  IL_0018 blt.s          IL_0022 
+  IL_001a ldsfld         HutongGames.PlayMaker.ActionHelpers::mousePickLayerMaskUsed token(0x0400002E)
+  IL_001f ldarg.1         
+  IL_0020 beq.s          IL_0029 
+  IL_0022 ldarg.0         
+  IL_0023 ldarg.1         
+  IL_0024 call           HutongGames.PlayMaker.ActionHelpers::DoMousePick token(0x0600005E)
+  IL_0029 ldsflda        HutongGames.PlayMaker.ActionHelpers::mousePickInfo token(0x0400002B)
+  IL_002e call           UnityEngine.RaycastHit::get_collider token(0x0A000042)
+  IL_0033 ldnull          
+  IL_0034 call           UnityEngine.Object::op_Inequality token(0x0A00001F)
+  IL_0039 brfalse.s      IL_0058 
+  IL_003b ldsflda        HutongGames.PlayMaker.ActionHelpers::mousePickInfo token(0x0400002B)
+  IL_0040 call           UnityEngine.RaycastHit::get_distance token(0x0A000043)
+  IL_0045 ldarg.0         
+  IL_0046 bge.un.s       IL_0058 
+  IL_0048 ldsflda        HutongGames.PlayMaker.ActionHelpers::mousePickInfo token(0x0400002B)
+  IL_004d call           UnityEngine.RaycastHit::get_collider token(0x0A000042)
+  IL_0052 callvirt       UnityEngine.Component::get_gameObject token(0x0A000044)
+  IL_0057 ret             
+  IL_0058 ldnull          
+  IL_0059 ret             
+
+0x0600005e HutongGames.PlayMaker.ActionHelpers::DoMousePick(distance,layerMask) RVA 0x3c0c SIG 0002010c08
+  IL_0000 call           UnityEngine.Camera::get_main token(0x0A000045)
+  IL_0005 ldnull          
+  IL_0006 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_000b brfalse.s      IL_000e 
+  IL_000d ret             
+  IL_000e call           UnityEngine.Camera::get_main token(0x0A000045)
+  IL_0013 call           UnityEngine.Input::get_mousePosition token(0x0A00003F)
+  IL_0018 callvirt       UnityEngine.Camera::ScreenPointToRay token(0x0A000046)
+  IL_001d ldsflda        HutongGames.PlayMaker.ActionHelpers::mousePickInfo token(0x0400002B)
+  IL_0022 ldarg.0         
+  IL_0023 ldarg.1         
+  IL_0024 call           UnityEngine.Physics::Raycast token(0x0A000047)
+  IL_0029 pop             
+  IL_002a ldarg.1         
+  IL_002b stsfld         HutongGames.PlayMaker.ActionHelpers::mousePickLayerMaskUsed token(0x0400002E)
+  IL_0030 ldarg.0         
+  IL_0031 stsfld         HutongGames.PlayMaker.ActionHelpers::mousePickDistanceUsed token(0x0400002D)
+  IL_0036 call           UnityEngine.Time::get_frameCount token(0x0A000041)
+  IL_003b conv.r4         
+  IL_003c stsfld         HutongGames.PlayMaker.ActionHelpers::mousePickRaycastTime token(0x0400002C)
+  IL_0041 ret             
+
+0x0600005f HutongGames.PlayMaker.ActionHelpers::LayerArrayToLayerMask(layers,invert) RVA 0x3c5c SIG 0002081d1280dd02
+  IL_0000 ldc.i4.0        
+  IL_0001 stloc.0         
+  IL_0002 ldarg.0         
+  IL_0003 stloc.1         
+  IL_0004 ldc.i4.0        
+  IL_0005 stloc.2         
+  IL_0006 br.s           IL_001e 
+  IL_0008 ldloc.1         
+  IL_0009 ldloc.2         
+  IL_000a ldelem.ref      
+  IL_000b stloc.3         
+  IL_000c ldloc.0         
+  IL_000d ldc.i4.1        
+  IL_000e ldloc.3         
+  IL_000f callvirt       HutongGames.PlayMaker.FsmInt::get_Value token(0x0A000048)
+  IL_0014 ldc.i4.s       31 
+  IL_0016 and             
+  IL_0017 shl             
+  IL_0018 or              
+  IL_0019 stloc.0         
+  IL_001a ldloc.2         
+  IL_001b ldc.i4.1        
+  IL_001c add             
+  IL_001d stloc.2         
+  IL_001e ldloc.2         
+  IL_001f ldloc.1         
+  IL_0020 ldlen           
+  IL_0021 conv.i4         
+  IL_0022 blt.s          IL_0008 
+  IL_0024 ldarg.1         
+  IL_0025 brfalse.s      IL_002a 
+  IL_0027 ldloc.0         
+  IL_0028 not             
+  IL_0029 stloc.0         
+  IL_002a ldloc.0         
+  IL_002b brfalse.s      IL_002f 
+  IL_002d ldloc.0         
+  IL_002e ret             
+  IL_002f ldc.i4.s       -5 
+  IL_0031 ret             
+
+0x06000060 HutongGames.PlayMaker.ActionHelpers::IsLoopingWrapMode(wrapMode) RVA 0x3c9a SIG 0001021180b1
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.2        
+  IL_0002 beq.s          IL_0009 
+  IL_0004 ldarg.0         
+  IL_0005 ldc.i4.4        
+  IL_0006 ceq             
+  IL_0008 ret             
+  IL_0009 ldc.i4.1        
+  IL_000a ret             
+
+0x06000061 HutongGames.PlayMaker.ActionHelpers::CheckRayDistance(rayDistance) RVA 0x3ca6 SIG 00010e0c
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         0.0 
+  IL_0006 ble.s          IL_000e 
+  IL_0008 ldstr          '' string token(0x7000004D)
+  IL_000d ret             
+  IL_000e ldstr          'Ray Distance should be greater than zero!\n' string token(0x7000004F)
+  IL_0013 ret             
+
+0x06000062 HutongGames.PlayMaker.ActionHelpers::CheckForValidEvent(state,eventName) RVA 0x3cbc SIG 00020e1280e50e
+  IL_0000 ldarg.0         
+  IL_0001 brtrue.s       IL_0009 
+  IL_0003 ldstr          'Invalid State!' string token(0x700000A5)
+  IL_0008 ret             
+  IL_0009 ldarg.1         
+  IL_000a call           System.String::IsNullOrEmpty token(0x0A00002D)
+  IL_000f brfalse.s      IL_0017 
+  IL_0011 ldstr          '' string token(0x7000004D)
+  IL_0016 ret             
+  IL_0017 ldarg.0         
+  IL_0018 callvirt       HutongGames.PlayMaker.FsmState::get_Fsm token(0x0A000049)
+  IL_001d callvirt       HutongGames.PlayMaker.Fsm::get_GlobalTransitions token(0x0A00004A)
+  IL_0022 stloc.0         
+  IL_0023 ldc.i4.0        
+  IL_0024 stloc.1         
+  IL_0025 br.s           IL_0041 
+  IL_0027 ldloc.0         
+  IL_0028 ldloc.1         
+  IL_0029 ldelem.ref      
+  IL_002a callvirt       HutongGames.PlayMaker.FsmTransition::get_EventName token(0x0A00004B)
+  IL_002f ldarg.1         
+  IL_0030 call           System.String::op_Equality token(0x0A000030)
+  IL_0035 brfalse.s      IL_003d 
+  IL_0037 ldstr          '' string token(0x7000004D)
+  IL_003c ret             
+  IL_003d ldloc.1         
+  IL_003e ldc.i4.1        
+  IL_003f add             
+  IL_0040 stloc.1         
+  IL_0041 ldloc.1         
+  IL_0042 ldloc.0         
+  IL_0043 ldlen           
+  IL_0044 conv.i4         
+  IL_0045 blt.s          IL_0027 
+  IL_0047 ldarg.0         
+  IL_0048 callvirt       HutongGames.PlayMaker.FsmState::get_Transitions token(0x0A00004C)
+  IL_004d stloc.0         
+  IL_004e ldc.i4.0        
+  IL_004f stloc.1         
+  IL_0050 br.s           IL_006c 
+  IL_0052 ldloc.0         
+  IL_0053 ldloc.1         
+  IL_0054 ldelem.ref      
+  IL_0055 callvirt       HutongGames.PlayMaker.FsmTransition::get_EventName token(0x0A00004B)
+  IL_005a ldarg.1         
+  IL_005b call           System.String::op_Equality token(0x0A000030)
+  IL_0060 brfalse.s      IL_0068 
+  IL_0062 ldstr          '' string token(0x7000004D)
+  IL_0067 ret             
+  IL_0068 ldloc.1         
+  IL_0069 ldc.i4.1        
+  IL_006a add             
+  IL_006b stloc.1         
+  IL_006c ldloc.1         
+  IL_006d ldloc.0         
+  IL_006e ldlen           
+  IL_006f conv.i4         
+  IL_0070 blt.s          IL_0052 
+  IL_0072 ldstr          'Fsm will not respond to Event: ' string token(0x700000C3)
+  IL_0077 ldarg.1         
+  IL_0078 call           System.String::Concat token(0x0A00004D)
+  IL_007d ret             
+
+0x06000063 HutongGames.PlayMaker.ActionHelpers::CheckPhysicsSetup(ownerDefault) RVA 0x3d46 SIG 00010e12808d
+  IL_0000 ldarg.0         
+  IL_0001 brtrue.s       IL_0009 
+  IL_0003 ldstr          '' string token(0x7000004D)
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a callvirt       HutongGames.PlayMaker.FsmOwnerDefault::get_GameObject token(0x0A00004E)
+  IL_000f callvirt       HutongGames.PlayMaker.FsmGameObject::get_Value token(0x0A00003A)
+  IL_0014 call           HutongGames.PlayMaker.ActionHelpers::CheckPhysicsSetup token(0x06000065)
+  IL_0019 ret             
+
+0x06000064 HutongGames.PlayMaker.ActionHelpers::CheckOwnerPhysicsSetup(gameObject) RVA 0x3d61 SIG 00010e1269
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.ActionHelpers::CheckPhysicsSetup token(0x06000065)
+  IL_0006 ret             
+
+0x06000065 HutongGames.PlayMaker.ActionHelpers::CheckPhysicsSetup(gameObject) RVA 0x3d6c SIG 00010e1269
+  IL_0000 ldsfld         System.String::Empty token(0x0A00004F)
+  IL_0005 stloc.0         
+  IL_0006 ldarg.0         
+  IL_0007 ldnull          
+  IL_0008 call           UnityEngine.Object::op_Inequality token(0x0A00001F)
+  IL_000d brfalse.s      IL_0037 
+  IL_000f ldarg.0         
+  IL_0010 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000005)
+  IL_0015 ldnull          
+  IL_0016 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_001b brfalse.s      IL_0037 
+  IL_001d ldarg.0         
+  IL_001e callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000006)
+  IL_0023 ldnull          
+  IL_0024 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_0029 brfalse.s      IL_0037 
+  IL_002b ldloc.0         
+  IL_002c ldstr          'GameObject requires RigidBody/Collider!\n' string token(0x70000103)
+  IL_0031 call           System.String::Concat token(0x0A00004D)
+  IL_0036 stloc.0         
+  IL_0037 ldloc.0         
+  IL_0038 ret             
+
+0x06000066 HutongGames.PlayMaker.ActionHelpers::CheckPhysics2dSetup(ownerDefault) RVA 0x3db1 SIG 00010e12808d
+  IL_0000 ldarg.0         
+  IL_0001 brtrue.s       IL_0009 
+  IL_0003 ldstr          '' string token(0x7000004D)
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a callvirt       HutongGames.PlayMaker.FsmOwnerDefault::get_GameObject token(0x0A00004E)
+  IL_000f callvirt       HutongGames.PlayMaker.FsmGameObject::get_Value token(0x0A00003A)
+  IL_0014 call           HutongGames.PlayMaker.ActionHelpers::CheckPhysics2dSetup token(0x06000068)
+  IL_0019 ret             
+
+0x06000067 HutongGames.PlayMaker.ActionHelpers::CheckOwnerPhysics2dSetup(gameObject) RVA 0x3dcc SIG 00010e1269
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.ActionHelpers::CheckPhysics2dSetup token(0x06000068)
+  IL_0006 ret             
+
+0x06000068 HutongGames.PlayMaker.ActionHelpers::CheckPhysics2dSetup(gameObject) RVA 0x3dd4 SIG 00010e1269
+  IL_0000 ldsfld         System.String::Empty token(0x0A00004F)
+  IL_0005 stloc.0         
+  IL_0006 ldarg.0         
+  IL_0007 ldnull          
+  IL_0008 call           UnityEngine.Object::op_Inequality token(0x0A00001F)
+  IL_000d brfalse.s      IL_0037 
+  IL_000f ldarg.0         
+  IL_0010 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000007)
+  IL_0015 ldnull          
+  IL_0016 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_001b brfalse.s      IL_0037 
+  IL_001d ldarg.0         
+  IL_001e callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000008)
+  IL_0023 ldnull          
+  IL_0024 call           UnityEngine.Object::op_Equality token(0x0A00001D)
+  IL_0029 brfalse.s      IL_0037 
+  IL_002b ldloc.0         
+  IL_002c ldstr          'GameObject requires a RigidBody2D or Collider2D component!\n' string token(0x70000155)
+  IL_0031 call           System.String::Concat token(0x0A00004D)
+  IL_0036 stloc.0         
+  IL_0037 ldloc.0         
+  IL_0038 ret             
+
+0x06000069 HutongGames.PlayMaker.ActionHelpers::DebugLog(fsm,logLevel,text,sendToUnityLog) RVA 0x3e1c SIG 0004011280891181010e02
+  IL_0000 call           UnityEngine.Application::get_isEditor token(0x0A000050)
+  IL_0005 ldc.i4.0        
+  IL_0006 ceq             
+  IL_0008 ldarg.3         
+  IL_0009 and             
+  IL_000a brfalse.s      IL_0033 
+  IL_000c ldarg.2         
+  IL_000d call           HutongGames.PlayMaker.ActionHelpers::FormatUnityLogString token(0x0600006C)
+  IL_0012 stloc.0         
+  IL_0013 ldarg.1         
+  IL_0014 ldc.i4.1        
+  IL_0015 beq.s          IL_001d 
+  IL_0017 ldarg.1         
+  IL_0018 ldc.i4.2        
+  IL_0019 beq.s          IL_0025 
+  IL_001b br.s           IL_002d 
+  IL_001d ldloc.0         
+  IL_001e call           UnityEngine.Debug::LogWarning token(0x0A000033)
+  IL_0023 br.s           IL_0033 
+  IL_0025 ldloc.0         
+  IL_0026 call           UnityEngine.Debug::LogError token(0x0A000051)
+  IL_002b br.s           IL_0033 
+  IL_002d ldloc.0         
+  IL_002e call           UnityEngine.Debug::Log token(0x0A000052)
+  IL_0033 call           HutongGames.PlayMaker.FsmLog::get_LoggingEnabled token(0x0A000053)
+  IL_0038 brfalse.s      IL_003d 
+  IL_003a ldarg.0         
+  IL_003b brtrue.s       IL_003e 
+  IL_003d ret             
+  IL_003e ldarg.1         
+  IL_003f switch         [IL_0051, IL_0060, IL_006f] 
+  IL_0050 ret             
+  IL_0051 ldarg.0         
+  IL_0052 callvirt       HutongGames.PlayMaker.Fsm::get_MyLog token(0x0A000054)
+  IL_0057 ldc.i4.0        
+  IL_0058 ldarg.2         
+  IL_0059 ldarg.3         
+  IL_005a callvirt       HutongGames.PlayMaker.FsmLog::LogAction token(0x0A000055)
+  IL_005f ret             
+  IL_0060 ldarg.0         
+  IL_0061 callvirt       HutongGames.PlayMaker.Fsm::get_MyLog token(0x0A000054)
+  IL_0066 ldc.i4.1        
+  IL_0067 ldarg.2         
+  IL_0068 ldarg.3         
+  IL_0069 callvirt       HutongGames.PlayMaker.FsmLog::LogAction token(0x0A000055)
+  IL_006e ret             
+  IL_006f ldarg.0         
+  IL_0070 callvirt       HutongGames.PlayMaker.Fsm::get_MyLog token(0x0A000054)
+  IL_0075 ldc.i4.2        
+  IL_0076 ldarg.2         
+  IL_0077 ldarg.3         
+  IL_0078 callvirt       HutongGames.PlayMaker.FsmLog::LogAction token(0x0A000055)
+  IL_007d ret             
+
+0x0600006a HutongGames.PlayMaker.ActionHelpers::LogError(text) RVA 0x3ea6 SIG 0001010e
+  IL_0000 call           HutongGames.PlayMaker.FsmExecutionStack::get_ExecutingFsm token(0x0A000056)
+  IL_0005 ldc.i4.2        
+  IL_0006 ldarg.0         
+  IL_0007 ldc.i4.1        
+  IL_0008 call           HutongGames.PlayMaker.ActionHelpers::DebugLog token(0x06000069)
+  IL_000d ret             
+
+0x0600006b HutongGames.PlayMaker.ActionHelpers::LogWarning(text) RVA 0x3eb5 SIG 0001010e
+  IL_0000 call           HutongGames.PlayMaker.FsmExecutionStack::get_ExecutingFsm token(0x0A000056)
+  IL_0005 ldc.i4.1        
+  IL_0006 ldarg.0         
+  IL_0007 ldc.i4.1        
+  IL_0008 call           HutongGames.PlayMaker.ActionHelpers::DebugLog token(0x06000069)
+  IL_000d ret             
+
+0x0600006c HutongGames.PlayMaker.ActionHelpers::FormatUnityLogString(text) RVA 0x3ec4 SIG 00010e0e
+  IL_0000 call           HutongGames.PlayMaker.FsmExecutionStack::get_ExecutingFsm token(0x0A000056)
+  IL_0005 brtrue.s       IL_0009 
+  IL_0007 ldarg.0         
+  IL_0008 ret             
+  IL_0009 call           HutongGames.PlayMaker.FsmExecutionStack::get_ExecutingFsm token(0x0A000056)
+  IL_000e call           HutongGames.PlayMaker.Fsm::GetFullFsmLabel token(0x0A000057)
+  IL_0013 stloc.0         
+  IL_0014 call           HutongGames.PlayMaker.FsmExecutionStack::get_ExecutingState token(0x0A000058)
+  IL_0019 brfalse.s      IL_002c 
+  IL_001b ldloc.0         
+  IL_001c ldstr          ' : ' string token(0x700001CD)
+  IL_0021 call           HutongGames.PlayMaker.FsmExecutionStack::get_ExecutingStateName token(0x0A000059)
+  IL_0026 call           System.String::Concat token(0x0A00005A)
+  IL_002b stloc.0         
+  IL_002c call           HutongGames.PlayMaker.FsmExecutionStack::get_ExecutingAction token(0x0A00005B)
+  IL_0031 brfalse.s      IL_0044 
+  IL_0033 ldloc.0         
+  IL_0034 call           HutongGames.PlayMaker.FsmExecutionStack::get_ExecutingAction token(0x0A00005B)
+  IL_0039 callvirt       HutongGames.PlayMaker.FsmStateAction::get_Name token(0x0A00005C)
+  IL_003e call           System.String::Concat token(0x0A00004D)
+  IL_0043 stloc.0         
+  IL_0044 ldloc.0         
+  IL_0045 ldstr          ' : ' string token(0x700001CD)
+  IL_004a ldarg.0         
+  IL_004b call           System.String::Concat token(0x0A00005A)
+  IL_0050 stloc.0         
+  IL_0051 ldloc.0         
+  IL_0052 ret             
+
+0x0600006d HutongGames.PlayMaker.ActionHelpers::StripTags(textWithTags) RVA 0x3f24 SIG 00010e0e
+  IL_0000 ldarg.0         
+  IL_0001 ldstr          '<i>' string token(0x700001D5)
+  IL_0006 ldstr          '' string token(0x7000004D)
+  IL_000b callvirt       System.String::Replace token(0x0A00005D)
+  IL_0010 starg.s        argument(0x0000) 
+  IL_0012 ldarg.0         
+  IL_0013 ldstr          '</i>' string token(0x700001DD)
+  IL_0018 ldstr          '' string token(0x7000004D)
+  IL_001d callvirt       System.String::Replace token(0x0A00005D)
+  IL_0022 starg.s        argument(0x0000) 
+  IL_0024 ldarg.0         
+  IL_0025 ldstr          '<b>' string token(0x700001E7)
+  IL_002a ldstr          '' string token(0x7000004D)
+  IL_002f callvirt       System.String::Replace token(0x0A00005D)
+  IL_0034 starg.s        argument(0x0000) 
+  IL_0036 ldarg.0         
+  IL_0037 ldstr          '</b>' string token(0x700001EF)
+  IL_003c ldstr          '' string token(0x7000004D)
+  IL_0041 callvirt       System.String::Replace token(0x0A00005D)
+  IL_0046 starg.s        argument(0x0000) 
+  IL_0048 ldarg.0         
+  IL_0049 ret             
+
+0x0600006e HutongGames.PlayMaker.ActionHelpers::GetValueLabel(variable) RVA 0x3f7a SIG 00010e128109
+  IL_0000 ldstr          '' string token(0x7000004D)
+  IL_0005 ret             
+
+0x0600006f HutongGames.PlayMaker.ActionHelpers::GetValueLabel(fsm,ownerDefault) RVA 0x3f81 SIG 00020e12808912808d
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_0009 
+  IL_0003 ldstr          '[null]' string token(0x700001F9)
+  IL_0008 ret             
+  IL_0009 ldarg.1         
+  IL_000a callvirt       HutongGames.PlayMaker.FsmOwnerDefault::get_OwnerOption token(0x0A00005E)
+  IL_000f brtrue.s       IL_0017 
+  IL_0011 ldstr          'Owner' string token(0x70000207)
+  IL_0016 ret             
+  IL_0017 ldarg.1         
+  IL_0018 callvirt       HutongGames.PlayMaker.FsmOwnerDefault::get_GameObject token(0x0A00004E)
+  IL_001d call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_0022 ret             
+
+0x06000070 HutongGames.PlayMaker.ActionHelpers::AutoName(action,exposedFields) RVA 0x3fa5 SIG 00020e1280851d128109
+  IL_0000 ldarg.0         
+  IL_0001 brfalse.s      IL_0015 
+  IL_0003 ldarg.0         
+  IL_0004 callvirt       System.Object::GetType token(0x0A00005F)
+  IL_0009 callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000060)
+  IL_000e ldarg.1         
+  IL_000f call           HutongGames.PlayMaker.ActionHelpers::AutoName token(0x06000074)
+  IL_0014 ret             
+  IL_0015 ldnull          
+  IL_0016 ret             
+
+0x06000071 HutongGames.PlayMaker.ActionHelpers::AutoName(action,fsm,ownerDefault) RVA 0x3fbd SIG 00030e12808512808912808d
+  IL_0000 ldarg.0         
+  IL_0001 brfalse.s      IL_0024 
+  IL_0003 ldarg.0         
+  IL_0004 callvirt       System.Object::GetType token(0x0A00005F)
+  IL_0009 callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000060)
+  IL_000e ldc.i4.1        
+  IL_000f newarr         System.String token(0x01000025)
+  IL_0014 dup             
+  IL_0015 ldc.i4.0        
+  IL_0016 ldarg.1         
+  IL_0017 ldarg.2         
+  IL_0018 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006F)
+  IL_001d stelem.ref      
+  IL_001e call           HutongGames.PlayMaker.ActionHelpers::AutoName token(0x06000075)
+  IL_0023 ret             
+  IL_0024 ldnull          
+  IL_0025 ret             
+
+0x06000072 HutongGames.PlayMaker.ActionHelpers::AutoName(action,labels) RVA 0x3fe4 SIG 00020e1280851d0e
+  IL_0000 ldarg.0         
+  IL_0001 brfalse.s      IL_0015 
+  IL_0003 ldarg.0         
+  IL_0004 callvirt       System.Object::GetType token(0x0A00005F)
+  IL_0009 callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000060)
+  IL_000e ldarg.1         
+  IL_000f call           HutongGames.PlayMaker.ActionHelpers::AutoName token(0x06000075)
+  IL_0014 ret             
+  IL_0015 ldnull          
+  IL_0016 ret             
+
+0x06000073 HutongGames.PlayMaker.ActionHelpers::AutoName(action,fsmEvent) RVA 0x3ffc SIG 00020e12808512811d
+  IL_0000 ldarg.0         
+  IL_0001 brfalse.s      IL_002d 
+  IL_0003 ldarg.0         
+  IL_0004 callvirt       System.Object::GetType token(0x0A00005F)
+  IL_0009 callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000060)
+  IL_000e ldc.i4.1        
+  IL_000f newarr         System.String token(0x01000025)
+  IL_0014 dup             
+  IL_0015 ldc.i4.0        
+  IL_0016 ldarg.1         
+  IL_0017 brtrue.s       IL_0020 
+  IL_0019 ldstr          'None' string token(0x70000213)
+  IL_001e br.s           IL_0026 
+  IL_0020 ldarg.1         
+  IL_0021 callvirt       HutongGames.PlayMaker.FsmEvent::get_Name token(0x0A000062)
+  IL_0026 stelem.ref      
+  IL_0027 call           HutongGames.PlayMaker.ActionHelpers::AutoName token(0x06000075)
+  IL_002c ret             
+  IL_002d ldnull          
+  IL_002e ret             
+
+0x06000074 HutongGames.PlayMaker.ActionHelpers::AutoName(actionName,exposedFields) RVA 0x402c SIG 00020e0e1d128109
+  IL_0000 ldarg.0         
+  IL_0001 ldstr          ': ' string token(0x7000021D)
+  IL_0006 call           System.String::Concat token(0x0A00004D)
+  IL_000b stloc.0         
+  IL_000c ldarg.1         
+  IL_000d stloc.1         
+  IL_000e ldc.i4.0        
+  IL_000f stloc.2         
+  IL_0010 br.s           IL_002c 
+  IL_0012 ldloc.1         
+  IL_0013 ldloc.2         
+  IL_0014 ldelem.ref      
+  IL_0015 stloc.3         
+  IL_0016 ldloc.0         
+  IL_0017 ldloc.3         
+  IL_0018 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_001d ldstr          ' ' string token(0x70000223)
+  IL_0022 call           System.String::Concat token(0x0A00005A)
+  IL_0027 stloc.0         
+  IL_0028 ldloc.2         
+  IL_0029 ldc.i4.1        
+  IL_002a add             
+  IL_002b stloc.2         
+  IL_002c ldloc.2         
+  IL_002d ldloc.1         
+  IL_002e ldlen           
+  IL_002f conv.i4         
+  IL_0030 blt.s          IL_0012 
+  IL_0032 ldloc.0         
+  IL_0033 ret             
+
+0x06000075 HutongGames.PlayMaker.ActionHelpers::AutoName(actionName,labels) RVA 0x406c SIG 00020e0e1d0e
+  IL_0000 ldarg.0         
+  IL_0001 ldstr          ': ' string token(0x7000021D)
+  IL_0006 call           System.String::Concat token(0x0A00004D)
+  IL_000b stloc.0         
+  IL_000c ldarg.1         
+  IL_000d stloc.1         
+  IL_000e ldc.i4.0        
+  IL_000f stloc.2         
+  IL_0010 br.s           IL_0027 
+  IL_0012 ldloc.1         
+  IL_0013 ldloc.2         
+  IL_0014 ldelem.ref      
+  IL_0015 stloc.3         
+  IL_0016 ldloc.0         
+  IL_0017 ldloc.3         
+  IL_0018 ldstr          ' ' string token(0x70000223)
+  IL_001d call           System.String::Concat token(0x0A00005A)
+  IL_0022 stloc.0         
+  IL_0023 ldloc.2         
+  IL_0024 ldc.i4.1        
+  IL_0025 add             
+  IL_0026 stloc.2         
+  IL_0027 ldloc.2         
+  IL_0028 ldloc.1         
+  IL_0029 ldlen           
+  IL_002a conv.i4         
+  IL_002b blt.s          IL_0012 
+  IL_002d ldloc.0         
+  IL_002e ret             
+
+0x06000076 HutongGames.PlayMaker.ActionHelpers::AutoName(action,fsm,target,exposedFields) RVA 0x40a7 SIG 00040e12808512808912808d1d128109
+  IL_0000 ldarg.0         
+  IL_0001 brfalse.s      IL_0017 
+  IL_0003 ldarg.0         
+  IL_0004 callvirt       System.Object::GetType token(0x0A00005F)
+  IL_0009 callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000060)
+  IL_000e ldarg.1         
+  IL_000f ldarg.2         
+  IL_0010 ldarg.3         
+  IL_0011 call           HutongGames.PlayMaker.ActionHelpers::AutoName token(0x06000077)
+  IL_0016 ret             
+  IL_0017 ldnull          
+  IL_0018 ret             
+
+0x06000077 HutongGames.PlayMaker.ActionHelpers::AutoName(actionName,fsm,target,exposedFields) RVA 0x40c4 SIG 00040e0e12808912808d1d128109
+  IL_0000 ldarg.0         
+  IL_0001 ldstr          ': ' string token(0x7000021D)
+  IL_0006 ldarg.1         
+  IL_0007 ldarg.2         
+  IL_0008 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006F)
+  IL_000d ldstr          ' ' string token(0x70000223)
+  IL_0012 call           System.String::Concat token(0x0A000032)
+  IL_0017 stloc.0         
+  IL_0018 ldarg.3         
+  IL_0019 stloc.1         
+  IL_001a ldc.i4.0        
+  IL_001b stloc.2         
+  IL_001c br.s           IL_0038 
+  IL_001e ldloc.1         
+  IL_001f ldloc.2         
+  IL_0020 ldelem.ref      
+  IL_0021 stloc.3         
+  IL_0022 ldloc.0         
+  IL_0023 ldloc.3         
+  IL_0024 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_0029 ldstr          ' ' string token(0x70000223)
+  IL_002e call           System.String::Concat token(0x0A00005A)
+  IL_0033 stloc.0         
+  IL_0034 ldloc.2         
+  IL_0035 ldc.i4.1        
+  IL_0036 add             
+  IL_0037 stloc.2         
+  IL_0038 ldloc.2         
+  IL_0039 ldloc.1         
+  IL_003a ldlen           
+  IL_003b conv.i4         
+  IL_003c blt.s          IL_001e 
+  IL_003e ldloc.0         
+  IL_003f ret             
+
+0x06000078 HutongGames.PlayMaker.ActionHelpers::AutoNameRange(action,min,max) RVA 0x4110 SIG 00030e1280851280bd1280bd
+  IL_0000 ldarg.0         
+  IL_0001 brfalse.s      IL_0016 
+  IL_0003 ldarg.0         
+  IL_0004 callvirt       System.Object::GetType token(0x0A00005F)
+  IL_0009 callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000060)
+  IL_000e ldarg.1         
+  IL_000f ldarg.2         
+  IL_0010 call           HutongGames.PlayMaker.ActionHelpers::AutoNameRange token(0x06000079)
+  IL_0015 ret             
+  IL_0016 ldnull          
+  IL_0017 ret             
+
+0x06000079 HutongGames.PlayMaker.ActionHelpers::AutoNameRange(actionName,min,max) RVA 0x4129 SIG 00030e0e1280bd1280bd
+  IL_0000 ldc.i4.5        
+  IL_0001 newarr         System.String token(0x01000025)
+  IL_0006 dup             
+  IL_0007 ldc.i4.0        
+  IL_0008 ldarg.0         
+  IL_0009 stelem.ref      
+  IL_000a dup             
+  IL_000b ldc.i4.1        
+  IL_000c ldstr          ': ' string token(0x7000021D)
+  IL_0011 stelem.ref      
+  IL_0012 dup             
+  IL_0013 ldc.i4.2        
+  IL_0014 ldarg.1         
+  IL_0015 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_001a stelem.ref      
+  IL_001b dup             
+  IL_001c ldc.i4.3        
+  IL_001d ldstr          ' - ' string token(0x70000227)
+  IL_0022 stelem.ref      
+  IL_0023 dup             
+  IL_0024 ldc.i4.4        
+  IL_0025 ldarg.2         
+  IL_0026 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_002b stelem.ref      
+  IL_002c call           System.String::Concat token(0x0A000063)
+  IL_0031 ret             
+
+0x0600007a HutongGames.PlayMaker.ActionHelpers::AutoNameSetVar(action,var,value) RVA 0x415c SIG 00030e1280851280bd1280bd
+  IL_0000 ldarg.0         
+  IL_0001 brfalse.s      IL_0016 
+  IL_0003 ldarg.0         
+  IL_0004 callvirt       System.Object::GetType token(0x0A00005F)
+  IL_0009 callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000060)
+  IL_000e ldarg.1         
+  IL_000f ldarg.2         
+  IL_0010 call           HutongGames.PlayMaker.ActionHelpers::AutoNameSetVar token(0x0600007B)
+  IL_0015 ret             
+  IL_0016 ldnull          
+  IL_0017 ret             
+
+0x0600007b HutongGames.PlayMaker.ActionHelpers::AutoNameSetVar(actionName,var,value) RVA 0x4175 SIG 00030e0e1280bd1280bd
+  IL_0000 ldc.i4.5        
+  IL_0001 newarr         System.String token(0x01000025)
+  IL_0006 dup             
+  IL_0007 ldc.i4.0        
+  IL_0008 ldarg.0         
+  IL_0009 stelem.ref      
+  IL_000a dup             
+  IL_000b ldc.i4.1        
+  IL_000c ldstr          ': ' string token(0x7000021D)
+  IL_0011 stelem.ref      
+  IL_0012 dup             
+  IL_0013 ldc.i4.2        
+  IL_0014 ldarg.1         
+  IL_0015 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_001a stelem.ref      
+  IL_001b dup             
+  IL_001c ldc.i4.3        
+  IL_001d ldstr          ' = ' string token(0x7000022F)
+  IL_0022 stelem.ref      
+  IL_0023 dup             
+  IL_0024 ldc.i4.4        
+  IL_0025 ldarg.2         
+  IL_0026 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_002b stelem.ref      
+  IL_002c call           System.String::Concat token(0x0A000063)
+  IL_0031 ret             
+
+0x0600007c HutongGames.PlayMaker.ActionHelpers::AutoNameConvert(action,fromVariable,toVariable) RVA 0x41a8 SIG 00030e1280851280bd1280bd
+  IL_0000 ldarg.0         
+  IL_0001 brfalse.s      IL_0016 
+  IL_0003 ldarg.0         
+  IL_0004 callvirt       System.Object::GetType token(0x0A00005F)
+  IL_0009 callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000060)
+  IL_000e ldarg.1         
+  IL_000f ldarg.2         
+  IL_0010 call           HutongGames.PlayMaker.ActionHelpers::AutoNameConvert token(0x0600007D)
+  IL_0015 ret             
+  IL_0016 ldnull          
+  IL_0017 ret             
+
+0x0600007d HutongGames.PlayMaker.ActionHelpers::AutoNameConvert(actionName,fromVariable,toVariable) RVA 0x41c4 SIG 00030e0e1280bd1280bd
+  IL_0000 ldc.i4.5        
+  IL_0001 newarr         System.String token(0x01000025)
+  IL_0006 dup             
+  IL_0007 ldc.i4.0        
+  IL_0008 ldarg.0         
+  IL_0009 ldstr          'Convert' string token(0x70000237)
+  IL_000e ldstr          '' string token(0x7000004D)
+  IL_0013 callvirt       System.String::Replace token(0x0A00005D)
+  IL_0018 stelem.ref      
+  IL_0019 dup             
+  IL_001a ldc.i4.1        
+  IL_001b ldstr          ': ' string token(0x7000021D)
+  IL_0020 stelem.ref      
+  IL_0021 dup             
+  IL_0022 ldc.i4.2        
+  IL_0023 ldarg.1         
+  IL_0024 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_0029 stelem.ref      
+  IL_002a dup             
+  IL_002b ldc.i4.3        
+  IL_002c ldstr          ' to ' string token(0x70000247)
+  IL_0031 stelem.ref      
+  IL_0032 dup             
+  IL_0033 ldc.i4.4        
+  IL_0034 ldarg.2         
+  IL_0035 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_003a stelem.ref      
+  IL_003b call           System.String::Concat token(0x0A000063)
+  IL_0040 ret             
+
+0x0600007e HutongGames.PlayMaker.ActionHelpers::AutoNameGetProperty(action,property,store) RVA 0x4211 SIG 00030e1280851280bd1280bd
+  IL_0000 ldarg.0         
+  IL_0001 brfalse.s      IL_0016 
+  IL_0003 ldarg.0         
+  IL_0004 callvirt       System.Object::GetType token(0x0A00005F)
+  IL_0009 callvirt       System.Reflection.MemberInfo::get_Name token(0x0A000060)
+  IL_000e ldarg.1         
+  IL_000f ldarg.2         
+  IL_0010 call           HutongGames.PlayMaker.ActionHelpers::AutoNameGetProperty token(0x0600007F)
+  IL_0015 ret             
+  IL_0016 ldnull          
+  IL_0017 ret             
+
+0x0600007f HutongGames.PlayMaker.ActionHelpers::AutoNameGetProperty(actionName,property,store) RVA 0x422a SIG 00030e0e1280bd1280bd
+  IL_0000 ldc.i4.5        
+  IL_0001 newarr         System.String token(0x01000025)
+  IL_0006 dup             
+  IL_0007 ldc.i4.0        
+  IL_0008 ldarg.0         
+  IL_0009 stelem.ref      
+  IL_000a dup             
+  IL_000b ldc.i4.1        
+  IL_000c ldstr          ': ' string token(0x7000021D)
+  IL_0011 stelem.ref      
+  IL_0012 dup             
+  IL_0013 ldc.i4.2        
+  IL_0014 ldarg.1         
+  IL_0015 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_001a stelem.ref      
+  IL_001b dup             
+  IL_001c ldc.i4.3        
+  IL_001d ldstr          ' -> ' string token(0x70000251)
+  IL_0022 stelem.ref      
+  IL_0023 dup             
+  IL_0024 ldc.i4.4        
+  IL_0025 ldarg.2         
+  IL_0026 call           HutongGames.PlayMaker.ActionHelpers::GetValueLabel token(0x0600006E)
+  IL_002b stelem.ref      
+  IL_002c call           System.String::Concat token(0x0A000063)
+  IL_0031 ret             
+
+0x06000080 HutongGames.PlayMaker.ActionHelpers::RuntimeError(action,error) RVA 0x425d SIG 0002011280850e
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 dup             
+  IL_0003 brtrue.s       IL_0009 
+  IL_0005 pop             
+  IL_0006 ldnull          
+  IL_0007 br.s           IL_000e 
+  IL_0009 callvirt       System.Object::ToString token(0x0A000064)
+  IL_000e ldstr          ': ' string token(0x7000021D)
+  IL_0013 ldarg.1         
+  IL_0014 call           System.String::Concat token(0x0A00005A)
+  IL_0019 callvirt       HutongGames.PlayMaker.FsmStateAction::LogError token(0x0A000065)
+  IL_001e ret             

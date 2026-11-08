@@ -1,0 +1,3193 @@
+
+TYPE TransformUtil 0x02002bc6
+
+TYPE CameraShakeMgr 0x02002be2
+FIELD 0x04011f9c m_amount SIG 06115d
+FIELD 0x04011f9d m_intensityCurve SIG 06128501
+FIELD 0x04011f9e m_holdAtSec SIG 06151181bd010c
+FIELD 0x04011f9f m_isOverride SIG 0602
+FIELD 0x04011fa0 m_started SIG 0602
+FIELD 0x04011fa1 m_initialPos SIG 06115d
+FIELD 0x04011fa2 m_progressSec SIG 060c
+FIELD 0x04011fa3 m_durationSec SIG 060c
+
+TYPE HutongGames.PlayMaker.Actions.SpellFinishAction 0x020030e1
+FIELD 0x04013c7a m_SpellObject SIG 061295bd
+FIELD 0x04013c7b m_Delay SIG 06128aa1
+
+TYPE HutongGames.PlayMaker.Actions.SpellStateAction 0x020030f3
+FIELD 0x04013caa m_SpellObject SIG 061295bd
+FIELD 0x04013cab m_spellStateType SIG 06118281
+FIELD 0x04013cac m_stateInvalid SIG 0602
+FIELD 0x04013cad m_stateDirty SIG 0602
+
+0x06014fb0 TransformUtil::GetUnitAnchor(anchor) RVA 0x62b214 SIG 0001115d11c000af08
+  IL_0000 ldloca.s       local(0x0000) 
+  IL_0002 initobj        UnityEngine.Vector3 token(0x01000017)
+  IL_0008 ldarg.0         
+  IL_0009 switch         [IL_006b, IL_0094, IL_00bd, IL_00e6, IL_010f, IL_0138, IL_0161, IL_018a, IL_01b3, IL_01dc, IL_0205, IL_022e, IL_0257, IL_0280, IL_02a9, IL_02d2, IL_02fb, IL_0324, IL_034d, IL_0373, IL_0399, IL_03bf] 
+  IL_0066 br             IL_03e3 
+  IL_006b ldloca.s       local(0x0000) 
+  IL_006d ldc.r4         0.0 
+  IL_0072 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0077 ldloca.s       local(0x0000) 
+  IL_0079 ldc.r4         1.0 
+  IL_007e stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0083 ldloca.s       local(0x0000) 
+  IL_0085 ldc.r4         0.0 
+  IL_008a stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_008f br             IL_03e3 
+  IL_0094 ldloca.s       local(0x0000) 
+  IL_0096 ldc.r4         0.5 
+  IL_009b stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_00a0 ldloca.s       local(0x0000) 
+  IL_00a2 ldc.r4         1.0 
+  IL_00a7 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_00ac ldloca.s       local(0x0000) 
+  IL_00ae ldc.r4         0.0 
+  IL_00b3 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_00b8 br             IL_03e3 
+  IL_00bd ldloca.s       local(0x0000) 
+  IL_00bf ldc.r4         1.0 
+  IL_00c4 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_00c9 ldloca.s       local(0x0000) 
+  IL_00cb ldc.r4         1.0 
+  IL_00d0 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_00d5 ldloca.s       local(0x0000) 
+  IL_00d7 ldc.r4         0.0 
+  IL_00dc stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_00e1 br             IL_03e3 
+  IL_00e6 ldloca.s       local(0x0000) 
+  IL_00e8 ldc.r4         0.0 
+  IL_00ed stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_00f2 ldloca.s       local(0x0000) 
+  IL_00f4 ldc.r4         0.5 
+  IL_00f9 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_00fe ldloca.s       local(0x0000) 
+  IL_0100 ldc.r4         0.0 
+  IL_0105 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_010a br             IL_03e3 
+  IL_010f ldloca.s       local(0x0000) 
+  IL_0111 ldc.r4         0.5 
+  IL_0116 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_011b ldloca.s       local(0x0000) 
+  IL_011d ldc.r4         0.5 
+  IL_0122 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0127 ldloca.s       local(0x0000) 
+  IL_0129 ldc.r4         0.0 
+  IL_012e stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0133 br             IL_03e3 
+  IL_0138 ldloca.s       local(0x0000) 
+  IL_013a ldc.r4         1.0 
+  IL_013f stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0144 ldloca.s       local(0x0000) 
+  IL_0146 ldc.r4         0.5 
+  IL_014b stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0150 ldloca.s       local(0x0000) 
+  IL_0152 ldc.r4         0.0 
+  IL_0157 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_015c br             IL_03e3 
+  IL_0161 ldloca.s       local(0x0000) 
+  IL_0163 ldc.r4         0.0 
+  IL_0168 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_016d ldloca.s       local(0x0000) 
+  IL_016f ldc.r4         0.0 
+  IL_0174 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0179 ldloca.s       local(0x0000) 
+  IL_017b ldc.r4         0.0 
+  IL_0180 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0185 br             IL_03e3 
+  IL_018a ldloca.s       local(0x0000) 
+  IL_018c ldc.r4         0.5 
+  IL_0191 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0196 ldloca.s       local(0x0000) 
+  IL_0198 ldc.r4         0.0 
+  IL_019d stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_01a2 ldloca.s       local(0x0000) 
+  IL_01a4 ldc.r4         0.0 
+  IL_01a9 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_01ae br             IL_03e3 
+  IL_01b3 ldloca.s       local(0x0000) 
+  IL_01b5 ldc.r4         1.0 
+  IL_01ba stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_01bf ldloca.s       local(0x0000) 
+  IL_01c1 ldc.r4         0.0 
+  IL_01c6 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_01cb ldloca.s       local(0x0000) 
+  IL_01cd ldc.r4         0.0 
+  IL_01d2 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_01d7 br             IL_03e3 
+  IL_01dc ldloca.s       local(0x0000) 
+  IL_01de ldc.r4         0.5 
+  IL_01e3 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_01e8 ldloca.s       local(0x0000) 
+  IL_01ea ldc.r4         0.0 
+  IL_01ef stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_01f4 ldloca.s       local(0x0000) 
+  IL_01f6 ldc.r4         1.0 
+  IL_01fb stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0200 br             IL_03e3 
+  IL_0205 ldloca.s       local(0x0000) 
+  IL_0207 ldc.r4         0.5 
+  IL_020c stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0211 ldloca.s       local(0x0000) 
+  IL_0213 ldc.r4         0.0 
+  IL_0218 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_021d ldloca.s       local(0x0000) 
+  IL_021f ldc.r4         0.0 
+  IL_0224 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0229 br             IL_03e3 
+  IL_022e ldloca.s       local(0x0000) 
+  IL_0230 ldc.r4         0.0 
+  IL_0235 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_023a ldloca.s       local(0x0000) 
+  IL_023c ldc.r4         1.0 
+  IL_0241 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0246 ldloca.s       local(0x0000) 
+  IL_0248 ldc.r4         0.0 
+  IL_024d stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0252 br             IL_03e3 
+  IL_0257 ldloca.s       local(0x0000) 
+  IL_0259 ldc.r4         0.5 
+  IL_025e stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0263 ldloca.s       local(0x0000) 
+  IL_0265 ldc.r4         1.0 
+  IL_026a stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_026f ldloca.s       local(0x0000) 
+  IL_0271 ldc.r4         0.0 
+  IL_0276 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_027b br             IL_03e3 
+  IL_0280 ldloca.s       local(0x0000) 
+  IL_0282 ldc.r4         1.0 
+  IL_0287 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_028c ldloca.s       local(0x0000) 
+  IL_028e ldc.r4         1.0 
+  IL_0293 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0298 ldloca.s       local(0x0000) 
+  IL_029a ldc.r4         0.0 
+  IL_029f stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_02a4 br             IL_03e3 
+  IL_02a9 ldloca.s       local(0x0000) 
+  IL_02ab ldc.r4         0.0 
+  IL_02b0 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_02b5 ldloca.s       local(0x0000) 
+  IL_02b7 ldc.r4         0.5 
+  IL_02bc stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_02c1 ldloca.s       local(0x0000) 
+  IL_02c3 ldc.r4         0.0 
+  IL_02c8 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_02cd br             IL_03e3 
+  IL_02d2 ldloca.s       local(0x0000) 
+  IL_02d4 ldc.r4         0.5 
+  IL_02d9 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_02de ldloca.s       local(0x0000) 
+  IL_02e0 ldc.r4         0.5 
+  IL_02e5 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_02ea ldloca.s       local(0x0000) 
+  IL_02ec ldc.r4         0.0 
+  IL_02f1 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_02f6 br             IL_03e3 
+  IL_02fb ldloca.s       local(0x0000) 
+  IL_02fd ldc.r4         1.0 
+  IL_0302 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0307 ldloca.s       local(0x0000) 
+  IL_0309 ldc.r4         0.5 
+  IL_030e stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0313 ldloca.s       local(0x0000) 
+  IL_0315 ldc.r4         0.0 
+  IL_031a stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_031f br             IL_03e3 
+  IL_0324 ldloca.s       local(0x0000) 
+  IL_0326 ldc.r4         0.0 
+  IL_032b stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0330 ldloca.s       local(0x0000) 
+  IL_0332 ldc.r4         0.0 
+  IL_0337 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_033c ldloca.s       local(0x0000) 
+  IL_033e ldc.r4         0.0 
+  IL_0343 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0348 br             IL_03e3 
+  IL_034d ldloca.s       local(0x0000) 
+  IL_034f ldc.r4         0.5 
+  IL_0354 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0359 ldloca.s       local(0x0000) 
+  IL_035b ldc.r4         0.0 
+  IL_0360 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0365 ldloca.s       local(0x0000) 
+  IL_0367 ldc.r4         0.0 
+  IL_036c stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0371 br.s           IL_03e3 
+  IL_0373 ldloca.s       local(0x0000) 
+  IL_0375 ldc.r4         1.0 
+  IL_037a stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_037f ldloca.s       local(0x0000) 
+  IL_0381 ldc.r4         0.0 
+  IL_0386 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_038b ldloca.s       local(0x0000) 
+  IL_038d ldc.r4         0.0 
+  IL_0392 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0397 br.s           IL_03e3 
+  IL_0399 ldloca.s       local(0x0000) 
+  IL_039b ldc.r4         0.5 
+  IL_03a0 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_03a5 ldloca.s       local(0x0000) 
+  IL_03a7 ldc.r4         0.0 
+  IL_03ac stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_03b1 ldloca.s       local(0x0000) 
+  IL_03b3 ldc.r4         1.0 
+  IL_03b8 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_03bd br.s           IL_03e3 
+  IL_03bf ldloca.s       local(0x0000) 
+  IL_03c1 ldc.r4         0.5 
+  IL_03c6 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_03cb ldloca.s       local(0x0000) 
+  IL_03cd ldc.r4         0.0 
+  IL_03d2 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_03d7 ldloca.s       local(0x0000) 
+  IL_03d9 ldc.r4         0.0 
+  IL_03de stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_03e3 ldloc.0         
+  IL_03e4 ret             
+
+0x06014fb1 TransformUtil::ComputeWorldPoint(bounds,selfUnitAnchor) RVA 0x62b608 SIG 0002115d118185115d
+  IL_0000 ldloca.s       local(0x0000) 
+  IL_0002 initobj        UnityEngine.Vector3 token(0x01000017)
+  IL_0008 ldloca.s       local(0x0000) 
+  IL_000a ldarga.s       argument(0x0000) 
+  IL_000c call           UnityEngine.Bounds::get_min token(0x0A000101)
+  IL_0011 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0016 ldarga.s       argument(0x0000) 
+  IL_0018 call           UnityEngine.Bounds::get_max token(0x0A0000FF)
+  IL_001d ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0022 ldarg.1         
+  IL_0023 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0028 call           UnityEngine.Mathf::Lerp token(0x0A000D72)
+  IL_002d stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0032 ldloca.s       local(0x0000) 
+  IL_0034 ldarga.s       argument(0x0000) 
+  IL_0036 call           UnityEngine.Bounds::get_min token(0x0A000101)
+  IL_003b ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0040 ldarga.s       argument(0x0000) 
+  IL_0042 call           UnityEngine.Bounds::get_max token(0x0A0000FF)
+  IL_0047 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_004c ldarg.1         
+  IL_004d ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0052 call           UnityEngine.Mathf::Lerp token(0x0A000D72)
+  IL_0057 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_005c ldloca.s       local(0x0000) 
+  IL_005e ldarga.s       argument(0x0000) 
+  IL_0060 call           UnityEngine.Bounds::get_min token(0x0A000101)
+  IL_0065 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_006a ldarga.s       argument(0x0000) 
+  IL_006c call           UnityEngine.Bounds::get_max token(0x0A0000FF)
+  IL_0071 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0076 ldarg.1         
+  IL_0077 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_007c call           UnityEngine.Mathf::Lerp token(0x0A000D72)
+  IL_0081 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0086 ldloc.0         
+  IL_0087 ret             
+
+0x06014fb2 TransformUtil::ComputeSetPointBounds(c) RVA 0x62b69c SIG 000111818512809d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.i4.0        
+  IL_0007 call           TransformUtil::ComputeSetPointBounds token(0x06014FB5)
+  IL_000c ret             
+
+0x06014fb3 TransformUtil::ComputeSetPointBounds(go) RVA 0x62b6aa SIG 000111818512808d
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.0        
+  IL_0002 call           TransformUtil::ComputeSetPointBounds token(0x06014FB5)
+  IL_0007 ret             
+
+0x06014fb4 TransformUtil::ComputeSetPointBounds(c,includeInactive) RVA 0x62b6b3 SIG 000211818512809d02
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 call           TransformUtil::ComputeSetPointBounds token(0x06014FB5)
+  IL_000c ret             
+
+0x06014fb5 TransformUtil::ComputeSetPointBounds(go,includeInactive) RVA 0x62b6c4 SIG 000211818512808d02
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00032E)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_000e brfalse.s      IL_0017 
+  IL_0010 ldloc.0         
+  IL_0011 callvirt       UberText::GetTextWorldSpaceBounds token(0x0A000A23)
+  IL_0016 ret             
+  IL_0017 ldarg.0         
+  IL_0018 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000007)
+  IL_001d stloc.1         
+  IL_001e ldloc.1         
+  IL_001f ldnull          
+  IL_0020 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0025 brfalse.s      IL_002e 
+  IL_0027 ldloc.1         
+  IL_0028 callvirt       UnityEngine.Renderer::get_bounds token(0x0A0000FD)
+  IL_002d ret             
+  IL_002e ldarg.0         
+  IL_002f callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0009A3)
+  IL_0034 stloc.2         
+  IL_0035 ldloc.2         
+  IL_0036 ldnull          
+  IL_0037 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_003c brfalse.s      IL_0045 
+  IL_003e ldloc.2         
+  IL_003f callvirt       BoundsOverride::get_bounds token(0x0600E806)
+  IL_0044 ret             
+  IL_0045 ldarg.0         
+  IL_0046 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0009A4)
+  IL_004b stloc.3         
+  IL_004c ldloc.3         
+  IL_004d ldnull          
+  IL_004e call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0053 brfalse.s      IL_005d 
+  IL_0055 ldloc.3         
+  IL_0056 ldarg.1         
+  IL_0057 callvirt       CustomSelectiveMeshBoundsOverride::ComputeBounds token(0x060000A6)
+  IL_005c ret             
+  IL_005d ldarg.0         
+  IL_005e callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00014A)
+  IL_0063 stloc.s        local(0x0004) 
+  IL_0065 ldloc.s        local(0x0004) 
+  IL_0067 ldnull          
+  IL_0068 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_006d brfalse        IL_0105 
+  IL_0072 ldloc.s        local(0x0004) 
+  IL_0074 callvirt       UnityEngine.Collider::get_enabled token(0x0A0010E4)
+  IL_0079 brfalse.s      IL_0086 
+  IL_007b ldloc.s        local(0x0004) 
+  IL_007d callvirt       UnityEngine.Collider::get_bounds token(0x0A0003A9)
+  IL_0082 stloc.s        local(0x0005) 
+  IL_0084 br.s           IL_009f 
+  IL_0086 ldloc.s        local(0x0004) 
+  IL_0088 ldc.i4.1        
+  IL_0089 callvirt       UnityEngine.Collider::set_enabled token(0x0A0001D6)
+  IL_008e ldloc.s        local(0x0004) 
+  IL_0090 callvirt       UnityEngine.Collider::get_bounds token(0x0A0003A9)
+  IL_0095 stloc.s        local(0x0005) 
+  IL_0097 ldloc.s        local(0x0004) 
+  IL_0099 ldc.i4.0        
+  IL_009a callvirt       UnityEngine.Collider::set_enabled token(0x0A0001D6)
+  IL_009f ldarg.0         
+  IL_00a0 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0009A5)
+  IL_00a5 stloc.s        local(0x0006) 
+  IL_00a7 ldloc.s        local(0x0006) 
+  IL_00a9 ldnull          
+  IL_00aa call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00af brfalse.s      IL_0102 
+  IL_00b1 ldloc.s        local(0x0006) 
+  IL_00b3 callvirt       MobileHitBox::HasExecuted token(0x06015E3A)
+  IL_00b8 brfalse.s      IL_0102 
+  IL_00ba ldloca.s       local(0x0005) 
+  IL_00bc ldloca.s       local(0x0005) 
+  IL_00be call           UnityEngine.Bounds::get_size token(0x0A0003DA)
+  IL_00c3 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_00c8 ldloc.s        local(0x0006) 
+  IL_00ca ldfld          MobileHitBox::m_scaleX token(0x04012D00)
+  IL_00cf div             
+  IL_00d0 ldloca.s       local(0x0005) 
+  IL_00d2 call           UnityEngine.Bounds::get_size token(0x0A0003DA)
+  IL_00d7 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_00dc ldloc.s        local(0x0006) 
+  IL_00de ldfld          MobileHitBox::m_scaleY token(0x04012D01)
+  IL_00e3 div             
+  IL_00e4 ldloca.s       local(0x0005) 
+  IL_00e6 call           UnityEngine.Bounds::get_size token(0x0A0003DA)
+  IL_00eb ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_00f0 ldloc.s        local(0x0006) 
+  IL_00f2 ldfld          MobileHitBox::m_scaleY token(0x04012D01)
+  IL_00f7 div             
+  IL_00f8 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_00fd call           UnityEngine.Bounds::set_size token(0x0A0009CC)
+  IL_0102 ldloc.s        local(0x0005) 
+  IL_0104 ret             
+  IL_0105 ldarg.0         
+  IL_0106 ldarg.1         
+  IL_0107 call           TransformUtil::GetBoundsOfChildren token(0x06014FCF)
+  IL_010c ret             
+
+0x06014fb6 TransformUtil::ComputeOrientedWorldBounds(go,minLocalPadding,maxLocalPadding,ignoreMeshes,includeAllChildren,includeMeshRenderers,includeWidgetTransformBounds,includeUberTextSize) RVA 0x62b7e0 SIG 000812c000af1012808d115d115d1512490112808d02020202
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brtrue.s       IL_0011 
+  IL_0009 ldarg.0         
+  IL_000a callvirt       UnityEngine.GameObject::get_activeSelf token(0x0A000362)
+  IL_000f brtrue.s       IL_0013 
+  IL_0011 ldnull          
+  IL_0012 ret             
+  IL_0013 ldnull          
+  IL_0014 stloc.0         
+  IL_0015 ldarg.s        argument(0x0005) 
+  IL_0017 brfalse.s      IL_0023 
+  IL_0019 ldarg.0         
+  IL_001a ldarg.3         
+  IL_001b ldarg.s        argument(0x0004) 
+  IL_001d call           TransformUtil::GetComponentsWithIgnore<spec> token(0x2B0009A6)
+  IL_0022 stloc.0         
+  IL_0023 ldnull          
+  IL_0024 stloc.1         
+  IL_0025 ldarg.s        argument(0x0006) 
+  IL_0027 brfalse.s      IL_0033 
+  IL_0029 ldarg.0         
+  IL_002a ldarg.3         
+  IL_002b ldarg.s        argument(0x0004) 
+  IL_002d call           TransformUtil::GetComponentsWithIgnore<spec> token(0x2B0009A7)
+  IL_0032 stloc.1         
+  IL_0033 ldnull          
+  IL_0034 stloc.2         
+  IL_0035 ldarg.s        argument(0x0007) 
+  IL_0037 brfalse.s      IL_0043 
+  IL_0039 ldarg.0         
+  IL_003a ldarg.3         
+  IL_003b ldarg.s        argument(0x0004) 
+  IL_003d call           TransformUtil::GetComponentsWithIgnore<spec> token(0x2B0009A8)
+  IL_0042 stloc.2         
+  IL_0043 ldarg.0         
+  IL_0044 ldarg.1         
+  IL_0045 ldarg.2         
+  IL_0046 ldloc.0         
+  IL_0047 ldloc.1         
+  IL_0048 ldloc.2         
+  IL_0049 call           TransformUtil::ComputeOrientedWorldBoundsWithComponents token(0x06014FB7)
+  IL_004e ret             
+
+0x06014fb7 TransformUtil::ComputeOrientedWorldBoundsWithComponents(go,minLocalPadding,maxLocalPadding,allMeshes,allWidgetTransforms,allUberTexts) RVA 0x62b83c SIG 000612c000af1012808d115d115d151249011280951512490112c000d58c15124901128169
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brtrue.s       IL_0011 
+  IL_0009 ldarg.0         
+  IL_000a callvirt       UnityEngine.GameObject::get_activeSelf token(0x0A000362)
+  IL_000f brtrue.s       IL_0013 
+  IL_0011 ldnull          
+  IL_0012 ret             
+  IL_0013 ldarg.3         
+  IL_0014 brfalse.s      IL_001e 
+  IL_0016 ldarg.3         
+  IL_0017 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d670>::get_Count token(0x0A005075)
+  IL_001c brtrue.s       IL_003a 
+  IL_001e ldarg.s        argument(0x0005) 
+  IL_0020 brfalse.s      IL_002b 
+  IL_0022 ldarg.s        argument(0x0005) 
+  IL_0024 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafb4140>::get_Count token(0x0A004D23)
+  IL_0029 brtrue.s       IL_003a 
+  IL_002b ldarg.s        argument(0x0004) 
+  IL_002d brfalse.s      IL_0038 
+  IL_002f ldarg.s        argument(0x0004) 
+  IL_0031 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d820>::get_Count token(0x0A005076)
+  IL_0036 brtrue.s       IL_003a 
+  IL_0038 ldnull          
+  IL_0039 ret             
+  IL_003a ldarg.0         
+  IL_003b callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0040 callvirt       UnityEngine.Transform::get_worldToLocalMatrix token(0x0A004F7C)
+  IL_0045 stloc.0         
+  IL_0046 ldloca.s       local(0x0001) 
+  IL_0048 ldc.r4         3.4028234663852886e+38 
+  IL_004d ldc.r4         3.4028234663852886e+38 
+  IL_0052 ldc.r4         3.4028234663852886e+38 
+  IL_0057 call           UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_005c ldloca.s       local(0x0002) 
+  IL_005e ldc.r4         -3.4028234663852886e+38 
+  IL_0063 ldc.r4         -3.4028234663852886e+38 
+  IL_0068 ldc.r4         -3.4028234663852886e+38 
+  IL_006d call           UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0072 ldarg.3         
+  IL_0073 brfalse        IL_0200 
+  IL_0078 ldarg.3         
+  IL_0079 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d670>::GetEnumerator token(0x0A005077)
+  IL_007e stloc.s        local(0x0007) 
+  IL_0080 br             IL_01e4 
+  IL_0085 ldloca.s       local(0x0007) 
+  IL_0087 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d9d0>::get_Current token(0x0A005078)
+  IL_008c stloc.s        local(0x0008) 
+  IL_008e ldloc.s        local(0x0008) 
+  IL_0090 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0095 callvirt       UnityEngine.GameObject::get_activeSelf token(0x0A000362)
+  IL_009a brfalse        IL_01e4 
+  IL_009f ldloc.s        local(0x0008) 
+  IL_00a1 callvirt       UnityEngine.MeshFilter::get_sharedMesh token(0x0A000DA8)
+  IL_00a6 ldnull          
+  IL_00a7 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00ac brtrue         IL_01e4 
+  IL_00b1 ldloc.s        local(0x0008) 
+  IL_00b3 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00b8 callvirt       UnityEngine.Transform::get_localToWorldMatrix token(0x0A0000D9)
+  IL_00bd stloc.s        local(0x0009) 
+  IL_00bf ldloc.s        local(0x0008) 
+  IL_00c1 callvirt       UnityEngine.MeshFilter::get_sharedMesh token(0x0A000DA8)
+  IL_00c6 callvirt       UnityEngine.Mesh::get_bounds token(0x0A000B6F)
+  IL_00cb stloc.s        local(0x000A) 
+  IL_00cd ldloc.0         
+  IL_00ce ldloc.s        local(0x0009) 
+  IL_00d0 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027C1)
+  IL_00d5 stloc.s        local(0x000B) 
+  IL_00d7 ldc.i4.3        
+  IL_00d8 newarr         UnityEngine.Vector3 token(0x01000017)
+  IL_00dd dup             
+  IL_00de ldc.i4.0        
+  IL_00df ldloc.s        local(0x000B) 
+  IL_00e1 ldloca.s       local(0x000A) 
+  IL_00e3 call           UnityEngine.Bounds::get_extents token(0x0A00035D)
+  IL_00e8 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_00ed ldc.r4         0.0 
+  IL_00f2 ldc.r4         0.0 
+  IL_00f7 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_00fc call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0101 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_0106 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_010b stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0110 dup             
+  IL_0111 ldc.i4.1        
+  IL_0112 ldloc.s        local(0x000B) 
+  IL_0114 ldc.r4         0.0 
+  IL_0119 ldloca.s       local(0x000A) 
+  IL_011b call           UnityEngine.Bounds::get_extents token(0x0A00035D)
+  IL_0120 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0125 ldc.r4         0.0 
+  IL_012a newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_012f call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0134 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_0139 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_013e stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0143 dup             
+  IL_0144 ldc.i4.2        
+  IL_0145 ldloc.s        local(0x000B) 
+  IL_0147 ldc.r4         0.0 
+  IL_014c ldc.r4         0.0 
+  IL_0151 ldloca.s       local(0x000A) 
+  IL_0153 call           UnityEngine.Bounds::get_extents token(0x0A00035D)
+  IL_0158 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_015d newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0162 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0167 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_016c call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_0171 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0176 stloc.s        local(0x000C) 
+  IL_0178 ldloc.s        local(0x0009) 
+  IL_017a ldloc.s        local(0x0008) 
+  IL_017c callvirt       UnityEngine.MeshFilter::get_sharedMesh token(0x0A000DA8)
+  IL_0181 callvirt       UnityEngine.Mesh::get_bounds token(0x0A000B6F)
+  IL_0186 stloc.s        local(0x000E) 
+  IL_0188 ldloca.s       local(0x000E) 
+  IL_018a call           UnityEngine.Bounds::get_center token(0x0A00035C)
+  IL_018f call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0194 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_0199 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_019e stloc.s        local(0x000D) 
+  IL_01a0 ldloc.0         
+  IL_01a1 ldloc.s        local(0x0008) 
+  IL_01a3 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_01a8 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_01ad ldloc.s        local(0x000D) 
+  IL_01af call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_01b4 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_01b9 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_01be call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_01c3 ldloc.s        local(0x000C) 
+  IL_01c5 ldc.i4.0        
+  IL_01c6 ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_01cb ldloc.s        local(0x000C) 
+  IL_01cd ldc.i4.1        
+  IL_01ce ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_01d3 ldloc.s        local(0x000C) 
+  IL_01d5 ldc.i4.2        
+  IL_01d6 ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_01db ldloca.s       local(0x0001) 
+  IL_01dd ldloca.s       local(0x0002) 
+  IL_01df call           TransformUtil::GetBoundsMinMax token(0x06014FBB)
+  IL_01e4 ldloca.s       local(0x0007) 
+  IL_01e6 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d9d0>::MoveNext token(0x0A005079)
+  IL_01eb brtrue         IL_0085 
+  IL_01f0 leave.s        IL_0200 
+  IL_01f2 ldloca.s       local(0x0007) 
+  IL_01f4 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d9d0> token(0x1B001320)
+  IL_01fa callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_01ff endfinally      
+  IL_0200 ldarg.s        argument(0x0004) 
+  IL_0202 brfalse        IL_0370 
+  IL_0207 ldarg.s        argument(0x0004) 
+  IL_0209 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d820>::GetEnumerator token(0x0A00507A)
+  IL_020e stloc.s        local(0x000F) 
+  IL_0210 br             IL_0354 
+  IL_0215 ldloca.s       local(0x000F) 
+  IL_0217 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98db80>::get_Current token(0x0A00507B)
+  IL_021c stloc.s        local(0x0010) 
+  IL_021e ldloc.s        local(0x0010) 
+  IL_0220 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0225 callvirt       UnityEngine.GameObject::get_activeSelf token(0x0A000362)
+  IL_022a brfalse        IL_0354 
+  IL_022f ldloc.s        local(0x0010) 
+  IL_0231 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0236 callvirt       UnityEngine.Transform::get_localToWorldMatrix token(0x0A0000D9)
+  IL_023b stloc.s        local(0x0011) 
+  IL_023d ldloc.s        local(0x0010) 
+  IL_023f callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0244 call           Hearthstone.UI.WidgetTransform::GetLocalBoundsOfWidgetTransform token(0x06019BD3)
+  IL_0249 stloc.s        local(0x0012) 
+  IL_024b ldloc.0         
+  IL_024c ldloc.s        local(0x0011) 
+  IL_024e call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027C1)
+  IL_0253 stloc.s        local(0x0013) 
+  IL_0255 ldc.i4.3        
+  IL_0256 newarr         UnityEngine.Vector3 token(0x01000017)
+  IL_025b dup             
+  IL_025c ldc.i4.0        
+  IL_025d ldloc.s        local(0x0013) 
+  IL_025f ldloca.s       local(0x0012) 
+  IL_0261 call           UnityEngine.Bounds::get_extents token(0x0A00035D)
+  IL_0266 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_026b ldc.r4         0.0 
+  IL_0270 ldc.r4         0.0 
+  IL_0275 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_027a call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_027f call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_0284 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_0289 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_028e dup             
+  IL_028f ldc.i4.1        
+  IL_0290 ldloc.s        local(0x0013) 
+  IL_0292 ldc.r4         0.0 
+  IL_0297 ldloca.s       local(0x0012) 
+  IL_0299 call           UnityEngine.Bounds::get_extents token(0x0A00035D)
+  IL_029e ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_02a3 ldc.r4         0.0 
+  IL_02a8 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_02ad call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_02b2 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_02b7 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_02bc stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_02c1 dup             
+  IL_02c2 ldc.i4.2        
+  IL_02c3 ldloc.s        local(0x0013) 
+  IL_02c5 ldc.r4         0.0 
+  IL_02ca ldc.r4         0.0 
+  IL_02cf ldloca.s       local(0x0012) 
+  IL_02d1 call           UnityEngine.Bounds::get_extents token(0x0A00035D)
+  IL_02d6 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_02db newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_02e0 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_02e5 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_02ea call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_02ef stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_02f4 stloc.s        local(0x0014) 
+  IL_02f6 ldloc.s        local(0x0011) 
+  IL_02f8 ldloca.s       local(0x0012) 
+  IL_02fa call           UnityEngine.Bounds::get_center token(0x0A00035C)
+  IL_02ff call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0304 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_0309 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_030e stloc.s        local(0x0015) 
+  IL_0310 ldloc.0         
+  IL_0311 ldloc.s        local(0x0010) 
+  IL_0313 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0318 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_031d ldloc.s        local(0x0015) 
+  IL_031f call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0324 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0329 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_032e call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_0333 ldloc.s        local(0x0014) 
+  IL_0335 ldc.i4.0        
+  IL_0336 ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_033b ldloc.s        local(0x0014) 
+  IL_033d ldc.i4.1        
+  IL_033e ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0343 ldloc.s        local(0x0014) 
+  IL_0345 ldc.i4.2        
+  IL_0346 ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_034b ldloca.s       local(0x0001) 
+  IL_034d ldloca.s       local(0x0002) 
+  IL_034f call           TransformUtil::GetBoundsMinMax token(0x06014FBB)
+  IL_0354 ldloca.s       local(0x000F) 
+  IL_0356 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98db80>::MoveNext token(0x0A00507C)
+  IL_035b brtrue         IL_0215 
+  IL_0360 leave.s        IL_0370 
+  IL_0362 ldloca.s       local(0x000F) 
+  IL_0364 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98db80> token(0x1B001321)
+  IL_036a callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_036f endfinally      
+  IL_0370 ldarg.s        argument(0x0005) 
+  IL_0372 brfalse        IL_04bf 
+  IL_0377 ldarg.s        argument(0x0005) 
+  IL_0379 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafb4140>::GetEnumerator token(0x0A00041B)
+  IL_037e stloc.s        local(0x0016) 
+  IL_0380 br             IL_04a3 
+  IL_0385 ldloca.s       local(0x0016) 
+  IL_0387 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafb42f0>::get_Current token(0x0A00041C)
+  IL_038c stloc.s        local(0x0017) 
+  IL_038e ldloc.s        local(0x0017) 
+  IL_0390 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0395 callvirt       UnityEngine.GameObject::get_activeSelf token(0x0A000362)
+  IL_039a brfalse        IL_04a3 
+  IL_039f ldloc.s        local(0x0017) 
+  IL_03a1 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_03a6 callvirt       UnityEngine.Transform::get_localToWorldMatrix token(0x0A0000D9)
+  IL_03ab stloc.s        local(0x0018) 
+  IL_03ad ldloc.s        local(0x0017) 
+  IL_03af callvirt       UberText::GetTextWorldSpaceBounds token(0x0A000A23)
+  IL_03b4 stloc.s        local(0x0019) 
+  IL_03b6 ldarg.0         
+  IL_03b7 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_03bc ldloca.s       local(0x0019) 
+  IL_03be call           UnityEngine.Bounds::get_extents token(0x0A00035D)
+  IL_03c3 callvirt       UnityEngine.Transform::InverseTransformVector token(0x0A003868)
+  IL_03c8 stloc.s        local(0x001A) 
+  IL_03ca ldloc.0         
+  IL_03cb ldloc.s        local(0x0018) 
+  IL_03cd call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027C1)
+  IL_03d2 stloc.s        local(0x001B) 
+  IL_03d4 ldc.i4.3        
+  IL_03d5 newarr         UnityEngine.Vector3 token(0x01000017)
+  IL_03da dup             
+  IL_03db ldc.i4.0        
+  IL_03dc ldloc.s        local(0x001B) 
+  IL_03de ldloc.s        local(0x001A) 
+  IL_03e0 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_03e5 ldc.r4         0.0 
+  IL_03ea ldc.r4         0.0 
+  IL_03ef newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_03f4 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_03f9 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_03fe call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_0403 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0408 dup             
+  IL_0409 ldc.i4.1        
+  IL_040a ldloc.s        local(0x001B) 
+  IL_040c ldc.r4         0.0 
+  IL_0411 ldloc.s        local(0x001A) 
+  IL_0413 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0418 ldc.r4         0.0 
+  IL_041d newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0422 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0427 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_042c call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_0431 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0436 dup             
+  IL_0437 ldc.i4.2        
+  IL_0438 ldloc.s        local(0x001B) 
+  IL_043a ldc.r4         0.0 
+  IL_043f ldc.r4         0.0 
+  IL_0444 ldloc.s        local(0x001A) 
+  IL_0446 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_044b newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0450 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0455 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_045a call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_045f stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0464 stloc.s        local(0x001C) 
+  IL_0466 ldloc.0         
+  IL_0467 ldloc.s        local(0x0017) 
+  IL_0469 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_046e callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0473 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0478 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_047d call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_0482 ldloc.s        local(0x001C) 
+  IL_0484 ldc.i4.0        
+  IL_0485 ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_048a ldloc.s        local(0x001C) 
+  IL_048c ldc.i4.1        
+  IL_048d ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0492 ldloc.s        local(0x001C) 
+  IL_0494 ldc.i4.2        
+  IL_0495 ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_049a ldloca.s       local(0x0001) 
+  IL_049c ldloca.s       local(0x0002) 
+  IL_049e call           TransformUtil::GetBoundsMinMax token(0x06014FBB)
+  IL_04a3 ldloca.s       local(0x0016) 
+  IL_04a5 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafb42f0>::MoveNext token(0x0A00041D)
+  IL_04aa brtrue         IL_0385 
+  IL_04af leave.s        IL_04bf 
+  IL_04b1 ldloca.s       local(0x0016) 
+  IL_04b3 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafb42f0> token(0x1B000135)
+  IL_04b9 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_04be endfinally      
+  IL_04bf ldarga.s       argument(0x0001) 
+  IL_04c1 call           UnityEngine.Vector3::get_sqrMagnitude token(0x0A0027BA)
+  IL_04c6 ldc.r4         0.0 
+  IL_04cb ble.un.s       IL_04d5 
+  IL_04cd ldloc.1         
+  IL_04ce ldarg.1         
+  IL_04cf call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_04d4 stloc.1         
+  IL_04d5 ldarga.s       argument(0x0002) 
+  IL_04d7 call           UnityEngine.Vector3::get_sqrMagnitude token(0x0A0027BA)
+  IL_04dc ldc.r4         0.0 
+  IL_04e1 ble.un.s       IL_04eb 
+  IL_04e3 ldloc.2         
+  IL_04e4 ldarg.2         
+  IL_04e5 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_04ea stloc.2         
+  IL_04eb ldarg.0         
+  IL_04ec callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_04f1 callvirt       UnityEngine.Transform::get_localToWorldMatrix token(0x0A0000D9)
+  IL_04f6 stloc.3         
+  IL_04f7 ldloc.3         
+  IL_04f8 stloc.s        local(0x0004) 
+  IL_04fa ldloca.s       local(0x0004) 
+  IL_04fc ldc.i4.3        
+  IL_04fd call           UnityEngine.Vector4::get_zero token(0x0A000DC5)
+  IL_0502 call           UnityEngine.Matrix4x4::SetColumn token(0x0A00507D)
+  IL_0507 ldloc.2         
+  IL_0508 ldloc.1         
+  IL_0509 call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_050e ldc.r4         0.5 
+  IL_0513 call           UnityEngine.Vector3::op_Multiply token(0x0A0000DF)
+  IL_0518 stloc.s        local(0x0005) 
+  IL_051a ldloc.3         
+  IL_051b ldloc.2         
+  IL_051c call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0521 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_0526 ldloc.3         
+  IL_0527 ldloc.1         
+  IL_0528 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_052d call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_0532 call           UnityEngine.Vector4::op_Addition token(0x0A000DC7)
+  IL_0537 ldc.r4         0.5 
+  IL_053c call           UnityEngine.Vector4::op_Multiply token(0x0A000DCD)
+  IL_0541 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_0546 stloc.s        local(0x0006) 
+  IL_0548 newobj         OrientedBounds::.ctor token(0x06014FAE)
+  IL_054d stloc.s        local(0x001D) 
+  IL_054f ldloc.s        local(0x001D) 
+  IL_0551 ldc.i4.3        
+  IL_0552 newarr         UnityEngine.Vector3 token(0x01000017)
+  IL_0557 dup             
+  IL_0558 ldc.i4.0        
+  IL_0559 ldloc.s        local(0x0004) 
+  IL_055b ldloc.s        local(0x0005) 
+  IL_055d ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0562 ldc.r4         0.0 
+  IL_0567 ldc.r4         0.0 
+  IL_056c newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0571 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_0576 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_057b call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_0580 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0585 dup             
+  IL_0586 ldc.i4.1        
+  IL_0587 ldloc.s        local(0x0004) 
+  IL_0589 ldc.r4         0.0 
+  IL_058e ldloc.s        local(0x0005) 
+  IL_0590 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0595 ldc.r4         0.0 
+  IL_059a newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_059f call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_05a4 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_05a9 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_05ae stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_05b3 dup             
+  IL_05b4 ldc.i4.2        
+  IL_05b5 ldloc.s        local(0x0004) 
+  IL_05b7 ldc.r4         0.0 
+  IL_05bc ldc.r4         0.0 
+  IL_05c1 ldloc.s        local(0x0005) 
+  IL_05c3 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_05c8 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_05cd call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_05d2 call           UnityEngine.Matrix4x4::op_Multiply token(0x0A0027D2)
+  IL_05d7 call           UnityEngine.Vector4::op_Implicit token(0x0A000D9F)
+  IL_05dc stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_05e1 stfld          OrientedBounds::Extents token(0x04011F30)
+  IL_05e6 ldloc.s        local(0x001D) 
+  IL_05e8 ldloc.s        local(0x0006) 
+  IL_05ea stfld          OrientedBounds::Origin token(0x04011F31)
+  IL_05ef ldloc.s        local(0x001D) 
+  IL_05f1 ldarg.0         
+  IL_05f2 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_05f7 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_05fc ldloc.s        local(0x0006) 
+  IL_05fe call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_0603 stfld          OrientedBounds::CenterOffset token(0x04011F32)
+  IL_0608 ldloc.s        local(0x001D) 
+  IL_060a ret             
+
+0x06014fb8 TransformUtil::CanComputeOrientedWorldBoundsWithComponents(go,ignoreObjects,meshFilters,uberTexts,widgetTransforms) RVA 0x62bea0 SIG 00050212808d1512490112808d15124901128095151249011281691512490112c000d58c
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brtrue.s       IL_0011 
+  IL_0009 ldarg.0         
+  IL_000a callvirt       UnityEngine.GameObject::get_activeSelf token(0x0A000362)
+  IL_000f brtrue.s       IL_0013 
+  IL_0011 ldc.i4.0        
+  IL_0012 ret             
+  IL_0013 ldarg.2         
+  IL_0014 brfalse.s      IL_005e 
+  IL_0016 ldarg.2         
+  IL_0017 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d670>::GetEnumerator token(0x0A005077)
+  IL_001c stloc.0         
+  IL_001d br.s           IL_0045 
+  IL_001f ldloca.s       local(0x0000) 
+  IL_0021 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d9d0>::get_Current token(0x0A005078)
+  IL_0026 stloc.1         
+  IL_0027 ldloc.1         
+  IL_0028 ldnull          
+  IL_0029 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_002e brtrue.s       IL_0045 
+  IL_0030 ldarg.1         
+  IL_0031 ldloc.1         
+  IL_0032 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0037 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaf8d130>::Contains token(0x0A0041D6)
+  IL_003c brtrue.s       IL_0045 
+  IL_003e ldc.i4.1        
+  IL_003f stloc.2         
+  IL_0040 leave          IL_00f9 
+  IL_0045 ldloca.s       local(0x0000) 
+  IL_0047 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d9d0>::MoveNext token(0x0A005079)
+  IL_004c brtrue.s       IL_001f 
+  IL_004e leave.s        IL_005e 
+  IL_0050 ldloca.s       local(0x0000) 
+  IL_0052 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d9d0> token(0x1B001320)
+  IL_0058 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_005d endfinally      
+  IL_005e ldarg.3         
+  IL_005f brfalse.s      IL_00a9 
+  IL_0061 ldarg.3         
+  IL_0062 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafb4140>::GetEnumerator token(0x0A00041B)
+  IL_0067 stloc.3         
+  IL_0068 br.s           IL_0090 
+  IL_006a ldloca.s       local(0x0003) 
+  IL_006c call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafb42f0>::get_Current token(0x0A00041C)
+  IL_0071 stloc.s        local(0x0004) 
+  IL_0073 ldloc.s        local(0x0004) 
+  IL_0075 ldnull          
+  IL_0076 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_007b brtrue.s       IL_0090 
+  IL_007d ldarg.1         
+  IL_007e ldloc.s        local(0x0004) 
+  IL_0080 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0085 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaf8d130>::Contains token(0x0A0041D6)
+  IL_008a brtrue.s       IL_0090 
+  IL_008c ldc.i4.1        
+  IL_008d stloc.2         
+  IL_008e leave.s        IL_00f9 
+  IL_0090 ldloca.s       local(0x0003) 
+  IL_0092 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafb42f0>::MoveNext token(0x0A00041D)
+  IL_0097 brtrue.s       IL_006a 
+  IL_0099 leave.s        IL_00a9 
+  IL_009b ldloca.s       local(0x0003) 
+  IL_009d constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafb42f0> token(0x1B000135)
+  IL_00a3 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_00a8 endfinally      
+  IL_00a9 ldarg.s        argument(0x0004) 
+  IL_00ab brfalse.s      IL_00f7 
+  IL_00ad ldarg.s        argument(0x0004) 
+  IL_00af callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98d820>::GetEnumerator token(0x0A00507A)
+  IL_00b4 stloc.s        local(0x0005) 
+  IL_00b6 br.s           IL_00de 
+  IL_00b8 ldloca.s       local(0x0005) 
+  IL_00ba call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98db80>::get_Current token(0x0A00507B)
+  IL_00bf stloc.s        local(0x0006) 
+  IL_00c1 ldloc.s        local(0x0006) 
+  IL_00c3 ldnull          
+  IL_00c4 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00c9 brtrue.s       IL_00de 
+  IL_00cb ldarg.1         
+  IL_00cc ldloc.s        local(0x0006) 
+  IL_00ce callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00d3 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaf8d130>::Contains token(0x0A0041D6)
+  IL_00d8 brtrue.s       IL_00de 
+  IL_00da ldc.i4.1        
+  IL_00db stloc.2         
+  IL_00dc leave.s        IL_00f9 
+  IL_00de ldloca.s       local(0x0005) 
+  IL_00e0 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98db80>::MoveNext token(0x0A00507C)
+  IL_00e5 brtrue.s       IL_00b8 
+  IL_00e7 leave.s        IL_00f7 
+  IL_00e9 ldloca.s       local(0x0005) 
+  IL_00eb constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98db80> token(0x1B001321)
+  IL_00f1 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_00f6 endfinally      
+  IL_00f7 ldc.i4.0        
+  IL_00f8 ret             
+  IL_00f9 ldloc.2         
+  IL_00fa ret             
+
+0x06014fb9 TransformUtil::GetComponentsWithIgnore(obj,ignoreObjects,includeAllChildren) RVA 0x62bfd0 SIG 100103151249011e0012808d1512490112808d02
+  IL_0000 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafceba0>::.ctor token(0x0A000B12)
+  IL_0005 stloc.0         
+  IL_0006 ldarg.0         
+  IL_0007 ldnull          
+  IL_0008 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000d brfalse.s      IL_0011 
+  IL_000f ldloc.0         
+  IL_0010 ret             
+  IL_0011 ldarg.2         
+  IL_0012 brfalse.s      IL_001b 
+  IL_0014 ldarg.0         
+  IL_0015 ldloc.0         
+  IL_0016 callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B0009A9)
+  IL_001b ldarg.0         
+  IL_001c callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0000F6)
+  IL_0021 stloc.1         
+  IL_0022 ldloc.1         
+  IL_0023 box            <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafcc170> token(0x1B000180)
+  IL_0028 ldnull          
+  IL_0029 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_002e brfalse.s      IL_003a 
+  IL_0030 ldarg.2         
+  IL_0031 brtrue.s       IL_003a 
+  IL_0033 ldloc.0         
+  IL_0034 ldloc.1         
+  IL_0035 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafceba0>::Add token(0x0A000B13)
+  IL_003a ldarg.1         
+  IL_003b brfalse        IL_00f4 
+  IL_0040 ldarg.1         
+  IL_0041 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaf8d130>::get_Count token(0x0A0002F7)
+  IL_0046 ldc.i4.0        
+  IL_0047 ble            IL_00f4 
+  IL_004c ldloc.0         
+  IL_004d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafceba0>::ToArray token(0x0A0026C8)
+  IL_0052 ldloc.0         
+  IL_0053 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafceba0>::Clear token(0x0A0026C9)
+  IL_0058 stloc.2         
+  IL_0059 ldc.i4.0        
+  IL_005a stloc.3         
+  IL_005b br             IL_00eb 
+  IL_0060 ldloc.2         
+  IL_0061 ldloc.3         
+  IL_0062 ldelem         <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafcc170> token(0x1B000180)
+  IL_0067 stloc.s        local(0x0004) 
+  IL_0069 ldc.i4.1        
+  IL_006a stloc.s        local(0x0005) 
+  IL_006c ldarg.1         
+  IL_006d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaf8d130>::GetEnumerator token(0x0A00039F)
+  IL_0072 stloc.s        local(0x0006) 
+  IL_0074 br.s           IL_00c2 
+  IL_0076 ldloca.s       local(0x0006) 
+  IL_0078 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaf9f9e0>::get_Current token(0x0A0003A0)
+  IL_007d stloc.s        local(0x0007) 
+  IL_007f ldloc.s        local(0x0007) 
+  IL_0081 ldnull          
+  IL_0082 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0087 brtrue.s       IL_00bd 
+  IL_0089 ldloc.s        local(0x0004) 
+  IL_008b box            <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafcc170> token(0x1B000180)
+  IL_0090 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0095 ldloc.s        local(0x0007) 
+  IL_0097 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_009c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00a1 brtrue.s       IL_00bd 
+  IL_00a3 ldloc.s        local(0x0004) 
+  IL_00a5 box            <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafcc170> token(0x1B000180)
+  IL_00aa callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00af ldloc.s        local(0x0007) 
+  IL_00b1 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_00b6 callvirt       UnityEngine.Transform::IsChildOf token(0x0A003D30)
+  IL_00bb brfalse.s      IL_00c2 
+  IL_00bd ldc.i4.0        
+  IL_00be stloc.s        local(0x0005) 
+  IL_00c0 leave.s        IL_00db 
+  IL_00c2 ldloca.s       local(0x0006) 
+  IL_00c4 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaf9f9e0>::MoveNext token(0x0A0003A1)
+  IL_00c9 brtrue.s       IL_0076 
+  IL_00cb leave.s        IL_00db 
+  IL_00cd ldloca.s       local(0x0006) 
+  IL_00cf constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaf9f9e0> token(0x1B00010A)
+  IL_00d5 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_00da endfinally      
+  IL_00db ldloc.s        local(0x0005) 
+  IL_00dd brfalse.s      IL_00e7 
+  IL_00df ldloc.0         
+  IL_00e0 ldloc.s        local(0x0004) 
+  IL_00e2 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfafceba0>::Add token(0x0A000B13)
+  IL_00e7 ldloc.3         
+  IL_00e8 ldc.i4.1        
+  IL_00e9 add             
+  IL_00ea stloc.3         
+  IL_00eb ldloc.3         
+  IL_00ec ldloc.2         
+  IL_00ed ldlen           
+  IL_00ee conv.i4         
+  IL_00ef blt            IL_0060 
+  IL_00f4 ldloc.0         
+  IL_00f5 ret             
+
+0x06014fba TransformUtil::GetBoundCorners(origin,xExtent,yExtent,zExtent) RVA 0x62c0e4 SIG 00041d115d115d115d115d115d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0007 stloc.0         
+  IL_0008 ldarg.0         
+  IL_0009 ldarg.1         
+  IL_000a call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_000f stloc.1         
+  IL_0010 ldarg.2         
+  IL_0011 ldarg.3         
+  IL_0012 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0017 stloc.2         
+  IL_0018 ldarg.2         
+  IL_0019 ldarg.3         
+  IL_001a call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_001f stloc.3         
+  IL_0020 ldarg.2         
+  IL_0021 call           UnityEngine.Vector3::op_UnaryNegation token(0x0A000D9C)
+  IL_0026 ldarg.3         
+  IL_0027 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_002c stloc.s        local(0x0004) 
+  IL_002e ldarg.2         
+  IL_002f call           UnityEngine.Vector3::op_UnaryNegation token(0x0A000D9C)
+  IL_0034 ldarg.3         
+  IL_0035 call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_003a stloc.s        local(0x0005) 
+  IL_003c ldc.i4.8        
+  IL_003d newarr         UnityEngine.Vector3 token(0x01000017)
+  IL_0042 dup             
+  IL_0043 ldc.i4.0        
+  IL_0044 ldloc.0         
+  IL_0045 ldloc.2         
+  IL_0046 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_004b stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0050 dup             
+  IL_0051 ldc.i4.1        
+  IL_0052 ldloc.0         
+  IL_0053 ldloc.3         
+  IL_0054 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0059 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_005e dup             
+  IL_005f ldc.i4.2        
+  IL_0060 ldloc.0         
+  IL_0061 ldloc.s        local(0x0004) 
+  IL_0063 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0068 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_006d dup             
+  IL_006e ldc.i4.3        
+  IL_006f ldloc.0         
+  IL_0070 ldloc.s        local(0x0005) 
+  IL_0072 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0077 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_007c dup             
+  IL_007d ldc.i4.4        
+  IL_007e ldloc.1         
+  IL_007f ldloc.2         
+  IL_0080 call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_0085 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_008a dup             
+  IL_008b ldc.i4.5        
+  IL_008c ldloc.1         
+  IL_008d ldloc.3         
+  IL_008e call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_0093 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0098 dup             
+  IL_0099 ldc.i4.6        
+  IL_009a ldloc.1         
+  IL_009b ldloc.s        local(0x0004) 
+  IL_009d call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_00a2 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_00a7 dup             
+  IL_00a8 ldc.i4.7        
+  IL_00a9 ldloc.1         
+  IL_00aa ldloc.s        local(0x0005) 
+  IL_00ac call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_00b1 stelem         UnityEngine.Vector3 token(0x01000017)
+  IL_00b6 ret             
+
+0x06014fbb TransformUtil::GetBoundsMinMax(origin,xExtent,yExtent,zExtent,min,max) RVA 0x62c1a8 SIG 000601115d115d115d115d10115d10115d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.2         
+  IL_0003 ldarg.3         
+  IL_0004 call           TransformUtil::GetBoundCorners token(0x06014FBA)
+  IL_0009 stloc.0         
+  IL_000a ldc.i4.0        
+  IL_000b stloc.1         
+  IL_000c br             IL_00cf 
+  IL_0011 ldarg.s        argument(0x0004) 
+  IL_0013 ldloc.0         
+  IL_0014 ldloc.1         
+  IL_0015 ldelema        UnityEngine.Vector3 token(0x01000017)
+  IL_001a ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_001f ldarg.s        argument(0x0004) 
+  IL_0021 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0026 call           UnityEngine.Mathf::Min token(0x0A000B2D)
+  IL_002b stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0030 ldarg.s        argument(0x0004) 
+  IL_0032 ldloc.0         
+  IL_0033 ldloc.1         
+  IL_0034 ldelema        UnityEngine.Vector3 token(0x01000017)
+  IL_0039 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_003e ldarg.s        argument(0x0004) 
+  IL_0040 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0045 call           UnityEngine.Mathf::Min token(0x0A000B2D)
+  IL_004a stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_004f ldarg.s        argument(0x0004) 
+  IL_0051 ldloc.0         
+  IL_0052 ldloc.1         
+  IL_0053 ldelema        UnityEngine.Vector3 token(0x01000017)
+  IL_0058 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_005d ldarg.s        argument(0x0004) 
+  IL_005f ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0064 call           UnityEngine.Mathf::Min token(0x0A000B2D)
+  IL_0069 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_006e ldarg.s        argument(0x0005) 
+  IL_0070 ldloc.0         
+  IL_0071 ldloc.1         
+  IL_0072 ldelema        UnityEngine.Vector3 token(0x01000017)
+  IL_0077 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_007c ldarg.s        argument(0x0005) 
+  IL_007e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0083 call           UnityEngine.Mathf::Max token(0x0A0009C0)
+  IL_0088 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_008d ldarg.s        argument(0x0005) 
+  IL_008f ldloc.0         
+  IL_0090 ldloc.1         
+  IL_0091 ldelema        UnityEngine.Vector3 token(0x01000017)
+  IL_0096 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_009b ldarg.s        argument(0x0005) 
+  IL_009d ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_00a2 call           UnityEngine.Mathf::Max token(0x0A0009C0)
+  IL_00a7 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_00ac ldarg.s        argument(0x0005) 
+  IL_00ae ldloc.0         
+  IL_00af ldloc.1         
+  IL_00b0 ldelema        UnityEngine.Vector3 token(0x01000017)
+  IL_00b5 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_00ba ldarg.s        argument(0x0005) 
+  IL_00bc ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_00c1 call           UnityEngine.Mathf::Max token(0x0A0009C0)
+  IL_00c6 stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_00cb ldloc.1         
+  IL_00cc ldc.i4.1        
+  IL_00cd add             
+  IL_00ce stloc.1         
+  IL_00cf ldloc.1         
+  IL_00d0 ldloc.0         
+  IL_00d1 ldlen           
+  IL_00d2 conv.i4         
+  IL_00d3 blt            IL_0011 
+  IL_00d8 ret             
+
+0x06014fbc TransformUtil::SetLocalScaleToWorldDimension(obj,dimensions) RVA 0x62c28d SIG 00020112808d1d11c000af14
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 ldarg.1         
+  IL_0003 call           TransformUtil::SetLocalScaleToWorldDimension token(0x06014FBD)
+  IL_0008 ret             
+
+0x06014fbd TransformUtil::SetLocalScaleToWorldDimension(obj,ignoreMeshes,dimensions) RVA 0x62c298 SIG 00030112808d1512490112808d1d11c000af14
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_000b stloc.0         
+  IL_000c ldarg.0         
+  IL_000d ldarg.1         
+  IL_000e stloc.2         
+  IL_000f ldloca.s       local(0x0003) 
+  IL_0011 initobj        UnityEngine.Vector3 token(0x01000017)
+  IL_0017 ldloc.3         
+  IL_0018 ldloca.s       local(0x0003) 
+  IL_001a initobj        UnityEngine.Vector3 token(0x01000017)
+  IL_0020 ldloc.3         
+  IL_0021 ldloc.2         
+  IL_0022 ldc.i4.1        
+  IL_0023 ldc.i4.1        
+  IL_0024 ldc.i4.0        
+  IL_0025 ldc.i4.0        
+  IL_0026 call           TransformUtil::ComputeOrientedWorldBounds token(0x06014FB6)
+  IL_002b stloc.1         
+  IL_002c ldc.i4.0        
+  IL_002d stloc.s        local(0x0004) 
+  IL_002f br             IL_00de 
+  IL_0034 ldloc.1         
+  IL_0035 ldfld          OrientedBounds::Extents token(0x04011F30)
+  IL_003a ldarg.2         
+  IL_003b ldloc.s        local(0x0004) 
+  IL_003d ldelema        WorldDimensionIndex token(0x02002BC5)
+  IL_0042 ldfld          WorldDimensionIndex::Index token(0x04011F34)
+  IL_0047 ldelema        UnityEngine.Vector3 token(0x01000017)
+  IL_004c call           UnityEngine.Vector3::get_magnitude token(0x0A000A2C)
+  IL_0051 ldc.r4         2.0 
+  IL_0056 mul             
+  IL_0057 stloc.s        local(0x0005) 
+  IL_0059 ldloca.s       local(0x0000) 
+  IL_005b stloc.s        local(0x0006) 
+  IL_005d ldarg.2         
+  IL_005e ldloc.s        local(0x0004) 
+  IL_0060 ldelema        WorldDimensionIndex token(0x02002BC5)
+  IL_0065 ldfld          WorldDimensionIndex::Index token(0x04011F34)
+  IL_006a stloc.s        local(0x0007) 
+  IL_006c ldloc.s        local(0x0006) 
+  IL_006e ldloc.s        local(0x0007) 
+  IL_0070 ldloc.s        local(0x0006) 
+  IL_0072 ldloc.s        local(0x0007) 
+  IL_0074 call           UnityEngine.Vector3::get_Item token(0x0A004F0C)
+  IL_0079 ldloc.s        local(0x0005) 
+  IL_007b ldsfld         UnityEngine.Mathf::Epsilon token(0x0A0004BC)
+  IL_0080 ble.s          IL_0094 
+  IL_0082 ldarg.2         
+  IL_0083 ldloc.s        local(0x0004) 
+  IL_0085 ldelema        WorldDimensionIndex token(0x02002BC5)
+  IL_008a ldfld          WorldDimensionIndex::Dimension token(0x04011F33)
+  IL_008f ldloc.s        local(0x0005) 
+  IL_0091 div             
+  IL_0092 br.s           IL_0099 
+  IL_0094 ldc.r4         0.0010000000474974513 
+  IL_0099 mul             
+  IL_009a call           UnityEngine.Vector3::set_Item token(0x0A0003D8)
+  IL_009f ldloca.s       local(0x0000) 
+  IL_00a1 ldarg.2         
+  IL_00a2 ldloc.s        local(0x0004) 
+  IL_00a4 ldelema        WorldDimensionIndex token(0x02002BC5)
+  IL_00a9 ldfld          WorldDimensionIndex::Index token(0x04011F34)
+  IL_00ae call           UnityEngine.Vector3::get_Item token(0x0A004F0C)
+  IL_00b3 call           UnityEngine.Mathf::Abs token(0x0A000AF6)
+  IL_00b8 ldc.r4         0.0010000000474974513 
+  IL_00bd bge.un.s       IL_00d8 
+  IL_00bf ldloca.s       local(0x0000) 
+  IL_00c1 ldarg.2         
+  IL_00c2 ldloc.s        local(0x0004) 
+  IL_00c4 ldelema        WorldDimensionIndex token(0x02002BC5)
+  IL_00c9 ldfld          WorldDimensionIndex::Index token(0x04011F34)
+  IL_00ce ldc.r4         0.0010000000474974513 
+  IL_00d3 call           UnityEngine.Vector3::set_Item token(0x0A0003D8)
+  IL_00d8 ldloc.s        local(0x0004) 
+  IL_00da ldc.i4.1        
+  IL_00db add             
+  IL_00dc stloc.s        local(0x0004) 
+  IL_00de ldloc.s        local(0x0004) 
+  IL_00e0 ldarg.2         
+  IL_00e1 ldlen           
+  IL_00e2 conv.i4         
+  IL_00e3 blt            IL_0034 
+  IL_00e8 ldarg.0         
+  IL_00e9 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_00ee ldloc.0         
+  IL_00ef callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_00f4 ret             
+
+0x06014fbe TransformUtil::SetPoint(src,srcAnchor,dst,dstAnchor) RVA 0x62c399 SIG 00040112809d11c000af0812809d11c000af08
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_000c ldarg.2         
+  IL_000d callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0012 ldarg.3         
+  IL_0013 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0018 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_001d ldc.i4.0        
+  IL_001e call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_0023 ret             
+
+0x06014fbf TransformUtil::SetPoint(src,srcAnchor,dst,dstAnchor) RVA 0x62c3be SIG 00040112809d11c000af0812808d11c000af08
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_000c ldarg.2         
+  IL_000d ldarg.3         
+  IL_000e call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0013 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0018 ldc.i4.0        
+  IL_0019 call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_001e ret             
+
+0x06014fc0 TransformUtil::SetPoint(src,srcAnchor,dst,dstAnchor) RVA 0x62c3de SIG 00040112808d11c000af0812809d11c000af08
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0007 ldarg.2         
+  IL_0008 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_000d ldarg.3         
+  IL_000e call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0013 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0018 ldc.i4.0        
+  IL_0019 call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_001e ret             
+
+0x06014fc1 TransformUtil::SetPoint(src,srcAnchor,dst,dstAnchor) RVA 0x62c3fe SIG 00040112808d11c000af0812808d11c000af08
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0007 ldarg.2         
+  IL_0008 ldarg.3         
+  IL_0009 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_000e call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0013 ldc.i4.0        
+  IL_0014 call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_0019 ret             
+
+0x06014fc2 TransformUtil::SetPoint(src,srcAnchor,dst,dstAnchor,offset) RVA 0x62c419 SIG 00050112809d11c000af0812809d11c000af08115d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_000c ldarg.2         
+  IL_000d callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0012 ldarg.3         
+  IL_0013 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0018 ldarg.s        argument(0x0004) 
+  IL_001a ldc.i4.0        
+  IL_001b call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_0020 ret             
+
+0x06014fc3 TransformUtil::SetPoint(src,srcAnchor,dst,dstAnchor,offset) RVA 0x62c43b SIG 00050112809d11c000af0812808d11c000af08115d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_000c ldarg.2         
+  IL_000d ldarg.3         
+  IL_000e call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0013 ldarg.s        argument(0x0004) 
+  IL_0015 ldc.i4.0        
+  IL_0016 call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_001b ret             
+
+0x06014fc4 TransformUtil::SetPoint(src,srcAnchor,dst,dstAnchor,offset) RVA 0x62c458 SIG 00050112808d11c000af0812809d11c000af08115d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0007 ldarg.2         
+  IL_0008 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_000d ldarg.3         
+  IL_000e call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0013 ldarg.s        argument(0x0004) 
+  IL_0015 ldc.i4.0        
+  IL_0016 call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_001b ret             
+
+0x06014fc5 TransformUtil::SetPoint(src,srcAnchor,dst,dstAnchor,offset) RVA 0x62c475 SIG 00050112808d11c000af0812808d11c000af08115d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0007 ldarg.2         
+  IL_0008 ldarg.3         
+  IL_0009 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_000e ldarg.s        argument(0x0004) 
+  IL_0010 ldc.i4.0        
+  IL_0011 call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_0016 ret             
+
+0x06014fc6 TransformUtil::SetPoint(src,srcAnchor,dst,dstAnchor,offset,includeInactive) RVA 0x62c48d SIG 00060112808d11c000af0812808d11c000af08115d02
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_0007 ldarg.2         
+  IL_0008 ldarg.3         
+  IL_0009 call           TransformUtil::GetUnitAnchor token(0x06014FB0)
+  IL_000e ldarg.s        argument(0x0004) 
+  IL_0010 ldarg.s        argument(0x0005) 
+  IL_0012 call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_0017 ret             
+
+0x06014fc7 TransformUtil::SetPoint(self,selfUnitAnchor,relative,relativeUnitAnchor) RVA 0x62c4a6 SIG 00040112809d115d12808d115d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 ldarg.2         
+  IL_0008 ldarg.3         
+  IL_0009 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_000e ldc.i4.0        
+  IL_000f call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_0014 ret             
+
+0x06014fc8 TransformUtil::SetPoint(self,selfUnitAnchor,relative,relativeUnitAnchor) RVA 0x62c4bc SIG 00040112808d115d12808d115d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.2         
+  IL_0003 ldarg.3         
+  IL_0004 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0009 ldc.i4.0        
+  IL_000a call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_000f ret             
+
+0x06014fc9 TransformUtil::SetPoint(self,selfUnitAnchor,relative,relativeUnitAnchor,offset) RVA 0x62c4cd SIG 00050112809d115d12809d115d115d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 ldarg.2         
+  IL_0008 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_000d ldarg.3         
+  IL_000e ldarg.s        argument(0x0004) 
+  IL_0010 ldc.i4.0        
+  IL_0011 call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_0016 ret             
+
+0x06014fca TransformUtil::SetPoint(self,selfUnitAnchor,relative,relativeUnitAnchor,offset) RVA 0x62c4e5 SIG 00050112809d115d12808d115d115d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 ldarg.2         
+  IL_0008 ldarg.3         
+  IL_0009 ldarg.s        argument(0x0004) 
+  IL_000b ldc.i4.0        
+  IL_000c call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_0011 ret             
+
+0x06014fcb TransformUtil::SetPoint(self,selfUnitAnchor,relative,relativeUnitAnchor,offset) RVA 0x62c4f8 SIG 00050112808d115d12808d115d115d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.2         
+  IL_0003 ldarg.3         
+  IL_0004 ldarg.s        argument(0x0004) 
+  IL_0006 ldc.i4.0        
+  IL_0007 call           TransformUtil::SetPoint token(0x06014FCC)
+  IL_000c ret             
+
+0x06014fcc TransformUtil::SetPoint(self,selfUnitAnchor,relative,relativeUnitAnchor,offset,includeInactive) RVA 0x62c508 SIG 00060112808d115d12808d115d115d02
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0006 brfalse.s      IL_0010 
+  IL_0008 ldarg.2         
+  IL_0009 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000e brtrue.s       IL_0011 
+  IL_0010 ret             
+  IL_0011 ldarg.0         
+  IL_0012 ldarg.s        argument(0x0005) 
+  IL_0014 call           TransformUtil::ComputeSetPointBounds token(0x06014FB5)
+  IL_0019 ldarg.2         
+  IL_001a ldarg.s        argument(0x0005) 
+  IL_001c call           TransformUtil::ComputeSetPointBounds token(0x06014FB5)
+  IL_0021 stloc.0         
+  IL_0022 ldarg.1         
+  IL_0023 call           TransformUtil::ComputeWorldPoint token(0x06014FB1)
+  IL_0028 stloc.1         
+  IL_0029 ldloc.0         
+  IL_002a ldarg.3         
+  IL_002b call           TransformUtil::ComputeWorldPoint token(0x06014FB1)
+  IL_0030 stloc.2         
+  IL_0031 ldloca.s       local(0x0003) 
+  IL_0033 ldloc.2         
+  IL_0034 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0039 ldloc.1         
+  IL_003a ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_003f sub             
+  IL_0040 ldarg.s        argument(0x0004) 
+  IL_0042 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0047 add             
+  IL_0048 ldloc.2         
+  IL_0049 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_004e ldloc.1         
+  IL_004f ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0054 sub             
+  IL_0055 ldarg.s        argument(0x0004) 
+  IL_0057 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_005c add             
+  IL_005d ldloc.2         
+  IL_005e ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0063 ldloc.1         
+  IL_0064 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0069 sub             
+  IL_006a ldarg.s        argument(0x0004) 
+  IL_006c ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0071 add             
+  IL_0072 call           UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0077 ldarg.0         
+  IL_0078 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_007d ldloc.3         
+  IL_007e ldc.i4.0        
+  IL_007f callvirt       UnityEngine.Transform::Translate token(0x0A000AF1)
+  IL_0084 ret             
+
+0x06014fcd TransformUtil::GetBoundsOfChildren(c) RVA 0x62c599 SIG 000111818512809d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldc.i4.0        
+  IL_0007 call           TransformUtil::GetBoundsOfChildren token(0x06014FCF)
+  IL_000c ret             
+
+0x06014fce TransformUtil::GetBoundsOfChildren(go) RVA 0x62c5a7 SIG 000111818512808d
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.0        
+  IL_0002 call           TransformUtil::GetBoundsOfChildren token(0x06014FCF)
+  IL_0007 ret             
+
+0x06014fcf TransformUtil::GetBoundsOfChildren(go,includeInactive) RVA 0x62c5b0 SIG 000211818512808d02
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B00001C)
+  IL_0007 stloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 ldlen           
+  IL_000a brtrue.s       IL_0022 
+  IL_000c ldarg.0         
+  IL_000d callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0012 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0017 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_001c newobj         UnityEngine.Bounds::.ctor token(0x0A0000FC)
+  IL_0021 ret             
+  IL_0022 ldloc.0         
+  IL_0023 ldc.i4.0        
+  IL_0024 ldelem.ref      
+  IL_0025 callvirt       UnityEngine.Renderer::get_bounds token(0x0A0000FD)
+  IL_002a stloc.1         
+  IL_002b ldc.i4.1        
+  IL_002c stloc.2         
+  IL_002d br.s           IL_0071 
+  IL_002f ldloc.0         
+  IL_0030 ldloc.2         
+  IL_0031 ldelem.ref      
+  IL_0032 callvirt       UnityEngine.Renderer::get_bounds token(0x0A0000FD)
+  IL_0037 stloc.3         
+  IL_0038 ldloca.s       local(0x0003) 
+  IL_003a call           UnityEngine.Bounds::get_max token(0x0A0000FF)
+  IL_003f ldloca.s       local(0x0001) 
+  IL_0041 call           UnityEngine.Bounds::get_max token(0x0A0000FF)
+  IL_0046 call           UnityEngine.Vector3::Max token(0x0A000100)
+  IL_004b stloc.s        local(0x0004) 
+  IL_004d ldloca.s       local(0x0003) 
+  IL_004f call           UnityEngine.Bounds::get_min token(0x0A000101)
+  IL_0054 ldloca.s       local(0x0001) 
+  IL_0056 call           UnityEngine.Bounds::get_min token(0x0A000101)
+  IL_005b call           UnityEngine.Vector3::Min token(0x0A000102)
+  IL_0060 stloc.s        local(0x0005) 
+  IL_0062 ldloca.s       local(0x0001) 
+  IL_0064 ldloc.s        local(0x0005) 
+  IL_0066 ldloc.s        local(0x0004) 
+  IL_0068 call           UnityEngine.Bounds::SetMinMax token(0x0A000103)
+  IL_006d ldloc.2         
+  IL_006e ldc.i4.1        
+  IL_006f add             
+  IL_0070 stloc.2         
+  IL_0071 ldloc.2         
+  IL_0072 ldloc.0         
+  IL_0073 ldlen           
+  IL_0074 conv.i4         
+  IL_0075 blt.s          IL_002f 
+  IL_0077 ldloc.1         
+  IL_0078 ret             
+
+0x06014fd0 TransformUtil::SetLocalPosX(go,x) RVA 0x62c638 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldloc.0         
+  IL_000a callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_000f ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0029 ret             
+
+0x06014fd1 TransformUtil::SetLocalPosX(component,x) RVA 0x62c670 SIG 00020112809d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldloc.0         
+  IL_000a callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_000f ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0029 ret             
+
+0x06014fd2 TransformUtil::SetLocalPosY(go,y) RVA 0x62c6a8 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldarg.1         
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0029 ret             
+
+0x06014fd3 TransformUtil::SetLocalPosY(component,y) RVA 0x62c6e0 SIG 00020112809d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldarg.1         
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0029 ret             
+
+0x06014fd4 TransformUtil::SetLocalPosZ(go,z) RVA 0x62c718 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldloc.0         
+  IL_0014 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_0019 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_001e ldarg.1         
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0029 ret             
+
+0x06014fd5 TransformUtil::SetLocalPosZ(component,z) RVA 0x62c750 SIG 00020112809d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldloc.0         
+  IL_0014 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_0019 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_001e ldarg.1         
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0029 ret             
+
+0x06014fd6 TransformUtil::SetPosX(go,x) RVA 0x62c788 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldloc.0         
+  IL_000a callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_000f ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0029 ret             
+
+0x06014fd7 TransformUtil::SetPosX(component,x) RVA 0x62c7c0 SIG 00020112809d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldloc.0         
+  IL_000a callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_000f ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0029 ret             
+
+0x06014fd8 TransformUtil::SetPosY(go,y) RVA 0x62c7f8 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldarg.1         
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0029 ret             
+
+0x06014fd9 TransformUtil::SetPosY(component,y) RVA 0x62c830 SIG 00020112809d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldarg.1         
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0029 ret             
+
+0x06014fda TransformUtil::SetPosZ(go,z) RVA 0x62c868 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldloc.0         
+  IL_0014 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0019 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_001e ldarg.1         
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0029 ret             
+
+0x06014fdb TransformUtil::SetPosZ(component,z) RVA 0x62c8a0 SIG 00020112809d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldloc.0         
+  IL_0014 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0019 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_001e ldarg.1         
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0029 ret             
+
+0x06014fdc TransformUtil::SetLocalEulerAngleX(go,x) RVA 0x62c8d8 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldloc.0         
+  IL_000a callvirt       UnityEngine.Transform::get_localEulerAngles token(0x0A000C6D)
+  IL_000f ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_localEulerAngles token(0x0A000C6D)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localEulerAngles token(0x0A0009F8)
+  IL_0029 ret             
+
+0x06014fdd TransformUtil::SetLocalEulerAngleY(go,y) RVA 0x62c910 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_localEulerAngles token(0x0A000C6D)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldarg.1         
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_localEulerAngles token(0x0A000C6D)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localEulerAngles token(0x0A0009F8)
+  IL_0029 ret             
+
+0x06014fde TransformUtil::SetEulerAngleX(go,x) RVA 0x62c948 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldloc.0         
+  IL_000a callvirt       UnityEngine.Transform::get_eulerAngles token(0x0A000D1A)
+  IL_000f ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_eulerAngles token(0x0A000D1A)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_eulerAngles token(0x0A00057A)
+  IL_0029 ret             
+
+0x06014fdf TransformUtil::SetEulerAngleY(go,y) RVA 0x62c980 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_eulerAngles token(0x0A000D1A)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldarg.1         
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_eulerAngles token(0x0A000D1A)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_eulerAngles token(0x0A00057A)
+  IL_0029 ret             
+
+0x06014fe0 TransformUtil::SetEulerAngleZ(go,z) RVA 0x62c9b8 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_eulerAngles token(0x0A000D1A)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldloc.0         
+  IL_0014 callvirt       UnityEngine.Transform::get_eulerAngles token(0x0A000D1A)
+  IL_0019 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_001e ldarg.1         
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_eulerAngles token(0x0A00057A)
+  IL_0029 ret             
+
+0x06014fe1 TransformUtil::SetLocalScaleX(component,x) RVA 0x62c9f0 SIG 00020112809d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldloc.0         
+  IL_000a callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_000f ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0029 ret             
+
+0x06014fe2 TransformUtil::SetLocalScaleX(go,x) RVA 0x62ca28 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldloc.0         
+  IL_000a callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_000f ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0029 ret             
+
+0x06014fe3 TransformUtil::SetLocalScaleY(go,y) RVA 0x62ca60 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldarg.1         
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0029 ret             
+
+0x06014fe4 TransformUtil::SetLocalScaleZ(component,z) RVA 0x62ca98 SIG 00020112809d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldloc.0         
+  IL_0014 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0019 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_001e ldarg.1         
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0029 ret             
+
+0x06014fe5 TransformUtil::SetLocalScaleZ(go,z) RVA 0x62cad0 SIG 00020112808d0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldloc.0         
+  IL_0009 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_000e ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0013 ldloc.0         
+  IL_0014 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0019 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_001e ldarg.1         
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0029 ret             
+
+0x06014fe6 TransformUtil::SetLocalScaleXY(go,x,y) RVA 0x62cb08 SIG 00030112808d0c0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldarg.2         
+  IL_000a ldloc.0         
+  IL_000b callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0010 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0015 newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_001a callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_001f ret             
+
+0x06014fe7 TransformUtil::SetLocalScaleXY(component,v) RVA 0x62cb34 SIG 00020112809d1175
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldfld          UnityEngine.Vector2::x token(0x0A000998)
+  IL_000e ldarg.1         
+  IL_000f ldfld          UnityEngine.Vector2::y token(0x0A000031)
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_001a ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0029 ret             
+
+0x06014fe8 TransformUtil::SetLocalScaleXZ(go,v) RVA 0x62cb6c SIG 00020112808d1175
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldarg.1         
+  IL_0009 ldfld          UnityEngine.Vector2::x token(0x0A000998)
+  IL_000e ldloc.0         
+  IL_000f callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0014 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0019 ldarg.1         
+  IL_001a ldfld          UnityEngine.Vector2::y token(0x0A000031)
+  IL_001f newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_0024 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0029 ret             
+
+0x06014fe9 TransformUtil::Identity(c) RVA 0x62cba2 SIG 00010112809d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0006 call           UnityEngine.Vector3::get_one token(0x0A000165)
+  IL_000b callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0010 ldarg.0         
+  IL_0011 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0016 call           UnityEngine.Quaternion::get_identity token(0x0A00021E)
+  IL_001b callvirt       UnityEngine.Transform::set_localRotation token(0x0A00021F)
+  IL_0020 ldarg.0         
+  IL_0021 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0026 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_002b callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0030 ret             
+
+0x06014fea TransformUtil::Identity(go) RVA 0x62cbd4 SIG 00010112808d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 call           UnityEngine.Vector3::get_one token(0x0A000165)
+  IL_000b callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0010 ldarg.0         
+  IL_0011 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0016 call           UnityEngine.Quaternion::get_identity token(0x0A00021E)
+  IL_001b callvirt       UnityEngine.Transform::set_localRotation token(0x0A00021F)
+  IL_0020 ldarg.0         
+  IL_0021 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0026 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_002b callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0030 ret             
+
+0x06014feb TransformUtil::CopyLocal(destination,source) RVA 0x62cc06 SIG 00020112809d12809d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_000c call           TransformUtil::CopyLocal token(0x06014FED)
+  IL_0011 ret             
+
+0x06014fec TransformUtil::CopyLocal(destination,source) RVA 0x62cc19 SIG 00020112808d12809d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0007 call           TransformUtil::CopyLocal token(0x06014FED)
+  IL_000c ret             
+
+0x06014fed TransformUtil::CopyLocal(destination,source) RVA 0x62cc28 SIG 00020112808d12808d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_000c callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0011 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0016 ldarg.0         
+  IL_0017 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_001c ldarg.1         
+  IL_001d callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0022 callvirt       UnityEngine.Transform::get_localRotation token(0x0A000CDB)
+  IL_0027 callvirt       UnityEngine.Transform::set_localRotation token(0x0A00021F)
+  IL_002c ldarg.0         
+  IL_002d callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0032 ldarg.1         
+  IL_0033 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0038 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_003d callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0042 ret             
+
+0x06014fee TransformUtil::CopyLocal(destination,source) RVA 0x62cc77 SIG 00020112809d11c000af0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 call           TransformUtil::CopyLocal token(0x06014FEF)
+  IL_000c ret             
+
+0x06014fef TransformUtil::CopyLocal(destination,source) RVA 0x62cc85 SIG 00020112808d11c000af0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 ldarga.s       argument(0x0001) 
+  IL_0008 call           TransformProps::get_scale token(0x06014FA6)
+  IL_000d callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0012 ldarg.0         
+  IL_0013 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0018 ldarga.s       argument(0x0001) 
+  IL_001a call           TransformProps::get_rotation token(0x06014FA8)
+  IL_001f callvirt       UnityEngine.Transform::set_localRotation token(0x0A00021F)
+  IL_0024 ldarg.0         
+  IL_0025 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_002a ldarga.s       argument(0x0001) 
+  IL_002c call           TransformProps::get_position token(0x06014FAA)
+  IL_0031 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0036 ret             
+
+0x06014ff0 TransformUtil::GetLocalTransformProps(source) RVA 0x62ccbd SIG 000111c000af0c12809d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 call           TransformUtil::GetLocalTransformProps token(0x06014FF1)
+  IL_000b ret             
+
+0x06014ff1 TransformUtil::GetLocalTransformProps(source) RVA 0x62cccc SIG 000111c000af0c12808d
+  IL_0000 ldloca.s       local(0x0000) 
+  IL_0002 initobj        TransformProps token(0x02002BC3)
+  IL_0008 ldloca.s       local(0x0000) 
+  IL_000a ldarg.0         
+  IL_000b callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0010 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0015 call           TransformProps::set_scale token(0x06014FA7)
+  IL_001a ldloca.s       local(0x0000) 
+  IL_001c ldarg.0         
+  IL_001d callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0022 callvirt       UnityEngine.Transform::get_localRotation token(0x0A000CDB)
+  IL_0027 call           TransformProps::set_rotation token(0x06014FA9)
+  IL_002c ldloca.s       local(0x0000) 
+  IL_002e ldarg.0         
+  IL_002f callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0034 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_0039 call           TransformProps::set_position token(0x06014FAB)
+  IL_003e ldloc.0         
+  IL_003f ret             
+
+0x06014ff2 TransformUtil::CopyWorld(destination,source) RVA 0x62cd18 SIG 00020112809d12809d
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0007 brfalse.s      IL_0015 
+  IL_0009 ldarg.0         
+  IL_000a callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_000f ldarg.1         
+  IL_0010 call           TransformUtil::CopyWorld token(0x06014FF4)
+  IL_0015 ret             
+
+0x06014ff3 TransformUtil::CopyWorld(destination,source) RVA 0x62cd2f SIG 00020112809d12808d
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0007 brfalse.s      IL_0015 
+  IL_0009 ldarg.0         
+  IL_000a callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_000f ldarg.1         
+  IL_0010 call           TransformUtil::CopyWorld token(0x06014FF5)
+  IL_0015 ret             
+
+0x06014ff4 TransformUtil::CopyWorld(destination,source) RVA 0x62cd46 SIG 00020112808d12809d
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0007 brfalse.s      IL_0015 
+  IL_0009 ldarg.0         
+  IL_000a ldarg.1         
+  IL_000b callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0010 call           TransformUtil::CopyWorld token(0x06014FF5)
+  IL_0015 ret             
+
+0x06014ff5 TransformUtil::CopyWorld(destination,source) RVA 0x62cd5d SIG 00020112808d12808d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           TransformUtil::CopyWorldScale token(0x06014FFB)
+  IL_0007 ldarg.0         
+  IL_0008 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_000d ldarg.1         
+  IL_000e callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0013 callvirt       UnityEngine.Transform::get_rotation token(0x0A000B4F)
+  IL_0018 callvirt       UnityEngine.Transform::set_rotation token(0x0A000B50)
+  IL_001d ldarg.0         
+  IL_001e callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0023 ldarg.1         
+  IL_0024 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0029 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_002e callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0033 ret             
+
+0x06014ff6 TransformUtil::CopyWorld(destination,source) RVA 0x62cd92 SIG 00020112809d11c000af0c
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 call           TransformUtil::CopyWorld token(0x06014FF7)
+  IL_000c ret             
+
+0x06014ff7 TransformUtil::CopyWorld(destination,source) RVA 0x62cda0 SIG 00020112808d11c000af0c
+  IL_0000 ldarg.0         
+  IL_0001 ldarga.s       argument(0x0001) 
+  IL_0003 call           TransformProps::get_scale token(0x06014FA6)
+  IL_0008 call           TransformUtil::SetWorldScale token(0x06014FFD)
+  IL_000d ldarg.0         
+  IL_000e callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0013 ldarga.s       argument(0x0001) 
+  IL_0015 call           TransformProps::get_rotation token(0x06014FA8)
+  IL_001a callvirt       UnityEngine.Transform::set_rotation token(0x0A000B50)
+  IL_001f ldarg.0         
+  IL_0020 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0025 ldarga.s       argument(0x0001) 
+  IL_0027 call           TransformProps::get_position token(0x06014FAA)
+  IL_002c callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0031 ret             
+
+0x06014ff8 TransformUtil::GetWorldTransformProps(source) RVA 0x62cdd3 SIG 000111c000af0c12809d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 call           TransformUtil::GetWorldTransformProps token(0x06014FF9)
+  IL_000b ret             
+
+0x06014ff9 TransformUtil::GetWorldTransformProps(source) RVA 0x62cde0 SIG 000111c000af0c12808d
+  IL_0000 ldloca.s       local(0x0000) 
+  IL_0002 initobj        TransformProps token(0x02002BC3)
+  IL_0008 ldloca.s       local(0x0000) 
+  IL_000a ldarg.0         
+  IL_000b call           TransformUtil::ComputeWorldScale token(0x06014FFF)
+  IL_0010 call           TransformProps::set_scale token(0x06014FA7)
+  IL_0015 ldloca.s       local(0x0000) 
+  IL_0017 ldarg.0         
+  IL_0018 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_001d callvirt       UnityEngine.Transform::get_rotation token(0x0A000B4F)
+  IL_0022 call           TransformProps::set_rotation token(0x06014FA9)
+  IL_0027 ldloca.s       local(0x0000) 
+  IL_0029 ldarg.0         
+  IL_002a callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_002f callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0034 call           TransformProps::set_position token(0x06014FAB)
+  IL_0039 ldloc.0         
+  IL_003a ret             
+
+0x06014ffa TransformUtil::CopyWorldScale(destination,source) RVA 0x62ce27 SIG 00020112809d12809d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_000c call           TransformUtil::CopyWorldScale token(0x06014FFB)
+  IL_0011 ret             
+
+0x06014ffb TransformUtil::CopyWorldScale(destination,source) RVA 0x62ce3c SIG 00020112808d12808d
+  IL_0000 ldarg.1         
+  IL_0001 call           TransformUtil::ComputeWorldScale token(0x06014FFF)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldloc.0         
+  IL_0009 call           TransformUtil::SetWorldScale token(0x06014FFD)
+  IL_000e ret             
+
+0x06014ffc TransformUtil::SetWorldScale(destination,scale) RVA 0x62ce57 SIG 00020112809d115d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 ldarg.1         
+  IL_0007 call           TransformUtil::SetWorldScale token(0x06014FFD)
+  IL_000c ret             
+
+0x06014ffd TransformUtil::SetWorldScale(destination,scale) RVA 0x62ce68 SIG 00020112808d115d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_000b ldnull          
+  IL_000c call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0011 brfalse.s      IL_0043 
+  IL_0013 ldarg.0         
+  IL_0014 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0019 callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_001e stloc.0         
+  IL_001f br.s           IL_003a 
+  IL_0021 ldarga.s       argument(0x0001) 
+  IL_0023 ldloc.0         
+  IL_0024 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0029 call           TransformUtil::Vector3Reciprocal token(0x06015000)
+  IL_002e call           UnityEngine.Vector3::Scale token(0x0A004311)
+  IL_0033 ldloc.0         
+  IL_0034 callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_0039 stloc.0         
+  IL_003a ldloc.0         
+  IL_003b ldnull          
+  IL_003c call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0041 brtrue.s       IL_0021 
+  IL_0043 ldarg.0         
+  IL_0044 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0049 ldarg.1         
+  IL_004a callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_004f ret             
+
+0x06014ffe TransformUtil::ComputeWorldScale(c) RVA 0x62cec4 SIG 0001115d12809d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 call           TransformUtil::ComputeWorldScale token(0x06014FFF)
+  IL_000b ret             
+
+0x06014fff TransformUtil::ComputeWorldScale(go) RVA 0x62ced4 SIG 0001115d12808d
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0006 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_000b stloc.0         
+  IL_000c ldarg.0         
+  IL_000d callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0012 callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_0017 ldnull          
+  IL_0018 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_001d brfalse.s      IL_004a 
+  IL_001f ldarg.0         
+  IL_0020 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0025 callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_002a stloc.1         
+  IL_002b br.s           IL_0041 
+  IL_002d ldloca.s       local(0x0000) 
+  IL_002f ldloc.1         
+  IL_0030 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0035 call           UnityEngine.Vector3::Scale token(0x0A004311)
+  IL_003a ldloc.1         
+  IL_003b callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_0040 stloc.1         
+  IL_0041 ldloc.1         
+  IL_0042 ldnull          
+  IL_0043 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0048 brtrue.s       IL_002d 
+  IL_004a ldloc.0         
+  IL_004b ret             
+
+0x06015000 TransformUtil::Vector3Reciprocal(source) RVA 0x62cf2c SIG 0001115d115d
+  IL_0000 ldarg.0         
+  IL_0001 stloc.0         
+  IL_0002 ldloc.0         
+  IL_0003 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0008 ldc.r4         0.0 
+  IL_000d beq.s          IL_0022 
+  IL_000f ldloca.s       local(0x0000) 
+  IL_0011 ldc.r4         1.0 
+  IL_0016 ldloc.0         
+  IL_0017 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_001c div             
+  IL_001d stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0022 ldloc.0         
+  IL_0023 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0028 ldc.r4         0.0 
+  IL_002d beq.s          IL_0042 
+  IL_002f ldloca.s       local(0x0000) 
+  IL_0031 ldc.r4         1.0 
+  IL_0036 ldloc.0         
+  IL_0037 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_003c div             
+  IL_003d stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0042 ldloc.0         
+  IL_0043 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0048 ldc.r4         0.0 
+  IL_004d beq.s          IL_0062 
+  IL_004f ldloca.s       local(0x0000) 
+  IL_0051 ldc.r4         1.0 
+  IL_0056 ldloc.0         
+  IL_0057 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_005c div             
+  IL_005d stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0062 ldloc.0         
+  IL_0063 ret             
+
+0x06015001 TransformUtil::RandomVector3(min,max) RVA 0x62cf9c SIG 0002115d115d115d
+  IL_0000 ldloca.s       local(0x0000) 
+  IL_0002 initobj        UnityEngine.Vector3 token(0x01000017)
+  IL_0008 ldloca.s       local(0x0000) 
+  IL_000a ldarg.0         
+  IL_000b ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0010 ldarg.1         
+  IL_0011 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0016 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_001b stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0020 ldloca.s       local(0x0000) 
+  IL_0022 ldarg.0         
+  IL_0023 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0028 ldarg.1         
+  IL_0029 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_002e call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0033 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0038 ldloca.s       local(0x0000) 
+  IL_003a ldarg.0         
+  IL_003b ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0040 ldarg.1         
+  IL_0041 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0046 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_004b stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0050 ldloc.0         
+  IL_0051 ret             
+
+0x06015002 TransformUtil::AttachAndPreserveLocalTransform(child,parent) RVA 0x62cffc SIG 0002011280a51280a5
+  IL_0000 ldarg.0         
+  IL_0001 call           TransformUtil::GetLocalTransformProps token(0x06014FF0)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldarg.1         
+  IL_0009 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_000e ldarg.0         
+  IL_000f ldloc.0         
+  IL_0010 call           TransformUtil::CopyLocal token(0x06014FEE)
+  IL_0015 ret             
+
+0x06015003 TransformUtil::GetAspectRatioValue(aspectRatio) RVA 0x62d01e SIG 00010c11c000af1c
+  IL_0000 ldarg.0         
+  IL_0001 switch         [IL_0014, IL_001a, IL_0020] 
+  IL_0012 br.s           IL_0026 
+  IL_0014 ldc.r4         1.5 
+  IL_0019 ret             
+  IL_001a ldc.r4         1.7777777910232544 
+  IL_001f ret             
+  IL_0020 ldc.r4         2.0399999618530273 
+  IL_0025 ret             
+  IL_0026 ldc.r4         0.0 
+  IL_002b ret             
+
+0x06015004 TransformUtil::GetAspectRatioDependentPosition(aspectSmall,aspectWide,aspectExtraWide) RVA 0x62d04b SIG 0003115d115d115d115d
+  IL_0000 ldnull          
+  IL_0001 ldftn          UnityEngine.Vector3::Lerp token(0x0A000D68)
+  IL_0007 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98dd30>::.ctor token(0x0A00507E)
+  IL_000c ldarg.0         
+  IL_000d ldarg.1         
+  IL_000e ldarg.2         
+  IL_000f call           TransformUtil::GetAspectRatioDependentValue<spec> token(0x2B0009AA)
+  IL_0014 ret             
+
+0x06015005 TransformUtil::GetAspectRatioDependentValue(aspectSmall,aspectWide,aspectExtraWide) RVA 0x62d061 SIG 00030c0c0c0c
+  IL_0000 ldnull          
+  IL_0001 ldftn          UnityEngine.Mathf::Lerp token(0x0A000D72)
+  IL_0007 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98dee0>::.ctor token(0x0A00507F)
+  IL_000c ldarg.0         
+  IL_000d ldarg.1         
+  IL_000e ldarg.2         
+  IL_000f call           TransformUtil::GetAspectRatioDependentValue<spec> token(0x2B0009AB)
+  IL_0014 ret             
+
+0x06015006 TransformUtil::GetAspectRatioDependentValue(interpolator,small,wide,extraWide) RVA 0x62d078 SIG 1001041e0015129a35041e001e000c1e001e001e001e00
+  IL_0000 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98e090>::.ctor token(0x0A005080)
+  IL_0005 dup             
+  IL_0006 ldc.i4.0        
+  IL_0007 ldarg.1         
+  IL_0008 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98e090>::Add token(0x0A005081)
+  IL_000d dup             
+  IL_000e ldc.i4.1        
+  IL_000f ldarg.2         
+  IL_0010 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98e090>::Add token(0x0A005081)
+  IL_0015 dup             
+  IL_0016 ldc.i4.2        
+  IL_0017 ldarg.3         
+  IL_0018 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98e090>::Add token(0x0A005081)
+  IL_001d stloc.2         
+  IL_001e ldloca.s       local(0x0000) 
+  IL_0020 ldloca.s       local(0x0001) 
+  IL_0022 call           TransformUtil::PhoneAspectRatioScale token(0x06015008)
+  IL_0027 stloc.3         
+  IL_0028 ldarg.0         
+  IL_0029 ldloc.2         
+  IL_002a ldloc.0         
+  IL_002b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98e090>::get_Item token(0x0A005082)
+  IL_0030 ldloc.2         
+  IL_0031 ldloc.1         
+  IL_0032 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98e090>::get_Item token(0x0A005082)
+  IL_0037 ldloc.3         
+  IL_0038 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8dfa98e240>::Invoke token(0x0A005083)
+  IL_003d ret             
+
+0x06015007 TransformUtil::IsExtraWideAspectRatio() RVA 0x62d0c2 SIG 000002
+  IL_0000 ldc.r4         0.0 
+  IL_0005 ldc.r4         1.0 
+  IL_000a ldc.r4         2.0 
+  IL_000f call           TransformUtil::GetAspectRatioDependentValue token(0x06015005)
+  IL_0014 ldc.r4         1.2000000476837158 
+  IL_0019 cgt             
+  IL_001b ret             
+
+0x06015008 TransformUtil::PhoneAspectRatioScale(lowerRatio,upperRatio) RVA 0x62d0e0 SIG 00020c1011c000af1c1011c000af1c
+  IL_0000 call           UnityEngine.Screen::get_width token(0x0A000026)
+  IL_0005 conv.r4         
+  IL_0006 call           UnityEngine.Screen::get_height token(0x0A000021)
+  IL_000b conv.r4         
+  IL_000c div             
+  IL_000d stloc.0         
+  IL_000e ldarg.0         
+  IL_000f ldc.i4.0        
+  IL_0010 stind.i4        
+  IL_0011 ldarg.1         
+  IL_0012 ldc.i4.2        
+  IL_0013 stind.i4        
+  IL_0014 call           Blizzard.T5.Core.Utils.EnumUtils::Length<spec> token(0x2B0009AC)
+  IL_0019 stloc.1         
+  IL_001a ldc.i4.0        
+  IL_001b stloc.s        local(0x0005) 
+  IL_001d br.s           IL_0051 
+  IL_001f ldloc.s        local(0x0005) 
+  IL_0021 stloc.s        local(0x0006) 
+  IL_0023 ldloc.s        local(0x0006) 
+  IL_0025 call           TransformUtil::GetAspectRatioValue token(0x06015003)
+  IL_002a ldloc.0         
+  IL_002b ble.un.s       IL_004b 
+  IL_002d ldarg.0         
+  IL_002e ldloc.s        local(0x0005) 
+  IL_0030 ldc.i4.0        
+  IL_0031 bgt.s          IL_0036 
+  IL_0033 ldc.i4.0        
+  IL_0034 br.s           IL_003a 
+  IL_0036 ldloc.s        local(0x0005) 
+  IL_0038 ldc.i4.1        
+  IL_0039 sub             
+  IL_003a stind.i4        
+  IL_003b ldarg.1         
+  IL_003c ldloc.s        local(0x0005) 
+  IL_003e brfalse.s      IL_0044 
+  IL_0040 ldloc.s        local(0x0006) 
+  IL_0042 br.s           IL_0048 
+  IL_0044 ldloc.s        local(0x0005) 
+  IL_0046 ldc.i4.1        
+  IL_0047 add             
+  IL_0048 stind.i4        
+  IL_0049 br.s           IL_0056 
+  IL_004b ldloc.s        local(0x0005) 
+  IL_004d ldc.i4.1        
+  IL_004e add             
+  IL_004f stloc.s        local(0x0005) 
+  IL_0051 ldloc.s        local(0x0005) 
+  IL_0053 ldloc.1         
+  IL_0054 blt.s          IL_001f 
+  IL_0056 ldarg.0         
+  IL_0057 ldind.i4        
+  IL_0058 call           TransformUtil::GetAspectRatioValue token(0x06015003)
+  IL_005d stloc.2         
+  IL_005e ldarg.1         
+  IL_005f ldind.i4        
+  IL_0060 call           TransformUtil::GetAspectRatioValue token(0x06015003)
+  IL_0065 stloc.3         
+  IL_0066 ldloc.3         
+  IL_0067 ldloc.2         
+  IL_0068 sub             
+  IL_0069 stloc.s        local(0x0004) 
+  IL_006b ldloc.0         
+  IL_006c ldloc.2         
+  IL_006d ldloc.3         
+  IL_006e call           UnityEngine.Mathf::Clamp token(0x0A0003AA)
+  IL_0073 stloc.0         
+  IL_0074 ldloc.0         
+  IL_0075 ldloc.2         
+  IL_0076 sub             
+  IL_0077 ldloc.s        local(0x0004) 
+  IL_0079 div             
+  IL_007a ret             
+
+0x06015009 TransformUtil::ConstrainToScreen(go,layer) RVA 0x62d168 SIG 00020112808d08
+  IL_0000 ldarg.1         
+  IL_0001 call           CameraUtils::FindFirstByLayer token(0x06014C07)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0025 
+  IL_0010 call           Log::get_All token(0x06014E0E)
+  IL_0015 ldstr          'TransformUtil.ConstrainToScreen - No camera found for indicated layer.' string token(0x703F4E9A)
+  IL_001a call           System.Array::Empty<spec> token(0x2B000001)
+  IL_001f callvirt       Logger::PrintError token(0x0A000074)
+  IL_0024 ret             
+  IL_0025 ldarg.0         
+  IL_0026 call           TransformUtil::ComputeSetPointBounds token(0x06014FB3)
+  IL_002b stloc.1         
+  IL_002c ldc.i4.4        
+  IL_002d newarr         UnityEngine.Vector3 token(0x01000017)
+  IL_0032 stloc.2         
+  IL_0033 ldloc.0         
+  IL_0034 ldc.r4         0.0 
+  IL_0039 ldc.r4         0.0 
+  IL_003e ldc.r4         1.0 
+  IL_0043 ldc.r4         1.0 
+  IL_0048 newobj         UnityEngine.Rect::.ctor token(0x0A000027)
+  IL_004d ldloc.0         
+  IL_004e callvirt       UnityEngine.Camera::get_farClipPlane token(0x0A0010E1)
+  IL_0053 ldc.i4.2        
+  IL_0054 ldloc.2         
+  IL_0055 callvirt       UnityEngine.Camera::CalculateFrustumCorners token(0x0A005084)
+  IL_005a ldloca.s       local(0x0003) 
+  IL_005c ldloc.0         
+  IL_005d callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0062 ldloc.2         
+  IL_0063 ldc.i4.0        
+  IL_0064 ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0069 callvirt       UnityEngine.Transform::TransformPoint token(0x0A000CD9)
+  IL_006e ldloca.s       local(0x0006) 
+  IL_0070 initobj        UnityEngine.Vector3 token(0x01000017)
+  IL_0076 ldloc.s        local(0x0006) 
+  IL_0078 call           UnityEngine.Bounds::.ctor token(0x0A0000FC)
+  IL_007d ldc.i4.1        
+  IL_007e stloc.s        local(0x0007) 
+  IL_0080 br.s           IL_00a6 
+  IL_0082 ldloc.0         
+  IL_0083 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0088 ldloc.2         
+  IL_0089 ldloc.s        local(0x0007) 
+  IL_008b ldelem         UnityEngine.Vector3 token(0x01000017)
+  IL_0090 callvirt       UnityEngine.Transform::TransformPoint token(0x0A000CD9)
+  IL_0095 stloc.s        local(0x0008) 
+  IL_0097 ldloca.s       local(0x0003) 
+  IL_0099 ldloc.s        local(0x0008) 
+  IL_009b call           UnityEngine.Bounds::Encapsulate token(0x0A005085)
+  IL_00a0 ldloc.s        local(0x0007) 
+  IL_00a2 ldc.i4.1        
+  IL_00a3 add             
+  IL_00a4 stloc.s        local(0x0007) 
+  IL_00a6 ldloc.s        local(0x0007) 
+  IL_00a8 ldc.i4.4        
+  IL_00a9 blt.s          IL_0082 
+  IL_00ab ldarg.0         
+  IL_00ac callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_00b1 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_00b6 stloc.s        local(0x0004) 
+  IL_00b8 ldloca.s       local(0x0003) 
+  IL_00ba ldloca.s       local(0x0003) 
+  IL_00bc call           UnityEngine.Bounds::get_min token(0x0A000101)
+  IL_00c1 ldloca.s       local(0x0001) 
+  IL_00c3 call           UnityEngine.Bounds::get_min token(0x0A000101)
+  IL_00c8 ldloc.s        local(0x0004) 
+  IL_00ca call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_00cf call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_00d4 ldloca.s       local(0x0003) 
+  IL_00d6 call           UnityEngine.Bounds::get_max token(0x0A0000FF)
+  IL_00db ldloca.s       local(0x0001) 
+  IL_00dd call           UnityEngine.Bounds::get_max token(0x0A0000FF)
+  IL_00e2 ldloc.s        local(0x0004) 
+  IL_00e4 call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_00e9 call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_00ee call           UnityEngine.Bounds::SetMinMax token(0x0A000103)
+  IL_00f3 ldloca.s       local(0x0003) 
+  IL_00f5 ldloc.s        local(0x0004) 
+  IL_00f7 call           UnityEngine.Bounds::ClosestPoint token(0x0A005086)
+  IL_00fc ldloc.s        local(0x0004) 
+  IL_00fe call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_0103 stloc.s        local(0x0005) 
+  IL_0105 ldloc.s        local(0x0005) 
+  IL_0107 ldloc.0         
+  IL_0108 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_010d callvirt       UnityEngine.Transform::get_forward token(0x0A000D8A)
+  IL_0112 ldloc.0         
+  IL_0113 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0118 callvirt       UnityEngine.Transform::get_forward token(0x0A000D8A)
+  IL_011d ldloc.s        local(0x0005) 
+  IL_011f call           UnityEngine.Vector3::Dot token(0x0A000D6A)
+  IL_0124 call           UnityEngine.Vector3::op_Multiply token(0x0A0000DF)
+  IL_0129 call           UnityEngine.Vector3::op_Subtraction token(0x0A00057C)
+  IL_012e stloc.s        local(0x0005) 
+  IL_0130 ldarg.0         
+  IL_0131 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0136 dup             
+  IL_0137 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_013c ldloc.s        local(0x0005) 
+  IL_013e call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0143 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0148 ret             
+
+0x0601507f CameraShakeMgr::get_IsCameraShaking() RVA 0x62f0bc SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          CameraShakeMgr::m_started token(0x04011FA0)
+  IL_0006 ret             
+
+0x06015080 CameraShakeMgr::Update() RVA 0x62f0c4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          CameraShakeMgr::m_started token(0x04011FA0)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+  IL_000f ldarg.0         
+  IL_0010 ldfld          CameraShakeMgr::m_durationSec token(0x04011FA3)
+  IL_0015 blt.un.s       IL_0026 
+  IL_0017 ldarg.0         
+  IL_0018 call           CameraShakeMgr::IsHolding token(0x0601508A)
+  IL_001d brtrue.s       IL_0026 
+  IL_001f ldarg.0         
+  IL_0020 call           CameraShakeMgr::StopShake token(0x06015087)
+  IL_0025 ret             
+  IL_0026 ldarg.0         
+  IL_0027 call           CameraShakeMgr::UpdateShake token(0x06015088)
+  IL_002c ret             
+
+0x06015081 CameraShakeMgr::Shake(camera,amount,intensityCurve,holdAtTime,isOverride) RVA 0x62f0f4 SIG 0005011280e9115d128501151181bd010c02
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 call           Options::Get token(0x060140E7)
+  IL_000e ldc.i4.s       110 
+  IL_0010 callvirt       Options::GetBool token(0x060140F8)
+  IL_0015 brtrue.s       IL_0018 
+  IL_0017 ret             
+  IL_0018 ldarg.0         
+  IL_0019 ldloca.s       local(0x0000) 
+  IL_001b callvirt       UnityEngine.Component::TryGetComponent<spec> token(0x2B0009B7)
+  IL_0020 brfalse.s      IL_0031 
+  IL_0022 ldarg.2         
+  IL_0023 call           CameraShakeMgr::DoesCurveHaveZeroTime token(0x06015085)
+  IL_0028 brfalse.s      IL_0046 
+  IL_002a ldloc.0         
+  IL_002b callvirt       CameraShakeMgr::StopShake token(0x06015087)
+  IL_0030 ret             
+  IL_0031 ldarg.2         
+  IL_0032 call           CameraShakeMgr::DoesCurveHaveZeroTime token(0x06015085)
+  IL_0037 brfalse.s      IL_003a 
+  IL_0039 ret             
+  IL_003a ldarg.0         
+  IL_003b callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0040 callvirt       UnityEngine.GameObject::AddComponent<spec> token(0x2B0009B8)
+  IL_0045 stloc.0         
+  IL_0046 ldloc.0         
+  IL_0047 ldarg.1         
+  IL_0048 ldarg.2         
+  IL_0049 ldarg.3         
+  IL_004a ldarg.s        argument(0x0004) 
+  IL_004c callvirt       CameraShakeMgr::StartShake token(0x06015086)
+  IL_0051 ret             
+
+0x06015082 CameraShakeMgr::Shake(camera,amount,time) RVA 0x62f154 SIG 0003011280e9115d0c
+  IL_0000 ldc.r4         0.0 
+  IL_0005 ldc.r4         1.0 
+  IL_000a ldarg.2         
+  IL_000b ldc.r4         0.0 
+  IL_0010 call           UnityEngine.AnimationCurve::Linear token(0x0A00423C)
+  IL_0015 stloc.0         
+  IL_0016 ldarg.0         
+  IL_0017 ldarg.1         
+  IL_0018 ldloc.0         
+  IL_0019 ldloca.s       local(0x0001) 
+  IL_001b initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaec4170> token(0x1B000478)
+  IL_0021 ldloc.1         
+  IL_0022 ldc.i4.0        
+  IL_0023 call           CameraShakeMgr::Shake token(0x06015081)
+  IL_0028 ret             
+
+0x06015083 CameraShakeMgr::Stop(camera,time) RVA 0x62f18c SIG 0002011280e90c
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 call           Options::Get token(0x060140E7)
+  IL_000e ldc.i4.s       110 
+  IL_0010 callvirt       Options::GetBool token(0x060140F8)
+  IL_0015 brtrue.s       IL_0018 
+  IL_0017 ret             
+  IL_0018 ldarg.0         
+  IL_0019 ldloca.s       local(0x0000) 
+  IL_001b callvirt       UnityEngine.Component::TryGetComponent<spec> token(0x2B0009B7)
+  IL_0020 brtrue.s       IL_0023 
+  IL_0022 ret             
+  IL_0023 ldarg.1         
+  IL_0024 ldc.r4         0.0 
+  IL_0029 bgt.un.s       IL_0032 
+  IL_002b ldloc.0         
+  IL_002c callvirt       CameraShakeMgr::StopShake token(0x06015087)
+  IL_0031 ret             
+  IL_0032 ldloc.0         
+  IL_0033 callvirt       CameraShakeMgr::ComputeIntensity token(0x06015089)
+  IL_0038 stloc.1         
+  IL_0039 ldc.r4         0.0 
+  IL_003e ldloc.1         
+  IL_003f ldarg.1         
+  IL_0040 ldc.r4         0.0 
+  IL_0045 call           UnityEngine.AnimationCurve::Linear token(0x0A00423C)
+  IL_004a stloc.2         
+  IL_004b ldloc.0         
+  IL_004c ldloc.0         
+  IL_004d ldfld          CameraShakeMgr::m_amount token(0x04011F9C)
+  IL_0052 ldloc.2         
+  IL_0053 ldloca.s       local(0x0003) 
+  IL_0055 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaec4170> token(0x1B000478)
+  IL_005b ldloc.3         
+  IL_005c ldc.i4.0        
+  IL_005d callvirt       CameraShakeMgr::StartShake token(0x06015086)
+  IL_0062 ret             
+
+0x06015084 CameraShakeMgr::IsShaking(camera) RVA 0x62f1fc SIG 0001021280e9
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0006 brtrue.s       IL_000a 
+  IL_0008 ldc.i4.0        
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b ldloca.s       local(0x0000) 
+  IL_000d callvirt       UnityEngine.Component::TryGetComponent<spec> token(0x2B0009B7)
+  IL_0012 brtrue.s       IL_0016 
+  IL_0014 ldc.i4.0        
+  IL_0015 ret             
+  IL_0016 ldloc.0         
+  IL_0017 callvirt       CameraShakeMgr::get_IsCameraShaking token(0x0601507F)
+  IL_001c ret             
+
+0x06015085 CameraShakeMgr::DoesCurveHaveZeroTime(intensityCurve) RVA 0x62f228 SIG 000102128501
+  IL_0000 ldarg.0         
+  IL_0001 brtrue.s       IL_0005 
+  IL_0003 ldc.i4.1        
+  IL_0004 ret             
+  IL_0005 ldarg.0         
+  IL_0006 callvirt       UnityEngine.AnimationCurve::get_length token(0x0A003966)
+  IL_000b brtrue.s       IL_000f 
+  IL_000d ldc.i4.1        
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldarg.0         
+  IL_0011 callvirt       UnityEngine.AnimationCurve::get_length token(0x0A003966)
+  IL_0016 ldc.i4.1        
+  IL_0017 sub             
+  IL_0018 callvirt       UnityEngine.AnimationCurve::get_Item token(0x0A003BAB)
+  IL_001d stloc.0         
+  IL_001e ldloca.s       local(0x0000) 
+  IL_0020 call           UnityEngine.Keyframe::get_time token(0x0A003BAC)
+  IL_0025 ldc.r4         0.0 
+  IL_002a bgt.un.s       IL_002e 
+  IL_002c ldc.i4.1        
+  IL_002d ret             
+  IL_002e ldc.i4.0        
+  IL_002f ret             
+
+0x06015086 CameraShakeMgr::StartShake(amount,intensityCurve,holdAtSec,isOverride) RVA 0x62f264 SIG 200401115d128501151181bd010c02
+  IL_0000 ldarg.s        argument(0x0004) 
+  IL_0002 brtrue.s       IL_0019 
+  IL_0004 ldarga.s       argument(0x0001) 
+  IL_0006 call           UnityEngine.Vector3::get_sqrMagnitude token(0x0A0027BA)
+  IL_000b ldarg.0         
+  IL_000c ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+  IL_0011 call           UnityEngine.Vector3::get_sqrMagnitude token(0x0A0027BA)
+  IL_0016 bge.un.s       IL_0019 
+  IL_0018 ret             
+  IL_0019 ldarg.0         
+  IL_001a ldfld          CameraShakeMgr::m_isOverride token(0x04011F9F)
+  IL_001f brfalse.s      IL_0022 
+  IL_0021 ret             
+  IL_0022 ldarg.0         
+  IL_0023 ldarg.1         
+  IL_0024 stfld          CameraShakeMgr::m_amount token(0x04011F9C)
+  IL_0029 ldarg.0         
+  IL_002a ldarg.2         
+  IL_002b stfld          CameraShakeMgr::m_intensityCurve token(0x04011F9D)
+  IL_0030 ldarg.0         
+  IL_0031 ldarg.3         
+  IL_0032 stfld          CameraShakeMgr::m_holdAtSec token(0x04011F9E)
+  IL_0037 ldarg.0         
+  IL_0038 ldarg.s        argument(0x0004) 
+  IL_003a stfld          CameraShakeMgr::m_isOverride token(0x04011F9F)
+  IL_003f ldarg.0         
+  IL_0040 ldfld          CameraShakeMgr::m_started token(0x04011FA0)
+  IL_0045 brtrue.s       IL_005f 
+  IL_0047 ldarg.0         
+  IL_0048 ldc.i4.1        
+  IL_0049 stfld          CameraShakeMgr::m_started token(0x04011FA0)
+  IL_004e ldarg.0         
+  IL_004f ldarg.0         
+  IL_0050 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0055 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_005a stfld          CameraShakeMgr::m_initialPos token(0x04011FA1)
+  IL_005f ldarg.0         
+  IL_0060 ldc.r4         0.0 
+  IL_0065 stfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+  IL_006a ldarg.2         
+  IL_006b ldarg.2         
+  IL_006c callvirt       UnityEngine.AnimationCurve::get_length token(0x0A003966)
+  IL_0071 ldc.i4.1        
+  IL_0072 sub             
+  IL_0073 callvirt       UnityEngine.AnimationCurve::get_Item token(0x0A003BAB)
+  IL_0078 stloc.0         
+  IL_0079 ldarg.0         
+  IL_007a ldloca.s       local(0x0000) 
+  IL_007c call           UnityEngine.Keyframe::get_time token(0x0A003BAC)
+  IL_0081 stfld          CameraShakeMgr::m_durationSec token(0x04011FA3)
+  IL_0086 ret             
+
+0x06015087 CameraShakeMgr::StopShake() RVA 0x62f2f8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           CameraShakeMgr::get_IsCameraShaking token(0x0601507F)
+  IL_0006 brfalse.s      IL_0019 
+  IL_0008 ldarg.0         
+  IL_0009 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_000e ldarg.0         
+  IL_000f ldfld          CameraShakeMgr::m_initialPos token(0x04011FA1)
+  IL_0014 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0019 ldarg.0         
+  IL_001a call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_001f stfld          CameraShakeMgr::m_amount token(0x04011F9C)
+  IL_0024 ldarg.0         
+  IL_0025 ldnull          
+  IL_0026 stfld          CameraShakeMgr::m_intensityCurve token(0x04011F9D)
+  IL_002b ldarg.0         
+  IL_002c ldflda         CameraShakeMgr::m_holdAtSec token(0x04011F9E)
+  IL_0031 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaec4170> token(0x1B000478)
+  IL_0037 ldarg.0         
+  IL_0038 ldc.i4.0        
+  IL_0039 stfld          CameraShakeMgr::m_isOverride token(0x04011F9F)
+  IL_003e ldarg.0         
+  IL_003f ldc.i4.0        
+  IL_0040 stfld          CameraShakeMgr::m_started token(0x04011FA0)
+  IL_0045 ret             
+
+0x06015088 CameraShakeMgr::UpdateShake() RVA 0x62f34c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           CameraShakeMgr::ComputeIntensity token(0x06015089)
+  IL_0006 stloc.0         
+  IL_0007 ldloca.s       local(0x0001) 
+  IL_0009 initobj        UnityEngine.Vector3 token(0x01000017)
+  IL_000f ldloca.s       local(0x0001) 
+  IL_0011 ldarg.0         
+  IL_0012 ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+  IL_0017 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_001c neg             
+  IL_001d ldloc.0         
+  IL_001e mul             
+  IL_001f ldarg.0         
+  IL_0020 ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+  IL_0025 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_002a ldloc.0         
+  IL_002b mul             
+  IL_002c call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0031 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0036 ldloca.s       local(0x0001) 
+  IL_0038 ldarg.0         
+  IL_0039 ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+  IL_003e ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0043 neg             
+  IL_0044 ldloc.0         
+  IL_0045 mul             
+  IL_0046 ldarg.0         
+  IL_0047 ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+  IL_004c ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_0051 ldloc.0         
+  IL_0052 mul             
+  IL_0053 call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_0058 stfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_005d ldloca.s       local(0x0001) 
+  IL_005f ldarg.0         
+  IL_0060 ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+  IL_0065 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_006a neg             
+  IL_006b ldloc.0         
+  IL_006c mul             
+  IL_006d ldarg.0         
+  IL_006e ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+  IL_0073 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0078 ldloc.0         
+  IL_0079 mul             
+  IL_007a call           UnityEngine.Random::Range token(0x0A00025A)
+  IL_007f stfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_0084 ldarg.0         
+  IL_0085 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_008a ldarg.0         
+  IL_008b ldfld          CameraShakeMgr::m_initialPos token(0x04011FA1)
+  IL_0090 ldloc.1         
+  IL_0091 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_0096 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_009b ldarg.0         
+  IL_009c call           CameraShakeMgr::IsHolding token(0x0601508A)
+  IL_00a1 brfalse.s      IL_00a4 
+  IL_00a3 ret             
+  IL_00a4 ldarg.0         
+  IL_00a5 ldarg.0         
+  IL_00a6 ldfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+  IL_00ab call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+  IL_00b0 add             
+  IL_00b1 ldarg.0         
+  IL_00b2 ldfld          CameraShakeMgr::m_durationSec token(0x04011FA3)
+  IL_00b7 call           UnityEngine.Mathf::Min token(0x0A000B2D)
+  IL_00bc stfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+  IL_00c1 ret             
+
+0x06015089 CameraShakeMgr::ComputeIntensity() RVA 0x62f41a SIG 20000c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          CameraShakeMgr::m_intensityCurve token(0x04011F9D)
+  IL_0006 brfalse.s      IL_001a 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          CameraShakeMgr::m_intensityCurve token(0x04011F9D)
+  IL_000e ldarg.0         
+  IL_000f ldfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+  IL_0014 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A000982)
+  IL_0019 ret             
+  IL_001a ldc.r4         0.0 
+  IL_001f ret             
+
+0x0601508a CameraShakeMgr::IsHolding() RVA 0x62f43c SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldflda         CameraShakeMgr::m_holdAtSec token(0x04011F9E)
+  IL_0006 call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaec4170>::get_HasValue token(0x0A001044)
+  IL_000b brtrue.s       IL_000f 
+  IL_000d ldc.i4.0        
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          CameraShakeMgr::m_holdAtSec token(0x04011F9E)
+  IL_001b stloc.0         
+  IL_001c ldloca.s       local(0x0000) 
+  IL_001e call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaec4170>::GetValueOrDefault token(0x0A0011E8)
+  IL_0023 clt.un          
+  IL_0025 ldc.i4.0        
+  IL_0026 ceq             
+  IL_0028 ldloca.s       local(0x0000) 
+  IL_002a call           <dnfile.mdtable.TypeSpecRow object at 0x7f8dfaec4170>::get_HasValue token(0x0A001044)
+  IL_002f and             
+  IL_0030 ret             
+
+0x0601508b CameraShakeMgr::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             
+
+0x06016cdc HutongGames.PlayMaker.Actions.SpellFinishAction::GetSpellOwner() RVA 0x6a2dcf SIG 200012808d
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SpellFinishAction::m_SpellObject token(0x04013C7A)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0011 ret             
+
+0x06016cdd HutongGames.PlayMaker.Actions.SpellFinishAction::OnEnter() RVA 0x6a2de4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SpellAction::OnEnter token(0x06016C90)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SpellAction::m_spell token(0x04013C2A)
+  IL_000c ldnull          
+  IL_000d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0012 brfalse.s      IL_002b 
+  IL_0014 ldstr          '{0}.OnEnter() - FAILED to find Spell component on Owner "{1}"' string token(0x70409230)
+  IL_0019 ldarg.0         
+  IL_001a ldarg.0         
+  IL_001b call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_0020 call           System.String::Format token(0x0A0000D1)
+  IL_0025 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_002a ret             
+  IL_002b ldarg.0         
+  IL_002c ldfld          HutongGames.PlayMaker.Actions.SpellFinishAction::m_Delay token(0x04013C7B)
+  IL_0031 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_0036 ldc.r4         0.0 
+  IL_003b ble.un.s       IL_0051 
+  IL_003d ldarg.0         
+  IL_003e ldfld          HutongGames.PlayMaker.Actions.SpellAction::m_spell token(0x04013C2A)
+  IL_0043 ldarg.0         
+  IL_0044 call           HutongGames.PlayMaker.Actions.SpellFinishAction::DelaySpellFinished token(0x06016CDE)
+  IL_0049 callvirt       UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_004e pop             
+  IL_004f br.s           IL_005c 
+  IL_0051 ldarg.0         
+  IL_0052 ldfld          HutongGames.PlayMaker.Actions.SpellAction::m_spell token(0x04013C2A)
+  IL_0057 callvirt       Spell::OnSpellFinished token(0x0601495F)
+  IL_005c ldarg.0         
+  IL_005d call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0062 ret             
+
+0x06016cde HutongGames.PlayMaker.Actions.SpellFinishAction::DelaySpellFinished() RVA 0x6a2e53 SIG 2000128111
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <DelaySpellFinished>d__4::.ctor token(0x06016CE0)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <DelaySpellFinished>d__4::<>4__this token(0x04013C7E)
+  IL_000d ret             
+
+0x06016cdf HutongGames.PlayMaker.Actions.SpellFinishAction::.ctor() RVA 0x6a2e62 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         0.0 
+  IL_0006 call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A0058F9)
+  IL_000b stfld          HutongGames.PlayMaker.Actions.SpellFinishAction::m_Delay token(0x04013C7B)
+  IL_0010 ldarg.0         
+  IL_0011 call           HutongGames.PlayMaker.Actions.SpellAction::.ctor token(0x06016C92)
+  IL_0016 ret             
+
+0x06016d20 HutongGames.PlayMaker.Actions.SpellStateAction::GetSpellOwner() RVA 0x6a3a56 SIG 200012808d
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_SpellObject token(0x04013CAA)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0011 ret             
+
+0x06016d21 HutongGames.PlayMaker.Actions.SpellStateAction::OnEnter() RVA 0x6a3a6c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SpellAction::OnEnter token(0x06016C90)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SpellAction::m_spell token(0x04013C2A)
+  IL_000c ldnull          
+  IL_000d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0012 brfalse.s      IL_0015 
+  IL_0014 ret             
+  IL_0015 ldarg.0         
+  IL_0016 call           HutongGames.PlayMaker.Actions.SpellStateAction::DiscoverSpellStateType token(0x06016D22)
+  IL_001b ldarg.0         
+  IL_001c ldfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_stateInvalid token(0x04013CAC)
+  IL_0021 brfalse.s      IL_0024 
+  IL_0023 ret             
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          HutongGames.PlayMaker.Actions.SpellAction::m_spell token(0x04013C2A)
+  IL_002a ldarg.0         
+  IL_002b call           HutongGames.PlayMaker.FsmStateAction::get_State token(0x0A005968)
+  IL_0030 ldarg.0         
+  IL_0031 ldfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_spellStateType token(0x04013CAB)
+  IL_0036 callvirt       Spell::OnFsmStateStarted token(0x06014961)
+  IL_003b ldarg.0         
+  IL_003c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0041 ret             
+
+0x06016d22 HutongGames.PlayMaker.Actions.SpellStateAction::DiscoverSpellStateType() RVA 0x6a3abc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_stateDirty token(0x04013CAD)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a call           HutongGames.PlayMaker.FsmStateAction::get_State token(0x0A005968)
+  IL_000f callvirt       HutongGames.PlayMaker.FsmState::get_Name token(0x0A000501)
+  IL_0014 stloc.0         
+  IL_0015 ldarg.0         
+  IL_0016 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_001b callvirt       HutongGames.PlayMaker.Fsm::get_GlobalTransitions token(0x0A005969)
+  IL_0020 stloc.1         
+  IL_0021 ldc.i4.0        
+  IL_0022 stloc.2         
+  IL_0023 br.s           IL_0054 
+  IL_0025 ldloc.1         
+  IL_0026 ldloc.2         
+  IL_0027 ldelem.ref      
+  IL_0028 stloc.3         
+  IL_0029 ldloc.0         
+  IL_002a ldloc.3         
+  IL_002b callvirt       HutongGames.PlayMaker.FsmTransition::get_ToState token(0x0A004EBF)
+  IL_0030 callvirt       System.String::Equals token(0x0A0001B2)
+  IL_0035 brfalse.s      IL_0050 
+  IL_0037 ldarg.0         
+  IL_0038 ldloc.3         
+  IL_0039 callvirt       HutongGames.PlayMaker.FsmTransition::get_EventName token(0x0A004EBB)
+  IL_003e call           Blizzard.T5.Core.Utils.EnumUtils::GetEnum<spec> token(0x2B000965)
+  IL_0043 stfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_spellStateType token(0x04013CAB)
+  IL_0048 ldarg.0         
+  IL_0049 ldc.i4.0        
+  IL_004a stfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_stateDirty token(0x04013CAD)
+  IL_004f ret             
+  IL_0050 ldloc.2         
+  IL_0051 ldc.i4.1        
+  IL_0052 add             
+  IL_0053 stloc.2         
+  IL_0054 ldloc.2         
+  IL_0055 ldloc.1         
+  IL_0056 ldlen           
+  IL_0057 conv.i4         
+  IL_0058 blt.s          IL_0025 
+  IL_005a ldarg.0         
+  IL_005b ldc.i4.1        
+  IL_005c stfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_stateInvalid token(0x04013CAC)
+  IL_0061 ret             
+
+0x06016d23 HutongGames.PlayMaker.Actions.SpellStateAction::.ctor() RVA 0x6a3b2a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_stateDirty token(0x04013CAD)
+  IL_0007 ldarg.0         
+  IL_0008 call           HutongGames.PlayMaker.Actions.SpellAction::.ctor token(0x06016C92)
+  IL_000d ret             

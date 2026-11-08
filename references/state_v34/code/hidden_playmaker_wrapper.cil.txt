@@ -1,0 +1,99 @@
+
+TYPE PlayMakerFSM 0x02000011
+FIELD 0x04000014 OnSettingChanged SIG 06151251010e
+FIELD 0x04000015 fsmList SIG 06151219011244
+FIELD 0x04000016 ApplicationIsQuitting SIG 0602
+FIELD 0x04000017 fsm SIG 06128218
+FIELD 0x04000018 fsmTemplate SIG 061208
+FIELD 0x04000019 eventHandlerComponentsAdded SIG 0602
+FIELD 0x0400001a <DrawGizmos>k__BackingField SIG 0602
+FIELD 0x0400001b OnReset SIG 061259
+FIELD 0x0400001c OnValidated SIG 061259
+FIELD 0x0400001d mainThread SIG 06125d
+FIELD 0x0400001e addEventHandlers SIG 061248
+
+0x0600004f PlayMakerFSM::Awake() RVA 0x2eab SIG 200001
+  IL_0000 call           UnityEngine.Application::get_isEditor token(0x0A000028)
+  IL_0005 brfalse.s      IL_001a 
+  IL_0007 ldarg.0         
+  IL_0008 call           PlayMakerFSM::get_Fsm token(0x0600006B)
+  IL_000d brfalse.s      IL_001a 
+  IL_000f ldarg.0         
+  IL_0010 call           PlayMakerFSM::get_Fsm token(0x0600006B)
+  IL_0015 callvirt       HutongGames.PlayMaker.Fsm::InitInEditor token(0x0600048B)
+  IL_001a call           System.Threading.Thread::get_CurrentThread token(0x0A000025)
+  IL_001f stsfld         PlayMakerFSM::mainThread token(0x0400001D)
+  IL_0024 call           PlayMakerGlobals::Initialize token(0x06000092)
+  IL_0029 call           PlayMakerGlobals::get_IsEditor token(0x0600008C)
+  IL_002e brtrue.s       IL_0036 
+  IL_0030 ldc.i4.0        
+  IL_0031 call           HutongGames.PlayMaker.FsmLog::set_LoggingEnabled token(0x0600058E)
+  IL_0036 ldarg.0         
+  IL_0037 call           PlayMakerFSM::Init token(0x06000051)
+  IL_003c ret             
+
+0x0600005a PlayMakerFSM::OnEnable() RVA 0x33d1 SIG 200001
+  IL_0000 ldsfld         PlayMakerFSM::fsmList token(0x04000015)
+  IL_0005 ldarg.0         
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2fe5fb8410>::Add token(0x0A000034)
+  IL_000b ldarg.0         
+  IL_000c ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_0011 callvirt       HutongGames.PlayMaker.Fsm::OnEnable token(0x0600048C)
+  IL_0016 ret             
+
+0x0600005b PlayMakerFSM::Update() RVA 0x33e9 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_0006 callvirt       HutongGames.PlayMaker.Fsm::get_Finished token(0x060003E9)
+  IL_000b brtrue.s       IL_0025 
+  IL_000d ldarg.0         
+  IL_000e ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_0013 callvirt       HutongGames.PlayMaker.Fsm::get_ManualUpdate token(0x060003A9)
+  IL_0018 brtrue.s       IL_0025 
+  IL_001a ldarg.0         
+  IL_001b ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_0020 callvirt       HutongGames.PlayMaker.Fsm::Update token(0x06000491)
+  IL_0025 ret             
+
+0x0600005d PlayMakerFSM::OnDisable() RVA 0x3428 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_0006 callvirt       HutongGames.PlayMaker.Fsm::get_Started token(0x060003BD)
+  IL_000b brfalse.s      IL_001d 
+  IL_000d ldarg.0         
+  IL_000e ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_0013 call           HutongGames.PlayMaker.FsmEvent::get_Disable token(0x06000557)
+  IL_0018 callvirt       HutongGames.PlayMaker.Fsm::Event token(0x060004A4)
+  IL_001d ldsfld         PlayMakerFSM::fsmList token(0x04000015)
+  IL_0022 ldarg.0         
+  IL_0023 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2fe5fb8410>::Remove token(0x0A000035)
+  IL_0028 pop             
+  IL_0029 ldarg.0         
+  IL_002a ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_002f brfalse.s      IL_0049 
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_0037 callvirt       HutongGames.PlayMaker.Fsm::get_Finished token(0x060003E9)
+  IL_003c brtrue.s       IL_0049 
+  IL_003e ldarg.0         
+  IL_003f ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_0044 callvirt       HutongGames.PlayMaker.Fsm::OnDisable token(0x06000496)
+  IL_0049 ret             
+
+0x0600006b PlayMakerFSM::get_Fsm() RVA 0x35c8 SIG 2000128218
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_0006 brfalse.s      IL_0014 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_000e ldarg.0         
+  IL_000f callvirt       HutongGames.PlayMaker.Fsm::set_Owner token(0x060003C4)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_001a ret             
+
+0x06000071 PlayMakerFSM::get_Active() RVA 0x362f SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          PlayMakerFSM::fsm token(0x04000017)
+  IL_0006 callvirt       HutongGames.PlayMaker.Fsm::get_Active token(0x060003E8)
+  IL_000b ret             

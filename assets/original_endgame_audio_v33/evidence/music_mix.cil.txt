@@ -1,0 +1,690 @@
+
+TYPE MusicPlaylist 0x02002aaf
+FIELD 0x040119e7 m_type SIG 0611c000aab0
+FIELD 0x040119e8 m_tracks SIG 061512490112c000aab8
+
+TYPE SoundManager 0x02002ac0
+FIELD 0x04011a1c VOLUME_SCALE_FACTOR SIG 060c
+FIELD 0x04011a1d s_instance SIG 0612c000ab00
+FIELD 0x04011a1e m_config SIG 0612c000aaf0
+FIELD 0x04011a1f m_generatedSources SIG 0615124901128351
+FIELD 0x04011a20 m_extensionMappings SIG 061512490112c000ab10
+FIELD 0x04011a21 m_sourcesByCategory SIG 06151281a10211c000be7815124901128351
+FIELD 0x04011a22 m_sourcesByClipName SIG 06151281a1020e15124901128351
+FIELD 0x04011a23 m_bundleInfos SIG 06151281a1020e12c000ab1c
+FIELD 0x04011a24 m_duckStates SIG 06151281a10211c000be781512490112c000ab24
+FIELD 0x04011a25 m_nextDuckStateTweenId SIG 0609
+FIELD 0x04011a26 m_inactiveSources SIG 0615124901128351
+FIELD 0x04011a27 m_bundleInfosToRemove SIG 06151249010e
+FIELD 0x04011a28 m_sceneObject SIG 0612808d
+FIELD 0x04011a29 activeLimitedSounds SIG 06151281a1020e08
+FIELD 0x04011a2a m_musicTracks SIG 061512490112c000aab8
+FIELD 0x04011a2b m_ambienceTracks SIG 061512490112c000aab8
+FIELD 0x04011a2c m_musicIsAboutToPlay SIG 0602
+FIELD 0x04011a2d m_ambienceIsAboutToPlay SIG 0602
+FIELD 0x04011a2e m_currentMusicTrack SIG 06128351
+FIELD 0x04011a2f m_currentAmbienceTrack SIG 06128351
+FIELD 0x04011a30 m_fadingTracks SIG 0615124901128351
+FIELD 0x04011a31 m_musicTrackStartTime SIG 060c
+FIELD 0x04011a32 m_musicTrackIndex SIG 0608
+FIELD 0x04011a33 m_nextMusicTrackIndex SIG 0608
+FIELD 0x04011a34 m_ambienceTrackIndex SIG 0608
+FIELD 0x04011a35 m_isMasterEnabled SIG 0602
+FIELD 0x04011a36 m_isMusicEnabled SIG 0602
+FIELD 0x04011a37 m_mute SIG 0602
+FIELD 0x04011a38 m_nextSourceId SIG 0608
+FIELD 0x04011a39 m_frame SIG 0609
+FIELD 0x04011a3a m_fadingTracksIn SIG 0615124901128171
+FIELD 0x04011a3b FallbackSound SIG 06128135
+FIELD 0x04011a3c OnMusicStarted SIG 061281c1
+
+0x06014725 SoundManager::GetVolume(source) RVA 0x60b99c SIG 20010c128351
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000f 
+  IL_0009 ldc.r4         1.0 
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 ldarg.1         
+  IL_0011 ldnull          
+  IL_0012 ldnull          
+  IL_0013 ldc.i4.0        
+  IL_0014 call           SoundManager::RegisterExtension token(0x0601475A)
+  IL_0019 stloc.0         
+  IL_001a ldloc.0         
+  IL_001b brtrue.s       IL_0023 
+  IL_001d ldc.r4         1.0 
+  IL_0022 ret             
+  IL_0023 ldloc.0         
+  IL_0024 ldfld          SourceExtension::m_codeVolume token(0x04011A4E)
+  IL_0029 ret             
+
+0x06014726 SoundManager::SetVolume(source,volume) RVA 0x60b9d4 SIG 2002011283510c
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_000a 
+  IL_0009 ret             
+  IL_000a ldarg.0         
+  IL_000b ldarg.1         
+  IL_000c ldnull          
+  IL_000d ldnull          
+  IL_000e ldc.i4.0        
+  IL_000f call           SoundManager::RegisterExtension token(0x0601475A)
+  IL_0014 stloc.0         
+  IL_0015 ldloc.0         
+  IL_0016 brtrue.s       IL_0019 
+  IL_0018 ret             
+  IL_0019 ldloc.0         
+  IL_001a ldarg.2         
+  IL_001b stfld          SourceExtension::m_codeVolume token(0x04011A4E)
+  IL_0020 ldarg.0         
+  IL_0021 ldarg.1         
+  IL_0022 ldloc.0         
+  IL_0023 call           SoundManager::UpdateVolume token(0x06014766)
+  IL_0028 ret             
+
+0x0601472c SoundManager::LoadAndPlay(assetRef) RVA 0x60baa8 SIG 200101128135
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldnull          
+  IL_0003 ldc.r4         1.0 
+  IL_0008 ldnull          
+  IL_0009 ldnull          
+  IL_000a call           SoundManager::LoadAndPlay token(0x06014730)
+  IL_000f ret             
+
+0x0601472d SoundManager::LoadAndPlay(assetRef,parent) RVA 0x60bab9 SIG 20020112813512808d
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.2         
+  IL_0003 ldc.r4         1.0 
+  IL_0008 ldnull          
+  IL_0009 ldnull          
+  IL_000a call           SoundManager::LoadAndPlay token(0x06014730)
+  IL_000f ret             
+
+0x0601472e SoundManager::LoadAndPlay(assetRef,parent,volume) RVA 0x60baca SIG 20030112813512808d0c
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.2         
+  IL_0003 ldarg.3         
+  IL_0004 ldnull          
+  IL_0005 ldnull          
+  IL_0006 call           SoundManager::LoadAndPlay token(0x06014730)
+  IL_000b ret             
+
+0x0601472f SoundManager::LoadAndPlay(assetRef,parent,volume,callback) RVA 0x60bad7 SIG 20040112813512808d0c12c000ab04
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldarg.2         
+  IL_0003 ldarg.3         
+  IL_0004 ldarg.s        argument(0x0004) 
+  IL_0006 ldnull          
+  IL_0007 call           SoundManager::LoadAndPlay token(0x06014730)
+  IL_000c ret             
+
+0x06014730 SoundManager::LoadAndPlay(assetRef,parent,volume,callback,callbackData) RVA 0x60bae8 SIG 20050112813512808d0c12c000ab041c
+  IL_0000 ldarg.1         
+  IL_0001 call           AssetReference::op_Implicit token(0x0A000190)
+  IL_0006 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_000b brfalse.s      IL_0030 
+  IL_000d call           Log::get_Sound token(0x06014E56)
+  IL_0012 ldstr          'Missing assetref for LoadAndPlay().' string token(0x703EE438)
+  IL_0017 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_001c callvirt       Logger::PrintWarning token(0x0A00002E)
+  IL_0021 ldarg.s        argument(0x0004) 
+  IL_0023 brfalse.s      IL_002f 
+  IL_0025 ldarg.s        argument(0x0004) 
+  IL_0027 ldnull          
+  IL_0028 ldarg.s        argument(0x0005) 
+  IL_002a callvirt       LoadedCallback::Invoke token(0x060147B1)
+  IL_002f ret             
+  IL_0030 newobj         SoundLoadContext::.ctor token(0x060147C0)
+  IL_0035 stloc.0         
+  IL_0036 ldloc.0         
+  IL_0037 ldarg.2         
+  IL_0038 ldarg.3         
+  IL_0039 ldarg.s        argument(0x0004) 
+  IL_003b ldarg.s        argument(0x0005) 
+  IL_003d callvirt       SoundLoadContext::Init token(0x060147BE)
+  IL_0042 ldarg.1         
+  IL_0043 ldarg.0         
+  IL_0044 ldftn          SoundManager::OnLoadAndPlaySoundLoaded token(0x06014738)
+  IL_004a newobj         <dnfile.mdtable.TypeSpecRow object at 0x7fb530d5e9f0>::.ctor token(0x0A000210)
+  IL_004f ldloc.0         
+  IL_0050 ldarg.0         
+  IL_0051 call           SoundManager::GetPlaceholderSound token(0x06014714)
+  IL_0056 call           SoundLoader::LoadSound token(0x06012B73)
+  IL_005b pop             
+  IL_005c ret             
+
+0x06014736 SoundManager::LoadAndPlayClip(assetRef,args) RVA 0x60bd70 SIG 20020212813512c000ab6c
+  IL_0000 ldarg.1         
+  IL_0001 call           AssetReference::op_Implicit token(0x0A000190)
+  IL_0006 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_000b brfalse.s      IL_0023 
+  IL_000d call           Log::get_Sound token(0x06014E56)
+  IL_0012 ldstr          'LoadAndPlayClip: Missing asset AssetReference!' string token(0x703EE5D7)
+  IL_0017 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_001c callvirt       Logger::PrintError token(0x0A000074)
+  IL_0021 ldc.i4.0        
+  IL_0022 ret             
+  IL_0023 call           AssetLoader::Get token(0x06012AFE)
+  IL_0028 ldarg.1         
+  IL_0029 callvirt       IAssetLoader::IsAssetAvailable token(0x0A002AA2)
+  IL_002e brtrue.s       IL_0032 
+  IL_0030 ldc.i4.0        
+  IL_0031 ret             
+  IL_0032 ldarg.2         
+  IL_0033 brtrue.s       IL_005c 
+  IL_0035 call           Log::get_Sound token(0x06014E56)
+  IL_003a ldstr          'LoadAndPlayClip: Missing SoundPlayClipArgs. Using default...' string token(0x703EE635)
+  IL_003f call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0044 callvirt       Logger::PrintWarning token(0x0A00002E)
+  IL_0049 newobj         SoundPlayClipArgs::.ctor token(0x06014812)
+  IL_004e dup             
+  IL_004f ldc.i4.1        
+  IL_0050 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7fb53073e960>::.ctor token(0x0A004D8A)
+  IL_0055 stfld          SoundPlayClipArgs::m_category token(0x04011AA9)
+  IL_005a starg.s        argument(0x0002) 
+  IL_005c ldarg.1         
+  IL_005d ldarg.0         
+  IL_005e ldftn          SoundManager::OnLoadAndPlayClipLoaded token(0x06014739)
+  IL_0064 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7fb530d5e9f0>::.ctor token(0x0A000210)
+  IL_0069 ldarg.2         
+  IL_006a ldnull          
+  IL_006b call           SoundLoader::LoadSound token(0x06012B73)
+  IL_0070 ret             
+
+0x06014738 SoundManager::OnLoadAndPlaySoundLoaded(assetRef,go,callbackData) RVA 0x60bea0 SIG 20030112813512808d1c
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_0018 
+  IL_0003 call           Log::get_Sound token(0x06014E56)
+  IL_0008 ldstr          'SoundManager.OnLoadAndPlaySoundLoaded() - ERROR Tried to load null assetRef!' string token(0x703EE874)
+  IL_000d call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0012 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0017 ret             
+  IL_0018 ldarg.2         
+  IL_0019 ldnull          
+  IL_001a call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001f brfalse.s      IL_003c 
+  IL_0021 call           Log::get_Sound token(0x06014E56)
+  IL_0026 ldstr          'SoundManager.OnLoadAndPlaySoundLoaded() - ERROR "{0}" failed to load' string token(0x703EE90F)
+  IL_002b ldarg.1         
+  IL_002c call           System.String::Format token(0x0A0000B7)
+  IL_0031 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0036 callvirt       Logger::PrintError token(0x0A000074)
+  IL_003b ret             
+  IL_003c ldarg.2         
+  IL_003d callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0001AF)
+  IL_0042 stloc.0         
+  IL_0043 ldloc.0         
+  IL_0044 ldnull          
+  IL_0045 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_004a brfalse.s      IL_006d 
+  IL_004c ldarg.2         
+  IL_004d call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_0052 call           Log::get_Sound token(0x06014E56)
+  IL_0057 ldstr          'SoundManager.OnLoadAndPlaySoundLoaded() - ERROR "{0}" has no AudioSource' string token(0x703EE99A)
+  IL_005c ldarg.1         
+  IL_005d call           System.String::Format token(0x0A0000B7)
+  IL_0062 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0067 callvirt       Logger::PrintError token(0x0A000074)
+  IL_006c ret             
+  IL_006d ldarg.3         
+  IL_006e castclass      SoundLoadContext token(0x02002AC5)
+  IL_0073 stloc.1         
+  IL_0074 ldloc.1         
+  IL_0075 ldfld          SoundLoadContext::m_sceneMode token(0x04011A49)
+  IL_007a ldc.i4.s       9 
+  IL_007c beq.s          IL_009a 
+  IL_007e call           SceneMgr::Get token(0x060108A4)
+  IL_0083 brfalse.s      IL_009a 
+  IL_0085 call           SceneMgr::Get token(0x060108A4)
+  IL_008a ldc.i4.s       9 
+  IL_008c callvirt       SceneMgr::IsModeRequested token(0x060108B5)
+  IL_0091 brfalse.s      IL_009a 
+  IL_0093 ldarg.2         
+  IL_0094 call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_0099 ret             
+  IL_009a ldarg.0         
+  IL_009b ldarg.1         
+  IL_009c ldloc.0         
+  IL_009d call           SoundManager::RegisterSourceBundle token(0x0601479C)
+  IL_00a2 brtrue.s       IL_00c5 
+  IL_00a4 call           Log::get_Sound token(0x06014E56)
+  IL_00a9 ldstr          'Failed to load and play sound name={0}, go={1} (this may be due to it not yet being downloaded)' string token(0x703EEA2D)
+  IL_00ae ldarg.1         
+  IL_00af ldarg.2         
+  IL_00b0 callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_00b5 call           System.String::Format token(0x0A0000D1)
+  IL_00ba call           System.Array::Empty<spec> token(0x2B000001)
+  IL_00bf callvirt       Logger::PrintWarning token(0x0A00002E)
+  IL_00c4 ret             
+  IL_00c5 ldloc.1         
+  IL_00c6 ldfld          SoundLoadContext::m_haveCallback token(0x04011A4A)
+  IL_00cb brfalse.s      IL_00f3 
+  IL_00cd ldloc.1         
+  IL_00ce ldfld          SoundLoadContext::m_callback token(0x04011A4B)
+  IL_00d3 call           Blizzard.T5.Core.Utils.GeneralUtils::IsCallbackValid token(0x0A002144)
+  IL_00d8 brtrue.s       IL_00f3 
+  IL_00da ldarg.2         
+  IL_00db call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_00e0 ldarg.0         
+  IL_00e1 ldarg.0         
+  IL_00e2 call           SoundManager::get_SceneObject token(0x06014709)
+  IL_00e7 callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_00ec ldloc.0         
+  IL_00ed call           SoundManager::UnregisterSourceBundle token(0x0601479E)
+  IL_00f2 ret             
+  IL_00f3 ldarg.0         
+  IL_00f4 ldfld          SoundManager::m_generatedSources token(0x04011A1F)
+  IL_00f9 ldloc.0         
+  IL_00fa callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb530a307a0>::Add token(0x0A002229)
+  IL_00ff ldarg.0         
+  IL_0100 ldloc.0         
+  IL_0101 ldnull          
+  IL_0102 ldnull          
+  IL_0103 ldc.i4.0        
+  IL_0104 call           SoundManager::RegisterExtension token(0x0601475A)
+  IL_0109 ldloc.1         
+  IL_010a ldfld          SoundLoadContext::m_volume token(0x04011A48)
+  IL_010f stfld          SourceExtension::m_codeVolume token(0x04011A4E)
+  IL_0114 ldarg.0         
+  IL_0115 ldloc.0         
+  IL_0116 ldloc.1         
+  IL_0117 ldfld          SoundLoadContext::m_parent token(0x04011A47)
+  IL_011c call           SoundManager::InitSourceTransform token(0x06014798)
+  IL_0121 ldarg.0         
+  IL_0122 ldloc.0         
+  IL_0123 ldnull          
+  IL_0124 ldnull          
+  IL_0125 ldnull          
+  IL_0126 call           SoundManager::Play token(0x06014719)
+  IL_012b pop             
+  IL_012c ldloc.1         
+  IL_012d ldfld          SoundLoadContext::m_callback token(0x04011A4B)
+  IL_0132 brfalse.s      IL_0146 
+  IL_0134 ldloc.1         
+  IL_0135 ldfld          SoundLoadContext::m_callback token(0x04011A4B)
+  IL_013a ldloc.0         
+  IL_013b ldloc.1         
+  IL_013c ldfld          SoundLoadContext::m_userData token(0x04011A4C)
+  IL_0141 callvirt       LoadedCallback::Invoke token(0x060147B1)
+  IL_0146 ret             
+
+0x06014739 SoundManager::OnLoadAndPlayClipLoaded(assetRef,go,callbackData) RVA 0x60bff4 SIG 20030112813512808d1c
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_0018 
+  IL_0003 call           Log::get_Sound token(0x06014E56)
+  IL_0008 ldstr          'SoundManager.OnLoadAndPlayClipLoaded() - ERROR Tried to load null assetRef!' string token(0x703EEAEE)
+  IL_000d call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0012 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0017 ret             
+  IL_0018 ldarg.2         
+  IL_0019 ldnull          
+  IL_001a call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001f brfalse.s      IL_003b 
+  IL_0021 call           Log::get_Sound token(0x06014E56)
+  IL_0026 ldstr          'LoadAndPlayClip: Sound asset "{0}" failed to load' string token(0x703EEB87)
+  IL_002b ldc.i4.1        
+  IL_002c newarr         System.Object token(0x01000001)
+  IL_0031 dup             
+  IL_0032 ldc.i4.0        
+  IL_0033 ldarg.1         
+  IL_0034 stelem.ref      
+  IL_0035 callvirt       Logger::PrintError token(0x0A000074)
+  IL_003a ret             
+  IL_003b ldarg.2         
+  IL_003c callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000487)
+  IL_0041 stloc.0         
+  IL_0042 ldloc.0         
+  IL_0043 ldnull          
+  IL_0044 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0049 brfalse.s      IL_006b 
+  IL_004b call           Log::get_Sound token(0x06014E56)
+  IL_0050 ldstr          'LoadAndPlayClip: SoundDef missing from asset! Aborting playing "{0}"' string token(0x703EEBEB)
+  IL_0055 ldc.i4.1        
+  IL_0056 newarr         System.Object token(0x01000001)
+  IL_005b dup             
+  IL_005c ldc.i4.0        
+  IL_005d ldarg.1         
+  IL_005e stelem.ref      
+  IL_005f callvirt       Logger::PrintError token(0x0A000074)
+  IL_0064 ldarg.2         
+  IL_0065 call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_006a ret             
+  IL_006b ldarg.3         
+  IL_006c castclass      SoundPlayClipArgs token(0x02002ADB)
+  IL_0071 stloc.1         
+  IL_0072 ldloc.1         
+  IL_0073 ldloc.0         
+  IL_0074 stfld          SoundPlayClipArgs::m_def token(0x04011AA4)
+  IL_0079 ldarg.0         
+  IL_007a ldloc.1         
+  IL_007b ldc.i4.0        
+  IL_007c ldnull          
+  IL_007d call           SoundManager::PlayClip token(0x06014735)
+  IL_0082 pop             
+  IL_0083 ret             
+
+0x06014745 SoundManager::NukeMusicAndStopPlayingCurrentTrack() RVA 0x60c17c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          SoundManager::m_musicTracks token(0x04011A2A)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb53073d430>::Clear token(0x0A004D8B)
+  IL_000b ldarg.0         
+  IL_000c ldc.i4.0        
+  IL_000d stfld          SoundManager::m_nextMusicTrackIndex token(0x04011A33)
+  IL_0012 ldarg.0         
+  IL_0013 ldc.i4.0        
+  IL_0014 stfld          SoundManager::m_musicTrackIndex token(0x04011A32)
+  IL_0019 ldarg.0         
+  IL_001a call           SoundManager::StopCurrentMusicTrack token(0x06014741)
+  IL_001f ret             
+
+0x06014746 SoundManager::NukeAmbienceAndStopPlayingCurrentTrack() RVA 0x60c19d SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          SoundManager::m_ambienceTracks token(0x04011A2B)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb53073d430>::Clear token(0x0A004D8B)
+  IL_000b ldarg.0         
+  IL_000c ldc.i4.0        
+  IL_000d stfld          SoundManager::m_ambienceTrackIndex token(0x04011A34)
+  IL_0012 ldarg.0         
+  IL_0013 call           SoundManager::StopCurrentAmbienceTrack token(0x06014742)
+  IL_0018 ret             
+
+0x0601474b SoundManager::OnMusicLoaded(assetRef,go,callbackData) RVA 0x60c2b4 SIG 20030112813512808d1c
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_0018 
+  IL_0003 call           Log::get_Sound token(0x06014E56)
+  IL_0008 ldstr          'SoundManager.OnMusicLoaded() - ERROR Tried to load null assetRef!' string token(0x703EEC76)
+  IL_000d call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0012 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0017 ret             
+  IL_0018 ldarg.2         
+  IL_0019 ldnull          
+  IL_001a call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001f brfalse.s      IL_003c 
+  IL_0021 call           Log::get_Sound token(0x06014E56)
+  IL_0026 ldstr          'SoundManager.OnMusicLoaded() - ERROR "{0}" failed to load' string token(0x703EECFB)
+  IL_002b ldarg.1         
+  IL_002c call           System.String::Format token(0x0A0000B7)
+  IL_0031 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0036 callvirt       Logger::PrintError token(0x0A000074)
+  IL_003b ret             
+  IL_003c ldarg.2         
+  IL_003d callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0001AF)
+  IL_0042 stloc.0         
+  IL_0043 ldloc.0         
+  IL_0044 ldnull          
+  IL_0045 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_004a brfalse.s      IL_0076 
+  IL_004c call           Log::get_Sound token(0x06014E56)
+  IL_0051 ldstr          'SoundManager.OnMusicLoaded() - ERROR "' string token(0x703EED6F)
+  IL_0056 ldarg.0         
+  IL_0057 call           SoundManager::get_SceneObject token(0x06014709)
+  IL_005c callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_0061 ldstr          '" has no AudioSource' string token(0x703EEDBD)
+  IL_0066 call           System.String::Concat token(0x0A0001B1)
+  IL_006b call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0070 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0075 ret             
+  IL_0076 ldarg.0         
+  IL_0077 ldarg.1         
+  IL_0078 ldloc.0         
+  IL_0079 call           SoundManager::RegisterSourceBundle token(0x0601479C)
+  IL_007e pop             
+  IL_007f ldarg.3         
+  IL_0080 castclass      MusicTrack token(0x02002AAE)
+  IL_0085 stloc.1         
+  IL_0086 ldarg.0         
+  IL_0087 ldfld          SoundManager::m_musicTrackIndex token(0x04011A32)
+  IL_008c ldarg.0         
+  IL_008d ldfld          SoundManager::m_musicTracks token(0x04011A2A)
+  IL_0092 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb53073d430>::get_Count token(0x0A004D62)
+  IL_0097 bge.s          IL_00ad 
+  IL_0099 ldarg.0         
+  IL_009a ldfld          SoundManager::m_musicTracks token(0x04011A2A)
+  IL_009f ldarg.0         
+  IL_00a0 ldfld          SoundManager::m_musicTrackIndex token(0x04011A32)
+  IL_00a5 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb53073d430>::get_Item token(0x0A004D63)
+  IL_00aa ldloc.1         
+  IL_00ab beq.s          IL_00c2 
+  IL_00ad ldarg.0         
+  IL_00ae ldarg.1         
+  IL_00af call           AssetReference::op_Implicit token(0x0A000190)
+  IL_00b4 ldloc.0         
+  IL_00b5 call           SoundManager::UnregisterSourceBundle token(0x0601479E)
+  IL_00ba ldarg.2         
+  IL_00bb call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_00c0 br.s           IL_0133 
+  IL_00c2 ldarg.0         
+  IL_00c3 ldfld          SoundManager::m_generatedSources token(0x04011A1F)
+  IL_00c8 ldloc.0         
+  IL_00c9 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb530a307a0>::Add token(0x0A002229)
+  IL_00ce ldloc.0         
+  IL_00cf callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00d4 ldarg.0         
+  IL_00d5 call           SoundManager::get_SceneObject token(0x06014709)
+  IL_00da callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_00df callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_00e4 ldloc.0         
+  IL_00e5 dup             
+  IL_00e6 callvirt       UnityEngine.AudioSource::get_volume token(0x0A004D8D)
+  IL_00eb ldloc.1         
+  IL_00ec ldfld          MusicTrack::m_volume token(0x040119E4)
+  IL_00f1 mul             
+  IL_00f2 callvirt       UnityEngine.AudioSource::set_volume token(0x0A004418)
+  IL_00f7 ldloc.0         
+  IL_00f8 ldarg.0         
+  IL_00f9 ldfld          SoundManager::m_musicTrackStartTime token(0x04011A31)
+  IL_00fe callvirt       UnityEngine.AudioSource::set_time token(0x0A004D80)
+  IL_0103 ldarg.0         
+  IL_0104 ldc.r4         0.0 
+  IL_0109 stfld          SoundManager::m_musicTrackStartTime token(0x04011A31)
+  IL_010e ldarg.0         
+  IL_010f ldloc.0         
+  IL_0110 call           SoundManager::ChangeCurrentMusicTrack token(0x0601474D)
+  IL_0115 ldarg.0         
+  IL_0116 ldloc.0         
+  IL_0117 ldnull          
+  IL_0118 ldnull          
+  IL_0119 ldnull          
+  IL_011a call           SoundManager::Play token(0x06014719)
+  IL_011f pop             
+  IL_0120 ldarg.0         
+  IL_0121 ldfld          SoundManager::OnMusicStarted token(0x04011A3C)
+  IL_0126 brfalse.s      IL_0133 
+  IL_0128 ldarg.0         
+  IL_0129 ldfld          SoundManager::OnMusicStarted token(0x04011A3C)
+  IL_012e callvirt       System.Action::Invoke token(0x0A0002AA)
+  IL_0133 ldarg.0         
+  IL_0134 ldc.i4.0        
+  IL_0135 stfld          SoundManager::m_musicIsAboutToPlay token(0x04011A2C)
+  IL_013a ret             
+
+0x0601474c SoundManager::OnAmbienceLoaded(assetRef,go,callbackData) RVA 0x60c3fc SIG 20030112813512808d1c
+  IL_0000 ldarg.1         
+  IL_0001 brtrue.s       IL_0018 
+  IL_0003 call           Log::get_Sound token(0x06014E56)
+  IL_0008 ldstr          'SoundManager.OnAmbienceLoaded() - ERROR Tried to load null assetRef!' string token(0x703EEDE7)
+  IL_000d call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0012 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0017 ret             
+  IL_0018 ldarg.2         
+  IL_0019 ldnull          
+  IL_001a call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001f brfalse.s      IL_003c 
+  IL_0021 call           Log::get_Sound token(0x06014E56)
+  IL_0026 ldstr          'SoundManager.OnAmbienceLoaded() - ERROR "{0}" failed to load' string token(0x703EEE72)
+  IL_002b ldarg.1         
+  IL_002c call           System.String::Format token(0x0A0000B7)
+  IL_0031 call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0036 callvirt       Logger::PrintError token(0x0A000074)
+  IL_003b ret             
+  IL_003c ldarg.2         
+  IL_003d callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0001AF)
+  IL_0042 stloc.0         
+  IL_0043 ldloc.0         
+  IL_0044 ldnull          
+  IL_0045 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_004a brfalse.s      IL_0076 
+  IL_004c call           Log::get_Sound token(0x06014E56)
+  IL_0051 ldstr          'SoundManager.OnAmbienceLoaded() - ERROR "' string token(0x703EEEEC)
+  IL_0056 ldarg.0         
+  IL_0057 call           SoundManager::get_SceneObject token(0x06014709)
+  IL_005c callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_0061 ldstr          '" has no AudioSource' string token(0x703EEDBD)
+  IL_0066 call           System.String::Concat token(0x0A0001B1)
+  IL_006b call           System.Array::Empty<spec> token(0x2B000001)
+  IL_0070 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0075 ret             
+  IL_0076 ldarg.0         
+  IL_0077 ldarg.1         
+  IL_0078 ldloc.0         
+  IL_0079 call           SoundManager::RegisterSourceBundle token(0x0601479C)
+  IL_007e pop             
+  IL_007f ldarg.3         
+  IL_0080 castclass      MusicTrack token(0x02002AAE)
+  IL_0085 stloc.1         
+  IL_0086 ldarg.0         
+  IL_0087 ldfld          SoundManager::m_ambienceTracks token(0x04011A2B)
+  IL_008c ldloc.1         
+  IL_008d callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb53073d430>::Contains token(0x0A004D8E)
+  IL_0092 brtrue.s       IL_00a9 
+  IL_0094 ldarg.0         
+  IL_0095 ldarg.1         
+  IL_0096 call           AssetReference::op_Implicit token(0x0A000190)
+  IL_009b ldloc.0         
+  IL_009c call           SoundManager::UnregisterSourceBundle token(0x0601479E)
+  IL_00a1 ldarg.2         
+  IL_00a2 call           UnityEngine.Object::DestroyImmediate token(0x0A0004B1)
+  IL_00a7 br.s           IL_0107 
+  IL_00a9 ldarg.0         
+  IL_00aa ldfld          SoundManager::m_generatedSources token(0x04011A1F)
+  IL_00af ldloc.0         
+  IL_00b0 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb530a307a0>::Add token(0x0A002229)
+  IL_00b5 ldloc.0         
+  IL_00b6 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00bb ldarg.0         
+  IL_00bc call           SoundManager::get_SceneObject token(0x06014709)
+  IL_00c1 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_00c6 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_00cb ldloc.0         
+  IL_00cc dup             
+  IL_00cd callvirt       UnityEngine.AudioSource::get_volume token(0x0A004D8D)
+  IL_00d2 ldloc.1         
+  IL_00d3 ldfld          MusicTrack::m_volume token(0x040119E4)
+  IL_00d8 mul             
+  IL_00d9 callvirt       UnityEngine.AudioSource::set_volume token(0x0A004418)
+  IL_00de ldarg.0         
+  IL_00df ldloc.0         
+  IL_00e0 call           SoundManager::ChangeCurrentAmbienceTrack token(0x0601474E)
+  IL_00e5 ldarg.0         
+  IL_00e6 ldfld          SoundManager::m_fadingTracksIn token(0x04011A3A)
+  IL_00eb ldarg.0         
+  IL_00ec ldloc.0         
+  IL_00ed call           SoundManager::FadeTrackIn token(0x06014758)
+  IL_00f2 call           Hearthstone.Core.Processor::RunCoroutine token(0x0A000D23)
+  IL_00f7 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb530925250>::Add token(0x0A002CA1)
+  IL_00fc ldarg.0         
+  IL_00fd ldloc.0         
+  IL_00fe ldnull          
+  IL_00ff ldnull          
+  IL_0100 ldnull          
+  IL_0101 call           SoundManager::Play token(0x06014719)
+  IL_0106 pop             
+  IL_0107 ldarg.0         
+  IL_0108 ldc.i4.0        
+  IL_0109 stfld          SoundManager::m_ambienceIsAboutToPlay token(0x04011A2D)
+  IL_010e ret             
+
+0x06014750 SoundManager::PlayMusicInSeconds(seconds) RVA 0x60c5cd SIG 20011281110c
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <PlayMusicInSeconds>d__119::.ctor token(0x06014801)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <PlayMusicInSeconds>d__119::<>4__this token(0x04011A90)
+  IL_000d dup             
+  IL_000e ldarg.1         
+  IL_000f stfld          <PlayMusicInSeconds>d__119::seconds token(0x04011A91)
+  IL_0014 ret             
+
+0x06014752 SoundManager::PlayMusicTrack(index) RVA 0x60c60c SIG 20010208
+  IL_0000 ldarg.1         
+  IL_0001 ldc.i4.0        
+  IL_0002 blt.s          IL_0012 
+  IL_0004 ldarg.1         
+  IL_0005 ldarg.0         
+  IL_0006 ldfld          SoundManager::m_musicTracks token(0x04011A2A)
+  IL_000b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb53073d430>::get_Count token(0x0A004D62)
+  IL_0010 blt.s          IL_0014 
+  IL_0012 ldc.i4.0        
+  IL_0013 ret             
+  IL_0014 ldarg.0         
+  IL_0015 ldarg.1         
+  IL_0016 stfld          SoundManager::m_musicTrackIndex token(0x04011A32)
+  IL_001b ldarg.0         
+  IL_001c ldfld          SoundManager::m_musicTracks token(0x04011A2A)
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          SoundManager::m_musicTrackIndex token(0x04011A32)
+  IL_0027 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb53073d430>::get_Item token(0x0A004D63)
+  IL_002c stloc.0         
+  IL_002d ldarg.0         
+  IL_002e ldarg.1         
+  IL_002f ldc.i4.1        
+  IL_0030 add             
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          SoundManager::m_musicTracks token(0x04011A2A)
+  IL_0037 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fb53073d430>::get_Count token(0x0A004D62)
+  IL_003c rem             
+  IL_003d stfld          SoundManager::m_nextMusicTrackIndex token(0x04011A33)
+  IL_0042 ldloc.0         
+  IL_0043 brtrue.s       IL_0047 
+  IL_0045 ldc.i4.0        
+  IL_0046 ret             
+  IL_0047 ldarg.0         
+  IL_0048 ldfld          SoundManager::m_currentMusicTrack token(0x04011A2E)
+  IL_004d ldnull          
+  IL_004e call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0053 brfalse.s      IL_0068 
+  IL_0055 ldarg.0         
+  IL_0056 ldarg.0         
+  IL_0057 ldfld          SoundManager::m_currentMusicTrack token(0x04011A2E)
+  IL_005c call           SoundManager::FadeTrackOut token(0x06014756)
+  IL_0061 ldarg.0         
+  IL_0062 ldnull          
+  IL_0063 call           SoundManager::ChangeCurrentMusicTrack token(0x0601474D)
+  IL_0068 call           AssetLoader::Get token(0x06012AFE)
+  IL_006d ldloc.0         
+  IL_006e ldfld          MusicTrack::m_name token(0x040119E3)
+  IL_0073 call           AssetReference::op_Implicit token(0x0A0000BB)
+  IL_0078 callvirt       IAssetLoader::IsAssetAvailable token(0x0A002AA2)
+  IL_007d brtrue.s       IL_0087 
+  IL_007f ldloc.0         
+  IL_0080 ldfld          MusicTrack::m_fallback token(0x040119E6)
+  IL_0085 br.s           IL_008d 
+  IL_0087 ldloc.0         
+  IL_0088 ldfld          MusicTrack::m_name token(0x040119E3)
+  IL_008d call           AssetReference::op_Implicit token(0x0A0000BB)
+  IL_0092 ldarg.0         
+  IL_0093 ldftn          SoundManager::OnMusicLoaded token(0x0601474B)
+  IL_0099 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7fb530d5e9f0>::.ctor token(0x0A000210)
+  IL_009e ldloc.0         
+  IL_009f ldarg.0         
+  IL_00a0 call           SoundManager::GetPlaceholderSound token(0x06014714)
+  IL_00a5 call           SoundLoader::LoadSound token(0x06012B73)
+  IL_00aa ret             
+
+0x06014754 SoundManager::PlayAmbienceInSeconds(seconds) RVA 0x60c6dc SIG 20011281110c
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <PlayAmbienceInSeconds>d__123::.ctor token(0x060147FB)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <PlayAmbienceInSeconds>d__123::<>4__this token(0x04011A8C)
+  IL_000d dup             
+  IL_000e ldarg.1         
+  IL_000f stfld          <PlayAmbienceInSeconds>d__123::seconds token(0x04011A8D)
+  IL_0014 ret             

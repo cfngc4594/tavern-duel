@@ -1,0 +1,532 @@
+
+TYPE AssignActorPortraitToChildren 0x02002bdb
+FIELD 0x04011f78 m_Actor SIG 0612c0009cf8
+FIELD 0x04011f79 m_portraitTextureHandle SIG 0615128125011280a9
+FIELD 0x04011f7a m_portraitMaterialHandle SIG 0615128125011280b9
+
+TYPE HutongGames.PlayMaker.Actions.GetPetModelAction 0x02003098
+FIELD 0x04013b3e m_FriendPetObject SIG 061282b9
+FIELD 0x04013b3f m_FriendTreatObject SIG 061282b9
+FIELD 0x04013b40 m_FriendToyObject SIG 061282b9
+FIELD 0x04013b41 m_FriendToyDisplayObject SIG 061282b9
+FIELD 0x04013b42 m_FriendToyDraggableObject SIG 061282b9
+FIELD 0x04013b43 m_OpposingPetObject SIG 061282b9
+
+TYPE HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction 0x020030b7
+FIELD 0x04013bc5 m_spellObject SIG 061295bd
+FIELD 0x04013bc6 m_rangeEventArray SIG 061d12c000c2e0
+FIELD 0x04013bc7 m_whichEntity SIG 0611c000c348
+FIELD 0x04013bc8 m_tagToCheck SIG 0611c000a930
+FIELD 0x04013bc9 m_tagToCheckOverride SIG 0608
+
+TYPE HutongGames.PlayMaker.Actions.SpellStateAction 0x020030f3
+FIELD 0x04013caa m_SpellObject SIG 061295bd
+FIELD 0x04013cab m_spellStateType SIG 06118281
+FIELD 0x04013cac m_stateInvalid SIG 0602
+FIELD 0x04013cad m_stateDirty SIG 0602
+
+0x06015063 AssignActorPortraitToChildren::Start() RVA 0x62e69c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0007 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B0001E0)
+  IL_000c stfld          AssignActorPortraitToChildren::m_Actor token(0x04011F78)
+  IL_0011 ret             
+
+0x06015064 AssignActorPortraitToChildren::OnDestroy() RVA 0x62e6af SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldflda         AssignActorPortraitToChildren::m_portraitTextureHandle token(0x04011F79)
+  IL_0006 call           Blizzard.T5.AssetManager.AssetHandle::SafeDispose<spec> token(0x2B000010)
+  IL_000b ldarg.0         
+  IL_000c ldflda         AssignActorPortraitToChildren::m_portraitMaterialHandle token(0x04011F7A)
+  IL_0011 call           Blizzard.T5.AssetManager.AssetHandle::SafeDispose<spec> token(0x2B000011)
+  IL_0016 ret             
+
+0x06015065 AssignActorPortraitToChildren::AssignPortraitToAllChildren() RVA 0x62e6c8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          AssignActorPortraitToChildren::m_Actor token(0x04011F78)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000b brfalse.s      IL_0020 
+  IL_000d ldarg.0         
+  IL_000e ldfld          AssignActorPortraitToChildren::m_Actor token(0x04011F78)
+  IL_0013 callvirt       Actor::GetCard token(0x060127F4)
+  IL_0018 ldnull          
+  IL_0019 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001e brfalse.s      IL_0021 
+  IL_0020 ret             
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          AssignActorPortraitToChildren::m_Actor token(0x04011F78)
+  IL_0027 ldfld          Actor::m_portraitMesh token(0x0400F6F9)
+  IL_002c ldnull          
+  IL_002d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0032 brfalse.s      IL_0035 
+  IL_0034 ret             
+  IL_0035 ldarg.0         
+  IL_0036 ldfld          AssignActorPortraitToChildren::m_Actor token(0x04011F78)
+  IL_003b callvirt       Actor::GetCard token(0x060127F4)
+  IL_0040 callvirt       Card::ShareDisposableCardDef token(0x06012D21)
+  IL_0045 dup             
+  IL_0046 brtrue.s       IL_004c 
+  IL_0048 pop             
+  IL_0049 ldnull          
+  IL_004a br.s           IL_0051 
+  IL_004c call           DisposableCardDef::get_CardDef token(0x0601366B)
+  IL_0051 stloc.0         
+  IL_0052 ldloc.0         
+  IL_0053 ldnull          
+  IL_0054 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0059 brfalse.s      IL_005c 
+  IL_005b ret             
+  IL_005c ldnull          
+  IL_005d stloc.1         
+  IL_005e ldarg.0         
+  IL_005f ldnull          
+  IL_0060 stfld          AssignActorPortraitToChildren::m_portraitTextureHandle token(0x04011F79)
+  IL_0065 ldarg.0         
+  IL_0066 ldnull          
+  IL_0067 stfld          AssignActorPortraitToChildren::m_portraitMaterialHandle token(0x04011F7A)
+  IL_006c ldloc.0         
+  IL_006d ldfld          CardDef::m_PreferredActorPortraitIndex token(0x0400FBF2)
+  IL_0072 brtrue.s       IL_009d 
+  IL_0074 ldarg.0         
+  IL_0075 ldflda         AssignActorPortraitToChildren::m_portraitTextureHandle token(0x04011F79)
+  IL_007a ldloc.0         
+  IL_007b ldc.i4.0        
+  IL_007c ldc.i4.0        
+  IL_007d ldc.i4.0        
+  IL_007e callvirt       CardDef::GetPortraitTexture token(0x06012FAF)
+  IL_0083 call           Blizzard.T5.AssetManager.AssetHandle::Take<spec> token(0x2B000018)
+  IL_0088 ldarg.0         
+  IL_0089 ldfld          AssignActorPortraitToChildren::m_portraitTextureHandle token(0x04011F79)
+  IL_008e dup             
+  IL_008f brtrue.s       IL_0095 
+  IL_0091 pop             
+  IL_0092 ldnull          
+  IL_0093 br.s           IL_009a 
+  IL_0095 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6eeab7c8c0>::get_Asset token(0x0A00021A)
+  IL_009a stloc.1         
+  IL_009b br.s           IL_00d7 
+  IL_009d ldloc.0         
+  IL_009e ldfld          CardDef::m_PreferredActorPortraitIndex token(0x0400FBF2)
+  IL_00a3 ldc.i4.1        
+  IL_00a4 bne.un.s       IL_00d7 
+  IL_00a6 ldarg.0         
+  IL_00a7 ldflda         AssignActorPortraitToChildren::m_portraitMaterialHandle token(0x04011F7A)
+  IL_00ac ldloc.0         
+  IL_00ad ldc.i4.1        
+  IL_00ae callvirt       CardDef::GetPortraitMaterial token(0x06012FB2)
+  IL_00b3 call           Blizzard.T5.AssetManager.AssetHandle::Take<spec> token(0x2B000037)
+  IL_00b8 ldarg.0         
+  IL_00b9 ldfld          AssignActorPortraitToChildren::m_portraitMaterialHandle token(0x04011F7A)
+  IL_00be dup             
+  IL_00bf brtrue.s       IL_00c5 
+  IL_00c1 pop             
+  IL_00c2 ldnull          
+  IL_00c3 br.s           IL_00d6 
+  IL_00c5 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6eeab7cc20>::get_Asset token(0x0A000219)
+  IL_00ca dup             
+  IL_00cb brtrue.s       IL_00d1 
+  IL_00cd pop             
+  IL_00ce ldnull          
+  IL_00cf br.s           IL_00d6 
+  IL_00d1 call           UnityEngine.Material::get_mainTexture token(0x0A000CA9)
+  IL_00d6 stloc.1         
+  IL_00d7 ldloc.1         
+  IL_00d8 ldnull          
+  IL_00d9 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00de brfalse.s      IL_00f6 
+  IL_00e0 ldstr          'AssignPortraitToAllChildren could not find a preferred portrait for {0}' string token(0x703F5315)
+  IL_00e5 ldarg.0         
+  IL_00e6 ldfld          AssignActorPortraitToChildren::m_Actor token(0x04011F78)
+  IL_00eb call           System.String::Format token(0x0A0000B7)
+  IL_00f0 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_00f5 ret             
+  IL_00f6 ldarg.0         
+  IL_00f7 call           UnityEngine.Component::GetComponentsInChildren<spec> token(0x2B00016F)
+  IL_00fc stloc.2         
+  IL_00fd ldc.i4.0        
+  IL_00fe stloc.3         
+  IL_00ff br.s           IL_0153 
+  IL_0101 ldloc.2         
+  IL_0102 ldloc.3         
+  IL_0103 ldelem.ref      
+  IL_0104 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterials token(0x0A0001D2)
+  IL_0109 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6eeab94e60>::GetEnumerator token(0x0A000D4E)
+  IL_010e stloc.s        local(0x0004) 
+  IL_0110 br.s           IL_0136 
+  IL_0112 ldloca.s       local(0x0004) 
+  IL_0114 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6eeaa9a450>::get_Current token(0x0A000D4F)
+  IL_0119 stloc.s        local(0x0005) 
+  IL_011b ldloc.s        local(0x0005) 
+  IL_011d callvirt       UnityEngine.Object::get_name token(0x0A0000BF)
+  IL_0122 ldstr          'portrait' string token(0x703ED947)
+  IL_0127 callvirt       System.String::Contains token(0x0A000D52)
+  IL_012c brfalse.s      IL_0136 
+  IL_012e ldloc.s        local(0x0005) 
+  IL_0130 ldloc.1         
+  IL_0131 callvirt       UnityEngine.Material::set_mainTexture token(0x0A0000AE)
+  IL_0136 ldloca.s       local(0x0004) 
+  IL_0138 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6eeaa9a450>::MoveNext token(0x0A000D50)
+  IL_013d brtrue.s       IL_0112 
+  IL_013f leave.s        IL_014f 
+  IL_0141 ldloca.s       local(0x0004) 
+  IL_0143 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f6eeaa9a450> token(0x1B0003A4)
+  IL_0149 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_014e endfinally      
+  IL_014f ldloc.3         
+  IL_0150 ldc.i4.1        
+  IL_0151 add             
+  IL_0152 stloc.3         
+  IL_0153 ldloc.3         
+  IL_0154 ldloc.2         
+  IL_0155 ldlen           
+  IL_0156 conv.i4         
+  IL_0157 blt.s          IL_0101 
+  IL_0159 ret             
+
+0x06015066 AssignActorPortraitToChildren::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             
+
+0x06016bad HutongGames.PlayMaker.Actions.GetPetModelAction::Reset() RVA 0x69e7db SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendPetObject token(0x04013B3E)
+  IL_0007 ldarg.0         
+  IL_0008 ldnull          
+  IL_0009 stfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendTreatObject token(0x04013B3F)
+  IL_000e ldarg.0         
+  IL_000f ldnull          
+  IL_0010 stfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendToyObject token(0x04013B40)
+  IL_0015 ldarg.0         
+  IL_0016 ldnull          
+  IL_0017 stfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendToyDisplayObject token(0x04013B41)
+  IL_001c ldarg.0         
+  IL_001d ldnull          
+  IL_001e stfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendToyDraggableObject token(0x04013B42)
+  IL_0023 ldarg.0         
+  IL_0024 ldnull          
+  IL_0025 stfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_OpposingPetObject token(0x04013B43)
+  IL_002a ret             
+
+0x06016bae HutongGames.PlayMaker.Actions.GetPetModelAction::OnEnter() RVA 0x69e808 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::OnEnter token(0x0A005907)
+  IL_0006 ldloca.s       local(0x0000) 
+  IL_0008 ldloca.s       local(0x0001) 
+  IL_000a call           PetUtility::GetCurrentPetControllers token(0x0600FA38)
+  IL_000f ldloc.0         
+  IL_0010 ldnull          
+  IL_0011 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0016 brfalse        IL_00d3 
+  IL_001b ldarg.0         
+  IL_001c ldfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendPetObject token(0x04013B3E)
+  IL_0021 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_0026 brtrue.s       IL_0039 
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendPetObject token(0x04013B3E)
+  IL_002e ldloc.0         
+  IL_002f callvirt       PetController::get_PetObject token(0x0600F830)
+  IL_0034 callvirt       HutongGames.PlayMaker.FsmGameObject::set_Value token(0x0A000468)
+  IL_0039 ldarg.0         
+  IL_003a ldfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendTreatObject token(0x04013B3F)
+  IL_003f callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_0044 brtrue.s       IL_0067 
+  IL_0046 ldloc.0         
+  IL_0047 callvirt       PetControllerBoard::get_Treat token(0x0600F84A)
+  IL_004c stloc.2         
+  IL_004d ldloc.2         
+  IL_004e ldnull          
+  IL_004f call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0054 brfalse.s      IL_0067 
+  IL_0056 ldarg.0         
+  IL_0057 ldfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendTreatObject token(0x04013B3F)
+  IL_005c ldloc.2         
+  IL_005d callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0062 callvirt       HutongGames.PlayMaker.FsmGameObject::set_Value token(0x0A000468)
+  IL_0067 ldarg.0         
+  IL_0068 ldfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendToyObject token(0x04013B40)
+  IL_006d callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_0072 brtrue.s       IL_00d3 
+  IL_0074 ldloc.0         
+  IL_0075 callvirt       PetControllerBoard::get_Toy token(0x0600F84C)
+  IL_007a stloc.3         
+  IL_007b ldloc.3         
+  IL_007c ldnull          
+  IL_007d call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0082 brfalse.s      IL_00d3 
+  IL_0084 ldarg.0         
+  IL_0085 ldfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendToyObject token(0x04013B40)
+  IL_008a ldloc.3         
+  IL_008b callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0090 callvirt       HutongGames.PlayMaker.FsmGameObject::set_Value token(0x0A000468)
+  IL_0095 ldloc.3         
+  IL_0096 callvirt       PetItem::get_DisplayVisual token(0x0600F99B)
+  IL_009b ldnull          
+  IL_009c call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00a1 brfalse.s      IL_00b4 
+  IL_00a3 ldarg.0         
+  IL_00a4 ldfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendToyDisplayObject token(0x04013B41)
+  IL_00a9 ldloc.3         
+  IL_00aa callvirt       PetItem::get_DisplayVisual token(0x0600F99B)
+  IL_00af callvirt       HutongGames.PlayMaker.FsmGameObject::set_Value token(0x0A000468)
+  IL_00b4 ldloc.3         
+  IL_00b5 callvirt       PetItem::get_DraggableVisual token(0x0600F99C)
+  IL_00ba ldnull          
+  IL_00bb call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00c0 brfalse.s      IL_00d3 
+  IL_00c2 ldarg.0         
+  IL_00c3 ldfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_FriendToyDraggableObject token(0x04013B42)
+  IL_00c8 ldloc.3         
+  IL_00c9 callvirt       PetItem::get_DraggableVisual token(0x0600F99C)
+  IL_00ce callvirt       HutongGames.PlayMaker.FsmGameObject::set_Value token(0x0A000468)
+  IL_00d3 ldloc.1         
+  IL_00d4 ldnull          
+  IL_00d5 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00da brfalse.s      IL_00fa 
+  IL_00dc ldarg.0         
+  IL_00dd ldfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_OpposingPetObject token(0x04013B43)
+  IL_00e2 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_00e7 brtrue.s       IL_00fa 
+  IL_00e9 ldarg.0         
+  IL_00ea ldfld          HutongGames.PlayMaker.Actions.GetPetModelAction::m_OpposingPetObject token(0x04013B43)
+  IL_00ef ldloc.1         
+  IL_00f0 callvirt       PetController::get_PetObject token(0x0600F830)
+  IL_00f5 callvirt       HutongGames.PlayMaker.FsmGameObject::set_Value token(0x0A000468)
+  IL_00fa ldarg.0         
+  IL_00fb call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0100 ret             
+
+0x06016baf HutongGames.PlayMaker.Actions.GetPetModelAction::.ctor() RVA 0x53731a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00406B)
+  IL_0006 ret             
+
+0x06016c24 HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::GetSpellOwner() RVA 0x6a0760 SIG 200012808d
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_spellObject token(0x04013BC5)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0011 ret             
+
+0x06016c25 HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::OnEnter() RVA 0x6a0774 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SpellAction::OnEnter token(0x06016C90)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_whichEntity token(0x04013BC7)
+  IL_000d call           HutongGames.PlayMaker.Actions.SpellAction::GetEntity token(0x06016C8C)
+  IL_0012 stloc.0         
+  IL_0013 ldloc.0         
+  IL_0014 brtrue.s       IL_0044 
+  IL_0016 call           Log::get_All token(0x06014E0E)
+  IL_001b ldstr          '{0}.OnEnter() - FAILED to find relevant entity: "{1}"' string token(0x70407F04)
+  IL_0020 ldc.i4.2        
+  IL_0021 newarr         System.Object token(0x01000001)
+  IL_0026 dup             
+  IL_0027 ldc.i4.0        
+  IL_0028 ldarg.0         
+  IL_0029 stelem.ref      
+  IL_002a dup             
+  IL_002b ldc.i4.1        
+  IL_002c ldarg.0         
+  IL_002d ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_whichEntity token(0x04013BC7)
+  IL_0032 box            Which token(0x020030D2)
+  IL_0037 stelem.ref      
+  IL_0038 callvirt       Logger::PrintWarning token(0x0A00002E)
+  IL_003d ldarg.0         
+  IL_003e call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0043 ret             
+  IL_0044 ldarg.0         
+  IL_0045 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheckOverride token(0x04013BC9)
+  IL_004a stloc.1         
+  IL_004b ldloc.1         
+  IL_004c brfalse.s      IL_0055 
+  IL_004e ldarg.0         
+  IL_004f ldloc.1         
+  IL_0050 stfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_005b call           PlayMakerUtils::CanPlaymakerGetTag token(0x06014ED7)
+  IL_0060 brtrue.s       IL_0090 
+  IL_0062 call           Log::get_Spells token(0x06014E55)
+  IL_0067 ldstr          '{0}.OnEnter() - Playmaker should not check value of tag {1}' string token(0x7040751E)
+  IL_006c ldc.i4.2        
+  IL_006d newarr         System.Object token(0x01000001)
+  IL_0072 dup             
+  IL_0073 ldc.i4.0        
+  IL_0074 ldarg.0         
+  IL_0075 stelem.ref      
+  IL_0076 dup             
+  IL_0077 ldc.i4.1        
+  IL_0078 ldarg.0         
+  IL_0079 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_007e box            GAME_TAG token(0x02002A4C)
+  IL_0083 stelem.ref      
+  IL_0084 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0089 ldarg.0         
+  IL_008a call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_008f ret             
+  IL_0090 ldnull          
+  IL_0091 stloc.2         
+  IL_0092 ldarg.0         
+  IL_0093 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_0098 ldc.i4         327 
+  IL_009d bne.un.s       IL_00ae 
+  IL_009f ldloc.0         
+  IL_00a0 callvirt       EntityBase::GetCardId token(0x06013947)
+  IL_00a5 ldc.i4.0        
+  IL_00a6 call           GameUtils::TranslateCardIdToDbId token(0x06014C6F)
+  IL_00ab pop             
+  IL_00ac br.s           IL_00bb 
+  IL_00ae ldloc.0         
+  IL_00af ldarg.0         
+  IL_00b0 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_00b5 callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_00ba pop             
+  IL_00bb ldarg.0         
+  IL_00bc ldloc.0         
+  IL_00bd ldarg.0         
+  IL_00be ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_00c3 callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_00c8 call           HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::DetermineEventToSend token(0x06016C26)
+  IL_00cd stloc.2         
+  IL_00ce ldloc.2         
+  IL_00cf brfalse.s      IL_00df 
+  IL_00d1 ldarg.0         
+  IL_00d2 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_00d7 ldloc.2         
+  IL_00d8 callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A00590F)
+  IL_00dd br.s           IL_00f8 
+  IL_00df call           Log::get_All token(0x06014E0E)
+  IL_00e4 ldstr          '{0}.OnEnter() - FAILED to find any event that could be sent, did you set up ranges?' string token(0x70408D44)
+  IL_00e9 ldc.i4.1        
+  IL_00ea newarr         System.Object token(0x01000001)
+  IL_00ef dup             
+  IL_00f0 ldc.i4.0        
+  IL_00f1 ldarg.0         
+  IL_00f2 stelem.ref      
+  IL_00f3 callvirt       Logger::PrintError token(0x0A000074)
+  IL_00f8 ldarg.0         
+  IL_00f9 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_00fe ret             
+
+0x06016c26 HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::DetermineEventToSend(tagValue) RVA 0x6a0880 SIG 2001129ef108
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_rangeEventArray token(0x04013BC6)
+  IL_0006 ldsfld         <>c::<>9__8_0 token(0x04013BCD)
+  IL_000b dup             
+  IL_000c brtrue.s       IL_0025 
+  IL_000e pop             
+  IL_000f ldsfld         <>c::<>9 token(0x04013BCC)
+  IL_0014 ldftn          <>c::<DetermineEventToSend>b__8_0 token(0x06016C2B)
+  IL_001a newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6eea466810>::.ctor token(0x0A005950)
+  IL_001f dup             
+  IL_0020 stsfld         <>c::<>9__8_0 token(0x04013BCD)
+  IL_0025 ldarg.1         
+  IL_0026 call           SpellUtils::GetAppropriateElementAccordingToRanges<spec> token(0x2B000C2B)
+  IL_002b stloc.0         
+  IL_002c ldloc.0         
+  IL_002d brfalse.s      IL_0036 
+  IL_002f ldloc.0         
+  IL_0030 ldfld          ValueRangeEvent::m_event token(0x04013BCB)
+  IL_0035 ret             
+  IL_0036 ldnull          
+  IL_0037 ret             
+
+0x06016c27 HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::.ctor() RVA 0x698144 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SpellAction::.ctor token(0x06016C92)
+  IL_0006 ret             
+
+0x06016d20 HutongGames.PlayMaker.Actions.SpellStateAction::GetSpellOwner() RVA 0x6a3a56 SIG 200012808d
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_SpellObject token(0x04013CAA)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0011 ret             
+
+0x06016d21 HutongGames.PlayMaker.Actions.SpellStateAction::OnEnter() RVA 0x6a3a6c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SpellAction::OnEnter token(0x06016C90)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SpellAction::m_spell token(0x04013C2A)
+  IL_000c ldnull          
+  IL_000d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0012 brfalse.s      IL_0015 
+  IL_0014 ret             
+  IL_0015 ldarg.0         
+  IL_0016 call           HutongGames.PlayMaker.Actions.SpellStateAction::DiscoverSpellStateType token(0x06016D22)
+  IL_001b ldarg.0         
+  IL_001c ldfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_stateInvalid token(0x04013CAC)
+  IL_0021 brfalse.s      IL_0024 
+  IL_0023 ret             
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          HutongGames.PlayMaker.Actions.SpellAction::m_spell token(0x04013C2A)
+  IL_002a ldarg.0         
+  IL_002b call           HutongGames.PlayMaker.FsmStateAction::get_State token(0x0A005968)
+  IL_0030 ldarg.0         
+  IL_0031 ldfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_spellStateType token(0x04013CAB)
+  IL_0036 callvirt       Spell::OnFsmStateStarted token(0x06014961)
+  IL_003b ldarg.0         
+  IL_003c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0041 ret             
+
+0x06016d22 HutongGames.PlayMaker.Actions.SpellStateAction::DiscoverSpellStateType() RVA 0x6a3abc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_stateDirty token(0x04013CAD)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a call           HutongGames.PlayMaker.FsmStateAction::get_State token(0x0A005968)
+  IL_000f callvirt       HutongGames.PlayMaker.FsmState::get_Name token(0x0A000501)
+  IL_0014 stloc.0         
+  IL_0015 ldarg.0         
+  IL_0016 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_001b callvirt       HutongGames.PlayMaker.Fsm::get_GlobalTransitions token(0x0A005969)
+  IL_0020 stloc.1         
+  IL_0021 ldc.i4.0        
+  IL_0022 stloc.2         
+  IL_0023 br.s           IL_0054 
+  IL_0025 ldloc.1         
+  IL_0026 ldloc.2         
+  IL_0027 ldelem.ref      
+  IL_0028 stloc.3         
+  IL_0029 ldloc.0         
+  IL_002a ldloc.3         
+  IL_002b callvirt       HutongGames.PlayMaker.FsmTransition::get_ToState token(0x0A004EBF)
+  IL_0030 callvirt       System.String::Equals token(0x0A0001B2)
+  IL_0035 brfalse.s      IL_0050 
+  IL_0037 ldarg.0         
+  IL_0038 ldloc.3         
+  IL_0039 callvirt       HutongGames.PlayMaker.FsmTransition::get_EventName token(0x0A004EBB)
+  IL_003e call           Blizzard.T5.Core.Utils.EnumUtils::GetEnum<spec> token(0x2B000965)
+  IL_0043 stfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_spellStateType token(0x04013CAB)
+  IL_0048 ldarg.0         
+  IL_0049 ldc.i4.0        
+  IL_004a stfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_stateDirty token(0x04013CAD)
+  IL_004f ret             
+  IL_0050 ldloc.2         
+  IL_0051 ldc.i4.1        
+  IL_0052 add             
+  IL_0053 stloc.2         
+  IL_0054 ldloc.2         
+  IL_0055 ldloc.1         
+  IL_0056 ldlen           
+  IL_0057 conv.i4         
+  IL_0058 blt.s          IL_0025 
+  IL_005a ldarg.0         
+  IL_005b ldc.i4.1        
+  IL_005c stfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_stateInvalid token(0x04013CAC)
+  IL_0061 ret             
+
+0x06016d23 HutongGames.PlayMaker.Actions.SpellStateAction::.ctor() RVA 0x6a3b2a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.1        
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.SpellStateAction::m_stateDirty token(0x04013CAD)
+  IL_0007 ldarg.0         
+  IL_0008 call           HutongGames.PlayMaker.Actions.SpellAction::.ctor token(0x06016C92)
+  IL_000d ret             

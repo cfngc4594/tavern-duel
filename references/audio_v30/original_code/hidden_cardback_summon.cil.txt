@@ -1,0 +1,180 @@
+
+TYPE CardBackSummon 0x020003ad
+FIELD 0x040014e3 m_CardBackManager SIG 06128e5c
+FIELD 0x040014e4 m_Actor SIG 0612c0009cf8
+FIELD 0x040014e5 m_Spell SIG 0612c000ac1c
+
+0x06001b6f CardBackSummon::OnEnable() RVA 0x86bf8 SIG 200001
+  IL_0000 call           CardBackManager::Get token(0x06001ACD)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brfalse.s      IL_001c 
+  IL_0009 ldloc.0         
+  IL_000a ldarg.0         
+  IL_000b ldftn          CardBackSummon::UpdateCardBack token(0x06001B74)
+  IL_0011 newobj         UpdateCardbacksCallback::.ctor token(0x06001B2A)
+  IL_0016 callvirt       CardBackManager::RegisterUpdateCardbacksListener token(0x06001ACE)
+  IL_001b pop             
+  IL_001c ldarg.0         
+  IL_001d ldarg.0         
+  IL_001e call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0023 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInParents<spec> token(0x2B0001E9)
+  IL_0028 stfld          CardBackSummon::m_Spell token(0x040014E5)
+  IL_002d ldarg.0         
+  IL_002e ldfld          CardBackSummon::m_Spell token(0x040014E5)
+  IL_0033 ldnull          
+  IL_0034 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0039 brfalse.s      IL_004d 
+  IL_003b ldstr          'Failed to find Spell on CardBackSummon' string token(0x7003A034)
+  IL_0040 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0045 ldarg.0         
+  IL_0046 ldnull          
+  IL_0047 call           CardBackSummon::UpdateEchoTexture token(0x06001B73)
+  IL_004c ret             
+  IL_004d ldarg.0         
+  IL_004e ldfld          CardBackSummon::m_Spell token(0x040014E5)
+  IL_0053 ldarg.0         
+  IL_0054 ldftn          CardBackSummon::OnStateStarted token(0x06001B71)
+  IL_005a newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f46ff1f9ee0>::.ctor token(0x0A000D61)
+  IL_005f callvirt       Spell::AddStateStartedCallback token(0x0601494C)
+  IL_0064 ret             
+
+0x06001b70 CardBackSummon::OnDisable() RVA 0x86c6c SIG 200001
+  IL_0000 call           CardBackManager::Get token(0x06001ACD)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brfalse.s      IL_001c 
+  IL_0009 ldloc.0         
+  IL_000a ldarg.0         
+  IL_000b ldftn          CardBackSummon::UpdateCardBack token(0x06001B74)
+  IL_0011 newobj         UpdateCardbacksCallback::.ctor token(0x06001B2A)
+  IL_0016 callvirt       CardBackManager::UnregisterUpdateCardbacksListener token(0x06001ACF)
+  IL_001b pop             
+  IL_001c ret             
+
+0x06001b71 CardBackSummon::OnStateStarted(spell,spellStateType,userData) RVA 0x86c98 SIG 20030112c000ac1c1182811c
+  IL_0000 ldarg.1         
+  IL_0001 callvirt       Blizzard.T5.Game.Spells.SpellBase::GetActiveState token(0x0A000C93)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldc.i4.1        
+  IL_0009 bne.un.s       IL_0021 
+  IL_000b ldarg.1         
+  IL_000c callvirt       Spell::GetSourceCard token(0x0601491E)
+  IL_0011 ldnull          
+  IL_0012 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0017 brfalse.s      IL_002b 
+  IL_0019 ldarg.0         
+  IL_001a ldnull          
+  IL_001b call           CardBackSummon::UpdateEchoTexture token(0x06001B73)
+  IL_0020 ret             
+  IL_0021 ldloc.0         
+  IL_0022 brtrue.s       IL_002b 
+  IL_0024 ldarg.0         
+  IL_0025 ldnull          
+  IL_0026 stfld          CardBackSummon::m_Actor token(0x040014E4)
+  IL_002b ret             
+
+0x06001b72 CardBackSummon::UpdateEffectWithCardBack(cardBack) RVA 0x86cd0 SIG 200101128e38
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           CardBackSummon::UpdateEchoTexture token(0x06001B73)
+  IL_0007 ret             
+
+0x06001b73 CardBackSummon::UpdateEchoTexture(cardBackOverride) RVA 0x86cdc SIG 200101128e38
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          CardBackSummon::m_Actor token(0x040014E4)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_0037 
+  IL_000e ldarg.0         
+  IL_000f ldarg.0         
+  IL_0010 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0015 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInParents<spec> token(0x2B0001EA)
+  IL_001a stfld          CardBackSummon::m_Actor token(0x040014E4)
+  IL_001f ldarg.0         
+  IL_0020 ldfld          CardBackSummon::m_Actor token(0x040014E4)
+  IL_0025 ldnull          
+  IL_0026 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_002b brfalse.s      IL_0037 
+  IL_002d ldstr          'CardBackSummonIn failed to get Actor!' string token(0x7003A082)
+  IL_0032 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0037 ldarg.0         
+  IL_0038 call           UnityEngine.Component::GetComponent<spec> token(0x2B000024)
+  IL_003d stloc.0         
+  IL_003e ldloc.0         
+  IL_003f call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x0A000222)
+  IL_0044 callvirt       UnityEngine.Material::get_mainTexture token(0x0A000CA9)
+  IL_0049 stloc.1         
+  IL_004a ldarg.1         
+  IL_004b ldnull          
+  IL_004c call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0051 brfalse.s      IL_005c 
+  IL_0053 ldarg.1         
+  IL_0054 ldfld          CardBack::m_HiddenCardEchoTexture token(0x0400145A)
+  IL_0059 stloc.1         
+  IL_005a br.s           IL_00d6 
+  IL_005c ldarg.0         
+  IL_005d ldfld          CardBackSummon::m_CardBackManager token(0x040014E3)
+  IL_0062 brtrue.s       IL_0089 
+  IL_0064 ldarg.0         
+  IL_0065 call           CardBackManager::Get token(0x06001ACD)
+  IL_006a stfld          CardBackSummon::m_CardBackManager token(0x040014E3)
+  IL_006f ldarg.0         
+  IL_0070 ldfld          CardBackSummon::m_CardBackManager token(0x040014E3)
+  IL_0075 brtrue.s       IL_0089 
+  IL_0077 ldstr          'CardBackSummonIn failed to get CardBackManager!' string token(0x7003A0CE)
+  IL_007c call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0081 ldarg.0         
+  IL_0082 ldc.i4.0        
+  IL_0083 call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0088 ret             
+  IL_0089 ldarg.0         
+  IL_008a ldfld          CardBackSummon::m_CardBackManager token(0x040014E3)
+  IL_008f ldarg.0         
+  IL_0090 ldfld          CardBackSummon::m_Actor token(0x040014E4)
+  IL_0095 callvirt       CardBackManager::IsActorFriendly token(0x06001AFE)
+  IL_009a brfalse.s      IL_00ba 
+  IL_009c ldarg.0         
+  IL_009d ldfld          CardBackSummon::m_CardBackManager token(0x040014E3)
+  IL_00a2 callvirt       CardBackManager::GetFriendlyCardBack token(0x06001AD1)
+  IL_00a7 stloc.2         
+  IL_00a8 ldloc.2         
+  IL_00a9 ldnull          
+  IL_00aa call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00af brfalse.s      IL_00d6 
+  IL_00b1 ldloc.2         
+  IL_00b2 ldfld          CardBack::m_HiddenCardEchoTexture token(0x0400145A)
+  IL_00b7 stloc.1         
+  IL_00b8 br.s           IL_00d6 
+  IL_00ba ldarg.0         
+  IL_00bb ldfld          CardBackSummon::m_CardBackManager token(0x040014E3)
+  IL_00c0 callvirt       CardBackManager::GetOpponentCardBack token(0x06001AD2)
+  IL_00c5 stloc.3         
+  IL_00c6 ldloc.3         
+  IL_00c7 ldnull          
+  IL_00c8 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00cd brfalse.s      IL_00d6 
+  IL_00cf ldloc.3         
+  IL_00d0 ldfld          CardBack::m_HiddenCardEchoTexture token(0x0400145A)
+  IL_00d5 stloc.1         
+  IL_00d6 ldloc.1         
+  IL_00d7 ldnull          
+  IL_00d8 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00dd brfalse.s      IL_00eb 
+  IL_00df ldloc.0         
+  IL_00e0 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x0A000222)
+  IL_00e5 ldloc.1         
+  IL_00e6 callvirt       UnityEngine.Material::set_mainTexture token(0x0A0000AE)
+  IL_00eb ret             
+
+0x06001b74 CardBackSummon::UpdateCardBack() RVA 0x86dd4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 call           CardBackSummon::UpdateEchoTexture token(0x06001B73)
+  IL_0007 ret             
+
+0x06001b75 CardBackSummon::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             

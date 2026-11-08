@@ -1,0 +1,255 @@
+// ISGN
+// SV_POSITION0: register0.xyzw systemvalue=1 componenttype=3
+// TEXCOORD0: register1.xy systemvalue=0 componenttype=3
+// TEXCOORD1: register2.xyz systemvalue=0 componenttype=3
+// TEXCOORDindex3: register3.xyzw systemvalue=0 componenttype=3
+// NORMAL0: register4.xyz systemvalue=0 componenttype=3
+// OSGN
+// SV_TARGET0: register0.xyzw systemvalue=0 componenttype=3
+// SHDR
+// shader kind=0, model=4.0, length=1986
+0002: customdata [raw]
+0020: dcl_constant_buffer cb0[11].xyzw
+0024: dcl_constant_buffer cb1[1024].xyzw
+0028: dcl_constant_buffer cb2[30].xyzw
+0032: dcl_constant_buffer cb3[29].xyzw
+0036: dcl_constant_buffer cb4[2].xyzw
+0040: dcl_sampler s0
+0043: dcl_sampler s1
+0046: dcl_resource t0, dimension=3,returntype=0x5555
+0050: dcl_resource t1, dimension=3,returntype=0x5555
+0054: dcl_input_ps v1.xy
+0057: dcl_input_ps v2.xyz
+0060: dcl_input_ps v3.xyz
+0063: dcl_input_ps v4.xyz
+0066: dcl_output o0.xyzw
+0069: dcl_temps 16
+0071: sample_b r0.xyzw, v1.xyxx, t1.xyzw, s1, cb0[4].x
+0083: mul r0.xyzw, r0.xyzw, cb4[1].xyzw
+0091: dp3 r1.x, v4.xyzx, v4.xyzx
+0098: rsq r1.x, r1.x
+0103: mul r1.xyz, r1.xxxx, v4.xyzx
+0110: lt r1.w, l(0), cb3[27].y
+0118: if r1.w
+0121: eq r1.w, cb3[27].y, l(1)
+0129: if r1.w
+0132: add r2.xyzw, v3.xyxy, cb3[25].xyzw
+0140: sample_c_lz r3.x, r2.xyxx, t0.xxxx, s0, v3.z
+0151: sample_c_lz r3.y, r2.zwzz, t0.xxxx, s0, v3.z
+0162: add r2.xyzw, v3.xyxy, cb3[26].xyzw
+0170: sample_c_lz r3.z, r2.xyxx, t0.xxxx, s0, v3.z
+0181: sample_c_lz r3.w, r2.zwzz, t0.xxxx, s0, v3.z
+0192: dp4 r1.w, r3.xyzw, l(0.25,0.25,0.25,0.25)
+0202: else 
+0203: eq r2.x, cb3[27].y, l(2)
+0211: if r2.x
+0214: mad r2.xy, v3.xyxx, cb3[28].zwzz, l(0.5,0.5,0,0)
+0227: round_ni r2.xy, r2.xyxx
+0232: mad r2.zw, v3.xxxy, cb3[28].zzzw, -r2.xxxy
+0243: add r3.xyzw, r2.zzww, l(0.5,1,0.5,1)
+0253: mul r4.xyzw, r3.xxzz, r3.xxzz
+0260: mul r3.xz, r4.yywy, l(0.0799999982,0,0.0799999982,0)
+0270: mad r4.xy, r4.xzxx, l(0.5,0.5,0,0), -r2.zwzz
+0283: add r4.zw, -r2.zzzw, l(0,0,1,1)
+0294: min r5.xy, r2.zwzz, l(0,0,0,0)
+0304: mad r5.xy, -r5.xyxx, r5.xyxx, r4.zwzz
+0314: max r2.zw, r2.zzzw, l(0,0,0,0)
+0324: mad r2.zw, -r2.zzzw, r2.zzzw, r3.yyyw
+0334: add r5.xy, r5.xyxx, l(1,1,0,0)
+0344: add r2.zw, r2.zzzw, l(0,0,1,1)
+0354: mul r6.xy, r4.xyxx, l(0.159999996,0.159999996,0,0)
+0364: mul r4.xy, r4.zwzz, l(0.159999996,0.159999996,0,0)
+0374: mul r5.xy, r5.xyxx, l(0.159999996,0.159999996,0,0)
+0384: mul r7.xy, r2.zwzz, l(0.159999996,0.159999996,0,0)
+0394: mul r2.zw, r3.yyyw, l(0,0,0.159999996,0.159999996)
+0404: mov r6.z, r5.x
+0409: mov r6.w, r2.z
+0414: mov r4.z, r7.x
+0419: mov r4.w, r3.x
+0424: add r8.xyzw, r4.zwxz, r6.zwxz
+0431: mov r5.z, r6.y
+0436: mov r5.w, r2.w
+0441: mov r7.z, r4.y
+0446: mov r7.w, r3.z
+0451: add r3.xyz, r5.zywz, r7.zywz
+0458: div r4.xyz, r4.xzwx, r8.zwyz
+0465: add r4.xyz, r4.xyzx, l(-2.5,-0.5,1.5,0)
+0475: div r5.xyz, r7.zywz, r3.xyzx
+0482: add r5.xyz, r5.xyzx, l(-2.5,-0.5,1.5,0)
+0492: mul r4.xyz, r4.yxzy, cb3[28].xxxx
+0500: mul r5.xyz, r5.xyzx, cb3[28].yyyy
+0508: mov r4.w, r5.x
+0513: mad r6.xyzw, r2.xyxy, cb3[28].xyxy, r4.ywxw
+0523: mad r2.zw, r2.xxxy, cb3[28].xxxy, r4.zzzw
+0533: mov r5.w, r4.y
+0538: mov r4.yw, r5.yyyz
+0543: mad r7.xyzw, r2.xyxy, cb3[28].xyxy, r4.xyzy
+0553: mad r5.xyzw, r2.xyxy, cb3[28].xyxy, r5.wywz
+0563: mad r4.xyzw, r2.xyxy, cb3[28].xyxy, r4.xwzw
+0573: mul r9.xyzw, r3.xxxy, r8.zwyz
+0580: mul r10.xyzw, r3.yyzz, r8.xyzw
+0587: mul r2.x, r3.z, r8.y
+0594: sample_c_lz r2.y, r6.xyxx, t0.xxxx, s0, v3.z
+0605: sample_c_lz r3.x, r6.zwzz, t0.xxxx, s0, v3.z
+0616: mul r3.x, r3.x, r9.y
+0623: mad r2.y, r9.x, r2.y, r3.x
+0632: sample_c_lz r2.z, r2.zwzz, t0.xxxx, s0, v3.z
+0643: mad r2.y, r9.z, r2.z, r2.y
+0652: sample_c_lz r2.z, r5.xyxx, t0.xxxx, s0, v3.z
+0663: mad r2.y, r9.w, r2.z, r2.y
+0672: sample_c_lz r2.z, r7.xyxx, t0.xxxx, s0, v3.z
+0683: mad r2.y, r10.x, r2.z, r2.y
+0692: sample_c_lz r2.z, r7.zwzz, t0.xxxx, s0, v3.z
+0703: mad r2.y, r10.y, r2.z, r2.y
+0712: sample_c_lz r2.z, r5.zwzz, t0.xxxx, s0, v3.z
+0723: mad r2.y, r10.z, r2.z, r2.y
+0732: sample_c_lz r2.z, r4.xyxx, t0.xxxx, s0, v3.z
+0743: mad r2.y, r10.w, r2.z, r2.y
+0752: sample_c_lz r2.z, r4.zwzz, t0.xxxx, s0, v3.z
+0763: mad r1.w, r2.x, r2.z, r2.y
+0772: else 
+0773: mad r2.xy, v3.xyxx, cb3[28].zwzz, l(0.5,0.5,0,0)
+0786: round_ni r2.xy, r2.xyxx
+0791: mad r2.zw, v3.xxxy, cb3[28].zzzw, -r2.xxxy
+0802: add r3.xyzw, r2.zzww, l(0.5,1,0.5,1)
+0812: mul r4.xyzw, r3.xxzz, r3.xxzz
+0819: mul r5.yw, r4.yyyw, l(0,0.0408160016,0,0.0408160016)
+0829: mad r3.xz, r4.xxzx, l(0.5,0,0.5,0), -r2.zzwz
+0842: add r4.xy, -r2.zwzz, l(1,1,0,0)
+0853: min r4.zw, r2.zzzw, l(0,0,0,0)
+0863: mad r4.xy, -r4.zwzz, r4.zwzz, r4.xyxx
+0873: max r4.zw, r2.zzzw, l(0,0,0,0)
+0883: mad r3.yw, -r4.zzzw, r4.zzzw, r3.yyyw
+0893: add r4.xy, r4.xyxx, l(2,2,0,0)
+0903: add r3.yw, r3.yyyw, l(0,2,0,2)
+0913: mul r6.z, r3.y, l(0.0816320032)
+0920: mul r7.xyz, r3.zxwz, l(0.0816320032,0.0816320032,0.0816320032,0)
+0930: mul r3.xy, r4.xyxx, l(0.0816320032,0.0816320032,0,0)
+0940: mov r6.x, r7.y
+0945: mad r6.yw, r2.zzzz, l(0,-0.0816320032,0,0.0816320032), l(0,0.163264006,0,0.0816320032)
+0960: mad r4.xz, r2.zzzz, l(-0.0816320032,0,0.0816320032,0), l(0.0816320032,0,0.163264006,0)
+0975: mov r4.y, r3.x
+0980: mov r4.w, r5.y
+0985: add r6.xyzw, r4.xyzw, r6.xyzw
+0992: mad r7.yw, r2.wwww, l(0,-0.0816320032,0,0.0816320032), l(0,0.163264006,0,0.0816320032)
+1007: mad r5.xz, r2.wwww, l(-0.0816320032,0,0.0816320032,0), l(0.0816320032,0,0.163264006,0)
+1022: mov r5.y, r3.y
+1027: add r3.xyzw, r5.xyzw, r7.xyzw
+1034: div r4.xyzw, r4.xyzw, r6.xyzw
+1041: add r4.xyzw, r4.xyzw, l(-3.5,-1.5,0.5,2.5)
+1051: div r5.xyzw, r5.xyzw, r3.xyzw
+1058: add r5.xyzw, r5.xyzw, l(-3.5,-1.5,0.5,2.5)
+1068: mul r4.xyzw, r4.wxyz, cb3[28].xxxx
+1076: mul r5.xyzw, r5.xwyz, cb3[28].yyyy
+1084: mov r7.xzw, r4.yyzw
+1089: mov r7.y, r5.x
+1094: mad r8.xyzw, r2.xyxy, cb3[28].xyxy, r7.xyzy
+1104: mad r2.zw, r2.xxxy, cb3[28].xxxy, r7.wwwy
+1114: mov r4.y, r7.y
+1119: mov r7.y, r5.z
+1124: mad r9.xyzw, r2.xyxy, cb3[28].xyxy, r7.xyzy
+1134: mad r10.xy, r2.xyxx, cb3[28].xyxx, r7.wyww
+1144: mov r4.z, r7.y
+1149: mad r11.xyzw, r2.xyxy, cb3[28].xyxy, r4.xyxz
+1159: mov r7.y, r5.w
+1164: mad r12.xyzw, r2.xyxy, cb3[28].xyxy, r7.xyzy
+1174: mad r4.yz, r2.xxyx, cb3[28].xxyx, r7.wwyw
+1184: mov r4.w, r7.y
+1189: mad r10.zw, r2.xxxy, cb3[28].xxxy, r4.xxxw
+1199: mov r5.xzw, r7.xxzw
+1204: mad r7.xyzw, r2.xyxy, cb3[28].xyxy, r5.xyzy
+1214: mad r5.zw, r2.xxxy, cb3[28].xxxy, r5.wwwy
+1224: mov r5.x, r4.x
+1229: mad r2.xy, r2.xyxx, cb3[28].xyxx, r5.xyxx
+1239: mul r13.xyzw, r3.xxxx, r6.xyzw
+1246: mul r14.xyzw, r3.yyyy, r6.xyzw
+1253: mul r15.xyzw, r3.zzzz, r6.xyzw
+1260: mul r3.xyzw, r3.wwww, r6.xyzw
+1267: sample_c_lz r4.x, r8.xyxx, t0.xxxx, s0, v3.z
+1278: sample_c_lz r4.w, r8.zwzz, t0.xxxx, s0, v3.z
+1289: mul r4.w, r4.w, r13.y
+1296: mad r4.x, r13.x, r4.x, r4.w
+1305: sample_c_lz r2.z, r2.zwzz, t0.xxxx, s0, v3.z
+1316: mad r2.z, r13.z, r2.z, r4.x
+1325: sample_c_lz r2.w, r11.xyxx, t0.xxxx, s0, v3.z
+1336: mad r2.z, r13.w, r2.w, r2.z
+1345: sample_c_lz r2.w, r9.xyxx, t0.xxxx, s0, v3.z
+1356: mad r2.z, r14.x, r2.w, r2.z
+1365: sample_c_lz r2.w, r9.zwzz, t0.xxxx, s0, v3.z
+1376: mad r2.z, r14.y, r2.w, r2.z
+1385: sample_c_lz r2.w, r10.xyxx, t0.xxxx, s0, v3.z
+1396: mad r2.z, r14.z, r2.w, r2.z
+1405: sample_c_lz r2.w, r11.zwzz, t0.xxxx, s0, v3.z
+1416: mad r2.z, r14.w, r2.w, r2.z
+1425: sample_c_lz r2.w, r12.xyxx, t0.xxxx, s0, v3.z
+1436: mad r2.z, r15.x, r2.w, r2.z
+1445: sample_c_lz r2.w, r12.zwzz, t0.xxxx, s0, v3.z
+1456: mad r2.z, r15.y, r2.w, r2.z
+1465: sample_c_lz r2.w, r4.yzyy, t0.xxxx, s0, v3.z
+1476: mad r2.z, r15.z, r2.w, r2.z
+1485: sample_c_lz r2.w, r10.zwzz, t0.xxxx, s0, v3.z
+1496: mad r2.z, r15.w, r2.w, r2.z
+1505: sample_c_lz r2.w, r7.xyxx, t0.xxxx, s0, v3.z
+1516: mad r2.z, r3.x, r2.w, r2.z
+1525: sample_c_lz r2.w, r7.zwzz, t0.xxxx, s0, v3.z
+1536: mad r2.z, r3.y, r2.w, r2.z
+1545: sample_c_lz r2.w, r5.zwzz, t0.xxxx, s0, v3.z
+1556: mad r2.z, r3.z, r2.w, r2.z
+1565: sample_c_lz r2.x, r2.xyxx, t0.xxxx, s0, v3.z
+1576: mad r1.w, r3.w, r2.x, r2.z
+1585: endif 
+1586: endif 
+1587: else 
+1588: sample_c_lz r1.w, v3.xyxx, t0.xxxx, s0, v3.z
+1599: endif 
+1600: add r2.x, -cb3[27].x, l(1)
+1609: mad r1.w, r1.w, cb3[27].x, r2.x
+1619: ge r2.x, l(0), v3.z
+1626: ge r2.y, v3.z, l(1)
+1633: or r2.x, r2.y, r2.x
+1640: movc r1.w, r2.x, l(1), r1.w
+1649: mul r1.w, r1.w, cb2[11].z
+1657: mul r2.xyz, r1.wwww, cb0[6].xyzx
+1665: dp3_sat r1.w, r1.xyzx, cb0[5].xyzx
+1673: min r2.w, cb0[10].x, cb2[11].y
+1682: ftoi r2.w, r2.w
+1687: mov r3.xyzw, l(0,0,0,0)
+1695: loop 
+1696: uge r4.x, r3.w, r2.w
+1703: breakc r4.x
+1706: ushr r4.x, r3.w, l(2.80259693e-45)
+1713: and r4.y, r3.w, l(4.20389539e-45)
+1720: dp4 r4.x, cb2[12+r4.x].xyzw, icbr4.y.xyzw
+1731: ftoi r4.x, r4.x
+1736: mad r4.yzw, -v2.xxyz, cb1[r4.x].wwww, cb1[r4.x].xxyz
+1750: dp3 r5.x, r4.yzwy, r4.yzwy
+1757: max r5.x, r5.x, l(6.10351562e-05)
+1764: rsq r5.y, r5.x
+1769: mul r4.yzw, r4.yyzw, r5.yyyy
+1776: div r5.y, l(1,1,1,1), cb1[512+r4.x].x
+1789: mul r5.x, r5.x, l(25)
+1796: div r5.x, r5.x, r5.y
+1803: add r5.x, r5.x, l(1)
+1810: div r5.x, l(1,1,1,1), r5.x
+1820: dp3 r5.y, cb1[768+r4.x].xyzx, r4.yzwy
+1830: mad_sat r5.y, r5.y, cb1[512+r4.x].z, cb1[512+r4.x].w
+1845: mul r5.y, r5.y, r5.y
+1852: mul r5.x, r5.y, r5.x
+1859: mul r5.xyz, r5.xxxx, cb1[256+r4.x].xyzx
+1869: dp3_sat r4.x, r1.xyzx, r4.yzwy
+1876: mad r3.xyz, r5.xyzx, r4.xxxx, r3.xyzx
+1885: iadd r3.w, r3.w, l(1.40129846e-45)
+1892: endloop 
+1893: mad r1.xyz, r2.xyzx, r1.wwww, r3.xyzx
+1902: mov r2.x, abs(cb2[27].w)
+1909: mov r2.y, abs(cb2[28].w)
+1916: mov r2.z, abs(cb2[29].w)
+1923: log r2.xyz, r2.xyzx
+1928: mul r2.xyz, r2.xyzx, l(0.416666657,0.416666657,0.416666657,0)
+1938: exp r2.xyz, r2.xyzx
+1943: mad_sat r2.xyz, r2.xyzx, l(1.05499995,1.05499995,1.05499995,0), l(-0.0549999997,-0.0549999997,-0.0549999997,0)
+1958: add r1.xyz, r1.xyzx, r2.xyzx
+1965: add r1.xyz, r1.xyzx, cb4[0].xxxx
+1973: mul o0.xyz, r0.xyzx, r1.xyzx
+1980: mov o0.w, r0.w
+1985: ret 

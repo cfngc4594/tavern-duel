@@ -1,0 +1,13 @@
+# Exact RenderTexture defaults and GPU edge sampling — completed
+
+Actual first execution exit0, Unity6000.3.10f1(e35f0c77bd8e), Apple M3, Metal, project/active colorSpace Gamma. No installation/login/game/manual license changes. New independent probe script and two shader assets only in existing isolated project; prior outputs untouched.
+
+Final RT exact constructor new RenderTexture(16,4,16,(RenderTextureFormat)16,(RenderTextureReadWrite)0). No assignments to wrap/filter/mipmap/AA/aniso/bias. Before/after Create properties identical except isCreated false/true: wrapMode/U/V/W Clamp, filterMode Bilinear, useMipMapfalse, autoGenerateMipstrue, antiAliasing1, graphicsFormatR8_UNorm, formatR8, sRGBfalse, anisoLevel1, mipMapBias0. Both snapshots exported raw.
+
+Temporary RT allocated ONLY by exact six-argument CommandBuffer.GetTemporaryRT(id,16,4,16,FilterMode.Bilinear,(RenderTextureFormat)16). No RenderTexture.GetTemporary, no wrap setter, no managed temporary-object property claims. In same command buffer: allocate, write pattern, copy pattern to diagnostic capture, bind source, edge-sample to separate diagnostic output, release. Graphics.ExecuteCommandBuffer completes before CPU ReadPixels.
+
+Pattern red0.2 left half /red0.8 right half, sixteen columns. Both final and temporary pattern PNGs verify R8 red51 left/red204 right. Edge sample fragment shader explicitly samples (u,v)=(-0.25,0.5),(0.25,0.5),(0.75,0.5),(1.25,0.5); each distinct output pixel center selects one UV. Both source types yield red[0.20000000298023225,0.20000000298023225,0.800000011920929,0.800000011920929],RGBA PNG bytes[51,51,204,204], alpha1. Controls separate color conversion from wrapping. This is measured horizontal Clamp behavior; Repeat would reverse outside controls at these UVs. Temporary V/W edge behavior was not tested and no temporary managed defaults inferred.
+
+Source format16 resolves to single-channel R8; pattern intentionally uses RED (not source alpha) to distinguish sides. Separate diagnostic ARGB32 Linear outputs are used solely for observation and are not substitutes for either source allocation. PNGs preserve original small dimensions. Source shaders use sampler2D with tex2D, no custom sampler wrap declarations.
+
+Raw properties/pixel JSON, pattern and sampled PNGs, source scripts/shaders, actual version, validation and redacted execution log included. Probe has no compiler/runtime failures. Unity normal background config request timeout appears in log, without affecting results. Results apply to this actual runtime/API/colorspace and calls, not an untested original game runtime or other platforms.

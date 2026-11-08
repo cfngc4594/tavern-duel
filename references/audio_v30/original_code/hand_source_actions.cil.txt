@@ -1,0 +1,309 @@
+
+TYPE HutongGames.PlayMaker.Actions.ActorSetVisibility 0x02003043
+FIELD 0x040139d0 m_ActorObject SIG 061282b9
+FIELD 0x040139d1 m_Visible SIG 061282c1
+FIELD 0x040139d2 m_IgnoreSpells SIG 061282c1
+FIELD 0x040139d3 m_ResetOnExit SIG 0602
+FIELD 0x040139d4 m_initialVisibility SIG 0602
+
+TYPE HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction 0x020030b7
+FIELD 0x04013bc5 m_spellObject SIG 061295bd
+FIELD 0x04013bc6 m_rangeEventArray SIG 061d12c000c2e0
+FIELD 0x04013bc7 m_whichEntity SIG 0611c000c348
+FIELD 0x04013bc8 m_tagToCheck SIG 0611c000a930
+FIELD 0x04013bc9 m_tagToCheckOverride SIG 0608
+
+TYPE HutongGames.PlayMaker.Actions.SpellCustomActorVariable 0x020030de
+FIELD 0x04013c71 m_objectName SIG 06128959
+FIELD 0x04013c72 m_actorObject SIG 061282b9
+
+0x06016a61 HutongGames.PlayMaker.Actions.ActorSetVisibility::GetActorOwner() RVA 0x69867d SIG 200012808d
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_ActorObject token(0x040139D0)
+  IL_0006 callvirt       HutongGames.PlayMaker.FsmGameObject::get_Value token(0x0A000579)
+  IL_000b ret             
+
+0x06016a62 HutongGames.PlayMaker.Actions.ActorSetVisibility::Reset() RVA 0x69868a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_ActorObject token(0x040139D0)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A0058FA)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_Visible token(0x040139D1)
+  IL_0013 ldarg.0         
+  IL_0014 ldc.i4.0        
+  IL_0015 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A0058FA)
+  IL_001a stfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_IgnoreSpells token(0x040139D2)
+  IL_001f ldarg.0         
+  IL_0020 ldc.i4.0        
+  IL_0021 stfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_ResetOnExit token(0x040139D3)
+  IL_0026 ret             
+
+0x06016a63 HutongGames.PlayMaker.Actions.ActorSetVisibility::OnEnter() RVA 0x6986b4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.ActorAction::OnEnter token(0x06016A4B)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ActorAction::m_actor token(0x040139BD)
+  IL_000c ldnull          
+  IL_000d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0012 brfalse.s      IL_001b 
+  IL_0014 ldarg.0         
+  IL_0015 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_001a ret             
+  IL_001b ldarg.0         
+  IL_001c ldarg.0         
+  IL_001d ldfld          HutongGames.PlayMaker.Actions.ActorAction::m_actor token(0x040139BD)
+  IL_0022 callvirt       Actor::IsShown token(0x06012839)
+  IL_0027 stfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_initialVisibility token(0x040139D4)
+  IL_002c ldarg.0         
+  IL_002d ldfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_Visible token(0x040139D1)
+  IL_0032 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A000471)
+  IL_0037 brfalse.s      IL_0041 
+  IL_0039 ldarg.0         
+  IL_003a call           HutongGames.PlayMaker.Actions.ActorSetVisibility::ShowActor token(0x06016A65)
+  IL_003f br.s           IL_0047 
+  IL_0041 ldarg.0         
+  IL_0042 call           HutongGames.PlayMaker.Actions.ActorSetVisibility::HideActor token(0x06016A66)
+  IL_0047 ldarg.0         
+  IL_0048 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_004d ret             
+
+0x06016a64 HutongGames.PlayMaker.Actions.ActorSetVisibility::OnExit() RVA 0x69870e SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_ResetOnExit token(0x040139D3)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_initialVisibility token(0x040139D4)
+  IL_000f brfalse.s      IL_0018 
+  IL_0011 ldarg.0         
+  IL_0012 call           HutongGames.PlayMaker.Actions.ActorSetVisibility::ShowActor token(0x06016A65)
+  IL_0017 ret             
+  IL_0018 ldarg.0         
+  IL_0019 call           HutongGames.PlayMaker.Actions.ActorSetVisibility::HideActor token(0x06016A66)
+  IL_001e ret             
+
+0x06016a65 HutongGames.PlayMaker.Actions.ActorSetVisibility::ShowActor() RVA 0x69872e SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.ActorAction::m_actor token(0x040139BD)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_IgnoreSpells token(0x040139D2)
+  IL_000c callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A000471)
+  IL_0011 callvirt       Actor::Show token(0x0601283B)
+  IL_0016 ret             
+
+0x06016a66 HutongGames.PlayMaker.Actions.ActorSetVisibility::HideActor() RVA 0x698746 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.ActorAction::m_actor token(0x040139BD)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ActorSetVisibility::m_IgnoreSpells token(0x040139D2)
+  IL_000c callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A000471)
+  IL_0011 callvirt       Actor::Hide token(0x0601283E)
+  IL_0016 ret             
+
+0x06016a67 HutongGames.PlayMaker.Actions.ActorSetVisibility::.ctor() RVA 0x697ec0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.ActorAction::.ctor token(0x06016A4C)
+  IL_0006 ret             
+
+0x06016c24 HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::GetSpellOwner() RVA 0x6a0760 SIG 200012808d
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_spellObject token(0x04013BC5)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0011 ret             
+
+0x06016c25 HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::OnEnter() RVA 0x6a0774 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SpellAction::OnEnter token(0x06016C90)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_whichEntity token(0x04013BC7)
+  IL_000d call           HutongGames.PlayMaker.Actions.SpellAction::GetEntity token(0x06016C8C)
+  IL_0012 stloc.0         
+  IL_0013 ldloc.0         
+  IL_0014 brtrue.s       IL_0044 
+  IL_0016 call           Log::get_All token(0x06014E0E)
+  IL_001b ldstr          '{0}.OnEnter() - FAILED to find relevant entity: "{1}"' string token(0x70407F04)
+  IL_0020 ldc.i4.2        
+  IL_0021 newarr         System.Object token(0x01000001)
+  IL_0026 dup             
+  IL_0027 ldc.i4.0        
+  IL_0028 ldarg.0         
+  IL_0029 stelem.ref      
+  IL_002a dup             
+  IL_002b ldc.i4.1        
+  IL_002c ldarg.0         
+  IL_002d ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_whichEntity token(0x04013BC7)
+  IL_0032 box            Which token(0x020030D2)
+  IL_0037 stelem.ref      
+  IL_0038 callvirt       Logger::PrintWarning token(0x0A00002E)
+  IL_003d ldarg.0         
+  IL_003e call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0043 ret             
+  IL_0044 ldarg.0         
+  IL_0045 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheckOverride token(0x04013BC9)
+  IL_004a stloc.1         
+  IL_004b ldloc.1         
+  IL_004c brfalse.s      IL_0055 
+  IL_004e ldarg.0         
+  IL_004f ldloc.1         
+  IL_0050 stfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_005b call           PlayMakerUtils::CanPlaymakerGetTag token(0x06014ED7)
+  IL_0060 brtrue.s       IL_0090 
+  IL_0062 call           Log::get_Spells token(0x06014E55)
+  IL_0067 ldstr          '{0}.OnEnter() - Playmaker should not check value of tag {1}' string token(0x7040751E)
+  IL_006c ldc.i4.2        
+  IL_006d newarr         System.Object token(0x01000001)
+  IL_0072 dup             
+  IL_0073 ldc.i4.0        
+  IL_0074 ldarg.0         
+  IL_0075 stelem.ref      
+  IL_0076 dup             
+  IL_0077 ldc.i4.1        
+  IL_0078 ldarg.0         
+  IL_0079 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_007e box            GAME_TAG token(0x02002A4C)
+  IL_0083 stelem.ref      
+  IL_0084 callvirt       Logger::PrintError token(0x0A000074)
+  IL_0089 ldarg.0         
+  IL_008a call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_008f ret             
+  IL_0090 ldnull          
+  IL_0091 stloc.2         
+  IL_0092 ldarg.0         
+  IL_0093 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_0098 ldc.i4         327 
+  IL_009d bne.un.s       IL_00ae 
+  IL_009f ldloc.0         
+  IL_00a0 callvirt       EntityBase::GetCardId token(0x06013947)
+  IL_00a5 ldc.i4.0        
+  IL_00a6 call           GameUtils::TranslateCardIdToDbId token(0x06014C6F)
+  IL_00ab pop             
+  IL_00ac br.s           IL_00bb 
+  IL_00ae ldloc.0         
+  IL_00af ldarg.0         
+  IL_00b0 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_00b5 callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_00ba pop             
+  IL_00bb ldarg.0         
+  IL_00bc ldloc.0         
+  IL_00bd ldarg.0         
+  IL_00be ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_tagToCheck token(0x04013BC8)
+  IL_00c3 callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_00c8 call           HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::DetermineEventToSend token(0x06016C26)
+  IL_00cd stloc.2         
+  IL_00ce ldloc.2         
+  IL_00cf brfalse.s      IL_00df 
+  IL_00d1 ldarg.0         
+  IL_00d2 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_00d7 ldloc.2         
+  IL_00d8 callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A00590F)
+  IL_00dd br.s           IL_00f8 
+  IL_00df call           Log::get_All token(0x06014E0E)
+  IL_00e4 ldstr          '{0}.OnEnter() - FAILED to find any event that could be sent, did you set up ranges?' string token(0x70408D44)
+  IL_00e9 ldc.i4.1        
+  IL_00ea newarr         System.Object token(0x01000001)
+  IL_00ef dup             
+  IL_00f0 ldc.i4.0        
+  IL_00f1 ldarg.0         
+  IL_00f2 stelem.ref      
+  IL_00f3 callvirt       Logger::PrintError token(0x0A000074)
+  IL_00f8 ldarg.0         
+  IL_00f9 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_00fe ret             
+
+0x06016c26 HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::DetermineEventToSend(tagValue) RVA 0x6a0880 SIG 2001129ef108
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::m_rangeEventArray token(0x04013BC6)
+  IL_0006 ldsfld         <>c::<>9__8_0 token(0x04013BCD)
+  IL_000b dup             
+  IL_000c brtrue.s       IL_0025 
+  IL_000e pop             
+  IL_000f ldsfld         <>c::<>9 token(0x04013BCC)
+  IL_0014 ldftn          <>c::<DetermineEventToSend>b__8_0 token(0x06016C2B)
+  IL_001a newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f3c4cf760f0>::.ctor token(0x0A005950)
+  IL_001f dup             
+  IL_0020 stsfld         <>c::<>9__8_0 token(0x04013BCD)
+  IL_0025 ldarg.1         
+  IL_0026 call           SpellUtils::GetAppropriateElementAccordingToRanges<spec> token(0x2B000C2B)
+  IL_002b stloc.0         
+  IL_002c ldloc.0         
+  IL_002d brfalse.s      IL_0036 
+  IL_002f ldloc.0         
+  IL_0030 ldfld          ValueRangeEvent::m_event token(0x04013BCB)
+  IL_0035 ret             
+  IL_0036 ldnull          
+  IL_0037 ret             
+
+0x06016c27 HutongGames.PlayMaker.Actions.SendEventBasedOnEntityTagAction::.ctor() RVA 0x698144 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SpellAction::.ctor token(0x06016C92)
+  IL_0006 ret             
+
+0x06016ccd HutongGames.PlayMaker.Actions.SpellCustomActorVariable::Reset() RVA 0x6a2b99 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldstr          '' string token(0x70000E3C)
+  IL_0006 call           HutongGames.PlayMaker.FsmString::op_Implicit token(0x0A00593F)
+  IL_000b stfld          HutongGames.PlayMaker.Actions.SpellCustomActorVariable::m_objectName token(0x04013C71)
+  IL_0010 ldarg.0         
+  IL_0011 ldnull          
+  IL_0012 stfld          HutongGames.PlayMaker.Actions.SpellCustomActorVariable::m_actorObject token(0x04013C72)
+  IL_0017 ret             
+
+0x06016cce HutongGames.PlayMaker.Actions.SpellCustomActorVariable::OnEnter() RVA 0x6a2bb4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.SpellCustomActorVariable::m_actorObject token(0x04013C72)
+  IL_0006 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_000b brtrue.s       IL_0076 
+  IL_000d ldarg.0         
+  IL_000e call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_0013 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B0001E0)
+  IL_0018 stloc.0         
+  IL_0019 ldloc.0         
+  IL_001a ldnull          
+  IL_001b call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0020 brfalse.s      IL_0076 
+  IL_0022 ldloc.0         
+  IL_0023 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          HutongGames.PlayMaker.Actions.SpellCustomActorVariable::m_objectName token(0x04013C71)
+  IL_002e callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A00449C)
+  IL_0033 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindChildBySubstring token(0x0A00221B)
+  IL_0038 stloc.1         
+  IL_0039 ldloc.1         
+  IL_003a ldnull          
+  IL_003b call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0040 brfalse.s      IL_006a 
+  IL_0042 ldstr          'Could not find object of name ' string token(0x70409686)
+  IL_0047 ldarg.0         
+  IL_0048 ldfld          HutongGames.PlayMaker.Actions.SpellCustomActorVariable::m_objectName token(0x04013C71)
+  IL_004d dup             
+  IL_004e brtrue.s       IL_0054 
+  IL_0050 pop             
+  IL_0051 ldnull          
+  IL_0052 br.s           IL_0059 
+  IL_0054 callvirt       System.Object::ToString token(0x0A00000C)
+  IL_0059 ldstr          ' in actor' string token(0x704096C4)
+  IL_005e call           System.String::Concat token(0x0A0001B1)
+  IL_0063 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0068 br.s           IL_0076 
+  IL_006a ldarg.0         
+  IL_006b ldfld          HutongGames.PlayMaker.Actions.SpellCustomActorVariable::m_actorObject token(0x04013C72)
+  IL_0070 ldloc.1         
+  IL_0071 callvirt       HutongGames.PlayMaker.FsmGameObject::set_Value token(0x0A000468)
+  IL_0076 ldarg.0         
+  IL_0077 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_007c ret             
+
+0x06016ccf HutongGames.PlayMaker.Actions.SpellCustomActorVariable::OnUpdate() RVA 0x4291 SIG 200001
+  IL_0000 ret             
+
+0x06016cd0 HutongGames.PlayMaker.Actions.SpellCustomActorVariable::.ctor() RVA 0x53731a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00406B)
+  IL_0006 ret             

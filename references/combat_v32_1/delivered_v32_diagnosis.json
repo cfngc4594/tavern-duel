@@ -1,0 +1,55 @@
+{
+  "status": "confirmed_delivered_v32_defects",
+  "user_observation": "handmade injury graphics and apparent repeated damage",
+  "source_revision": {
+    "scripts/game.gd": "4eb768c9cd169c626ced3d6317790fc531f8ca499f8968056892ac7941c82638",
+    "scripts/dual_class_rules.gd": "1009abe3889ae442f77da20162fa34fabbcb5884c5a1722746b8bd20b320d864",
+    "scripts/native_combat_player.gd": "f18ec9f2b4a863a433b75875caba8e5ee19b850ca8e7837fec941ac62a159edb"
+  },
+  "findings": [
+    {
+      "finding": "Legacy damage UI remains",
+      "path": "scripts/game.gd",
+      "lines": [
+        1091,
+        1101,
+        2000,
+        2011
+      ],
+      "detail": "Every _damage appends fixed-position float; _draw_effects(true) draws handmade16point star and2.2s sine scale/drift. Native original DamageSplatSpell absent."
+    },
+    {
+      "finding": "Combat popup identity lost at contact",
+      "path": "scripts/native_combat_player.gd",
+      "lines": [
+        142,
+        146
+      ],
+      "detail": "unit.pos=entry.contact before on_contact. rules.resolve_combat sends two distinct recipients through _damage; popup copies both contact positions rather than following each recipient Actor."
+    },
+    {
+      "finding": "Legacy hero flash and death shards remain",
+      "path": "scripts/game.gd",
+      "lines": [
+        1408,
+        1409,
+        1164,
+        1165,
+        2546,
+        2558
+      ],
+      "detail": "Custom hero red polygon and death portrait triangles/dust visibly overlap source combat."
+    },
+    {
+      "finding": "No repeated rule damage in12fresh scenarios",
+      "evidence": "qa/v32_1/diagnostic/damage-events.json",
+      "checks": 24,
+      "detail": "Two attacks damage two different entity IDs once each. Both hero fireballs6 once; minion6 once; fireblast1 once; Arcane intended3x1 and no playback extra calls; reset cancels late callbacks. Does not claim exhaustive proof across all possible play."
+    },
+    {
+      "finding": "Entire glyph atlas visible in delivered frame258",
+      "evidence": "v32/qa/v32/delivered-video-review/exact/frame-258-8.600s.png",
+      "status": "RT lifecycle owner reproducing separately; not attributed to rules or normal UI"
+    }
+  ]
+}

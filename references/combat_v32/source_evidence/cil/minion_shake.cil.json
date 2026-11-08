@@ -1,0 +1,4590 @@
+{
+  "types": [
+    {
+      "type": "MinionShake",
+      "token": "0x02002c3f",
+      "fields": [
+        {
+          "name": "OFFSCREEN_POSITION",
+          "token": "0x040122d8",
+          "signature": "06115d"
+        },
+        {
+          "name": "INTENSITY_SMALL",
+          "token": "0x040122d9",
+          "signature": "060c"
+        },
+        {
+          "name": "INTENSITY_MEDIUM",
+          "token": "0x040122da",
+          "signature": "060c"
+        },
+        {
+          "name": "INTENSITY_LARGE",
+          "token": "0x040122db",
+          "signature": "060c"
+        },
+        {
+          "name": "DISABLE_HEIGHT",
+          "token": "0x040122dc",
+          "signature": "060c"
+        },
+        {
+          "name": "m_MinionShakeAnimator",
+          "token": "0x040122dd",
+          "signature": "0612808d"
+        },
+        {
+          "name": "m_Animating",
+          "token": "0x040122de",
+          "signature": "0602"
+        },
+        {
+          "name": "m_Animator",
+          "token": "0x040122df",
+          "signature": "06128241"
+        },
+        {
+          "name": "m_ImpactDirection",
+          "token": "0x040122e0",
+          "signature": "061175"
+        },
+        {
+          "name": "m_ImpactPosition",
+          "token": "0x040122e1",
+          "signature": "06115d"
+        },
+        {
+          "name": "m_Angle",
+          "token": "0x040122e2",
+          "signature": "060c"
+        },
+        {
+          "name": "m_ShakeIntensityType",
+          "token": "0x040122e3",
+          "signature": "0611c000b0f4"
+        },
+        {
+          "name": "m_IntensityValue",
+          "token": "0x040122e4",
+          "signature": "060c"
+        },
+        {
+          "name": "m_ShakeType",
+          "token": "0x040122e5",
+          "signature": "0611c000b0f8"
+        },
+        {
+          "name": "m_MinionShakeInstance",
+          "token": "0x040122e6",
+          "signature": "0612808d"
+        },
+        {
+          "name": "m_CardPlayAllyTransform",
+          "token": "0x040122e7",
+          "signature": "061280a5"
+        },
+        {
+          "name": "m_MinionOrgPos",
+          "token": "0x040122e8",
+          "signature": "06115d"
+        },
+        {
+          "name": "m_MinionOrgRot",
+          "token": "0x040122e9",
+          "signature": "06118215"
+        },
+        {
+          "name": "m_StartDelay",
+          "token": "0x040122ea",
+          "signature": "060c"
+        },
+        {
+          "name": "m_Radius",
+          "token": "0x040122eb",
+          "signature": "060c"
+        },
+        {
+          "name": "m_IgnoreAnimationPlaying",
+          "token": "0x040122ec",
+          "signature": "0602"
+        },
+        {
+          "name": "m_IgnoreHeight",
+          "token": "0x040122ed",
+          "signature": "0602"
+        },
+        {
+          "name": "m_graphicsManager",
+          "token": "0x040122ee",
+          "signature": "0612856d"
+        },
+        {
+          "name": "s_IdleState",
+          "token": "0x040122ef",
+          "signature": "0608"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "MinionShake",
+      "method": "Awake",
+      "token": "0x060152d6",
+      "rva": "0x63beb7",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 12,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Services.ServiceManager::Get<spec>",
+          "token": "token(0x2B000144)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_graphicsManager",
+          "token": "token(0x040122EE)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "LateUpdate",
+      "token": "0x060152d7",
+      "rva": "0x63bec4",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 229,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_graphicsManager",
+          "token": "token(0x040122EE)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brfalse.s",
+          "operand": "IL_0016",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_graphicsManager",
+          "token": "token(0x040122EE)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "callvirt",
+          "operand": "IGraphicsManager::get_RenderQualityLevel",
+          "token": "token(0x0A000DEB)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "brtrue.s",
+          "operand": "IL_0016",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Animating",
+          "token": "token(0x040122DE)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "brtrue.s",
+          "operand": "IL_001f",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Animator",
+          "token": "token(0x040122DF)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "brfalse.s",
+          "operand": "IL_002e",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionShakeInstance",
+          "token": "token(0x040122E6)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "brfalse.s",
+          "operand": "IL_003d",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Animator",
+          "token": "token(0x040122DF)"
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Animator::GetCurrentAnimatorStateInfo",
+          "token": "token(0x0A0005CA)"
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "call",
+          "operand": "UnityEngine.AnimatorStateInfo::get_fullPathHash",
+          "token": "token(0x0A0005CC)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ldsfld",
+          "operand": "MinionShake::s_IdleState",
+          "token": "token(0x040122EF)"
+        },
+        {
+          "offset": "IL_0056",
+          "opcode": "bne.un.s",
+          "operand": "IL_0094",
+          "token": null
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Animator",
+          "token": "token(0x040122DF)"
+        },
+        {
+          "offset": "IL_005e",
+          "opcode": "ldstr",
+          "operand": "'shake'",
+          "token": "string token(0x703F760F)"
+        },
+        {
+          "offset": "IL_0063",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Animator::GetBool",
+          "token": "token(0x0A004424)"
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "brtrue.s",
+          "operand": "IL_0094",
+          "token": null
+        },
+        {
+          "offset": "IL_006a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0070",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0071",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionOrgPos",
+          "token": "token(0x040122E8)"
+        },
+        {
+          "offset": "IL_0076",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_localPosition",
+          "token": "token(0x0A000226)"
+        },
+        {
+          "offset": "IL_007b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007c",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0081",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0082",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionOrgRot",
+          "token": "token(0x040122E9)"
+        },
+        {
+          "offset": "IL_0087",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_localRotation",
+          "token": "token(0x0A00021F)"
+        },
+        {
+          "offset": "IL_008c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008d",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008e",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_Animating",
+          "token": "token(0x040122DE)"
+        },
+        {
+          "offset": "IL_0093",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0094",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0095",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_009a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_009b",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_CardPlayAllyTransform",
+          "token": "token(0x040122E7)"
+        },
+        {
+          "offset": "IL_00a0",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_localPosition",
+          "token": "token(0x0A00022A)"
+        },
+        {
+          "offset": "IL_00a5",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a6",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionOrgPos",
+          "token": "token(0x040122E8)"
+        },
+        {
+          "offset": "IL_00ab",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Addition",
+          "token": "token(0x0A0002FD)"
+        },
+        {
+          "offset": "IL_00b0",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_localPosition",
+          "token": "token(0x0A000226)"
+        },
+        {
+          "offset": "IL_00b5",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b6",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_00bb",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00bc",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionOrgRot",
+          "token": "token(0x040122E9)"
+        },
+        {
+          "offset": "IL_00c1",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_localRotation",
+          "token": "token(0x0A00021F)"
+        },
+        {
+          "offset": "IL_00c6",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00c7",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_00cc",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00cd",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_CardPlayAllyTransform",
+          "token": "token(0x040122E7)"
+        },
+        {
+          "offset": "IL_00d2",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_localRotation",
+          "token": "token(0x0A000CDB)"
+        },
+        {
+          "offset": "IL_00d7",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d8",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_00da",
+          "opcode": "call",
+          "operand": "UnityEngine.Quaternion::get_eulerAngles",
+          "token": "token(0x0A000B56)"
+        },
+        {
+          "offset": "IL_00df",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::Rotate",
+          "token": "token(0x0A000220)"
+        },
+        {
+          "offset": "IL_00e4",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "OnDestroy",
+      "token": "0x060152d8",
+      "rva": "0x63bfb5",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 25,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionShakeInstance",
+          "token": "token(0x040122E6)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "brfalse.s",
+          "operand": "IL_0018",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionShakeInstance",
+          "token": "token(0x040122E6)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::Destroy",
+          "token": "token(0x0A000059)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "isShaking",
+      "token": "0x060152d9",
+      "rva": "0x63bfcf",
+      "signature": "200002",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Animating",
+          "token": "token(0x040122DE)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "ShakeAllMinions",
+      "token": "0x060152da",
+      "rva": "0x63bfd8",
+      "signature": "00070112808d11c000b0f8115d11c000b0f40c0c0c",
+      "parameters": [
+        "shakeTrigger",
+        "shakeType",
+        "impactPoint",
+        "intensityType",
+        "intensityValue",
+        "radius",
+        "startDelay"
+      ],
+      "code_size": 99,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "MinionShake::FindAllMinionShakers",
+          "token": "token(0x060152E6)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "br.s",
+          "operand": "IL_005c",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldelem.ref",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_StartDelay",
+          "token": "token(0x040122EA)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeType",
+          "token": "token(0x040122E5)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ImpactPosition",
+          "token": "token(0x040122E1)"
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeIntensityType",
+          "token": "token(0x040122E3)"
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_IntensityValue",
+          "token": "token(0x040122E4)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_Radius",
+          "token": "token(0x040122EB)"
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "callvirt",
+          "operand": "MinionShake::ShakeMinion",
+          "token": "token(0x060152E2)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "call",
+          "operand": "BoardEvents::Get",
+          "token": "token(0x06012C81)"
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "brfalse.s",
+          "operand": "IL_0058",
+          "token": null
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0050",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "callvirt",
+          "operand": "BoardEvents::MinionShakeEvent",
+          "token": "token(0x06012C94)"
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005e",
+          "opcode": "ldlen",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "conv.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "blt.s",
+          "operand": "IL_000b",
+          "token": null
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "ShakeTargetMinion",
+      "token": "0x060152db",
+      "rva": "0x63c048",
+      "signature": "00070112808d11c000b0f8115d11c000b0f40c0c0c",
+      "parameters": [
+        "shakeTarget",
+        "shakeType",
+        "impactPoint",
+        "intensityType",
+        "intensityValue",
+        "radius",
+        "startDelay"
+      ],
+      "code_size": 133,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec>",
+          "token": "token(0x2B0009CE)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "brfalse.s",
+          "operand": "IL_001b",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldstr",
+          "operand": "'MinionShake: failed to locate Spell component'",
+          "token": "string token(0x703F761B)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "call",
+          "operand": "UnityEngine.Debug::LogWarning",
+          "token": "token(0x0A0000B0)"
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Game.Spells.SpellBase::GetVisualTarget",
+          "token": "token(0x0A004F21)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "brfalse.s",
+          "operand": "IL_0036",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldstr",
+          "operand": "'MinionShake: failed to Spell GetVisualTarget'",
+          "token": "string token(0x703F7677)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "call",
+          "operand": "UnityEngine.Debug::LogWarning",
+          "token": "token(0x0A0000B0)"
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::GetComponentInChildren<spec>",
+          "token": "token(0x2B0007AD)"
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "brfalse.s",
+          "operand": "IL_0051",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldstr",
+          "operand": "'MinionShake: failed to locate MinionShake component'",
+          "token": "string token(0x703F76D1)"
+        },
+        {
+          "offset": "IL_004b",
+          "opcode": "call",
+          "operand": "UnityEngine.Debug::LogWarning",
+          "token": "token(0x0A0000B0)"
+        },
+        {
+          "offset": "IL_0050",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_StartDelay",
+          "token": "token(0x040122EA)"
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeType",
+          "token": "token(0x040122E5)"
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0061",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ImpactPosition",
+          "token": "token(0x040122E1)"
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0069",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeIntensityType",
+          "token": "token(0x040122E3)"
+        },
+        {
+          "offset": "IL_006e",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006f",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0071",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_IntensityValue",
+          "token": "token(0x040122E4)"
+        },
+        {
+          "offset": "IL_0076",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0077",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0079",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_Radius",
+          "token": "token(0x040122EB)"
+        },
+        {
+          "offset": "IL_007e",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007f",
+          "opcode": "callvirt",
+          "operand": "MinionShake::ShakeMinion",
+          "token": "token(0x060152E2)"
+        },
+        {
+          "offset": "IL_0084",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "ShakeObject",
+      "token": "0x060152dc",
+      "rva": "0x63c0d9",
+      "signature": "00070112808d11c000b0f8115d11c000b0f40c0c0c",
+      "parameters": [
+        "shakeObject",
+        "shakeType",
+        "impactPoint",
+        "intensityType",
+        "intensityValue",
+        "radius",
+        "startDelay"
+      ],
+      "code_size": 17,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0003",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0004",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "MinionShake::ShakeObject",
+          "token": "token(0x060152DD)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "ShakeObject",
+      "token": "0x060152dd",
+      "rva": "0x63c0ec",
+      "signature": "00080112808d11c000b0f8115d11c000b0f40c0c0c02",
+      "parameters": [
+        "shakeObject",
+        "shakeType",
+        "impactPoint",
+        "intensityType",
+        "intensityValue",
+        "radius",
+        "startDelay",
+        "ignoreAnimationPlaying"
+      ],
+      "code_size": 19,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0003",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0004",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "MinionShake::ShakeObject",
+          "token": "token(0x060152DE)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "ShakeObject",
+      "token": "0x060152de",
+      "rva": "0x63c10c",
+      "signature": "00090112808d11c000b0f8115d11c000b0f40c0c0c0202",
+      "parameters": [
+        "shakeObject",
+        "shakeType",
+        "impactPoint",
+        "intensityType",
+        "intensityValue",
+        "radius",
+        "startDelay",
+        "ignoreAnimationPlaying",
+        "ignoreHeight"
+      ],
+      "code_size": 115,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::GetComponentInChildren<spec>",
+          "token": "token(0x2B0007AD)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "brfalse.s",
+          "operand": "IL_0037",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInParents<spec>",
+          "token": "token(0x2B0001EA)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "brfalse.s",
+          "operand": "IL_0021",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::GetComponentInChildren<spec>",
+          "token": "token(0x2B0007AD)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "brfalse.s",
+          "operand": "IL_0037",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_StartDelay",
+          "token": "token(0x040122EA)"
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeType",
+          "token": "token(0x040122E5)"
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ImpactPosition",
+          "token": "token(0x040122E1)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeIntensityType",
+          "token": "token(0x040122E3)"
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0057",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_IntensityValue",
+          "token": "token(0x040122E4)"
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_Radius",
+          "token": "token(0x040122EB)"
+        },
+        {
+          "offset": "IL_0064",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_IgnoreAnimationPlaying",
+          "token": "token(0x040122EC)"
+        },
+        {
+          "offset": "IL_006c",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "callvirt",
+          "operand": "MinionShake::ShakeMinion",
+          "token": "token(0x060152E2)"
+        },
+        {
+          "offset": "IL_0072",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "ShakeAllMinionsRandomMedium",
+      "token": "0x060152df",
+      "rva": "0x63c18c",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 79,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_zero",
+          "token": "token(0x0A0000DD)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "Board::Get",
+          "token": "token(0x06012C1F)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "brfalse.s",
+          "operand": "IL_0031",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldstr",
+          "operand": "'CenterPointBone'",
+          "token": "string token(0x70083806)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "callvirt",
+          "operand": "Board::FindBone",
+          "token": "token(0x06012C2B)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "brfalse.s",
+          "operand": "IL_0031",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_position",
+          "token": "token(0x0A0000FB)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldc.r4",
+          "operand": "0.5",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "call",
+          "operand": "MinionShake::ShakeAllMinions",
+          "token": "token(0x060152DA)"
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "ShakeAllMinionsRandomLarge",
+      "token": "0x060152e0",
+      "rva": "0x63c1e8",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 79,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_zero",
+          "token": "token(0x0A0000DD)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "Board::Get",
+          "token": "token(0x06012C1F)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "brfalse.s",
+          "operand": "IL_0031",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldstr",
+          "operand": "'CenterPointBone'",
+          "token": "string token(0x70083806)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "callvirt",
+          "operand": "Board::FindBone",
+          "token": "token(0x06012C2B)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "brfalse.s",
+          "operand": "IL_0031",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_position",
+          "token": "token(0x0A0000FB)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldc.i4.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "call",
+          "operand": "MinionShake::ShakeAllMinions",
+          "token": "token(0x060152DA)"
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "RandomShake",
+      "token": "0x060152e1",
+      "rva": "0x63c243",
+      "signature": "2001010c",
+      "parameters": [
+        "impact"
+      ],
+      "code_size": 35,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeIntensityType",
+          "token": "token(0x040122E3)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_IntensityValue",
+          "token": "token(0x040122E4)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeType",
+          "token": "token(0x040122E5)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeType",
+          "token": "token(0x040122E5)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "call",
+          "operand": "MinionShake::ShakeMinion",
+          "token": "token(0x060152E2)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "ShakeMinion",
+      "token": "0x060152e2",
+      "rva": "0x63c268",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 680,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_graphicsManager",
+          "token": "token(0x040122EE)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brfalse.s",
+          "operand": "IL_0015",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_graphicsManager",
+          "token": "token(0x040122EE)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "callvirt",
+          "operand": "IGraphicsManager::get_RenderQualityLevel",
+          "token": "token(0x0A000DEB)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "brtrue.s",
+          "operand": "IL_0016",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionShakeAnimator",
+          "token": "token(0x040122DD)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "brfalse.s",
+          "operand": "IL_002f",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldstr",
+          "operand": "'MinionShake: failed to locate MinionShake Animator'",
+          "token": "string token(0x703F7739)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "call",
+          "operand": "UnityEngine.Debug::LogWarning",
+          "token": "token(0x0A0000B0)"
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::GetComponent<spec>",
+          "token": "token(0x2B00001E)"
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "brfalse.s",
+          "operand": "IL_0050",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Animation::get_isPlaying",
+          "token": "token(0x0A0002F3)"
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "brfalse.s",
+          "operand": "IL_0050",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_IgnoreAnimationPlaying",
+          "token": "token(0x040122EC)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "brtrue.s",
+          "operand": "IL_0050",
+          "token": null
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0050",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_zero",
+          "token": "token(0x0A0000DD)"
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0056",
+          "opcode": "call",
+          "operand": "Board::Get",
+          "token": "token(0x06012C1F)"
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005e",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0063",
+          "opcode": "brfalse.s",
+          "operand": "IL_0084",
+          "token": null
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "ldstr",
+          "operand": "'CenterPointBone'",
+          "token": "string token(0x70083806)"
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "callvirt",
+          "operand": "Board::FindBone",
+          "token": "token(0x06012C2B)"
+        },
+        {
+          "offset": "IL_0070",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0072",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0074",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0075",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_007a",
+          "opcode": "brfalse.s",
+          "operand": "IL_0084",
+          "token": null
+        },
+        {
+          "offset": "IL_007c",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_007e",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_position",
+          "token": "token(0x0A0000FB)"
+        },
+        {
+          "offset": "IL_0083",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0084",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0085",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::y",
+          "token": "token(0x0A000022)"
+        },
+        {
+          "offset": "IL_008a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008b",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0090",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_position",
+          "token": "token(0x0A0000FB)"
+        },
+        {
+          "offset": "IL_0095",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::y",
+          "token": "token(0x0A000022)"
+        },
+        {
+          "offset": "IL_009a",
+          "opcode": "sub",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_009b",
+          "opcode": "ldc.r4",
+          "operand": "0.10000000149011612",
+          "token": null
+        },
+        {
+          "offset": "IL_00a0",
+          "opcode": "ble.un.s",
+          "operand": "IL_00ab",
+          "token": null
+        },
+        {
+          "offset": "IL_00a2",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a3",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_IgnoreHeight",
+          "token": "token(0x040122ED)"
+        },
+        {
+          "offset": "IL_00a8",
+          "opcode": "brtrue.s",
+          "operand": "IL_00ab",
+          "token": null
+        },
+        {
+          "offset": "IL_00aa",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ab",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ac",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionShakeInstance",
+          "token": "token(0x040122E6)"
+        },
+        {
+          "offset": "IL_00b1",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b2",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_00b7",
+          "opcode": "brfalse.s",
+          "operand": "IL_0100",
+          "token": null
+        },
+        {
+          "offset": "IL_00b9",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ba",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00bb",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionShakeAnimator",
+          "token": "token(0x040122DD)"
+        },
+        {
+          "offset": "IL_00c0",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00c1",
+          "opcode": "ldfld",
+          "operand": "MinionShake::OFFSCREEN_POSITION",
+          "token": "token(0x040122D8)"
+        },
+        {
+          "offset": "IL_00c6",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00c7",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_00cc",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_rotation",
+          "token": "token(0x0A000B4F)"
+        },
+        {
+          "offset": "IL_00d1",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::Instantiate<spec>",
+          "token": "token(0x2B0003FD)"
+        },
+        {
+          "offset": "IL_00d6",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_MinionShakeInstance",
+          "token": "token(0x040122E6)"
+        },
+        {
+          "offset": "IL_00db",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00dc",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00dd",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionShakeInstance",
+          "token": "token(0x040122E6)"
+        },
+        {
+          "offset": "IL_00e2",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_00e7",
+          "opcode": "ldstr",
+          "operand": "'Card_Play_Ally'",
+          "token": "string token(0x703F779F)"
+        },
+        {
+          "offset": "IL_00ec",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::Find",
+          "token": "token(0x0A0005BF)"
+        },
+        {
+          "offset": "IL_00f1",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_00f6",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_00fb",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_CardPlayAllyTransform",
+          "token": "token(0x040122E7)"
+        },
+        {
+          "offset": "IL_0100",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0101",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Animator",
+          "token": "token(0x040122DF)"
+        },
+        {
+          "offset": "IL_0106",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0107",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_010c",
+          "opcode": "brfalse.s",
+          "operand": "IL_011f",
+          "token": null
+        },
+        {
+          "offset": "IL_010e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_010f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0110",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_MinionShakeInstance",
+          "token": "token(0x040122E6)"
+        },
+        {
+          "offset": "IL_0115",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::GetComponent<spec>",
+          "token": "token(0x2B00024C)"
+        },
+        {
+          "offset": "IL_011a",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_Animator",
+          "token": "token(0x040122DF)"
+        },
+        {
+          "offset": "IL_011f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0120",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Animating",
+          "token": "token(0x040122DE)"
+        },
+        {
+          "offset": "IL_0125",
+          "opcode": "brtrue.s",
+          "operand": "IL_0149",
+          "token": null
+        },
+        {
+          "offset": "IL_0127",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0128",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0129",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_012e",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_localPosition",
+          "token": "token(0x0A00022A)"
+        },
+        {
+          "offset": "IL_0133",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_MinionOrgPos",
+          "token": "token(0x040122E8)"
+        },
+        {
+          "offset": "IL_0138",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0139",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_013a",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_013f",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_localRotation",
+          "token": "token(0x0A000CDB)"
+        },
+        {
+          "offset": "IL_0144",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_MinionOrgRot",
+          "token": "token(0x040122E9)"
+        },
+        {
+          "offset": "IL_0149",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_014a",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_ShakeType",
+          "token": "token(0x040122E5)"
+        },
+        {
+          "offset": "IL_014f",
+          "opcode": "brtrue.s",
+          "operand": "IL_0165",
+          "token": null
+        },
+        {
+          "offset": "IL_0151",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0152",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0153",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0154",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Angle",
+          "token": "token(0x040122E2)"
+        },
+        {
+          "offset": "IL_0159",
+          "opcode": "call",
+          "operand": "MinionShake::AngleToVector",
+          "token": "token(0x060152E3)"
+        },
+        {
+          "offset": "IL_015e",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ImpactDirection",
+          "token": "token(0x040122E0)"
+        },
+        {
+          "offset": "IL_0163",
+          "opcode": "br.s",
+          "operand": "IL_01ba",
+          "token": null
+        },
+        {
+          "offset": "IL_0165",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0166",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_ShakeType",
+          "token": "token(0x040122E5)"
+        },
+        {
+          "offset": "IL_016b",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_016c",
+          "opcode": "bne.un.s",
+          "operand": "IL_0196",
+          "token": null
+        },
+        {
+          "offset": "IL_016e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_016f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0170",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0175",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_position",
+          "token": "token(0x0A0000FB)"
+        },
+        {
+          "offset": "IL_017a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_017b",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_ImpactPosition",
+          "token": "token(0x040122E1)"
+        },
+        {
+          "offset": "IL_0180",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Subtraction",
+          "token": "token(0x0A00057C)"
+        },
+        {
+          "offset": "IL_0185",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::Normalize",
+          "token": "token(0x0A005108)"
+        },
+        {
+          "offset": "IL_018a",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector2::op_Implicit",
+          "token": "token(0x0A000A0A)"
+        },
+        {
+          "offset": "IL_018f",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ImpactDirection",
+          "token": "token(0x040122E0)"
+        },
+        {
+          "offset": "IL_0194",
+          "opcode": "br.s",
+          "operand": "IL_01ba",
+          "token": null
+        },
+        {
+          "offset": "IL_0196",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0197",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_ShakeType",
+          "token": "token(0x040122E5)"
+        },
+        {
+          "offset": "IL_019c",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_019d",
+          "opcode": "bne.un.s",
+          "operand": "IL_01ba",
+          "token": null
+        },
+        {
+          "offset": "IL_019f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01a0",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01a1",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_01a6",
+          "opcode": "ldc.r4",
+          "operand": "360.0",
+          "token": null
+        },
+        {
+          "offset": "IL_01ab",
+          "opcode": "call",
+          "operand": "UnityEngine.Random::Range",
+          "token": "token(0x0A00025A)"
+        },
+        {
+          "offset": "IL_01b0",
+          "opcode": "call",
+          "operand": "MinionShake::AngleToVector",
+          "token": "token(0x060152E3)"
+        },
+        {
+          "offset": "IL_01b5",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ImpactDirection",
+          "token": "token(0x040122E0)"
+        },
+        {
+          "offset": "IL_01ba",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01bb",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_IntensityValue",
+          "token": "token(0x040122E4)"
+        },
+        {
+          "offset": "IL_01c0",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01c1",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01c2",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_ShakeIntensityType",
+          "token": "token(0x040122E3)"
+        },
+        {
+          "offset": "IL_01c7",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01c8",
+          "opcode": "bne.un.s",
+          "operand": "IL_01d2",
+          "token": null
+        },
+        {
+          "offset": "IL_01ca",
+          "opcode": "ldc.r4",
+          "operand": "0.10000000149011612",
+          "token": null
+        },
+        {
+          "offset": "IL_01cf",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01d0",
+          "opcode": "br.s",
+          "operand": "IL_01f2",
+          "token": null
+        },
+        {
+          "offset": "IL_01d2",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01d3",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_ShakeIntensityType",
+          "token": "token(0x040122E3)"
+        },
+        {
+          "offset": "IL_01d8",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01d9",
+          "opcode": "bne.un.s",
+          "operand": "IL_01e3",
+          "token": null
+        },
+        {
+          "offset": "IL_01db",
+          "opcode": "ldc.r4",
+          "operand": "0.5",
+          "token": null
+        },
+        {
+          "offset": "IL_01e0",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01e1",
+          "opcode": "br.s",
+          "operand": "IL_01f2",
+          "token": null
+        },
+        {
+          "offset": "IL_01e3",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01e4",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_ShakeIntensityType",
+          "token": "token(0x040122E3)"
+        },
+        {
+          "offset": "IL_01e9",
+          "opcode": "ldc.i4.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01ea",
+          "opcode": "bne.un.s",
+          "operand": "IL_01f2",
+          "token": null
+        },
+        {
+          "offset": "IL_01ec",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_01f1",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01f2",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01f3",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01f4",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_ImpactDirection",
+          "token": "token(0x040122E0)"
+        },
+        {
+          "offset": "IL_01f9",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01fa",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector2::op_Multiply",
+          "token": "token(0x0A000AF5)"
+        },
+        {
+          "offset": "IL_01ff",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ImpactDirection",
+          "token": "token(0x040122E0)"
+        },
+        {
+          "offset": "IL_0204",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0205",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Animator",
+          "token": "token(0x040122DF)"
+        },
+        {
+          "offset": "IL_020a",
+          "opcode": "ldstr",
+          "operand": "'posx'",
+          "token": "string token(0x703F77BD)"
+        },
+        {
+          "offset": "IL_020f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0210",
+          "opcode": "ldflda",
+          "operand": "MinionShake::m_ImpactDirection",
+          "token": "token(0x040122E0)"
+        },
+        {
+          "offset": "IL_0215",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector2::x",
+          "token": "token(0x0A000998)"
+        },
+        {
+          "offset": "IL_021a",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Animator::SetFloat",
+          "token": "token(0x0A005109)"
+        },
+        {
+          "offset": "IL_021f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0220",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Animator",
+          "token": "token(0x040122DF)"
+        },
+        {
+          "offset": "IL_0225",
+          "opcode": "ldstr",
+          "operand": "'posy'",
+          "token": "string token(0x703F77C7)"
+        },
+        {
+          "offset": "IL_022a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_022b",
+          "opcode": "ldflda",
+          "operand": "MinionShake::m_ImpactDirection",
+          "token": "token(0x040122E0)"
+        },
+        {
+          "offset": "IL_0230",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector2::y",
+          "token": "token(0x0A000031)"
+        },
+        {
+          "offset": "IL_0235",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Animator::SetFloat",
+          "token": "token(0x0A005109)"
+        },
+        {
+          "offset": "IL_023a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_023b",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Radius",
+          "token": "token(0x040122EB)"
+        },
+        {
+          "offset": "IL_0240",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0245",
+          "opcode": "ble.un.s",
+          "operand": "IL_0266",
+          "token": null
+        },
+        {
+          "offset": "IL_0247",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0248",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_024d",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_position",
+          "token": "token(0x0A0000FB)"
+        },
+        {
+          "offset": "IL_0252",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0253",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_ImpactPosition",
+          "token": "token(0x040122E1)"
+        },
+        {
+          "offset": "IL_0258",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::Distance",
+          "token": "token(0x0A000C63)"
+        },
+        {
+          "offset": "IL_025d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_025e",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Radius",
+          "token": "token(0x040122EB)"
+        },
+        {
+          "offset": "IL_0263",
+          "opcode": "ble.un.s",
+          "operand": "IL_0266",
+          "token": null
+        },
+        {
+          "offset": "IL_0265",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0266",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0267",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_StartDelay",
+          "token": "token(0x040122EA)"
+        },
+        {
+          "offset": "IL_026c",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0271",
+          "opcode": "ble.un.s",
+          "operand": "IL_0282",
+          "token": null
+        },
+        {
+          "offset": "IL_0273",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0274",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0275",
+          "opcode": "call",
+          "operand": "MinionShake::StartShakeAnimation",
+          "token": "token(0x060152E4)"
+        },
+        {
+          "offset": "IL_027a",
+          "opcode": "call",
+          "operand": "UnityEngine.MonoBehaviour::StartCoroutine",
+          "token": "token(0x0A0000F1)"
+        },
+        {
+          "offset": "IL_027f",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0280",
+          "opcode": "br.s",
+          "operand": "IL_029a",
+          "token": null
+        },
+        {
+          "offset": "IL_0282",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0283",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0284",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_Animating",
+          "token": "token(0x040122DE)"
+        },
+        {
+          "offset": "IL_0289",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_028a",
+          "opcode": "ldfld",
+          "operand": "MinionShake::m_Animator",
+          "token": "token(0x040122DF)"
+        },
+        {
+          "offset": "IL_028f",
+          "opcode": "ldstr",
+          "operand": "'shake'",
+          "token": "string token(0x703F760F)"
+        },
+        {
+          "offset": "IL_0294",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0295",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Animator::SetBool",
+          "token": "token(0x0A004423)"
+        },
+        {
+          "offset": "IL_029a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_029b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_029c",
+          "opcode": "call",
+          "operand": "MinionShake::ResetShakeAnimator",
+          "token": "token(0x060152E5)"
+        },
+        {
+          "offset": "IL_02a1",
+          "opcode": "call",
+          "operand": "UnityEngine.MonoBehaviour::StartCoroutine",
+          "token": "token(0x0A0000F1)"
+        },
+        {
+          "offset": "IL_02a6",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_02a7",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "AngleToVector",
+      "token": "0x060152e3",
+      "rva": "0x63c51c",
+      "signature": "200111750c",
+      "parameters": [
+        "angle"
+      ],
+      "code_size": 60,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "UnityEngine.Quaternion::Euler",
+          "token": "token(0x0A000D67)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldc.r4",
+          "operand": "-1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "newobj",
+          "operand": "UnityEngine.Vector3::.ctor",
+          "token": "token(0x0A00004C)"
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "call",
+          "operand": "UnityEngine.Quaternion::op_Multiply",
+          "token": "token(0x0A000D9A)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::x",
+          "token": "token(0x0A00001F)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::z",
+          "token": "token(0x0A00025C)"
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "newobj",
+          "operand": "UnityEngine.Vector2::.ctor",
+          "token": "token(0x0A00004E)"
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "StartShakeAnimation",
+      "token": "0x060152e4",
+      "rva": "0x63c564",
+      "signature": "2000128111",
+      "parameters": [],
+      "code_size": 14,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "newobj",
+          "operand": "<StartShakeAnimation>d__38::.ctor",
+          "token": "token(0x060152EF)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "stfld",
+          "operand": "<StartShakeAnimation>d__38::<>4__this",
+          "token": "token(0x040122F5)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "ResetShakeAnimator",
+      "token": "0x060152e5",
+      "rva": "0x63c573",
+      "signature": "2000128111",
+      "parameters": [],
+      "code_size": 14,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "newobj",
+          "operand": "<ResetShakeAnimator>d__39::.ctor",
+          "token": "token(0x060152E9)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "stfld",
+          "operand": "<ResetShakeAnimator>d__39::<>4__this",
+          "token": "token(0x040122F2)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": "FindAllMinionShakers",
+      "token": "0x060152e6",
+      "rva": "0x63c584",
+      "signature": "00011d12c000b0fc12808d",
+      "parameters": [
+        "shakeTrigger"
+      ],
+      "code_size": 267,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0003",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec>",
+          "token": "token(0x2B0009CE)"
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "brfalse.s",
+          "operand": "IL_0019",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "callvirt",
+          "operand": "Spell::GetSourceCard",
+          "token": "token(0x0601491E)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f58774753d0>::.ctor",
+          "token": "token(0x0A00510A)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "call",
+          "operand": "ZoneMgr::Get",
+          "token": "token(0x06006502)"
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "brfalse.s",
+          "operand": "IL_0035",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f58774753d0>::ToArray",
+          "token": "token(0x0A00510B)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "callvirt",
+          "operand": "ZoneMgr::FindZonesForTag",
+          "token": "token(0x0600650D)"
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f58778f2c30>::GetEnumerator",
+          "token": "token(0x0A0023A8)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "br",
+          "operand": "IL_00e8",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5877764680>::get_Current",
+          "token": "token(0x0A0023A9)"
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "callvirt",
+          "operand": "System.Object::GetType",
+          "token": "token(0x0A0004ED)"
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "ldtoken",
+          "operand": "ZoneHero",
+          "token": "token(0x02000CC4)"
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "call",
+          "operand": "System.Type::GetTypeFromHandle",
+          "token": "token(0x0A00010D)"
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "call",
+          "operand": "System.Type::op_Equality",
+          "token": "token(0x0A000C28)"
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "brtrue.s",
+          "operand": "IL_00e8",
+          "token": null
+        },
+        {
+          "offset": "IL_0069",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "callvirt",
+          "operand": "Zone::GetCards",
+          "token": "token(0x06006374)"
+        },
+        {
+          "offset": "IL_0070",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5877a9d8b0>::GetEnumerator",
+          "token": "token(0x0A0011BA)"
+        },
+        {
+          "offset": "IL_0075",
+          "opcode": "stloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_0077",
+          "opcode": "br.s",
+          "operand": "IL_00cf",
+          "token": null
+        },
+        {
+          "offset": "IL_0079",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_007b",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f58779baf90>::get_Current",
+          "token": "token(0x0A0011BB)"
+        },
+        {
+          "offset": "IL_0080",
+          "opcode": "stloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_0082",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_0084",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0085",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_008a",
+          "opcode": "brtrue.s",
+          "operand": "IL_00cf",
+          "token": null
+        },
+        {
+          "offset": "IL_008c",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_008e",
+          "opcode": "callvirt",
+          "operand": "Card::IsActorReady",
+          "token": "token(0x06012DDB)"
+        },
+        {
+          "offset": "IL_0093",
+          "opcode": "brfalse.s",
+          "operand": "IL_00cf",
+          "token": null
+        },
+        {
+          "offset": "IL_0095",
+          "opcode": "nop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0096",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_0098",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::GetComponentInChildren<spec>",
+          "token": "token(0x2B0009CF)"
+        },
+        {
+          "offset": "IL_009d",
+          "opcode": "stloc.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_009f",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_00a1",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a2",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_00a7",
+          "opcode": "brfalse.s",
+          "operand": "IL_00b1",
+          "token": null
+        },
+        {
+          "offset": "IL_00a9",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00aa",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_00ac",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f58774753d0>::Add",
+          "token": "token(0x0A00510C)"
+        },
+        {
+          "offset": "IL_00b1",
+          "opcode": "leave.s",
+          "operand": "IL_00cf",
+          "token": null
+        },
+        {
+          "offset": "IL_00b3",
+          "opcode": "stloc.s",
+          "operand": "local(0x0009)",
+          "token": null
+        },
+        {
+          "offset": "IL_00b5",
+          "opcode": "ldstr",
+          "operand": "'MinionShake: failed to get component - card = {0}, ignored: {1}'",
+          "token": "string token(0x703F77D1)"
+        },
+        {
+          "offset": "IL_00ba",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_00bc",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0009)",
+          "token": null
+        },
+        {
+          "offset": "IL_00be",
+          "opcode": "callvirt",
+          "operand": "System.Exception::get_Message",
+          "token": "token(0x0A000A59)"
+        },
+        {
+          "offset": "IL_00c3",
+          "opcode": "call",
+          "operand": "System.String::Format",
+          "token": "token(0x0A0000D1)"
+        },
+        {
+          "offset": "IL_00c8",
+          "opcode": "call",
+          "operand": "UnityEngine.Debug::LogWarning",
+          "token": "token(0x0A0000B0)"
+        },
+        {
+          "offset": "IL_00cd",
+          "opcode": "leave.s",
+          "operand": "IL_00cf",
+          "token": null
+        },
+        {
+          "offset": "IL_00cf",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_00d1",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f58779baf90>::MoveNext",
+          "token": "token(0x0A0011BC)"
+        },
+        {
+          "offset": "IL_00d6",
+          "opcode": "brtrue.s",
+          "operand": "IL_0079",
+          "token": null
+        },
+        {
+          "offset": "IL_00d8",
+          "opcode": "leave.s",
+          "operand": "IL_00e8",
+          "token": null
+        },
+        {
+          "offset": "IL_00da",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_00dc",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f58779baf90>",
+          "token": "token(0x1B0004DE)"
+        },
+        {
+          "offset": "IL_00e2",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_00e7",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00e8",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00ea",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5877764680>::MoveNext",
+          "token": "token(0x0A0023AA)"
+        },
+        {
+          "offset": "IL_00ef",
+          "opcode": "brtrue",
+          "operand": "IL_0048",
+          "token": null
+        },
+        {
+          "offset": "IL_00f4",
+          "opcode": "leave.s",
+          "operand": "IL_0104",
+          "token": null
+        },
+        {
+          "offset": "IL_00f6",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00f8",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f5877764680>",
+          "token": "token(0x1B0009CC)"
+        },
+        {
+          "offset": "IL_00fe",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0103",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0104",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0105",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f58774753d0>::ToArray",
+          "token": "token(0x0A00510B)"
+        },
+        {
+          "offset": "IL_010a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": ".ctor",
+      "token": "0x060152e7",
+      "rva": "0x63c6c4",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 58,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldc.r4",
+          "operand": "-400.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldc.r4",
+          "operand": "-400.0",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldc.r4",
+          "operand": "-400.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "newobj",
+          "operand": "UnityEngine.Vector3::.ctor",
+          "token": "token(0x0A00004C)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "stfld",
+          "operand": "MinionShake::OFFSCREEN_POSITION",
+          "token": "token(0x040122D8)"
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeIntensityType",
+          "token": "token(0x040122E3)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldc.r4",
+          "operand": "0.5",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_IntensityValue",
+          "token": "token(0x040122E4)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "stfld",
+          "operand": "MinionShake::m_ShakeType",
+          "token": "token(0x040122E5)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "call",
+          "operand": "UnityEngine.MonoBehaviour::.ctor",
+          "token": "token(0x0A000018)"
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "MinionShake",
+      "method": ".cctor",
+      "token": "0x060152e8",
+      "rva": "0x63c6ff",
+      "signature": "000001",
+      "parameters": [],
+      "code_size": 16,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldstr",
+          "operand": "'Base.Idle'",
+          "token": "string token(0x703F7851)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "call",
+          "operand": "UnityEngine.Animator::StringToHash",
+          "token": "token(0x0A00276C)"
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "stsfld",
+          "operand": "MinionShake::s_IdleState",
+          "token": "token(0x040122EF)"
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

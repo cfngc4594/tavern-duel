@@ -1,0 +1,28 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Card/UnlitDesat" {
+Properties {
+
+_MainTex ("Base (RGB)", 2D) = "white" { }
+
+_ValueRange ("_ValueRange", Range(0, 5)) = 1.0
+
+_Transistion ("_Transistion", Range(0, 1)) = 0.0
+
+_Color ("_Color", Color) = (1,1,1,1)
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "Highlight" = "true" "LIGHTMODE" = "UniversalForward" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "Highlight" = "true" "LIGHTMODE" = "UniversalForward" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 19379
+}
+}
+Fall back "Utility/HearthstoneFallbackDiffuse"
+}

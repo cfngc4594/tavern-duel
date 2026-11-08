@@ -1,0 +1,32 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hero/Unlit/Unlit_Transparent_Desaturate" {
+Properties {
+
+_MainTex ("Texture", 2D) = "white" { }
+
+_Color ("Color", Color) = (1,1,1,1)
+
+_Desaturate ("Desaturate", Float) = 1.0
+
+_Contrast ("Contrast", Float) = 0.0
+
+_Intensity ("Intensity", Float) = 1.0
+
+_AvgLum ("Average Luminosity", Float) = 0.5
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" }
+ Pass {
+  Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" }
+ ZWrite Off
+  GpuProgramID 3062
+}
+}
+}

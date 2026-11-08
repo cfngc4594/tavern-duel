@@ -1,0 +1,30 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Card/Unlit_2Texture2uv" {
+Properties {
+
+_Color ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_MainTex ("Main Texture", 2D) = "white" { }
+
+_SecondTex ("Second Texture", 2D) = "white" { }
+
+_SecondTint ("Second Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_BlendIntensity ("Blend Intensity", Float) = 2.0
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "Highlight" = "true" "LIGHTMODE" = "UniversalForward" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "Highlight" = "true" "LIGHTMODE" = "UniversalForward" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 36234
+}
+}
+Fall back "Utility/HearthstoneFallbackDiffuse"
+}

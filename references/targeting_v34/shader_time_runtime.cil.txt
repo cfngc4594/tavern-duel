@@ -1,0 +1,95 @@
+
+TYPE ShaderTime 0x02002ca3
+FIELD 0x040125a0 m_maxTime SIG 060c
+FIELD 0x040125a1 m_time SIG 060c
+FIELD 0x040125a2 m_enabled SIG 0602
+
+0x06015543 ShaderTime::Initialize(serviceLocator) RVA 0x6490df SIG 200115128109011281a51281a9
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <Initialize>d__6::.ctor token(0x0601554A)
+  IL_0006 ret             
+
+0x06015544 ShaderTime::GetDependencies() RVA 0x635459 SIG 20001d128179
+  IL_0000 ldc.i4.1        
+  IL_0001 newarr         System.Type token(0x0100005E)
+  IL_0006 dup             
+  IL_0007 ldc.i4.0        
+  IL_0008 ldtoken        IGraphicsManager token(0x0100015B)
+  IL_000d call           System.Type::GetTypeFromHandle token(0x0A00010D)
+  IL_0012 stelem.ref      
+  IL_0013 ret             
+
+0x06015545 ShaderTime::Shutdown() RVA 0x6490e7 SIG 200001
+  IL_0000 ldstr          '_ShaderTime' string token(0x703F95AF)
+  IL_0005 ldc.r4         0.0 
+  IL_000a call           UnityEngine.Shader::SetGlobalFloat token(0x0A0051D4)
+  IL_000f ret             
+
+0x06015546 ShaderTime::Update() RVA 0x6490f8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           ShaderTime::UpdateShaderAnimationTime token(0x06015547)
+  IL_0006 ldarg.0         
+  IL_0007 call           ShaderTime::UpdateGyro token(0x06015548)
+  IL_000c ret             
+
+0x06015547 ShaderTime::UpdateShaderAnimationTime() RVA 0x649108 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          ShaderTime::m_enabled token(0x040125A2)
+  IL_0006 brtrue.s       IL_0015 
+  IL_0008 ldarg.0         
+  IL_0009 ldc.r4         1.0 
+  IL_000e stfld          ShaderTime::m_time token(0x040125A1)
+  IL_0013 br.s           IL_0066 
+  IL_0015 ldarg.0         
+  IL_0016 ldarg.0         
+  IL_0017 ldfld          ShaderTime::m_time token(0x040125A1)
+  IL_001c call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+  IL_0021 ldc.r4         20.0 
+  IL_0026 div             
+  IL_0027 add             
+  IL_0028 stfld          ShaderTime::m_time token(0x040125A1)
+  IL_002d ldarg.0         
+  IL_002e ldfld          ShaderTime::m_time token(0x040125A1)
+  IL_0033 ldarg.0         
+  IL_0034 ldfld          ShaderTime::m_maxTime token(0x040125A0)
+  IL_0039 ble.un.s       IL_0066 
+  IL_003b ldarg.0         
+  IL_003c ldarg.0         
+  IL_003d ldfld          ShaderTime::m_time token(0x040125A1)
+  IL_0042 ldarg.0         
+  IL_0043 ldfld          ShaderTime::m_maxTime token(0x040125A0)
+  IL_0048 sub             
+  IL_0049 stfld          ShaderTime::m_time token(0x040125A1)
+  IL_004e ldarg.0         
+  IL_004f ldfld          ShaderTime::m_time token(0x040125A1)
+  IL_0054 ldc.r4         0.0 
+  IL_0059 bgt.un.s       IL_0066 
+  IL_005b ldarg.0         
+  IL_005c ldc.r4         9.999999747378752e-05 
+  IL_0061 stfld          ShaderTime::m_time token(0x040125A1)
+  IL_0066 ldstr          '_ShaderTime' string token(0x703F95AF)
+  IL_006b ldarg.0         
+  IL_006c ldfld          ShaderTime::m_time token(0x040125A1)
+  IL_0071 call           UnityEngine.Shader::SetGlobalFloat token(0x0A0051D4)
+  IL_0076 ret             
+
+0x06015548 ShaderTime::UpdateGyro() RVA 0x64918c SIG 200001
+  IL_0000 call           UnityEngine.Input::get_gyro token(0x0A000CD7)
+  IL_0005 callvirt       UnityEngine.Gyroscope::get_gravity token(0x0A0051D5)
+  IL_000a call           UnityEngine.Vector4::op_Implicit token(0x0A000D9E)
+  IL_000f stloc.0         
+  IL_0010 ldstr          '_Gyroscope' string token(0x703F95C7)
+  IL_0015 ldloc.0         
+  IL_0016 call           UnityEngine.Shader::SetGlobalVector token(0x0A0051D6)
+  IL_001b ret             
+
+0x06015549 ShaderTime::.ctor() RVA 0x6491b4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         65535.0 
+  IL_0006 stfld          ShaderTime::m_maxTime token(0x040125A0)
+  IL_000b ldarg.0         
+  IL_000c ldc.i4.1        
+  IL_000d stfld          ShaderTime::m_enabled token(0x040125A2)
+  IL_0012 ldarg.0         
+  IL_0013 call           System.Object::.ctor token(0x0A000003)
+  IL_0018 ret             

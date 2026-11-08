@@ -1,0 +1,156 @@
+
+0x06016bde HutongGames.PlayMaker.Actions.MainCameraShakerAction::OnEnter RVA 0x69f5cb
+ IL_0000 ldarg.0         
+ IL_0001 ldc.r4         0.0 
+ IL_0006 stfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_timerSec token(0x04013B72)
+ IL_000b ldarg.0         
+ IL_000c ldc.i4.0        
+ IL_000d stfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_shakeFired token(0x04013B73)
+ IL_0012 ret             
+
+0x06016bdf HutongGames.PlayMaker.Actions.MainCameraShakerAction::OnUpdate RVA 0x69f5e0
+ IL_0000 ldarg.0         
+ IL_0001 ldarg.0         
+ IL_0002 ldfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_timerSec token(0x04013B72)
+ IL_0007 call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+ IL_000c add             
+ IL_000d stfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_timerSec token(0x04013B72)
+ IL_0012 ldarg.0         
+ IL_0013 ldfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_timerSec token(0x04013B72)
+ IL_0018 ldarg.0         
+ IL_0019 ldfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_Delay token(0x04013B70)
+ IL_001e callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+ IL_0023 blt.un.s       IL_0033 
+ IL_0025 ldarg.0         
+ IL_0026 ldfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_shakeFired token(0x04013B73)
+ IL_002b brtrue.s       IL_0033 
+ IL_002d ldarg.0         
+ IL_002e call           HutongGames.PlayMaker.Actions.MainCameraShakerAction::Shake token(0x06016BE0)
+ IL_0033 ldarg.0         
+ IL_0034 ldfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_timerSec token(0x04013B72)
+ IL_0039 ldarg.0         
+ IL_003a ldfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_Delay token(0x04013B70)
+ IL_003f callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+ IL_0044 ldarg.0         
+ IL_0045 ldfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_Time token(0x04013B6F)
+ IL_004a callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+ IL_004f add             
+ IL_0050 blt.un.s       IL_0069 
+ IL_0052 ldarg.0         
+ IL_0053 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+ IL_0058 ldarg.0         
+ IL_0059 ldfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_FinishedEvent token(0x04013B71)
+ IL_005e callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A00590F)
+ IL_0063 ldarg.0         
+ IL_0064 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+ IL_0069 ret             
+
+0x06016be0 HutongGames.PlayMaker.Actions.MainCameraShakerAction::Shake RVA 0x69f656
+ IL_0000 call           UnityEngine.Camera::get_main token(0x0A000580)
+ IL_0005 ldarg.0         
+ IL_0006 ldfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_Amount token(0x04013B6E)
+ IL_000b callvirt       HutongGames.PlayMaker.FsmVector3::get_Value token(0x0A005926)
+ IL_0010 ldarg.0         
+ IL_0011 ldfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_Time token(0x04013B6F)
+ IL_0016 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+ IL_001b call           CameraShakeMgr::Shake token(0x06015082)
+ IL_0020 ldarg.0         
+ IL_0021 ldc.i4.1        
+ IL_0022 stfld          HutongGames.PlayMaker.Actions.MainCameraShakerAction::m_shakeFired token(0x04013B73)
+ IL_0027 ret             
+
+0x06016be1 HutongGames.PlayMaker.Actions.MainCameraShakerAction::.ctor RVA 0x53731a
+ IL_0000 ldarg.0         
+ IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00406B)
+ IL_0006 ret             
+
+0x06016c7a HutongGames.PlayMaker.Actions.ShakeMinionsAction::OnEnter RVA 0x6a16bd
+ IL_0000 ldarg.0         
+ IL_0001 call           HutongGames.PlayMaker.Actions.ShakeMinionsAction::DoShakeMinions token(0x06016C7B)
+ IL_0006 ldarg.0         
+ IL_0007 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+ IL_000c ret             
+
+0x06016c7b HutongGames.PlayMaker.Actions.ShakeMinionsAction::DoShakeMinions RVA 0x6a16cc
+ IL_0000 ldarg.0         
+ IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+ IL_0006 ldarg.0         
+ IL_0007 ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::gameObject token(0x04013C10)
+ IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+ IL_0011 stloc.0         
+ IL_0012 ldloc.0         
+ IL_0013 ldnull          
+ IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000046)
+ IL_0019 brfalse.s      IL_0022 
+ IL_001b ldarg.0         
+ IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+ IL_0021 ret             
+ IL_0022 ldarg.0         
+ IL_0023 ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::MinionsToShake token(0x04013C12)
+ IL_0028 brtrue.s       IL_0063 
+ IL_002a ldloc.0         
+ IL_002b ldarg.0         
+ IL_002c ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::shakeType token(0x04013C11)
+ IL_0031 ldloc.0         
+ IL_0032 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+ IL_0037 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+ IL_003c ldarg.0         
+ IL_003d ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::shakeSize token(0x04013C13)
+ IL_0042 ldarg.0         
+ IL_0043 ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::customShakeIntensity token(0x04013C14)
+ IL_0048 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+ IL_004d ldarg.0         
+ IL_004e ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::radius token(0x04013C15)
+ IL_0053 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+ IL_0058 ldc.r4         0.0 
+ IL_005d call           MinionShake::ShakeAllMinions token(0x060152DA)
+ IL_0062 ret             
+ IL_0063 ldarg.0         
+ IL_0064 ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::MinionsToShake token(0x04013C12)
+ IL_0069 ldc.i4.1        
+ IL_006a bne.un.s       IL_009f 
+ IL_006c ldloc.0         
+ IL_006d ldarg.0         
+ IL_006e ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::shakeType token(0x04013C11)
+ IL_0073 ldloc.0         
+ IL_0074 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+ IL_0079 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+ IL_007e ldarg.0         
+ IL_007f ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::shakeSize token(0x04013C13)
+ IL_0084 ldarg.0         
+ IL_0085 ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::customShakeIntensity token(0x04013C14)
+ IL_008a callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+ IL_008f ldc.r4         0.0 
+ IL_0094 ldc.r4         0.0 
+ IL_0099 call           MinionShake::ShakeTargetMinion token(0x060152DB)
+ IL_009e ret             
+ IL_009f ldarg.0         
+ IL_00a0 ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::MinionsToShake token(0x04013C12)
+ IL_00a5 ldc.i4.2        
+ IL_00a6 bne.un.s       IL_00da 
+ IL_00a8 ldloc.0         
+ IL_00a9 ldarg.0         
+ IL_00aa ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::shakeType token(0x04013C11)
+ IL_00af ldloc.0         
+ IL_00b0 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+ IL_00b5 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+ IL_00ba ldarg.0         
+ IL_00bb ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::shakeSize token(0x04013C13)
+ IL_00c0 ldarg.0         
+ IL_00c1 ldfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::customShakeIntensity token(0x04013C14)
+ IL_00c6 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+ IL_00cb ldc.r4         0.0 
+ IL_00d0 ldc.r4         0.0 
+ IL_00d5 call           MinionShake::ShakeObject token(0x060152DC)
+ IL_00da ret             
+
+0x06016c7c HutongGames.PlayMaker.Actions.ShakeMinionsAction::.ctor RVA 0x6a17b3
+ IL_0000 ldarg.0         
+ IL_0001 ldc.i4.2        
+ IL_0002 stfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::shakeType token(0x04013C11)
+ IL_0007 ldarg.0         
+ IL_0008 ldc.i4.1        
+ IL_0009 stfld          HutongGames.PlayMaker.Actions.ShakeMinionsAction::shakeSize token(0x04013C13)
+ IL_000e ldarg.0         
+ IL_000f call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00406B)
+ IL_0014 ret             

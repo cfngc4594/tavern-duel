@@ -1,0 +1,26 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hidden/TextShadow" {
+Properties {
+
+_MainTex ("Font Texture", 2D) = "white" { }
+
+_Color ("Shadow Color", Color) = (0,0,0,0.3)
+
+_OffsetX ("OffsetX", Float) = 0.0020000000949949026
+
+_OffsetY ("OffsetY", Float) = 0.0020000000949949026
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent-1" "RenderType" = "Transparent" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent-1" "RenderType" = "Transparent" }
+ ZWrite Off
+  GpuProgramID 32405
+}
+}
+}

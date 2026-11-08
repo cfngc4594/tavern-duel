@@ -1,0 +1,11 @@
+# Unity exploratory glyph probe — completed
+
+Actual Unity: 6000.3.10f1 (e35f0c77bd8e), Apple M3, Metal. Target isolated fixture: 6000.3.11f1 (3000ef702840); this is NOT a strict same-version comparison or original Hearthstone client screenshot.
+
+Second run exited 0 and returned status sampled. All 23 distinct characters for 冰风雪人 / 吸取生命 / 造成2点伤害。为你的英雄恢复2点生命值。 have CharacterInfo metrics and UVs and individually nonempty atlas regions. Atlas 256x512 has 11039 nonzero alpha pixels. RGBA RGB channels are black; use alpha coverage or atlas_alpha.png. Rotated packed glyph UVs are preserved.
+
+Font SHA256 b540fd60e6f44d3263c971861ebfec2b79788b20b94b2c753431b4480108e3e5 verified. Import size16, spacing1, padding4, Dynamic, Smooth, round advance true; request46 Normal. Legacy bounds true successfully set through existing m_UseLegacyBoundsCalculation. Fallback references empty. Ascent14 and lineHeight16 are runtime results, not injected original values.
+
+Original source script reviewed: no network calls, exports only in requested directory; local font import/reimport and temporary TextMesh objects only. No source script changes. First run stopped at invalid dependency com.unity.modules.textrendering@1.0.0; this nonexistent package was removed only from isolated manifest; installed built-in imageconversion retained. Second run compiled successfully. Independent ProjectVersion automatically converted from 6000.3.11f1 to installed version; originals and actual files included. No other game project modified, software installed, account/license settings manually changed, or Hearthstone login performed. Unity itself used its normal existing license service and attempted its background UnityConnect config request (timeout reported), despite the probe script itself being offline.
+
+Both execution logs are included with session, license, correlation and machine identifiers redacted; unredacted originals retained locally only. Warnings include UnityConnect timeout, transient licensing access-token unavailable followed by successful existing entitlement resolution, shutdown debugger-agent listen warning; none prevented sampled output. This does not run original UberText/shader/curved card layout or establish client pixel identity.

@@ -1,0 +1,743 @@
+{
+  "types": [
+    {
+      "type": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction",
+      "token": "0x020030b3",
+      "fields": [
+        {
+          "name": "gameObjectList",
+          "token": "0x04013bbc",
+          "signature": "06129435"
+        },
+        {
+          "name": "waitTime",
+          "token": "0x04013bbd",
+          "signature": "06128aa1"
+        },
+        {
+          "name": "coroutineParent",
+          "token": "0x04013bbe",
+          "signature": "061235"
+        }
+      ]
+    },
+    {
+      "type": "<WaitAndRemove>d__4",
+      "token": "0x020030b4",
+      "fields": [
+        {
+          "name": "<>1__state",
+          "token": "0x04013bbf",
+          "signature": "0608"
+        },
+        {
+          "name": "<>2__current",
+          "token": "0x04013bc0",
+          "signature": "061c"
+        },
+        {
+          "name": "<>4__this",
+          "token": "0x04013bc1",
+          "signature": "0612c000c2cc"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction",
+      "method": "OnEnter",
+      "token": "0x06016c15",
+      "rva": "0x6a05dc",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 51,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::gameObjectList",
+          "token": "token(0x04013BBC)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmArray::get_Length",
+          "token": "token(0x0A00594E)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "brtrue.s",
+          "operand": "IL_000e",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "newobj",
+          "operand": "UnityEngine.GameObject::.ctor",
+          "token": "token(0x0A000583)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::AddComponent<spec>",
+          "token": "token(0x2B0003A7)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "stfld",
+          "operand": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::coroutineParent",
+          "token": "token(0x04013BBE)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::coroutineParent",
+          "token": "token(0x04013BBE)"
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::WaitAndRemove",
+          "token": "token(0x06016C16)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.MonoBehaviour::StartCoroutine",
+          "token": "token(0x0A0000F1)"
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction",
+      "method": "WaitAndRemove",
+      "token": "0x06016c16",
+      "rva": "0x6a061b",
+      "signature": "2000128111",
+      "parameters": [],
+      "code_size": 14,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "newobj",
+          "operand": "<WaitAndRemove>d__4::.ctor",
+          "token": "token(0x06016C18)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "stfld",
+          "operand": "<WaitAndRemove>d__4::<>4__this",
+          "token": "token(0x04013BC1)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction",
+      "method": ".ctor",
+      "token": "0x06016c17",
+      "rva": "0x53731a",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::.ctor",
+          "token": "token(0x0A00406B)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "<WaitAndRemove>d__4",
+      "method": ".ctor",
+      "token": "0x06016c18",
+      "rva": "0x6a062a",
+      "signature": "20010108",
+      "parameters": [
+        "<>1__state"
+      ],
+      "code_size": 14,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "System.Object::.ctor",
+          "token": "token(0x0A000003)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "stfld",
+          "operand": "<WaitAndRemove>d__4::<>1__state",
+          "token": "token(0x04013BBF)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "<WaitAndRemove>d__4",
+      "method": "System.IDisposable.Dispose",
+      "token": "0x06016c19",
+      "rva": "0x4291",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 1,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "<WaitAndRemove>d__4",
+      "method": "MoveNext",
+      "token": "0x06016c1a",
+      "rva": "0x6a063c",
+      "signature": "200002",
+      "parameters": [],
+      "code_size": 125,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "<WaitAndRemove>d__4::<>1__state",
+          "token": "token(0x04013BBF)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldfld",
+          "operand": "<WaitAndRemove>d__4::<>4__this",
+          "token": "token(0x04013BC1)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "brfalse.s",
+          "operand": "IL_0017",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "beq.s",
+          "operand": "IL_003d",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "stfld",
+          "operand": "<WaitAndRemove>d__4::<>1__state",
+          "token": "token(0x04013BBF)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::waitTime",
+          "token": "token(0x04013BBD)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmFloat::get_Value",
+          "token": "token(0x0A003708)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "newobj",
+          "operand": "UnityEngine.WaitForSecondsRealtime::.ctor",
+          "token": "token(0x0A000D0E)"
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "stfld",
+          "operand": "<WaitAndRemove>d__4::<>2__current",
+          "token": "token(0x04013BC0)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "stfld",
+          "operand": "<WaitAndRemove>d__4::<>1__state",
+          "token": "token(0x04013BBF)"
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "stfld",
+          "operand": "<WaitAndRemove>d__4::<>1__state",
+          "token": "token(0x04013BBF)"
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::gameObjectList",
+          "token": "token(0x04013BBC)"
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmArray::get_Values",
+          "token": "token(0x0A00594F)"
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0050",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "br.s",
+          "operand": "IL_0065",
+          "token": null
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0056",
+          "opcode": "ldelem.ref",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0057",
+          "opcode": "castclass",
+          "operand": "UnityEngine.GameObject",
+          "token": "token(0x01000023)"
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::Destroy",
+          "token": "token(0x0A000059)"
+        },
+        {
+          "offset": "IL_0061",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0063",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0064",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "ldlen",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "conv.i4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0069",
+          "opcode": "blt.s",
+          "operand": "IL_0054",
+          "token": null
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006c",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::coroutineParent",
+          "token": "token(0x04013BBE)"
+        },
+        {
+          "offset": "IL_0071",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_0076",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::Destroy",
+          "token": "token(0x0A000059)"
+        },
+        {
+          "offset": "IL_007b",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "<WaitAndRemove>d__4",
+      "method": "System.Collections.Generic.IEnumerator<System.Object>.get_Current",
+      "token": "0x06016c1b",
+      "rva": "0x6a06c5",
+      "signature": "20001c",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "<WaitAndRemove>d__4::<>2__current",
+          "token": "token(0x04013BC0)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "<WaitAndRemove>d__4",
+      "method": "System.Collections.IEnumerator.Reset",
+      "token": "0x06016c1c",
+      "rva": "0x4585",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 6,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "newobj",
+          "operand": "System.NotSupportedException::.ctor",
+          "token": "token(0x0A0000F7)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "throw",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "<WaitAndRemove>d__4",
+      "method": "System.Collections.IEnumerator.get_Current",
+      "token": "0x06016c1d",
+      "rva": "0x6a06c5",
+      "signature": "20001c",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "<WaitAndRemove>d__4::<>2__current",
+          "token": "token(0x04013BC0)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

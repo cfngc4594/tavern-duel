@@ -1,0 +1,25 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Card/UnlitTextureTint" {
+Properties {
+
+_Color ("Color", Color) = (1,1,1,1)
+
+_MainTex ("Base (RGB)", 2D) = "white" { }
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "CardAlpha" = "true" "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "CardAlpha" = "true" "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Cull Off
+  GpuProgramID 26785
+}
+}
+Fall back "Utility/HearthstoneFallbackDiffuse"
+}

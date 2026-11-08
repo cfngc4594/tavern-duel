@@ -1,0 +1,29 @@
+正文五维原配置 vs v24（build37视觉，规则仍5834，不更改规则）
+
+1 字体
+原普通Description/PowersUberText引用FranklinGothic Font PathID-3530185850595028133；现有zhCN bundle实际FontDefinition PathID2496988426703900957名FranklinGothic，m_Font FileID6 PathID2407746389514081280，即已有BlizzardGlobal。FontDef modifiers：lineSpacing1.25, fontSize1, charSize1, singleLineAdjustment0, outline1, unbound1。v24正文BlizzardGlobal本身符合此映射，不应改用标题隶书。zhcn-fontdefinitions.json保存直接解析数据。
+
+2 粗细
+正文m_Outline=0，m_BoldSize=1.25；正常字使用UnlitTextMaterialQuery，粗体使用BoldTextMaterialQuery。不要对全部正文套标题outline9tap。Bold()中m_BoldSize只在>10时clamp10；采样offset=(1/atlasW,1/atlasH)*1.25。Hidden/Text_Bold原Shader PathID7346164597719664136已找到，团队从原shader readable证据恢复八采样：四对角offset(±.6bx,±.6by)、水平±bx、垂直±by，不含中心；alpha=.230000004*sum8(alpha)*vertexColor.a*_Color.a，RGB=vertexColor.rgb*_Color.rgb，无shader内clamp。当前bundle单独导出的shader_7346164597719664136.txt只含属性/Pass，不是可运行shader；程序证据来自团队原shader readable，不是该简略导出。
+
+3 间距
+两类原m_LineSpacing=.75；zhCN多行effective=.75*1.25=.9375，单行=.75+0+0=.75。原Unity TextMesh使用lineSpacing倍率而非像素差。原GetCharacterInfo.advance*characterSize*.1用于字宽。没有发现正文组件独立字距调整字段；字距来自字体/Unity glyph metrics。v24 Label3D没有设置行距，使用Godot默认，不等价。
+
+4 大小/布局
+两类fontSize40，charSize5=>Unity characterSize .05，minChar1=>.01；字号modifier=1，勿用标题1.15。原ResizeToFit1,ResizeToFitAndGrow0,WordWrap1；缩的是characterSize，迭代乘.95最多40次，非字号逐减。v24 renderer214-234是人工\n分行，逐字号fs-=1到18，pixel_size固定.005；这改变字体栅格、换行、粗细，需替换。
+普通随从component7968649797362748695：width1.9500000477 height.8700000048；Underwear1, width.25,height.1700000018,flip0。
+普通法术component8380202808946389638：width1.7000000477 height.8199999928；Underwear1,width.2599999905,height.1599999964,flip1。
+Underwear为原异形排版约束，不应忽略。UberText.cs2540+向LineWrapper传入原width/height及收窄区；locale无zhCN=9额外覆盖（随从仅8,4,15，法术4,15）。其调整方程：narrowWidth=W*(1-underwearWidth); regionHeight=H*(flip?underwearHeight:1-underwearHeight)。具体哪一行收窄由LineWrapper.GetFinalContainerWidth/GetUnderwearBounds原逻辑决定，不凭视觉。
+正文m_RenderToTexture=0，并非标题RTT；原直接TextMesh。转Godot中间纹理可作兼容架构，不能称原正文RTT流程。
+
+5 加粗富文本
+两类m_RichText=1，序列化m_Text为空，由运行时注入。
+Actor.cs4575+ UpdatePowersText→GetPowersText→UpdateText(m_powersTextMesh,powersText)。GetPowersText4602+从EntityDef.GetCardTextInHand或Entity.GetCardTextInHand/History获取，之后可经GameEntity.UpdateCardText修正。没有在Actor中按中文关键词自动加粗。
+UberText.cs2597 ProcessText：先插入<material=1></material>；识别<b>后Bold()，把<b>换<material=1>，</b>换</material>。不是Unity字体Bold style，亦非另选粗体字体。
+UberTextRendering.cs ApplyMaterials按m_boldEnabled把bold材质绑定submesh/materialIndex1；正常materialIndex0。
+v24 desc数组是手写文字/硬换行，无标签，Label3D不能重建richText材料分组。应新增明确rich_description，不修改effect/damage/keyword规则字段。已从项目锁定源XML(5834 commit f1f95c620ce6e103c5974e169cac3bf7410281ae)恢复完整30卡原CardDef富文本，见rich_desc_5834.json。text_raw保留<b>/$/#，rich_desc_base仅删除数字前$/#供无加成基础展示；无需猜关键词。原XML SHA256 e0a50c4be89d3c9fe99145488a76be4202e36cad87109ad7d7248fccfa307c3a。
+
+证据：description-serialized-anchors.json完整原两普通组件（保留所有locale参数），zhcn-fontdefinitions.json直接UnityPy只读解析。原代码目录 /workspace/scratch/bb17e9e89c3a/rea_card_analysis/checkpoint/SourceEvidence/reconstructed_classes。原Prefab source_selection.json路径记录在anchors文件。原LineWrapper CIL在 /workspace/scratch/bb17e9e89c3a/name_mesh_probe/text_pipeline/linewrapper-rea.json。
+
+
+布局进一步闭环详见UNDERWEAR_PORT.txt；当前105字符的原换行规则子集已给实现代理，Unity多行bounds采样仍用于验证布局。

@@ -1,0 +1,1372 @@
+
+0x06014719 SoundManager::Play
+IL_0000 ldarg.0 
+IL_0001 ldarg.1 
+IL_0002 ldarg.2 
+IL_0003 ldarg.3 
+IL_0004 ldarg.s argument(0x0004)
+IL_0006 call SoundManager::PlayImpl
+IL_000b call UnityEngine.Object::op_Implicit
+IL_0010 ret 
+
+0x06014726 SoundManager::SetVolume
+IL_0000 ldarg.1 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brfalse.s IL_000a
+IL_0009 ret 
+IL_000a ldarg.0 
+IL_000b ldarg.1 
+IL_000c ldnull 
+IL_000d ldnull 
+IL_000e ldc.i4.0 
+IL_000f call SoundManager::RegisterExtension
+IL_0014 stloc.0 
+IL_0015 ldloc.0 
+IL_0016 brtrue.s IL_0019
+IL_0018 ret 
+IL_0019 ldloc.0 
+IL_001a ldarg.2 
+IL_001b stfld SourceExtension::m_codeVolume
+IL_0020 ldarg.0 
+IL_0021 ldarg.1 
+IL_0022 ldloc.0 
+IL_0023 call SoundManager::UpdateVolume
+IL_0028 ret 
+
+0x06014735 SoundManager::PlayClip
+IL_0000 ldarg.1 
+IL_0001 brfalse.s IL_001f
+IL_0003 ldarg.1 
+IL_0004 ldfld SoundPlayClipArgs::m_def
+IL_0009 ldnull 
+IL_000a call UnityEngine.Object::op_Equality
+IL_000f brfalse.s IL_004d
+IL_0011 ldarg.1 
+IL_0012 ldfld SoundPlayClipArgs::m_forcedAudioClip
+IL_0017 ldnull 
+IL_0018 call UnityEngine.Object::op_Equality
+IL_001d brfalse.s IL_004d
+IL_001f ldstr 'PlayClip: using placeholder sound for audio clip: {0}'
+IL_0024 ldc.i4.1 
+IL_0025 newarr System.Object
+IL_002a dup 
+IL_002b ldc.i4.0 
+IL_002c ldarg.1 
+IL_002d brtrue.s IL_0036
+IL_002f ldstr ''
+IL_0034 br.s IL_003c
+IL_0036 ldarg.1 
+IL_0037 callvirt System.Object::ToString
+IL_003c stelem.ref 
+IL_003d call UnityEngine.Debug::LogWarningFormat
+IL_0042 ldarg.0 
+IL_0043 ldnull 
+IL_0044 ldnull 
+IL_0045 ldnull 
+IL_0046 ldnull 
+IL_0047 call SoundManager::PlayImpl
+IL_004c ret 
+IL_004d ldnull 
+IL_004e stloc.0 
+IL_004f ldarg.2 
+IL_0050 brfalse.s IL_0067
+IL_0052 ldarg.0 
+IL_0053 ldarg.1 
+IL_0054 ldfld SoundPlayClipArgs::m_templateSource
+IL_0059 ldarg.1 
+IL_005a ldfld SoundPlayClipArgs::m_def
+IL_005f call SoundManager::GenerateAudioSource
+IL_0064 stloc.0 
+IL_0065 br.s IL_00b1
+IL_0067 ldarg.1 
+IL_0068 ldfld SoundPlayClipArgs::m_def
+IL_006d callvirt UnityEngine.Component::GetComponent<spec>
+IL_0072 stloc.0 
+IL_0073 ldloc.0 
+IL_0074 ldnull 
+IL_0075 call UnityEngine.Object::op_Inequality
+IL_007a brfalse.s IL_008a
+IL_007c ldarg.0 
+IL_007d ldfld SoundManager::m_generatedSources
+IL_0082 ldloc.0 
+IL_0083 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d227e60>::Add
+IL_0088 br.s IL_00b1
+IL_008a call Log::get_Asset
+IL_008f ldstr 'PlayClip: Loaded sound asset missing AudioSource. Generating new one...'
+IL_0094 call System.Array::Empty<spec>
+IL_0099 callvirt Logger::PrintWarning
+IL_009e ldarg.0 
+IL_009f ldarg.1 
+IL_00a0 ldfld SoundPlayClipArgs::m_templateSource
+IL_00a5 ldarg.1 
+IL_00a6 ldfld SoundPlayClipArgs::m_def
+IL_00ab call SoundManager::GenerateAudioSource
+IL_00b0 stloc.0 
+IL_00b1 ldarg.1 
+IL_00b2 ldfld SoundPlayClipArgs::m_forcedAudioClip
+IL_00b7 ldnull 
+IL_00b8 call UnityEngine.Object::op_Inequality
+IL_00bd brfalse.s IL_00cb
+IL_00bf ldloc.0 
+IL_00c0 ldarg.1 
+IL_00c1 ldfld SoundPlayClipArgs::m_forcedAudioClip
+IL_00c6 callvirt UnityEngine.AudioSource::set_clip
+IL_00cb ldarg.1 
+IL_00cc ldflda SoundPlayClipArgs::m_volume
+IL_00d1 call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d4a8080>::get_HasValue
+IL_00d6 brfalse.s IL_00e9
+IL_00d8 ldloc.0 
+IL_00d9 ldarg.1 
+IL_00da ldflda SoundPlayClipArgs::m_volume
+IL_00df call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d4a8080>::get_Value
+IL_00e4 callvirt UnityEngine.AudioSource::set_volume
+IL_00e9 ldarg.1 
+IL_00ea ldflda SoundPlayClipArgs::m_pitch
+IL_00ef call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d4a8080>::get_HasValue
+IL_00f4 brfalse.s IL_0107
+IL_00f6 ldloc.0 
+IL_00f7 ldarg.1 
+IL_00f8 ldflda SoundPlayClipArgs::m_pitch
+IL_00fd call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d4a8080>::get_Value
+IL_0102 callvirt UnityEngine.AudioSource::set_pitch
+IL_0107 ldarg.1 
+IL_0108 ldflda SoundPlayClipArgs::m_spatialBlend
+IL_010d call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d4a8080>::get_HasValue
+IL_0112 brfalse.s IL_0125
+IL_0114 ldloc.0 
+IL_0115 ldarg.1 
+IL_0116 ldflda SoundPlayClipArgs::m_spatialBlend
+IL_011b call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d4a8080>::get_Value
+IL_0120 callvirt UnityEngine.AudioSource::set_spatialBlend
+IL_0125 ldarg.1 
+IL_0126 ldflda SoundPlayClipArgs::m_category
+IL_012b call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf3e060>::get_HasValue
+IL_0130 brfalse.s IL_0148
+IL_0132 ldloc.0 
+IL_0133 callvirt UnityEngine.Component::GetComponent<spec>
+IL_0138 ldarg.1 
+IL_0139 ldflda SoundPlayClipArgs::m_category
+IL_013e call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf3e060>::get_Value
+IL_0143 stfld SoundDef::m_Category
+IL_0148 ldarg.0 
+IL_0149 ldloc.0 
+IL_014a ldarg.1 
+IL_014b ldfld SoundPlayClipArgs::m_parentObject
+IL_0150 call SoundManager::InitSourceTransform
+IL_0155 ldarg.1 
+IL_0156 ldfld SoundPlayClipArgs::m_forcedAudioClip
+IL_015b ldnull 
+IL_015c call UnityEngine.Object::op_Inequality
+IL_0161 brfalse.s IL_0176
+IL_0163 ldarg.0 
+IL_0164 ldloc.0 
+IL_0165 ldnull 
+IL_0166 ldarg.1 
+IL_0167 ldfld SoundPlayClipArgs::m_forcedAudioClip
+IL_016c ldnull 
+IL_016d call SoundManager::Play
+IL_0172 brfalse.s IL_0189
+IL_0174 ldloc.0 
+IL_0175 ret 
+IL_0176 ldarg.0 
+IL_0177 ldloc.0 
+IL_0178 ldarg.1 
+IL_0179 ldfld SoundPlayClipArgs::m_def
+IL_017e ldnull 
+IL_017f ldarg.3 
+IL_0180 call SoundManager::Play
+IL_0185 brfalse.s IL_0189
+IL_0187 ldloc.0 
+IL_0188 ret 
+IL_0189 ldarg.0 
+IL_018a ldloc.0 
+IL_018b call SoundManager::FinishGeneratedSource
+IL_0190 ldnull 
+IL_0191 ret 
+
+0x0601475a SoundManager::RegisterExtension
+IL_0000 ldarg.2 
+IL_0001 stloc.0 
+IL_0002 ldloc.0 
+IL_0003 ldnull 
+IL_0004 call UnityEngine.Object::op_Equality
+IL_0009 brfalse.s IL_0013
+IL_000b ldarg.0 
+IL_000c ldarg.1 
+IL_000d call SoundManager::GetDefFromSource
+IL_0012 stloc.0 
+IL_0013 ldarg.0 
+IL_0014 ldarg.1 
+IL_0015 call SoundManager::GetExtension
+IL_001a stloc.1 
+IL_001b ldloc.1 
+IL_001c brtrue.s IL_0085
+IL_001e ldnull 
+IL_001f stloc.2 
+IL_0020 ldarg.3 
+IL_0021 ldnull 
+IL_0022 call UnityEngine.Object::op_Equality
+IL_0027 brtrue.s IL_002c
+IL_0029 ldarg.3 
+IL_002a br.s IL_0036
+IL_002c ldarg.0 
+IL_002d ldloca.s local(0x0002)
+IL_002f ldarg.1 
+IL_0030 ldloc.0 
+IL_0031 call SoundManager::LoadClipForPlayback
+IL_0036 stloc.3 
+IL_0037 call Blizzard.T5.Services.ServiceManager::Get<spec>
+IL_003c dup 
+IL_003d brtrue.s IL_0042
+IL_003f pop 
+IL_0040 br.s IL_0049
+IL_0042 ldarg.1 
+IL_0043 ldloc.2 
+IL_0044 call Blizzard.T5.AssetManager.DisposablesCleaner::Attach
+IL_0049 ldloc.3 
+IL_004a ldnull 
+IL_004b call UnityEngine.Object::op_Equality
+IL_0050 brtrue.s IL_005f
+IL_0052 ldarg.s argument(0x0004)
+IL_0054 brfalse.s IL_0061
+IL_0056 ldarg.0 
+IL_0057 ldloc.3 
+IL_0058 call SoundManager::ProcessClipLimits
+IL_005d brfalse.s IL_0061
+IL_005f ldnull 
+IL_0060 ret 
+IL_0061 ldarg.0 
+IL_0062 ldarg.1 
+IL_0063 ldloc.0 
+IL_0064 call SoundManager::RegisterSourceExtensionCommon
+IL_0069 stloc.1 
+IL_006a ldloc.1 
+IL_006b ldarg.1 
+IL_006c callvirt UnityEngine.AudioSource::get_clip
+IL_0071 stfld SourceExtension::m_sourceClip
+IL_0076 ldarg.0 
+IL_0077 ldarg.1 
+IL_0078 ldloc.0 
+IL_0079 ldloc.1 
+IL_007a ldloc.3 
+IL_007b call SoundManager::InitNewClipOnSource
+IL_0080 br IL_0112
+IL_0085 ldarg.s argument(0x0004)
+IL_0087 brfalse IL_0112
+IL_008c ldarg.3 
+IL_008d ldnull 
+IL_008e call UnityEngine.Object::op_Equality
+IL_0093 brfalse.s IL_00b9
+IL_0095 ldnull 
+IL_0096 stloc.s local(0x0005)
+IL_0098 ldarg.0 
+IL_0099 ldloca.s local(0x0005)
+IL_009b ldarg.1 
+IL_009c ldloc.0 
+IL_009d call SoundManager::LoadClipForPlayback
+IL_00a2 stloc.s local(0x0004)
+IL_00a4 call Blizzard.T5.Services.ServiceManager::Get<spec>
+IL_00a9 dup 
+IL_00aa brtrue.s IL_00af
+IL_00ac pop 
+IL_00ad br.s IL_00bc
+IL_00af ldarg.1 
+IL_00b0 ldloc.s local(0x0005)
+IL_00b2 call Blizzard.T5.AssetManager.DisposablesCleaner::Attach
+IL_00b7 br.s IL_00bc
+IL_00b9 ldarg.3 
+IL_00ba stloc.s local(0x0004)
+IL_00bc ldarg.0 
+IL_00bd ldarg.1 
+IL_00be ldloc.s local(0x0004)
+IL_00c0 call SoundManager::CanPlayClipOnExistingSource
+IL_00c5 brtrue.s IL_00e3
+IL_00c7 ldarg.0 
+IL_00c8 ldarg.1 
+IL_00c9 call SoundManager::IsActive
+IL_00ce brfalse.s IL_00da
+IL_00d0 ldarg.0 
+IL_00d1 ldarg.1 
+IL_00d2 call SoundManager::Stop
+IL_00d7 pop 
+IL_00d8 br.s IL_00e1
+IL_00da ldarg.0 
+IL_00db ldarg.1 
+IL_00dc call SoundManager::FinishSource
+IL_00e1 ldnull 
+IL_00e2 ret 
+IL_00e3 ldarg.1 
+IL_00e4 callvirt UnityEngine.AudioSource::get_clip
+IL_00e9 ldloc.s local(0x0004)
+IL_00eb call UnityEngine.Object::op_Inequality
+IL_00f0 brfalse.s IL_0112
+IL_00f2 ldarg.1 
+IL_00f3 callvirt UnityEngine.AudioSource::get_clip
+IL_00f8 ldnull 
+IL_00f9 call UnityEngine.Object::op_Inequality
+IL_00fe brfalse.s IL_0107
+IL_0100 ldarg.0 
+IL_0101 ldarg.1 
+IL_0102 call SoundManager::UnregisterSourceByClip
+IL_0107 ldarg.0 
+IL_0108 ldarg.1 
+IL_0109 ldloc.0 
+IL_010a ldloc.1 
+IL_010b ldloc.s local(0x0004)
+IL_010d call SoundManager::InitNewClipOnSource
+IL_0112 ldloc.1 
+IL_0113 ret 
+
+0x0601475c SoundManager::RegisterSourceExtensionCommon
+IL_0000 newobj SourceExtension::.ctor
+IL_0005 stloc.0 
+IL_0006 ldloc.0 
+IL_0007 ldarg.1 
+IL_0008 callvirt UnityEngine.AudioSource::get_volume
+IL_000d stfld SourceExtension::m_sourceVolume
+IL_0012 ldloc.0 
+IL_0013 ldarg.1 
+IL_0014 callvirt UnityEngine.AudioSource::get_pitch
+IL_0019 stfld SourceExtension::m_sourcePitch
+IL_001e ldloc.0 
+IL_001f ldarg.0 
+IL_0020 call SoundManager::GetNextSourceId
+IL_0025 stfld SourceExtension::m_id
+IL_002a ldarg.0 
+IL_002b ldarg.1 
+IL_002c ldloc.0 
+IL_002d call SoundManager::AddExtensionMapping
+IL_0032 ldarg.0 
+IL_0033 ldarg.1 
+IL_0034 call SoundManager::GetCategory
+IL_0039 stloc.1 
+IL_003a ldloc.1 
+IL_003b brtrue.s IL_0044
+IL_003d ldarg.2 
+IL_003e ldfld SoundDef::m_Category
+IL_0043 stloc.1 
+IL_0044 ldarg.0 
+IL_0045 ldarg.1 
+IL_0046 ldloc.1 
+IL_0047 call SoundManager::RegisterSourceByCategory
+IL_004c ldloc.0 
+IL_004d ldarg.2 
+IL_004e call SoundUtils::GetRandomVolumeFromDef
+IL_0053 stfld SourceExtension::m_defVolume
+IL_0058 ldloc.0 
+IL_0059 ldarg.2 
+IL_005a call SoundUtils::GetRandomPitchFromDef
+IL_005f stfld SourceExtension::m_defPitch
+IL_0064 ldloc.0 
+IL_0065 ret 
+
+0x0601475d SoundManager::LoadClipForPlayback
+IL_0000 ldnull 
+IL_0001 stloc.0 
+IL_0002 ldarg.3 
+IL_0003 stloc.1 
+IL_0004 ldarg.3 
+IL_0005 ldnull 
+IL_0006 call UnityEngine.Object::op_Equality
+IL_000b brfalse.s IL_0014
+IL_000d ldarg.2 
+IL_000e callvirt UnityEngine.Component::GetComponent<spec>
+IL_0013 stloc.1 
+IL_0014 ldloc.1 
+IL_0015 ldnull 
+IL_0016 call UnityEngine.Object::op_Inequality
+IL_001b brfalse.s IL_0098
+IL_001d ldloc.1 
+IL_001e call SoundUtils::GetRandomClipFromDef
+IL_0023 stloc.0 
+IL_0024 ldloc.0 
+IL_0025 brtrue.s IL_0098
+IL_0027 ldloc.1 
+IL_0028 ldfld SoundDef::m_AudioClip
+IL_002d stloc.0 
+IL_002e ldloc.0 
+IL_002f call System.String::IsNullOrEmpty
+IL_0034 brfalse.s IL_0098
+IL_0036 ldarg.2 
+IL_0037 callvirt UnityEngine.AudioSource::get_clip
+IL_003c ldnull 
+IL_003d call UnityEngine.Object::op_Inequality
+IL_0042 brfalse.s IL_004b
+IL_0044 ldarg.2 
+IL_0045 callvirt UnityEngine.AudioSource::get_clip
+IL_004a ret 
+IL_004b ldstr ''
+IL_0050 stloc.2 
+IL_0051 call Hearthstone.HearthstoneApplication::IsInternal
+IL_0056 brfalse.s IL_006b
+IL_0058 ldstr ' '
+IL_005d ldarg.2 
+IL_005e ldc.i4.s 46
+IL_0060 call DebugUtils::GetHierarchyPathAndType
+IL_0065 call System.String::Concat
+IL_006a stloc.2 
+IL_006b ldstr '{0} has no AudioClip. Top-level parent is {1}{2}.'
+IL_0070 ldc.i4.3 
+IL_0071 newarr System.Object
+IL_0076 dup 
+IL_0077 ldc.i4.0 
+IL_0078 ldarg.2 
+IL_0079 callvirt UnityEngine.Component::get_gameObject
+IL_007e callvirt UnityEngine.Object::get_name
+IL_0083 stelem.ref 
+IL_0084 dup 
+IL_0085 ldc.i4.1 
+IL_0086 ldarg.2 
+IL_0087 call Blizzard.T5.Core.Utils.GameObjectUtils::FindTopParent
+IL_008c stelem.ref 
+IL_008d dup 
+IL_008e ldc.i4.2 
+IL_008f ldloc.2 
+IL_0090 stelem.ref 
+IL_0091 call Error::AddDevFatal
+IL_0096 ldnull 
+IL_0097 ret 
+IL_0098 ldloc.0 
+IL_0099 brfalse.s IL_00a4
+IL_009b ldloc.1 
+IL_009c ldnull 
+IL_009d call UnityEngine.Object::op_Equality
+IL_00a2 brfalse.s IL_00cc
+IL_00a4 ldstr 'DetermineClipForPlayback: failed to GET AudioClip clipAsset={0}, gameObject={2}, soundDef={3}'
+IL_00a9 ldc.i4.3 
+IL_00aa newarr System.Object
+IL_00af dup 
+IL_00b0 ldc.i4.0 
+IL_00b1 ldloc.0 
+IL_00b2 stelem.ref 
+IL_00b3 dup 
+IL_00b4 ldc.i4.1 
+IL_00b5 ldarg.2 
+IL_00b6 callvirt UnityEngine.Component::get_gameObject
+IL_00bb callvirt UnityEngine.Object::get_name
+IL_00c0 stelem.ref 
+IL_00c1 dup 
+IL_00c2 ldc.i4.2 
+IL_00c3 ldloc.1 
+IL_00c4 stelem.ref 
+IL_00c5 call Error::AddDevFatal
+IL_00ca ldnull 
+IL_00cb ret 
+IL_00cc ldarg.1 
+IL_00cd ldarg.2 
+IL_00ce ldloc.0 
+IL_00cf call AssetReference::op_Implicit
+IL_00d4 call SoundLoader::LoadAudioClipWithFallback
+IL_00d9 ldarg.1 
+IL_00da ldind.ref 
+IL_00db dup 
+IL_00dc brtrue.s IL_00e1
+IL_00de pop 
+IL_00df ldnull 
+IL_00e0 ret 
+IL_00e1 call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d08f4a0>::get_Asset
+IL_00e6 ret 
+
+0x0601475f SoundManager::InitNewClipOnSource
+IL_0000 ldarg.3 
+IL_0001 ldarg.2 
+IL_0002 call SoundUtils::GetRandomVolumeFromDef
+IL_0007 stfld SourceExtension::m_defVolume
+IL_000c ldarg.3 
+IL_000d ldarg.2 
+IL_000e call SoundUtils::GetRandomPitchFromDef
+IL_0013 stfld SourceExtension::m_defPitch
+IL_0018 ldarg.1 
+IL_0019 ldarg.s argument(0x0004)
+IL_001b callvirt UnityEngine.AudioSource::set_clip
+IL_0020 ldarg.0 
+IL_0021 ldarg.1 
+IL_0022 ldarg.s argument(0x0004)
+IL_0024 call SoundManager::RegisterSourceByClip
+IL_0029 ret 
+
+0x06014766 SoundManager::UpdateVolume
+IL_0000 ldarg.0 
+IL_0001 ldarg.1 
+IL_0002 call SoundManager::GetCategoryVolume
+IL_0007 stloc.0 
+IL_0008 ldarg.0 
+IL_0009 ldarg.1 
+IL_000a call SoundManager::GetDuckingVolume
+IL_000f stloc.1 
+IL_0010 ldarg.0 
+IL_0011 ldarg.1 
+IL_0012 ldarg.2 
+IL_0013 ldloc.0 
+IL_0014 ldloc.1 
+IL_0015 call SoundManager::UpdateVolume
+IL_001a ret 
+
+0x06014767 SoundManager::UpdateVolume
+IL_0000 ldarg.1 
+IL_0001 ldarg.2 
+IL_0002 ldfld SourceExtension::m_codeVolume
+IL_0007 ldarg.2 
+IL_0008 ldfld SourceExtension::m_sourceVolume
+IL_000d mul 
+IL_000e ldarg.2 
+IL_000f ldfld SourceExtension::m_defVolume
+IL_0014 mul 
+IL_0015 ldarg.3 
+IL_0016 mul 
+IL_0017 ldarg.s argument(0x0004)
+IL_0019 mul 
+IL_001a callvirt UnityEngine.AudioSource::set_volume
+IL_001f ret 
+
+0x0601476a SoundManager::UpdatePitch
+IL_0000 ldarg.1 
+IL_0001 ldarg.2 
+IL_0002 ldfld SourceExtension::m_codePitch
+IL_0007 ldarg.2 
+IL_0008 ldfld SourceExtension::m_sourcePitch
+IL_000d mul 
+IL_000e ldarg.2 
+IL_000f ldfld SourceExtension::m_defPitch
+IL_0014 mul 
+IL_0015 callvirt UnityEngine.AudioSource::set_pitch
+IL_001a ret 
+
+0x06014791 SoundManager::PlayImpl
+IL_0000 ldarg.1 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brfalse.s IL_005a
+IL_0009 ldarg.0 
+IL_000a call SoundManager::GetPlaceholderSource
+IL_000f stloc.1 
+IL_0010 ldloc.1 
+IL_0011 ldnull 
+IL_0012 call UnityEngine.Object::op_Equality
+IL_0017 brfalse.s IL_002a
+IL_0019 ldstr 'SoundManager.Play() - source is null and fallback is null'
+IL_001e call System.Array::Empty<spec>
+IL_0023 call Error::AddDevFatal
+IL_0028 ldnull 
+IL_0029 ret 
+IL_002a ldstr 'Using placeholder sound for source={0}, oneShotDef={1}, oneShotClip={2}'
+IL_002f ldc.i4.3 
+IL_0030 newarr System.Object
+IL_0035 dup 
+IL_0036 ldc.i4.0 
+IL_0037 ldarg.1 
+IL_0038 stelem.ref 
+IL_0039 dup 
+IL_003a ldc.i4.1 
+IL_003b ldarg.2 
+IL_003c stelem.ref 
+IL_003d dup 
+IL_003e ldc.i4.2 
+IL_003f ldarg.3 
+IL_0040 stelem.ref 
+IL_0041 call UnityEngine.Debug::LogWarningFormat
+IL_0046 ldloc.1 
+IL_0047 call UnityEngine.Object::Instantiate<spec>
+IL_004c starg.s argument(0x0001)
+IL_004e ldarg.0 
+IL_004f ldfld SoundManager::m_generatedSources
+IL_0054 ldarg.1 
+IL_0055 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d227e60>::Add
+IL_005a ldarg.0 
+IL_005b ldarg.1 
+IL_005c ldarg.2 
+IL_005d ldarg.3 
+IL_005e ldc.i4.1 
+IL_005f call SoundManager::RegisterExtension
+IL_0064 stloc.0 
+IL_0065 ldloc.0 
+IL_0066 brtrue.s IL_006a
+IL_0068 ldnull 
+IL_0069 ret 
+IL_006a ldarg.0 
+IL_006b ldarg.1 
+IL_006c call SoundManager::SourceIsRegisteredForDucking
+IL_0071 brtrue.s IL_007b
+IL_0073 ldarg.0 
+IL_0074 ldarg.1 
+IL_0075 ldloc.0 
+IL_0076 call SoundManager::RegisterSourceForDucking
+IL_007b ldarg.0 
+IL_007c ldarg.1 
+IL_007d ldloc.0 
+IL_007e call SoundManager::UpdateSource
+IL_0083 ldarg.s argument(0x0004)
+IL_0085 brtrue.s IL_00d9
+IL_0087 ldarg.2 
+IL_0088 stloc.2 
+IL_0089 ldloc.2 
+IL_008a ldnull 
+IL_008b call UnityEngine.Object::op_Equality
+IL_0090 brfalse.s IL_0099
+IL_0092 ldarg.1 
+IL_0093 callvirt UnityEngine.Component::GetComponent<spec>
+IL_0098 stloc.2 
+IL_0099 ldloc.2 
+IL_009a ldnull 
+IL_009b call UnityEngine.Object::op_Inequality
+IL_00a0 brfalse.s IL_00d9
+IL_00a2 newobj SoundOptions::.ctor
+IL_00a7 dup 
+IL_00a8 ldloc.2 
+IL_00a9 ldfld SoundDef::m_InstanceLimited
+IL_00ae callvirt SoundOptions::set_InstanceLimited
+IL_00b3 dup 
+IL_00b4 ldloc.2 
+IL_00b5 ldfld SoundDef::m_InstanceLimitedDuration
+IL_00ba callvirt SoundOptions::set_InstanceTimeLimit
+IL_00bf dup 
+IL_00c0 ldloc.2 
+IL_00c1 ldfld SoundDef::m_InstanceLimitMaximum
+IL_00c6 callvirt SoundOptions::set_MaxInstancesOfThisSound
+IL_00cb dup 
+IL_00cc ldloc.2 
+IL_00cd ldfld SoundDef::m_LimitMaxOutOption
+IL_00d2 callvirt SoundOptions::set_LimitMaxingOutOption
+IL_00d7 starg.s argument(0x0004)
+IL_00d9 ldarg.s argument(0x0004)
+IL_00db brfalse IL_0216
+IL_00e0 ldarg.s argument(0x0004)
+IL_00e2 callvirt SoundOptions::get_InstanceLimited
+IL_00e7 brfalse IL_0216
+IL_00ec ldarg.0 
+IL_00ed ldfld SoundManager::activeLimitedSounds
+IL_00f2 ldarg.1 
+IL_00f3 callvirt UnityEngine.Component::get_gameObject
+IL_00f8 callvirt UnityEngine.Object::get_name
+IL_00fd ldloca.s local(0x0003)
+IL_00ff callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d5ffcb0>::TryGetValue
+IL_0104 brfalse IL_01a0
+IL_0109 ldarg.s argument(0x0004)
+IL_010b callvirt SoundOptions::get_MaxInstancesOfThisSound
+IL_0110 stloc.s local(0x0006)
+IL_0112 ldloc.s local(0x0006)
+IL_0114 ldc.i4.1 
+IL_0115 bge.s IL_011a
+IL_0117 ldc.i4.1 
+IL_0118 stloc.s local(0x0006)
+IL_011a ldloc.3 
+IL_011b ldloc.s local(0x0006)
+IL_011d blt.s IL_016e
+IL_011f ldarg.s argument(0x0004)
+IL_0121 callvirt SoundOptions::get_LimitMaxingOutOption
+IL_0126 stloc.s local(0x0007)
+IL_0128 ldloc.s local(0x0007)
+IL_012a brfalse.s IL_0133
+IL_012c ldloc.s local(0x0007)
+IL_012e ldc.i4.1 
+IL_012f beq.s IL_0135
+IL_0131 br.s IL_0148
+IL_0133 ldnull 
+IL_0134 ret 
+IL_0135 ldarg.0 
+IL_0136 ldarg.1 
+IL_0137 callvirt UnityEngine.Component::get_gameObject
+IL_013c callvirt UnityEngine.Object::get_name
+IL_0141 call SoundManager::FinishFirstGeneratedSourceByName
+IL_0146 br.s IL_01b7
+IL_0148 call Log::get_Presence
+IL_014d ldstr 'Unknown Sound MaxOut Option: {0}'
+IL_0152 ldc.i4.1 
+IL_0153 newarr System.Object
+IL_0158 dup 
+IL_0159 ldc.i4.0 
+IL_015a ldarg.s argument(0x0004)
+IL_015c callvirt SoundOptions::get_LimitMaxingOutOption
+IL_0161 box LimitMaxOutOption
+IL_0166 stelem.ref 
+IL_0167 callvirt Logger::PrintWarning
+IL_016c ldnull 
+IL_016d ret 
+IL_016e ldarg.0 
+IL_016f ldfld SoundManager::activeLimitedSounds
+IL_0174 ldarg.1 
+IL_0175 callvirt UnityEngine.Component::get_gameObject
+IL_017a callvirt UnityEngine.Object::get_name
+IL_017f callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d5ffcb0>::Remove
+IL_0184 pop 
+IL_0185 ldarg.0 
+IL_0186 ldfld SoundManager::activeLimitedSounds
+IL_018b ldarg.1 
+IL_018c callvirt UnityEngine.Component::get_gameObject
+IL_0191 callvirt UnityEngine.Object::get_name
+IL_0196 ldloc.3 
+IL_0197 ldc.i4.1 
+IL_0198 add 
+IL_0199 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d5ffcb0>::Add
+IL_019e br.s IL_01b7
+IL_01a0 ldarg.0 
+IL_01a1 ldfld SoundManager::activeLimitedSounds
+IL_01a6 ldarg.1 
+IL_01a7 callvirt UnityEngine.Component::get_gameObject
+IL_01ac callvirt UnityEngine.Object::get_name
+IL_01b1 ldc.i4.1 
+IL_01b2 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2d5ffcb0>::Add
+IL_01b7 ldarg.s argument(0x0004)
+IL_01b9 callvirt SoundOptions::get_InstanceTimeLimit
+IL_01be stloc.s local(0x0004)
+IL_01c0 ldloc.s local(0x0004)
+IL_01c2 ldc.r4 0.0
+IL_01c7 bgt.un.s IL_01eb
+IL_01c9 ldarg.1 
+IL_01ca callvirt UnityEngine.AudioSource::get_clip
+IL_01cf ldnull 
+IL_01d0 call UnityEngine.Object::op_Inequality
+IL_01d5 brtrue.s IL_01de
+IL_01d7 ldc.r4 0.0
+IL_01dc br.s IL_01e9
+IL_01de ldarg.1 
+IL_01df callvirt UnityEngine.AudioSource::get_clip
+IL_01e4 callvirt UnityEngine.AudioClip::get_length
+IL_01e9 stloc.s local(0x0004)
+IL_01eb call Hearthstone.HearthstoneApplication::Get
+IL_01f0 stloc.s local(0x0005)
+IL_01f2 ldloc.s local(0x0005)
+IL_01f4 call UnityEngine.Object::op_Implicit
+IL_01f9 brfalse.s IL_0216
+IL_01fb ldloc.s local(0x0005)
+IL_01fd ldarg.0 
+IL_01fe ldarg.1 
+IL_01ff callvirt UnityEngine.Component::get_gameObject
+IL_0204 callvirt UnityEngine.Object::get_name
+IL_0209 ldloc.s local(0x0004)
+IL_020b call SoundManager::EnableInstanceLimitedSound
+IL_0210 callvirt UnityEngine.MonoBehaviour::StartCoroutine
+IL_0215 pop 
+IL_0216 ldarg.s argument(0x0004)
+IL_0218 brfalse.s IL_024e
+IL_021a ldarg.s argument(0x0004)
+IL_021c callvirt SoundOptions::get_RandomStartTime
+IL_0221 brfalse.s IL_024e
+IL_0223 ldarg.1 
+IL_0224 brtrue.s IL_0229
+IL_0226 ldnull 
+IL_0227 br.s IL_022f
+IL_0229 ldarg.1 
+IL_022a call UnityEngine.AudioSource::get_clip
+IL_022f ldnull 
+IL_0230 call UnityEngine.Object::op_Inequality
+IL_0235 brfalse.s IL_024e
+IL_0237 ldarg.1 
+IL_0238 call UnityEngine.Random::get_value
+IL_023d ldarg.1 
+IL_023e callvirt UnityEngine.AudioSource::get_clip
+IL_0243 callvirt UnityEngine.AudioClip::get_length
+IL_0248 mul 
+IL_0249 callvirt UnityEngine.AudioSource::set_time
+IL_024e ldarg.1 
+IL_024f callvirt UnityEngine.AudioSource::Play
+IL_0254 ldarg.1 
+IL_0255 ret 
+
+0x06014793 SoundManager::GetDefFromSource
+IL_0000 ldarg.1 
+IL_0001 callvirt UnityEngine.Component::GetComponent<spec>
+IL_0006 stloc.0 
+IL_0007 ldloc.0 
+IL_0008 ldnull 
+IL_0009 call UnityEngine.Object::op_Equality
+IL_000e brfalse.s IL_0035
+IL_0010 call Log::get_Sound
+IL_0015 ldstr 'SoundUtils.GetDefFromSource() - source={0} has no def. adding new def.'
+IL_001a ldc.i4.1 
+IL_001b newarr System.Object
+IL_0020 dup 
+IL_0021 ldc.i4.0 
+IL_0022 ldarg.1 
+IL_0023 stelem.ref 
+IL_0024 callvirt Logger::Print
+IL_0029 ldarg.1 
+IL_002a callvirt UnityEngine.Component::get_gameObject
+IL_002f callvirt UnityEngine.GameObject::AddComponent<spec>
+IL_0034 stloc.0 
+IL_0035 ldloc.0 
+IL_0036 ret 
+
+0x0601481d SoundUtils::GetRandomClipFromDef
+IL_0000 ldarg.0 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brfalse.s IL_000b
+IL_0009 ldnull 
+IL_000a ret 
+IL_000b ldarg.0 
+IL_000c ldfld SoundDef::m_RandomClips
+IL_0011 stloc.0 
+IL_0012 ldarg.0 
+IL_0013 isinst IMultipleRandomClipSoundDef
+IL_0018 brfalse.s IL_0026
+IL_001a ldarg.0 
+IL_001b castclass IMultipleRandomClipSoundDef
+IL_0020 callvirt IMultipleRandomClipSoundDef::GetRandomAudioClips
+IL_0025 stloc.0 
+IL_0026 ldloc.0 
+IL_0027 brtrue.s IL_002b
+IL_0029 ldnull 
+IL_002a ret 
+IL_002b ldloc.0 
+IL_002c callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48e30>::get_Count
+IL_0031 brtrue.s IL_0035
+IL_0033 ldnull 
+IL_0034 ret 
+IL_0035 ldc.r4 0.0
+IL_003a stloc.1 
+IL_003b ldloc.0 
+IL_003c callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48e30>::GetEnumerator
+IL_0041 stloc.s local(0x0005)
+IL_0043 br.s IL_0058
+IL_0045 ldloca.s local(0x0005)
+IL_0047 call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48fe0>::get_Current
+IL_004c stloc.s local(0x0006)
+IL_004e ldloc.1 
+IL_004f ldloc.s local(0x0006)
+IL_0051 ldfld RandomAudioClip::m_Weight
+IL_0056 add 
+IL_0057 stloc.1 
+IL_0058 ldloca.s local(0x0005)
+IL_005a call <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48fe0>::MoveNext
+IL_005f brtrue.s IL_0045
+IL_0061 leave.s IL_0071
+IL_0063 ldloca.s local(0x0005)
+IL_0065 constrained. <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48fe0>
+IL_006b callvirt System.IDisposable::Dispose
+IL_0070 endfinally 
+IL_0071 ldc.r4 0.0
+IL_0076 ldloc.1 
+IL_0077 call UnityEngine.Random::Range
+IL_007c stloc.2 
+IL_007d ldc.r4 0.0
+IL_0082 stloc.3 
+IL_0083 ldloc.0 
+IL_0084 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48e30>::get_Count
+IL_0089 ldc.i4.1 
+IL_008a sub 
+IL_008b stloc.s local(0x0004)
+IL_008d ldc.i4.0 
+IL_008e stloc.s local(0x0007)
+IL_0090 br.s IL_00b8
+IL_0092 ldloc.0 
+IL_0093 ldloc.s local(0x0007)
+IL_0095 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48e30>::get_Item
+IL_009a stloc.s local(0x0008)
+IL_009c ldloc.3 
+IL_009d ldloc.s local(0x0008)
+IL_009f ldfld RandomAudioClip::m_Weight
+IL_00a4 add 
+IL_00a5 stloc.3 
+IL_00a6 ldloc.2 
+IL_00a7 ldloc.3 
+IL_00a8 bgt.un.s IL_00b2
+IL_00aa ldloc.s local(0x0008)
+IL_00ac ldfld RandomAudioClip::m_Clip
+IL_00b1 ret 
+IL_00b2 ldloc.s local(0x0007)
+IL_00b4 ldc.i4.1 
+IL_00b5 add 
+IL_00b6 stloc.s local(0x0007)
+IL_00b8 ldloc.s local(0x0007)
+IL_00ba ldloc.s local(0x0004)
+IL_00bc blt.s IL_0092
+IL_00be ldloc.0 
+IL_00bf ldloc.s local(0x0004)
+IL_00c1 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f5e2cf48e30>::get_Item
+IL_00c6 ldfld RandomAudioClip::m_Clip
+IL_00cb ret 
+
+0x0601481e SoundUtils::GetRandomVolumeFromDef
+IL_0000 ldarg.0 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brfalse.s IL_000f
+IL_0009 ldc.r4 1.0
+IL_000e ret 
+IL_000f ldarg.0 
+IL_0010 ldfld SoundDef::m_RandomVolumeMin
+IL_0015 ldarg.0 
+IL_0016 ldfld SoundDef::m_RandomVolumeMax
+IL_001b call UnityEngine.Random::Range
+IL_0020 ret 
+
+0x0601481f SoundUtils::GetRandomPitchFromDef
+IL_0000 ldarg.0 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brfalse.s IL_000f
+IL_0009 ldc.r4 1.0
+IL_000e ret 
+IL_000f ldarg.0 
+IL_0010 ldfld SoundDef::m_RandomPitchMin
+IL_0015 ldarg.0 
+IL_0016 ldfld SoundDef::m_RandomPitchMax
+IL_001b call UnityEngine.Random::Range
+IL_0020 ret 
+
+0x06016aae HutongGames.PlayMaker.Actions.AudioPlayClipAction::OnEnter
+IL_0000 ldarg.0 
+IL_0001 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Delay
+IL_0006 ldc.r4 0.0
+IL_000b ble.un.s IL_0027
+IL_000d ldarg.0 
+IL_000e ldarg.0 
+IL_000f ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Delay
+IL_0014 stfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_DelayTime
+IL_0019 ldarg.0 
+IL_001a ldarg.0 
+IL_001b call HutongGames.PlayMaker.Actions.AudioPlayClipAction::Delay
+IL_0020 call HutongGames.PlayMaker.FsmStateAction::StartCoroutine
+IL_0025 pop 
+IL_0026 ret 
+IL_0027 ldarg.0 
+IL_0028 call HutongGames.PlayMaker.Actions.AudioPlayClipAction::Play
+IL_002d ret 
+
+0x06016aaf HutongGames.PlayMaker.Actions.AudioPlayClipAction::Play
+IL_0000 ldarg.0 
+IL_0001 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Sound
+IL_0006 brtrue.s IL_000f
+IL_0008 ldarg.0 
+IL_0009 call HutongGames.PlayMaker.FsmStateAction::Finish
+IL_000e ret 
+IL_000f ldarg.0 
+IL_0010 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_IsKeywordVO
+IL_0015 brfalse.s IL_0034
+IL_0017 call GameState::Get
+IL_001c brfalse.s IL_0034
+IL_001e call GameState::Get
+IL_0023 callvirt GameState::GetGameEntity
+IL_0028 ldc.i4 2636
+IL_002d callvirt EntityBase::HasTag
+IL_0032 br.s IL_0035
+IL_0034 ldc.i4.0 
+IL_0035 stloc.0 
+IL_0036 ldarg.0 
+IL_0037 call HutongGames.PlayMaker.Actions.AudioPlayClipAction::GetActor
+IL_003c stloc.1 
+IL_003d ldarg.0 
+IL_003e ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_SkipSuppressEntitySoundCheck
+IL_0043 brtrue.s IL_006f
+IL_0045 ldloc.1 
+IL_0046 ldnull 
+IL_0047 call UnityEngine.Object::op_Inequality
+IL_004c brfalse.s IL_006f
+IL_004e ldloc.1 
+IL_004f callvirt Actor::GetEntity
+IL_0054 brfalse.s IL_006f
+IL_0056 ldloc.1 
+IL_0057 callvirt Actor::GetEntity
+IL_005c ldc.i4 3093
+IL_0061 callvirt EntityBase::HasTag
+IL_0066 brfalse.s IL_006f
+IL_0068 ldarg.0 
+IL_0069 call HutongGames.PlayMaker.FsmStateAction::Finish
+IL_006e ret 
+IL_006f ldarg.0 
+IL_0070 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_IsMinionSummonVO
+IL_0075 brfalse.s IL_00ab
+IL_0077 ldloc.0 
+IL_0078 brtrue.s IL_00ab
+IL_007a call GameState::Get
+IL_007f brfalse.s IL_00a4
+IL_0081 ldloc.1 
+IL_0082 ldnull 
+IL_0083 call UnityEngine.Object::op_Inequality
+IL_0088 brfalse.s IL_00ab
+IL_008a ldloc.1 
+IL_008b callvirt Actor::GetEntity
+IL_0090 brfalse.s IL_00ab
+IL_0092 ldloc.1 
+IL_0093 callvirt Actor::GetEntity
+IL_0098 ldc.i4 1458
+IL_009d callvirt EntityBase::HasTag
+IL_00a2 brfalse.s IL_00ab
+IL_00a4 ldarg.0 
+IL_00a5 call HutongGames.PlayMaker.FsmStateAction::Finish
+IL_00aa ret 
+IL_00ab newobj SoundPlayClipArgs::.ctor
+IL_00b0 stloc.2 
+IL_00b1 ldloc.2 
+IL_00b2 ldarg.0 
+IL_00b3 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_TemplateSource
+IL_00b8 stfld SoundPlayClipArgs::m_templateSource
+IL_00bd ldloc.2 
+IL_00be ldarg.0 
+IL_00bf ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Sound
+IL_00c4 callvirt HutongGames.PlayMaker.FsmObject::get_Value
+IL_00c9 isinst SoundDef
+IL_00ce stfld SoundPlayClipArgs::m_def
+IL_00d3 ldarg.0 
+IL_00d4 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Volume
+IL_00d9 callvirt HutongGames.PlayMaker.NamedVariable::get_IsNone
+IL_00de brtrue.s IL_00f6
+IL_00e0 ldloc.2 
+IL_00e1 ldarg.0 
+IL_00e2 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Volume
+IL_00e7 callvirt HutongGames.PlayMaker.FsmFloat::get_Value
+IL_00ec newobj <dnfile.mdtable.TypeSpecRow object at 0x7fb5161d4230>::.ctor
+IL_00f1 stfld SoundPlayClipArgs::m_volume
+IL_00f6 ldarg.0 
+IL_00f7 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Pitch
+IL_00fc callvirt HutongGames.PlayMaker.NamedVariable::get_IsNone
+IL_0101 brtrue.s IL_0119
+IL_0103 ldloc.2 
+IL_0104 ldarg.0 
+IL_0105 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Pitch
+IL_010a callvirt HutongGames.PlayMaker.FsmFloat::get_Value
+IL_010f newobj <dnfile.mdtable.TypeSpecRow object at 0x7fb5161d4230>::.ctor
+IL_0114 stfld SoundPlayClipArgs::m_pitch
+IL_0119 ldarg.0 
+IL_011a ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_SpatialBlend
+IL_011f callvirt HutongGames.PlayMaker.NamedVariable::get_IsNone
+IL_0124 brtrue.s IL_013c
+IL_0126 ldloc.2 
+IL_0127 ldarg.0 
+IL_0128 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_SpatialBlend
+IL_012d callvirt HutongGames.PlayMaker.FsmFloat::get_Value
+IL_0132 newobj <dnfile.mdtable.TypeSpecRow object at 0x7fb5161d4230>::.ctor
+IL_0137 stfld SoundPlayClipArgs::m_spatialBlend
+IL_013c ldarg.0 
+IL_013d ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Category
+IL_0142 brfalse.s IL_0155
+IL_0144 ldloc.2 
+IL_0145 ldarg.0 
+IL_0146 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_Category
+IL_014b newobj <dnfile.mdtable.TypeSpecRow object at 0x7fb515c56210>::.ctor
+IL_0150 stfld SoundPlayClipArgs::m_category
+IL_0155 ldloc.2 
+IL_0156 ldarg.0 
+IL_0157 call HutongGames.PlayMaker.FsmStateAction::get_Fsm
+IL_015c ldarg.0 
+IL_015d ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_ParentObject
+IL_0162 callvirt HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget
+IL_0167 stfld SoundPlayClipArgs::m_parentObject
+IL_016c newobj SoundOptions::.ctor
+IL_0171 dup 
+IL_0172 ldarg.0 
+IL_0173 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_InstanceLimited
+IL_0178 callvirt SoundOptions::set_InstanceLimited
+IL_017d dup 
+IL_017e ldarg.0 
+IL_017f ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_InstanceLimitedDuration
+IL_0184 callvirt SoundOptions::set_InstanceTimeLimit
+IL_0189 dup 
+IL_018a ldarg.0 
+IL_018b ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_InstanceLimitMaximum
+IL_0190 callvirt SoundOptions::set_MaxInstancesOfThisSound
+IL_0195 dup 
+IL_0196 ldarg.0 
+IL_0197 ldfld HutongGames.PlayMaker.Actions.AudioPlayClipAction::m_LimitMaxOutOption
+IL_019c callvirt SoundOptions::set_LimitMaxingOutOption
+IL_01a1 stloc.3 
+IL_01a2 call SoundManager::Get
+IL_01a7 ldloc.2 
+IL_01a8 ldc.i4.1 
+IL_01a9 ldloc.3 
+IL_01aa callvirt SoundManager::PlayClip
+IL_01af pop 
+IL_01b0 ldarg.0 
+IL_01b1 call HutongGames.PlayMaker.FsmStateAction::Finish
+IL_01b6 ret 
+
+0x06016ab1 HutongGames.PlayMaker.Actions.AudioPlayClipAction::GetActor
+IL_0000 ldarg.0 
+IL_0001 call HutongGames.PlayMaker.FsmStateAction::get_Owner
+IL_0006 call Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec>
+IL_000b stloc.0 
+IL_000c ldloc.0 
+IL_000d ldnull 
+IL_000e call UnityEngine.Object::op_Equality
+IL_0013 brfalse.s IL_0031
+IL_0015 ldarg.0 
+IL_0016 call HutongGames.PlayMaker.FsmStateAction::get_Owner
+IL_001b call Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec>
+IL_0020 stloc.1 
+IL_0021 ldloc.1 
+IL_0022 ldnull 
+IL_0023 call UnityEngine.Object::op_Inequality
+IL_0028 brfalse.s IL_0031
+IL_002a ldloc.1 
+IL_002b callvirt Card::GetActor
+IL_0030 stloc.0 
+IL_0031 ldloc.0 
+IL_0032 ret 
+
+0x06016ac8 HutongGames.PlayMaker.Actions.AudioPlaythroughAction::OnEnter
+IL_0000 ldarg.0 
+IL_0001 ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_Delay
+IL_0006 ldc.r4 0.0
+IL_000b ble.un.s IL_0027
+IL_000d ldarg.0 
+IL_000e ldarg.0 
+IL_000f ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_Delay
+IL_0014 stfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_DelayTime
+IL_0019 ldarg.0 
+IL_001a ldarg.0 
+IL_001b call HutongGames.PlayMaker.Actions.AudioPlaythroughAction::Delay
+IL_0020 call HutongGames.PlayMaker.FsmStateAction::StartCoroutine
+IL_0025 pop 
+IL_0026 ret 
+IL_0027 ldarg.0 
+IL_0028 call HutongGames.PlayMaker.Actions.AudioPlaythroughAction::Play
+IL_002d ret 
+
+0x06016ac9 HutongGames.PlayMaker.Actions.AudioPlaythroughAction::GetSource
+IL_0000 ldarg.0 
+IL_0001 call HutongGames.PlayMaker.FsmStateAction::get_Fsm
+IL_0006 ldarg.0 
+IL_0007 ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_GameObject
+IL_000c callvirt HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget
+IL_0011 stloc.0 
+IL_0012 ldloc.0 
+IL_0013 ldnull 
+IL_0014 call UnityEngine.Object::op_Equality
+IL_0019 brfalse.s IL_001d
+IL_001b ldnull 
+IL_001c ret 
+IL_001d ldloc.0 
+IL_001e callvirt UnityEngine.GameObject::GetComponent<spec>
+IL_0023 ret 
+
+0x06016aca HutongGames.PlayMaker.Actions.AudioPlaythroughAction::Play
+IL_0000 ldarg.0 
+IL_0001 call HutongGames.PlayMaker.Actions.AudioPlaythroughAction::GetSource
+IL_0006 stloc.0 
+IL_0007 ldloc.0 
+IL_0008 ldnull 
+IL_0009 call UnityEngine.Object::op_Equality
+IL_000e brfalse.s IL_0028
+IL_0010 ldarg.0 
+IL_0011 call HutongGames.PlayMaker.FsmStateAction::get_Fsm
+IL_0016 ldarg.0 
+IL_0017 ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_FinishedEvent
+IL_001c callvirt HutongGames.PlayMaker.Fsm::Event
+IL_0021 ldarg.0 
+IL_0022 call HutongGames.PlayMaker.FsmStateAction::Finish
+IL_0027 ret 
+IL_0028 ldarg.0 
+IL_0029 ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_IsKeywordVO
+IL_002e brfalse.s IL_004d
+IL_0030 call GameState::Get
+IL_0035 brfalse.s IL_004d
+IL_0037 call GameState::Get
+IL_003c callvirt GameState::GetGameEntity
+IL_0041 ldc.i4 2636
+IL_0046 callvirt EntityBase::HasTag
+IL_004b br.s IL_004e
+IL_004d ldc.i4.0 
+IL_004e stloc.1 
+IL_004f ldarg.0 
+IL_0050 ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_IsMinionSummonVO
+IL_0055 brfalse.s IL_00a0
+IL_0057 ldloc.1 
+IL_0058 brtrue.s IL_00a0
+IL_005a ldarg.0 
+IL_005b call HutongGames.PlayMaker.Actions.AudioPlaythroughAction::GetActor
+IL_0060 stloc.s local(0x0004)
+IL_0062 ldloc.s local(0x0004)
+IL_0064 ldnull 
+IL_0065 call UnityEngine.Object::op_Inequality
+IL_006a brfalse.s IL_00a0
+IL_006c ldloc.s local(0x0004)
+IL_006e callvirt Actor::GetEntity
+IL_0073 brfalse.s IL_00a0
+IL_0075 ldloc.s local(0x0004)
+IL_0077 callvirt Actor::GetEntity
+IL_007c ldc.i4 1458
+IL_0081 callvirt EntityBase::HasTag
+IL_0086 brfalse.s IL_00a0
+IL_0088 ldarg.0 
+IL_0089 call HutongGames.PlayMaker.FsmStateAction::get_Fsm
+IL_008e ldarg.0 
+IL_008f ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_FinishedEvent
+IL_0094 callvirt HutongGames.PlayMaker.Fsm::Event
+IL_0099 ldarg.0 
+IL_009a call HutongGames.PlayMaker.FsmStateAction::Finish
+IL_009f ret 
+IL_00a0 call TeammateBoardViewer::Get
+IL_00a5 ldnull 
+IL_00a6 call UnityEngine.Object::op_Inequality
+IL_00ab brfalse.s IL_0103
+IL_00ad ldarg.0 
+IL_00ae call HutongGames.PlayMaker.Actions.AudioPlaythroughAction::GetActor
+IL_00b3 stloc.s local(0x0005)
+IL_00b5 ldarg.0 
+IL_00b6 call HutongGames.PlayMaker.FsmStateAction::get_Owner
+IL_00bb call Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec>
+IL_00c0 stloc.s local(0x0006)
+IL_00c2 call TeammateBoardViewer::Get
+IL_00c7 callvirt TeammateBoardViewer::IsViewingTeammate
+IL_00cc brtrue.s IL_0103
+IL_00ce ldloc.s local(0x0005)
+IL_00d0 ldnull 
+IL_00d1 call UnityEngine.Object::op_Inequality
+IL_00d6 brfalse.s IL_00e1
+IL_00d8 ldloc.s local(0x0005)
+IL_00da callvirt Actor::IsTeammateActor
+IL_00df brtrue.s IL_00eb
+IL_00e1 ldloc.s local(0x0006)
+IL_00e3 ldnull 
+IL_00e4 call UnityEngine.Object::op_Inequality
+IL_00e9 brfalse.s IL_0103
+IL_00eb ldarg.0 
+IL_00ec call HutongGames.PlayMaker.FsmStateAction::get_Fsm
+IL_00f1 ldarg.0 
+IL_00f2 ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_FinishedEvent
+IL_00f7 callvirt HutongGames.PlayMaker.Fsm::Event
+IL_00fc ldarg.0 
+IL_00fd call HutongGames.PlayMaker.FsmStateAction::Finish
+IL_0102 ret 
+IL_0103 newobj SoundOptions::.ctor
+IL_0108 dup 
+IL_0109 ldarg.0 
+IL_010a ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_InstanceLimited
+IL_010f callvirt SoundOptions::set_InstanceLimited
+IL_0114 dup 
+IL_0115 ldarg.0 
+IL_0116 ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_InstanceLimitedDuration
+IL_011b callvirt SoundOptions::set_InstanceTimeLimit
+IL_0120 dup 
+IL_0121 ldarg.0 
+IL_0122 ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_InstanceLimitMaximum
+IL_0127 callvirt SoundOptions::set_MaxInstancesOfThisSound
+IL_012c dup 
+IL_012d ldarg.0 
+IL_012e ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_LimitMaxOutOption
+IL_0133 callvirt SoundOptions::set_LimitMaxingOutOption
+IL_0138 stloc.2 
+IL_0139 ldarg.0 
+IL_013a ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_OneShotSound
+IL_013f callvirt HutongGames.PlayMaker.FsmObject::get_Value
+IL_0144 isinst SoundDef
+IL_0149 stloc.3 
+IL_014a ldloc.3 
+IL_014b ldnull 
+IL_014c call UnityEngine.Object::op_Equality
+IL_0151 brfalse.s IL_0187
+IL_0153 ldarg.0 
+IL_0154 ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_VolumeScale
+IL_0159 callvirt HutongGames.PlayMaker.NamedVariable::get_IsNone
+IL_015e brtrue.s IL_0176
+IL_0160 call SoundManager::Get
+IL_0165 ldloc.0 
+IL_0166 ldarg.0 
+IL_0167 ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_VolumeScale
+IL_016c callvirt HutongGames.PlayMaker.FsmFloat::get_Value
+IL_0171 callvirt SoundManager::SetVolume
+IL_0176 call SoundManager::Get
+IL_017b ldloc.0 
+IL_017c ldnull 
+IL_017d ldnull 
+IL_017e ldloc.2 
+IL_017f callvirt SoundManager::Play
+IL_0184 pop 
+IL_0185 br.s IL_01e5
+IL_0187 newobj SoundPlayClipArgs::.ctor
+IL_018c stloc.s local(0x0007)
+IL_018e ldloc.s local(0x0007)
+IL_0190 ldloc.0 
+IL_0191 stfld SoundPlayClipArgs::m_templateSource
+IL_0196 ldloc.s local(0x0007)
+IL_0198 ldloc.3 
+IL_0199 stfld SoundPlayClipArgs::m_def
+IL_019e ldarg.0 
+IL_019f ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_VolumeScale
+IL_01a4 callvirt HutongGames.PlayMaker.NamedVariable::get_IsNone
+IL_01a9 brtrue.s IL_01c2
+IL_01ab ldloc.s local(0x0007)
+IL_01ad ldarg.0 
+IL_01ae ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_VolumeScale
+IL_01b3 callvirt HutongGames.PlayMaker.FsmFloat::get_Value
+IL_01b8 newobj <dnfile.mdtable.TypeSpecRow object at 0x7fb5161d4230>::.ctor
+IL_01bd stfld SoundPlayClipArgs::m_volume
+IL_01c2 ldloc.s local(0x0007)
+IL_01c4 ldloc.0 
+IL_01c5 callvirt UnityEngine.Component::get_gameObject
+IL_01ca stfld SoundPlayClipArgs::m_parentObject
+IL_01cf call SoundManager::Get
+IL_01d4 brfalse.s IL_01e5
+IL_01d6 call SoundManager::Get
+IL_01db ldloc.s local(0x0007)
+IL_01dd ldc.i4.1 
+IL_01de ldloc.2 
+IL_01df callvirt SoundManager::PlayClip
+IL_01e4 pop 
+IL_01e5 ldarg.0 
+IL_01e6 call HutongGames.PlayMaker.FsmStateAction::get_Fsm
+IL_01eb ldarg.0 
+IL_01ec ldfld HutongGames.PlayMaker.Actions.AudioPlaythroughAction::m_FinishedEvent
+IL_01f1 callvirt HutongGames.PlayMaker.Fsm::Event
+IL_01f6 ldarg.0 
+IL_01f7 call HutongGames.PlayMaker.FsmStateAction::Finish
+IL_01fc ret 
+
+0x06016acc HutongGames.PlayMaker.Actions.AudioPlaythroughAction::GetActor
+IL_0000 ldarg.0 
+IL_0001 call HutongGames.PlayMaker.FsmStateAction::get_Owner
+IL_0006 call Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec>
+IL_000b stloc.0 
+IL_000c ldloc.0 
+IL_000d ldnull 
+IL_000e call UnityEngine.Object::op_Equality
+IL_0013 brfalse.s IL_0031
+IL_0015 ldarg.0 
+IL_0016 call HutongGames.PlayMaker.FsmStateAction::get_Owner
+IL_001b call Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec>
+IL_0020 stloc.1 
+IL_0021 ldloc.1 
+IL_0022 ldnull 
+IL_0023 call UnityEngine.Object::op_Inequality
+IL_0028 brfalse.s IL_0031
+IL_002a ldloc.1 
+IL_002b callvirt Card::GetActor
+IL_0030 stloc.0 
+IL_0031 ldloc.0 
+IL_0032 ret 
+
+0x06014798 SoundManager::InitSourceTransform
+IL_0000 ldarg.1 
+IL_0001 ldnull 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brtrue.s IL_0025
+IL_0009 ldarg.1 
+IL_000a callvirt UnityEngine.Component::get_gameObject
+IL_000f ldnull 
+IL_0010 call UnityEngine.Object::op_Equality
+IL_0015 brtrue.s IL_0025
+IL_0017 ldarg.1 
+IL_0018 callvirt UnityEngine.Component::get_transform
+IL_001d ldnull 
+IL_001e call UnityEngine.Object::op_Equality
+IL_0023 brfalse.s IL_0026
+IL_0025 ret 
+IL_0026 ldarg.1 
+IL_0027 callvirt UnityEngine.Component::get_transform
+IL_002c ldarg.0 
+IL_002d call SoundManager::get_SceneObject
+IL_0032 callvirt UnityEngine.GameObject::get_transform
+IL_0037 callvirt UnityEngine.Transform::set_parent
+IL_003c ldarg.2 
+IL_003d ldnull 
+IL_003e call UnityEngine.Object::op_Equality
+IL_0043 brtrue.s IL_0053
+IL_0045 ldarg.2 
+IL_0046 callvirt UnityEngine.GameObject::get_transform
+IL_004b ldnull 
+IL_004c call UnityEngine.Object::op_Equality
+IL_0051 brfalse.s IL_0064
+IL_0053 ldarg.1 
+IL_0054 callvirt UnityEngine.Component::get_transform
+IL_0059 call UnityEngine.Vector3::get_zero
+IL_005e callvirt UnityEngine.Transform::set_position
+IL_0063 ret 
+IL_0064 ldarg.1 
+IL_0065 callvirt UnityEngine.Component::get_transform
+IL_006a ldarg.2 
+IL_006b callvirt UnityEngine.GameObject::get_transform
+IL_0070 callvirt UnityEngine.Transform::get_position
+IL_0075 callvirt UnityEngine.Transform::set_position
+IL_007a ret 

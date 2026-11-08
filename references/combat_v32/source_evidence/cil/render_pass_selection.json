@@ -1,0 +1,52 @@
+{
+  "build": "37.0.0.255130.254477",
+  "managed_assembly": "v30_work/original_code/Assembly-CSharp.dll",
+  "source_file": "render_command_lists.cil.json",
+  "source_sha256": "3435a9617f8ee09d84a042a850e67e9627d010c9302e29f256810b8853a0292c",
+  "ordinary_capture": {
+    "entry": "RenderToTexture.RenderTex 0x060153ca IL00e2..00f4",
+    "pool_get": "RenderCommandListPool.Get(GameObject,bool,overrides) 0x060154b2",
+    "include_inactive_renderers": false,
+    "append_components": "0x060154a5 calls GameObject.GetComponentsInChildren<Renderer>(includeInactiveRenderers)",
+    "pass_selection_method": "RenderCommandLists.AppendRenderCommands(Renderer[],overrides) 0x060154a6",
+    "pass_selection_il": "IL0201..02c1",
+    "light_mode_tag": "LightMode",
+    "missing_tag_maps_to": "SRPDefaultUnlit",
+    "included_light_modes_in_output_order": [
+      "SRPDefaultUnlit",
+      "UniversalForward",
+      "LightweightForward"
+    ],
+    "duplicate_policy": "For each category keep first pass in original material pass order. Emit all present category entries, maximum three. No fallback pass when none match.",
+    "excluded_examples": [
+      "GlowTransparent",
+      "Alpha",
+      "ShadowCaster",
+      "DepthOnly"
+    ],
+    "command_pass_assignment_il": [
+      "IL0314",
+      "IL0375"
+    ],
+    "opaque_queue_test": "material.renderQueue < 3000",
+    "transparent_queue_test": "material.renderQueue >= 3000",
+    "sort_method": "0x060154a4 ascending renderer.sortingOrder then material.renderQueue, no camera-depth comparison",
+    "draw_method": "RenderToTextureUtils.DrawCommand 0x060154ac uses the selected command.passIndex, renderer, material and submesh",
+    "draw_filters": [
+      "renderer gameObject layer intersects culling mask",
+      "renderer.enabled"
+    ]
+  },
+  "bloom_capture": {
+    "entry": "RenderToTexture.RenderBloom 0x060153cb IL018a..01b9",
+    "same_pool_selection": true,
+    "replacement_shader": null,
+    "conclusion": "RenderToTexture-specific bloom capture still uses ordinary selected color passes; this does not route GlowTransparent."
+  },
+  "replacement_capture": {
+    "method": "RenderToTextureUtils.RenderCamera 0x060154ae + DrawCommandReplacement 0x060154ad",
+    "selection": "Starts from the same ordinary command lists, then filters command.Material.GetTag(replacementTag,false) against replacement material tag.",
+    "draw": "DrawRenderer(renderer,replacementMaterial,meshIndex) overload; does not forward original passIndex. Exact native default-pass behavior is not established in this CIL extraction."
+  },
+  "non_rtt_glow_route": "Not established by this bounded RTT trace. Do not attach all secondary passes to ordinary RGB capture or claim custom main-scene glow compositor restored."
+}

@@ -1,0 +1,31 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/FX/FX_HolyRender" {
+Properties {
+
+_Color ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_Color2 ("Tint Color 2", Color) = (0.5,0.5,0.5,0.5)
+
+_MainTex ("Main Texture", 2D) = "white" { }
+
+_Clip ("Clip", Float) = 1.0
+
+_Intensity ("Intensity", Float) = 1.0
+
+_Alpha ("Alpha", Float) = 1.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 62513
+}
+}
+}

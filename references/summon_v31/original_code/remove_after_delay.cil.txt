@@ -1,0 +1,127 @@
+
+TYPE HutongGames.PlayMaker.Actions.RemoveAfterDelayAction 0x020030b3
+FIELD 0x04013bbc gameObjectList SIG 06129435
+FIELD 0x04013bbd waitTime SIG 06128aa1
+FIELD 0x04013bbe coroutineParent SIG 061235
+
+TYPE <WaitAndRemove>d__4 0x020030b4
+FIELD 0x04013bbf <>1__state SIG 0608
+FIELD 0x04013bc0 <>2__current SIG 061c
+FIELD 0x04013bc1 <>4__this SIG 0612c000c2cc
+
+0x06016c15 HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::OnEnter() RVA 0x6a05dc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::gameObjectList token(0x04013BBC)
+  IL_0006 callvirt       HutongGames.PlayMaker.FsmArray::get_Length token(0x0A00594E)
+  IL_000b brtrue.s       IL_000e 
+  IL_000d ret             
+  IL_000e newobj         UnityEngine.GameObject::.ctor token(0x0A000583)
+  IL_0013 stloc.0         
+  IL_0014 ldarg.0         
+  IL_0015 ldloc.0         
+  IL_0016 callvirt       UnityEngine.GameObject::AddComponent<spec> token(0x2B0003A7)
+  IL_001b stfld          HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::coroutineParent token(0x04013BBE)
+  IL_0020 ldarg.0         
+  IL_0021 ldfld          HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::coroutineParent token(0x04013BBE)
+  IL_0026 ldarg.0         
+  IL_0027 call           HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::WaitAndRemove token(0x06016C16)
+  IL_002c callvirt       UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_0031 pop             
+  IL_0032 ret             
+
+0x06016c16 HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::WaitAndRemove() RVA 0x6a061b SIG 2000128111
+  IL_0000 ldc.i4.0        
+  IL_0001 newobj         <WaitAndRemove>d__4::.ctor token(0x06016C18)
+  IL_0006 dup             
+  IL_0007 ldarg.0         
+  IL_0008 stfld          <WaitAndRemove>d__4::<>4__this token(0x04013BC1)
+  IL_000d ret             
+
+0x06016c17 HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::.ctor() RVA 0x53731a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00406B)
+  IL_0006 ret             
+
+0x06016c18 <WaitAndRemove>d__4::.ctor(<>1__state) RVA 0x6a062a SIG 20010108
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A000003)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 stfld          <WaitAndRemove>d__4::<>1__state token(0x04013BBF)
+  IL_000d ret             
+
+0x06016c19 <WaitAndRemove>d__4::System.IDisposable.Dispose() RVA 0x4291 SIG 200001
+  IL_0000 ret             
+
+0x06016c1a <WaitAndRemove>d__4::MoveNext() RVA 0x6a063c SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitAndRemove>d__4::<>1__state token(0x04013BBF)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <WaitAndRemove>d__4::<>4__this token(0x04013BC1)
+  IL_000d stloc.1         
+  IL_000e ldloc.0         
+  IL_000f brfalse.s      IL_0017 
+  IL_0011 ldloc.0         
+  IL_0012 ldc.i4.1        
+  IL_0013 beq.s          IL_003d 
+  IL_0015 ldc.i4.0        
+  IL_0016 ret             
+  IL_0017 ldarg.0         
+  IL_0018 ldc.i4.m1       
+  IL_0019 stfld          <WaitAndRemove>d__4::<>1__state token(0x04013BBF)
+  IL_001e ldarg.0         
+  IL_001f ldloc.1         
+  IL_0020 ldfld          HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::waitTime token(0x04013BBD)
+  IL_0025 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_002a newobj         UnityEngine.WaitForSecondsRealtime::.ctor token(0x0A000D0E)
+  IL_002f stfld          <WaitAndRemove>d__4::<>2__current token(0x04013BC0)
+  IL_0034 ldarg.0         
+  IL_0035 ldc.i4.1        
+  IL_0036 stfld          <WaitAndRemove>d__4::<>1__state token(0x04013BBF)
+  IL_003b ldc.i4.1        
+  IL_003c ret             
+  IL_003d ldarg.0         
+  IL_003e ldc.i4.m1       
+  IL_003f stfld          <WaitAndRemove>d__4::<>1__state token(0x04013BBF)
+  IL_0044 ldloc.1         
+  IL_0045 ldfld          HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::gameObjectList token(0x04013BBC)
+  IL_004a callvirt       HutongGames.PlayMaker.FsmArray::get_Values token(0x0A00594F)
+  IL_004f stloc.2         
+  IL_0050 ldc.i4.0        
+  IL_0051 stloc.3         
+  IL_0052 br.s           IL_0065 
+  IL_0054 ldloc.2         
+  IL_0055 ldloc.3         
+  IL_0056 ldelem.ref      
+  IL_0057 castclass      UnityEngine.GameObject token(0x01000023)
+  IL_005c call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_0061 ldloc.3         
+  IL_0062 ldc.i4.1        
+  IL_0063 add             
+  IL_0064 stloc.3         
+  IL_0065 ldloc.3         
+  IL_0066 ldloc.2         
+  IL_0067 ldlen           
+  IL_0068 conv.i4         
+  IL_0069 blt.s          IL_0054 
+  IL_006b ldloc.1         
+  IL_006c ldfld          HutongGames.PlayMaker.Actions.RemoveAfterDelayAction::coroutineParent token(0x04013BBE)
+  IL_0071 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0076 call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_007b ldc.i4.0        
+  IL_007c ret             
+
+0x06016c1b <WaitAndRemove>d__4::System.Collections.Generic.IEnumerator<System.Object>.get_Current() RVA 0x6a06c5 SIG 20001c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitAndRemove>d__4::<>2__current token(0x04013BC0)
+  IL_0006 ret             
+
+0x06016c1c <WaitAndRemove>d__4::System.Collections.IEnumerator.Reset() RVA 0x4585 SIG 200001
+  IL_0000 newobj         System.NotSupportedException::.ctor token(0x0A0000F7)
+  IL_0005 throw           
+
+0x06016c1d <WaitAndRemove>d__4::System.Collections.IEnumerator.get_Current() RVA 0x6a06c5 SIG 20001c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <WaitAndRemove>d__4::<>2__current token(0x04013BC0)
+  IL_0006 ret             

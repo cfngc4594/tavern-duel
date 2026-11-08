@@ -1,0 +1,1002 @@
+{
+  "scope": "All enabled action types in eight current ordinary routes; large diagnostic route excluded from current-pool completeness claim.",
+  "source_routes": [
+    "hand_out_small",
+    "hand_out_medium",
+    "hand_out_hidden",
+    "play_in_small",
+    "play_in_medium",
+    "play_in_opponent",
+    "spawn_friendly",
+    "spawn_opponent"
+  ],
+  "type_count": 23,
+  "action_count": 120,
+  "types": {
+    "ActivateGameObject": {
+      "status": "explicit_handler",
+      "implementation": "Original ordinary/diamond/premium branch visibility at t0 and t2.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "OnOff",
+          "index": 0,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:-6355154311123566839"
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "OnOff",
+          "index": 1,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:7252202869477605129"
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "OnOff",
+          "index": 2,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:-9199105820885975287"
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 2,
+          "state": "NONE",
+          "index": 1,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:-6355154311123566839"
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 2,
+          "state": "NONE",
+          "index": 2,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:7252202869477605129"
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 2,
+          "state": "NONE",
+          "index": 3,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:-9199105820885975287"
+        }
+      ]
+    },
+    "ActorSetVisibility": {
+      "status": "explicit_handler",
+      "implementation": "All four occurrences dispatched in source state order. Hidden body hides at .5 while ignoreSpells=true leaves effect renderers unchanged at this boundary.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 3,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 3,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 1,
+          "state": "Sub_Birth 2",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0.5,
+          "state": "Birth SubState",
+          "index": 0,
+          "target": null
+        }
+      ]
+    },
+    "AnimateFloat": {
+      "status": "exact_current_binding",
+      "implementation": "Both current occurrences are source HighlightIntensity 1\u21920 over 1 second, sampled separately from clip transforms.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Regular",
+          "index": 6,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "State 1",
+          "index": 7,
+          "target": null
+        }
+      ]
+    },
+    "AnimationPlaythroughAction": {
+      "status": "source_curves_with_explicit_compatibility_crossfade",
+      "implementation": "Exact Actor and effect local source clip sampling/start times. Hidden original 0.30000001 CrossFade calls use explicit linear property mixing and source-pose fallback; Unity native normalization is not recovered.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Regular",
+          "index": 1,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:8899442138007076617"
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Regular",
+          "index": 2,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "State 1",
+          "index": 1,
+          "target": "cab-865f43f611eb20762339650558784e7a:1259913617868694982"
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "State 1",
+          "index": 2,
+          "target": null
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 2,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:2302479511609491323"
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0.5,
+          "state": "Birth SubState",
+          "index": 2,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:2302479511609491323"
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 2,
+          "target": null
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 2,
+          "target": null
+        }
+      ]
+    },
+    "AudioPlayAction": {
+      "status": "existing_source_audio_router",
+      "implementation": "Original source audio definitions. Ordinary generated template is inactive while its one-shot is on a new source, so it does not extend animation gate.",
+      "occurrences": [
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "State 1",
+          "index": 5,
+          "target": null
+        },
+        {
+          "route": "spawn_friendly",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 3,
+          "target": null
+        },
+        {
+          "route": "spawn_opponent",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 3,
+          "target": null
+        }
+      ]
+    },
+    "AudioPlaythroughAction": {
+      "status": "existing_source_audio_router",
+      "implementation": "v30 source audio definition delays are anchored to actual source Out/In entry; no duplicate FSM audio dispatch.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Regular",
+          "index": 3,
+          "target": null
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 0.5,
+          "state": "Kill Dust, Play Sound",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0.366666704416275,
+          "state": "Kill Dust, Play Sound",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0.4300000071525574,
+          "state": "Kill Dust, Play Sound",
+          "index": 0,
+          "target": null
+        }
+      ]
+    },
+    "InvokeMethod": {
+      "status": "explicit_current_binding",
+      "implementation": "Medium source CameraShaker at In+.35, independent uniform xyz .1 with .25 linear decay; projected with documented board-camera compatibility map.",
+      "occurrences": [
+        {
+          "route": "play_in_medium",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 6,
+          "target": null
+        }
+      ]
+    },
+    "ParticlePlayAction": {
+      "status": "explicit_handler",
+      "implementation": "Exact source target IDs and start times; restored enabled modules, independent deterministic compatibility solver.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Regular",
+          "index": 4,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:6538087048048279305"
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0.5,
+          "state": "Birth SubState",
+          "index": 1,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:5201848174202404731"
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 3,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:-18238306004689792"
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 0.5,
+          "state": "Kill Dust, Play Sound",
+          "index": 1,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:-6620779850417365888"
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 0.5,
+          "state": "Kill Dust, Play Sound",
+          "index": 4,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:9016756839510580352"
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0.366666704416275,
+          "state": "NONE",
+          "index": 1,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878"
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 3,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:5594884208522736127"
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0.4300000071525574,
+          "state": "Kill Dust, Play Sound",
+          "index": 1,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:-2807441509357669889"
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0.4300000071525574,
+          "state": "Kill Dust, Play Sound",
+          "index": 4,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:141865491118141951"
+        }
+      ]
+    },
+    "ParticleStopAction": {
+      "status": "explicit_handler",
+      "implementation": "Both occurrences stop emission at exact source time while keeping particles already born.",
+      "occurrences": [
+        {
+          "route": "play_in_small",
+          "source_time": 0.5,
+          "state": "Kill Dust, Play Sound",
+          "index": 3,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:-18238306004689792"
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0.4300000071525574,
+          "state": "Kill Dust, Play Sound",
+          "index": 3,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:5594884208522736127"
+        }
+      ]
+    },
+    "PlayAnimation": {
+      "status": "explicit_handler_and_actor_binding",
+      "implementation": "Exact raw source keys and target hierarchy, legacy curve-bound duration oracle; Actor root targets handled independently from effect-relative targets.",
+      "occurrences": [
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "State 1",
+          "index": 3,
+          "target": "cab-865f43f611eb20762339650558784e7a:-6423421601965955642"
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "State 1",
+          "index": 4,
+          "target": "cab-865f43f611eb20762339650558784e7a:5370805469513885126"
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 2,
+          "target": null
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 5,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614"
+        },
+        {
+          "route": "spawn_friendly",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 2,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:3526570297683023389"
+        },
+        {
+          "route": "spawn_friendly",
+          "source_time": 0.6833333373069763,
+          "state": "Birth Sub-State",
+          "index": 2,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:3526570297683023389"
+        },
+        {
+          "route": "spawn_opponent",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 2,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-2944531682885798335"
+        },
+        {
+          "route": "spawn_opponent",
+          "source_time": 0.6833333373069763,
+          "state": "Birth Sub-State",
+          "index": 2,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-2944531682885798335"
+        }
+      ]
+    },
+    "SendEventBasedOnEntityTagAction": {
+      "status": "bounded_ordinary_branch",
+      "implementation": "Source runtime_routes preselects ordinary non-premium NoDragon branch. No current normal-pool dragon/elite/diamond variant claim.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Dragon?",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Is Diamond?",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "Dragon?",
+          "index": 0,
+          "target": null
+        }
+      ]
+    },
+    "SetMaterialFloat": {
+      "status": "exact_current_binding",
+      "implementation": "Both current occurrences write Highlight _Intensity every frame from the above source curve.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Regular",
+          "index": 7,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "State 1",
+          "index": 8,
+          "target": null
+        }
+      ]
+    },
+    "SetMaterialTexture": {
+      "status": "explicit_handler_bounded_target",
+      "implementation": "Exact small/medium normal ScryLines texture and sampler binding. Two other small targets belong to disabled Diamond/Premium branches and are not rendered.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Texture Swap - NoDragon",
+          "index": 0,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:8899442138007076617"
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Texture Swap - NoDragon",
+          "index": 1,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:6034471933934894857"
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Texture Swap - NoDragon",
+          "index": 2,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:-5810669572538499319"
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "Texture Swap - NoDragon",
+          "index": 0,
+          "target": "cab-865f43f611eb20762339650558784e7a:1259913617868694982"
+        }
+      ]
+    },
+    "SetParent": {
+      "status": "explicit_detach_equivalent_recycle",
+      "implementation": "Medium ring/dust exact worldPositionStays detach. Two source reattach actions at terminal Reset are replaced by deleting the one-shot graph at the same boundary.",
+      "occurrences": [
+        {
+          "route": "play_in_medium",
+          "source_time": 0.366666704416275,
+          "state": "NONE",
+          "index": 4,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878"
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0.366666704416275,
+          "state": "NONE",
+          "index": 5,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614"
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 2.866666704416275,
+          "state": "Reset",
+          "index": 2,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878"
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 2.866666704416275,
+          "state": "Reset",
+          "index": 3,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614"
+        }
+      ]
+    },
+    "SetPosition": {
+      "status": "equivalent_terminal_recycle",
+      "implementation": "Both source local resets occur after hiding at terminal Reset. New instances reconstruct original transforms; no persistent pool objects are reused.",
+      "occurrences": [
+        {
+          "route": "play_in_medium",
+          "source_time": 2.866666704416275,
+          "state": "Reset",
+          "index": 4,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878"
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 2.866666704416275,
+          "state": "Reset",
+          "index": 5,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614"
+        }
+      ]
+    },
+    "SetVisibility": {
+      "status": "equivalent_for_current_targets",
+      "implementation": "Scry starts enabled via source clip m_Enabled; source Highlight hidden by handoff; medium ring/dust already enabled, and Reset coincides with destruction. Not a general SetVisibility interpreter.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Regular",
+          "index": 0,
+          "target": "cab-69c88b234dfa427e02d1fcee9337ae34:8899442138007076617"
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 1,
+          "state": "Sub_Birth 3",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "State 1",
+          "index": 0,
+          "target": "cab-865f43f611eb20762339650558784e7a:1259913617868694982"
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 1,
+          "state": "Sub_Birth 2",
+          "index": 2,
+          "target": null
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0.366666704416275,
+          "state": "NONE",
+          "index": 2,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878"
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0.366666704416275,
+          "state": "NONE",
+          "index": 3,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614"
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 2.866666704416275,
+          "state": "Reset",
+          "index": 0,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-8450156401545552878"
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 2.866666704416275,
+          "state": "Reset",
+          "index": 1,
+          "target": "cab-824a57d31e8915d6162164fd62a4305d:-3351224058537157614"
+        }
+      ]
+    },
+    "SetVisibilityRecursiveAction": {
+      "status": "equivalent_current_handoff",
+      "implementation": "Small RootObject body and Highlight renderers hide at t1, keeping Out spell alive; medium Actor/Out root hide at t1.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 1,
+          "state": "Sub_Birth 3",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 1,
+          "state": "Sub_Birth 2",
+          "index": 1,
+          "target": "cab-865f43f611eb20762339650558784e7a:-7917689932185229882"
+        }
+      ]
+    },
+    "SpellCustomActorVariable": {
+      "status": "bound_by_player",
+      "implementation": "Exact Highlight_Card_Plane source node/static mask; disabled unless a verified submission hand state is supplied.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 2,
+          "target": null
+        }
+      ]
+    },
+    "SpellFinishAction": {
+      "status": "source_callback",
+      "implementation": "Original source finished time triggers one callback; visual residual lifetime remains separate. Generated callback controls only presentation, preserving old game token rules.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 1,
+          "state": "Sub_Birth 3",
+          "index": 3,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 1,
+          "state": "Sub_Birth 2",
+          "index": 4,
+          "target": null
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0.8499999940395355,
+          "state": "State 1",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 0.5,
+          "state": "Kill Dust, Play Sound",
+          "index": 2,
+          "target": null
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0.4300000071525574,
+          "state": "Kill Dust, Play Sound",
+          "index": 2,
+          "target": null
+        },
+        {
+          "route": "spawn_friendly",
+          "source_time": 0.6833333373069763,
+          "state": "Birth Sub-State",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "spawn_opponent",
+          "source_time": 0.6833333373069763,
+          "state": "Birth Sub-State",
+          "index": 1,
+          "target": null
+        }
+      ]
+    },
+    "SpellInitActorVariables": {
+      "status": "bound_by_player",
+      "implementation": "Whole source Actor, source RootObject/path maps, source prefab object keys bound during construction.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "spawn_friendly",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "spawn_opponent",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 0,
+          "target": null
+        }
+      ]
+    },
+    "SpellStateAction": {
+      "status": "source_schedule_and_callback",
+      "implementation": "Birth/NONE and continuous finished boundaries read from source oracle. Out source Actor is hidden/released only at its original NONE; original object-pool reuse replaced by one-shot cleanup.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 2,
+          "target": null
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 2,
+          "state": "NONE",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 2,
+          "state": "NONE",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 2.0999999940395355,
+          "state": "None State",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 2.5,
+          "state": "NONE",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0.366666704416275,
+          "state": "NONE",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0,
+          "state": "BIRTH",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 2.4300000071525574,
+          "state": "NONE",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "spawn_friendly",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "spawn_friendly",
+          "source_time": 0.6833333373069763,
+          "state": "Birth Sub-State",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "spawn_friendly",
+          "source_time": 1.0333333313465118,
+          "state": "None State",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "spawn_opponent",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 1,
+          "target": null
+        },
+        {
+          "route": "spawn_opponent",
+          "source_time": 0.6833333373069763,
+          "state": "Birth Sub-State",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "spawn_opponent",
+          "source_time": 1.0333333313465118,
+          "state": "None State",
+          "index": 0,
+          "target": null
+        }
+      ]
+    },
+    "Wait": {
+      "status": "source_schedule",
+      "implementation": "Source completed states account for parallel action/finish-event semantics. Wait without transition event is not automatically treated as a new finished boundary.",
+      "occurrences": [
+        {
+          "route": "hand_out_small",
+          "source_time": 0,
+          "state": "Regular",
+          "index": 5,
+          "target": null
+        },
+        {
+          "route": "hand_out_small",
+          "source_time": 1,
+          "state": "Sub_Birth 3",
+          "index": 2,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 0,
+          "state": "State 1",
+          "index": 6,
+          "target": null
+        },
+        {
+          "route": "hand_out_medium",
+          "source_time": 1,
+          "state": "Sub_Birth 2",
+          "index": 3,
+          "target": null
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 3,
+          "target": null
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0.5,
+          "state": "Birth SubState",
+          "index": 3,
+          "target": null
+        },
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0.8499999940395355,
+          "state": "State 1",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 0,
+          "state": "wait",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_small",
+          "source_time": 0.5,
+          "state": "Kill Dust, Play Sound",
+          "index": 5,
+          "target": null
+        },
+        {
+          "route": "play_in_medium",
+          "source_time": 0.366666704416275,
+          "state": "NONE",
+          "index": 6,
+          "target": null
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0,
+          "state": "wait",
+          "index": 0,
+          "target": null
+        },
+        {
+          "route": "play_in_opponent",
+          "source_time": 0.4300000071525574,
+          "state": "Kill Dust, Play Sound",
+          "index": 5,
+          "target": null
+        }
+      ]
+    },
+    "iTweenMoveTo": {
+      "status": "explicit_current_binding",
+      "implementation": "Hidden Actor local target(0,6,0), .4 seconds, easeOutQuad, independent Card-parent travel.",
+      "occurrences": [
+        {
+          "route": "hand_out_hidden",
+          "source_time": 0,
+          "state": "Birth State",
+          "index": 4,
+          "target": null
+        }
+      ]
+    }
+  },
+  "open_review": [],
+  "not_a_general_fsm_interpreter": true,
+  "remaining_compatibility_boundaries": [
+    "Unity native crossfade normalization and unbound reference pose are approximated explicitly, not inferred from PlayMaker fields.",
+    "Original object-pool reattachment/reset is replaced by one-shot graph deletion at the same terminal time.",
+    "Scene registration, light globals and particle native solver/RNG remain documented separately."
+  ]
+}

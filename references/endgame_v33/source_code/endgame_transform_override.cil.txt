@@ -1,0 +1,99 @@
+
+TYPE TransformOverride 0x02001eda
+FIELD 0x0400cae6 m_screenCategory SIG 061512490111c000ae68
+FIELD 0x0400cae7 m_localPosition SIG 0615124901115d
+FIELD 0x0400cae8 m_localScale SIG 0615124901115d
+FIELD 0x0400cae9 m_localRotation SIG 0615124901118215
+FIELD 0x0400caea testVal SIG 060c
+
+TYPE TransformOverride 0x020021b5
+FIELD 0x0400dca4 Transform SIG 061280a5
+FIELD 0x0400dca5 Type SIG 0611c00086d8
+FIELD 0x0400dca6 Value SIG 06115d
+
+0x0600e8c7 TransformOverride::Awake() RVA 0x45cf76 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Application::IsPlaying token(0x0A002C44)
+  IL_0006 brfalse.s      IL_000e 
+  IL_0008 ldarg.0         
+  IL_0009 call           TransformOverride::UpdateObject token(0x0600E8CA)
+  IL_000e ret             
+
+0x0600e8c8 TransformOverride::AddCategory(screen) RVA 0x45cf88 SIG 20010111c000ae68
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Application::IsPlaying token(0x0A002C44)
+  IL_0006 brtrue.s       IL_0056 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          TransformOverride::m_screenCategory token(0x0400CAE6)
+  IL_000e ldarg.1         
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbb1bb9ac30>::Add token(0x0A002C45)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          TransformOverride::m_localPosition token(0x0400CAE7)
+  IL_001a ldarg.0         
+  IL_001b call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0020 callvirt       UnityEngine.Transform::get_localPosition token(0x0A00022A)
+  IL_0025 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::Add token(0x0A00054E)
+  IL_002a ldarg.0         
+  IL_002b ldfld          TransformOverride::m_localScale token(0x0400CAE8)
+  IL_0030 ldarg.0         
+  IL_0031 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0036 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_003b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::Add token(0x0A00054E)
+  IL_0040 ldarg.0         
+  IL_0041 ldfld          TransformOverride::m_localRotation token(0x0400CAE9)
+  IL_0046 ldarg.0         
+  IL_0047 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_004c callvirt       UnityEngine.Transform::get_localRotation token(0x0A000CDB)
+  IL_0051 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbb1bee3290>::Add token(0x0A000DB2)
+  IL_0056 ret             
+
+0x0600e8c9 TransformOverride::AddCategory() RVA 0x45cfeb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           PlatformSettings::get_Screen token(0x06014EA9)
+  IL_0006 call           TransformOverride::AddCategory token(0x0600E8C8)
+  IL_000b ret             
+
+0x0600e8ca TransformOverride::UpdateObject() RVA 0x45cff8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          TransformOverride::m_screenCategory token(0x0400CAE6)
+  IL_0006 call           PlatformSettings::GetBestScreenMatch token(0x06014EB0)
+  IL_000b stloc.0         
+  IL_000c ldarg.0         
+  IL_000d call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0012 ldarg.0         
+  IL_0013 ldfld          TransformOverride::m_localPosition token(0x0400CAE7)
+  IL_0018 ldloc.0         
+  IL_0019 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::get_Item token(0x0A000552)
+  IL_001e callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_0023 ldarg.0         
+  IL_0024 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0029 ldarg.0         
+  IL_002a ldfld          TransformOverride::m_localScale token(0x0400CAE8)
+  IL_002f ldloc.0         
+  IL_0030 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::get_Item token(0x0A000552)
+  IL_0035 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_003a ldarg.0         
+  IL_003b call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0040 ldarg.0         
+  IL_0041 ldfld          TransformOverride::m_localRotation token(0x0400CAE9)
+  IL_0046 ldloc.0         
+  IL_0047 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fbb1bee3290>::get_Item token(0x0A002C77)
+  IL_004c callvirt       UnityEngine.Transform::set_localRotation token(0x0A00021F)
+  IL_0051 ret             
+
+0x0600e8cb TransformOverride::.ctor() RVA 0x45d056 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7fbb1bb9ac30>::.ctor token(0x0A002C47)
+  IL_0006 stfld          TransformOverride::m_screenCategory token(0x0400CAE6)
+  IL_000b ldarg.0         
+  IL_000c newobj         <dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::.ctor token(0x0A000567)
+  IL_0011 stfld          TransformOverride::m_localPosition token(0x0400CAE7)
+  IL_0016 ldarg.0         
+  IL_0017 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7fbb1c037fb0>::.ctor token(0x0A000567)
+  IL_001c stfld          TransformOverride::m_localScale token(0x0400CAE8)
+  IL_0021 ldarg.0         
+  IL_0022 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7fbb1bee3290>::.ctor token(0x0A000DB3)
+  IL_0027 stfld          TransformOverride::m_localRotation token(0x0400CAE9)
+  IL_002c ldarg.0         
+  IL_002d call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0032 ret             

@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "scope": "Narrow static semantic review of final local-chain patch; no new renderer run or production edits. Actual QA remains separately owned.",
+  "files": {
+    "native_target_highlight.gd": "84115bb663d5d4cef86e4d79e0d9ed2216bffecf60a95525273b2fee18921ac7",
+    "native_target_highlight_gpu.gd": "683bd1208ace1b94b4920d257d38700e0178891a8cfedf3be0ca42250ecbbcaf",
+    "native_highlight.gd": "ecdbad448df60dc6cf0b7a5409ba22f9f228af467e344be3d7c1a4861e2508ac"
+  },
+  "relative_transform": {
+    "formula": "inverse(reference_to_common_ancestor) * node_to_common_ancestor",
+    "composition": "Premultiply each Node3D local transform while walking upwards. For a descendant of reference, reference_to_common is identity. Board/world common ancestors cancel without global inverse/global recomposition.",
+    "reason": "The QA-observed square RT dimension flips came from float32 world-transform roundtrip near an exact aspect-ratio truncation boundary. This patch removes common presentation transforms before computing bounds; it does not clamp/round/tune the original dimensions.",
+    "scope_boundary": "Verified for current ordinary Node3D actor/source-mesh hierarchy. It is not a general guarantee for new top_level renderers, disconnected trees, or future special transform inheritance."
+  },
+  "minion_attachment": {
+    "registration": "native_status_effects._project sets effect.projection.global_transform = piece.actor.root.global_transform.",
+    "anchor": "effect.projection",
+    "anchor_to_actor": "Transform3D.IDENTITY",
+    "mesh_to_actor": "local mesh-to-projection chain",
+    "source_animation": "All original local transforms from projection through the source effect root to each mesh remain included. No source effect root scale or animation is discarded."
+  },
+  "hero_attachment": {
+    "registration": "native_combat_effects and native_highlight hero holders use the same screen_to_world(hero_position + shake_offset), same 15-degree basis, same PROJECTION_SCALE=0.78*0.9. Status projection precedes the original hero actor root local transform.",
+    "anchor": "effect.projection",
+    "anchor_to_actor": "actor.root.transform.affine_inverse()",
+    "mesh_to_actor": "inverse(hero_root_local) * local mesh-to-status-projection chain",
+    "source_root": "Original hero root local scale1.1100000143051147 is canceled by the bridge rather than removed from effect child geometry."
+  },
+  "fallback": "Only explicit actor_relative_anchor opts into attachment bridge. Other attached instances use normal common-ancestor relative_transform(mesh, actor_root).",
+  "update_order": "game.gd invokes native_status.sync_from_game before native_highlight.sync_from_game, so projection synchronization precedes mask snapshot.",
+  "unchanged": [
+    "source AABB/bounds",
+    "source ratio/int dimension truncation",
+    "source orthographic view/depth parameters",
+    "replacement surface eligibility/material tags",
+    "ten-pass sizes/equations/order",
+    "source local animated transforms"
+  ],
+  "verification": "Only file hashes and read-only source relationships were checked here. Parent reported the corrected actual QA comparison passed; final frozen-candidate QA is separate."
+}

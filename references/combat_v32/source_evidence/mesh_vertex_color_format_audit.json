@@ -1,0 +1,136 @@
+{
+  "scope": "Original serialized Mesh vertex channel format and exported decoded colors; Unity UNorm8 format2 must be normalized before Godot Color input.",
+  "rows": [
+    {
+      "source_key": "cab-66e7137de3b79380e05eb711ae004556:8493740288585164683",
+      "name": "PlaySurface_FullUV_Alpha_BothSides_mesh",
+      "file": "v32_work/TavernDuel/assets/original_combat_v32/meshes/PlaySurface_FullUV_Alpha_BothSides_mesh__8493740288585164683.mesh.json",
+      "vertex_colors": 216,
+      "min": [
+        255,
+        255,
+        255,
+        0
+      ],
+      "max": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "integer_values": true,
+      "source_color_channel": {
+        "stream": 0,
+        "offset": 40,
+        "format": 2,
+        "dimension": 4
+      }
+    },
+    {
+      "source_key": "cab-66e7137de3b79380e05eb711ae004556:-2505304352304015960",
+      "name": "AOE_full_mesh",
+      "file": "v32_work/TavernDuel/assets/original_combat_v32/meshes/AOE_full_mesh__-2505304352304015960.mesh.json",
+      "vertex_colors": 252,
+      "min": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "max": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "integer_values": true,
+      "source_color_channel": {
+        "stream": 0,
+        "offset": 40,
+        "format": 2,
+        "dimension": 4
+      }
+    },
+    {
+      "source_key": "cab-8a1f07d9e06200f3772e6647fecfce97:3550372629045002327",
+      "name": "CircleMask_mesh",
+      "file": "v32_work/TavernDuel/assets/original_combat_v32/meshes/CircleMask_mesh__3550372629045002327.mesh.json",
+      "vertex_colors": 80,
+      "min": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "max": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "integer_values": true,
+      "source_color_channel": {
+        "stream": 0,
+        "offset": 28,
+        "format": 2,
+        "dimension": 4
+      }
+    },
+    {
+      "source_key": "cab-8a1f07d9e06200f3772e6647fecfce97:-3943821637359471946",
+      "name": "FX_Hero_Mask",
+      "file": "v32_work/TavernDuel/assets/original_combat_v32/meshes/FX_Hero_Mask__-3943821637359471946.mesh.json",
+      "vertex_colors": 100,
+      "min": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "max": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "integer_values": true,
+      "source_color_channel": {
+        "stream": 0,
+        "offset": 40,
+        "format": 2,
+        "dimension": 4
+      }
+    },
+    {
+      "source_key": "cab-8a1f07d9e06200f3772e6647fecfce97:-474445178604948562",
+      "name": "FX_Hero_FadeMask",
+      "file": "v32_work/TavernDuel/assets/original_combat_v32/meshes/FX_Hero_FadeMask__-474445178604948562.mesh.json",
+      "vertex_colors": 100,
+      "min": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "max": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "integer_values": true,
+      "source_color_channel": {
+        "stream": 0,
+        "offset": 28,
+        "format": 2,
+        "dimension": 4
+      }
+    }
+  ],
+  "verified_mesh_channels": "../mesh_color_channels.json",
+  "godot_storage_correction": {
+    "evidence": "godot_4_6_3_source_evidence/mesh_color_packing_evidence.json",
+    "verified": "Godot clamps each ARRAY_COLOR channel to UNorm8 before GPU fetch. Values 1 and 255 both yield GPU COLOR1. Without dividing the original Unity UNorm8 bytes by255, intermediate alpha values1..254 become1 instead of gradients.",
+    "superseded": "The earlier CPU-only65025 brightness-multiplier hypothesis is disproved by actual Godot packing; no claim that this correction alone fixes the remaining Nova white ring."
+  }
+}

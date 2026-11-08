@@ -1,0 +1,61 @@
+extends RefCounted
+## Mage versus Warlock, pinned to official client 1.0.0.5834.
+## Values/localization: assets/data/dual_deck_cards_5834.json.
+## Art provenance/availability: references/DUAL-DECK-ART.json.
+
+const EXTRA_PORTRAIT_IDS: Array[String] = ["CS2_022", "CS2_025", "CS2_026", "CS2_027", "CS2_032", "CS2_033", "EX1_277", "EX1_066", "CS2_057", "CS2_061", "CS2_062", "CS2_063", "CS2_064", "CS2_065", "EX1_302", "EX1_301", "EX1_308", "NEW1_003", "CS2_tk1", "CS2_mirror", "HERO_07", "CS2_056"]
+const MAGE_RECIPE = {"CS2_029": 2, "CS2_024": 2, "CS2_022": 1, "CS2_023": 2, "CS2_025": 2, "CS2_026": 1, "CS2_027": 2, "CS2_032": 1, "CS2_033": 2, "EX1_277": 2, "CS2_182": 2, "CS2_179": 2, "CS2_172": 2, "EX1_066": 2, "CS2_189": 2, "CS2_200": 1, "CS2_120": 2}
+const WARLOCK_RECIPE = {"CS2_057": 2, "CS2_061": 2, "CS2_062": 2, "CS2_063": 2, "CS2_064": 2, "CS2_065": 2, "EX1_302": 2, "EX1_301": 2, "EX1_308": 2, "NEW1_003": 2, "CS2_182": 2, "CS2_179": 2, "CS2_172": 2, "EX1_066": 2, "CS2_189": 2}
+
+static func additional_definitions() -> Dictionary:
+	var definitions = {
+		"CS2_029": {"card_id":"CS2_029","name":"火球术","cost":4,"atk":0,"hp":0,"art":5,"kind":"spell","keyword":"","desc":["造成6点伤害。"],"collectible":true,"class":"MAGE","effect":"damage","damage":6,"target":"character","color":Color("769fbd")},
+		"CS2_024": {"card_id":"CS2_024","name":"寒冰箭","cost":2,"atk":0,"hp":0,"art":7,"kind":"spell","keyword":"冻结","desc":["造成3点伤害，","并冻结目标。"],"collectible":true,"class":"MAGE","effect":"frostbolt","damage":3,"target":"character","color":Color("769fbd")},
+		"CS2_022": {"card_id":"CS2_022","name":"变形术","cost":4,"atk":0,"hp":0,"art":36,"kind":"spell","keyword":"","desc":["使一个随从变形","成为1/1的绵羊。"],"collectible":true,"class":"MAGE","effect":"polymorph","damage":0,"target":"minion","color":Color("769fbd")},
+		"CS2_023": {"card_id":"CS2_023","name":"奥术智慧","cost":3,"atk":0,"hp":0,"art":16,"kind":"spell","keyword":"","desc":["抽两张牌。"],"collectible":true,"class":"MAGE","effect":"draw2","damage":0,"target":"none","color":Color("769fbd")},
+		"CS2_025": {"card_id":"CS2_025","name":"魔爆术","cost":2,"atk":0,"hp":0,"art":37,"kind":"spell","keyword":"","desc":["对所有敌方随从","造成1点伤害。"],"collectible":true,"class":"MAGE","effect":"arcane_explosion","damage":1,"target":"none","color":Color("769fbd")},
+		"CS2_026": {"card_id":"CS2_026","name":"冰霜新星","cost":3,"atk":0,"hp":0,"art":38,"kind":"spell","keyword":"","desc":["冻结所有敌方随从。"],"collectible":true,"class":"MAGE","effect":"frost_nova","damage":0,"target":"none","color":Color("769fbd")},
+		"CS2_027": {"card_id":"CS2_027","name":"镜像","cost":1,"atk":0,"hp":0,"art":39,"kind":"spell","keyword":"","desc":["召唤两个0/2并具有","嘲讽的随从。"],"collectible":true,"class":"MAGE","effect":"mirror_image","damage":0,"target":"none","color":Color("769fbd")},
+		"CS2_032": {"card_id":"CS2_032","name":"烈焰风暴","cost":7,"atk":0,"hp":0,"art":40,"kind":"spell","keyword":"","desc":["对所有敌方随从","造成4点伤害。"],"collectible":true,"class":"MAGE","effect":"flamestrike","damage":4,"target":"none","color":Color("769fbd")},
+		"CS2_033": {"card_id":"CS2_033","name":"水元素","cost":4,"atk":3,"hp":6,"art":41,"kind":"minion","keyword":"","desc":["冻结任何受到该随从","伤害的角色。"],"collectible":true,"class":"MAGE","freeze_on_damage":true,"effect":"water_elemental","frame":"frame-minion-mage","color":Color("769fbd")},
+		"EX1_277": {"card_id":"EX1_277","name":"奥术飞弹","cost":1,"atk":0,"hp":0,"art":42,"kind":"spell","keyword":"","desc":["造成3点伤害，随机","分配给所有敌方角色。"],"collectible":true,"class":"MAGE","effect":"arcane_missiles","damage":1,"target":"none","color":Color("769fbd")},
+		"CS2_182": {"card_id":"CS2_182","name":"冰风雪人","cost":4,"atk":4,"hp":5,"art":13,"kind":"minion","keyword":"","desc":[],"collectible":true,"class":"NEUTRAL","color":Color("a78c6d")},
+		"CS2_179": {"card_id":"CS2_179","name":"森金持盾卫士","cost":4,"atk":3,"hp":5,"art":8,"kind":"minion","keyword":"嘲讽","desc":["嘲讽"],"collectible":true,"class":"NEUTRAL","color":Color("a78c6d")},
+		"CS2_172": {"card_id":"CS2_172","name":"血沼迅猛龙","cost":2,"atk":3,"hp":2,"art":33,"kind":"minion","keyword":"","desc":[],"collectible":true,"class":"NEUTRAL","race":"BEAST","race_name":"野兽","color":Color("a78c6d")},
+		"EX1_066": {"card_id":"EX1_066","name":"酸性沼泽软泥怪","cost":2,"atk":3,"hp":2,"art":43,"kind":"minion","keyword":"战吼","desc":["战吼：摧毁对手的武器。"],"collectible":true,"class":"NEUTRAL","battlecry":"destroy_weapon","color":Color("a78c6d")},
+		"CS2_189": {"card_id":"CS2_189","name":"精灵弓箭手","cost":1,"atk":1,"hp":1,"art":9,"kind":"minion","keyword":"战吼","desc":["战吼：造成1点伤害。"],"collectible":true,"class":"NEUTRAL","battlecry":"damage1","color":Color("a78c6d")},
+		"CS2_200": {"card_id":"CS2_200","name":"石拳食人魔","cost":6,"atk":6,"hp":7,"art":34,"kind":"minion","keyword":"","desc":[],"collectible":true,"class":"NEUTRAL","color":Color("a78c6d")},
+		"CS2_120": {"card_id":"CS2_120","name":"淡水鳄","cost":2,"atk":2,"hp":3,"art":14,"kind":"minion","keyword":"","desc":[],"collectible":true,"class":"NEUTRAL","race":"BEAST","race_name":"野兽","color":Color("a78c6d")},
+		"CS2_057": {"card_id":"CS2_057","name":"暗影箭","cost":3,"atk":0,"hp":0,"art":44,"kind":"spell","keyword":"","desc":["对一个随从","造成4点伤害。"],"collectible":true,"class":"WARLOCK","effect":"shadow_bolt","damage":4,"target":"minion","frame":"frame-spell-warlock","color":Color("9b6eb2")},
+		"CS2_061": {"card_id":"CS2_061","name":"吸取生命","cost":3,"atk":0,"hp":0,"art":45,"kind":"spell","keyword":"","desc":["造成2点伤害，为","你的英雄恢复2点生命。"],"collectible":true,"class":"WARLOCK","effect":"drain_life","damage":2,"target":"character","frame":"frame-spell-warlock","color":Color("9b6eb2")},
+		"CS2_062": {"card_id":"CS2_062","name":"地狱烈焰","cost":4,"atk":0,"hp":0,"art":46,"kind":"spell","keyword":"","desc":["对所有角色","造成3点伤害。"],"collectible":true,"class":"WARLOCK","effect":"hellfire","damage":3,"target":"none","frame":"frame-spell-warlock","color":Color("9b6eb2")},
+		"CS2_063": {"card_id":"CS2_063","name":"腐蚀术","cost":1,"atk":0,"hp":0,"art":47,"kind":"spell","keyword":"","desc":["选择敌方随从，在你的","下个回合开始时消灭它。"],"collectible":true,"class":"WARLOCK","effect":"corruption","damage":0,"target":"enemy_minion","frame":"frame-spell-warlock","color":Color("9b6eb2")},
+		"CS2_064": {"card_id":"CS2_064","name":"恐惧地狱火","cost":6,"atk":6,"hp":6,"art":48,"kind":"minion","keyword":"战吼","desc":["战吼：对所有其他","角色造成1点伤害。"],"collectible":true,"class":"WARLOCK","race":"DEMON","race_name":"恶魔","battlecry":"infernal_aoe","frame":"frame-minion-warlock","color":Color("9b6eb2")},
+		"CS2_065": {"card_id":"CS2_065","name":"虚空行者","cost":1,"atk":1,"hp":3,"art":49,"kind":"minion","keyword":"嘲讽","desc":["嘲讽"],"collectible":true,"class":"WARLOCK","race":"DEMON","race_name":"恶魔","frame":"frame-minion-warlock","color":Color("9b6eb2")},
+		"EX1_302": {"card_id":"EX1_302","name":"死亡缠绕","cost":1,"atk":0,"hp":0,"art":50,"kind":"spell","keyword":"","desc":["对一个随从造成1点","伤害；若杀死它，抽牌。"],"collectible":true,"class":"WARLOCK","effect":"mortal_coil","damage":1,"target":"minion","frame":"frame-spell-warlock","color":Color("9b6eb2")},
+		"EX1_301": {"card_id":"EX1_301","name":"恶魔卫士","cost":3,"atk":3,"hp":5,"art":51,"kind":"minion","keyword":"嘲讽","desc":["嘲讽，战吼：摧毁","你的一个法力水晶。"],"collectible":true,"class":"WARLOCK","race":"DEMON","race_name":"恶魔","battlecry":"destroy_mana","frame":"frame-minion-warlock","color":Color("9b6eb2")},
+		"EX1_308": {"card_id":"EX1_308","name":"灵魂之火","cost":0,"atk":0,"hp":0,"art":52,"kind":"spell","keyword":"","desc":["造成4点伤害，","随机弃一张牌。"],"collectible":true,"class":"WARLOCK","effect":"soulfire","damage":4,"target":"character","frame":"frame-spell-warlock","color":Color("9b6eb2")},
+		"NEW1_003": {"card_id":"NEW1_003","name":"牺牲契约","cost":0,"atk":0,"hp":0,"art":53,"kind":"spell","keyword":"","desc":["消灭一个恶魔，为你的","英雄恢复5点生命值。"],"collectible":true,"class":"WARLOCK","effect":"sacrificial_pact","damage":0,"target":"demon","frame":"frame-spell-warlock","color":Color("9b6eb2")},
+		"CS2_tk1": {"card_id":"CS2_tk1","name":"绵羊","cost":0,"atk":1,"hp":1,"art":54,"kind":"minion","keyword":"","desc":[],"collectible":false,"class":"NEUTRAL","token":true,"race":"BEAST","race_name":"野兽","color":Color("a78c6d")},
+		"CS2_mirror": {"card_id":"CS2_mirror","name":"镜像","cost":0,"atk":0,"hp":2,"art":55,"kind":"minion","keyword":"嘲讽","desc":["嘲讽"],"collectible":false,"class":"MAGE","token":true,"frame":"frame-minion-mage","color":Color("769fbd")},
+		"GAME_005": {"card_id":"GAME_005","name":"幸运币","cost":0,"atk":0,"hp":0,"art":26,"kind":"spell","keyword":"","desc":["在本回合中，获得","一个法力水晶。"],"collectible":false,"class":"NEUTRAL","token":true,"effect":"temporary_mana","damage":0,"target":"none","frame":"frame-spell-neutral","mana_gain":1,"color":Color("a78c6d")},
+	}
+	return definitions
+
+static func _recipe(counts: Dictionary) -> Array:
+	var result: Array = []
+	for card_id in counts:
+		for copy in range(counts[card_id]): result.append(card_id)
+	return result
+
+static func mage_deck_recipe() -> Array:
+	return _recipe(MAGE_RECIPE)
+
+static func warlock_deck_recipe() -> Array:
+	return _recipe(WARLOCK_RECIPE)
+
+static func legal_deck_recipe() -> Array:
+	return mage_deck_recipe()
+
+static func extra_portrait_ids() -> Array[String]:
+	return EXTRA_PORTRAIT_IDS.duplicate()

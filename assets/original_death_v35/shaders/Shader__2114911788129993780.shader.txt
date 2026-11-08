@@ -1,0 +1,40 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Card/UnlitTextureReflection" {
+Properties {
+
+_MainTex ("Base (RGB)", 2D) = "white" { }
+
+_SpecTex ("Specular (RGB)", 2D) = "white" { }
+
+_ReflTex ("Reflection (RGB)", 2D) = "white" { }
+
+_ReflectionIntensity ("Reflection Intensity", Float) = 1.0
+
+_ReflectionRotation ("not Reflection Rotation", Float) = 1.0
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+_ShaderTime ("Shader Time", Float) = 0.0
+
+}
+SubShader {
+ Tags { "CardAlpha" = "true" "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "CardAlpha" = "true" "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 59721
+}
+ Pass {
+ Name "ShadowCaster"
+  LOD 300
+  Tags { "CardAlpha" = "true" "Highlight" = "true" "LIGHTMODE" = "SHADOWCASTER" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ ZTest Less
+ Cull Off
+  GpuProgramID 73090
+}
+}
+Fall back "Utility/HearthstoneFallbackDiffuse"
+}

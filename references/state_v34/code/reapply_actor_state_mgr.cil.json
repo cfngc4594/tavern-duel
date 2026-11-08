@@ -1,0 +1,776 @@
+{
+  "types": [
+    {
+      "type": "ActorStateMgr",
+      "base_type": "UnityEngine.MonoBehaviour",
+      "token": "0x02002aef",
+      "fields": [
+        {
+          "name": "m_ObjectContainer",
+          "token": "0x04011b69",
+          "signature": "0612808d"
+        },
+        {
+          "name": "m_actorStateMap",
+          "token": "0x04011b6a",
+          "signature": "06151281a10211c000abb01512490112c000abb8"
+        },
+        {
+          "name": "m_activeStateType",
+          "token": "0x04011b6b",
+          "signature": "0611c000abb0"
+        },
+        {
+          "name": "m_shown",
+          "token": "0x04011b6c",
+          "signature": "0602"
+        },
+        {
+          "name": "m_HighlightState",
+          "token": "0x04011b6d",
+          "signature": "0612c000b0c0"
+        },
+        {
+          "name": "m_initialHighlightRenderQueue",
+          "token": "0x04011b6e",
+          "signature": "0608"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "ActorStateMgr",
+      "method": "ShowStateMgr",
+      "token": "0x0601489c",
+      "rva": "0x6114cc",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 23,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_shown",
+          "token": "token(0x04011B6C)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brfalse.s",
+          "operand": "IL_0009",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "stfld",
+          "operand": "ActorStateMgr::m_shown",
+          "token": "token(0x04011B6C)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "call",
+          "operand": "ActorStateMgr::ShowImpl",
+          "token": "token(0x060148A2)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ActorStateMgr",
+      "method": "HideStateMgr",
+      "token": "0x0601489d",
+      "rva": "0x6114e4",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 23,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_shown",
+          "token": "token(0x04011B6C)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_0009",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "stfld",
+          "operand": "ActorStateMgr::m_shown",
+          "token": "token(0x04011B6C)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "call",
+          "operand": "ActorStateMgr::HideImpl",
+          "token": "token(0x060148A3)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ActorStateMgr",
+      "method": "RefreshStateMgr",
+      "token": "0x0601489e",
+      "rva": "0x6114fc",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 25,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_HighlightState",
+          "token": "token(0x04011B6D)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "brfalse.s",
+          "operand": "IL_0018",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_HighlightState",
+          "token": "token(0x04011B6D)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "callvirt",
+          "operand": "HighlightState::SetDirty",
+          "token": "token(0x0601528F)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ActorStateMgr",
+      "method": "ShowImpl",
+      "token": "0x060148a2",
+      "rva": "0x611648",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 122,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_HighlightState",
+          "token": "token(0x04011B6D)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "brfalse.s",
+          "operand": "IL_001f",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_HighlightState",
+          "token": "token(0x04011B6D)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_activeStateType",
+          "token": "token(0x04011B6B)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "callvirt",
+          "operand": "HighlightState::ChangeState",
+          "token": "token(0x06015293)"
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_activeStateType",
+          "token": "token(0x04011B6B)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "brfalse.s",
+          "operand": "IL_0041",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_ObjectContainer",
+          "token": "token(0x04011B69)"
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "brfalse.s",
+          "operand": "IL_0041",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_ObjectContainer",
+          "token": "token(0x04011B69)"
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::SetActive",
+          "token": "token(0x0A000104)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "call",
+          "operand": "ActorStateMgr::GetActiveStateList",
+          "token": "token(0x06014897)"
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "brfalse.s",
+          "operand": "IL_0079",
+          "token": null
+        },
+        {
+          "offset": "IL_004b",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f7033b0b770>::GetEnumerator",
+          "token": "token(0x0A004E5C)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "br.s",
+          "operand": "IL_0060",
+          "token": null
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_0056",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30>::get_Current",
+          "token": "token(0x0A004E5D)"
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "callvirt",
+          "operand": "ActorState::ShowState",
+          "token": "token(0x0601488F)"
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30>::MoveNext",
+          "token": "token(0x0A004E5E)"
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "brtrue.s",
+          "operand": "IL_0054",
+          "token": null
+        },
+        {
+          "offset": "IL_0069",
+          "opcode": "leave.s",
+          "operand": "IL_0079",
+          "token": null
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30>",
+          "token": "token(0x1B0012BC)"
+        },
+        {
+          "offset": "IL_0073",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0078",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0079",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "ActorStateMgr",
+      "method": "HideImpl",
+      "token": "0x060148a3",
+      "rva": "0x6116e0",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 117,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_HighlightState",
+          "token": "token(0x04011B6D)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "brfalse.s",
+          "operand": "IL_001a",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_HighlightState",
+          "token": "token(0x04011B6D)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "callvirt",
+          "operand": "HighlightState::ChangeState",
+          "token": "token(0x06015293)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "call",
+          "operand": "ActorStateMgr::GetActiveStateList",
+          "token": "token(0x06014897)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "brfalse.s",
+          "operand": "IL_0052",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f7033b0b770>::GetEnumerator",
+          "token": "token(0x0A004E5C)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "br.s",
+          "operand": "IL_0039",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30>::get_Current",
+          "token": "token(0x0A004E5D)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "callvirt",
+          "operand": "ActorState::HideState",
+          "token": "token(0x06014890)"
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30>::MoveNext",
+          "token": "token(0x0A004E5E)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "brtrue.s",
+          "operand": "IL_002d",
+          "token": null
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "leave.s",
+          "operand": "IL_0052",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f7033b0be30>",
+          "token": "token(0x1B0012BC)"
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_activeStateType",
+          "token": "token(0x04011B6B)"
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "brfalse.s",
+          "operand": "IL_0074",
+          "token": null
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_ObjectContainer",
+          "token": "token(0x04011B69)"
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0061",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "brfalse.s",
+          "operand": "IL_0074",
+          "token": null
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0069",
+          "opcode": "ldfld",
+          "operand": "ActorStateMgr::m_ObjectContainer",
+          "token": "token(0x04011B69)"
+        },
+        {
+          "offset": "IL_006e",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006f",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::SetActive",
+          "token": "token(0x0A000104)"
+        },
+        {
+          "offset": "IL_0074",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

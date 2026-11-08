@@ -1,0 +1,18 @@
+Hearthstone build37.0.0.255130.254477 original Windows colorSpace investigation
+
+RESULT: Original binary field m_ActiveColorSpace=0, mapping to Unity ColorSpace.Gamma.
+This is now field-level evidence from authentic original bytes, not merely the previous partial JSON. Full PlayerSettings object parse still has4 unconsumed bytes; do not label whole object fully parsed.
+
+Recovery:
+Original loose URL returned404 previously. Read existing verified build install/encoding manifests, downloaded matching CDN config (MD5 ff9025d0103bd77a12912ccb15b40178), scanned listed official archive indexes. Found original encoding key f369c607463cd34e42724719f49289a9 in archive e42f606f05b463d78dff28ba1c7c97ca at47219720 size234184. HTTP206 Range request read exactly that slice. Verified index footer MD5, BLTE header MD5, chunkMD5, bounded zlib decompression, decoded MD5 e29cfe68bbdf476d66850a133c06f900, size518388. SHA25637202703edace88e3552ca100f106f6dd59be6af07a15cee0c733f4c2cb584db exactly matches preexisting source inventory.
+Original serialized file header Unity6000.3.11f1. Object1 class129 PlayerSettings is840B.
+
+Field-level validation:
+Fresh current UnityPy precise-version schema reads m_ActiveColorSpace at object offset268..272; raw00000000. Offset264 m_StereoRenderingPath0, offset272 unsupportedMSAAFallback0. Company/product strings correctly decode as Blizzard Entertainment/Hearthstone at36/64; qualitySettingsNames correctly decode Medium/Low/High at736..768. See field_offsets.json and PlayerSettings_raw.bin.
+Downloaded independent public exact release schema https://raw.githubusercontent.com/AssetRipper/TypeTreeDumps/main/StructsDump/release/6000.3.11f1.dump SHA2568e87e2d8d05613af5913643a2168593fedd315ae4352506748aeb1f31a299a2a. PlayerSettings lines6527–6880. Independent agent compared all353 schema nodes against UnityPy: field/type/hierarchy/metaflag identical. ActiveColorSpace is not a guessed offset from another version.
+Official Unity enum source https://raw.githubusercontent.com/Unity-Technologies/UnityCsReference/master/Runtime/Export/Graphics/GraphicsEnums.cs lines270–274: Uninitialized=-1,Gamma=0,Linear=1. Local Unity_GraphicsEnums.cs.
+
+Boundary:
+Public schema consumes836B; tail836..840 contains int3. No invented field name appended to force success. Source asset has no embedded typetree for this class, so custom-build extension vs schema divergence cannot be named without matching native/player typetree or implementation. Prefix evidence supports Gamma, but it is not permission to claim every PlayerSettings field verified or every runtime render target/texture shares a gamma format. RenderTexture formats/readWrite/sRGB and shader/import choices remain separate.
+
+Files not missing anymore: original globalgamemanagers recovered at this directory. Exact record/transport provenance is provenance.json; original bytes immutable.

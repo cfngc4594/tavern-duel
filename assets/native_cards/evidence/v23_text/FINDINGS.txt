@@ -1,0 +1,21 @@
+Original UberText text pipeline, 2026-11-02; static evidence only.
+
+SOURCE: rea_card_analysis/checkpoint/SourceEvidence/reconstructed_classes/UberText.cs and UberTextRendering.cs; verified managed CIL from shared/rea_card_evidence and new linewrapper-rea.json (original DLL SHA256 09fb757690d86a436eafd02d8846f760c3592bf18021388172eb046957bccb7c). resolved-critical-il.txt resolves member names against these same DLL inventories.
+
+IMPORTANT BOUNDARY
+UberTextRendering.CreateTextMeshObject creates UnityEngine.TextMesh. SetText/SetFont/SetFontSize/SetCharacterSize directly assign Unity TextMesh properties; GetTextMeshBounds returns MeshRenderer.bounds. SetFont gets atlas from font.material.mainTexture. No custom UberText glyph atlas packer or glyph-quad padding computation exists in these methods: these are delegated to Unity native font/TextMesh. Godot Label/FreeType default shaping is not proven equivalent. No UnityPlayer or UnityEngine.Text* binary found in the inspected rea_card_analysis/card_library_exports extracted file trees. For exact glyph output need same-version Unity TextMesh native behavior or captured original atlas + glyph UV/metrics/quads (including fallback glyph source, hinting, padding); original TTF alone does not establish these outputs.
+
+TRANSFERABLE EQUATIONS
+UberText.cs 1821+: characterSize0 = m_CharacterSize * FontDefinition.m_CharacterSizeModifier * 0.01. At configured charSize=5 and modifier=1 -> 0.05 Unity TextMesh units.
+UberText.cs 2147+: fontSize = trunc(FontDef.fontSizeModifier * locale.fontSizeModifier * configuredFontSize). Configured 40 is rasterizer fontSize, not Godot Label visual pixels.
+UberTextLineWrapper.UpdateCharWidth 0x06000104 IL16-65: Font.GetCharacterInfo(c, out info, actualFontSize); width = float(info.advance) * actualCharacterSize * 0.1. Reset reads current font/fontSize/characterSize and clears width map. Wrap also measures full candidate line via SetText/GetTextMeshBounds, so summing advance alone does not replace full bounds.
+ResizeTextToFit (UberText.cs2282+) selects ReduceText_CharSize unless ResizeToFitAndGrow. That path (2382+) initially subtracts intraLineHeight from measured y; while outside allowed height or width*locale.resizeToFitWidthModifier, multiply characterSize by0.95, at most40 steps, clamped to m_MinCharacterSize*0.01; rewrap/re-measure each step. It does not use the separate ReduceText(fontSize) function. IntraLineHeight = Bounds('|\n|').height - 2*Bounds('|').height. Final characterSize is multiplied by m_UnboundCharacterSizeModifier * locale.unboundedCharSize if the latter is positive, otherwise1.
+Single-line lineSpacing = configured + fontDef.singleLineAdjustment + locale.singleLineAdjustment; multiline = configured * fontDef.lineSpaceModifier * locale.lineSpaceModifier.
+Outline offsets: atlas texel=(1/atlasW,1/atlasH); outline=texel*(configuredOutline*fontDef.outlineModifier*locale.outlineModifier); bold=texel*boldSize; outlineBold=texel*(outlineSizeProduct+0.75*boldSize). Outline3 is atlas texels, not 3/5 output RT pixels.
+RT size (CalcTextureSize 2809+): if W>H, (R,R*H/W), else (R*W/H,R). If graphicsManager.RenderQualityLevel==0 multiply both by0.75. Truncate to integers. W=1.9,H=0.3,R=300 gives300x47 or low-quality225x35, not570x90. Locale may override W/H so this is conditional on actual resolved profile.
+SetupMatrices 0x060001b1: halfSize=(W,H)*0.5. centerX=-3000 +(alignment==0?W/2:alignment==2?-W/2:0); shiftY=(anchor==0?H/2:anchor==2?-H/2:0); position=(centerX,3000-shiftY,offset). view=TRS(0,identity,(1,1,-1))*inverse(LookAt(position,position+forward,up)); projection=Ortho(-W/2,W/2,-H/2,H/2,-0.1,0.1).
+SetTargetClearColor 0x060001b2 copies chosen text/outline RGB but sets alpha=0. SetupCamera chooses outline color when outline enabled, else text color.
+
+STILL REQUIRED FOR STRICT REPRODUCTION
+Actual zhCN FontDefinition + locale overrides and chosen font/fallback chain; exact TextMesh glyph raster/atlas/quad outputs; effective runtime bounds for fitting; render-quality selection; original tracker RT settings and actual shader/AA/linear-sRGB blend behavior. Font40/char5/outline3 by themselves cannot yield an honest equivalent Godot fontsize/outline constant.
+This report provides source-derived equations and boundaries, not a completed equivalent rasterizer nor pixel parity.

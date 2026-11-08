@@ -1,0 +1,12 @@
+Original-client BGM: Duel, build 37.0.0.255130.254477, 191.155771 seconds, stereo 48 kHz.
+See music_manifest.json for original clip identity, bundle provenance, decode/transcode steps and hashes.
+OGG is a conversion of the original FSB, not newly composed music. Full-track looping is this application's playback policy, not an assertion of original client loop points.
+
+One persistent SoundManager autoload owns one Music AudioStreamPlayer. Default Music bus volume 35%, track gain -6 dB, original pitch 1.0. Repeated start calls do not restart active/paused playback. Mode or match resets do not create another player. Music mute pauses/resumes the same stream position; volume zero independently mutes bus output. SFX bus and settings are independent. Normal manager exit stops playback.
+The existing settings page exposes Music volume +/- and a separate music mute toggle. Missing/invalid provenance, missing input or hash mismatch disables playback rather than substituting an unrelated sound.
+
+Cloud environment lacks a working physical audio sink. Verified output uses Godot's official MovieWriter offline engine mixer: actual mixer PCM is nonzero with music, silent when muted/volume-zero, and SFX remain audible when music is muted. This is not a claim of physical-speaker listening. Tests also seek across the real track end to verify looping and exercise normal/practice mode switches.
+
+No-live-backend protection: if AudioServer reports Dummy and Engine.get_write_movie_path() is empty, verified metadata remains available but playback is not loaded/started; audit error=backend_unavailable. Official MovieWriter is explicitly permitted. Exit clears the player stream after stopping it. The no-backend test uses unmodified normal engine quit (no fixture pre-cleanup), repeats start five times and exits without leaked resources.
+
+Normal window close is handled by SoundManager.request_shutdown(): disable automatic immediate quit, stop/clear audio, let the mixer retire decoder references for0.15 seconds, then quit. Repeated requests are idempotent. Real GUI MovieWriter window-close notification probe passed with no leaked resources. Any application code wishing to quit should call this method. Calling SceneTree.quit() directly or forcibly terminating the process bypasses this graceful shutdown; the direct-quit probe is retained as an observed Godot decoder-retirement limitation rather than labeled passing. No gameplay rule was changed; an unrelated old-mode texture-cost lookup now skips keys absent from the current mode definitions.

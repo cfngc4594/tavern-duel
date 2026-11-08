@@ -1,0 +1,22 @@
+2026-11-02 v25 independent read-only review: trailing 器。/晶。
+
+CONFIRMED BUG (first flagged by QA, independently checked against GetUnderwearBounds CIL):
+Current initial v25 _wrap_native_body used inner_edge=W*.5-W*uW*.75.
+Original Bounds center.x=W*.5-W*.5*uW*.5; Bounds.size.x=W*uW*.5; extent.x=W*uW*.25.
+Therefore inner edge=center.x-extent.x=W*.5-W*uW*.5=NarrowW/2.
+Module has been notified to change .75 to .5, not adjust typography visually.
+
+THE TWO WIDOW-LIKE LINES DO NOT REQUIRE THIS BUG:
+Original glyph capture uses advance40 for all these characters; world char scale=.05*.1=.005, hence each .2 units.
+EX1_066: W1.95. '战吼：摧毁对手的武' 9 chars=1.8; next unbreakable token '器。' .4 ->2.2>1.95. Original CIL prevents line starting with 。; greedy algorithm wraps token together. Two-line uppercenter bottom=.87*.25-48.046875*(1+.9375)*.005=-.2479541; forbidden top=-.87*.5+.87*.17*.5+.87*.17*.25=-.324075. No vertical overlap, so the erroneous horizontal edge did not affect this case.
+GAME_005: spell NarrowW=1.7*(1-.26)=1.258. First 6 chars '在本回合中，'=1.2 fit; adding 获=>1.4 doesn't. After second line starts, full W1.7 applies by original flip-height equation. '获得一个法力水'=1.4; adding unbreakable 晶。 gives1.8>1.7, so final token wraps. Three-line measured height approximately .690674<.82, so original ReduceText_CharSize has no height need to shrink/reflow.
+
+NO MISSED WIDOW BALANCE IN ANALYZED WRAP:
+Final CIL after restoring anchor/position calls only UberText.RemoveLineBreakTagsHardSpace0x060000d4, ReplaceUnderscoredAngleBrackets0x060000d5, LineCount0x060000dd.
+Source UberText.cs2903+: strips [b]/[d]/[x] controls, converts underscore to NBSP; bracket function only unescapes '<_'/'_>'. No orphan/widow/balanced-line reflow.
+Normal parameters ResizeToFitAndGrow=0: only shrink if actual bounds exceed configured rectangle, not to avoid a short last line.
+
+Direction/anchor checks:
+Temporary UpperCenter at position(0,H*.25,0) confirmed. Captured UpperCenter bounds have ymax0 before this position offset. Minion side forbidden areas are bottom; spell flip narrows upper area. No detected inversion in current port. Final centered display transform is separate from temporary layout measurement.
+
+Evidence scope: establishes equations/control-flow and explains these outputs with captured metrics; does not establish actual original client screenshot parity or all richtext/control-tag cases. Preserve original formatting unless user explicitly chooses a different, non-original balanced layout.

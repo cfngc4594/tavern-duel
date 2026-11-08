@@ -1,0 +1,574 @@
+
+TYPE Entity 0x02001f4a
+FIELD 0x0400cd77 <ID>k__BackingField SIG 0608
+FIELD 0x0400cd78 <Tags>k__BackingField SIG 061512490112c0007d2c
+FIELD 0x0400cd79 <DefTags>k__BackingField SIG 061512490112c0007d2c
+FIELD 0x0400cd7a <TagLists>k__BackingField SIG 061512490112c0007d30
+FIELD 0x0400cd7b <DefTagLists>k__BackingField SIG 061512490112c0007d30
+FIELD 0x0400cd7c <CardID>k__BackingField SIG 060e
+
+TYPE Entity 0x020028c8
+FIELD 0x04010105 m_staticEntityDef SIG 0612c000a354
+FIELD 0x04010106 m_dynamicEntityDef SIG 0612c000a354
+FIELD 0x04010107 m_card SIG 0612c0009ebc
+FIELD 0x04010108 m_loadState SIG 0611c000a324
+FIELD 0x04010109 m_cardAssetLoadCount SIG 0608
+FIELD 0x0401010a m_useBattlecryPower SIG 0602
+FIELD 0x0401010b m_duplicateForHistory SIG 0602
+FIELD 0x0401010c m_cardTextHistoryData SIG 0612c00095d4
+FIELD 0x0401010d m_attachments SIG 061512490112c000a320
+FIELD 0x0401010e m_subCardIDs SIG 061512490108
+FIELD 0x0401010f m_lettuceAbilityEntityIDs SIG 061512490108
+FIELD 0x04010110 m_realTimeCost SIG 0608
+FIELD 0x04010111 m_realTimeAttack SIG 0608
+FIELD 0x04010112 m_realTimeHealth SIG 0608
+FIELD 0x04010113 m_realTimeDamage SIG 0608
+FIELD 0x04010114 m_realTimeArmor SIG 0608
+FIELD 0x04010115 m_realTimeZone SIG 0608
+FIELD 0x04010116 m_realTimeZonePosition SIG 0608
+FIELD 0x04010117 m_realTimeLinkedEntityId SIG 0608
+FIELD 0x04010118 m_realTimeParentEntityId SIG 0608
+FIELD 0x04010119 m_realTimePoweredUp SIG 0602
+FIELD 0x0401011a m_realTimeDivineShield SIG 0602
+FIELD 0x0401011b m_realTimeIsImmune SIG 0602
+FIELD 0x0401011c m_realTimeIsImmuneWhileAttacking SIG 0602
+FIELD 0x0401011d m_realTimeIsPoisonous SIG 0602
+FIELD 0x0401011e m_realTimeIsVenomous SIG 0602
+FIELD 0x0401011f m_realTimeIsDormant SIG 0602
+FIELD 0x04010120 m_realTimeSpellpower SIG 0608
+FIELD 0x04010121 m_realTimeSpellpowerDouble SIG 0602
+FIELD 0x04010122 m_realTimeHealingDoesDamageHint SIG 0602
+FIELD 0x04010123 m_realTimeLifestealDoesDamageHint SIG 0602
+FIELD 0x04010124 m_realTimeCardCostsHealth SIG 0602
+FIELD 0x04010125 m_realTimeCardCostsArmor SIG 0602
+FIELD 0x04010126 m_realTimeCardCostsCorpses SIG 0602
+FIELD 0x04010127 m_realTimeCardCostsAltTavernCoin SIG 0602
+FIELD 0x04010128 m_realTimeAttackableByRush SIG 0602
+FIELD 0x04010129 m_realTimeBaconCombatPhaseHero SIG 0602
+FIELD 0x0401012a m_realTimeBaconDamageCapEnabled SIG 0602
+FIELD 0x0401012b m_realTimeBaconCombatPhase SIG 0602
+FIELD 0x0401012c m_realTimeDeckActionCost SIG 0608
+FIELD 0x0401012d m_realTimeIsTitan SIG 0602
+FIELD 0x0401012e m_realTimeTitanAbilityUsed1 SIG 0602
+FIELD 0x0401012f m_realTimeTitanAbilityUsed2 SIG 0602
+FIELD 0x04010130 m_realTimeTitanAbilityUsed3 SIG 0602
+FIELD 0x04010131 m_realTimeTitanAbilityUsed4 SIG 0602
+FIELD 0x04010132 m_realTimeIsOldGod SIG 0602
+FIELD 0x04010133 m_realTimeCardType SIG 0611c000a958
+FIELD 0x04010134 m_realTimePremium SIG 0611c000a954
+FIELD 0x04010135 m_realTimePlayerLeaderboardPlace SIG 0608
+FIELD 0x04010136 m_realTimePlayerTechLevel SIG 0608
+FIELD 0x04010137 m_realTimePlayerFightsFirst SIG 0608
+FIELD 0x04010138 m_realTimeBaconDuoPassable SIG 0608
+FIELD 0x04010139 m_queuedRealTimeControllerTagChangeCount SIG 0608
+FIELD 0x0401013a m_queuedChangeEntityCount SIG 0608
+FIELD 0x0401013b m_transformPowersProcessed SIG 061512490112c0007da0
+FIELD 0x0401013c m_displayedCreatorName SIG 060e
+FIELD 0x0401013d m_enchantmentCreatorCardIDForPortrait SIG 060e
+FIELD 0x0401013e m_cachedDebugName SIG 0611c000a32c
+FIELD 0x0401013f s_cardInitMarker SIG 0611899d
+
+0x06013799 Entity::OnChangeEntity(changeEntity) RVA 0x5c37e4 SIG 20010112c0007da0
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Entity::m_transformPowersProcessed token(0x0401013B)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7ff81c4edf40>::Contains token(0x0A0046E4)
+  IL_000c brfalse.s      IL_001c 
+  IL_000e ldarg.0         
+  IL_000f ldfld          Entity::m_transformPowersProcessed token(0x0401013B)
+  IL_0014 ldarg.1         
+  IL_0015 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7ff81c4edf40>::Remove token(0x0A0046E5)
+  IL_001a pop             
+  IL_001b ret             
+  IL_001c ldarg.0         
+  IL_001d ldfld          Entity::m_subCardIDs token(0x0401010E)
+  IL_0022 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7ff81c977ef0>::Clear token(0x0A0005D2)
+  IL_0027 ldarg.0         
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          Entity::m_queuedChangeEntityCount token(0x0401013A)
+  IL_002e ldc.i4.1        
+  IL_002f sub             
+  IL_0030 stfld          Entity::m_queuedChangeEntityCount token(0x0401013A)
+  IL_0035 newobj         LoadCardData::.ctor token(0x06013890)
+  IL_003a dup             
+  IL_003b ldarg.0         
+  IL_003c ldarg.1         
+  IL_003d call           Entity::ShouldUpdateActorOnChangeEntity token(0x0601379C)
+  IL_0042 stfld          LoadCardData::updateActor token(0x04010145)
+  IL_0047 dup             
+  IL_0048 ldarg.0         
+  IL_0049 ldarg.1         
+  IL_004a call           Entity::ShouldRestartStateSpellsOnChangeEntity token(0x0601379D)
+  IL_004f stfld          LoadCardData::restartStateSpells token(0x04010146)
+  IL_0054 dup             
+  IL_0055 ldc.i4.1        
+  IL_0056 stfld          LoadCardData::fromChangeEntity token(0x04010147)
+  IL_005b stloc.0         
+  IL_005c ldarg.0         
+  IL_005d ldarg.1         
+  IL_005e callvirt       HistChangeEntity::get_Entity token(0x0600EF65)
+  IL_0063 ldloc.0         
+  IL_0064 ldc.i4.0        
+  IL_0065 call           Entity::HandleEntityChange token(0x060137AF)
+  IL_006a ret             
+
+0x0601379a Entity::IsTagChanged(changeEntity,tag) RVA 0x5c385c SIG 20020212c0007da011c000a930
+  IL_0000 newobj         <>c__DisplayClass71_0::.ctor token(0x06013899)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 ldarg.2         
+  IL_0008 stfld          <>c__DisplayClass71_0::tag token(0x04010158)
+  IL_000d ldarg.1         
+  IL_000e callvirt       HistChangeEntity::get_Entity token(0x0600EF65)
+  IL_0013 callvirt       Entity::get_Tags token(0x0600EE6F)
+  IL_0018 ldloc.0         
+  IL_0019 ldftn          <>c__DisplayClass71_0::<IsTagChanged>b__0 token(0x0601389A)
+  IL_001f newobj         <dnfile.mdtable.TypeSpecRow object at 0x7ff81c6a0710>::.ctor token(0x0A00253D)
+  IL_0024 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7ff81c671760>::Find token(0x0A00253E)
+  IL_0029 stloc.1         
+  IL_002a ldloc.1         
+  IL_002b brfalse.s      IL_0045 
+  IL_002d ldarg.0         
+  IL_002e ldloc.0         
+  IL_002f ldfld          <>c__DisplayClass71_0::tag token(0x04010158)
+  IL_0034 call           EntityBase::GetTag token(0x060138A4)
+  IL_0039 ldloc.1         
+  IL_003a callvirt       Tag::get_Value token(0x0600EE7F)
+  IL_003f ceq             
+  IL_0041 ldc.i4.0        
+  IL_0042 ceq             
+  IL_0044 ret             
+  IL_0045 ldc.i4.0        
+  IL_0046 ret             
+
+0x0601379b Entity::SignatureFrameWillChange(cardId,changeId) RVA 0x5c38af SIG 2002020e0e
+  IL_0000 ldarg.1         
+  IL_0001 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0006 brtrue.s       IL_0010 
+  IL_0008 ldarg.2         
+  IL_0009 call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_000e brfalse.s      IL_0012 
+  IL_0010 ldc.i4.0        
+  IL_0011 ret             
+  IL_0012 ldarg.0         
+  IL_0013 ldc.i4.s       12 
+  IL_0015 call           EntityBase::GetTag<spec> token(0x2B00046D)
+  IL_001a ldc.i4.3        
+  IL_001b bne.un.s       IL_002f 
+  IL_001d ldarg.1         
+  IL_001e call           ActorNames::GetSignatureFrameId token(0x060129FE)
+  IL_0023 ldarg.2         
+  IL_0024 call           ActorNames::GetSignatureFrameId token(0x060129FE)
+  IL_0029 ceq             
+  IL_002b ldc.i4.0        
+  IL_002c ceq             
+  IL_002e ret             
+  IL_002f ldc.i4.0        
+  IL_0030 ret             
+
+0x0601379c Entity::ShouldUpdateActorOnChangeEntity(changeEntity) RVA 0x5c38e4 SIG 20010212c0007da0
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 ldc.i4         202 
+  IL_0007 call           Entity::IsTagChanged token(0x0601379A)
+  IL_000c brtrue.s       IL_0062 
+  IL_000e ldarg.0         
+  IL_000f ldc.i4         202 
+  IL_0014 call           EntityBase::GetTag token(0x060138A4)
+  IL_0019 ldarg.0         
+  IL_001a ldfld          Entity::m_realTimeCardType token(0x04010133)
+  IL_001f bne.un.s       IL_0062 
+  IL_0021 ldarg.0         
+  IL_0022 ldarg.1         
+  IL_0023 ldc.i4.s       12 
+  IL_0025 call           Entity::IsTagChanged token(0x0601379A)
+  IL_002a brtrue.s       IL_0062 
+  IL_002c ldarg.0         
+  IL_002d ldc.i4.s       12 
+  IL_002f call           EntityBase::GetTag token(0x060138A4)
+  IL_0034 ldarg.0         
+  IL_0035 ldfld          Entity::m_realTimePremium token(0x04010134)
+  IL_003a bne.un.s       IL_0062 
+  IL_003c ldarg.0         
+  IL_003d ldarg.1         
+  IL_003e ldc.i4         1665 
+  IL_0043 call           Entity::IsTagChanged token(0x0601379A)
+  IL_0048 brtrue.s       IL_0062 
+  IL_004a ldarg.0         
+  IL_004b ldarg.0         
+  IL_004c call           EntityBase::get_m_cardId token(0x0601389E)
+  IL_0051 ldarg.1         
+  IL_0052 callvirt       HistChangeEntity::get_Entity token(0x0600EF65)
+  IL_0057 callvirt       Entity::get_CardID token(0x0600EE76)
+  IL_005c call           Entity::SignatureFrameWillChange token(0x0601379B)
+  IL_0061 ret             
+  IL_0062 ldc.i4.1        
+  IL_0063 ret             
+
+0x0601379d Entity::ShouldRestartStateSpellsOnChangeEntity(changeEntity) RVA 0x5c3954 SIG 20010212c0007da0
+  IL_0000 call           GameState::Get token(0x06005589)
+  IL_0005 brfalse.s      IL_0038 
+  IL_0007 call           GameState::Get token(0x06005589)
+  IL_000c callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0011 ldc.i4         1467 
+  IL_0016 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_001b brfalse.s      IL_0038 
+  IL_001d ldarg.0         
+  IL_001e call           Entity::IsControlledByFriendlySidePlayer token(0x060137E1)
+  IL_0023 brtrue.s       IL_0038 
+  IL_0025 ldarg.0         
+  IL_0026 call           EntityBase::IsMinion token(0x060138DB)
+  IL_002b brfalse.s      IL_0038 
+  IL_002d ldarg.0         
+  IL_002e call           EntityBase::GetZone token(0x06013922)
+  IL_0033 ldc.i4.1        
+  IL_0034 bne.un.s       IL_0038 
+  IL_0036 ldc.i4.1        
+  IL_0037 ret             
+  IL_0038 ldarg.0         
+  IL_0039 ldarg.1         
+  IL_003a ldc.i4.s       114 
+  IL_003c call           Entity::IsTagChanged token(0x0601379A)
+  IL_0041 ret             
+
+0x060137a1 Entity::HandlePreTransformTagChanges(changeList) RVA 0x5c402c SIG 20010112c000a9ac
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Entity::m_card token(0x04010107)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_000c brfalse.s      IL_0019 
+  IL_000e ldarg.0         
+  IL_000f ldfld          Entity::m_card token(0x04010107)
+  IL_0014 callvirt       Card::DeactivateCustomKeywordEffect token(0x06012D59)
+  IL_0019 ret             
+
+0x060137a2 Entity::OnTagsChanged(changeList,fromShowEntity) RVA 0x5c4048 SIG 20020112c000a9ac02
+  IL_0000 ldc.i4.0        
+  IL_0001 stloc.0         
+  IL_0002 ldc.i4.0        
+  IL_0003 stloc.1         
+  IL_0004 br.s           IL_0024 
+  IL_0006 ldarg.1         
+  IL_0007 ldloc.1         
+  IL_0008 callvirt       TagDeltaList::get_Item token(0x060144E8)
+  IL_000d stloc.2         
+  IL_000e ldarg.0         
+  IL_000f ldloc.2         
+  IL_0010 call           Entity::IsNameChange token(0x060137B8)
+  IL_0015 brfalse.s      IL_0019 
+  IL_0017 ldc.i4.1        
+  IL_0018 stloc.0         
+  IL_0019 ldarg.0         
+  IL_001a ldloc.2         
+  IL_001b call           Entity::HandleTagChange token(0x060137B0)
+  IL_0020 ldloc.1         
+  IL_0021 ldc.i4.1        
+  IL_0022 add             
+  IL_0023 stloc.1         
+  IL_0024 ldloc.1         
+  IL_0025 ldarg.1         
+  IL_0026 callvirt       TagDeltaList::get_Count token(0x060144E7)
+  IL_002b blt.s          IL_0006 
+  IL_002d ldarg.0         
+  IL_002e ldfld          Entity::m_card token(0x04010107)
+  IL_0033 ldnull          
+  IL_0034 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0039 brfalse.s      IL_003c 
+  IL_003b ret             
+  IL_003c ldloc.0         
+  IL_003d brfalse.s      IL_0045 
+  IL_003f ldarg.0         
+  IL_0040 call           Entity::UpdateCardName token(0x060137F8)
+  IL_0045 ldarg.0         
+  IL_0046 ldfld          Entity::m_card token(0x04010107)
+  IL_004b ldarg.1         
+  IL_004c ldarg.2         
+  IL_004d callvirt       Card::OnTagsChanged token(0x06012D77)
+  IL_0052 ret             
+
+0x060137af Entity::HandleEntityChange(netEntity,data,fromShowEntity) RVA 0x5c44c8 SIG 20030112c0007d2812c000a32802
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          EntityBase::m_tags token(0x0401015F)
+  IL_0006 ldarg.1         
+  IL_0007 callvirt       Entity::get_Tags token(0x0600EE6F)
+  IL_000c callvirt       TagMap::CreateDeltas token(0x060144F7)
+  IL_0011 stloc.0         
+  IL_0012 ldarg.0         
+  IL_0013 ldarg.1         
+  IL_0014 callvirt       Entity::get_Tags token(0x0600EE6F)
+  IL_0019 call           EntityBase::SetTags token(0x060138AA)
+  IL_001e ldarg.0         
+  IL_001f ldarg.1         
+  IL_0020 callvirt       Entity::get_TagLists token(0x0600EE73)
+  IL_0025 call           EntityBase::SetTagLists token(0x060138AC)
+  IL_002a ldarg.0         
+  IL_002b ldloc.0         
+  IL_002c callvirt       Entity::HandlePreTransformTagChanges token(0x060137A1)
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          Entity::m_card token(0x04010107)
+  IL_0037 ldnull          
+  IL_0038 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_003d brfalse.s      IL_004a 
+  IL_003f ldarg.0         
+  IL_0040 ldfld          Entity::m_card token(0x04010107)
+  IL_0045 callvirt       Card::DestroyCardDefAssetsOnEntityChanged token(0x06012D6E)
+  IL_004a ldarg.0         
+  IL_004b ldarg.1         
+  IL_004c callvirt       Entity::get_CardID token(0x0600EE76)
+  IL_0051 ldarg.2         
+  IL_0052 ldc.i4.0        
+  IL_0053 call           Entity::LoadCard token(0x06013874)
+  IL_0058 ldarg.0         
+  IL_0059 call           EntityBase::GetZone token(0x06013922)
+  IL_005e ldc.i4.3        
+  IL_005f bne.un.s       IL_00a6 
+  IL_0061 ldarg.0         
+  IL_0062 call           Entity::GetCard token(0x060137BF)
+  IL_0067 ldnull          
+  IL_0068 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_006d brfalse.s      IL_00a6 
+  IL_006f ldarg.0         
+  IL_0070 call           Entity::GetCard token(0x060137BF)
+  IL_0075 callvirt       Card::GetZone token(0x06012DE5)
+  IL_007a ldnull          
+  IL_007b call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0080 brfalse.s      IL_00a6 
+  IL_0082 ldarg.2         
+  IL_0083 ldfld          LoadCardData::updateActor token(0x04010145)
+  IL_0088 brfalse.s      IL_009a 
+  IL_008a ldarg.0         
+  IL_008b call           Entity::GetCard token(0x060137BF)
+  IL_0090 callvirt       Card::GetZone token(0x06012DE5)
+  IL_0095 callvirt       Zone::UpdateLayout token(0x0600639B)
+  IL_009a ldarg.0         
+  IL_009b call           Entity::GetCard token(0x060137BF)
+  IL_00a0 ldc.i4.1        
+  IL_00a1 callvirt       Card::UpdateActorState token(0x06012DCD)
+  IL_00a6 ldarg.1         
+  IL_00a7 callvirt       Entity::get_DefTags token(0x0600EE71)
+  IL_00ac callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7ff81c671760>::get_Count token(0x0A0023EA)
+  IL_00b1 ldc.i4.0        
+  IL_00b2 ble.s          IL_00f9 
+  IL_00b4 ldarg.0         
+  IL_00b5 call           Entity::GetOrCreateDynamicDefinition token(0x060137BB)
+  IL_00ba stloc.1         
+  IL_00bb ldc.i4.0        
+  IL_00bc stloc.2         
+  IL_00bd br.s           IL_00eb 
+  IL_00bf ldloc.1         
+  IL_00c0 ldarg.1         
+  IL_00c1 callvirt       Entity::get_DefTags token(0x0600EE71)
+  IL_00c6 ldloc.2         
+  IL_00c7 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7ff81c671760>::get_Item token(0x0A0023E9)
+  IL_00cc callvirt       Tag::get_Name token(0x0600EE7D)
+  IL_00d1 ldarg.1         
+  IL_00d2 callvirt       Entity::get_DefTags token(0x0600EE71)
+  IL_00d7 ldloc.2         
+  IL_00d8 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7ff81c671760>::get_Item token(0x0A0023E9)
+  IL_00dd callvirt       Tag::get_Value token(0x0600EE7F)
+  IL_00e2 callvirt       EntityBase::SetTag token(0x060138A6)
+  IL_00e7 ldloc.2         
+  IL_00e8 ldc.i4.1        
+  IL_00e9 add             
+  IL_00ea stloc.2         
+  IL_00eb ldloc.2         
+  IL_00ec ldarg.1         
+  IL_00ed callvirt       Entity::get_DefTags token(0x0600EE71)
+  IL_00f2 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7ff81c671760>::get_Count token(0x0A0023EA)
+  IL_00f7 blt.s          IL_00bf 
+  IL_00f9 ldarg.0         
+  IL_00fa call           EntityBase::RemoveCachedEntityRaces token(0x06013951)
+  IL_00ff ldarg.0         
+  IL_0100 ldloc.0         
+  IL_0101 ldarg.3         
+  IL_0102 callvirt       Entity::OnTagsChanged token(0x060137A2)
+  IL_0107 call           CorpseCounter::UpdateTextAll token(0x060052F8)
+  IL_010c ret             
+
+0x06013874 Entity::LoadCard(cardId,data,async) RVA 0x5c74ec SIG 2003010e12c000a32802
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           Entity::LoadEntityDef token(0x06013873)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.2        
+  IL_0009 stfld          Entity::m_loadState token(0x04010108)
+  IL_000e ldarg.1         
+  IL_000f call           System.String::IsNullOrEmpty token(0x0A0000B3)
+  IL_0014 brfalse.s      IL_0053 
+  IL_0016 ldarg.3         
+  IL_0017 brfalse.s      IL_0036 
+  IL_0019 call           DefLoader::Get token(0x06013655)
+  IL_001e ldstr          'HiddenCard' string token(0x703D44E5)
+  IL_0023 ldarg.0         
+  IL_0024 ldftn          Entity::OnCardDefLoaded token(0x06013875)
+  IL_002a newobj         <dnfile.mdtable.TypeSpecRow object at 0x7ff81c97eea0>::.ctor token(0x0A000217)
+  IL_002f ldnull          
+  IL_0030 callvirt       DefLoader::LoadCardDefAsync token(0x0601365F)
+  IL_0035 ret             
+  IL_0036 call           DefLoader::Get token(0x06013655)
+  IL_003b ldstr          'HiddenCard' string token(0x703D44E5)
+  IL_0040 ldarg.0         
+  IL_0041 ldftn          Entity::OnCardDefLoaded token(0x06013875)
+  IL_0047 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7ff81c97eea0>::.ctor token(0x0A000217)
+  IL_004c ldnull          
+  IL_004d callvirt       DefLoader::LoadCardDef token(0x0601365E)
+  IL_0052 ret             
+  IL_0053 call           CardPortraitQuality::GetDefault token(0x06013651)
+  IL_0058 ldarg.0         
+  IL_0059 ldfld          Entity::m_realTimePremium token(0x04010134)
+  IL_005e stfld          CardPortraitQuality::PremiumType token(0x0400FFEF)
+  IL_0063 ldarg.3         
+  IL_0064 brfalse.s      IL_007f 
+  IL_0066 call           DefLoader::Get token(0x06013655)
+  IL_006b ldarg.1         
+  IL_006c ldarg.0         
+  IL_006d ldftn          Entity::OnCardDefLoaded token(0x06013875)
+  IL_0073 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7ff81c97eea0>::.ctor token(0x0A000217)
+  IL_0078 ldarg.2         
+  IL_0079 callvirt       DefLoader::LoadCardDefAsync token(0x0601365F)
+  IL_007e ret             
+  IL_007f call           DefLoader::Get token(0x06013655)
+  IL_0084 ldarg.1         
+  IL_0085 ldarg.0         
+  IL_0086 ldftn          Entity::OnCardDefLoaded token(0x06013875)
+  IL_008c newobj         <dnfile.mdtable.TypeSpecRow object at 0x7ff81c97eea0>::.ctor token(0x0A000217)
+  IL_0091 ldarg.2         
+  IL_0092 callvirt       DefLoader::LoadCardDef token(0x0601365E)
+  IL_0097 ret             
+
+0x06013875 Entity::OnCardDefLoaded(cardId,cardDef,callbackData) RVA 0x5c7590 SIG 2003010e12c000a2841c
+  IL_0000 ldarg.2         
+  IL_0001 stloc.0         
+  IL_0002 ldarg.2         
+  IL_0003 brtrue.s       IL_0025 
+  IL_0005 ldstr          'Entity.OnCardDefLoaded() - {0} does not have an asset!' string token(0x703D4DDC)
+  IL_000a ldc.i4.1        
+  IL_000b newarr         System.Object token(0x01000001)
+  IL_0010 dup             
+  IL_0011 ldc.i4.0        
+  IL_0012 ldarg.1         
+  IL_0013 stelem.ref      
+  IL_0014 call           UnityEngine.Debug::LogErrorFormat token(0x0A000168)
+  IL_0019 ldarg.0         
+  IL_001a ldc.i4.3        
+  IL_001b stfld          Entity::m_loadState token(0x04010108)
+  IL_0020 leave          IL_017e 
+  IL_0025 newobj         LoadCardData::.ctor token(0x06013890)
+  IL_002a dup             
+  IL_002b ldc.i4.0        
+  IL_002c stfld          LoadCardData::updateActor token(0x04010145)
+  IL_0031 dup             
+  IL_0032 ldc.i4.0        
+  IL_0033 stfld          LoadCardData::restartStateSpells token(0x04010146)
+  IL_0038 dup             
+  IL_0039 ldc.i4.0        
+  IL_003a stfld          LoadCardData::fromChangeEntity token(0x04010147)
+  IL_003f stloc.1         
+  IL_0040 ldarg.3         
+  IL_0041 isinst         LoadCardData token(0x020028CA)
+  IL_0046 brfalse.s      IL_004f 
+  IL_0048 ldarg.3         
+  IL_0049 castclass      LoadCardData token(0x020028CA)
+  IL_004e stloc.1         
+  IL_004f ldarg.0         
+  IL_0050 ldfld          Entity::m_card token(0x04010107)
+  IL_0055 ldnull          
+  IL_0056 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_005b brfalse        IL_014b 
+  IL_0060 ldarg.0         
+  IL_0061 ldfld          Entity::m_card token(0x04010107)
+  IL_0066 ldarg.2         
+  IL_0067 ldloc.1         
+  IL_0068 ldfld          LoadCardData::updateActor token(0x04010145)
+  IL_006d callvirt       Card::SetCardDef token(0x06012D22)
+  IL_0072 ldloc.1         
+  IL_0073 ldfld          LoadCardData::updateActor token(0x04010145)
+  IL_0078 brfalse.s      IL_00c1 
+  IL_007a ldarg.0         
+  IL_007b ldfld          Entity::m_card token(0x04010107)
+  IL_0080 callvirt       Card::GetActor token(0x06012DD6)
+  IL_0085 ldnull          
+  IL_0086 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_008b brfalse.s      IL_00a6 
+  IL_008d ldloc.1         
+  IL_008e ldfld          LoadCardData::fromChangeEntity token(0x04010147)
+  IL_0093 brfalse.s      IL_00a6 
+  IL_0095 ldarg.0         
+  IL_0096 ldfld          Entity::m_card token(0x04010107)
+  IL_009b callvirt       Card::GetActor token(0x06012DD6)
+  IL_00a0 ldarg.2         
+  IL_00a1 callvirt       Actor::SetCardDef token(0x06012807)
+  IL_00a6 ldarg.0         
+  IL_00a7 ldfld          Entity::m_card token(0x04010107)
+  IL_00ac ldc.i4.0        
+  IL_00ad ldnull          
+  IL_00ae callvirt       Card::UpdateActor token(0x06012DFB)
+  IL_00b3 ldarg.0         
+  IL_00b4 ldfld          Entity::m_card token(0x04010107)
+  IL_00b9 ldc.i4.0        
+  IL_00ba callvirt       Card::ActivateStateSpells token(0x06012D87)
+  IL_00bf br.s           IL_00d5 
+  IL_00c1 ldloc.1         
+  IL_00c2 ldfld          LoadCardData::restartStateSpells token(0x04010146)
+  IL_00c7 brfalse.s      IL_00d5 
+  IL_00c9 ldarg.0         
+  IL_00ca ldfld          Entity::m_card token(0x04010107)
+  IL_00cf ldc.i4.1        
+  IL_00d0 callvirt       Card::ActivateStateSpells token(0x06012D87)
+  IL_00d5 ldloc.1         
+  IL_00d6 ldfld          LoadCardData::fromChangeEntity token(0x04010147)
+  IL_00db brfalse.s      IL_0113 
+  IL_00dd ldarg.0         
+  IL_00de ldfld          Entity::m_card token(0x04010107)
+  IL_00e3 callvirt       Card::GetActor token(0x06012DD6)
+  IL_00e8 ldnull          
+  IL_00e9 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00ee brfalse.s      IL_0113 
+  IL_00f0 ldarg.0         
+  IL_00f1 ldfld          Entity::m_card token(0x04010107)
+  IL_00f6 callvirt       Card::GetActor token(0x06012DD6)
+  IL_00fb ldc.i4.1        
+  IL_00fc callvirt       Actor::UseTechLevelManaGem token(0x06012944)
+  IL_0101 brfalse.s      IL_0113 
+  IL_0103 ldarg.0         
+  IL_0104 ldfld          Entity::m_card token(0x04010107)
+  IL_0109 callvirt       Card::GetActor token(0x06012DD6)
+  IL_010e callvirt       Actor::ShowTavernTierSpell token(0x06012974)
+  IL_0113 ldarg.0         
+  IL_0114 ldfld          Entity::m_card token(0x04010107)
+  IL_0119 callvirt       Card::RefreshCardsInTooltip token(0x06012E0E)
+  IL_011e ldloc.1         
+  IL_011f ldfld          LoadCardData::fromChangeEntity token(0x04010147)
+  IL_0124 brfalse.s      IL_014b 
+  IL_0126 ldarg.0         
+  IL_0127 call           EntityBase::IsMinion token(0x060138DB)
+  IL_012c brfalse.s      IL_014b 
+  IL_012e ldarg.0         
+  IL_012f ldfld          Entity::m_card token(0x04010107)
+  IL_0134 callvirt       Card::GetZone token(0x06012DE5)
+  IL_0139 isinst         ZonePlay token(0x02000CDA)
+  IL_013e brfalse.s      IL_014b 
+  IL_0140 ldarg.0         
+  IL_0141 ldfld          Entity::m_card token(0x04010107)
+  IL_0146 callvirt       Card::ActivateCharacterPlayEffects token(0x06012D4F)
+  IL_014b ldarg.0         
+  IL_014c ldc.i4.0        
+  IL_014d call           Entity::UpdateUseBattlecryFlag token(0x06013826)
+  IL_0152 ldarg.0         
+  IL_0153 ldc.i4.3        
+  IL_0154 stfld          Entity::m_loadState token(0x04010108)
+  IL_0159 ldarg.0         
+  IL_015a ldfld          Entity::m_card token(0x04010107)
+  IL_015f ldnull          
+  IL_0160 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0165 brfalse.s      IL_0172 
+  IL_0167 ldarg.0         
+  IL_0168 ldfld          Entity::m_card token(0x04010107)
+  IL_016d callvirt       Card::RefreshActor token(0x06012DE4)
+  IL_0172 leave.s        IL_017e 
+  IL_0174 ldloc.0         
+  IL_0175 brfalse.s      IL_017d 
+  IL_0177 ldloc.0         
+  IL_0178 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_017d endfinally      
+  IL_017e ret             

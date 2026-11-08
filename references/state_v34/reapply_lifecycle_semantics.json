@@ -1,0 +1,2114 @@
+{
+  "schema_version": 1,
+  "build": "37.0.0.255130.254477",
+  "rules_build": 5834,
+  "scope": "Only the four recovered current-pool frozen_minion, frozen_hero, taunt and sleep status roots. Static cached original CIL/prefab audit, no client execution.",
+  "implementation": {
+    "cache_key": "Actor identity plus original SpellType. Current types: frozen14, taunt8, sleep52. Keep the same Spell/FSM/prefab objects through Birth, Death and None until actual actor release.",
+    "reapply_during_death": "ActivateSpellBirthState returns the existing nonnull owned Spell and ActivateState(Birth=1). Interrupt the current FSM state and enter its global Birth route on that same object; do not spawn a second effect or synthesize None first.",
+    "reapply_after_none": "Reuse the same cached Spell, leave None through ChangeStateImpl, reset m_finished=false and call OnExitedNoneState. This enables ObjectContainer renderers and then runs the original Birth route.",
+    "old_state_work": "Exit the previous FSM state. Its Wait action no longer updates. Cancel its outstanding delayed FSM events because all four keepDelayedEventsOnStateExit=0. Do not let an old Death deadline send None into a later Birth.",
+    "timing": "Continue FSM time while temporarily hidden or in None; None does not disable the root GameObject or FSM. Source zero-time state transitions remain frame-quantized. This does not claim every native particle simulation step continues while renderer-culling applies.",
+    "state_domains": "Do not conflate Spell.m_finished, Spell.m_activeStateType and PlayMaker active state. Frozen SpellFinishAction at Death entry only sets m_finished=true through OnSpellFinished; activeStateType remains Death=5 until NoneState SpellStateAction reports None.",
+    "renderer_write_order": "For ChangeStateImpl, apply original OnExitedNoneState container enable only when the previous Spell state is None, not on every Birth. Separate actual Spell.Show false-to-true while activeStateType!=None also invokes OnExitedNoneState. Apply explicit route SetVisibility actions without resetting all prefab transforms/materials or inventing renderer restoration.",
+    "audio_dedup": "Use cached effect serial plus activation/state-entry generation and action identity. A legitimate second Death of the same cached object must play once; old actions must not replay on reattachment.",
+    "release": "Actual owner release destroys/releases cached Spell objects. Neither ordinary None nor OnSpellFinished is owner release."
+  },
+  "hero_renderer_edge": {
+    "result": "Direct Death-tail to Birth retains disabled hero ice-shell renderers. This is the verified direct source sequence, not an instruction to correct its appearance.",
+    "spell_finish_action": "SpellFinishAction.OnEnter 0x06016cdd IL0051..0057 calls Spell.OnSpellFinished for serialized delay0; then action Finish. No ChangeState/Deactivate call.",
+    "spell_finished": "Spell.OnSpellFinished 0x0601495f writes m_finished, removes blocks, fires one-shot listeners. It does not write m_activeStateType. Actor.LoadSpell adds release/state-start callbacks, not an ordinary finished-to-None callback.",
+    "conditional_enable": "Spell.ChangeStateImpl 0x0601496c IL0037 branches on previous state; IL00b6..00c1 calls OnExitedNoneState only previous None and next non-None. OnExitedNoneState 0x0601498a calls ActivateObjectContainer(true).",
+    "hidden_renderers": [
+      "cab-69c88b234dfa427e02d1fcee9337ae34:5932701138785887379",
+      "cab-69c88b234dfa427e02d1fcee9337ae34:-1273333477960620909"
+    ],
+    "death_actions": "frozen_hero Death indices3/4 SetVisibility(false), resetOnExit=false.",
+    "birth_actions": "Normal hero Birth: Scale Hero Frame? -> Regular Frame, only ParticlePlay(frost, includeChildren=false) and SetScale(container). No shell enable action. Legacy Birth SpellState targets a Transform-only container and has no animation/renderer action.",
+    "callback_check": "Actor.OnSpellStateStarted 0x0601297f calls ActorStateMgr.RefreshStateMgr 0x0601489e, which only calls HighlightState.SetDirty. No container/shell enable is added there.",
+    "after_none": "None->Birth does enable both shells as part of ObjectContainer renderer traversal.",
+    "minion_contrast": "Normal frozen_minion Birth CheckIfMerc->EnableIce explicitly enables all three ice objects, so direct Death-tail reentry restores them.",
+    "explicit_hide_show_exception": "Spell.Show 0x06014935 returns when already m_shown=true. On false-to-true it sets m_shown=true and, if activeStateType!=0, calls OnExitedNoneState before ShowImpl. Therefore a real Hide->Show while still Death enables every active ObjectContainer renderer, including shells hidden by Death. If the Spell reached None while hidden, Show does not enable them. There is no Birth/state reset in this call.",
+    "scope_caveat": "This is the direct tag-remove/reapply source path without an intervening independent Actor Hide/Show or release. Do not generalize it to unrelated presentation calls."
+  },
+  "audio": {
+    "no_exit_stop": "AudioPlaythroughAction and AudioPlayClipAction directly inherit FsmStateAction, declare no OnExit override, and have no stopOnExit field. FsmStateAction.OnExit 0x06000638 is ret.",
+    "frozen_tail": "Already-started thaw sound continues when Death is interrupted by Birth and when the FSM enters None. The AudioSource stays on the same active cached prefab; renderer gating does not stop it.",
+    "second_frozen_death": "Both frozen routes use ordinary SoundManager.Play on their existing AudioSource, not OneShotSound/Clip. PlayImpl 0x06014791 RegisterExtension(newClip=true), LoadClipForPlayback 0x0601475d and InitNewClipOnSource 0x0601475f set the next selected clip, then AudioSource.Play on the same source. Model one reusable playback slot per source: later Death replaces/restarts its prior playback rather than layering another generated source.",
+    "taunt_tail": "AudioPlayClipAction uses SoundManager.PlayClip with a newly generated SceneObject source. Already-fired taunt audio is independent of cached status state exits. Retain summon/keyword suppression and exact action scheduling from audio/runtime_manifest.json.",
+    "sleep": "No audio action exists in the recovered sleep root."
+  },
+  "particles_and_tweens": {
+    "action_lifetime": "ParticlePlayAction, ParticleStopAction and ParticleClearAction directly inherit FsmStateAction, have no OnExit, and finish immediately after invoking their own operation on the existing ParticleSystem(s). Do not destroy/recreate PS objects on every FSM activation.",
+    "play": "ParticlePlayAction.OnEnter 0x060000ee calls ParticleSystem.Play(includeChildren). No preceding Clear/Stop/Simulate is implied. Preserve old emitted particles except when an actual source action clears them.",
+    "stop": "ParticleStopAction.OnEnter 0x060000f4 calls ParticleSystem.Stop(includeChildren). Original Unity managed overload 0x0600005c passes stopBehavior=1, verified enum StopEmitting. It does not clear existing particles.",
+    "clear": "ParticleClearAction.OnEnter 0x060000df calls ParticleSystem.Clear(includeChildren). This is a separate source action, not destruction of the cached system and not an automatic stop.",
+    "frozen_shatter": "Death plays shatter systems; Birth has no shatter Clear/Stop action. Already emitted shatter particles retain their own lifetimes through a rapid reapply. Frost Play restarts/resumes the same source system using its native semantics.",
+    "none": "None only disables ObjectContainer renderers. No blanket ParticleSystem Pause/Stop/Clear follows from None itself. Existing route actions may already have stopped or cleared selected systems.",
+    "itween_exit": "iTweenFadeToAction.OnExit 0x06000128 and iTweenScaleTo.OnExit 0x060001c0 call iTweenFsmAction.OnExitiTween 0x06000151, remove their callback mapping, and call iTween.Stop(target,itweenType) when stopOnExit is unset or true. Current serialized interrupted sleep/taunt tween actions have stopOnExit=true. Their old tween completion must not overwrite the new state.",
+    "culling_enums": {
+      "ParticleSystemStopBehavior": {
+        "StopEmittingAndClear": 0,
+        "StopEmitting": 1
+      },
+      "ParticleSystemStopAction": {
+        "None": 0,
+        "Disable": 1,
+        "Destroy": 2,
+        "Callback": 3
+      },
+      "ParticleSystemCullingMode": {
+        "Automatic": 0,
+        "PauseAndCatchup": 1,
+        "Pause": 2,
+        "AlwaysSimulate": 3
+      }
+    },
+    "native_boundary": "Current fields use PauseAndCatchup=1 or AlwaysSimulate=3, not Automatic. Preserve these exact source values as evidence. Native renderer-visibility/culling internals, native ParticleSystem RNG and native integration are not reproduced by this static audit; the portable fixed-step particle model remains a documented compatibility boundary.",
+    "systems": [
+      {
+        "component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8093159647586757460",
+        "game_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8152262837988633428",
+        "game_object_name": "FX_Mist_new",
+        "source_object_sha256": "78ef32f53378810696af7c17589e819e39ea7950370c2593f32b834fb95bb11d",
+        "lengthInSec": 5.0,
+        "simulationSpeed": 1.0,
+        "stopAction": 0,
+        "cullingMode": 1,
+        "looping": true,
+        "playOnAwake": false,
+        "useUnscaledTime": false,
+        "autoRandomSeed": true,
+        "randomSeed": 0
+      },
+      {
+        "component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-5121958075804887892",
+        "game_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-3259667316296395604",
+        "game_object_name": "FX_Shatter",
+        "source_object_sha256": "d06b60afe3ff7d390bc21957b4f819667b85000749dbda823e8cbd4b3b56a246",
+        "lengthInSec": 3.0,
+        "simulationSpeed": 1.0,
+        "stopAction": 0,
+        "cullingMode": 3,
+        "looping": false,
+        "playOnAwake": false,
+        "useUnscaledTime": false,
+        "autoRandomSeed": true,
+        "randomSeed": 0
+      },
+      {
+        "component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8068901785922579284",
+        "game_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:2457910773545030828",
+        "game_object_name": "FX_Mist_burst",
+        "source_object_sha256": "55ca6475ba4fcd7b3d9130434a29fa4380cef08a1c6b2d435f0b6a1997613691",
+        "lengthInSec": 5.0,
+        "simulationSpeed": 2.0,
+        "stopAction": 0,
+        "cullingMode": 1,
+        "looping": false,
+        "playOnAwake": false,
+        "useUnscaledTime": false,
+        "autoRandomSeed": true,
+        "randomSeed": 0
+      },
+      {
+        "component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:2922334946158037561",
+        "game_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:9074186161103620665",
+        "game_object_name": "FX_SparkBurst",
+        "source_object_sha256": "f163a067f141f3ef0e60ffc6243678798ea2b6b12f5945af32ff236ccc6d8d64",
+        "lengthInSec": 1.0,
+        "simulationSpeed": 1.0,
+        "stopAction": 0,
+        "cullingMode": 3,
+        "looping": false,
+        "playOnAwake": false,
+        "useUnscaledTime": false,
+        "autoRandomSeed": true,
+        "randomSeed": 0
+      },
+      {
+        "component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2727159342162916807",
+        "game_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6533413806742620729",
+        "game_object_name": "FX_GlintFlare",
+        "source_object_sha256": "82e81329e0ae084f788027491e7608abfcc51abe95f0437b6195ad2d3347873e",
+        "lengthInSec": 1.0,
+        "simulationSpeed": 1.0,
+        "stopAction": 0,
+        "cullingMode": 1,
+        "looping": false,
+        "playOnAwake": true,
+        "useUnscaledTime": false,
+        "autoRandomSeed": true,
+        "randomSeed": 0
+      },
+      {
+        "component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-5085216370203466605",
+        "game_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053",
+        "game_object_name": "FX_Mist_new",
+        "source_object_sha256": "1c187c18d55166b726e8c15fed957def5917fbbcab04094983c0110135427205",
+        "lengthInSec": 5.0,
+        "simulationSpeed": 1.0,
+        "stopAction": 0,
+        "cullingMode": 1,
+        "looping": true,
+        "playOnAwake": true,
+        "useUnscaledTime": false,
+        "autoRandomSeed": true,
+        "randomSeed": 0
+      },
+      {
+        "component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6318409310918042771",
+        "game_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8765430549368839021",
+        "game_object_name": "FX_Shatter",
+        "source_object_sha256": "eea3b30a8d9bfb2263be2efd30d975996bb47c780dc1dd4baff68e205b6f92e3",
+        "lengthInSec": 3.0,
+        "simulationSpeed": 1.0,
+        "stopAction": 0,
+        "cullingMode": 3,
+        "looping": false,
+        "playOnAwake": false,
+        "useUnscaledTime": false,
+        "autoRandomSeed": true,
+        "randomSeed": 0
+      },
+      {
+        "component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:1466674003099346067",
+        "game_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6245855444539696275",
+        "game_object_name": "FX_Mist_burst",
+        "source_object_sha256": "d23f6299d66218f576137be70db801a18eb6e9eaf8d1f492dc091f8a92c6f1e6",
+        "lengthInSec": 5.0,
+        "simulationSpeed": 2.0,
+        "stopAction": 0,
+        "cullingMode": 1,
+        "looping": false,
+        "playOnAwake": false,
+        "useUnscaledTime": false,
+        "autoRandomSeed": true,
+        "randomSeed": 0
+      },
+      {
+        "component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:448378055411967612",
+        "game_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-1351460939439987076",
+        "game_object_name": "FX_Zzz",
+        "source_object_sha256": "86537ff382a31a4fda0a7a2c8d3c9e5594d11423c002340aad8a71cfa5d47e36",
+        "lengthInSec": 5.0,
+        "simulationSpeed": 1.0,
+        "stopAction": 0,
+        "cullingMode": 1,
+        "looping": true,
+        "playOnAwake": false,
+        "useUnscaledTime": false,
+        "autoRandomSeed": true,
+        "randomSeed": 0
+      }
+    ]
+  },
+  "async_state_request": "WaitThenChangeFsmState.MoveNext 0x06014999 waits until m_fsmReady, then compares current m_activeStateType with the requested stateType before ChangeFsmStateNow. A stale pre-ready request for another state is discarded. ChangeFsmStateNow sends the global enum event.",
+  "route_actions": {
+    "frozen_minion/root": {
+      "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:8559689017633789100",
+      "fsm_component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5648821771300557996",
+      "keepDelayedEventsOnStateExit": 0,
+      "state_actions": [
+        {
+          "state": "CheckIfMerc",
+          "index": 2,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8152262837988633428"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "value": 0,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-8152262837988633428"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8152262837988633428"
+        },
+        {
+          "state": "CheckIfMerc",
+          "index": 3,
+          "class_name": "SetVisibility",
+          "enabled": false,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "8307728421905355948"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:8307728421905355948"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:8307728421905355948"
+        },
+        {
+          "state": "CheckIfMerc",
+          "index": 4,
+          "class_name": "SetVisibility",
+          "enabled": false,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "1204054133996770476"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:1204054133996770476"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:1204054133996770476"
+        },
+        {
+          "state": "CheckIfMerc",
+          "index": 5,
+          "class_name": "SetVisibility",
+          "enabled": false,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "5232427102039168172"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:5232427102039168172"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5232427102039168172"
+        },
+        {
+          "state": "Death",
+          "index": 1,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-3259667316296395604"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "value": 1,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-3259667316296395604"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-3259667316296395604"
+        },
+        {
+          "state": "Death",
+          "index": 2,
+          "class_name": "AudioPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "3123646001976759468"
+                }
+              }
+            },
+            "m_VolumeScale": {
+              "value": 1.0,
+              "useVariable": 0
+            },
+            "m_OneShotClip": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "UnityEngine.AudioClip",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              }
+            },
+            "m_Delay": 0.0,
+            "m_OneShotSound": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "SoundDef",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              }
+            },
+            "m_FinishedEvent": "",
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:3123646001976759468",
+            "params.m_OneShotClip.value": null,
+            "params.m_OneShotSound.value": null
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:3123646001976759468"
+        },
+        {
+          "state": "Death",
+          "index": 3,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "8307728421905355948"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:8307728421905355948"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:8307728421905355948"
+        },
+        {
+          "state": "Death",
+          "index": 4,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "5232427102039168172"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:5232427102039168172"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5232427102039168172"
+        },
+        {
+          "state": "Death",
+          "index": 5,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "1204054133996770476"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:1204054133996770476"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:1204054133996770476"
+        },
+        {
+          "state": "Death",
+          "index": 6,
+          "class_name": "ParticleStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8152262837988633428"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "value": 0,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-8152262837988633428"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8152262837988633428"
+        },
+        {
+          "state": "Death",
+          "index": 7,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              }
+            },
+            "m_Delay": {
+              "value": 0.0,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_SpellObject.gameObject.value": null
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:8559689017633789100"
+        },
+        {
+          "state": "Death",
+          "index": 8,
+          "class_name": "Wait",
+          "enabled": true,
+          "params": {
+            "time": {
+              "value": 3.0,
+              "useVariable": 0
+            },
+            "finishEvent": "FINISHED",
+            "realTime": false
+          },
+          "reference_keys": {},
+          "target_object_key": null
+        },
+        {
+          "state": "EnableIce",
+          "index": 0,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "8307728421905355948"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:8307728421905355948"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:8307728421905355948"
+        },
+        {
+          "state": "EnableIce",
+          "index": 1,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "1204054133996770476"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:1204054133996770476"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:1204054133996770476"
+        },
+        {
+          "state": "EnableIce",
+          "index": 2,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "5232427102039168172"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:5232427102039168172"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5232427102039168172"
+        }
+      ]
+    },
+    "taunt/root": {
+      "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:4450909134831995449",
+      "fsm_component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-3592409061587170759",
+      "keepDelayedEventsOnStateExit": 0,
+      "state_actions": [
+        {
+          "state": "Idle State",
+          "index": 2,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "2211766007062841913"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:2211766007062841913"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:2211766007062841913"
+        },
+        {
+          "state": "Idle State",
+          "index": 3,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-2637737112469845447"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-2637737112469845447"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2637737112469845447"
+        },
+        {
+          "state": "Idle State",
+          "index": 5,
+          "class_name": "Wait",
+          "enabled": true,
+          "params": {
+            "time": {
+              "value": 0.6000000238418579,
+              "useVariable": 0
+            },
+            "finishEvent": "FINISHED",
+            "realTime": false
+          },
+          "reference_keys": {},
+          "target_object_key": null
+        },
+        {
+          "state": "State 2",
+          "index": 2,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "6533413806742620729"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "value": 0,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:6533413806742620729"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:6533413806742620729"
+        },
+        {
+          "state": "State 3",
+          "index": 0,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-2637737112469845447"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-2637737112469845447"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2637737112469845447"
+        },
+        {
+          "state": "Death",
+          "index": 2,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "2211766007062841913"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:2211766007062841913"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:2211766007062841913"
+        },
+        {
+          "state": "State 4",
+          "index": 3,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "9074186161103620665"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "value": 0,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:9074186161103620665"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:9074186161103620665"
+        },
+        {
+          "state": "State 4",
+          "index": 4,
+          "class_name": "iTweenFadeToAction",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8083812114505348551"
+                }
+              }
+            },
+            "id": {
+              "useVariable": 1,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": ""
+            },
+            "m_Alpha": {
+              "value": 0.0,
+              "useVariable": 0
+            },
+            "time": {
+              "value": 0.5,
+              "useVariable": 0
+            },
+            "delay": {
+              "value": 0.0,
+              "useVariable": 0
+            },
+            "easeType": 27,
+            "loopType": 0,
+            "m_IncludeChildren": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "startEvent": "",
+            "finishEvent": "",
+            "realTime": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "stopOnExit": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "loopDontFinish": {
+              "value": 1,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-8083812114505348551"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8083812114505348551"
+        },
+        {
+          "state": "State 4",
+          "index": 6,
+          "class_name": "AudioPlayClipAction",
+          "enabled": true,
+          "params": {
+            "m_ParentObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              }
+            },
+            "m_Sound": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "SoundDef",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": "-5250088552283498042"
+              }
+            },
+            "m_Volume": {
+              "value": 1.0,
+              "useVariable": 0
+            },
+            "m_Pitch": {
+              "value": 1.0,
+              "useVariable": 0
+            },
+            "m_SpatialBlend": {
+              "value": 0.0,
+              "useVariable": 0
+            },
+            "m_Category": 1,
+            "m_Delay": 0.0,
+            "m_TemplateSource": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_SkipSuppressEntitySoundCheck": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "reference_keys": {
+            "params.m_ParentObject.gameObject.value": null,
+            "params.m_Sound.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-5250088552283498042",
+            "params.m_TemplateSource": null
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:4450909134831995449"
+        },
+        {
+          "state": "State 4",
+          "index": 7,
+          "class_name": "Wait",
+          "enabled": true,
+          "params": {
+            "time": {
+              "value": 1.2000000476837158,
+              "useVariable": 0
+            },
+            "finishEvent": "FINISHED",
+            "realTime": false
+          },
+          "reference_keys": {},
+          "target_object_key": null
+        },
+        {
+          "state": "State 6",
+          "index": 1,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "2211766007062841913"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:2211766007062841913"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:2211766007062841913"
+        },
+        {
+          "state": "State 6",
+          "index": 2,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-2637737112469845447"
+                }
+              }
+            },
+            "toggle": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "visible": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-2637737112469845447"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2637737112469845447"
+        },
+        {
+          "state": "State 6",
+          "index": 3,
+          "class_name": "iTweenFadeToAction",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8083812114505348551"
+                }
+              }
+            },
+            "id": {
+              "useVariable": 1,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": ""
+            },
+            "m_Alpha": {
+              "value": 1.0,
+              "useVariable": 0
+            },
+            "time": {
+              "value": 0.009999999776482582,
+              "useVariable": 0
+            },
+            "delay": {
+              "value": 0.0,
+              "useVariable": 0
+            },
+            "easeType": 21,
+            "loopType": 0,
+            "m_IncludeChildren": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "startEvent": "",
+            "finishEvent": "",
+            "realTime": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "stopOnExit": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "loopDontFinish": {
+              "value": 1,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-8083812114505348551"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8083812114505348551"
+        },
+        {
+          "state": "State 6",
+          "index": 4,
+          "class_name": "AudioPlayClipAction",
+          "enabled": true,
+          "params": {
+            "m_ParentObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              }
+            },
+            "m_Sound": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "SoundDef",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": "-5850663814021487319"
+              }
+            },
+            "m_Volume": {
+              "value": 1.0,
+              "useVariable": 0
+            },
+            "m_Pitch": {
+              "value": 1.0,
+              "useVariable": 0
+            },
+            "m_SpatialBlend": {
+              "value": 0.0,
+              "useVariable": 0
+            },
+            "m_Category": 1,
+            "m_Delay": 0.0,
+            "m_TemplateSource": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "m_IsMinionSummonVO": true,
+            "m_IsKeywordVO": true,
+            "m_SkipSuppressEntitySoundCheck": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "reference_keys": {
+            "params.m_ParentObject.gameObject.value": null,
+            "params.m_Sound.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-5850663814021487319",
+            "params.m_TemplateSource": null
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:4450909134831995449"
+        },
+        {
+          "state": "State 6",
+          "index": 5,
+          "class_name": "AudioPlayClipAction",
+          "enabled": true,
+          "params": {
+            "m_ParentObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              }
+            },
+            "m_Sound": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "SoundDef",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": "-3184324394516651753"
+              }
+            },
+            "m_Volume": {
+              "value": 0.8999999761581421,
+              "useVariable": 0
+            },
+            "m_Pitch": {
+              "value": 1.0,
+              "useVariable": 0
+            },
+            "m_SpatialBlend": {
+              "value": 0.0,
+              "useVariable": 0
+            },
+            "m_Category": 1,
+            "m_Delay": 0.0,
+            "m_TemplateSource": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "m_IsMinionSummonVO": true,
+            "m_IsKeywordVO": false,
+            "m_SkipSuppressEntitySoundCheck": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "reference_keys": {
+            "params.m_ParentObject.gameObject.value": null,
+            "params.m_Sound.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-3184324394516651753",
+            "params.m_TemplateSource": null
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:4450909134831995449"
+        },
+        {
+          "state": "State 6",
+          "index": 7,
+          "class_name": "iTweenScaleTo",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "2211766007062841913"
+                }
+              }
+            },
+            "id": {
+              "useVariable": 1,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": ""
+            },
+            "transformScale": {
+              "useVariable": 1,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              }
+            },
+            "vectorScale": {
+              "value": {
+                "x": 0.977573573589325,
+                "y": 0.977573573589325,
+                "z": 0.977573573589325
+              },
+              "useVariable": 0
+            },
+            "time": {
+              "value": 0.4000000059604645,
+              "useVariable": 0
+            },
+            "delay": {
+              "value": 0.0,
+              "useVariable": 0
+            },
+            "speed": {
+              "value": 0.0,
+              "useVariable": 1
+            },
+            "easeType": 30,
+            "loopType": 0,
+            "startEvent": "",
+            "finishEvent": "FINISHED",
+            "realTime": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "stopOnExit": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "loopDontFinish": {
+              "value": 1,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:2211766007062841913",
+            "params.transformScale.value": null
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:2211766007062841913"
+        },
+        {
+          "state": "State 6",
+          "index": 8,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "9074186161103620665"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "value": 0,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:9074186161103620665"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:9074186161103620665"
+        }
+      ]
+    },
+    "frozen_hero/root": {
+      "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5353412325203731603",
+      "fsm_component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5650804765267879059",
+      "keepDelayedEventsOnStateExit": 0,
+      "state_actions": [
+        {
+          "state": "Diamond Scale",
+          "index": 0,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8156138921684147053"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053"
+        },
+        {
+          "state": "Death",
+          "index": 1,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8765430549368839021"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 1
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-8765430549368839021"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8765430549368839021"
+        },
+        {
+          "state": "Death",
+          "index": 2,
+          "class_name": "AudioPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-4961190689943296877"
+                }
+              }
+            },
+            "m_VolumeScale": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.699999988079071
+            },
+            "m_OneShotClip": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "UnityEngine.AudioClip",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              }
+            },
+            "m_Delay": 0.0,
+            "m_OneShotSound": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "typeName": "SoundDef",
+              "value": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              }
+            },
+            "m_FinishedEvent": "",
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-4961190689943296877",
+            "params.m_OneShotClip.value": null,
+            "params.m_OneShotSound.value": null
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-4961190689943296877"
+        },
+        {
+          "state": "Death",
+          "index": 3,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "5932701138785887379"
+                }
+              }
+            },
+            "toggle": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            },
+            "visible": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:5932701138785887379"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5932701138785887379"
+        },
+        {
+          "state": "Death",
+          "index": 4,
+          "class_name": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-1273333477960620909"
+                }
+              }
+            },
+            "toggle": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            },
+            "visible": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            },
+            "resetOnExit": false
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-1273333477960620909"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-1273333477960620909"
+        },
+        {
+          "state": "Death",
+          "index": 5,
+          "class_name": "ParticleStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8156138921684147053"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053"
+        },
+        {
+          "state": "Death",
+          "index": 6,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              }
+            },
+            "m_Delay": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0.0
+            }
+          },
+          "reference_keys": {
+            "params.m_SpellObject.gameObject.value": null
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5353412325203731603"
+        },
+        {
+          "state": "Death",
+          "index": 7,
+          "class_name": "Wait",
+          "enabled": true,
+          "params": {
+            "time": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 3.0
+            },
+            "finishEvent": "FINISHED",
+            "realTime": false
+          },
+          "reference_keys": {},
+          "target_object_key": null
+        },
+        {
+          "state": "Regular Frame",
+          "index": 0,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8156138921684147053"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053"
+        },
+        {
+          "state": "RagnarosScale",
+          "index": 0,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8156138921684147053"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053"
+        },
+        {
+          "state": "YoggScale",
+          "index": 0,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8156138921684147053"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "useVariable": 0,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-8156138921684147053"
+        }
+      ]
+    },
+    "sleep/root": {
+      "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2327705289159465348",
+      "fsm_component_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2329815384984836484",
+      "keepDelayedEventsOnStateExit": 0,
+      "state_actions": [
+        {
+          "state": "Birth State",
+          "index": 3,
+          "class_name": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-1351460939439987076"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "value": 0,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-1351460939439987076"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-1351460939439987076"
+        },
+        {
+          "state": "Death State",
+          "index": 1,
+          "class_name": "SpellFinishAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "ownerOption": 0,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              }
+            },
+            "m_Delay": {
+              "value": 0.0,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_SpellObject.gameObject.value": null
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-2327705289159465348"
+        },
+        {
+          "state": "Death State",
+          "index": 2,
+          "class_name": "iTweenFadeToAction",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-1351460939439987076"
+                }
+              }
+            },
+            "id": {
+              "useVariable": 1,
+              "name": "",
+              "tooltip": "",
+              "showInInspector": 0,
+              "networkSync": 0,
+              "value": ""
+            },
+            "m_Alpha": {
+              "value": 0.0,
+              "useVariable": 0
+            },
+            "time": {
+              "value": 1.0,
+              "useVariable": 0
+            },
+            "delay": {
+              "value": 0.0,
+              "useVariable": 0
+            },
+            "easeType": 21,
+            "loopType": 0,
+            "m_IncludeChildren": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "startEvent": "",
+            "finishEvent": "FINISHED",
+            "realTime": {
+              "value": 0,
+              "useVariable": 0
+            },
+            "stopOnExit": {
+              "value": 1,
+              "useVariable": 0
+            },
+            "loopDontFinish": {
+              "value": 1,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.gameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-1351460939439987076"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-1351460939439987076"
+        },
+        {
+          "state": "State 1",
+          "index": 0,
+          "class_name": "ParticleClearAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-1351460939439987076"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "value": 0,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-1351460939439987076"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-1351460939439987076"
+        },
+        {
+          "state": "State 1",
+          "index": 1,
+          "class_name": "ParticleStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "ownerOption": 1,
+              "gameObject": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": {
+                  "m_FileID": 0,
+                  "m_PathID": "-1351460939439987076"
+                }
+              }
+            },
+            "m_IncludeChildren": {
+              "value": 0,
+              "useVariable": 0
+            }
+          },
+          "reference_keys": {
+            "params.m_GameObject.gameObject.value": "cab-69c88b234dfa427e02d1fcee9337ae34:-1351460939439987076"
+          },
+          "target_object_key": "cab-69c88b234dfa427e02d1fcee9337ae34:-1351460939439987076"
+        }
+      ]
+    }
+  },
+  "qa_assertions": [
+    "After minion thaw then refreeze within3s: same cached serial, Birth route once, original three ice renderers enabled, original shatter tail retained, no old Death Wait later forces None.",
+    "After hero thaw then direct refreeze within3s: same serial, normal Birth frost+scale, shell flags remain false as the original direct sequence; after a completed None then Birth both shells enable.",
+    "After a completed None then reapply: same serial, not a new prefab; correct container-enable gate then source Birth actions.",
+    "A thaw sound is not stopped by immediate Birth. A subsequent thaw on the same effect replaces its source playback slot and is not blocked by same-serial dedup.",
+    "Entering None does not reset FSM clock, clear all PS objects or destroy audio; actual Actor release does destroy the cached owned effect.",
+    "Sleep/taunt interrupted stopOnExit tweens cannot later write old alpha/scale or send stale completion into a new state."
+  ],
+  "evidence_paths": [
+    "code/reapply_selected_methods.json",
+    "code/reapply_action_lifecycle.cil.json",
+    "code/reapply_spell_actions.cil.json",
+    "code/reapply_particle_actions.cil.json",
+    "code/reapply_wait_visibility.cil.json",
+    "code/reapply_itween_actions.cil.json",
+    "code/reapply_actor_state_mgr.cil.json",
+    "code/reapply_particle_native_wrappers.cil.json",
+    "code/reapply_particle_enums.json",
+    "code/hidden_actor_prefab_bindings.json",
+    "code/legacy_state_components.cil.json",
+    "assets/manifest.json",
+    "runtime_routes.json"
+  ]
+}

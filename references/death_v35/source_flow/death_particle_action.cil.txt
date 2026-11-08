@@ -1,0 +1,316 @@
+
+TYPE HutongGames.PlayMaker.Actions.ParticlePlaySoftRef 0x0200001b
+FIELD 0x0400009d ParentGO SIG 061280a1
+FIELD 0x0400009e VFXSlot SIG 0611817d
+FIELD 0x0400009f VFXGameObjectRef SIG 060e
+FIELD 0x040000a0 m_IncludeChildren SIG 061280c9
+FIELD 0x040000a1 OverridePrefabPosition SIG 0602
+FIELD 0x040000a2 positionOverride SIG 0611810d
+FIELD 0x040000a3 OverridePrefabRotation SIG 0602
+FIELD 0x040000a4 RotationOverride SIG 0611810d
+FIELD 0x040000a5 OverridePrefabScale SIG 0602
+FIELD 0x040000a6 ScaleOverride SIG 0611810d
+
+TYPE HutongGames.PlayMaker.Actions.ParticlePlayAction 0x02000032
+FIELD 0x04000102 m_GameObject SIG 061280a1
+FIELD 0x04000103 m_IncludeChildren SIG 061280c9
+
+0x06000094 HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::Reset() RVA 0x4b7d SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::VFXGameObjectRef token(0x0400009F)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::m_IncludeChildren token(0x040000A0)
+  IL_0013 ret             
+
+0x06000095 HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::OnEnter() RVA 0x4b94 SIG 200001
+  IL_0000 newobj         Blizzard.T5.VFXManager.VFXLoadRequest::.ctor token(0x0A0000DA)
+  IL_0005 dup             
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::VFXGameObjectRef token(0x0400009F)
+  IL_000c call           AssetReference::op_Implicit token(0x0A0000DB)
+  IL_0011 stfld          Blizzard.T5.VFXManager.VFXLoadRequest::VFXAssetRef token(0x0A0000DC)
+  IL_0016 dup             
+  IL_0017 ldarg.0         
+  IL_0018 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A0000D3)
+  IL_001d stfld          Blizzard.T5.VFXManager.VFXLoadRequest::OwnerFSM token(0x0A0000DD)
+  IL_0022 dup             
+  IL_0023 ldarg.0         
+  IL_0024 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0029 ldarg.0         
+  IL_002a ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::ParentGO token(0x0400009D)
+  IL_002f callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0034 dup             
+  IL_0035 brtrue.s       IL_003b 
+  IL_0037 pop             
+  IL_0038 ldnull          
+  IL_0039 br.s           IL_0040 
+  IL_003b call           UnityEngine.GameObject::get_transform token(0x0A00008E)
+  IL_0040 stfld          Blizzard.T5.VFXManager.VFXLoadRequest::VFXTargetParent token(0x0A0000DE)
+  IL_0045 dup             
+  IL_0046 ldarg.0         
+  IL_0047 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::m_IncludeChildren token(0x040000A0)
+  IL_004c callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0051 stfld          Blizzard.T5.VFXManager.VFXLoadRequest::IncludeChildren token(0x0A0000DF)
+  IL_0056 dup             
+  IL_0057 ldarg.0         
+  IL_0058 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::VFXSlot token(0x0400009E)
+  IL_005d stfld          Blizzard.T5.VFXManager.VFXLoadRequest::VFXSlot token(0x0A0000E0)
+  IL_0062 stloc.0         
+  IL_0063 ldloc.0         
+  IL_0064 call           Blizzard.T5.VFXManager.VFXExtensions::Validate token(0x0A0000E1)
+  IL_0069 stloc.1         
+  IL_006a ldloc.1         
+  IL_006b call           Blizzard.T5.VFXManager.ValidationOp::op_Implicit token(0x0A0000E2)
+  IL_0070 brtrue.s       IL_0080 
+  IL_0072 ldarg.0         
+  IL_0073 ldloc.1         
+  IL_0074 call           HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::PrintValidationErrors token(0x06000097)
+  IL_0079 ldarg.0         
+  IL_007a call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_007f ret             
+  IL_0080 call           Blizzard.T5.Services.ServiceManager::Get<spec> token(0x2B000005)
+  IL_0085 ldloc.0         
+  IL_0086 callvirt       Blizzard.T5.VFXManager.VFXManager::Load token(0x0A0000E3)
+  IL_008b stloc.2         
+  IL_008c ldloc.2         
+  IL_008d ldfld          Blizzard.T5.VFXManager.VFXLoadOp::Validation token(0x0A0000E4)
+  IL_0092 call           Blizzard.T5.VFXManager.ValidationOp::op_Implicit token(0x0A0000E2)
+  IL_0097 brtrue.s       IL_00ac 
+  IL_0099 ldarg.0         
+  IL_009a ldloc.2         
+  IL_009b ldfld          Blizzard.T5.VFXManager.VFXLoadOp::Validation token(0x0A0000E4)
+  IL_00a0 call           HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::PrintValidationErrors token(0x06000097)
+  IL_00a5 ldarg.0         
+  IL_00a6 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00ab ret             
+  IL_00ac ldarg.0         
+  IL_00ad ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::OverridePrefabPosition token(0x040000A1)
+  IL_00b2 brtrue.s       IL_00c4 
+  IL_00b4 ldarg.0         
+  IL_00b5 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::OverridePrefabRotation token(0x040000A3)
+  IL_00ba brtrue.s       IL_00c4 
+  IL_00bc ldarg.0         
+  IL_00bd ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::OverridePrefabScale token(0x040000A5)
+  IL_00c2 brfalse.s      IL_00d5 
+  IL_00c4 ldarg.0         
+  IL_00c5 ldloc.2         
+  IL_00c6 ldfld          Blizzard.T5.VFXManager.VFXLoadOp::VFXInfo token(0x0A0000E5)
+  IL_00cb ldfld          Blizzard.T5.VFXManager.VFXInfo::InstantiatedGameObject token(0x0A0000E6)
+  IL_00d0 call           HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::SetTransformOverrides token(0x06000096)
+  IL_00d5 ldloc.2         
+  IL_00d6 ldfld          Blizzard.T5.VFXManager.VFXLoadOp::VFXInfo token(0x0A0000E5)
+  IL_00db ldfld          Blizzard.T5.VFXManager.VFXInfo::ParticleSystems token(0x0A0000E7)
+  IL_00e0 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5a699fb1a0>::GetEnumerator token(0x0A0000E8)
+  IL_00e5 stloc.3         
+  IL_00e6 br.s           IL_00ff 
+  IL_00e8 ldloca.s       local(0x0003) 
+  IL_00ea call           <dnfile.mdtable.TypeSpecRow object at 0x7f5a699fb350>::get_Current token(0x0A0000E9)
+  IL_00ef ldarg.0         
+  IL_00f0 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::m_IncludeChildren token(0x040000A0)
+  IL_00f5 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_00fa callvirt       UnityEngine.ParticleSystem::Play token(0x0A0000EA)
+  IL_00ff ldloca.s       local(0x0003) 
+  IL_0101 call           <dnfile.mdtable.TypeSpecRow object at 0x7f5a699fb350>::MoveNext token(0x0A0000EB)
+  IL_0106 brtrue.s       IL_00e8 
+  IL_0108 leave.s        IL_0118 
+  IL_010a ldloca.s       local(0x0003) 
+  IL_010c constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f5a699fb350> token(0x1B000011)
+  IL_0112 callvirt       System.IDisposable::Dispose token(0x0A000051)
+  IL_0117 endfinally      
+  IL_0118 ldarg.0         
+  IL_0119 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_011e ret             
+
+0x06000096 HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::SetTransformOverrides(go) RVA 0x4cd0 SIG 2001011280dd
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::OverridePrefabPosition token(0x040000A1)
+  IL_0006 brfalse.s      IL_0019 
+  IL_0008 ldarg.1         
+  IL_0009 callvirt       UnityEngine.GameObject::get_transform token(0x0A00008E)
+  IL_000e ldarg.0         
+  IL_000f ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::positionOverride token(0x040000A2)
+  IL_0014 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000090)
+  IL_0019 ldarg.0         
+  IL_001a ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::OverridePrefabRotation token(0x040000A3)
+  IL_001f brfalse.s      IL_0037 
+  IL_0021 ldarg.1         
+  IL_0022 callvirt       UnityEngine.GameObject::get_transform token(0x0A00008E)
+  IL_0027 ldarg.0         
+  IL_0028 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::RotationOverride token(0x040000A4)
+  IL_002d call           UnityEngine.Quaternion::Euler token(0x0A0000EC)
+  IL_0032 callvirt       UnityEngine.Transform::set_localRotation token(0x0A0000ED)
+  IL_0037 ldarg.0         
+  IL_0038 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::OverridePrefabScale token(0x040000A5)
+  IL_003d brfalse.s      IL_0050 
+  IL_003f ldarg.1         
+  IL_0040 callvirt       UnityEngine.GameObject::get_transform token(0x0A00008E)
+  IL_0045 ldarg.0         
+  IL_0046 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::ScaleOverride token(0x040000A6)
+  IL_004b callvirt       UnityEngine.Transform::set_localScale token(0x0A0000EE)
+  IL_0050 ret             
+
+0x06000097 HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::PrintValidationErrors(validation) RVA 0x4d30 SIG 200101128189
+  IL_0000 ldarg.1         
+  IL_0001 call           Blizzard.T5.VFXManager.ValidationOp::op_Implicit token(0x0A0000E2)
+  IL_0006 brfalse.s      IL_0009 
+  IL_0008 ret             
+  IL_0009 ldstr          ', ' string token(0x700005A3)
+  IL_000e ldarg.1         
+  IL_000f ldfld          Blizzard.T5.VFXManager.ValidationOp::validationErrors token(0x0A0000EF)
+  IL_0014 call           System.String::Join<spec> token(0x2B000006)
+  IL_0019 stloc.0         
+  IL_001a ldstr          'ParticlePlaySoftRef.OnEnter() - state={0}, Owner={1}, Error: {2}.' string token(0x700005A9)
+  IL_001f ldarg.0         
+  IL_0020 call           HutongGames.PlayMaker.FsmStateAction::get_State token(0x0A0000D6)
+  IL_0025 callvirt       HutongGames.PlayMaker.FsmState::get_Name token(0x0A0000D7)
+  IL_002a ldarg.0         
+  IL_002b call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A0000D3)
+  IL_0030 ldloc.0         
+  IL_0031 call           System.String::Format token(0x0A0000F1)
+  IL_0036 call           UnityEngine.Debug::LogError token(0x0A000002)
+  IL_003b ret             
+
+0x06000098 HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::ErrorCheck() RVA 0x4d78 SIG 20000e
+  IL_0000 newobj         Blizzard.T5.VFXManager.VFXLoadRequest::.ctor token(0x0A0000DA)
+  IL_0005 dup             
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::VFXGameObjectRef token(0x0400009F)
+  IL_000c call           AssetReference::op_Implicit token(0x0A0000DB)
+  IL_0011 stfld          Blizzard.T5.VFXManager.VFXLoadRequest::VFXAssetRef token(0x0A0000DC)
+  IL_0016 dup             
+  IL_0017 ldarg.0         
+  IL_0018 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A0000D3)
+  IL_001d stfld          Blizzard.T5.VFXManager.VFXLoadRequest::OwnerFSM token(0x0A0000DD)
+  IL_0022 dup             
+  IL_0023 ldarg.0         
+  IL_0024 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0029 ldarg.0         
+  IL_002a ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::ParentGO token(0x0400009D)
+  IL_002f callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0034 dup             
+  IL_0035 brtrue.s       IL_003b 
+  IL_0037 pop             
+  IL_0038 ldnull          
+  IL_0039 br.s           IL_0040 
+  IL_003b call           UnityEngine.GameObject::get_transform token(0x0A00008E)
+  IL_0040 stfld          Blizzard.T5.VFXManager.VFXLoadRequest::VFXTargetParent token(0x0A0000DE)
+  IL_0045 dup             
+  IL_0046 ldarg.0         
+  IL_0047 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::m_IncludeChildren token(0x040000A0)
+  IL_004c callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0051 stfld          Blizzard.T5.VFXManager.VFXLoadRequest::IncludeChildren token(0x0A0000DF)
+  IL_0056 dup             
+  IL_0057 ldarg.0         
+  IL_0058 ldfld          HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::VFXSlot token(0x0400009E)
+  IL_005d stfld          Blizzard.T5.VFXManager.VFXLoadRequest::VFXSlot token(0x0A0000E0)
+  IL_0062 call           Blizzard.T5.VFXManager.VFXExtensions::Validate token(0x0A0000E1)
+  IL_0067 stloc.0         
+  IL_0068 ldloc.0         
+  IL_0069 call           Blizzard.T5.VFXManager.ValidationOp::op_Implicit token(0x0A0000E2)
+  IL_006e brfalse.s      IL_0072 
+  IL_0070 ldnull          
+  IL_0071 ret             
+  IL_0072 ldstr          ', ' string token(0x700005A3)
+  IL_0077 ldloc.0         
+  IL_0078 ldfld          Blizzard.T5.VFXManager.ValidationOp::validationErrors token(0x0A0000EF)
+  IL_007d call           System.String::Join<spec> token(0x2B000006)
+  IL_0082 ret             
+
+0x06000099 HutongGames.PlayMaker.Actions.ParticlePlaySoftRef::.ctor() RVA 0x36eb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0006 ret             
+
+0x060000ed HutongGames.PlayMaker.Actions.ParticlePlayAction::Reset() RVA 0x605d SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_GameObject token(0x04000102)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_0013 ret             
+
+0x060000ee HutongGames.PlayMaker.Actions.ParticlePlayAction::OnEnter() RVA 0x6074 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_GameObject token(0x04000102)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldloc.0         
+  IL_0023 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0028 stloc.1         
+  IL_0029 ldloc.1         
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0030 brfalse.s      IL_005c 
+  IL_0032 ldarg.0         
+  IL_0033 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_0038 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_003d brtrue.s       IL_005c 
+  IL_003f ldstr          'ParticlePlayAction.OnEnter() - {0} has no ParticleSystem component. Owner={1}' string token(0x70000BCC)
+  IL_0044 ldloc.0         
+  IL_0045 ldarg.0         
+  IL_0046 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A0000D3)
+  IL_004b call           System.String::Format token(0x0A000123)
+  IL_0050 call           UnityEngine.Debug::LogWarning token(0x0A0000F5)
+  IL_0055 ldarg.0         
+  IL_0056 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_005b ret             
+  IL_005c ldloc.1         
+  IL_005d ldnull          
+  IL_005e call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0063 brfalse.s      IL_00a1 
+  IL_0065 ldarg.0         
+  IL_0066 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_006b callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0070 brfalse.s      IL_00a1 
+  IL_0072 ldloc.0         
+  IL_0073 callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B00000C)
+  IL_0078 stloc.2         
+  IL_0079 ldc.i4.0        
+  IL_007a stloc.3         
+  IL_007b br.s           IL_0094 
+  IL_007d ldloc.2         
+  IL_007e ldloc.3         
+  IL_007f ldelem.ref      
+  IL_0080 ldarg.0         
+  IL_0081 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_0086 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_008b callvirt       UnityEngine.ParticleSystem::Play token(0x0A0000EA)
+  IL_0090 ldloc.3         
+  IL_0091 ldc.i4.1        
+  IL_0092 add             
+  IL_0093 stloc.3         
+  IL_0094 ldloc.3         
+  IL_0095 ldloc.2         
+  IL_0096 ldlen           
+  IL_0097 conv.i4         
+  IL_0098 blt.s          IL_007d 
+  IL_009a ldarg.0         
+  IL_009b call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00a0 ret             
+  IL_00a1 ldloc.1         
+  IL_00a2 ldarg.0         
+  IL_00a3 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_00a8 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_00ad callvirt       UnityEngine.ParticleSystem::Play token(0x0A0000EA)
+  IL_00b2 ldarg.0         
+  IL_00b3 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00b8 ret             
+
+0x060000ef HutongGames.PlayMaker.Actions.ParticlePlayAction::.ctor() RVA 0x36eb SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0006 ret             

@@ -1,0 +1,26 @@
+extends SceneTree
+func _initialize():call_deferred("run")
+func run():
+ var view=SubViewport.new();view.size=Vector2i(1600,900);view.own_world_3d=true;root.add_child(view)
+ var camera=Camera3D.new();view.add_child(camera);camera.position=Vector3(0,5,10);camera.current=true
+ var source_parent=Node3D.new();view.add_child(source_parent)
+ var actor=Node3D.new();source_parent.add_child(actor);actor.visible=false;actor.position=Vector3(1,0,-2)
+ var highlight=Node3D.new();actor.add_child(highlight)
+ var effect=load("res://scripts/native_card_birth.gd").new();source_parent.add_child(effect)
+ effect.setup(null,{"root":actor,"paths":{"Highlight_Card_Plane":highlight},"source_key":"test actual-actor stand-in"})
+ assert(effect.blockers.is_empty(),str(effect.blockers))
+ assert(is_equal_approx(effect.duration,1.51666668057442))
+ assert(effect.transform==actor.transform)
+ var events=[];effect.finished.connect(func():events.append("finished"));effect.actor_revealed.connect(func():events.append("revealed"))
+ effect.begin();assert(effect.phase=="Birth" and not actor.visible)
+ effect.sample(0.499);assert(effect.phase=="Birth")
+ effect.sample(0.5);assert(effect.phase=="State 2")
+ effect.sample(0.5+effect.out_duration+0.000001);assert(effect.phase=="State 1" and actor.visible and not highlight.visible)
+ var material=effect.state.materials["cab-69c88b234dfa427e02d1fcee9337ae34:3479665975110438036"][0]
+ assert(material is ShaderMaterial)
+ assert(material.get_shader_parameter("_Color").a>0.99)
+ effect.sample(effect.duration+0.000001);assert(effect.phase=="None" and events==["revealed","finished"])
+ effect.advance(0.1);assert(events.size()==2)
+ assert(not effect.state.paths[effect.ECHO_PATH].visible)
+ print("CARD_BIRTH_PASS duration=",effect.duration," particles=",effect.particle_players.size()," blockers=",effect.blockers," source curve/FSM transitions and callback verified")
+ effect.clear();source_parent.queue_free();view.queue_free();await process_frame;quit()

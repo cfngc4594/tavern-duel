@@ -1,0 +1,59 @@
+{
+  "source_build": "37.0.0.255130.254477",
+  "scope": "Current ordinary minion type5 death only; no hero end-game death gate inferred",
+  "minion": {
+    "release_seconds": 3.5,
+    "hide_body_seconds": 0.5,
+    "clock": "scaled game time; actual callbacks quantized by Unity/FSM update frames",
+    "origin": "Card.ActivateDeathSpell -> ISpell.Activate -> Birth entry, during Play-to-Graveyard visual processing, NOT HP=0 or damage callback automatically",
+    "prefab_guid": "0d12844e0f5834ae084290dc98ded3af",
+    "root_key": "cab-69c88b234dfa427e02d1fcee9337ae34:5210564580019615545",
+    "fsm_key": "cab-69c88b234dfa427e02d1fcee9337ae34:8211937404196173625",
+    "route": [
+      {
+        "state": "Birth State",
+        "at": 0,
+        "events": "SpellInitActorVariables, SpellStateAction, material replacement; all finish immediately"
+      },
+      {
+        "state": "Birth Animate",
+        "at": 0,
+        "blocking_action": "iTweenShakePosition",
+        "duration": 0.5,
+        "notes": "AnimationPlaythroughAction plays AllyInPlay_Death then immediately Finish. AudioPlaythroughAction plays then immediately Finish. Shake loopType0 / delay0 and iTweenFSMEvents.OnComplete finishes the remaining action."
+      },
+      {
+        "state": "Birth SubState",
+        "at": 0.5,
+        "actions": "Hide RootObject renderers recursively, show fragments, start move1.5+delay1.5 and Wait3; Wait sends FINISHED at3 scaled seconds"
+      },
+      {
+        "state": "disable shadows",
+        "at": 3.5,
+        "actions": "InvokeMethod ProjectedShadow.DisableShadow delay0; action immediately Finish"
+      },
+      {
+        "state": "None State",
+        "at": 3.5,
+        "actions": "SpellStateAction discovers global None mapping; Spell.ChangeStateImpl sets activeState0 BEFORE old-state finished callbacks. Card callback then Actor.Destroy."
+      }
+    ],
+    "body_target": "Actor.GetRootObject() is named RootObject descendant. Splat is attached to separate Actor/Spells node, not this body subtree. Hide only the source RootObject presentation, keep its owning Actor transform and damage UI until release.",
+    "damage_splat_lifetime": "DamageSplat itself ends at post-Update-yield+3.100000023841858 normal, or is restarted by another hit or canceled by Actor release, whichever occurs first.",
+    "source_cil": {
+      "activate": "Assembly-CSharp 0x06012db1 IL00d9..00da",
+      "animation_immediate_finish": "Assembly-CSharp 0x06016a80 IL0074..007a",
+      "audio_immediate_finish": "Assembly-CSharp 0x06016aca IL01e5..01f7",
+      "shake_start": "Blizzard.T5.PlayMakerCustomActions.Runtime 0x060001ca + 0x060001cc",
+      "shake_completion": "Blizzard.T5.PlayMakerCustomActions.Runtime 0x06000005 IL004a..005c",
+      "blocks_finish_default": "PlayMaker 0x06000673 IL000e..0010",
+      "fsm_all_actions_gate": "PlayMaker 0x06000605",
+      "wait": "Blizzard.T5.PlayMaker.Runtime 0x06000d9e",
+      "invoke_finish": "Blizzard.T5.PlayMaker.Runtime 0x06000bc3",
+      "none_mapping": "Assembly-CSharp 0x06016d21 + 0x06016d22",
+      "none_set_before_callback": "Assembly-CSharp 0x0601496c IL000e..0010 then IL00ad..00af",
+      "destroy": "Assembly-CSharp 0x06012dca"
+    }
+  },
+  "compatibility_boundary": "5834 simulator does not provide the original server power-history packet timeline. Consuming its already existing death-wave/_clear_dead event as this Birth origin preserves rule order but is an explicit timing adapter; static CIL does not prove exact original delay from attack contact/return or spell damage to graveyard entry. No gameplay state, RNG, or death-wave ordering should change."
+}

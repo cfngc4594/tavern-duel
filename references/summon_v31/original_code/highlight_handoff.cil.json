@@ -1,0 +1,1069 @@
+{
+  "types": [
+    {
+      "type": "ActorStateMgr",
+      "token": "0x02002aef",
+      "fields": [
+        {
+          "name": "m_ObjectContainer",
+          "token": "0x04011b69",
+          "signature": "0612808d"
+        },
+        {
+          "name": "m_actorStateMap",
+          "token": "0x04011b6a",
+          "signature": "06151281a10211c000abb01512490112c000abb8"
+        },
+        {
+          "name": "m_activeStateType",
+          "token": "0x04011b6b",
+          "signature": "0611c000abb0"
+        },
+        {
+          "name": "m_shown",
+          "token": "0x04011b6c",
+          "signature": "0602"
+        },
+        {
+          "name": "m_HighlightState",
+          "token": "0x04011b6d",
+          "signature": "0612c000b0c0"
+        },
+        {
+          "name": "m_initialHighlightRenderQueue",
+          "token": "0x04011b6e",
+          "signature": "0608"
+        }
+      ]
+    },
+    {
+      "type": "TagVisualConfiguration",
+      "token": "0x02002b4c",
+      "fields": [
+        {
+          "name": "m_TagVisuals",
+          "token": "0x04011dad",
+          "signature": "061512490112c000ad2c"
+        },
+        {
+          "name": "s_instance",
+          "token": "0x04011dae",
+          "signature": "0612c000ad30"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "ActorStateMgr",
+      "method": "ChangeState",
+      "token": "0x06014899",
+      "rva": "0x611384",
+      "signature": "20010211c000abb0",
+      "parameters": [
+        "stateType"
+      ],
+      "code_size": 24,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "call",
+          "operand": "ActorStateMgr::ChangeState_NewState",
+          "token": "token(0x0601489A)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "brfalse.s",
+          "operand": "IL_000b",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "ActorStateMgr::ChangeState_LegacyState",
+          "token": "token(0x0601489B)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "brfalse.s",
+          "operand": "IL_0016",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "TagVisualConfiguration",
+      "method": "DeactivateHandStateSpells",
+      "token": "0x06014bab",
+      "rva": "0x61c6b4",
+      "signature": "20020112c0009ebc12c0009cf8",
+      "parameters": [
+        "card",
+        "actor"
+      ],
+      "code_size": 400,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "brtrue.s",
+          "operand": "IL_001a",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "brtrue.s",
+          "operand": "IL_001a",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "callvirt",
+          "operand": "Card::GetEntity",
+          "token": "token(0x06012CC3)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "brtrue.s",
+          "operand": "IL_001b",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfiguration::m_TagVisuals",
+          "token": "token(0x04011DAD)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a116960>::GetEnumerator",
+          "token": "token(0x0A003F0C)"
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "br",
+          "operand": "IL_0173",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a116b10>::get_Current",
+          "token": "token(0x0A003F0D)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_ReferenceTag",
+          "token": "token(0x04011DA6)"
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "brfalse.s",
+          "operand": "IL_004b",
+          "token": null
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_ReferenceTag",
+          "token": "token(0x04011DA6)"
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "call",
+          "operand": "TagVisualConfiguration::FindTagEntry",
+          "token": "token(0x06014BB5)"
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004b",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "brfalse",
+          "operand": "IL_0173",
+          "token": null
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_IsHandStateSpell",
+          "token": "token(0x04011DA8)"
+        },
+        {
+          "offset": "IL_0057",
+          "opcode": "brfalse",
+          "operand": "IL_0173",
+          "token": null
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "newobj",
+          "operand": "TagDelta::.ctor",
+          "token": "token(0x060144E5)"
+        },
+        {
+          "offset": "IL_0061",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0063",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0064",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_Tag",
+          "token": "token(0x04011DA4)"
+        },
+        {
+          "offset": "IL_0069",
+          "opcode": "stfld",
+          "operand": "TagDelta::tag",
+          "token": "token(0x040116BB)"
+        },
+        {
+          "offset": "IL_006e",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006f",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0070",
+          "opcode": "stfld",
+          "operand": "TagDelta::oldValue",
+          "token": "token(0x040116BC)"
+        },
+        {
+          "offset": "IL_0075",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0076",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0077",
+          "opcode": "callvirt",
+          "operand": "Card::GetEntity",
+          "token": "token(0x06012CC3)"
+        },
+        {
+          "offset": "IL_007c",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007d",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_Tag",
+          "token": "token(0x04011DA4)"
+        },
+        {
+          "offset": "IL_0082",
+          "opcode": "callvirt",
+          "operand": "EntityBase::GetTag",
+          "token": "token(0x060138A4)"
+        },
+        {
+          "offset": "IL_0087",
+          "opcode": "stfld",
+          "operand": "TagDelta::newValue",
+          "token": "token(0x040116BD)"
+        },
+        {
+          "offset": "IL_008c",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008d",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_BeforeAlways",
+          "token": "token(0x04011DA9)"
+        },
+        {
+          "offset": "IL_0092",
+          "opcode": "brfalse.s",
+          "operand": "IL_00d9",
+          "token": null
+        },
+        {
+          "offset": "IL_0094",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0095",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_BeforeAlways",
+          "token": "token(0x04011DA9)"
+        },
+        {
+          "offset": "IL_009a",
+          "opcode": "ldfld",
+          "operand": "TagVisualStateConfiguration::m_Actions",
+          "token": "token(0x04011DA3)"
+        },
+        {
+          "offset": "IL_009f",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044a40>::GetEnumerator",
+          "token": "token(0x0A004F4C)"
+        },
+        {
+          "offset": "IL_00a4",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00a6",
+          "opcode": "br.s",
+          "operand": "IL_00c0",
+          "token": null
+        },
+        {
+          "offset": "IL_00a8",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00aa",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::get_Current",
+          "token": "token(0x0A004F4D)"
+        },
+        {
+          "offset": "IL_00af",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_00b1",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b2",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b3",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_00b5",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b6",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b7",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b8",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b9",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ba",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00bb",
+          "opcode": "call",
+          "operand": "TagVisualConfiguration::ConditionallyExecuteAction",
+          "token": "token(0x06014BAD)"
+        },
+        {
+          "offset": "IL_00c0",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00c2",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::MoveNext",
+          "token": "token(0x0A004F4E)"
+        },
+        {
+          "offset": "IL_00c7",
+          "opcode": "brtrue.s",
+          "operand": "IL_00a8",
+          "token": null
+        },
+        {
+          "offset": "IL_00c9",
+          "opcode": "leave.s",
+          "operand": "IL_00d9",
+          "token": null
+        },
+        {
+          "offset": "IL_00cb",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00cd",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>",
+          "token": "token(0x1B0012F0)"
+        },
+        {
+          "offset": "IL_00d3",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_00d8",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00d9",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00da",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_TagRemoved",
+          "token": "token(0x04011DAB)"
+        },
+        {
+          "offset": "IL_00df",
+          "opcode": "brfalse.s",
+          "operand": "IL_0126",
+          "token": null
+        },
+        {
+          "offset": "IL_00e1",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00e2",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_TagRemoved",
+          "token": "token(0x04011DAB)"
+        },
+        {
+          "offset": "IL_00e7",
+          "opcode": "ldfld",
+          "operand": "TagVisualStateConfiguration::m_Actions",
+          "token": "token(0x04011DA3)"
+        },
+        {
+          "offset": "IL_00ec",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044a40>::GetEnumerator",
+          "token": "token(0x0A004F4C)"
+        },
+        {
+          "offset": "IL_00f1",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00f3",
+          "opcode": "br.s",
+          "operand": "IL_010d",
+          "token": null
+        },
+        {
+          "offset": "IL_00f5",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00f7",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::get_Current",
+          "token": "token(0x0A004F4D)"
+        },
+        {
+          "offset": "IL_00fc",
+          "opcode": "stloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_00fe",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ff",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0100",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_0102",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0103",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0104",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0105",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0106",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0107",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0108",
+          "opcode": "call",
+          "operand": "TagVisualConfiguration::ConditionallyExecuteAction",
+          "token": "token(0x06014BAD)"
+        },
+        {
+          "offset": "IL_010d",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_010f",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::MoveNext",
+          "token": "token(0x0A004F4E)"
+        },
+        {
+          "offset": "IL_0114",
+          "opcode": "brtrue.s",
+          "operand": "IL_00f5",
+          "token": null
+        },
+        {
+          "offset": "IL_0116",
+          "opcode": "leave.s",
+          "operand": "IL_0126",
+          "token": null
+        },
+        {
+          "offset": "IL_0118",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_011a",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>",
+          "token": "token(0x1B0012F0)"
+        },
+        {
+          "offset": "IL_0120",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0125",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0126",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0127",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_AfterAlways",
+          "token": "token(0x04011DAC)"
+        },
+        {
+          "offset": "IL_012c",
+          "opcode": "brfalse.s",
+          "operand": "IL_0173",
+          "token": null
+        },
+        {
+          "offset": "IL_012e",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_012f",
+          "opcode": "ldfld",
+          "operand": "TagVisualConfigurationEntry::m_AfterAlways",
+          "token": "token(0x04011DAC)"
+        },
+        {
+          "offset": "IL_0134",
+          "opcode": "ldfld",
+          "operand": "TagVisualStateConfiguration::m_Actions",
+          "token": "token(0x04011DA3)"
+        },
+        {
+          "offset": "IL_0139",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044a40>::GetEnumerator",
+          "token": "token(0x0A004F4C)"
+        },
+        {
+          "offset": "IL_013e",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0140",
+          "opcode": "br.s",
+          "operand": "IL_015a",
+          "token": null
+        },
+        {
+          "offset": "IL_0142",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0144",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::get_Current",
+          "token": "token(0x0A004F4D)"
+        },
+        {
+          "offset": "IL_0149",
+          "opcode": "stloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_014b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_014c",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_014d",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_014f",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0150",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0151",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0152",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0153",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0154",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0155",
+          "opcode": "call",
+          "operand": "TagVisualConfiguration::ConditionallyExecuteAction",
+          "token": "token(0x06014BAD)"
+        },
+        {
+          "offset": "IL_015a",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_015c",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::MoveNext",
+          "token": "token(0x0A004F4E)"
+        },
+        {
+          "offset": "IL_0161",
+          "opcode": "brtrue.s",
+          "operand": "IL_0142",
+          "token": null
+        },
+        {
+          "offset": "IL_0163",
+          "opcode": "leave.s",
+          "operand": "IL_0173",
+          "token": null
+        },
+        {
+          "offset": "IL_0165",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0167",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>",
+          "token": "token(0x1B0012F0)"
+        },
+        {
+          "offset": "IL_016d",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0172",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0173",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0175",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a116b10>::MoveNext",
+          "token": "token(0x0A003F0E)"
+        },
+        {
+          "offset": "IL_017a",
+          "opcode": "brtrue",
+          "operand": "IL_002c",
+          "token": null
+        },
+        {
+          "offset": "IL_017f",
+          "opcode": "leave.s",
+          "operand": "IL_018f",
+          "token": null
+        },
+        {
+          "offset": "IL_0181",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0183",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fd69a116b10>",
+          "token": "token(0x1B000F69)"
+        },
+        {
+          "offset": "IL_0189",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_018e",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_018f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

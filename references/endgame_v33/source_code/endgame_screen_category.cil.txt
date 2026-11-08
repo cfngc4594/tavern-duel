@@ -1,0 +1,54 @@
+
+TYPE PlatformSettings 0x02002b9f
+FIELD 0x04011e8d s_isDeviceSupported SIG 0602
+FIELD 0x04011e8e s_isDeviceInMinSpec SIG 0602
+FIELD 0x04011e8f s_os SIG 0611c000ae60
+FIELD 0x04011e90 s_memory SIG 0611c000ae64
+FIELD 0x04011e91 s_screen SIG 0611c000ae68
+FIELD 0x04011e92 s_input SIG 0611c000ae70
+FIELD 0x04011e93 s_screenDensity SIG 0611c000ae74
+FIELD 0x04011e94 s_CurrentLocaleVariant SIG 0611c000ae78
+FIELD 0x04011e95 s_graphicsManager SIG 0612856d
+FIELD 0x04011e96 s_deviceModel SIG 060e
+FIELD 0x04011e97 s_isEmulating SIG 0602
+
+0x06014ea9 PlatformSettings::get_Screen() RVA 0x627dbf SIG 000011c000ae68
+  IL_0000 ldsfld         PlatformSettings::s_screen token(0x04011E91)
+  IL_0005 ret             
+
+0x06014eb0 PlatformSettings::GetBestScreenMatch(categories) RVA 0x627e7c SIG 0001081512490111c000ae68
+  IL_0000 call           PlatformSettings::get_Screen token(0x06014EA9)
+  IL_0005 stloc.0         
+  IL_0006 ldc.i4.0        
+  IL_0007 stloc.1         
+  IL_0008 ldc.i4         2147483647 
+  IL_000d stloc.2         
+  IL_000e ldc.i4.0        
+  IL_000f stloc.3         
+  IL_0010 br.s           IL_0030 
+  IL_0012 ldarg.0         
+  IL_0013 ldloc.3         
+  IL_0014 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8a2014ac00>::get_Item token(0x0A00500F)
+  IL_0019 ldloc.0         
+  IL_001a sub             
+  IL_001b stloc.s        local(0x0004) 
+  IL_001d ldloc.s        local(0x0004) 
+  IL_001f ldc.i4.0        
+  IL_0020 blt.s          IL_002c 
+  IL_0022 ldloc.s        local(0x0004) 
+  IL_0024 ldloc.2         
+  IL_0025 bge.s          IL_002c 
+  IL_0027 ldloc.3         
+  IL_0028 stloc.1         
+  IL_0029 ldloc.s        local(0x0004) 
+  IL_002b stloc.2         
+  IL_002c ldloc.3         
+  IL_002d ldc.i4.1        
+  IL_002e add             
+  IL_002f stloc.3         
+  IL_0030 ldloc.3         
+  IL_0031 ldarg.0         
+  IL_0032 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f8a2014ac00>::get_Count token(0x0A005010)
+  IL_0037 blt.s          IL_0012 
+  IL_0039 ldloc.1         
+  IL_003a ret             

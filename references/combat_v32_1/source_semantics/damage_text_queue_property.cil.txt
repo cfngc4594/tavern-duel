@@ -1,0 +1,310 @@
+
+TYPE UberTextMaterial 0x02000013
+FIELD 0x040000c8 INVALID_RENDER_QUEUE SIG 0608
+FIELD 0x040000c9 <Type>k__BackingField SIG 061154
+FIELD 0x040000ca <Query>k__BackingField SIG 061274
+FIELD 0x040000cb m_shader SIG 061211
+FIELD 0x040000cc m_material SIG 061231
+FIELD 0x040000cd m_referenceCounter SIG 0608
+FIELD 0x040000ce m_temporalRendererMaterialList SIG 0615122d011231
+
+TYPE IncrementRenderQueueMaterialProperty 0x0200001c
+FIELD 0x040000f1 m_value SIG 0608
+FIELD 0x040000f2 m_originalMaterialRenderQueue SIG 0608
+
+0x06000120 UberTextMaterial::get_Type() RVA 0x7e50 SIG 20001154
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          UberTextMaterial::<Type>k__BackingField token(0x040000C9)
+  IL_0006 ret             
+
+0x06000121 UberTextMaterial::set_Type(value) RVA 0x7e58 SIG 2001011154
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          UberTextMaterial::<Type>k__BackingField token(0x040000C9)
+  IL_0007 ret             
+
+0x06000122 UberTextMaterial::get_Query() RVA 0x7e61 SIG 20001274
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          UberTextMaterial::<Query>k__BackingField token(0x040000CA)
+  IL_0006 ret             
+
+0x06000123 UberTextMaterial::set_Query(value) RVA 0x7e69 SIG 2001011274
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          UberTextMaterial::<Query>k__BackingField token(0x040000CA)
+  IL_0007 ret             
+
+0x06000124 UberTextMaterial::.ctor(uberTextShaderUtil,type,shaderName,query) RVA 0x7e74 SIG 200401120c11540e1274
+  IL_0000 ldarg.0         
+  IL_0001 call           System.Object::.ctor token(0x0A0000D0)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.2         
+  IL_0008 call           UberTextMaterial::set_Type token(0x06000121)
+  IL_000d ldarg.0         
+  IL_000e ldarg.s        argument(0x0004) 
+  IL_0010 callvirt       UberTextMaterialQuery::Clone token(0x0600015E)
+  IL_0015 call           UberTextMaterial::set_Query token(0x06000123)
+  IL_001a ldarg.0         
+  IL_001b ldarg.1         
+  IL_001c ldarg.3         
+  IL_001d callvirt       IUberTextShaderUtil::FindShader token(0x06000003)
+  IL_0022 stfld          UberTextMaterial::m_shader token(0x040000CB)
+  IL_0027 ldarg.0         
+  IL_0028 ldfld          UberTextMaterial::m_shader token(0x040000CB)
+  IL_002d call           UnityEngine.Object::op_Implicit token(0x0A000029)
+  IL_0032 brtrue.s       IL_0044 
+  IL_0034 ldstr          'UberText Failed to load Shader: ' string token(0x700005C8)
+  IL_0039 ldarg.3         
+  IL_003a call           System.String::Concat token(0x0A00005C)
+  IL_003f call           UnityEngine.Debug::LogError token(0x0A00001A)
+  IL_0044 ldarg.0         
+  IL_0045 ldarg.0         
+  IL_0046 ldfld          UberTextMaterial::m_shader token(0x040000CB)
+  IL_004b newobj         UnityEngine.Material::.ctor token(0x0A00010C)
+  IL_0050 stfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_0055 ldarg.0         
+  IL_0056 call           UberTextMaterial::get_Query token(0x06000122)
+  IL_005b ldarg.0         
+  IL_005c ldfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_0061 callvirt       UberTextMaterialQuery::ApplyToMaterial token(0x06000160)
+  IL_0066 ret             
+
+0x06000125 UberTextMaterial::Destroy() RVA 0x7ee7 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_0006 call           UnityEngine.Object::Destroy token(0x0A00010D)
+  IL_000b ret             
+
+0x06000126 UberTextMaterial::HasQuery(query) RVA 0x7ef4 SIG 2001021274
+  IL_0000 ldarg.0         
+  IL_0001 call           UberTextMaterial::IsValid token(0x0600012B)
+  IL_0006 brfalse.s      IL_0015 
+  IL_0008 ldarg.0         
+  IL_0009 call           UberTextMaterial::get_Query token(0x06000122)
+  IL_000e ldarg.1         
+  IL_000f callvirt       UberTextMaterialQuery::Equals token(0x0600015F)
+  IL_0014 ret             
+  IL_0015 ldc.i4.0        
+  IL_0016 ret             
+
+0x06000127 UberTextMaterial::Acquire() RVA 0x7f0c SIG 20001231
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 ldfld          UberTextMaterial::m_referenceCounter token(0x040000CD)
+  IL_0007 ldc.i4.1        
+  IL_0008 add             
+  IL_0009 stfld          UberTextMaterial::m_referenceCounter token(0x040000CD)
+  IL_000e ldarg.0         
+  IL_000f ldfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_0014 ret             
+
+0x06000128 UberTextMaterial::Release() RVA 0x7f22 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 ldfld          UberTextMaterial::m_referenceCounter token(0x040000CD)
+  IL_0007 ldc.i4.1        
+  IL_0008 sub             
+  IL_0009 stfld          UberTextMaterial::m_referenceCounter token(0x040000CD)
+  IL_000e ret             
+
+0x06000129 UberTextMaterial::CanDestroy() RVA 0x7f32 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          UberTextMaterial::m_referenceCounter token(0x040000CD)
+  IL_0006 ldc.i4.0        
+  IL_0007 cgt             
+  IL_0009 ldc.i4.0        
+  IL_000a ceq             
+  IL_000c ret             
+
+0x0600012a UberTextMaterial::GetRenderQueue() RVA 0x7f40 SIG 200008
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A000029)
+  IL_000b brfalse.s      IL_0019 
+  IL_000d ldarg.0         
+  IL_000e ldfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_0013 callvirt       UnityEngine.Material::get_renderQueue token(0x0A00010E)
+  IL_0018 ret             
+  IL_0019 ldc.i4.m1       
+  IL_001a ret             
+
+0x0600012b UberTextMaterial::IsValid() RVA 0x7f5c SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A000029)
+  IL_000b ret             
+
+0x0600012c UberTextMaterial::IsStillBound(renderer) RVA 0x7f6c SIG 2001021281a5
+  IL_0000 ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_0005 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::Clear token(0x0A00010F)
+  IL_000a ldarg.1         
+  IL_000b ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_0010 callvirt       UnityEngine.Renderer::GetSharedMaterials token(0x0A000110)
+  IL_0015 ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_001a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::GetEnumerator token(0x0A000111)
+  IL_001f stloc.0         
+  IL_0020 br.s           IL_003a 
+  IL_0022 ldloca.s       local(0x0000) 
+  IL_0024 call           <dnfile.mdtable.TypeSpecRow object at 0x7faaaaabbe30>::get_Current token(0x0A000112)
+  IL_0029 ldarg.0         
+  IL_002a ldfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_002f call           UnityEngine.Object::op_Equality token(0x0A000014)
+  IL_0034 brfalse.s      IL_003a 
+  IL_0036 ldc.i4.1        
+  IL_0037 stloc.1         
+  IL_0038 leave.s        IL_0055 
+  IL_003a ldloca.s       local(0x0000) 
+  IL_003c call           <dnfile.mdtable.TypeSpecRow object at 0x7faaaaabbe30>::MoveNext token(0x0A000113)
+  IL_0041 brtrue.s       IL_0022 
+  IL_0043 leave.s        IL_0053 
+  IL_0045 ldloca.s       local(0x0000) 
+  IL_0047 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7faaaaabbe30> token(0x1B000017)
+  IL_004d callvirt       System.IDisposable::Dispose token(0x0A0000AB)
+  IL_0052 endfinally      
+  IL_0053 ldc.i4.0        
+  IL_0054 ret             
+  IL_0055 ldloc.1         
+  IL_0056 ret             
+
+0x0600012d UberTextMaterial::Rebound(renderer,index) RVA 0x7fe0 SIG 2002011281a508
+  IL_0000 ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_0005 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::Clear token(0x0A00010F)
+  IL_000a ldarg.1         
+  IL_000b ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_0010 callvirt       UnityEngine.Renderer::GetSharedMaterials token(0x0A000110)
+  IL_0015 ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_001a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::get_Count token(0x0A000114)
+  IL_001f ldarg.2         
+  IL_0020 ble.s          IL_0035 
+  IL_0022 ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_0027 ldarg.2         
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_002e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::set_Item token(0x0A000115)
+  IL_0033 br.s           IL_0045 
+  IL_0035 ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_003a ldarg.0         
+  IL_003b ldfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_0040 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::Add token(0x0A000116)
+  IL_0045 ldarg.1         
+  IL_0046 ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_004b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::ToArray token(0x0A000117)
+  IL_0050 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::SetSharedMaterials token(0x0A000118)
+  IL_0055 ret             
+
+0x0600012e UberTextMaterial::Unbound(renderer) RVA 0x8044 SIG 2001011281a5
+  IL_0000 ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_0005 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::Clear token(0x0A00010F)
+  IL_000a ldarg.1         
+  IL_000b ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_0010 callvirt       UnityEngine.Renderer::GetSharedMaterials token(0x0A000110)
+  IL_0015 ldc.i4.m1       
+  IL_0016 stloc.0         
+  IL_0017 ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_001c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::get_Count token(0x0A000114)
+  IL_0021 ldc.i4.1        
+  IL_0022 sub             
+  IL_0023 stloc.1         
+  IL_0024 br.s           IL_0046 
+  IL_0026 ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_002b ldloc.1         
+  IL_002c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::get_Item token(0x0A000119)
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          UberTextMaterial::m_material token(0x040000CC)
+  IL_0037 call           UnityEngine.Object::op_Equality token(0x0A000014)
+  IL_003c brfalse.s      IL_0042 
+  IL_003e ldloc.1         
+  IL_003f stloc.0         
+  IL_0040 br.s           IL_004a 
+  IL_0042 ldloc.1         
+  IL_0043 ldc.i4.1        
+  IL_0044 sub             
+  IL_0045 stloc.1         
+  IL_0046 ldloc.1         
+  IL_0047 ldc.i4.0        
+  IL_0048 bge.s          IL_0026 
+  IL_004a ldloc.0         
+  IL_004b ldc.i4.m1       
+  IL_004c beq.s          IL_0069 
+  IL_004e ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_0053 ldloc.0         
+  IL_0054 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::RemoveAt token(0x0A00011A)
+  IL_0059 ldarg.1         
+  IL_005a ldsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_005f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::ToArray token(0x0A000117)
+  IL_0064 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::SetSharedMaterials token(0x0A000118)
+  IL_0069 ret             
+
+0x0600012f UberTextMaterial::.cctor() RVA 0x80ba SIG 000001
+  IL_0000 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7faaaaababa0>::.ctor token(0x0A0000C2)
+  IL_0005 stsfld         UberTextMaterial::m_temporalRendererMaterialList token(0x040000CE)
+  IL_000a ret             
+
+0x06000156 IncrementRenderQueueMaterialProperty::.ctor() RVA 0x8826 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4         -9999 
+  IL_0006 stfld          IncrementRenderQueueMaterialProperty::m_originalMaterialRenderQueue token(0x040000F2)
+  IL_000b ldarg.0         
+  IL_000c ldstr          'RenderQueue' string token(0x70000866)
+  IL_0011 call           UberTextMaterialProperty::.ctor token(0x0600013C)
+  IL_0016 ret             
+
+0x06000157 IncrementRenderQueueMaterialProperty::CopyTo(dest) RVA 0x8840 SIG 200101125c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          UberTextMaterialProperty::m_enabled token(0x040000EA)
+  IL_0006 brfalse.s      IL_001e 
+  IL_0008 ldarg.1         
+  IL_0009 isinst         IncrementRenderQueueMaterialProperty token(0x0200001C)
+  IL_000e stloc.0         
+  IL_000f ldloc.0         
+  IL_0010 brfalse.s      IL_001e 
+  IL_0012 ldloc.0         
+  IL_0013 ldarg.0         
+  IL_0014 ldfld          IncrementRenderQueueMaterialProperty::m_value token(0x040000F1)
+  IL_0019 callvirt       IncrementRenderQueueMaterialProperty::SetValue token(0x06000158)
+  IL_001e ret             
+
+0x06000158 IncrementRenderQueueMaterialProperty::SetValue(value) RVA 0x886b SIG 20010108
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          IncrementRenderQueueMaterialProperty::m_value token(0x040000F1)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.1        
+  IL_0009 stfld          UberTextMaterialProperty::m_enabled token(0x040000EA)
+  IL_000e ret             
+
+0x06000159 IncrementRenderQueueMaterialProperty::DoApplyToMaterial(material) RVA 0x887b SIG 2001011231
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          IncrementRenderQueueMaterialProperty::m_originalMaterialRenderQueue token(0x040000F2)
+  IL_0006 ldc.i4         -9999 
+  IL_000b bne.un.s       IL_0019 
+  IL_000d ldarg.0         
+  IL_000e ldarg.1         
+  IL_000f callvirt       UnityEngine.Material::get_renderQueue token(0x0A00010E)
+  IL_0014 stfld          IncrementRenderQueueMaterialProperty::m_originalMaterialRenderQueue token(0x040000F2)
+  IL_0019 ldarg.1         
+  IL_001a ldarg.0         
+  IL_001b ldfld          IncrementRenderQueueMaterialProperty::m_originalMaterialRenderQueue token(0x040000F2)
+  IL_0020 ldarg.0         
+  IL_0021 ldfld          IncrementRenderQueueMaterialProperty::m_value token(0x040000F1)
+  IL_0026 add             
+  IL_0027 ldsfld         UberTextMaterialProperty::MinRenderQueueValue token(0x040000EB)
+  IL_002c ldsfld         UberTextMaterialProperty::MaxRenderQueueValue token(0x040000EC)
+  IL_0031 call           UnityEngine.Mathf::Clamp token(0x0A000132)
+  IL_0036 callvirt       UnityEngine.Material::set_renderQueue token(0x0A000133)
+  IL_003b ret             
+
+0x0600015a IncrementRenderQueueMaterialProperty::Equals(materialProperty) RVA 0x88b8 SIG 200102125c
+  IL_0000 ldarg.1         
+  IL_0001 isinst         IncrementRenderQueueMaterialProperty token(0x0200001C)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 brtrue.s       IL_000c 
+  IL_000a ldc.i4.0        
+  IL_000b ret             
+  IL_000c ldarg.0         
+  IL_000d ldfld          IncrementRenderQueueMaterialProperty::m_value token(0x040000F1)
+  IL_0012 ldloc.0         
+  IL_0013 ldfld          IncrementRenderQueueMaterialProperty::m_value token(0x040000F1)
+  IL_0018 ceq             
+  IL_001a ret             

@@ -1,0 +1,7 @@
+# ShaderTagId actual runtime case comparison
+
+Executed in installed isolated Unity6000.3.10f1(e35f0c77bd8e), Apple M3 / Metal, first run exit0. Source constructs new UnityEngine.Rendering.ShaderTagId for SRPDEFAULTUNLIT then SRPDefaultUnlit and records .name, GetHashCode(), ==, !=, typed Equals and boxed-object Equals. These are actual Unity runtime results, not a conclusion inferred from string comparison rules.
+
+Observed: both .name return SRPDEFAULTUNLIT; both hash322070835; operator==true, operator!=false, typedEqualstrue, objectEqualstrue. Input construction order is upper-case first; canonical-name casing should not be assumed independent of initialization order. Hash values are observations from this Editor process and should not be assumed stable across processes/versions. This test establishes ShaderTagId equality for these two inputs in this installed Editor; it does not itself execute a specific render pipeline or prove which LightMode passes that pipeline selects.
+
+Only new independent test script added to existing isolated probe. No game/other project edits, software installation, login or manual account/license changes. Actual source, runtime version and redacted log included. Initial post-run packaging check wrongly assumed .name preserves input case; it failed before upload and was corrected to validate result consistency only; no Unity rerun or data alteration.

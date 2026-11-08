@@ -1,0 +1,74 @@
+	private void UpdateWatermark()
+	{
+		if (m_entityDef == null && m_entity == null)
+		{
+			return;
+		}
+		string text = null;
+		EntityDef obj = m_entityDef ?? m_entity.GetEntityDef();
+		string watermarkTextureOverride = obj.GetWatermarkTextureOverride();
+		TAG_CARD_SET cardSetId = GetCardSet();
+		if (m_watermarkCardSetOverride != TAG_CARD_SET.INVALID)
+		{
+			cardSetId = m_watermarkCardSetOverride;
+		}
+		else if (!string.IsNullOrEmpty(watermarkTextureOverride))
+		{
+			text = watermarkTextureOverride;
+		}
+		if (text == null)
+		{
+			CardSetDbfRecord cardSet = GameDbf.GetIndex().GetCardSet(cardSetId);
+			if (cardSet != null)
+			{
+				text = cardSet.CardWatermarkTexture;
+			}
+		}
+		if (obj.IsCoreCard())
+		{
+			text = SetRotationIcon.GetYearIconWatermark();
+		}
+		float num = 0f;
+		num = (((m_entityDef == null || !m_entityDef.HasTag(GAME_TAG.HIDE_WATERMARK)) && (m_entity == null || !m_entity.HasTag(GAME_TAG.HIDE_WATERMARK))) ? WATERMARK_ALPHA_VALUE : 0f);
+		if (m_descriptionMesh != null && m_descriptionMesh.TryGetComponent<Renderer>(out var component) && RendererExtension.GetSharedMaterial(component).HasProperty("_SecondTint") && RendererExtension.GetSharedMaterial(component).HasProperty("_SecondTex"))
+		{
+			if (!string.IsNullOrEmpty(text))
+			{
+				AssetLoader.Get().LoadAsset<Texture>(ref m_watermarkTex, AssetReference.op_Implicit(text), (AssetLoadingOptions)0);
+				GetMaterialInstance(component).SetTexture("_SecondTex", AssetHandle<Texture>.op_Implicit(m_watermarkTex));
+			}
+			else
+			{
+				num = 0f;
+			}
+			Material materialInstance = GetMaterialInstance(component);
+			Color color = materialInstance.GetColor("_SecondTint");
+			color.a = num;
+			materialInstance.SetColor("_SecondTint", color);
+		}
+		if (m_watermarkMesh != null && m_watermarkMesh.TryGetComponent<Renderer>(out var component2) && RendererExtension.GetSharedMaterial(component2).HasProperty("_Color") && RendererExtension.GetSharedMaterial(component2).HasProperty("_MainTex"))
+		{
+			if (!string.IsNullOrEmpty(text))
+			{
+				AssetLoader.Get().LoadAsset<Texture>(ref m_watermarkTex, AssetReference.op_Implicit(text), (AssetLoadingOptions)0);
+				GetMaterialInstance(component2).SetTexture("_MainTex", AssetHandle<Texture>.op_Implicit(m_watermarkTex));
+			}
+			else
+			{
+				num = 0f;
+			}
+			Material materialInstance2 = GetMaterialInstance(component2);
+			Color color2 = materialInstance2.GetColor("_Color");
+			color2.a = num;
+			materialInstance2.SetColor("_Color", color2);
+		}
+	}
+
+	private void UpdateEliteComponent()
+	{
+		if (!(m_eliteObject == null))
+		{
+			bool enable = IsElite();
+			RenderUtils.EnableRenderers(m_eliteObject, enable, includeInactive: true);
+		}
+	}

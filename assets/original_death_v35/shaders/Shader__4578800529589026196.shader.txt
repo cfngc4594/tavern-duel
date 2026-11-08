@@ -1,0 +1,23 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Card/SelfIlluminDiffuse" {
+Properties {
+
+_Color ("Main Color", Color) = (1,1,1,1)
+
+_MainTex ("Base Texture", 2D) = "white" { }
+
+_Illum ("Illumin Color", Float) = 1.0
+
+}
+SubShader {
+ Tags { "CardAlpha" = "true" "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "CardAlpha" = "true" "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 38995
+}
+}
+}

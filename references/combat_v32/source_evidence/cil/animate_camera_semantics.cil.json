@@ -1,0 +1,2346 @@
+{
+  "types": [
+    {
+      "type": "CameraShakeMgr",
+      "token": "0x02002be2",
+      "fields": [
+        {
+          "name": "m_amount",
+          "token": "0x04011f9c",
+          "signature": "06115d"
+        },
+        {
+          "name": "m_intensityCurve",
+          "token": "0x04011f9d",
+          "signature": "06128501"
+        },
+        {
+          "name": "m_holdAtSec",
+          "token": "0x04011f9e",
+          "signature": "06151181bd010c"
+        },
+        {
+          "name": "m_isOverride",
+          "token": "0x04011f9f",
+          "signature": "0602"
+        },
+        {
+          "name": "m_started",
+          "token": "0x04011fa0",
+          "signature": "0602"
+        },
+        {
+          "name": "m_initialPos",
+          "token": "0x04011fa1",
+          "signature": "06115d"
+        },
+        {
+          "name": "m_progressSec",
+          "token": "0x04011fa2",
+          "signature": "060c"
+        },
+        {
+          "name": "m_durationSec",
+          "token": "0x04011fa3",
+          "signature": "060c"
+        }
+      ]
+    },
+    {
+      "type": "CameraShaker",
+      "token": "0x02002be3",
+      "fields": [
+        {
+          "name": "m_Amount",
+          "token": "0x04011fa4",
+          "signature": "06115d"
+        },
+        {
+          "name": "m_IntensityCurve",
+          "token": "0x04011fa5",
+          "signature": "06128501"
+        },
+        {
+          "name": "m_Hold",
+          "token": "0x04011fa6",
+          "signature": "0602"
+        },
+        {
+          "name": "m_HoldAtSec",
+          "token": "0x04011fa7",
+          "signature": "060c"
+        },
+        {
+          "name": "m_IsOverride",
+          "token": "0x04011fa8",
+          "signature": "0602"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "CameraShakeMgr",
+      "method": "get_IsCameraShaking",
+      "token": "0x0601507f",
+      "rva": "0x62f0bc",
+      "signature": "200002",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_started",
+          "token": "token(0x04011FA0)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "Update",
+      "token": "0x06015080",
+      "rva": "0x62f0c4",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 45,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_started",
+          "token": "token(0x04011FA0)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_0009",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_progressSec",
+          "token": "token(0x04011FA2)"
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_durationSec",
+          "token": "token(0x04011FA3)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "blt.un.s",
+          "operand": "IL_0026",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "call",
+          "operand": "CameraShakeMgr::IsHolding",
+          "token": "token(0x0601508A)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "brtrue.s",
+          "operand": "IL_0026",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "call",
+          "operand": "CameraShakeMgr::StopShake",
+          "token": "token(0x06015087)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "call",
+          "operand": "CameraShakeMgr::UpdateShake",
+          "token": "token(0x06015088)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "Shake",
+      "token": "0x06015081",
+      "rva": "0x62f0f4",
+      "signature": "0005011280e9115d128501151181bd010c02",
+      "parameters": [
+        "camera",
+        "amount",
+        "intensityCurve",
+        "holdAtTime",
+        "isOverride"
+      ],
+      "code_size": 82,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_0009",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "call",
+          "operand": "Options::Get",
+          "token": "token(0x060140E7)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldc.i4.s",
+          "operand": "110",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "callvirt",
+          "operand": "Options::GetBool",
+          "token": "token(0x060140F8)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "brtrue.s",
+          "operand": "IL_0018",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::TryGetComponent<spec>",
+          "token": "token(0x2B0009B7)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "brfalse.s",
+          "operand": "IL_0031",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "call",
+          "operand": "CameraShakeMgr::DoesCurveHaveZeroTime",
+          "token": "token(0x06015085)"
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "brfalse.s",
+          "operand": "IL_0046",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "callvirt",
+          "operand": "CameraShakeMgr::StopShake",
+          "token": "token(0x06015087)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "call",
+          "operand": "CameraShakeMgr::DoesCurveHaveZeroTime",
+          "token": "token(0x06015085)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "brfalse.s",
+          "operand": "IL_003a",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::AddComponent<spec>",
+          "token": "token(0x2B0009B8)"
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "callvirt",
+          "operand": "CameraShakeMgr::StartShake",
+          "token": "token(0x06015086)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "Shake",
+      "token": "0x06015082",
+      "rva": "0x62f154",
+      "signature": "0003011280e9115d0c",
+      "parameters": [
+        "camera",
+        "amount",
+        "time"
+      ],
+      "code_size": 41,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "call",
+          "operand": "UnityEngine.AnimationCurve::Linear",
+          "token": "token(0x0A00423C)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "initobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fda94354470>",
+          "token": "token(0x1B000478)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "call",
+          "operand": "CameraShakeMgr::Shake",
+          "token": "token(0x06015081)"
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "Stop",
+      "token": "0x06015083",
+      "rva": "0x62f18c",
+      "signature": "0002011280e90c",
+      "parameters": [
+        "camera",
+        "time"
+      ],
+      "code_size": 99,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_0009",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "call",
+          "operand": "Options::Get",
+          "token": "token(0x060140E7)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldc.i4.s",
+          "operand": "110",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "callvirt",
+          "operand": "Options::GetBool",
+          "token": "token(0x060140F8)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "brtrue.s",
+          "operand": "IL_0018",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::TryGetComponent<spec>",
+          "token": "token(0x2B0009B7)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "brtrue.s",
+          "operand": "IL_0023",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "bgt.un.s",
+          "operand": "IL_0032",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "callvirt",
+          "operand": "CameraShakeMgr::StopShake",
+          "token": "token(0x06015087)"
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "callvirt",
+          "operand": "CameraShakeMgr::ComputeIntensity",
+          "token": "token(0x06015089)"
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "call",
+          "operand": "UnityEngine.AnimationCurve::Linear",
+          "token": "token(0x0A00423C)"
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004b",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_amount",
+          "token": "token(0x04011F9C)"
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "initobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fda94354470>",
+          "token": "token(0x1B000478)"
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "callvirt",
+          "operand": "CameraShakeMgr::StartShake",
+          "token": "token(0x06015086)"
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "IsShaking",
+      "token": "0x06015084",
+      "rva": "0x62f1fc",
+      "signature": "0001021280e9",
+      "parameters": [
+        "camera"
+      ],
+      "code_size": 29,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Implicit",
+          "token": "token(0x0A00006A)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_000a",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::TryGetComponent<spec>",
+          "token": "token(0x2B0009B7)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "brtrue.s",
+          "operand": "IL_0016",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "callvirt",
+          "operand": "CameraShakeMgr::get_IsCameraShaking",
+          "token": "token(0x0601507F)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "DoesCurveHaveZeroTime",
+      "token": "0x06015085",
+      "rva": "0x62f228",
+      "signature": "000102128501",
+      "parameters": [
+        "intensityCurve"
+      ],
+      "code_size": 48,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "brtrue.s",
+          "operand": "IL_0005",
+          "token": null
+        },
+        {
+          "offset": "IL_0003",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0004",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.AnimationCurve::get_length",
+          "token": "token(0x0A003966)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "brtrue.s",
+          "operand": "IL_000f",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.AnimationCurve::get_length",
+          "token": "token(0x0A003966)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "sub",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.AnimationCurve::get_Item",
+          "token": "token(0x0A003BAB)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "call",
+          "operand": "UnityEngine.Keyframe::get_time",
+          "token": "token(0x0A003BAC)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "bgt.un.s",
+          "operand": "IL_002e",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "StartShake",
+      "token": "0x06015086",
+      "rva": "0x62f264",
+      "signature": "200401115d128501151181bd010c02",
+      "parameters": [
+        "amount",
+        "intensityCurve",
+        "holdAtSec",
+        "isOverride"
+      ],
+      "code_size": 135,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "brtrue.s",
+          "operand": "IL_0019",
+          "token": null
+        },
+        {
+          "offset": "IL_0004",
+          "opcode": "ldarga.s",
+          "operand": "argument(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_sqrMagnitude",
+          "token": "token(0x0A0027BA)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldflda",
+          "operand": "CameraShakeMgr::m_amount",
+          "token": "token(0x04011F9C)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_sqrMagnitude",
+          "token": "token(0x0A0027BA)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "bge.un.s",
+          "operand": "IL_0019",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_isOverride",
+          "token": "token(0x04011F9F)"
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "brfalse.s",
+          "operand": "IL_0022",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_amount",
+          "token": "token(0x04011F9C)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_intensityCurve",
+          "token": "token(0x04011F9D)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldarg.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_holdAtSec",
+          "token": "token(0x04011F9E)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "ldarg.s",
+          "operand": "argument(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_isOverride",
+          "token": "token(0x04011F9F)"
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_started",
+          "token": "token(0x04011FA0)"
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "brtrue.s",
+          "operand": "IL_005f",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_started",
+          "token": "token(0x04011FA0)"
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0050",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_position",
+          "token": "token(0x0A0000FB)"
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_initialPos",
+          "token": "token(0x04011FA1)"
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_progressSec",
+          "token": "token(0x04011FA2)"
+        },
+        {
+          "offset": "IL_006a",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006c",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.AnimationCurve::get_length",
+          "token": "token(0x0A003966)"
+        },
+        {
+          "offset": "IL_0071",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0072",
+          "opcode": "sub",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0073",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.AnimationCurve::get_Item",
+          "token": "token(0x0A003BAB)"
+        },
+        {
+          "offset": "IL_0078",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0079",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007a",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_007c",
+          "opcode": "call",
+          "operand": "UnityEngine.Keyframe::get_time",
+          "token": "token(0x0A003BAC)"
+        },
+        {
+          "offset": "IL_0081",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_durationSec",
+          "token": "token(0x04011FA3)"
+        },
+        {
+          "offset": "IL_0086",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "StopShake",
+      "token": "0x06015087",
+      "rva": "0x62f2f8",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 70,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "CameraShakeMgr::get_IsCameraShaking",
+          "token": "token(0x0601507F)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brfalse.s",
+          "operand": "IL_0019",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_initialPos",
+          "token": "token(0x04011FA1)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_position",
+          "token": "token(0x0A00020F)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_zero",
+          "token": "token(0x0A0000DD)"
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_amount",
+          "token": "token(0x04011F9C)"
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_intensityCurve",
+          "token": "token(0x04011F9D)"
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldflda",
+          "operand": "CameraShakeMgr::m_holdAtSec",
+          "token": "token(0x04011F9E)"
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "initobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fda94354470>",
+          "token": "token(0x1B000478)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_isOverride",
+          "token": "token(0x04011F9F)"
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_started",
+          "token": "token(0x04011FA0)"
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "UpdateShake",
+      "token": "0x06015088",
+      "rva": "0x62f34c",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 194,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "CameraShakeMgr::ComputeIntensity",
+          "token": "token(0x06015089)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "initobj",
+          "operand": "UnityEngine.Vector3",
+          "token": "token(0x01000017)"
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldflda",
+          "operand": "CameraShakeMgr::m_amount",
+          "token": "token(0x04011F9C)"
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::x",
+          "token": "token(0x0A00001F)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "neg",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "mul",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldflda",
+          "operand": "CameraShakeMgr::m_amount",
+          "token": "token(0x04011F9C)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::x",
+          "token": "token(0x0A00001F)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "mul",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "call",
+          "operand": "UnityEngine.Random::Range",
+          "token": "token(0x0A00025A)"
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "stfld",
+          "operand": "UnityEngine.Vector3::x",
+          "token": "token(0x0A00001F)"
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldflda",
+          "operand": "CameraShakeMgr::m_amount",
+          "token": "token(0x04011F9C)"
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::y",
+          "token": "token(0x0A000022)"
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "neg",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "mul",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldflda",
+          "operand": "CameraShakeMgr::m_amount",
+          "token": "token(0x04011F9C)"
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::y",
+          "token": "token(0x0A000022)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "mul",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "call",
+          "operand": "UnityEngine.Random::Range",
+          "token": "token(0x0A00025A)"
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "stfld",
+          "operand": "UnityEngine.Vector3::y",
+          "token": "token(0x0A000022)"
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "ldflda",
+          "operand": "CameraShakeMgr::m_amount",
+          "token": "token(0x04011F9C)"
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::z",
+          "token": "token(0x0A00025C)"
+        },
+        {
+          "offset": "IL_006a",
+          "opcode": "neg",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006c",
+          "opcode": "mul",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006e",
+          "opcode": "ldflda",
+          "operand": "CameraShakeMgr::m_amount",
+          "token": "token(0x04011F9C)"
+        },
+        {
+          "offset": "IL_0073",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::z",
+          "token": "token(0x0A00025C)"
+        },
+        {
+          "offset": "IL_0078",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0079",
+          "opcode": "mul",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007a",
+          "opcode": "call",
+          "operand": "UnityEngine.Random::Range",
+          "token": "token(0x0A00025A)"
+        },
+        {
+          "offset": "IL_007f",
+          "opcode": "stfld",
+          "operand": "UnityEngine.Vector3::z",
+          "token": "token(0x0A00025C)"
+        },
+        {
+          "offset": "IL_0084",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0085",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_008a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008b",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_initialPos",
+          "token": "token(0x04011FA1)"
+        },
+        {
+          "offset": "IL_0090",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0091",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Addition",
+          "token": "token(0x0A0002FD)"
+        },
+        {
+          "offset": "IL_0096",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_position",
+          "token": "token(0x0A00020F)"
+        },
+        {
+          "offset": "IL_009b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_009c",
+          "opcode": "call",
+          "operand": "CameraShakeMgr::IsHolding",
+          "token": "token(0x0601508A)"
+        },
+        {
+          "offset": "IL_00a1",
+          "opcode": "brfalse.s",
+          "operand": "IL_00a4",
+          "token": null
+        },
+        {
+          "offset": "IL_00a3",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a4",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a5",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a6",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_progressSec",
+          "token": "token(0x04011FA2)"
+        },
+        {
+          "offset": "IL_00ab",
+          "opcode": "call",
+          "operand": "UnityEngine.Time::get_deltaTime",
+          "token": "token(0x0A00096D)"
+        },
+        {
+          "offset": "IL_00b0",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b1",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b2",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_durationSec",
+          "token": "token(0x04011FA3)"
+        },
+        {
+          "offset": "IL_00b7",
+          "opcode": "call",
+          "operand": "UnityEngine.Mathf::Min",
+          "token": "token(0x0A000B2D)"
+        },
+        {
+          "offset": "IL_00bc",
+          "opcode": "stfld",
+          "operand": "CameraShakeMgr::m_progressSec",
+          "token": "token(0x04011FA2)"
+        },
+        {
+          "offset": "IL_00c1",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "ComputeIntensity",
+      "token": "0x06015089",
+      "rva": "0x62f41a",
+      "signature": "20000c",
+      "parameters": [],
+      "code_size": 32,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_intensityCurve",
+          "token": "token(0x04011F9D)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brfalse.s",
+          "operand": "IL_001a",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_intensityCurve",
+          "token": "token(0x04011F9D)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_progressSec",
+          "token": "token(0x04011FA2)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.AnimationCurve::Evaluate",
+          "token": "token(0x0A000982)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": "IsHolding",
+      "token": "0x0601508a",
+      "rva": "0x62f43c",
+      "signature": "200002",
+      "parameters": [],
+      "code_size": 49,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldflda",
+          "operand": "CameraShakeMgr::m_holdAtSec",
+          "token": "token(0x04011F9E)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fda94354470>::get_HasValue",
+          "token": "token(0x0A001044)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "brtrue.s",
+          "operand": "IL_000f",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_progressSec",
+          "token": "token(0x04011FA2)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldfld",
+          "operand": "CameraShakeMgr::m_holdAtSec",
+          "token": "token(0x04011F9E)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fda94354470>::GetValueOrDefault",
+          "token": "token(0x0A0011E8)"
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "clt.un",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ceq",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fda94354470>::get_HasValue",
+          "token": "token(0x0A001044)"
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "and",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShakeMgr",
+      "method": ".ctor",
+      "token": "0x0601508b",
+      "rva": "0x24e0",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "UnityEngine.MonoBehaviour::.ctor",
+          "token": "token(0x0A000018)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShaker",
+      "method": "StartShake",
+      "token": "0x0601508c",
+      "rva": "0x62f47c",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 59,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "initobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fda94354470>",
+          "token": "token(0x1B000478)"
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldfld",
+          "operand": "CameraShaker::m_Hold",
+          "token": "token(0x04011FA6)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "brfalse.s",
+          "operand": "IL_001d",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldfld",
+          "operand": "CameraShaker::m_HoldAtSec",
+          "token": "token(0x04011FA7)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fda94354470>::.ctor",
+          "token": "token(0x0A0011DF)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "call",
+          "operand": "UnityEngine.Camera::get_main",
+          "token": "token(0x0A000580)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldfld",
+          "operand": "CameraShaker::m_Amount",
+          "token": "token(0x04011FA4)"
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldfld",
+          "operand": "CameraShaker::m_IntensityCurve",
+          "token": "token(0x04011FA5)"
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldfld",
+          "operand": "CameraShaker::m_IsOverride",
+          "token": "token(0x04011FA8)"
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "call",
+          "operand": "CameraShakeMgr::Shake",
+          "token": "token(0x06015081)"
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "CameraShaker",
+      "method": ".ctor",
+      "token": "0x0601508d",
+      "rva": "0x24e0",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 7,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "UnityEngine.MonoBehaviour::.ctor",
+          "token": "token(0x0A000018)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

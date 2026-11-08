@@ -1,0 +1,95 @@
+
+TYPE HutongGames.PlayMaker.Actions.RandomWait 0x02000300
+FIELD 0x04000ef8 min SIG 0612809d
+FIELD 0x04000ef9 max SIG 0612809d
+FIELD 0x04000efa finishEvent SIG 0612811d
+FIELD 0x04000efb realTime SIG 0602
+FIELD 0x04000efc startTime SIG 060c
+FIELD 0x04000efd timer SIG 060c
+FIELD 0x04000efe time SIG 060c
+
+0x06000d93 HutongGames.PlayMaker.Actions.RandomWait::Reset() RVA 0x3136d SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldc.r4         0.0 
+  IL_0006 call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A0000DA)
+  IL_000b stfld          HutongGames.PlayMaker.Actions.RandomWait::min token(0x04000EF8)
+  IL_0010 ldarg.0         
+  IL_0011 ldc.r4         1.0 
+  IL_0016 call           HutongGames.PlayMaker.FsmFloat::op_Implicit token(0x0A0000DA)
+  IL_001b stfld          HutongGames.PlayMaker.Actions.RandomWait::max token(0x04000EF9)
+  IL_0020 ldarg.0         
+  IL_0021 ldnull          
+  IL_0022 stfld          HutongGames.PlayMaker.Actions.RandomWait::finishEvent token(0x04000EFA)
+  IL_0027 ldarg.0         
+  IL_0028 ldc.i4.0        
+  IL_0029 stfld          HutongGames.PlayMaker.Actions.RandomWait::realTime token(0x04000EFB)
+  IL_002e ret             
+
+0x06000d94 HutongGames.PlayMaker.Actions.RandomWait::OnEnter() RVA 0x313a0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 ldfld          HutongGames.PlayMaker.Actions.RandomWait::min token(0x04000EF8)
+  IL_0007 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_000c ldarg.0         
+  IL_000d ldfld          HutongGames.PlayMaker.Actions.RandomWait::max token(0x04000EF9)
+  IL_0012 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A000034)
+  IL_0017 call           UnityEngine.Random::Range token(0x0A000035)
+  IL_001c stfld          HutongGames.PlayMaker.Actions.RandomWait::time token(0x04000EFE)
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          HutongGames.PlayMaker.Actions.RandomWait::time token(0x04000EFE)
+  IL_0027 ldc.r4         0.0 
+  IL_002c bgt.un.s       IL_0046 
+  IL_002e ldarg.0         
+  IL_002f call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0034 ldarg.0         
+  IL_0035 ldfld          HutongGames.PlayMaker.Actions.RandomWait::finishEvent token(0x04000EFA)
+  IL_003a callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A0000B9)
+  IL_003f ldarg.0         
+  IL_0040 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0045 ret             
+  IL_0046 ldarg.0         
+  IL_0047 call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_004c stfld          HutongGames.PlayMaker.Actions.RandomWait::startTime token(0x04000EFC)
+  IL_0051 ldarg.0         
+  IL_0052 ldc.r4         0.0 
+  IL_0057 stfld          HutongGames.PlayMaker.Actions.RandomWait::timer token(0x04000EFD)
+  IL_005c ret             
+
+0x06000d95 HutongGames.PlayMaker.Actions.RandomWait::OnUpdate() RVA 0x3140c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.RandomWait::realTime token(0x04000EFB)
+  IL_0006 brfalse.s      IL_001c 
+  IL_0008 ldarg.0         
+  IL_0009 call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A0000BB)
+  IL_000e ldarg.0         
+  IL_000f ldfld          HutongGames.PlayMaker.Actions.RandomWait::startTime token(0x04000EFC)
+  IL_0014 sub             
+  IL_0015 stfld          HutongGames.PlayMaker.Actions.RandomWait::timer token(0x04000EFD)
+  IL_001a br.s           IL_002e 
+  IL_001c ldarg.0         
+  IL_001d ldarg.0         
+  IL_001e ldfld          HutongGames.PlayMaker.Actions.RandomWait::timer token(0x04000EFD)
+  IL_0023 call           UnityEngine.Time::get_deltaTime token(0x0A0000C1)
+  IL_0028 add             
+  IL_0029 stfld          HutongGames.PlayMaker.Actions.RandomWait::timer token(0x04000EFD)
+  IL_002e ldarg.0         
+  IL_002f ldfld          HutongGames.PlayMaker.Actions.RandomWait::timer token(0x04000EFD)
+  IL_0034 ldarg.0         
+  IL_0035 ldfld          HutongGames.PlayMaker.Actions.RandomWait::time token(0x04000EFE)
+  IL_003a blt.un.s       IL_005b 
+  IL_003c ldarg.0         
+  IL_003d call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A0000B8)
+  IL_0042 ldarg.0         
+  IL_0043 ldfld          HutongGames.PlayMaker.Actions.RandomWait::finishEvent token(0x04000EFA)
+  IL_0048 brfalse.s      IL_005b 
+  IL_004a ldarg.0         
+  IL_004b call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A00002B)
+  IL_0050 ldarg.0         
+  IL_0051 ldfld          HutongGames.PlayMaker.Actions.RandomWait::finishEvent token(0x04000EFA)
+  IL_0056 callvirt       HutongGames.PlayMaker.Fsm::Event token(0x0A0000B9)
+  IL_005b ret             
+
+0x06000d96 HutongGames.PlayMaker.Actions.RandomWait::.ctor() RVA 0x4f16 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A0000C2)
+  IL_0006 ret             

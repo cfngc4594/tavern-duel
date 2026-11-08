@@ -1,0 +1,44 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/FX/FX_AreaEffect_Render" {
+Properties {
+
+_Color ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_MainTex ("Main Texture", 2D) = "white" { }
+
+_RampTex ("Horizontal Ramp (dark->light)", 2D) = "white" { }
+
+_RampIntensity ("Ramp Intensity", Float) = 1.0
+
+_Intensity ("Intensity", Float) = 1.0
+
+_Alpha ("Alpha", Float) = 1.0
+
+_GlowColor ("Glow Color", Color) = (1,1,1,1)
+
+_GlowIntensity ("Glow Intensity", Float) = 0.0
+
+_GlowAddMul ("Glow Add/Multiply", Range(0, 1)) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Geometry+2000" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Geometry+2000" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 4362
+}
+ Pass {
+ Name "GlowAdditive"
+  Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "GlowAdditive" "QUEUE" = "Geometry+2000" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 125290
+}
+}
+}

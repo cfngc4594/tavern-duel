@@ -1,0 +1,192 @@
+
+TYPE HutongGames.PlayMaker.Actions.SetMaterial 0x0200000d
+FIELD 0x0400005e gameObject SIG 061280a1
+FIELD 0x0400005f materialIndex SIG 061280c1
+FIELD 0x04000060 material SIG 0612812d
+
+TYPE HutongGames.PlayMaker.Actions.SetMaterialTexture 0x02000011
+FIELD 0x04000072 gameObject SIG 061280a1
+FIELD 0x04000073 materialIndex SIG 061280c1
+FIELD 0x04000074 material SIG 0612812d
+FIELD 0x04000075 namedTexture SIG 061280bd
+FIELD 0x04000076 texture SIG 06128141
+
+0x06000057 HutongGames.PlayMaker.Actions.SetMaterial::Reset() RVA 0x3d23 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.SetMaterial::gameObject token(0x0400005E)
+  IL_0007 ldarg.0         
+  IL_0008 ldnull          
+  IL_0009 stfld          HutongGames.PlayMaker.Actions.SetMaterial::material token(0x04000060)
+  IL_000e ldarg.0         
+  IL_000f ldc.i4.0        
+  IL_0010 call           HutongGames.PlayMaker.FsmInt::op_Implicit token(0x0A00006C)
+  IL_0015 stfld          HutongGames.PlayMaker.Actions.SetMaterial::materialIndex token(0x0400005F)
+  IL_001a ret             
+
+0x06000058 HutongGames.PlayMaker.Actions.SetMaterial::OnEnter() RVA 0x3d3f SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SetMaterial::DoSetMaterial token(0x06000059)
+  IL_0006 ldarg.0         
+  IL_0007 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_000c ret             
+
+0x06000059 HutongGames.PlayMaker.Actions.SetMaterial::DoSetMaterial() RVA 0x3d50 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SetMaterial::gameObject token(0x0400005E)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldarg.0         
+  IL_0013 ldloc.0         
+  IL_0014 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a780>::UpdateCache token(0x0A00009A)
+  IL_0019 brtrue.s       IL_001c 
+  IL_001b ret             
+  IL_001c ldarg.0         
+  IL_001d ldfld          HutongGames.PlayMaker.Actions.SetMaterial::materialIndex token(0x0400005F)
+  IL_0022 callvirt       HutongGames.PlayMaker.FsmInt::get_Value token(0x0A000079)
+  IL_0027 brtrue.s       IL_0040 
+  IL_0029 ldarg.0         
+  IL_002a call           <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a780>::get_renderer token(0x0A00009B)
+  IL_002f ldarg.0         
+  IL_0030 ldfld          HutongGames.PlayMaker.Actions.SetMaterial::material token(0x04000060)
+  IL_0035 callvirt       HutongGames.PlayMaker.FsmMaterial::get_Value token(0x0A0000A6)
+  IL_003a call           Blizzard.T5.MaterialService.Extensions.RendererExtension::SetMaterial token(0x0A0000A7)
+  IL_003f ret             
+  IL_0040 ldarg.0         
+  IL_0041 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a780>::get_renderer token(0x0A00009B)
+  IL_0046 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterials token(0x0A00009C)
+  IL_004b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a930>::get_Count token(0x0A0000A0)
+  IL_0050 ldarg.0         
+  IL_0051 ldfld          HutongGames.PlayMaker.Actions.SetMaterial::materialIndex token(0x0400005F)
+  IL_0056 callvirt       HutongGames.PlayMaker.FsmInt::get_Value token(0x0A000079)
+  IL_005b ble.s          IL_007e 
+  IL_005d ldarg.0         
+  IL_005e call           <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a780>::get_renderer token(0x0A00009B)
+  IL_0063 ldarg.0         
+  IL_0064 ldfld          HutongGames.PlayMaker.Actions.SetMaterial::materialIndex token(0x0400005F)
+  IL_0069 callvirt       HutongGames.PlayMaker.FsmInt::get_Value token(0x0A000079)
+  IL_006e ldarg.0         
+  IL_006f ldfld          HutongGames.PlayMaker.Actions.SetMaterial::material token(0x04000060)
+  IL_0074 callvirt       HutongGames.PlayMaker.FsmMaterial::get_Value token(0x0A0000A6)
+  IL_0079 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::SetMaterial token(0x0A0000A8)
+  IL_007e ret             
+
+0x0600005a HutongGames.PlayMaker.Actions.SetMaterial::.ctor() RVA 0x3ba4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a780>::.ctor token(0x0A0000A2)
+  IL_0006 ret             
+
+0x0600006a HutongGames.PlayMaker.Actions.SetMaterialTexture::Reset() RVA 0x4106 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::gameObject token(0x04000072)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmInt::op_Implicit token(0x0A00006C)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::materialIndex token(0x04000073)
+  IL_0013 ldarg.0         
+  IL_0014 ldnull          
+  IL_0015 stfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::material token(0x04000074)
+  IL_001a ldarg.0         
+  IL_001b ldstr          '_MainTex' string token(0x700003B1)
+  IL_0020 call           HutongGames.PlayMaker.FsmString::op_Implicit token(0x0A00006B)
+  IL_0025 stfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::namedTexture token(0x04000075)
+  IL_002a ldarg.0         
+  IL_002b ldnull          
+  IL_002c stfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::texture token(0x04000076)
+  IL_0031 ret             
+
+0x0600006b HutongGames.PlayMaker.Actions.SetMaterialTexture::OnEnter() RVA 0x4139 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SetMaterialTexture::DoSetMaterialTexture token(0x0600006C)
+  IL_0006 ldarg.0         
+  IL_0007 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_000c ret             
+
+0x0600006c HutongGames.PlayMaker.Actions.SetMaterialTexture::DoSetMaterialTexture() RVA 0x4148 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::namedTexture token(0x04000075)
+  IL_0006 callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A00007A)
+  IL_000b stloc.0         
+  IL_000c ldloc.0         
+  IL_000d ldstr          '' string token(0x70000209)
+  IL_0012 call           System.String::op_Equality token(0x0A00004B)
+  IL_0017 brfalse.s      IL_001f 
+  IL_0019 ldstr          '_MainTex' string token(0x700003B1)
+  IL_001e stloc.0         
+  IL_001f ldarg.0         
+  IL_0020 ldfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::material token(0x04000074)
+  IL_0025 callvirt       HutongGames.PlayMaker.FsmMaterial::get_Value token(0x0A0000A6)
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Inequality token(0x0A0000AB)
+  IL_0030 brfalse.s      IL_004f 
+  IL_0032 ldarg.0         
+  IL_0033 ldfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::material token(0x04000074)
+  IL_0038 callvirt       HutongGames.PlayMaker.FsmMaterial::get_Value token(0x0A0000A6)
+  IL_003d ldloc.0         
+  IL_003e ldarg.0         
+  IL_003f ldfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::texture token(0x04000076)
+  IL_0044 callvirt       HutongGames.PlayMaker.FsmTexture::get_Value token(0x0A0000B2)
+  IL_0049 callvirt       UnityEngine.Material::SetTexture token(0x0A0000B3)
+  IL_004e ret             
+  IL_004f ldarg.0         
+  IL_0050 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::gameObject token(0x04000072)
+  IL_005b callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0060 stloc.1         
+  IL_0061 ldarg.0         
+  IL_0062 ldloc.1         
+  IL_0063 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a780>::UpdateCache token(0x0A00009A)
+  IL_0068 brtrue.s       IL_006b 
+  IL_006a ret             
+  IL_006b ldarg.0         
+  IL_006c call           <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a780>::get_renderer token(0x0A00009B)
+  IL_0071 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x0A00009D)
+  IL_0076 stloc.2         
+  IL_0077 ldloc.2         
+  IL_0078 ldnull          
+  IL_0079 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_007e brfalse.s      IL_008c 
+  IL_0080 ldarg.0         
+  IL_0081 ldstr          'Missing Material!' string token(0x700003D1)
+  IL_0086 call           HutongGames.PlayMaker.FsmStateAction::LogError token(0x0A0000AE)
+  IL_008b ret             
+  IL_008c ldarg.0         
+  IL_008d ldfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::materialIndex token(0x04000073)
+  IL_0092 callvirt       HutongGames.PlayMaker.FsmInt::get_Value token(0x0A000079)
+  IL_0097 brtrue.s       IL_00ac 
+  IL_0099 ldloc.2         
+  IL_009a ldloc.0         
+  IL_009b ldarg.0         
+  IL_009c ldfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::texture token(0x04000076)
+  IL_00a1 callvirt       HutongGames.PlayMaker.FsmTexture::get_Value token(0x0A0000B2)
+  IL_00a6 callvirt       UnityEngine.Material::SetTexture token(0x0A0000B3)
+  IL_00ab ret             
+  IL_00ac ldarg.0         
+  IL_00ad call           <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a780>::get_renderer token(0x0A00009B)
+  IL_00b2 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterials token(0x0A00009C)
+  IL_00b7 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a930>::get_Count token(0x0A0000A0)
+  IL_00bc ldarg.0         
+  IL_00bd ldfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::materialIndex token(0x04000073)
+  IL_00c2 callvirt       HutongGames.PlayMaker.FsmInt::get_Value token(0x0A000079)
+  IL_00c7 ble.s          IL_00f0 
+  IL_00c9 ldarg.0         
+  IL_00ca call           <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a780>::get_renderer token(0x0A00009B)
+  IL_00cf ldarg.0         
+  IL_00d0 ldfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::materialIndex token(0x04000073)
+  IL_00d5 callvirt       HutongGames.PlayMaker.FsmInt::get_Value token(0x0A000079)
+  IL_00da call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x0A0000AF)
+  IL_00df ldloc.0         
+  IL_00e0 ldarg.0         
+  IL_00e1 ldfld          HutongGames.PlayMaker.Actions.SetMaterialTexture::texture token(0x04000076)
+  IL_00e6 callvirt       HutongGames.PlayMaker.FsmTexture::get_Value token(0x0A0000B2)
+  IL_00eb callvirt       UnityEngine.Material::SetTexture token(0x0A0000B3)
+  IL_00f0 ret             
+
+0x0600006d HutongGames.PlayMaker.Actions.SetMaterialTexture::.ctor() RVA 0x3ba4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           <dnfile.mdtable.TypeSpecRow object at 0x7f6f8744a780>::.ctor token(0x0A0000A2)
+  IL_0006 ret             

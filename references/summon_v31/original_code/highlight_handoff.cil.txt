@@ -1,0 +1,180 @@
+
+TYPE ActorStateMgr 0x02002aef
+FIELD 0x04011b69 m_ObjectContainer SIG 0612808d
+FIELD 0x04011b6a m_actorStateMap SIG 06151281a10211c000abb01512490112c000abb8
+FIELD 0x04011b6b m_activeStateType SIG 0611c000abb0
+FIELD 0x04011b6c m_shown SIG 0602
+FIELD 0x04011b6d m_HighlightState SIG 0612c000b0c0
+FIELD 0x04011b6e m_initialHighlightRenderQueue SIG 0608
+
+TYPE TagVisualConfiguration 0x02002b4c
+FIELD 0x04011dad m_TagVisuals SIG 061512490112c000ad2c
+FIELD 0x04011dae s_instance SIG 0612c000ad30
+
+0x06014899 ActorStateMgr::ChangeState(stateType) RVA 0x611384 SIG 20010211c000abb0
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           ActorStateMgr::ChangeState_NewState token(0x0601489A)
+  IL_0007 brfalse.s      IL_000b 
+  IL_0009 ldc.i4.1        
+  IL_000a ret             
+  IL_000b ldarg.0         
+  IL_000c ldarg.1         
+  IL_000d call           ActorStateMgr::ChangeState_LegacyState token(0x0601489B)
+  IL_0012 brfalse.s      IL_0016 
+  IL_0014 ldc.i4.1        
+  IL_0015 ret             
+  IL_0016 ldc.i4.0        
+  IL_0017 ret             
+
+0x06014bab TagVisualConfiguration::DeactivateHandStateSpells(card,actor) RVA 0x61c6b4 SIG 20020112c0009ebc12c0009cf8
+  IL_0000 ldarg.1         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brtrue.s       IL_001a 
+  IL_0009 ldarg.2         
+  IL_000a ldnull          
+  IL_000b call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0010 brtrue.s       IL_001a 
+  IL_0012 ldarg.1         
+  IL_0013 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_0018 brtrue.s       IL_001b 
+  IL_001a ret             
+  IL_001b ldarg.0         
+  IL_001c ldfld          TagVisualConfiguration::m_TagVisuals token(0x04011DAD)
+  IL_0021 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fd69a116960>::GetEnumerator token(0x0A003F0C)
+  IL_0026 stloc.0         
+  IL_0027 br             IL_0173 
+  IL_002c ldloca.s       local(0x0000) 
+  IL_002e call           <dnfile.mdtable.TypeSpecRow object at 0x7fd69a116b10>::get_Current token(0x0A003F0D)
+  IL_0033 stloc.1         
+  IL_0034 ldloc.1         
+  IL_0035 stloc.2         
+  IL_0036 ldloc.1         
+  IL_0037 ldfld          TagVisualConfigurationEntry::m_ReferenceTag token(0x04011DA6)
+  IL_003c brfalse.s      IL_004b 
+  IL_003e ldarg.0         
+  IL_003f ldloc.1         
+  IL_0040 ldfld          TagVisualConfigurationEntry::m_ReferenceTag token(0x04011DA6)
+  IL_0045 call           TagVisualConfiguration::FindTagEntry token(0x06014BB5)
+  IL_004a stloc.2         
+  IL_004b ldloc.2         
+  IL_004c brfalse        IL_0173 
+  IL_0051 ldloc.2         
+  IL_0052 ldfld          TagVisualConfigurationEntry::m_IsHandStateSpell token(0x04011DA8)
+  IL_0057 brfalse        IL_0173 
+  IL_005c newobj         TagDelta::.ctor token(0x060144E5)
+  IL_0061 stloc.3         
+  IL_0062 ldloc.3         
+  IL_0063 ldloc.1         
+  IL_0064 ldfld          TagVisualConfigurationEntry::m_Tag token(0x04011DA4)
+  IL_0069 stfld          TagDelta::tag token(0x040116BB)
+  IL_006e ldloc.3         
+  IL_006f ldc.i4.0        
+  IL_0070 stfld          TagDelta::oldValue token(0x040116BC)
+  IL_0075 ldloc.3         
+  IL_0076 ldarg.1         
+  IL_0077 callvirt       Card::GetEntity token(0x06012CC3)
+  IL_007c ldloc.1         
+  IL_007d ldfld          TagVisualConfigurationEntry::m_Tag token(0x04011DA4)
+  IL_0082 callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_0087 stfld          TagDelta::newValue token(0x040116BD)
+  IL_008c ldloc.2         
+  IL_008d ldfld          TagVisualConfigurationEntry::m_BeforeAlways token(0x04011DA9)
+  IL_0092 brfalse.s      IL_00d9 
+  IL_0094 ldloc.2         
+  IL_0095 ldfld          TagVisualConfigurationEntry::m_BeforeAlways token(0x04011DA9)
+  IL_009a ldfld          TagVisualStateConfiguration::m_Actions token(0x04011DA3)
+  IL_009f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044a40>::GetEnumerator token(0x0A004F4C)
+  IL_00a4 stloc.s        local(0x0004) 
+  IL_00a6 br.s           IL_00c0 
+  IL_00a8 ldloca.s       local(0x0004) 
+  IL_00aa call           <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::get_Current token(0x0A004F4D)
+  IL_00af stloc.s        local(0x0005) 
+  IL_00b1 ldarg.0         
+  IL_00b2 ldloc.2         
+  IL_00b3 ldloc.s        local(0x0005) 
+  IL_00b5 ldarg.1         
+  IL_00b6 ldc.i4.0        
+  IL_00b7 ldloc.3         
+  IL_00b8 ldc.i4.0        
+  IL_00b9 ldc.i4.0        
+  IL_00ba ldarg.2         
+  IL_00bb call           TagVisualConfiguration::ConditionallyExecuteAction token(0x06014BAD)
+  IL_00c0 ldloca.s       local(0x0004) 
+  IL_00c2 call           <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::MoveNext token(0x0A004F4E)
+  IL_00c7 brtrue.s       IL_00a8 
+  IL_00c9 leave.s        IL_00d9 
+  IL_00cb ldloca.s       local(0x0004) 
+  IL_00cd constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0> token(0x1B0012F0)
+  IL_00d3 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_00d8 endfinally      
+  IL_00d9 ldloc.2         
+  IL_00da ldfld          TagVisualConfigurationEntry::m_TagRemoved token(0x04011DAB)
+  IL_00df brfalse.s      IL_0126 
+  IL_00e1 ldloc.2         
+  IL_00e2 ldfld          TagVisualConfigurationEntry::m_TagRemoved token(0x04011DAB)
+  IL_00e7 ldfld          TagVisualStateConfiguration::m_Actions token(0x04011DA3)
+  IL_00ec callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044a40>::GetEnumerator token(0x0A004F4C)
+  IL_00f1 stloc.s        local(0x0004) 
+  IL_00f3 br.s           IL_010d 
+  IL_00f5 ldloca.s       local(0x0004) 
+  IL_00f7 call           <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::get_Current token(0x0A004F4D)
+  IL_00fc stloc.s        local(0x0006) 
+  IL_00fe ldarg.0         
+  IL_00ff ldloc.2         
+  IL_0100 ldloc.s        local(0x0006) 
+  IL_0102 ldarg.1         
+  IL_0103 ldc.i4.0        
+  IL_0104 ldloc.3         
+  IL_0105 ldc.i4.0        
+  IL_0106 ldc.i4.0        
+  IL_0107 ldarg.2         
+  IL_0108 call           TagVisualConfiguration::ConditionallyExecuteAction token(0x06014BAD)
+  IL_010d ldloca.s       local(0x0004) 
+  IL_010f call           <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::MoveNext token(0x0A004F4E)
+  IL_0114 brtrue.s       IL_00f5 
+  IL_0116 leave.s        IL_0126 
+  IL_0118 ldloca.s       local(0x0004) 
+  IL_011a constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0> token(0x1B0012F0)
+  IL_0120 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0125 endfinally      
+  IL_0126 ldloc.2         
+  IL_0127 ldfld          TagVisualConfigurationEntry::m_AfterAlways token(0x04011DAC)
+  IL_012c brfalse.s      IL_0173 
+  IL_012e ldloc.2         
+  IL_012f ldfld          TagVisualConfigurationEntry::m_AfterAlways token(0x04011DAC)
+  IL_0134 ldfld          TagVisualStateConfiguration::m_Actions token(0x04011DA3)
+  IL_0139 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044a40>::GetEnumerator token(0x0A004F4C)
+  IL_013e stloc.s        local(0x0004) 
+  IL_0140 br.s           IL_015a 
+  IL_0142 ldloca.s       local(0x0004) 
+  IL_0144 call           <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::get_Current token(0x0A004F4D)
+  IL_0149 stloc.s        local(0x0007) 
+  IL_014b ldarg.0         
+  IL_014c ldloc.2         
+  IL_014d ldloc.s        local(0x0007) 
+  IL_014f ldarg.1         
+  IL_0150 ldc.i4.0        
+  IL_0151 ldloc.3         
+  IL_0152 ldc.i4.0        
+  IL_0153 ldc.i4.0        
+  IL_0154 ldarg.2         
+  IL_0155 call           TagVisualConfiguration::ConditionallyExecuteAction token(0x06014BAD)
+  IL_015a ldloca.s       local(0x0004) 
+  IL_015c call           <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0>::MoveNext token(0x0A004F4E)
+  IL_0161 brtrue.s       IL_0142 
+  IL_0163 leave.s        IL_0173 
+  IL_0165 ldloca.s       local(0x0004) 
+  IL_0167 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fd69a044bf0> token(0x1B0012F0)
+  IL_016d callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0172 endfinally      
+  IL_0173 ldloca.s       local(0x0000) 
+  IL_0175 call           <dnfile.mdtable.TypeSpecRow object at 0x7fd69a116b10>::MoveNext token(0x0A003F0E)
+  IL_017a brtrue         IL_002c 
+  IL_017f leave.s        IL_018f 
+  IL_0181 ldloca.s       local(0x0000) 
+  IL_0183 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7fd69a116b10> token(0x1B000F69)
+  IL_0189 callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_018e endfinally      
+  IL_018f ret             

@@ -1,0 +1,33 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Utility/HearthstoneFallbackDiffuse" {
+Properties {
+
+_Color ("Main Color", Color) = (1,1,1,1)
+
+_MainTex ("Texture", 2D) = "white" { }
+
+}
+SubShader {
+ Tags { "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+ Name "ForwardLit"
+  Tags { "LIGHTMODE" = "UniversalForward" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 17329
+}
+ Pass {
+ Name "DepthOnly"
+  Tags { "LIGHTMODE" = "DepthOnly" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 117360
+}
+ Pass {
+ Name "ShadowCaster"
+  Tags { "LIGHTMODE" = "SHADOWCASTER" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 184904
+}
+}
+Fall back "Hidden/Universal Render Pipeline/FallbackError"
+}

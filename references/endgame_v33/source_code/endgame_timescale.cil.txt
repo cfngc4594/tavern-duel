@@ -1,0 +1,55 @@
+
+TYPE Gameplay 0x02000b84
+FIELD 0x04003cff s_instance SIG 0612ae10
+FIELD 0x04003d00 m_unloading SIG 0602
+FIELD 0x04003d01 m_lastFatalBnetErrorInfo SIG 061283f9
+FIELD 0x04003d02 m_handleLastFatalBnetErrorNow SIG 0602
+FIELD 0x04003d03 m_boardProgress SIG 060c
+FIELD 0x04003d04 m_nameBanners SIG 061512490112b044
+FIELD 0x04003d05 m_nameBannerGamePlayPhone SIG 0612b044
+FIELD 0x04003d06 m_numBannersRequested SIG 0608
+FIELD 0x04003d07 m_cardDrawStandIn SIG 0612c0009cf8
+FIELD 0x04003d08 m_boardLayout SIG 0612c0009ea4
+FIELD 0x04003d09 m_baconFavoriteBoardSkin SIG 0608
+FIELD 0x04003d0a m_baconTeammateFavoriteBoardSkin SIG 0608
+FIELD 0x04003d0b m_loadingBaconBoard SIG 0602
+FIELD 0x04003d0c m_criticalAssetsLoaded SIG 0602
+FIELD 0x04003d0d m_hasReportedGameContext SIG 0602
+FIELD 0x04003d0e m_pingedActorsList SIG 061512490112c0009cf8
+FIELD 0x04003d0f m_queuedPowerHistory SIG 06151281dd011512490112c0007d74
+FIELD 0x04003d10 m_originalTimeScale SIG 06151181bd010c
+FIELD 0x04003d11 m_inputCamera SIG 061280e9
+FIELD 0x04003d12 m_prefabContext SIG 0612b13c
+FIELD 0x04003d13 m_taskTokenSource SIG 06128749
+FIELD 0x04003d14 m_pausePowerTokenSource SIG 06128749
+FIELD 0x04003d15 m_waitForOpponentTokenSource SIG 06128749
+FIELD 0x04003d16 m_stateTokenSource SIG 06128749
+FIELD 0x04003d17 m_lettuceAbilityTokenSource SIG 06128749
+FIELD 0x04003d18 m_cheatManager SIG 0612c000ad7c
+FIELD 0x04003d19 m_prefabInstanceLoaderTracker SIG 0612b138
+FIELD 0x04003d1a s_gameplayProcessNetworkMarker SIG 0611899d
+FIELD 0x04003d1b s_gameplayGameStateUpdateMarker SIG 0611899d
+
+0x06005840 Gameplay::SaveOriginalTimeScale() RVA 0x199cc7 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           Blizzard.T5.Core.Time.TimeScaleMgr::Get token(0x0A000581)
+  IL_0006 callvirt       Blizzard.T5.Core.Time.TimeScaleMgr::GetGameTimeScale token(0x0A00245E)
+  IL_000b newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f428b05c860>::.ctor token(0x0A0011DF)
+  IL_0010 stfld          Gameplay::m_originalTimeScale token(0x04003D10)
+  IL_0015 ret             
+
+0x06005841 Gameplay::RestoreOriginalTimeScale() RVA 0x199cde SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldflda         Gameplay::m_originalTimeScale token(0x04003D10)
+  IL_0006 call           <dnfile.mdtable.TypeSpecRow object at 0x7f428b05c860>::get_HasValue token(0x0A001044)
+  IL_000b brfalse.s      IL_002f 
+  IL_000d call           Blizzard.T5.Core.Time.TimeScaleMgr::Get token(0x0A000581)
+  IL_0012 ldarg.0         
+  IL_0013 ldflda         Gameplay::m_originalTimeScale token(0x04003D10)
+  IL_0018 call           <dnfile.mdtable.TypeSpecRow object at 0x7f428b05c860>::get_Value token(0x0A001045)
+  IL_001d conv.r4         
+  IL_001e callvirt       Blizzard.T5.Core.Time.TimeScaleMgr::SetGameTimeScale token(0x0A000582)
+  IL_0023 ldarg.0         
+  IL_0024 ldflda         Gameplay::m_originalTimeScale token(0x04003D10)
+  IL_0029 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f428b05c860> token(0x1B000478)
+  IL_002f ret             

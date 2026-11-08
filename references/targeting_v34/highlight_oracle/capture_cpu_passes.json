@@ -1,0 +1,400 @@
+{
+  "input": "v34_work/source_targeting/adapter_draft/cpu_passes",
+  "files": {
+    "dark": {
+      "file": "v34_work/source_targeting/adapter_draft/cpu_passes/01_dark.png",
+      "shape": [
+        76,
+        76
+      ],
+      "sha256": "12d5f56b1ec668324aadc323e0f0cc5a00253a510232adddda53465e422497df",
+      "nonzero_red_pixels": 1956,
+      "edge_nonzero_red_pixels": 0
+    },
+    "grey": {
+      "file": "v34_work/source_targeting/adapter_draft/cpu_passes/02_grey.png",
+      "shape": [
+        76,
+        76
+      ],
+      "sha256": "6d77b88f357282c39192d7b6e80b094258d60859e80ded31e8bd4c0139a9e387",
+      "nonzero_red_pixels": 2116,
+      "edge_nonzero_red_pixels": 0
+    },
+    "blend1": {
+      "file": "v34_work/source_targeting/adapter_draft/cpu_passes/03_blend1.png",
+      "shape": [
+        76,
+        76
+      ],
+      "sha256": "2ed2ee74ec8e438c5cb1d7c08f352bc50e35516275a1e3cfba64bde958d88240",
+      "nonzero_red_pixels": 2379,
+      "edge_nonzero_red_pixels": 0
+    },
+    "light1": {
+      "file": "v34_work/source_targeting/adapter_draft/cpu_passes/04_light1.png",
+      "shape": [
+        128,
+        128
+      ],
+      "sha256": "e4aaee2d0cdaa08b18462bf5bde91149b2d4112e44792b307599eb568a782866",
+      "nonzero_red_pixels": 4221,
+      "edge_nonzero_red_pixels": 0
+    },
+    "blend2": {
+      "file": "v34_work/source_targeting/adapter_draft/cpu_passes/05_blend2.png",
+      "shape": [
+        128,
+        128
+      ],
+      "sha256": "04972ddf55701f25f1dba499d72bf7769471812d6f5210d7858943e41f97aa68",
+      "nonzero_red_pixels": 7489,
+      "edge_nonzero_red_pixels": 0
+    },
+    "light2": {
+      "file": "v34_work/source_targeting/adapter_draft/cpu_passes/06_light2.png",
+      "shape": [
+        256,
+        256
+      ],
+      "sha256": "0e201a913a78a07031bdbcd135ba82d7b727bec643e16287120fe3c818f5bd08",
+      "nonzero_red_pixels": 15632,
+      "edge_nonzero_red_pixels": 0
+    },
+    "blend3": {
+      "file": "v34_work/source_targeting/adapter_draft/cpu_passes/07_blend3.png",
+      "shape": [
+        256,
+        256
+      ],
+      "sha256": "1219f3335152b40ee4cdbbe3b67a1c6e7acfdddc40625bb4e658aa035dfe13ae",
+      "nonzero_red_pixels": 30851,
+      "edge_nonzero_red_pixels": 0
+    },
+    "blur": {
+      "file": "v34_work/source_targeting/adapter_draft/cpu_passes/08_blur.png",
+      "shape": [
+        256,
+        256
+      ],
+      "sha256": "43213fdfd749eddf1c9c92b213292b4a8818919f28ce5abc369f104421c75c87",
+      "nonzero_red_pixels": 31417,
+      "edge_nonzero_red_pixels": 0
+    },
+    "clip": {
+      "file": "v34_work/source_targeting/adapter_draft/cpu_passes/09_clip.png",
+      "shape": [
+        235,
+        235
+      ],
+      "sha256": "07342bed32b535a8da804518859bd9cbdaef5f8cdb3b417a24a922dfcb4623c7",
+      "nonzero_red_pixels": 12367,
+      "edge_nonzero_red_pixels": 0
+    },
+    "silhouette": {
+      "file": "v34_work/source_targeting/adapter_draft/cpu_passes/10_silhouette.png",
+      "shape": [
+        256,
+        256
+      ],
+      "sha256": "f4177f1196ccddaaf3e31f21a9da322d6d2a20624e61ae33c01efb500279363d",
+      "nonzero_red_pixels": 17189,
+      "edge_nonzero_red_pixels": 0
+    }
+  },
+  "replacement_values": [
+    {
+      "pass": "dark",
+      "unique_red_codes": [
+        0,
+        64
+      ],
+      "canonical_foreground_code": 64,
+      "only_clear_and_expected": true
+    },
+    {
+      "pass": "grey",
+      "unique_red_codes": [
+        0,
+        128
+      ],
+      "canonical_foreground_code": 128,
+      "only_clear_and_expected": true
+    },
+    {
+      "pass": "light1",
+      "unique_red_codes": [
+        0,
+        191
+      ],
+      "canonical_foreground_code": 191,
+      "only_clear_and_expected": true
+    },
+    {
+      "pass": "light2",
+      "unique_red_codes": [
+        0,
+        191
+      ],
+      "canonical_foreground_code": 191,
+      "only_clear_and_expected": true
+    },
+    {
+      "pass": "clip",
+      "unique_red_codes": [
+        0,
+        255
+      ],
+      "canonical_foreground_code": 255,
+      "only_clear_and_expected": true
+    }
+  ],
+  "variants": [
+    {
+      "wrap": "clamp",
+      "sample_fraction_bits": null,
+      "passes": [
+        {
+          "pass": "blend1",
+          "max_byte_error": 0,
+          "mean_byte_error": 0.0,
+          "different_pixels": 0,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": true,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blend2",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.000244140625,
+          "different_pixels": 4,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blend3",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.0005645751953125,
+          "different_pixels": 37,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blur",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.002044677734375,
+          "different_pixels": 134,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "silhouette",
+          "max_byte_error": 1,
+          "mean_byte_error": 1.52587890625e-05,
+          "different_pixels": 1,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        }
+      ],
+      "all_canonical_exact": false,
+      "all_within_one_byte": true
+    },
+    {
+      "wrap": "clamp",
+      "sample_fraction_bits": 8,
+      "passes": [
+        {
+          "pass": "blend1",
+          "max_byte_error": 0,
+          "mean_byte_error": 0.0,
+          "different_pixels": 0,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": true,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blend2",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.000244140625,
+          "different_pixels": 4,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blend3",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.0005645751953125,
+          "different_pixels": 37,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blur",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.002044677734375,
+          "different_pixels": 134,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "silhouette",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.0029296875,
+          "different_pixels": 192,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        }
+      ],
+      "all_canonical_exact": false,
+      "all_within_one_byte": true
+    },
+    {
+      "wrap": "repeat",
+      "sample_fraction_bits": null,
+      "passes": [
+        {
+          "pass": "blend1",
+          "max_byte_error": 0,
+          "mean_byte_error": 0.0,
+          "different_pixels": 0,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": true,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blend2",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.000244140625,
+          "different_pixels": 4,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blend3",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.0005645751953125,
+          "different_pixels": 37,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blur",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.002044677734375,
+          "different_pixels": 134,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "silhouette",
+          "max_byte_error": 1,
+          "mean_byte_error": 1.52587890625e-05,
+          "different_pixels": 1,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        }
+      ],
+      "all_canonical_exact": false,
+      "all_within_one_byte": true
+    },
+    {
+      "wrap": "repeat",
+      "sample_fraction_bits": 8,
+      "passes": [
+        {
+          "pass": "blend1",
+          "max_byte_error": 0,
+          "mean_byte_error": 0.0,
+          "different_pixels": 0,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": true,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blend2",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.000244140625,
+          "different_pixels": 4,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blend3",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.0005645751953125,
+          "different_pixels": 37,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "blur",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.002044677734375,
+          "different_pixels": 134,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        },
+        {
+          "pass": "silhouette",
+          "max_byte_error": 1,
+          "mean_byte_error": 0.0029296875,
+          "different_pixels": 192,
+          "pixels_over_one_byte": 0,
+          "canonical_exact": false,
+          "within_one_byte": true
+        }
+      ],
+      "all_canonical_exact": false,
+      "all_within_one_byte": true
+    }
+  ],
+  "godot_cpu_precision": [
+    {
+      "pass": "blend1",
+      "max_byte_error": 0,
+      "different_pixels": 0,
+      "canonical_exact": true
+    },
+    {
+      "pass": "blend2",
+      "max_byte_error": 0,
+      "different_pixels": 0,
+      "canonical_exact": true
+    },
+    {
+      "pass": "blend3",
+      "max_byte_error": 0,
+      "different_pixels": 0,
+      "canonical_exact": true
+    },
+    {
+      "pass": "blur",
+      "max_byte_error": 0,
+      "different_pixels": 0,
+      "canonical_exact": true
+    },
+    {
+      "pass": "silhouette",
+      "max_byte_error": 0,
+      "different_pixels": 0,
+      "canonical_exact": true
+    }
+  ],
+  "godot_cpu_precision_all_exact": true,
+  "scope": "Observed scalar postprocess pass outputs compared against source-DXBC equations with independent canonical R8 sampler. Geometry masks supplied by implementation; triangle coverage, live visibility, original client capture and native Unity wrap defaults are not validated. One-byte diagnostic threshold is not a complete accumulated hardware error budget."
+}

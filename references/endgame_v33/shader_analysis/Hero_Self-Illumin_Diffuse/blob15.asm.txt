@@ -1,0 +1,73 @@
+// ISGN
+// SV_POSITION0: register0.xyzw systemvalue=1 componenttype=3
+// TEXCOORD0: register1.xy systemvalue=0 componenttype=3
+// TEXCOORD1: register2.xyz systemvalue=0 componenttype=3
+// NORMAL0: register3.xyz systemvalue=0 componenttype=3
+// OSGN
+// SV_Target0: register0.xyzw systemvalue=0 componenttype=3
+// SHDR
+// shader kind=0, model=4.0, length=455
+0002: customdata [raw]
+0020: dcl_constant_buffer cb0[11].xyzw
+0024: dcl_constant_buffer cb1[1024].xyzw
+0028: dcl_constant_buffer cb2[30].xyzw
+0032: dcl_constant_buffer cb3[3].xyzw
+0036: dcl_sampler s0
+0039: dcl_resource t0, dimension=3,returntype=0x5555
+0043: dcl_input_ps v1.xy
+0046: dcl_input_ps v2.xyz
+0049: dcl_input_ps v3.xyz
+0052: dcl_output o0.xyzw
+0055: dcl_temps 6
+0057: sample_b r0.xyzw, v1.xyxx, t0.xyzw, s0, cb0[4].x
+0069: mul r0.xyz, r0.xyzx, cb3[1].xyzx
+0077: dp3 r0.w, v3.xyzx, v3.xyzx
+0084: rsq r0.w, r0.w
+0089: mul r1.xyz, r0.wwww, v3.xyzx
+0096: mul r2.xyz, cb0[6].xyzx, cb2[11].zzzz
+0105: dp3_sat r0.w, r1.xyzx, cb0[5].xyzx
+0113: min r1.w, cb0[10].x, cb2[11].y
+0122: ftoi r1.w, r1.w
+0127: mov r3.xyz, l(0,0,0,0)
+0135: mov r2.w, l(0)
+0140: loop 
+0141: uge r3.w, r2.w, r1.w
+0148: breakc r3.w
+0151: ushr r3.w, r2.w, l(2.80259693e-45)
+0158: and r4.x, r2.w, l(4.20389539e-45)
+0165: dp4 r3.w, cb2[12+r3.w].xyzw, icbr4.x.xyzw
+0176: ftoi r3.w, r3.w
+0181: mad r4.xyz, -v2.xyzx, cb1[r3.w].wwww, cb1[r3.w].xyzx
+0195: dp3 r4.w, r4.xyzx, r4.xyzx
+0202: max r4.w, r4.w, l(6.10351562e-05)
+0209: rsq r5.x, r4.w
+0214: mul r4.xyz, r4.xyzx, r5.xxxx
+0221: div r5.x, l(1,1,1,1), cb1[512+r3.w].x
+0234: mul r4.w, r4.w, l(25)
+0241: div r4.w, r4.w, r5.x
+0248: add r4.w, r4.w, l(1)
+0255: div r4.w, l(1,1,1,1), r4.w
+0265: dp3 r5.x, cb1[768+r3.w].xyzx, r4.xyzx
+0275: mad_sat r5.x, r5.x, cb1[512+r3.w].z, cb1[512+r3.w].w
+0290: mul r5.x, r5.x, r5.x
+0297: mul r4.w, r4.w, r5.x
+0304: mul r5.xyz, r4.wwww, cb1[256+r3.w].xyzx
+0314: dp3_sat r3.w, r1.xyzx, r4.xyzx
+0321: mad r3.xyz, r5.xyzx, r3.wwww, r3.xyzx
+0330: iadd r2.w, r2.w, l(1.40129846e-45)
+0337: endloop 
+0338: mad r1.xyz, r2.xyzx, r0.wwww, r3.xyzx
+0347: mov r2.x, abs(cb2[27].w)
+0354: mov r2.y, abs(cb2[28].w)
+0361: mov r2.z, abs(cb2[29].w)
+0368: log r2.xyz, r2.xyzx
+0373: mul r2.xyz, r2.xyzx, l(0.416666657,0.416666657,0.416666657,0)
+0383: exp r2.xyz, r2.xyzx
+0388: mad_sat r2.xyz, r2.xyzx, l(1.05499995,1.05499995,1.05499995,0), l(-0.0549999997,-0.0549999997,-0.0549999997,0)
+0403: add r1.xyz, r1.xyzx, r2.xyzx
+0410: add r2.xyz, r2.xyzx, l(-1,-1,-1,0)
+0420: mad r2.xyz, cb3[2].xxxx, r2.xyzx, l(1,1,1,0)
+0433: mul r2.xyz, r0.xyzx, r2.xyzx
+0440: mad o0.xyz, r1.xyzx, r0.xyzx, r2.xyzx
+0449: mov o0.w, l(1)
+0454: ret 

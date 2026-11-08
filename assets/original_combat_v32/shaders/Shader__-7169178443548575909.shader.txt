@@ -1,0 +1,28 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hero/Diffuse/Diffuse" {
+Properties {
+
+_MainTex ("Base (RGB)", 2D) = "white" { }
+
+}
+SubShader {
+ Tags { "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 39915
+}
+ Pass {
+ Name "ShadowCaster"
+  LOD 300
+  Tags { "LIGHTMODE" = "SHADOWCASTER" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ ZTest Less
+ Cull Off
+  GpuProgramID 119622
+}
+}
+Fall back "Utility/HearthstoneFallbackDiffuse"
+}

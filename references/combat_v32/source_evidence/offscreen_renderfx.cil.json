@@ -1,0 +1,1882 @@
+{
+  "types": [
+    {
+      "type": "OffScreenRenderFX",
+      "token": "0x02002c45",
+      "fields": [
+        {
+          "name": "ObjectToRender",
+          "token": "0x04012311",
+          "signature": "0612808d"
+        },
+        {
+          "name": "UseBounds",
+          "token": "0x04012312",
+          "signature": "0602"
+        },
+        {
+          "name": "RenderResolutionX",
+          "token": "0x04012313",
+          "signature": "0608"
+        },
+        {
+          "name": "RenderResolutionY",
+          "token": "0x04012314",
+          "signature": "0608"
+        },
+        {
+          "name": "AboveClip",
+          "token": "0x04012315",
+          "signature": "060c"
+        },
+        {
+          "name": "BelowClip",
+          "token": "0x04012316",
+          "signature": "060c"
+        },
+        {
+          "name": "ForceSize",
+          "token": "0x04012317",
+          "signature": "060c"
+        },
+        {
+          "name": "CameraRect",
+          "token": "0x04012318",
+          "signature": "061141"
+        },
+        {
+          "name": "offscreenFXCamera",
+          "token": "0x04012319",
+          "signature": "061280e9"
+        },
+        {
+          "name": "offscreenFXCameraGO",
+          "token": "0x0401231a",
+          "signature": "0612808d"
+        },
+        {
+          "name": "tempRenderBuffer",
+          "token": "0x0401231b",
+          "signature": "06128315"
+        },
+        {
+          "name": "IgnoreLayer",
+          "token": "0x0401231c",
+          "signature": "0608"
+        },
+        {
+          "name": "Yoffset",
+          "token": "0x0401231d",
+          "signature": "060c"
+        },
+        {
+          "name": "RenderBounds",
+          "token": "0x0401231e",
+          "signature": "06118185"
+        },
+        {
+          "name": "s_Yoffset",
+          "token": "0x0401231f",
+          "signature": "060c"
+        },
+        {
+          "name": "s_Xoffset",
+          "token": "0x04012320",
+          "signature": "060c"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "OffScreenRenderFX",
+      "method": "Start",
+      "token": "0x060152ff",
+      "rva": "0x63cc5c",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 102,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::UseBounds",
+          "token": "token(0x04012312)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brfalse.s",
+          "operand": "IL_0020",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::GetComponent<spec>",
+          "token": "token(0x2B0001F9)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.MeshFilter::get_mesh",
+          "token": "token(0x0A000056)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Mesh::get_bounds",
+          "token": "token(0x0A000B6F)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::RenderBounds",
+          "token": "token(0x0401231E)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldsfld",
+          "operand": "OffScreenRenderFX::s_Yoffset",
+          "token": "token(0x0401231F)"
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::Yoffset",
+          "token": "token(0x0401231D)"
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldsfld",
+          "operand": "OffScreenRenderFX::s_Yoffset",
+          "token": "token(0x0401231F)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldc.r4",
+          "operand": "10.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "stsfld",
+          "operand": "OffScreenRenderFX::s_Yoffset",
+          "token": "token(0x0401231F)"
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "call",
+          "operand": "OffScreenRenderFX::PositionObjectToRender",
+          "token": "token(0x06015306)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "call",
+          "operand": "OffScreenRenderFX::CreateCamera",
+          "token": "token(0x06015301)"
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "call",
+          "operand": "OffScreenRenderFX::CreateRenderTexture",
+          "token": "token(0x06015304)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "call",
+          "operand": "OffScreenRenderFX::SetupCamera",
+          "token": "token(0x06015302)"
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "call",
+          "operand": "OffScreenRenderFX::SetupMaterial",
+          "token": "token(0x06015305)"
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::GetComponent<spec>",
+          "token": "token(0x2B000024)"
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Renderer::set_enabled",
+          "token": "token(0x0A00022D)"
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "OffScreenRenderFX",
+      "method": "OnDestroy",
+      "token": "0x06015300",
+      "rva": "0x63ccce",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 39,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::tempRenderBuffer",
+          "token": "token(0x0401231B)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "brfalse.s",
+          "operand": "IL_0026",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::tempRenderBuffer",
+          "token": "token(0x0401231B)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.RenderTexture::IsCreated",
+          "token": "token(0x0A0050F3)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "brfalse.s",
+          "operand": "IL_0026",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::tempRenderBuffer",
+          "token": "token(0x0401231B)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "call",
+          "operand": "UnityEngine.RenderTexture::ReleaseTemporary",
+          "token": "token(0x0A004060)"
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "OffScreenRenderFX",
+      "method": "CreateCamera",
+      "token": "0x06015301",
+      "rva": "0x63ccf8",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 125,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCameraGO",
+          "token": "token(0x0401231A)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "brfalse.s",
+          "operand": "IL_007c",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "brfalse.s",
+          "operand": "IL_0027",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::Destroy",
+          "token": "token(0x0A000059)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "newobj",
+          "operand": "UnityEngine.GameObject::.ctor",
+          "token": "token(0x0A000583)"
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::offscreenFXCameraGO",
+          "token": "token(0x0401231A)"
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCameraGO",
+          "token": "token(0x0401231A)"
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::AddComponent<spec>",
+          "token": "token(0x2B0002B5)"
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCameraGO",
+          "token": "token(0x0401231A)"
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::get_name",
+          "token": "token(0x0A0000BF)"
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "ldstr",
+          "operand": "'_OffScreenFXCamera'",
+          "token": "string token(0x703F7865)"
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "call",
+          "operand": "System.String::Concat",
+          "token": "token(0x0A0000C0)"
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Object::set_name",
+          "token": "token(0x0A000050)"
+        },
+        {
+          "offset": "IL_005e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCameraGO",
+          "token": "token(0x0401231A)"
+        },
+        {
+          "offset": "IL_0064",
+          "opcode": "ldc.i4.s",
+          "operand": "61",
+          "token": null
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "call",
+          "operand": "Blizzard.T5.Core.Utils.GameObjectUtils::SetHideFlags",
+          "token": "token(0x0A00112E)"
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "call",
+          "operand": "UniversalInputManager::Get",
+          "token": "token(0x060145BB)"
+        },
+        {
+          "offset": "IL_0070",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0071",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0076",
+          "opcode": "callvirt",
+          "operand": "UniversalInputManager::AddIgnoredCamera",
+          "token": "token(0x060145E6)"
+        },
+        {
+          "offset": "IL_007b",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "OffScreenRenderFX",
+      "method": "SetupCamera",
+      "token": "0x06015302",
+      "rva": "0x63cd84",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 189,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_orthographic",
+          "token": "token(0x0A001122)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "call",
+          "operand": "OffScreenRenderFX::UpdateOffScreenCamera",
+          "token": "token(0x06015303)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_parent",
+          "token": "token(0x0A000191)"
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::AboveClip",
+          "token": "token(0x04012315)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "neg",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_nearClipPlane",
+          "token": "token(0x0A001123)"
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::BelowClip",
+          "token": "token(0x04012316)"
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_farClipPlane",
+          "token": "token(0x0A001124)"
+        },
+        {
+          "offset": "IL_004b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::tempRenderBuffer",
+          "token": "token(0x0401231B)"
+        },
+        {
+          "offset": "IL_0057",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_targetTexture",
+          "token": "token(0x0A000584)"
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "call",
+          "operand": "UnityEngine.Camera::get_main",
+          "token": "token(0x0A000580)"
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::get_depth",
+          "token": "token(0x0A001125)"
+        },
+        {
+          "offset": "IL_006c",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0071",
+          "opcode": "sub",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0072",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_depth",
+          "token": "token(0x0A001126)"
+        },
+        {
+          "offset": "IL_0077",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0078",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_007d",
+          "opcode": "call",
+          "operand": "UnityEngine.Color::get_black",
+          "token": "token(0x0A000989)"
+        },
+        {
+          "offset": "IL_0082",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_backgroundColor",
+          "token": "token(0x0A001127)"
+        },
+        {
+          "offset": "IL_0087",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0088",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_008d",
+          "opcode": "ldc.i4.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008e",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_clearFlags",
+          "token": "token(0x0A001128)"
+        },
+        {
+          "offset": "IL_0093",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0094",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0099",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_009a",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::CameraRect",
+          "token": "token(0x04012318)"
+        },
+        {
+          "offset": "IL_009f",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_rect",
+          "token": "token(0x0A00510F)"
+        },
+        {
+          "offset": "IL_00a4",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a5",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_00aa",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ab",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Behaviour::set_enabled",
+          "token": "token(0x0A00046B)"
+        },
+        {
+          "offset": "IL_00b0",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b1",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_00b6",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b7",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_allowHDR",
+          "token": "token(0x0A00112B)"
+        },
+        {
+          "offset": "IL_00bc",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "OffScreenRenderFX",
+      "method": "UpdateOffScreenCamera",
+      "token": "0x06015303",
+      "rva": "0x63ce50",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 205,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::ObjectToRender",
+          "token": "token(0x04012311)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "brfalse.s",
+          "operand": "IL_000f",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::ForceSize",
+          "token": "token(0x04012317)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "bne.un.s",
+          "operand": "IL_005c",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_transform",
+          "token": "token(0x0A000049)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_localScale",
+          "token": "token(0x0A00004A)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::x",
+          "token": "token(0x0A00001F)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::UseBounds",
+          "token": "token(0x04012312)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "brfalse.s",
+          "operand": "IL_0048",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldflda",
+          "operand": "OffScreenRenderFX::RenderBounds",
+          "token": "token(0x0401231E)"
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "call",
+          "operand": "UnityEngine.Bounds::get_size",
+          "token": "token(0x0A0003DA)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ldfld",
+          "operand": "UnityEngine.Vector3::x",
+          "token": "token(0x0A00001F)"
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "mul",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "ldc.r4",
+          "operand": "2.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "div",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_orthographicSize",
+          "token": "token(0x0A001132)"
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "br.s",
+          "operand": "IL_006d",
+          "token": null
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCamera",
+          "token": "token(0x04012319)"
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0063",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::ForceSize",
+          "token": "token(0x04012317)"
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Camera::set_orthographicSize",
+          "token": "token(0x0A001132)"
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006e",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCameraGO",
+          "token": "token(0x0401231A)"
+        },
+        {
+          "offset": "IL_0073",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_0078",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0079",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::ObjectToRender",
+          "token": "token(0x04012311)"
+        },
+        {
+          "offset": "IL_007e",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_0083",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_position",
+          "token": "token(0x0A0000FB)"
+        },
+        {
+          "offset": "IL_0088",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_position",
+          "token": "token(0x0A00020F)"
+        },
+        {
+          "offset": "IL_008d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008e",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCameraGO",
+          "token": "token(0x0401231A)"
+        },
+        {
+          "offset": "IL_0093",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_0098",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0099",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::ObjectToRender",
+          "token": "token(0x04012311)"
+        },
+        {
+          "offset": "IL_009e",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_00a3",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_rotation",
+          "token": "token(0x0A000B4F)"
+        },
+        {
+          "offset": "IL_00a8",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_rotation",
+          "token": "token(0x0A000B50)"
+        },
+        {
+          "offset": "IL_00ad",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ae",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::offscreenFXCameraGO",
+          "token": "token(0x0401231A)"
+        },
+        {
+          "offset": "IL_00b3",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_00b8",
+          "opcode": "ldc.r4",
+          "operand": "90.0",
+          "token": null
+        },
+        {
+          "offset": "IL_00bd",
+          "opcode": "ldc.r4",
+          "operand": "180.0",
+          "token": null
+        },
+        {
+          "offset": "IL_00c2",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_00c7",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::Rotate",
+          "token": "token(0x0A00112D)"
+        },
+        {
+          "offset": "IL_00cc",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "OffScreenRenderFX",
+      "method": "CreateRenderTexture",
+      "token": "0x06015304",
+      "rva": "0x63cf29",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 26,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::RenderResolutionX",
+          "token": "token(0x04012313)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::RenderResolutionY",
+          "token": "token(0x04012314)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldc.i4.s",
+          "operand": "24",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "call",
+          "operand": "UnityEngine.RenderTexture::GetTemporary",
+          "token": "token(0x0A004061)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::tempRenderBuffer",
+          "token": "token(0x0401231B)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "OffScreenRenderFX",
+      "method": "SetupMaterial",
+      "token": "0x06015305",
+      "rva": "0x63cf44",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 28,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::GetComponent<spec>",
+          "token": "token(0x2B000007)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial",
+          "token": "token(0x0A000222)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::tempRenderBuffer",
+          "token": "token(0x0401231B)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Material::set_mainTexture",
+          "token": "token(0x0A0000AE)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "OffScreenRenderFX",
+      "method": "PositionObjectToRender",
+      "token": "0x06015306",
+      "rva": "0x63cf64",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 104,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_up",
+          "token": "token(0x0A0000E4)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::Yoffset",
+          "token": "token(0x0401231D)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Multiply",
+          "token": "token(0x0A0000DF)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::get_right",
+          "token": "token(0x0A0000DE)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ldsfld",
+          "operand": "OffScreenRenderFX::s_Xoffset",
+          "token": "token(0x04012320)"
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Multiply",
+          "token": "token(0x0A0000DF)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::ObjectToRender",
+          "token": "token(0x04012311)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "brfalse.s",
+          "operand": "IL_0067",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::ObjectToRender",
+          "token": "token(0x04012311)"
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_position",
+          "token": "token(0x0A0000FB)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Addition",
+          "token": "token(0x0A0002FD)"
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_position",
+          "token": "token(0x0A00020F)"
+        },
+        {
+          "offset": "IL_004b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "ldfld",
+          "operand": "OffScreenRenderFX::ObjectToRender",
+          "token": "token(0x04012311)"
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.GameObject::get_transform",
+          "token": "token(0x0A000164)"
+        },
+        {
+          "offset": "IL_0056",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0057",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::get_position",
+          "token": "token(0x0A0000FB)"
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "call",
+          "operand": "UnityEngine.Vector3::op_Addition",
+          "token": "token(0x0A0002FD)"
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Transform::set_position",
+          "token": "token(0x0A00020F)"
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "OffScreenRenderFX",
+      "method": ".ctor",
+      "token": "0x06015307",
+      "rva": "0x63cfd8",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 89,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::UseBounds",
+          "token": "token(0x04012312)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldc.i4",
+          "operand": "256",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::RenderResolutionX",
+          "token": "token(0x04012313)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldc.i4",
+          "operand": "256",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::RenderResolutionY",
+          "token": "token(0x04012314)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::AboveClip",
+          "token": "token(0x04012315)"
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::BelowClip",
+          "token": "token(0x04012316)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldc.r4",
+          "operand": "0.0",
+          "token": null
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "ldc.r4",
+          "operand": "1.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "newobj",
+          "operand": "UnityEngine.Rect::.ctor",
+          "token": "token(0x0A000027)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "stfld",
+          "operand": "OffScreenRenderFX::CameraRect",
+          "token": "token(0x04012318)"
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "call",
+          "operand": "UnityEngine.MonoBehaviour::.ctor",
+          "token": "token(0x0A000018)"
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "OffScreenRenderFX",
+      "method": ".cctor",
+      "token": "0x06015308",
+      "rva": "0x63d03d",
+      "signature": "000001",
+      "parameters": [],
+      "code_size": 21,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldc.r4",
+          "operand": "250.0",
+          "token": null
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "stsfld",
+          "operand": "OffScreenRenderFX::s_Yoffset",
+          "token": "token(0x0401231F)"
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldc.r4",
+          "operand": "250.0",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "stsfld",
+          "operand": "OffScreenRenderFX::s_Xoffset",
+          "token": "token(0x04012320)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

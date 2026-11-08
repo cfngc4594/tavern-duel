@@ -1,0 +1,1638 @@
+{
+  "victory_screen": [
+    {
+      "object": "cab-69c88b234dfa427e02d1fcee9337ae34:8831516558022252176",
+      "globalTransitions": [
+        {
+          "fsmEvent": {
+            "name": "Action",
+            "isSystemEvent": 0,
+            "isGlobal": 1
+          },
+          "toState": "Audio",
+          "linkStyle": 0,
+          "linkConstraint": 0,
+          "linkTarget": 0,
+          "colorIndex": 0
+        },
+        {
+          "fsmEvent": {
+            "name": "Cancel",
+            "isSystemEvent": 0,
+            "isGlobal": 1
+          },
+          "toState": "State 3",
+          "linkStyle": 0,
+          "linkConstraint": 0,
+          "linkTarget": 0,
+          "colorIndex": 0
+        },
+        {
+          "fsmEvent": {
+            "name": "Death",
+            "isSystemEvent": 0,
+            "isGlobal": 1
+          },
+          "toState": "State 4",
+          "linkStyle": 0,
+          "linkConstraint": 0,
+          "linkTarget": 0,
+          "colorIndex": 0
+        }
+      ],
+      "states": [
+        {
+          "name": "State 1",
+          "sequence": 0,
+          "transitions": [],
+          "actions": []
+        },
+        {
+          "name": "Audio",
+          "sequence": 0,
+          "transitions": [
+            {
+              "fsmEvent": {
+                "name": "FINISHED",
+                "isSystemEvent": 1,
+                "isGlobal": 1
+              },
+              "toState": "State 2",
+              "linkStyle": 0,
+              "linkConstraint": 0,
+              "linkTarget": 0,
+              "colorIndex": 0
+            }
+          ],
+          "actions": [
+            {
+              "index": 0,
+              "class_name": "AudioLoadAndPlayAction",
+              "enabled": true,
+              "params": {
+                "m_ParentObject": {
+                  "ownerOption": 0,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": 0
+                    }
+                  }
+                },
+                "m_PrefabName": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": "victory_screen_start.prefab:c05ca48794478fc4086cebcb2d67a2ef"
+                },
+                "m_VolumeScale": {
+                  "useVariable": 1,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0.0
+                }
+              }
+            },
+            {
+              "index": 1,
+              "class_name": "Wait",
+              "enabled": true,
+              "params": {
+                "time": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 6.0
+                },
+                "finishEvent": "FINISHED",
+                "realTime": false
+              }
+            }
+          ]
+        },
+        {
+          "name": "State 2",
+          "sequence": 0,
+          "transitions": [],
+          "actions": [
+            {
+              "index": 0,
+              "class_name": "AudioVolumeFadeAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 1,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": -8769865228811004272
+                    }
+                  }
+                },
+                "m_FadeTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.5
+                },
+                "m_TargetVolume": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                "m_StopWhenDone": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0
+                },
+                "m_RealTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0
+                }
+              }
+            },
+            {
+              "index": 1,
+              "class_name": "AudioPlayAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 1,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": -8769865228811004272
+                    }
+                  }
+                },
+                "m_VolumeScale": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "",
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  }
+                },
+                "m_FinishedEvent": ""
+              }
+            }
+          ]
+        },
+        {
+          "name": "State 3",
+          "sequence": 0,
+          "transitions": [],
+          "actions": [
+            {
+              "index": 0,
+              "class_name": "AudioVolumeFadeAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 1,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": -8769865228811004272
+                    }
+                  }
+                },
+                "m_FadeTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                "m_TargetVolume": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0.0
+                },
+                "m_StopWhenDone": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1
+                },
+                "m_RealTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0
+                }
+              }
+            },
+            {
+              "index": 1,
+              "class_name": "AudioPlaythroughAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 0,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": -8665710019177834864
+                    }
+                  }
+                },
+                "m_VolumeScale": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0.4000000059604645
+                },
+                "m_OneShotClip": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "UnityEngine.AudioClip",
+                  "value": {
+                    "m_FileID": 10,
+                    "m_PathID": -5690437819570273110
+                  }
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "",
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": -8769873111220842154
+                  }
+                },
+                "m_FinishedEvent": "",
+                "m_IsMinionSummonVO": false,
+                "m_InstanceLimited": false,
+                "m_InstanceLimitedDuration": 0.0,
+                "m_InstanceLimitMaximum": 1,
+                "m_LimitMaxOutOption": 0
+              }
+            }
+          ]
+        },
+        {
+          "name": "State 4",
+          "sequence": 0,
+          "transitions": [],
+          "actions": [
+            {
+              "index": 0,
+              "class_name": "AudioVolumeFadeAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 1,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": -8769865228811004272
+                    }
+                  }
+                },
+                "m_FadeTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                "m_TargetVolume": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0.0
+                },
+                "m_StopWhenDone": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1
+                },
+                "m_RealTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0
+                }
+              }
+            },
+            {
+              "index": 1,
+              "class_name": "AudioPlaythroughAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 0,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": -8665710019177834864
+                    }
+                  }
+                },
+                "m_VolumeScale": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0.4000000059604645
+                },
+                "m_OneShotClip": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "UnityEngine.AudioClip",
+                  "value": {
+                    "m_FileID": 10,
+                    "m_PathID": -5690437819570273110
+                  }
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "",
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": -8769873111220842154
+                  }
+                },
+                "m_FinishedEvent": "",
+                "m_IsMinionSummonVO": false,
+                "m_InstanceLimited": false,
+                "m_InstanceLimitedDuration": 0.0,
+                "m_InstanceLimitMaximum": 1,
+                "m_LimitMaxOutOption": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source_state": "State 2",
+      "source_action": 0,
+      "field": ".m_GameObject.gameObject.value",
+      "target": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8769865228811004272",
+        "guid": null
+      },
+      "data": {
+        "m_Component": [
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -9136267213752789360
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -1006824338455488880
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -4722808744144628080
+            }
+          }
+        ],
+        "m_Layer": 0,
+        "m_Name": "fireworks sound loop",
+        "m_Tag": 0,
+        "m_IsActive": true
+      }
+    },
+    {
+      "source_state": "State 2",
+      "source_action": 1,
+      "field": ".m_GameObject.gameObject.value",
+      "target": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8769865228811004272",
+        "guid": null
+      },
+      "data": {
+        "m_Component": [
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -9136267213752789360
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -1006824338455488880
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -4722808744144628080
+            }
+          }
+        ],
+        "m_Layer": 0,
+        "m_Name": "fireworks sound loop",
+        "m_Tag": 0,
+        "m_IsActive": true
+      }
+    },
+    {
+      "source_state": "State 3",
+      "source_action": 0,
+      "field": ".m_GameObject.gameObject.value",
+      "target": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8769865228811004272",
+        "guid": null
+      },
+      "data": {
+        "m_Component": [
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -9136267213752789360
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -1006824338455488880
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -4722808744144628080
+            }
+          }
+        ],
+        "m_Layer": 0,
+        "m_Name": "fireworks sound loop",
+        "m_Tag": 0,
+        "m_IsActive": true
+      }
+    },
+    {
+      "source_state": "State 3",
+      "source_action": 1,
+      "field": ".m_GameObject.gameObject.value",
+      "target": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8665710019177834864",
+        "guid": null
+      },
+      "data": {
+        "m_Component": [
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -8461218553735506288
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -1825936277280680304
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -8742122392139229552
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -1877002846396049776
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -509847124310321520
+            }
+          }
+        ],
+        "m_Layer": 0,
+        "m_Name": "VictoryBanner",
+        "m_Tag": 0,
+        "m_IsActive": true
+      }
+    },
+    {
+      "source_state": "State 3",
+      "source_action": 1,
+      "field": ".m_OneShotClip.value",
+      "target": {
+        "bundle": "essential_base_global-audio-0.unity3d",
+        "cab": "CAB-c491983cea83897756f11fa097177509",
+        "path_id": "-5690437819570273110",
+        "guid": "13a0ec2b90855f14191feb849f2e451c"
+      },
+      "data": {
+        "m_Name": "banner_shrink",
+        "m_LoadType": 1,
+        "m_Channels": 2,
+        "m_Frequency": 48000,
+        "m_BitsPerSample": 16,
+        "m_Length": 1.167312502861023,
+        "m_IsTrackerFormat": false,
+        "m_Ambisonic": false,
+        "m_SubsoundIndex": 0,
+        "m_PreloadAudioData": true,
+        "m_LoadInBackground": false,
+        "m_Legacy3D": true,
+        "m_Resource": {
+          "m_Source": "archive:/CAB-c491983cea83897756f11fa097177509/CAB-c491983cea83897756f11fa097177509.resource",
+          "m_Offset": 8238304,
+          "m_Size": 40000
+        },
+        "m_CompressionFormat": 1
+      }
+    },
+    {
+      "source_state": "State 3",
+      "source_action": 1,
+      "field": ".m_OneShotSound.value",
+      "target": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8769873111220842154",
+        "guid": null
+      },
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 2895169382668734806
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 5395326102866774978
+        },
+        "m_Name": "",
+        "m_AudioClip": "banner_shrink.wav:13a0ec2b90855f14191feb849f2e451c",
+        "m_Category": 1,
+        "m_RandomClips": [],
+        "m_RandomPitchMin": 1.0,
+        "m_RandomPitchMax": 1.0,
+        "m_RandomVolumeMin": 1.0,
+        "m_RandomVolumeMax": 1.0,
+        "m_IgnoreDucking": 0,
+        "m_persistPastGameEnd": 0,
+        "m_InstanceLimited": 0,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      }
+    },
+    {
+      "source_state": "State 4",
+      "source_action": 0,
+      "field": ".m_GameObject.gameObject.value",
+      "target": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8769865228811004272",
+        "guid": null
+      },
+      "data": {
+        "m_Component": [
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -9136267213752789360
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -1006824338455488880
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -4722808744144628080
+            }
+          }
+        ],
+        "m_Layer": 0,
+        "m_Name": "fireworks sound loop",
+        "m_Tag": 0,
+        "m_IsActive": true
+      }
+    },
+    {
+      "source_state": "State 4",
+      "source_action": 1,
+      "field": ".m_GameObject.gameObject.value",
+      "target": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8665710019177834864",
+        "guid": null
+      },
+      "data": {
+        "m_Component": [
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -8461218553735506288
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -1825936277280680304
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -8742122392139229552
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -1877002846396049776
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -509847124310321520
+            }
+          }
+        ],
+        "m_Layer": 0,
+        "m_Name": "VictoryBanner",
+        "m_Tag": 0,
+        "m_IsActive": true
+      }
+    },
+    {
+      "source_state": "State 4",
+      "source_action": 1,
+      "field": ".m_OneShotClip.value",
+      "target": {
+        "bundle": "essential_base_global-audio-0.unity3d",
+        "cab": "CAB-c491983cea83897756f11fa097177509",
+        "path_id": "-5690437819570273110",
+        "guid": "13a0ec2b90855f14191feb849f2e451c"
+      },
+      "data": {
+        "m_Name": "banner_shrink",
+        "m_LoadType": 1,
+        "m_Channels": 2,
+        "m_Frequency": 48000,
+        "m_BitsPerSample": 16,
+        "m_Length": 1.167312502861023,
+        "m_IsTrackerFormat": false,
+        "m_Ambisonic": false,
+        "m_SubsoundIndex": 0,
+        "m_PreloadAudioData": true,
+        "m_LoadInBackground": false,
+        "m_Legacy3D": true,
+        "m_Resource": {
+          "m_Source": "archive:/CAB-c491983cea83897756f11fa097177509/CAB-c491983cea83897756f11fa097177509.resource",
+          "m_Offset": 8238304,
+          "m_Size": 40000
+        },
+        "m_CompressionFormat": 1
+      }
+    },
+    {
+      "source_state": "State 4",
+      "source_action": 1,
+      "field": ".m_OneShotSound.value",
+      "target": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8769873111220842154",
+        "guid": null
+      },
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 2895169382668734806
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 5395326102866774978
+        },
+        "m_Name": "",
+        "m_AudioClip": "banner_shrink.wav:13a0ec2b90855f14191feb849f2e451c",
+        "m_Category": 1,
+        "m_RandomClips": [],
+        "m_RandomPitchMin": 1.0,
+        "m_RandomPitchMax": 1.0,
+        "m_RandomVolumeMin": 1.0,
+        "m_RandomVolumeMax": 1.0,
+        "m_IgnoreDucking": 0,
+        "m_persistPastGameEnd": 0,
+        "m_InstanceLimited": 0,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      }
+    }
+  ],
+  "defeat_screen": [
+    {
+      "object": "cab-33ac7a42de0e5712cf0d622e368df924:6018131332333338743",
+      "globalTransitions": [
+        {
+          "fsmEvent": {
+            "name": "Action",
+            "isSystemEvent": 0,
+            "isGlobal": 1
+          },
+          "toState": "Audio",
+          "linkStyle": 0,
+          "linkConstraint": 0,
+          "linkTarget": 0,
+          "colorIndex": 0
+        },
+        {
+          "fsmEvent": {
+            "name": "Cancel",
+            "isSystemEvent": 0,
+            "isGlobal": 1
+          },
+          "toState": "State 3",
+          "linkStyle": 0,
+          "linkConstraint": 0,
+          "linkTarget": 0,
+          "colorIndex": 0
+        },
+        {
+          "fsmEvent": {
+            "name": "Death",
+            "isSystemEvent": 0,
+            "isGlobal": 1
+          },
+          "toState": "State 4",
+          "linkStyle": 0,
+          "linkConstraint": 0,
+          "linkTarget": 0,
+          "colorIndex": 0
+        }
+      ],
+      "states": [
+        {
+          "name": "State 1",
+          "sequence": 0,
+          "transitions": [],
+          "actions": []
+        },
+        {
+          "name": "Audio",
+          "sequence": 0,
+          "transitions": [
+            {
+              "fsmEvent": {
+                "name": "FINISHED",
+                "isSystemEvent": 1,
+                "isGlobal": 1
+              },
+              "toState": "State 2",
+              "linkStyle": 0,
+              "linkConstraint": 0,
+              "linkTarget": 0,
+              "colorIndex": 0
+            }
+          ],
+          "actions": [
+            {
+              "index": 0,
+              "class_name": "AudioLoadAndPlayAction",
+              "enabled": true,
+              "params": {
+                "m_ParentObject": {
+                  "ownerOption": 0,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": 0
+                    }
+                  }
+                },
+                "m_PrefabName": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": "defeat_screen_start.prefab:e174d9ab945f35e468706a9a11e2affb"
+                },
+                "m_VolumeScale": {
+                  "useVariable": 1,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0.0
+                }
+              }
+            },
+            {
+              "index": 1,
+              "class_name": "Wait",
+              "enabled": true,
+              "params": {
+                "time": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                "finishEvent": "FINISHED",
+                "realTime": false
+              }
+            }
+          ]
+        },
+        {
+          "name": "State 2",
+          "sequence": 0,
+          "transitions": [],
+          "actions": [
+            {
+              "index": 0,
+              "class_name": "AudioPlayAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 1,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": -1704278337543176073
+                    }
+                  }
+                },
+                "m_VolumeScale": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "",
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  }
+                },
+                "m_FinishedEvent": ""
+              }
+            },
+            {
+              "index": 1,
+              "class_name": "AudioVolumeFadeAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 1,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": -1704278337543176073
+                    }
+                  }
+                },
+                "m_AudioSource": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "",
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  }
+                },
+                "m_FadeTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                "m_TargetVolume": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                "m_StopWhenDone": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0
+                },
+                "m_RealTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "State 3",
+          "sequence": 0,
+          "transitions": [],
+          "actions": [
+            {
+              "index": 0,
+              "class_name": "AudioVolumeFadeAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 1,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": -1704278337543176073
+                    }
+                  }
+                },
+                "m_AudioSource": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "",
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  }
+                },
+                "m_FadeTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                "m_TargetVolume": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0.0
+                },
+                "m_StopWhenDone": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1
+                },
+                "m_RealTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0
+                }
+              }
+            },
+            {
+              "index": 1,
+              "class_name": "AudioPlaythroughAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 0,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": 0
+                    }
+                  }
+                },
+                "m_VolumeScale": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0.4000000059604645
+                },
+                "m_OneShotClip": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "UnityEngine.AudioClip",
+                  "value": {
+                    "m_FileID": 30,
+                    "m_PathID": -5690437819570273110
+                  }
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "",
+                  "value": {
+                    "m_FileID": 8,
+                    "m_PathID": -8769873111220842154
+                  }
+                },
+                "m_FinishedEvent": "",
+                "m_IsMinionSummonVO": false,
+                "m_IsKeywordVO": false,
+                "m_InstanceLimited": false,
+                "m_InstanceLimitedDuration": 0.0,
+                "m_InstanceLimitMaximum": 1,
+                "m_LimitMaxOutOption": 0
+              }
+            }
+          ]
+        },
+        {
+          "name": "State 4",
+          "sequence": 0,
+          "transitions": [],
+          "actions": [
+            {
+              "index": 0,
+              "class_name": "AudioVolumeFadeAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 1,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": -1704278337543176073
+                    }
+                  }
+                },
+                "m_AudioSource": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "",
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 0
+                  }
+                },
+                "m_FadeTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                "m_TargetVolume": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0.0
+                },
+                "m_StopWhenDone": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1
+                },
+                "m_RealTime": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0
+                }
+              }
+            },
+            {
+              "index": 1,
+              "class_name": "AudioPlaythroughAction",
+              "enabled": true,
+              "params": {
+                "m_GameObject": {
+                  "ownerOption": 0,
+                  "gameObject": {
+                    "useVariable": 0,
+                    "name": "",
+                    "tooltip": "",
+                    "showInInspector": 0,
+                    "networkSync": 0,
+                    "value": {
+                      "m_FileID": 0,
+                      "m_PathID": 0
+                    }
+                  }
+                },
+                "m_VolumeScale": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 0.4000000059604645
+                },
+                "m_OneShotClip": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "UnityEngine.AudioClip",
+                  "value": {
+                    "m_FileID": 30,
+                    "m_PathID": -5690437819570273110
+                  }
+                },
+                "m_Delay": 0.0,
+                "m_OneShotSound": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "typeName": "",
+                  "value": {
+                    "m_FileID": 8,
+                    "m_PathID": -8769873111220842154
+                  }
+                },
+                "m_FinishedEvent": "",
+                "m_IsMinionSummonVO": false,
+                "m_IsKeywordVO": false,
+                "m_InstanceLimited": false,
+                "m_InstanceLimitedDuration": 0.0,
+                "m_InstanceLimitMaximum": 1,
+                "m_LimitMaxOutOption": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source_state": "State 2",
+      "source_action": 0,
+      "field": ".m_GameObject.gameObject.value",
+      "target": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-3.unity3d",
+        "cab": "CAB-33ac7a42de0e5712cf0d622e368df924",
+        "path_id": "-1704278337543176073",
+        "guid": null
+      },
+      "data": {
+        "m_Component": [
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": 4989876359323418743
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": 870033010731679863
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -4506878136070143881
+            }
+          }
+        ],
+        "m_Layer": 0,
+        "m_Name": "thunder sound loop",
+        "m_Tag": 0,
+        "m_IsActive": true
+      }
+    },
+    {
+      "source_state": "State 2",
+      "source_action": 1,
+      "field": ".m_GameObject.gameObject.value",
+      "target": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-3.unity3d",
+        "cab": "CAB-33ac7a42de0e5712cf0d622e368df924",
+        "path_id": "-1704278337543176073",
+        "guid": null
+      },
+      "data": {
+        "m_Component": [
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": 4989876359323418743
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": 870033010731679863
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -4506878136070143881
+            }
+          }
+        ],
+        "m_Layer": 0,
+        "m_Name": "thunder sound loop",
+        "m_Tag": 0,
+        "m_IsActive": true
+      }
+    },
+    {
+      "source_state": "State 3",
+      "source_action": 0,
+      "field": ".m_GameObject.gameObject.value",
+      "target": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-3.unity3d",
+        "cab": "CAB-33ac7a42de0e5712cf0d622e368df924",
+        "path_id": "-1704278337543176073",
+        "guid": null
+      },
+      "data": {
+        "m_Component": [
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": 4989876359323418743
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": 870033010731679863
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -4506878136070143881
+            }
+          }
+        ],
+        "m_Layer": 0,
+        "m_Name": "thunder sound loop",
+        "m_Tag": 0,
+        "m_IsActive": true
+      }
+    },
+    {
+      "source_state": "State 3",
+      "source_action": 1,
+      "field": ".m_OneShotClip.value",
+      "target": {
+        "bundle": "essential_base_global-audio-0.unity3d",
+        "cab": "CAB-c491983cea83897756f11fa097177509",
+        "path_id": "-5690437819570273110",
+        "guid": "13a0ec2b90855f14191feb849f2e451c"
+      },
+      "data": {
+        "m_Name": "banner_shrink",
+        "m_LoadType": 1,
+        "m_Channels": 2,
+        "m_Frequency": 48000,
+        "m_BitsPerSample": 16,
+        "m_Length": 1.167312502861023,
+        "m_IsTrackerFormat": false,
+        "m_Ambisonic": false,
+        "m_SubsoundIndex": 0,
+        "m_PreloadAudioData": true,
+        "m_LoadInBackground": false,
+        "m_Legacy3D": true,
+        "m_Resource": {
+          "m_Source": "archive:/CAB-c491983cea83897756f11fa097177509/CAB-c491983cea83897756f11fa097177509.resource",
+          "m_Offset": 8238304,
+          "m_Size": 40000
+        },
+        "m_CompressionFormat": 1
+      }
+    },
+    {
+      "source_state": "State 3",
+      "source_action": 1,
+      "field": ".m_OneShotSound.value",
+      "target": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8769873111220842154",
+        "guid": null
+      },
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 2895169382668734806
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 5395326102866774978
+        },
+        "m_Name": "",
+        "m_AudioClip": "banner_shrink.wav:13a0ec2b90855f14191feb849f2e451c",
+        "m_Category": 1,
+        "m_RandomClips": [],
+        "m_RandomPitchMin": 1.0,
+        "m_RandomPitchMax": 1.0,
+        "m_RandomVolumeMin": 1.0,
+        "m_RandomVolumeMax": 1.0,
+        "m_IgnoreDucking": 0,
+        "m_persistPastGameEnd": 0,
+        "m_InstanceLimited": 0,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      }
+    },
+    {
+      "source_state": "State 4",
+      "source_action": 0,
+      "field": ".m_GameObject.gameObject.value",
+      "target": {
+        "bundle": "initial_base_global-2ebe64b8-prefab-3.unity3d",
+        "cab": "CAB-33ac7a42de0e5712cf0d622e368df924",
+        "path_id": "-1704278337543176073",
+        "guid": null
+      },
+      "data": {
+        "m_Component": [
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": 4989876359323418743
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": 870033010731679863
+            }
+          },
+          {
+            "component": {
+              "m_FileID": 0,
+              "m_PathID": -4506878136070143881
+            }
+          }
+        ],
+        "m_Layer": 0,
+        "m_Name": "thunder sound loop",
+        "m_Tag": 0,
+        "m_IsActive": true
+      }
+    },
+    {
+      "source_state": "State 4",
+      "source_action": 1,
+      "field": ".m_OneShotClip.value",
+      "target": {
+        "bundle": "essential_base_global-audio-0.unity3d",
+        "cab": "CAB-c491983cea83897756f11fa097177509",
+        "path_id": "-5690437819570273110",
+        "guid": "13a0ec2b90855f14191feb849f2e451c"
+      },
+      "data": {
+        "m_Name": "banner_shrink",
+        "m_LoadType": 1,
+        "m_Channels": 2,
+        "m_Frequency": 48000,
+        "m_BitsPerSample": 16,
+        "m_Length": 1.167312502861023,
+        "m_IsTrackerFormat": false,
+        "m_Ambisonic": false,
+        "m_SubsoundIndex": 0,
+        "m_PreloadAudioData": true,
+        "m_LoadInBackground": false,
+        "m_Legacy3D": true,
+        "m_Resource": {
+          "m_Source": "archive:/CAB-c491983cea83897756f11fa097177509/CAB-c491983cea83897756f11fa097177509.resource",
+          "m_Offset": 8238304,
+          "m_Size": 40000
+        },
+        "m_CompressionFormat": 1
+      }
+    },
+    {
+      "source_state": "State 4",
+      "source_action": 1,
+      "field": ".m_OneShotSound.value",
+      "target": {
+        "bundle": "essential_base_global-prefab-0.unity3d",
+        "cab": "CAB-69c88b234dfa427e02d1fcee9337ae34",
+        "path_id": "-8769873111220842154",
+        "guid": null
+      },
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 2895169382668734806
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 5395326102866774978
+        },
+        "m_Name": "",
+        "m_AudioClip": "banner_shrink.wav:13a0ec2b90855f14191feb849f2e451c",
+        "m_Category": 1,
+        "m_RandomClips": [],
+        "m_RandomPitchMin": 1.0,
+        "m_RandomPitchMax": 1.0,
+        "m_RandomVolumeMin": 1.0,
+        "m_RandomVolumeMax": 1.0,
+        "m_IgnoreDucking": 0,
+        "m_persistPastGameEnd": 0,
+        "m_InstanceLimited": 0,
+        "m_InstanceLimitedDuration": 0.0,
+        "m_InstanceLimitMaximum": 1,
+        "m_LimitMaxOutOption": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,376 @@
+
+0x0601507f CameraShakeMgr::get_IsCameraShaking RVA 0x62f0bc
+ IL_0000 ldarg.0         
+ IL_0001 ldfld          CameraShakeMgr::m_started token(0x04011FA0)
+ IL_0006 ret             
+
+0x06015080 CameraShakeMgr::Update RVA 0x62f0c4
+ IL_0000 ldarg.0         
+ IL_0001 ldfld          CameraShakeMgr::m_started token(0x04011FA0)
+ IL_0006 brtrue.s       IL_0009 
+ IL_0008 ret             
+ IL_0009 ldarg.0         
+ IL_000a ldfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+ IL_000f ldarg.0         
+ IL_0010 ldfld          CameraShakeMgr::m_durationSec token(0x04011FA3)
+ IL_0015 blt.un.s       IL_0026 
+ IL_0017 ldarg.0         
+ IL_0018 call           CameraShakeMgr::IsHolding token(0x0601508A)
+ IL_001d brtrue.s       IL_0026 
+ IL_001f ldarg.0         
+ IL_0020 call           CameraShakeMgr::StopShake token(0x06015087)
+ IL_0025 ret             
+ IL_0026 ldarg.0         
+ IL_0027 call           CameraShakeMgr::UpdateShake token(0x06015088)
+ IL_002c ret             
+
+0x06015081 CameraShakeMgr::Shake RVA 0x62f0f4
+ IL_0000 ldarg.0         
+ IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+ IL_0006 brtrue.s       IL_0009 
+ IL_0008 ret             
+ IL_0009 call           Options::Get token(0x060140E7)
+ IL_000e ldc.i4.s       110 
+ IL_0010 callvirt       Options::GetBool token(0x060140F8)
+ IL_0015 brtrue.s       IL_0018 
+ IL_0017 ret             
+ IL_0018 ldarg.0         
+ IL_0019 ldloca.s       local(0x0000) 
+ IL_001b callvirt       UnityEngine.Component::TryGetComponent<spec> token(0x2B0009B7)
+ IL_0020 brfalse.s      IL_0031 
+ IL_0022 ldarg.2         
+ IL_0023 call           CameraShakeMgr::DoesCurveHaveZeroTime token(0x06015085)
+ IL_0028 brfalse.s      IL_0046 
+ IL_002a ldloc.0         
+ IL_002b callvirt       CameraShakeMgr::StopShake token(0x06015087)
+ IL_0030 ret             
+ IL_0031 ldarg.2         
+ IL_0032 call           CameraShakeMgr::DoesCurveHaveZeroTime token(0x06015085)
+ IL_0037 brfalse.s      IL_003a 
+ IL_0039 ret             
+ IL_003a ldarg.0         
+ IL_003b callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+ IL_0040 callvirt       UnityEngine.GameObject::AddComponent<spec> token(0x2B0009B8)
+ IL_0045 stloc.0         
+ IL_0046 ldloc.0         
+ IL_0047 ldarg.1         
+ IL_0048 ldarg.2         
+ IL_0049 ldarg.3         
+ IL_004a ldarg.s        argument(0x0004) 
+ IL_004c callvirt       CameraShakeMgr::StartShake token(0x06015086)
+ IL_0051 ret             
+
+0x06015082 CameraShakeMgr::Shake RVA 0x62f154
+ IL_0000 ldc.r4         0.0 
+ IL_0005 ldc.r4         1.0 
+ IL_000a ldarg.2         
+ IL_000b ldc.r4         0.0 
+ IL_0010 call           UnityEngine.AnimationCurve::Linear token(0x0A00423C)
+ IL_0015 stloc.0         
+ IL_0016 ldarg.0         
+ IL_0017 ldarg.1         
+ IL_0018 ldloc.0         
+ IL_0019 ldloca.s       local(0x0001) 
+ IL_001b initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f7f2e418860> token(0x1B000478)
+ IL_0021 ldloc.1         
+ IL_0022 ldc.i4.0        
+ IL_0023 call           CameraShakeMgr::Shake token(0x06015081)
+ IL_0028 ret             
+
+0x06015083 CameraShakeMgr::Stop RVA 0x62f18c
+ IL_0000 ldarg.0         
+ IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+ IL_0006 brtrue.s       IL_0009 
+ IL_0008 ret             
+ IL_0009 call           Options::Get token(0x060140E7)
+ IL_000e ldc.i4.s       110 
+ IL_0010 callvirt       Options::GetBool token(0x060140F8)
+ IL_0015 brtrue.s       IL_0018 
+ IL_0017 ret             
+ IL_0018 ldarg.0         
+ IL_0019 ldloca.s       local(0x0000) 
+ IL_001b callvirt       UnityEngine.Component::TryGetComponent<spec> token(0x2B0009B7)
+ IL_0020 brtrue.s       IL_0023 
+ IL_0022 ret             
+ IL_0023 ldarg.1         
+ IL_0024 ldc.r4         0.0 
+ IL_0029 bgt.un.s       IL_0032 
+ IL_002b ldloc.0         
+ IL_002c callvirt       CameraShakeMgr::StopShake token(0x06015087)
+ IL_0031 ret             
+ IL_0032 ldloc.0         
+ IL_0033 callvirt       CameraShakeMgr::ComputeIntensity token(0x06015089)
+ IL_0038 stloc.1         
+ IL_0039 ldc.r4         0.0 
+ IL_003e ldloc.1         
+ IL_003f ldarg.1         
+ IL_0040 ldc.r4         0.0 
+ IL_0045 call           UnityEngine.AnimationCurve::Linear token(0x0A00423C)
+ IL_004a stloc.2         
+ IL_004b ldloc.0         
+ IL_004c ldloc.0         
+ IL_004d ldfld          CameraShakeMgr::m_amount token(0x04011F9C)
+ IL_0052 ldloc.2         
+ IL_0053 ldloca.s       local(0x0003) 
+ IL_0055 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f7f2e418860> token(0x1B000478)
+ IL_005b ldloc.3         
+ IL_005c ldc.i4.0        
+ IL_005d callvirt       CameraShakeMgr::StartShake token(0x06015086)
+ IL_0062 ret             
+
+0x06015084 CameraShakeMgr::IsShaking RVA 0x62f1fc
+ IL_0000 ldarg.0         
+ IL_0001 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+ IL_0006 brtrue.s       IL_000a 
+ IL_0008 ldc.i4.0        
+ IL_0009 ret             
+ IL_000a ldarg.0         
+ IL_000b ldloca.s       local(0x0000) 
+ IL_000d callvirt       UnityEngine.Component::TryGetComponent<spec> token(0x2B0009B7)
+ IL_0012 brtrue.s       IL_0016 
+ IL_0014 ldc.i4.0        
+ IL_0015 ret             
+ IL_0016 ldloc.0         
+ IL_0017 callvirt       CameraShakeMgr::get_IsCameraShaking token(0x0601507F)
+ IL_001c ret             
+
+0x06015085 CameraShakeMgr::DoesCurveHaveZeroTime RVA 0x62f228
+ IL_0000 ldarg.0         
+ IL_0001 brtrue.s       IL_0005 
+ IL_0003 ldc.i4.1        
+ IL_0004 ret             
+ IL_0005 ldarg.0         
+ IL_0006 callvirt       UnityEngine.AnimationCurve::get_length token(0x0A003966)
+ IL_000b brtrue.s       IL_000f 
+ IL_000d ldc.i4.1        
+ IL_000e ret             
+ IL_000f ldarg.0         
+ IL_0010 ldarg.0         
+ IL_0011 callvirt       UnityEngine.AnimationCurve::get_length token(0x0A003966)
+ IL_0016 ldc.i4.1        
+ IL_0017 sub             
+ IL_0018 callvirt       UnityEngine.AnimationCurve::get_Item token(0x0A003BAB)
+ IL_001d stloc.0         
+ IL_001e ldloca.s       local(0x0000) 
+ IL_0020 call           UnityEngine.Keyframe::get_time token(0x0A003BAC)
+ IL_0025 ldc.r4         0.0 
+ IL_002a bgt.un.s       IL_002e 
+ IL_002c ldc.i4.1        
+ IL_002d ret             
+ IL_002e ldc.i4.0        
+ IL_002f ret             
+
+0x06015086 CameraShakeMgr::StartShake RVA 0x62f264
+ IL_0000 ldarg.s        argument(0x0004) 
+ IL_0002 brtrue.s       IL_0019 
+ IL_0004 ldarga.s       argument(0x0001) 
+ IL_0006 call           UnityEngine.Vector3::get_sqrMagnitude token(0x0A0027BA)
+ IL_000b ldarg.0         
+ IL_000c ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+ IL_0011 call           UnityEngine.Vector3::get_sqrMagnitude token(0x0A0027BA)
+ IL_0016 bge.un.s       IL_0019 
+ IL_0018 ret             
+ IL_0019 ldarg.0         
+ IL_001a ldfld          CameraShakeMgr::m_isOverride token(0x04011F9F)
+ IL_001f brfalse.s      IL_0022 
+ IL_0021 ret             
+ IL_0022 ldarg.0         
+ IL_0023 ldarg.1         
+ IL_0024 stfld          CameraShakeMgr::m_amount token(0x04011F9C)
+ IL_0029 ldarg.0         
+ IL_002a ldarg.2         
+ IL_002b stfld          CameraShakeMgr::m_intensityCurve token(0x04011F9D)
+ IL_0030 ldarg.0         
+ IL_0031 ldarg.3         
+ IL_0032 stfld          CameraShakeMgr::m_holdAtSec token(0x04011F9E)
+ IL_0037 ldarg.0         
+ IL_0038 ldarg.s        argument(0x0004) 
+ IL_003a stfld          CameraShakeMgr::m_isOverride token(0x04011F9F)
+ IL_003f ldarg.0         
+ IL_0040 ldfld          CameraShakeMgr::m_started token(0x04011FA0)
+ IL_0045 brtrue.s       IL_005f 
+ IL_0047 ldarg.0         
+ IL_0048 ldc.i4.1        
+ IL_0049 stfld          CameraShakeMgr::m_started token(0x04011FA0)
+ IL_004e ldarg.0         
+ IL_004f ldarg.0         
+ IL_0050 call           UnityEngine.Component::get_transform token(0x0A000049)
+ IL_0055 callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+ IL_005a stfld          CameraShakeMgr::m_initialPos token(0x04011FA1)
+ IL_005f ldarg.0         
+ IL_0060 ldc.r4         0.0 
+ IL_0065 stfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+ IL_006a ldarg.2         
+ IL_006b ldarg.2         
+ IL_006c callvirt       UnityEngine.AnimationCurve::get_length token(0x0A003966)
+ IL_0071 ldc.i4.1        
+ IL_0072 sub             
+ IL_0073 callvirt       UnityEngine.AnimationCurve::get_Item token(0x0A003BAB)
+ IL_0078 stloc.0         
+ IL_0079 ldarg.0         
+ IL_007a ldloca.s       local(0x0000) 
+ IL_007c call           UnityEngine.Keyframe::get_time token(0x0A003BAC)
+ IL_0081 stfld          CameraShakeMgr::m_durationSec token(0x04011FA3)
+ IL_0086 ret             
+
+0x06015087 CameraShakeMgr::StopShake RVA 0x62f2f8
+ IL_0000 ldarg.0         
+ IL_0001 call           CameraShakeMgr::get_IsCameraShaking token(0x0601507F)
+ IL_0006 brfalse.s      IL_0019 
+ IL_0008 ldarg.0         
+ IL_0009 call           UnityEngine.Component::get_transform token(0x0A000049)
+ IL_000e ldarg.0         
+ IL_000f ldfld          CameraShakeMgr::m_initialPos token(0x04011FA1)
+ IL_0014 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+ IL_0019 ldarg.0         
+ IL_001a call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+ IL_001f stfld          CameraShakeMgr::m_amount token(0x04011F9C)
+ IL_0024 ldarg.0         
+ IL_0025 ldnull          
+ IL_0026 stfld          CameraShakeMgr::m_intensityCurve token(0x04011F9D)
+ IL_002b ldarg.0         
+ IL_002c ldflda         CameraShakeMgr::m_holdAtSec token(0x04011F9E)
+ IL_0031 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f7f2e418860> token(0x1B000478)
+ IL_0037 ldarg.0         
+ IL_0038 ldc.i4.0        
+ IL_0039 stfld          CameraShakeMgr::m_isOverride token(0x04011F9F)
+ IL_003e ldarg.0         
+ IL_003f ldc.i4.0        
+ IL_0040 stfld          CameraShakeMgr::m_started token(0x04011FA0)
+ IL_0045 ret             
+
+0x06015088 CameraShakeMgr::UpdateShake RVA 0x62f34c
+ IL_0000 ldarg.0         
+ IL_0001 call           CameraShakeMgr::ComputeIntensity token(0x06015089)
+ IL_0006 stloc.0         
+ IL_0007 ldloca.s       local(0x0001) 
+ IL_0009 initobj        UnityEngine.Vector3 token(0x01000017)
+ IL_000f ldloca.s       local(0x0001) 
+ IL_0011 ldarg.0         
+ IL_0012 ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+ IL_0017 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+ IL_001c neg             
+ IL_001d ldloc.0         
+ IL_001e mul             
+ IL_001f ldarg.0         
+ IL_0020 ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+ IL_0025 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+ IL_002a ldloc.0         
+ IL_002b mul             
+ IL_002c call           UnityEngine.Random::Range token(0x0A00025A)
+ IL_0031 stfld          UnityEngine.Vector3::x token(0x0A00001F)
+ IL_0036 ldloca.s       local(0x0001) 
+ IL_0038 ldarg.0         
+ IL_0039 ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+ IL_003e ldfld          UnityEngine.Vector3::y token(0x0A000022)
+ IL_0043 neg             
+ IL_0044 ldloc.0         
+ IL_0045 mul             
+ IL_0046 ldarg.0         
+ IL_0047 ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+ IL_004c ldfld          UnityEngine.Vector3::y token(0x0A000022)
+ IL_0051 ldloc.0         
+ IL_0052 mul             
+ IL_0053 call           UnityEngine.Random::Range token(0x0A00025A)
+ IL_0058 stfld          UnityEngine.Vector3::y token(0x0A000022)
+ IL_005d ldloca.s       local(0x0001) 
+ IL_005f ldarg.0         
+ IL_0060 ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+ IL_0065 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+ IL_006a neg             
+ IL_006b ldloc.0         
+ IL_006c mul             
+ IL_006d ldarg.0         
+ IL_006e ldflda         CameraShakeMgr::m_amount token(0x04011F9C)
+ IL_0073 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+ IL_0078 ldloc.0         
+ IL_0079 mul             
+ IL_007a call           UnityEngine.Random::Range token(0x0A00025A)
+ IL_007f stfld          UnityEngine.Vector3::z token(0x0A00025C)
+ IL_0084 ldarg.0         
+ IL_0085 call           UnityEngine.Component::get_transform token(0x0A000049)
+ IL_008a ldarg.0         
+ IL_008b ldfld          CameraShakeMgr::m_initialPos token(0x04011FA1)
+ IL_0090 ldloc.1         
+ IL_0091 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+ IL_0096 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+ IL_009b ldarg.0         
+ IL_009c call           CameraShakeMgr::IsHolding token(0x0601508A)
+ IL_00a1 brfalse.s      IL_00a4 
+ IL_00a3 ret             
+ IL_00a4 ldarg.0         
+ IL_00a5 ldarg.0         
+ IL_00a6 ldfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+ IL_00ab call           UnityEngine.Time::get_deltaTime token(0x0A00096D)
+ IL_00b0 add             
+ IL_00b1 ldarg.0         
+ IL_00b2 ldfld          CameraShakeMgr::m_durationSec token(0x04011FA3)
+ IL_00b7 call           UnityEngine.Mathf::Min token(0x0A000B2D)
+ IL_00bc stfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+ IL_00c1 ret             
+
+0x06015089 CameraShakeMgr::ComputeIntensity RVA 0x62f41a
+ IL_0000 ldarg.0         
+ IL_0001 ldfld          CameraShakeMgr::m_intensityCurve token(0x04011F9D)
+ IL_0006 brfalse.s      IL_001a 
+ IL_0008 ldarg.0         
+ IL_0009 ldfld          CameraShakeMgr::m_intensityCurve token(0x04011F9D)
+ IL_000e ldarg.0         
+ IL_000f ldfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+ IL_0014 callvirt       UnityEngine.AnimationCurve::Evaluate token(0x0A000982)
+ IL_0019 ret             
+ IL_001a ldc.r4         0.0 
+ IL_001f ret             
+
+0x0601508a CameraShakeMgr::IsHolding RVA 0x62f43c
+ IL_0000 ldarg.0         
+ IL_0001 ldflda         CameraShakeMgr::m_holdAtSec token(0x04011F9E)
+ IL_0006 call           <dnfile.mdtable.TypeSpecRow object at 0x7f7f2e418860>::get_HasValue token(0x0A001044)
+ IL_000b brtrue.s       IL_000f 
+ IL_000d ldc.i4.0        
+ IL_000e ret             
+ IL_000f ldarg.0         
+ IL_0010 ldfld          CameraShakeMgr::m_progressSec token(0x04011FA2)
+ IL_0015 ldarg.0         
+ IL_0016 ldfld          CameraShakeMgr::m_holdAtSec token(0x04011F9E)
+ IL_001b stloc.0         
+ IL_001c ldloca.s       local(0x0000) 
+ IL_001e call           <dnfile.mdtable.TypeSpecRow object at 0x7f7f2e418860>::GetValueOrDefault token(0x0A0011E8)
+ IL_0023 clt.un          
+ IL_0025 ldc.i4.0        
+ IL_0026 ceq             
+ IL_0028 ldloca.s       local(0x0000) 
+ IL_002a call           <dnfile.mdtable.TypeSpecRow object at 0x7f7f2e418860>::get_HasValue token(0x0A001044)
+ IL_002f and             
+ IL_0030 ret             
+
+0x0601508b CameraShakeMgr::.ctor RVA 0x24e0
+ IL_0000 ldarg.0         
+ IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+ IL_0006 ret             
+
+0x0601508c CameraShaker::StartShake RVA 0x62f47c
+ IL_0000 ldloca.s       local(0x0000) 
+ IL_0002 initobj        <dnfile.mdtable.TypeSpecRow object at 0x7f7f2e418860> token(0x1B000478)
+ IL_0008 ldarg.0         
+ IL_0009 ldfld          CameraShaker::m_Hold token(0x04011FA6)
+ IL_000e brfalse.s      IL_001d 
+ IL_0010 ldloca.s       local(0x0000) 
+ IL_0012 ldarg.0         
+ IL_0013 ldfld          CameraShaker::m_HoldAtSec token(0x04011FA7)
+ IL_0018 call           <dnfile.mdtable.TypeSpecRow object at 0x7f7f2e418860>::.ctor token(0x0A0011DF)
+ IL_001d call           UnityEngine.Camera::get_main token(0x0A000580)
+ IL_0022 ldarg.0         
+ IL_0023 ldfld          CameraShaker::m_Amount token(0x04011FA4)
+ IL_0028 ldarg.0         
+ IL_0029 ldfld          CameraShaker::m_IntensityCurve token(0x04011FA5)
+ IL_002e ldloc.0         
+ IL_002f ldarg.0         
+ IL_0030 ldfld          CameraShaker::m_IsOverride token(0x04011FA8)
+ IL_0035 call           CameraShakeMgr::Shake token(0x06015081)
+ IL_003a ret             
+
+0x0601508d CameraShaker::.ctor RVA 0x24e0
+ IL_0000 ldarg.0         
+ IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+ IL_0006 ret             

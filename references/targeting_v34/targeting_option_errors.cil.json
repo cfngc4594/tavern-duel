@@ -1,0 +1,784 @@
+{
+  "types": [
+    {
+      "type": "SubOption",
+      "token": "0x02001f52",
+      "fields": [
+        {
+          "name": "<ID>k__BackingField",
+          "token": "0x0400cd8e",
+          "signature": "0608"
+        },
+        {
+          "name": "<Targets>k__BackingField",
+          "token": "0x0400cd8f",
+          "signature": "061512490112c0007d44"
+        },
+        {
+          "name": "<PlayErrorInfo>k__BackingField",
+          "token": "0x0400cd90",
+          "signature": "0612c0007d40"
+        },
+        {
+          "name": "<PowerKeyword>k__BackingField",
+          "token": "0x0400cd91",
+          "signature": "0611c000a930"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "SubOption",
+      "method": ".ctor",
+      "token": "0x0600eea6",
+      "rva": "0x473063",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 25,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "System.Object::.ctor",
+          "token": "token(0x0A000003)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "call",
+          "operand": "SubOption::set_ID",
+          "token": "token(0x0600EEA8)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "newobj",
+          "operand": "PlayErrorInfo::.ctor",
+          "token": "token(0x0600EE99)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "call",
+          "operand": "SubOption::set_PlayErrorInfo",
+          "token": "token(0x0600EEAC)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "SubOption",
+      "method": "IsValidTarget",
+      "token": "0x0600eeb3",
+      "rva": "0x473130",
+      "signature": "20010208",
+      "parameters": [
+        "entityID"
+      ],
+      "code_size": 87,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "SubOption::get_Targets",
+          "token": "token(0x0600EEA9)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_000a",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "SubOption::get_Targets",
+          "token": "token(0x0600EEA9)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143d70>::GetEnumerator",
+          "token": "token(0x0A002394)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "br.s",
+          "operand": "IL_003a",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::get_Current",
+          "token": "token(0x0A002395)"
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "callvirt",
+          "operand": "TargetOption::get_ID",
+          "token": "token(0x0600EEA0)"
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "bne.un.s",
+          "operand": "IL_003a",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "callvirt",
+          "operand": "TargetOption::get_PlayErrorInfo",
+          "token": "token(0x0600EEA2)"
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "callvirt",
+          "operand": "PlayErrorInfo::IsValid",
+          "token": "token(0x0600EE9E)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "brfalse.s",
+          "operand": "IL_003a",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "leave.s",
+          "operand": "IL_0055",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::MoveNext",
+          "token": "token(0x0A002396)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "brtrue.s",
+          "operand": "IL_0018",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "leave.s",
+          "operand": "IL_0053",
+          "token": null
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>",
+          "token": "token(0x1B0009C5)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0056",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "SubOption",
+      "method": "GetErrorForTarget",
+      "token": "0x0600eeb4",
+      "rva": "0x4731a4",
+      "signature": "200111b05c08",
+      "parameters": [
+        "entityID"
+      ],
+      "code_size": 84,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "SubOption::get_Targets",
+          "token": "token(0x0600EEA9)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_000a",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "SubOption::get_Targets",
+          "token": "token(0x0600EEA9)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143d70>::GetEnumerator",
+          "token": "token(0x0A002394)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "br.s",
+          "operand": "IL_0037",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::get_Current",
+          "token": "token(0x0A002395)"
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "callvirt",
+          "operand": "TargetOption::get_ID",
+          "token": "token(0x0600EEA0)"
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "bne.un.s",
+          "operand": "IL_0037",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "callvirt",
+          "operand": "TargetOption::get_PlayErrorInfo",
+          "token": "token(0x0600EEA2)"
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "callvirt",
+          "operand": "PlayErrorInfo::get_PlayError",
+          "token": "token(0x0600EE9A)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "leave.s",
+          "operand": "IL_0052",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::MoveNext",
+          "token": "token(0x0A002396)"
+        },
+        {
+          "offset": "IL_003e",
+          "opcode": "brtrue.s",
+          "operand": "IL_0018",
+          "token": null
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "leave.s",
+          "operand": "IL_0050",
+          "token": null
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>",
+          "token": "token(0x1B0009C5)"
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0050",
+          "opcode": "ldc.i4.m1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "SubOption",
+      "method": "GetErrorParamForTarget",
+      "token": "0x0600eeb5",
+      "rva": "0x473214",
+      "signature": "2001151181bd010808",
+      "parameters": [
+        "entityID"
+      ],
+      "code_size": 100,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "SubOption::get_Targets",
+          "token": "token(0x0600EEA9)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_0012",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "initobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa3464353d0>",
+          "token": "token(0x1B000056)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "call",
+          "operand": "SubOption::get_Targets",
+          "token": "token(0x0600EEA9)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143d70>::GetEnumerator",
+          "token": "token(0x0A002394)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "br.s",
+          "operand": "IL_003f",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::get_Current",
+          "token": "token(0x0A002395)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "callvirt",
+          "operand": "TargetOption::get_ID",
+          "token": "token(0x0600EEA0)"
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "bne.un.s",
+          "operand": "IL_003f",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "callvirt",
+          "operand": "TargetOption::get_PlayErrorInfo",
+          "token": "token(0x0600EEA2)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "callvirt",
+          "operand": "PlayErrorInfo::get_PlayErrorParam",
+          "token": "token(0x0600EE9C)"
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "leave.s",
+          "operand": "IL_0062",
+          "token": null
+        },
+        {
+          "offset": "IL_003f",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>::MoveNext",
+          "token": "token(0x0A002396)"
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "brtrue.s",
+          "operand": "IL_0020",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "leave.s",
+          "operand": "IL_0058",
+          "token": null
+        },
+        {
+          "offset": "IL_004a",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0001)",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa346143f20>",
+          "token": "token(0x1B0009C5)"
+        },
+        {
+          "offset": "IL_0052",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0057",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0003)",
+          "token": null
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "initobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fa3464353d0>",
+          "token": "token(0x1B000056)"
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0061",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0063",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

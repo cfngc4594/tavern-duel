@@ -1,0 +1,12 @@
+extends SceneTree
+func _init():
+ var plane_basis:=Basis(Quaternion(0.0,1.0,0.0,-4.371138828673793e-08))
+ var offset_basis:=Basis.from_euler(Vector3(PI/2.0,PI,0.0))
+ var cb: Basis=plane_basis*offset_basis*Basis.from_scale(Vector3(1,1,-1))
+ var world: Vector3=plane_basis*Vector3(0.499875009059906,0,-0.499875009059906)
+ var camera: Vector3=cb.inverse()*world
+ var projected:=Vector2((camera.x/0.499875009059906+1.0)*0.5,(1.0-camera.y/0.499875009059906)*0.5)
+ var result={"offset_basis_rows":[[offset_basis.x.x,offset_basis.y.x,offset_basis.z.x],[offset_basis.x.y,offset_basis.y.y,offset_basis.z.y],[offset_basis.x.z,offset_basis.y.z,offset_basis.z.z]],"source_plane_point":[.499875009059906,0,-.499875009059906],"world_point":[world.x,world.y,world.z],"camera_point":[camera.x,camera.y,camera.z],"image_uv":[projected.x,projected.y],"source_uv":[0,1],"godot_flipped_uv":[0,0],"matches_no_extra_flip":projected.distance_to(Vector2.ZERO)<0.00001}
+ print(JSON.stringify(result))
+ FileAccess.open("res://projection_validation.json",FileAccess.WRITE).store_string(JSON.stringify(result,"  "))
+ quit(0 if result.matches_no_extra_flip else 2)

@@ -1,0 +1,171 @@
+{
+  "source_build": "37.0.0.255130.254477",
+  "analysis_method": "Read-only dnfile/dncil managed CIL plus original serialized bundle data. Original client not run. REA budget-limited earlier; not represented as a complete REA decompilation.",
+  "scope": "Current ordinary hero/minion damage, heal sign, repeated hits and minion fatal presentation. No whole HUD or hero end-game sequence inferred.",
+  "entry": {
+    "method": "Assembly-CSharp Card.OnMetaData 0x06012d78",
+    "metadata_types": [
+      1,
+      2,
+      22,
+      23,
+      27,
+      28
+    ],
+    "presentation_only": true,
+    "value": "metadata.Data, negated for heal type2; full metadata amount rather than HP delta clamped at0",
+    "actor_spell_type": 7,
+    "per_actor_cached_instance": "Actor.GetLoadedSpell 0x0601294e / m_ownedSpells",
+    "activate": "Spell.ActivateState(Action=3), even if already in Action; Spell.ChangeStateImpl does not early-return for same state",
+    "hp_refresh": "Card.OnSpellFinished_UpdateActorComponents0x06012dc8 -> Card.UpdateActorComponents0x06012ddd. Does not execute rules damage again."
+  },
+  "assets": {
+    "minion": "Card_Play_Ally_DamageSplat.prefab:3011e9bf869a34d05b66e084f8880b11",
+    "hero": "Card_Play_Hero_DamageSplat.prefab:2ecc84d6a2db7461799ad55067409307",
+    "hero_binding": "Card_Play_Hero_SpellTable.prefab:c7908ae61ab34412aa7f5a9bf3c89cf2; actual HERO_08/HERO_07 CardDefs have no SpellTable override",
+    "evidence": "v32_1_work/source_damage_assets/actor_spell_table_bindings.json; hero_carddefs.json; assets/manifest.json"
+  },
+  "attachment": {
+    "chain": [
+      "Actor root",
+      "Spells (local position0,rotationidentity,scale1)",
+      "DamageSplat original prefab local transform"
+    ],
+    "method": "Actor.LoadSpell0x0601294c IL014f..0161 -> Actor.GetSpellParent0x06012987 -> TransformUtil.AttachAndPreserveLocalTransform0x06015002",
+    "meaning": "Follow owning actor transform during attack contact/return. Never freeze at world impact position or reassign to next surviving unit. Preserve source prefab root offset rather than generic root-zero asset placement.",
+    "minion_root_position": [
+      -0.07665428519248962,
+      0.36000001430511475,
+      0.25999999046325684
+    ],
+    "concurrency": "One persistent type7 instance per actor; a new hit cancels previous async and root tweens, restores alpha1, rewrites amount, and restarts. Different actors remain independent."
+  },
+  "strings": {
+    "normal": "-{0}",
+    "normal_minus_codepoint": "U+002D ASCII hyphen",
+    "heal": "+{0}",
+    "crit": "-{0}!",
+    "poison": "Numeric text GameObject hidden",
+    "crit_threshold": "No amount threshold in DamageSplat; crit is supplied by metadata type23. Do not infer crit from damage>=N."
+  },
+  "animation": {
+    "method": "DamageSplatSpell.<SplatAnimAsync>d__28.MoveNext0x06011846",
+    "start": [
+      "UpdateElements",
+      "Root transform.localScale=Vector3.zero",
+      "await UniTask.Yield(Update enum8,cancellationToken)"
+    ],
+    "post_yield": [
+      "OnSpellFinished callback refreshes Actor components",
+      "SetDamageIsCrit(false)",
+      "Root iTween.ScaleTo(Vector3.one,time1,easeOutElastic enum30)"
+    ],
+    "normal_wait_seconds": 2.0,
+    "poison_wait_seconds": 0.800000011920929,
+    "fade_seconds": 1.0,
+    "finish_wait_seconds": 1.100000023841858,
+    "normal_disable_seconds_after_yield": 3.100000023841858,
+    "fade_ease": "linear enum21 explicitly inserted by iTween.ColorTo if absent, not global default easeOutExpo",
+    "fade_targets": "ROOT ColorTo includechildren defaulttrue, recursive child renderers/material colors; direct UberText uses TextColor",
+    "after_wait": "Disable all seven splat renderers, then OnStateFinished if activeState!=None",
+    "movement": "No upward float or position tween in DamageSplat async. Root scale and fade only.",
+    "yield_precision": "Update yield is a player-loop scheduling point, not a fixed duration or guaranteed complete frame. Delay uses scaled time and Update timing."
+  },
+  "font": {
+    "serialized_font": "Belwe_Outline",
+    "locale": "zhCN",
+    "font_def_global_guid": "3b6d04aee23313140a4436f2db238cfd",
+    "font_def_localized_guid": "2d18db065eb8a3e4dbde94c6b749aee1",
+    "runtime_font": "GLEI00M_t_Outline",
+    "runtime_font_path_id": "4016971574774461928",
+    "serialized_font_size": 70,
+    "font_def_size_modifier": 1.149999976158142,
+    "locale_adjustment_size_modifier": 1.0,
+    "font_size_formula": "conv.i4(float32(FontDefinition.sizeModifier * localeAdjustment.sizeModifier * serializedFontSize))",
+    "font_size_product_float32": 80.5,
+    "runtime_font_size": 80,
+    "initial_character_size": 0.07789999961853028,
+    "character_size_formula": "serialized7.789999961853027 * FontDefinition.characterModifier1 *0.01, then resize-to-fit, then unboundModifiers1",
+    "resize_to_fit": {
+      "enabled": true,
+      "grow": false,
+      "width": 1.0,
+      "height": 1.0,
+      "word_wrap": false,
+      "iterations_limit": 40,
+      "shrink_factor": 0.949999988079071,
+      "minimum_character_size": 0.01,
+      "algorithm": "Measure unparented scale1 rotationidentity TextMesh bounds. For one line set lineSpacing0 while measuring; initial height subtracts (height(|\\n|)-2*height(|)); while too large multiply charSize by0.95, clamp min0.01; subsequent measures use full bounds. Restore original transform/text/lineSpacing1. Does not lower fontSize80."
+    },
+    "alignment": "UberText Alignment1 center + Anchor1 middle => Unity.TextAnchor4 MiddleCenter",
+    "font_def_other_modifiers": "LineSpace/CharacterSize/Outline/UnboundCharacterSize=1; SingleLineAdjustment=0",
+    "source": "damage_ubertext_runtime.cil.*; damage_font_service.cil.*; damage_final_gates.cil.*; resource font_localization_binding.json"
+  },
+  "material": {
+    "render_to_texture": false,
+    "rich_text": true,
+    "bold": false,
+    "outline": true,
+    "outline_size": 3.0899999141693115,
+    "text_color": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "outline_color": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "shader": "Hidden/TextOutline_Unlit",
+    "source_shader": "v32-win-globalgamemanagers.assets Shader pathID29",
+    "selection": "UberTextMaterialManager.CreateUberTextMaterial0x06000137 querytype1; richText true; Locale zhCN9 != thTH15. NoVertColor only richTextfalse; _2pass onlythTH15; bold has separate query, ordinary -N strings never setHasBoldText.",
+    "outline_uv_offset": "(1/fontAtlasWidth,1/fontAtlasHeight)*m_OutlineSize*FontDefinition.outlineModifier1*localeOutlineModifier1",
+    "shader_formula": "Use recovered actual Shader29 and decoded blob from resource worker. Do not substitute font GUI/Text material, card RTT nine-sample shader, or guessed Gaussian outline.",
+    "methods": [
+      "UberText.CreateTextMesh0x060000a8",
+      "UberText.RenderText0x0600009b",
+      "UberText.UpdateOutlineProperties0x060000c5",
+      "UberTextRendering.ApplyMaterials0x060001ca",
+      "UberTextMaterialManager.CreateUberTextMaterial0x06000137"
+    ]
+  },
+  "death": {
+    "timing_file": "death_release_timing.json",
+    "preserves_damage_splat": "Actor.DoCardDeathVisuals0x06012966 explicitly skips type7 atIL0042..0044",
+    "body_hide": "type5 Birth+.5s hides RootObject renderers recursively, not Actor/Spells sibling",
+    "actor_release": "type5 None after nominal3.5s fires state-finished callback while activeStatealready0; Card.OnSpellStateFinished_DestroyActor0x06012dca destroys owningActor -> releaseallspells",
+    "server_order_boundary": "Original death origin is Play-to-Graveyard processing, not a guessed relative offset after damage or attack return. 5834 adapter must preserve its existing death-wave/RNG/rule order and disclose presentation-event alignment."
+  },
+  "flash_and_shake": {
+    "damage_splat": "No independent generic red hit flash or screen-shake call in DamageSplat path. Do not label legacy redflash as recovered source.",
+    "actor_state_refresh": "Actor.OnSpellStateStarted -> ActorStateMgr.RefreshStateMgr0x0601489e merely marks HighlightState dirty; not a hurt-flash primitive.",
+    "board_damage_event": "BoardEvents.DamageEvent0x06012c95 queues event data; no direct visual flash or shake.",
+    "attack_hit": "Recovered AllyAttack_IMPACT_Hit clip has rotation tracks, no material-color flash. Attack impact prefab has its own CameraShaker/event chain already recovered in v32; separate from DamageSplat.",
+    "limits": "This is evidence for inspected current path, not a claim that no other original effect anywhere has a hit flash."
+  },
+  "remaining_native_boundary": [
+    "Unity dynamic font atlas packing and glyph mesh generation / Renderer.bounds are native. Use the authorized offline Unity probe with actual GLEI00M_t_Outline and fontSize80 to reproduce glyph metrics/atlas/resize, not an arbitrary font substitute.",
+    "Original server packet timing between damage metadata and Play-to-Graveyard cannot be recovered from static client CIL alone.",
+    "Full minion death fragment/material-transition rendering and hero end-game death are outside this limited damage-UI implementation; exact bodyhide/release gates are recovered."
+  ],
+  "evidence_files": [
+    "damage_splat_complete.cil.json",
+    "callers_06011835_06011838_06011836.json",
+    "damage_parent_release.cil.json",
+    "damage_itween.cil.json",
+    "damage_ubertext_runtime.cil.json",
+    "damage_font_service.cil.json",
+    "damage_final_gates.cil.json",
+    "damage_font_job_death_prepare.cil.json",
+    "damage_death_playmaker.cil.json",
+    "damage_death_itween_events.cil.json",
+    "damage_death_fsm_gate.cil.json",
+    "damage_death_builtin_actions.cil.json",
+    "damage_fsm_action_ctor.cil.json",
+    "damage_runtime_constants.json",
+    "death_release_timing.json"
+  ]
+}

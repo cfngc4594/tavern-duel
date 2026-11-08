@@ -1,0 +1,313 @@
+{
+  "types": [
+    {
+      "type": "PlatformSettings",
+      "token": "0x02002b9f",
+      "fields": [
+        {
+          "name": "s_isDeviceSupported",
+          "token": "0x04011e8d",
+          "signature": "0602"
+        },
+        {
+          "name": "s_isDeviceInMinSpec",
+          "token": "0x04011e8e",
+          "signature": "0602"
+        },
+        {
+          "name": "s_os",
+          "token": "0x04011e8f",
+          "signature": "0611c000ae60"
+        },
+        {
+          "name": "s_memory",
+          "token": "0x04011e90",
+          "signature": "0611c000ae64"
+        },
+        {
+          "name": "s_screen",
+          "token": "0x04011e91",
+          "signature": "0611c000ae68"
+        },
+        {
+          "name": "s_input",
+          "token": "0x04011e92",
+          "signature": "0611c000ae70"
+        },
+        {
+          "name": "s_screenDensity",
+          "token": "0x04011e93",
+          "signature": "0611c000ae74"
+        },
+        {
+          "name": "s_CurrentLocaleVariant",
+          "token": "0x04011e94",
+          "signature": "0611c000ae78"
+        },
+        {
+          "name": "s_graphicsManager",
+          "token": "0x04011e95",
+          "signature": "0612856d"
+        },
+        {
+          "name": "s_deviceModel",
+          "token": "0x04011e96",
+          "signature": "060e"
+        },
+        {
+          "name": "s_isEmulating",
+          "token": "0x04011e97",
+          "signature": "0602"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "PlatformSettings",
+      "method": "get_Screen",
+      "token": "0x06014ea9",
+      "rva": "0x627dbf",
+      "signature": "000011c000ae68",
+      "parameters": [],
+      "code_size": 6,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldsfld",
+          "operand": "PlatformSettings::s_screen",
+          "token": "token(0x04011E91)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "PlatformSettings",
+      "method": "GetBestScreenMatch",
+      "token": "0x06014eb0",
+      "rva": "0x627e7c",
+      "signature": "0001081512490111c000ae68",
+      "parameters": [
+        "categories"
+      ],
+      "code_size": 59,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "PlatformSettings::get_Screen",
+          "token": "token(0x06014EA9)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldc.i4",
+          "operand": "2147483647",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "br.s",
+          "operand": "IL_0030",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f8a2014ac00>::get_Item",
+          "token": "token(0x0A00500F)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "sub",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_001f",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "blt.s",
+          "operand": "IL_002c",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "bge.s",
+          "operand": "IL_002c",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f8a2014ac00>::get_Count",
+          "token": "token(0x0A005010)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "blt.s",
+          "operand": "IL_0012",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

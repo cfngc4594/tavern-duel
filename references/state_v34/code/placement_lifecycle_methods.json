@@ -1,0 +1,4093 @@
+[
+  {
+    "source_file": "v30_work/audio_code_evidence/fsm_actor.cil.json",
+    "type": "Actor",
+    "method": "ReleaseSpells",
+    "token": "0x060127f0",
+    "rva": "0x564374",
+    "signature": "200001",
+    "parameters": [],
+    "code_size": 260,
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "call",
+        "operand": "SpellManager::Get",
+        "token": "token(0x060149FC)"
+      },
+      {
+        "offset": "IL_0005",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "brtrue.s",
+        "operand": "IL_000a",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000a",
+        "opcode": "newobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb5162a2ea0>::.ctor",
+        "token": "token(0x0A000312)"
+      },
+      {
+        "offset": "IL_000f",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0010",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0011",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_0016",
+        "opcode": "brfalse.s",
+        "operand": "IL_007a",
+        "token": null
+      },
+      {
+        "offset": "IL_0018",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_001e",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d934a0>::get_Values",
+        "token": "token(0x0A0042DE)"
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93650>::GetEnumerator",
+        "token": "token(0x0A0042DF)"
+      },
+      {
+        "offset": "IL_0028",
+        "opcode": "stloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0029",
+        "opcode": "br.s",
+        "operand": "IL_0056",
+        "token": null
+      },
+      {
+        "offset": "IL_002b",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0002)",
+        "token": null
+      },
+      {
+        "offset": "IL_002d",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>::get_Current",
+        "token": "token(0x0A0042E0)"
+      },
+      {
+        "offset": "IL_0032",
+        "opcode": "stloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0033",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0035",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Equality",
+        "token": "token(0x0A000046)"
+      },
+      {
+        "offset": "IL_003a",
+        "opcode": "brtrue.s",
+        "operand": "IL_0056",
+        "token": null
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003e",
+        "opcode": "ldftn",
+        "operand": "Actor::OnSpellRelease",
+        "token": "token(0x0601294D)"
+      },
+      {
+        "offset": "IL_0044",
+        "opcode": "newobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d939b0>::.ctor",
+        "token": "token(0x0A0042E1)"
+      },
+      {
+        "offset": "IL_0049",
+        "opcode": "callvirt",
+        "operand": "Spell::RemoveSpellReleasedCallback",
+        "token": "token(0x06014955)"
+      },
+      {
+        "offset": "IL_004e",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004f",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0050",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0051",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb5162a2ea0>::Add",
+        "token": "token(0x0A00030E)"
+      },
+      {
+        "offset": "IL_0056",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0002)",
+        "token": null
+      },
+      {
+        "offset": "IL_0058",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>::MoveNext",
+        "token": "token(0x0A0042E2)"
+      },
+      {
+        "offset": "IL_005d",
+        "opcode": "brtrue.s",
+        "operand": "IL_002b",
+        "token": null
+      },
+      {
+        "offset": "IL_005f",
+        "opcode": "leave.s",
+        "operand": "IL_006f",
+        "token": null
+      },
+      {
+        "offset": "IL_0061",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0002)",
+        "token": null
+      },
+      {
+        "offset": "IL_0063",
+        "opcode": "constrained.",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>",
+        "token": "token(0x1B001030)"
+      },
+      {
+        "offset": "IL_0069",
+        "opcode": "callvirt",
+        "operand": "System.IDisposable::Dispose",
+        "token": "token(0x0A000068)"
+      },
+      {
+        "offset": "IL_006e",
+        "opcode": "endfinally",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0070",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_0075",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d934a0>::Clear",
+        "token": "token(0x0A0042E3)"
+      },
+      {
+        "offset": "IL_007a",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007b",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb5162a2ea0>::get_Count",
+        "token": "token(0x0A002303)"
+      },
+      {
+        "offset": "IL_0080",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0081",
+        "opcode": "sub",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0082",
+        "opcode": "stloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_0084",
+        "opcode": "br.s",
+        "operand": "IL_009c",
+        "token": null
+      },
+      {
+        "offset": "IL_0086",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0087",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0088",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_008a",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb5162a2ea0>::get_Item",
+        "token": "token(0x0A002302)"
+      },
+      {
+        "offset": "IL_008f",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0090",
+        "opcode": "callvirt",
+        "operand": "SpellManager::ReleaseSpell",
+        "token": "token(0x06014A03)"
+      },
+      {
+        "offset": "IL_0095",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0096",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_0098",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0099",
+        "opcode": "sub",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_009a",
+        "opcode": "stloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_009c",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_009e",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_009f",
+        "opcode": "bge.s",
+        "operand": "IL_0086",
+        "token": null
+      },
+      {
+        "offset": "IL_00a1",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a2",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb5162a2ea0>::Clear",
+        "token": "token(0x0A000307)"
+      },
+      {
+        "offset": "IL_00a7",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a8",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_00ad",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ae",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_00b3",
+        "opcode": "brfalse.s",
+        "operand": "IL_0103",
+        "token": null
+      },
+      {
+        "offset": "IL_00b5",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b6",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_00bb",
+        "opcode": "ldfld",
+        "operand": "SpellTable::m_Table",
+        "token": "token(0x04011CCF)"
+      },
+      {
+        "offset": "IL_00c0",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93b60>::get_Count",
+        "token": "token(0x0A0042E4)"
+      },
+      {
+        "offset": "IL_00c5",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c6",
+        "opcode": "sub",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c7",
+        "opcode": "stloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_00c9",
+        "opcode": "br.s",
+        "operand": "IL_00fe",
+        "token": null
+      },
+      {
+        "offset": "IL_00cb",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00cc",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_00d1",
+        "opcode": "ldfld",
+        "operand": "SpellTable::m_Table",
+        "token": "token(0x04011CCF)"
+      },
+      {
+        "offset": "IL_00d6",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_00d8",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93b60>::get_Item",
+        "token": "token(0x0A0042E5)"
+      },
+      {
+        "offset": "IL_00dd",
+        "opcode": "ldfld",
+        "operand": "SpellTableEntry::m_Spell",
+        "token": "token(0x04011CCD)"
+      },
+      {
+        "offset": "IL_00e2",
+        "opcode": "stloc.s",
+        "operand": "local(0x0006)",
+        "token": null
+      },
+      {
+        "offset": "IL_00e4",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0006)",
+        "token": null
+      },
+      {
+        "offset": "IL_00e6",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e7",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Equality",
+        "token": "token(0x0A000046)"
+      },
+      {
+        "offset": "IL_00ec",
+        "opcode": "brtrue.s",
+        "operand": "IL_00f8",
+        "token": null
+      },
+      {
+        "offset": "IL_00ee",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ef",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0006)",
+        "token": null
+      },
+      {
+        "offset": "IL_00f1",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f2",
+        "opcode": "callvirt",
+        "operand": "SpellManager::ReleaseSpell",
+        "token": "token(0x06014A03)"
+      },
+      {
+        "offset": "IL_00f7",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f8",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_00fa",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00fb",
+        "opcode": "sub",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00fc",
+        "opcode": "stloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_00fe",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_0100",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0101",
+        "opcode": "bge.s",
+        "operand": "IL_00cb",
+        "token": null
+      },
+      {
+        "offset": "IL_0103",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "source_file": "v30_work/audio_code_evidence/fsm_actor.cil.json",
+    "type": "Actor",
+    "method": "ShowSpellTable",
+    "token": "0x0601283c",
+    "rva": "0x564f04",
+    "signature": "200001",
+    "parameters": [],
+    "code_size": 101,
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "brfalse.s",
+        "operand": "IL_004b",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d934a0>::get_Values",
+        "token": "token(0x0A0042DE)"
+      },
+      {
+        "offset": "IL_0013",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93650>::GetEnumerator",
+        "token": "token(0x0A0042DF)"
+      },
+      {
+        "offset": "IL_0018",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "br.s",
+        "operand": "IL_0032",
+        "token": null
+      },
+      {
+        "offset": "IL_001b",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_001d",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>::get_Current",
+        "token": "token(0x0A0042E0)"
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0024",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0025",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "brfalse.s",
+        "operand": "IL_0032",
+        "token": null
+      },
+      {
+        "offset": "IL_002c",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002d",
+        "opcode": "callvirt",
+        "operand": "Blizzard.T5.Game.Spells.SpellBase::Show",
+        "token": "token(0x0A0025A1)"
+      },
+      {
+        "offset": "IL_0032",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>::MoveNext",
+        "token": "token(0x0A0042E2)"
+      },
+      {
+        "offset": "IL_0039",
+        "opcode": "brtrue.s",
+        "operand": "IL_001b",
+        "token": null
+      },
+      {
+        "offset": "IL_003b",
+        "opcode": "leave.s",
+        "operand": "IL_004b",
+        "token": null
+      },
+      {
+        "offset": "IL_003d",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_003f",
+        "opcode": "constrained.",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>",
+        "token": "token(0x1B001030)"
+      },
+      {
+        "offset": "IL_0045",
+        "opcode": "callvirt",
+        "operand": "System.IDisposable::Dispose",
+        "token": "token(0x0A000068)"
+      },
+      {
+        "offset": "IL_004a",
+        "opcode": "endfinally",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004c",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_0051",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0052",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0057",
+        "opcode": "brfalse.s",
+        "operand": "IL_0064",
+        "token": null
+      },
+      {
+        "offset": "IL_0059",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005a",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_005f",
+        "opcode": "callvirt",
+        "operand": "SpellTable::Show",
+        "token": "token(0x06014AA3)"
+      },
+      {
+        "offset": "IL_0064",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "source_file": "v30_work/audio_code_evidence/fsm_actor.cil.json",
+    "type": "Actor",
+    "method": "HideSpellTable",
+    "token": "0x06012840",
+    "rva": "0x56504c",
+    "signature": "200001",
+    "parameters": [],
+    "code_size": 109,
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "brfalse.s",
+        "operand": "IL_0053",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d934a0>::get_Values",
+        "token": "token(0x0A0042DE)"
+      },
+      {
+        "offset": "IL_0013",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93650>::GetEnumerator",
+        "token": "token(0x0A0042DF)"
+      },
+      {
+        "offset": "IL_0018",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "br.s",
+        "operand": "IL_003a",
+        "token": null
+      },
+      {
+        "offset": "IL_001b",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_001d",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>::get_Current",
+        "token": "token(0x0A0042E0)"
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0024",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0025",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "brfalse.s",
+        "operand": "IL_003a",
+        "token": null
+      },
+      {
+        "offset": "IL_002c",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002d",
+        "opcode": "callvirt",
+        "operand": "Spell::GetSpellType",
+        "token": "token(0x06014901)"
+      },
+      {
+        "offset": "IL_0032",
+        "opcode": "brfalse.s",
+        "operand": "IL_003a",
+        "token": null
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0035",
+        "opcode": "callvirt",
+        "operand": "Blizzard.T5.Game.Spells.SpellBase::Hide",
+        "token": "token(0x0A0042E6)"
+      },
+      {
+        "offset": "IL_003a",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>::MoveNext",
+        "token": "token(0x0A0042E2)"
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "brtrue.s",
+        "operand": "IL_001b",
+        "token": null
+      },
+      {
+        "offset": "IL_0043",
+        "opcode": "leave.s",
+        "operand": "IL_0053",
+        "token": null
+      },
+      {
+        "offset": "IL_0045",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_0047",
+        "opcode": "constrained.",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>",
+        "token": "token(0x1B001030)"
+      },
+      {
+        "offset": "IL_004d",
+        "opcode": "callvirt",
+        "operand": "System.IDisposable::Dispose",
+        "token": "token(0x0A000068)"
+      },
+      {
+        "offset": "IL_0052",
+        "opcode": "endfinally",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0053",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0054",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_0059",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005a",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_005f",
+        "opcode": "brfalse.s",
+        "operand": "IL_006c",
+        "token": null
+      },
+      {
+        "offset": "IL_0061",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0062",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_0067",
+        "opcode": "callvirt",
+        "operand": "SpellTable::Hide",
+        "token": "token(0x06014AA4)"
+      },
+      {
+        "offset": "IL_006c",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "source_file": "v30_work/audio_code_evidence/fsm_actor.cil.json",
+    "type": "Actor",
+    "method": "LoadSpell",
+    "token": "0x0601294c",
+    "rva": "0x56cfec",
+    "signature": "200112c000ac1c118285",
+    "parameters": [
+      "spellType"
+    ],
+    "code_size": 503,
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0002",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0003",
+        "opcode": "ldfld",
+        "operand": "Actor::m_card",
+        "token": "token(0x0400F75C)"
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "brfalse.s",
+        "operand": "IL_0022",
+        "token": null
+      },
+      {
+        "offset": "IL_0010",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0011",
+        "opcode": "ldfld",
+        "operand": "Actor::m_card",
+        "token": "token(0x0400F75C)"
+      },
+      {
+        "offset": "IL_0016",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0017",
+        "opcode": "callvirt",
+        "operand": "Card::GetSpellTableOverride",
+        "token": "token(0x06012D42)"
+      },
+      {
+        "offset": "IL_001c",
+        "opcode": "isinst",
+        "operand": "Spell",
+        "token": "token(0x02002B07)"
+      },
+      {
+        "offset": "IL_0021",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0024",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Equality",
+        "token": "token(0x0A000046)"
+      },
+      {
+        "offset": "IL_0029",
+        "opcode": "brfalse.s",
+        "operand": "IL_00a8",
+        "token": null
+      },
+      {
+        "offset": "IL_002b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002c",
+        "opcode": "ldfld",
+        "operand": "Actor::m_cardDefHandle",
+        "token": "token(0x0400F75E)"
+      },
+      {
+        "offset": "IL_0031",
+        "opcode": "callvirt",
+        "operand": "CardDefHandle::Get",
+        "token": "token(0x06012FCB)"
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0037",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0038",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0039",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_003e",
+        "opcode": "brfalse.s",
+        "operand": "IL_00a8",
+        "token": null
+      },
+      {
+        "offset": "IL_0040",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "ldfld",
+        "operand": "CardDef::m_SpellTableOverrides",
+        "token": "token(0x0400FC13)"
+      },
+      {
+        "offset": "IL_0046",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da1340>::GetEnumerator",
+        "token": "token(0x0A00430C)"
+      },
+      {
+        "offset": "IL_004b",
+        "opcode": "stloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_004c",
+        "opcode": "br.s",
+        "operand": "IL_008f",
+        "token": null
+      },
+      {
+        "offset": "IL_004e",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0002)",
+        "token": null
+      },
+      {
+        "offset": "IL_0050",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da14f0>::get_Current",
+        "token": "token(0x0A00430D)"
+      },
+      {
+        "offset": "IL_0055",
+        "opcode": "stloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0056",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0057",
+        "opcode": "ldfld",
+        "operand": "SpellTableOverride::m_Type",
+        "token": "token(0x0400FBBD)"
+      },
+      {
+        "offset": "IL_005c",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005d",
+        "opcode": "bne.un.s",
+        "operand": "IL_008f",
+        "token": null
+      },
+      {
+        "offset": "IL_005f",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0060",
+        "opcode": "ldfld",
+        "operand": "SpellTableOverride::m_SpellPrefabName",
+        "token": "token(0x0400FBBE)"
+      },
+      {
+        "offset": "IL_0065",
+        "opcode": "call",
+        "operand": "System.String::IsNullOrEmpty",
+        "token": "token(0x0A0000B3)"
+      },
+      {
+        "offset": "IL_006a",
+        "opcode": "brtrue.s",
+        "operand": "IL_0098",
+        "token": null
+      },
+      {
+        "offset": "IL_006c",
+        "opcode": "call",
+        "operand": "SpellManager::Get",
+        "token": "token(0x060149FC)"
+      },
+      {
+        "offset": "IL_0071",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0072",
+        "opcode": "ldfld",
+        "operand": "SpellTableOverride::m_SpellPrefabName",
+        "token": "token(0x0400FBBE)"
+      },
+      {
+        "offset": "IL_0077",
+        "opcode": "callvirt",
+        "operand": "SpellManager::GetSpell",
+        "token": "token(0x06014A01)"
+      },
+      {
+        "offset": "IL_007c",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007d",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007e",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007f",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0084",
+        "opcode": "brfalse.s",
+        "operand": "IL_0098",
+        "token": null
+      },
+      {
+        "offset": "IL_0086",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0087",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0088",
+        "opcode": "callvirt",
+        "operand": "Spell::SetSpellType",
+        "token": "token(0x06014902)"
+      },
+      {
+        "offset": "IL_008d",
+        "opcode": "leave.s",
+        "operand": "IL_00a8",
+        "token": null
+      },
+      {
+        "offset": "IL_008f",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0002)",
+        "token": null
+      },
+      {
+        "offset": "IL_0091",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da14f0>::MoveNext",
+        "token": "token(0x0A00430E)"
+      },
+      {
+        "offset": "IL_0096",
+        "opcode": "brtrue.s",
+        "operand": "IL_004e",
+        "token": null
+      },
+      {
+        "offset": "IL_0098",
+        "opcode": "leave.s",
+        "operand": "IL_00a8",
+        "token": null
+      },
+      {
+        "offset": "IL_009a",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0002)",
+        "token": null
+      },
+      {
+        "offset": "IL_009c",
+        "opcode": "constrained.",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da14f0>",
+        "token": "token(0x1B001041)"
+      },
+      {
+        "offset": "IL_00a2",
+        "opcode": "callvirt",
+        "operand": "System.IDisposable::Dispose",
+        "token": "token(0x0A000068)"
+      },
+      {
+        "offset": "IL_00a7",
+        "opcode": "endfinally",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a8",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00a9",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00aa",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Equality",
+        "token": "token(0x0A000046)"
+      },
+      {
+        "offset": "IL_00af",
+        "opcode": "brfalse.s",
+        "operand": "IL_00f8",
+        "token": null
+      },
+      {
+        "offset": "IL_00b1",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b2",
+        "opcode": "call",
+        "operand": "Actor::GetCardSet",
+        "token": "token(0x06012814)"
+      },
+      {
+        "offset": "IL_00b7",
+        "opcode": "stloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_00b9",
+        "opcode": "call",
+        "operand": "GameDbf::GetIndex",
+        "token": "token(0x06003669)"
+      },
+      {
+        "offset": "IL_00be",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_00c0",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00c1",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0006)",
+        "token": null
+      },
+      {
+        "offset": "IL_00c3",
+        "opcode": "callvirt",
+        "operand": "GameDbfIndex::GetCardSetSpellOverride",
+        "token": "token(0x06013A32)"
+      },
+      {
+        "offset": "IL_00c8",
+        "opcode": "stloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_00ca",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_00cc",
+        "opcode": "call",
+        "operand": "System.String::IsNullOrEmpty",
+        "token": "token(0x0A0000B3)"
+      },
+      {
+        "offset": "IL_00d1",
+        "opcode": "brtrue.s",
+        "operand": "IL_00f2",
+        "token": null
+      },
+      {
+        "offset": "IL_00d3",
+        "opcode": "call",
+        "operand": "SpellManager::Get",
+        "token": "token(0x060149FC)"
+      },
+      {
+        "offset": "IL_00d8",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0005)",
+        "token": null
+      },
+      {
+        "offset": "IL_00da",
+        "opcode": "callvirt",
+        "operand": "SpellManager::GetSpell",
+        "token": "token(0x06014A01)"
+      },
+      {
+        "offset": "IL_00df",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e0",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e1",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e2",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_00e7",
+        "opcode": "brfalse.s",
+        "operand": "IL_00f8",
+        "token": null
+      },
+      {
+        "offset": "IL_00e9",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ea",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00eb",
+        "opcode": "callvirt",
+        "operand": "Spell::SetSpellType",
+        "token": "token(0x06014902)"
+      },
+      {
+        "offset": "IL_00f0",
+        "opcode": "br.s",
+        "operand": "IL_00f8",
+        "token": null
+      },
+      {
+        "offset": "IL_00f2",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0006)",
+        "token": null
+      },
+      {
+        "offset": "IL_00f4",
+        "opcode": "brfalse.s",
+        "operand": "IL_00f8",
+        "token": null
+      },
+      {
+        "offset": "IL_00f6",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f7",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f8",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f9",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00fa",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Equality",
+        "token": "token(0x0A000046)"
+      },
+      {
+        "offset": "IL_00ff",
+        "opcode": "brfalse.s",
+        "operand": "IL_011c",
+        "token": null
+      },
+      {
+        "offset": "IL_0101",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0102",
+        "opcode": "ldfld",
+        "operand": "Actor::m_sharedSpellTable",
+        "token": "token(0x0400F772)"
+      },
+      {
+        "offset": "IL_0107",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0108",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_010d",
+        "opcode": "brfalse.s",
+        "operand": "IL_011c",
+        "token": null
+      },
+      {
+        "offset": "IL_010f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0110",
+        "opcode": "ldfld",
+        "operand": "Actor::m_sharedSpellTable",
+        "token": "token(0x0400F772)"
+      },
+      {
+        "offset": "IL_0115",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0116",
+        "opcode": "callvirt",
+        "operand": "SpellTable::GetSpellInstance",
+        "token": "token(0x06014AA0)"
+      },
+      {
+        "offset": "IL_011b",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_011c",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_011d",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_011e",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Equality",
+        "token": "token(0x0A000046)"
+      },
+      {
+        "offset": "IL_0123",
+        "opcode": "brfalse.s",
+        "operand": "IL_0127",
+        "token": null
+      },
+      {
+        "offset": "IL_0125",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0126",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0127",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0128",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_012d",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_012e",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d934a0>::ContainsKey",
+        "token": "token(0x0A0042FA)"
+      },
+      {
+        "offset": "IL_0133",
+        "opcode": "brfalse.s",
+        "operand": "IL_0142",
+        "token": null
+      },
+      {
+        "offset": "IL_0135",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0136",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_013b",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_013c",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d934a0>::Remove",
+        "token": "token(0x0A00430F)"
+      },
+      {
+        "offset": "IL_0141",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0142",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0143",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_0148",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0149",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_014a",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d934a0>::Add",
+        "token": "token(0x0A004310)"
+      },
+      {
+        "offset": "IL_014f",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0150",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Component::get_gameObject",
+        "token": "token(0x0A000045)"
+      },
+      {
+        "offset": "IL_0155",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.GameObject::get_transform",
+        "token": "token(0x0A000164)"
+      },
+      {
+        "offset": "IL_015a",
+        "opcode": "dup",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_015b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_015c",
+        "opcode": "call",
+        "operand": "Actor::GetSpellParent",
+        "token": "token(0x06012987)"
+      },
+      {
+        "offset": "IL_0161",
+        "opcode": "call",
+        "operand": "TransformUtil::AttachAndPreserveLocalTransform",
+        "token": "token(0x06015002)"
+      },
+      {
+        "offset": "IL_0166",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Transform::get_localScale",
+        "token": "token(0x0A00004A)"
+      },
+      {
+        "offset": "IL_016b",
+        "opcode": "stloc.s",
+        "operand": "local(0x0007)",
+        "token": null
+      },
+      {
+        "offset": "IL_016d",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0007)",
+        "token": null
+      },
+      {
+        "offset": "IL_016f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0170",
+        "opcode": "ldfld",
+        "operand": "Actor::m_sharedSpellTable",
+        "token": "token(0x0400F772)"
+      },
+      {
+        "offset": "IL_0175",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Component::get_gameObject",
+        "token": "token(0x0A000045)"
+      },
+      {
+        "offset": "IL_017a",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.GameObject::get_transform",
+        "token": "token(0x0A000164)"
+      },
+      {
+        "offset": "IL_017f",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Transform::get_localScale",
+        "token": "token(0x0A00004A)"
+      },
+      {
+        "offset": "IL_0184",
+        "opcode": "call",
+        "operand": "UnityEngine.Vector3::Scale",
+        "token": "token(0x0A004311)"
+      },
+      {
+        "offset": "IL_0189",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_018a",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Component::get_gameObject",
+        "token": "token(0x0A000045)"
+      },
+      {
+        "offset": "IL_018f",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0190",
+        "opcode": "call",
+        "operand": "UnityEngine.Component::get_gameObject",
+        "token": "token(0x0A000045)"
+      },
+      {
+        "offset": "IL_0195",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.GameObject::get_layer",
+        "token": "token(0x0A0002A2)"
+      },
+      {
+        "offset": "IL_019a",
+        "opcode": "call",
+        "operand": "LayerUtils::SetLayer",
+        "token": "token(0x06014DF0)"
+      },
+      {
+        "offset": "IL_019f",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01a0",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01a1",
+        "opcode": "ldftn",
+        "operand": "Actor::OnSpellRelease",
+        "token": "token(0x0601294D)"
+      },
+      {
+        "offset": "IL_01a7",
+        "opcode": "newobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d939b0>::.ctor",
+        "token": "token(0x0A0042E1)"
+      },
+      {
+        "offset": "IL_01ac",
+        "opcode": "callvirt",
+        "operand": "Spell::AddSpellReleasedCallback",
+        "token": "token(0x06014954)"
+      },
+      {
+        "offset": "IL_01b1",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01b2",
+        "opcode": "callvirt",
+        "operand": "Spell::OnLoad",
+        "token": "token(0x0601498D)"
+      },
+      {
+        "offset": "IL_01b7",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01b8",
+        "opcode": "ldfld",
+        "operand": "Actor::m_actorStateMgr",
+        "token": "token(0x0400F765)"
+      },
+      {
+        "offset": "IL_01bd",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01be",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_01c3",
+        "opcode": "brfalse.s",
+        "operand": "IL_01d7",
+        "token": null
+      },
+      {
+        "offset": "IL_01c5",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01c6",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01c7",
+        "opcode": "ldftn",
+        "operand": "Actor::OnSpellStateStarted",
+        "token": "token(0x0601297F)"
+      },
+      {
+        "offset": "IL_01cd",
+        "opcode": "newobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb5161920f0>::.ctor",
+        "token": "token(0x0A000D61)"
+      },
+      {
+        "offset": "IL_01d2",
+        "opcode": "callvirt",
+        "operand": "Spell::AddStateStartedCallback",
+        "token": "token(0x0601494C)"
+      },
+      {
+        "offset": "IL_01d7",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01d8",
+        "opcode": "ldc.i4",
+        "operand": "277",
+        "token": null
+      },
+      {
+        "offset": "IL_01dd",
+        "opcode": "beq.s",
+        "operand": "IL_01ef",
+        "token": null
+      },
+      {
+        "offset": "IL_01df",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01e0",
+        "opcode": "ldc.i4",
+        "operand": "278",
+        "token": null
+      },
+      {
+        "offset": "IL_01e5",
+        "opcode": "beq.s",
+        "operand": "IL_01ef",
+        "token": null
+      },
+      {
+        "offset": "IL_01e7",
+        "opcode": "ldarg.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01e8",
+        "opcode": "ldc.i4",
+        "operand": "279",
+        "token": null
+      },
+      {
+        "offset": "IL_01ed",
+        "opcode": "bne.un.s",
+        "operand": "IL_01f5",
+        "token": null
+      },
+      {
+        "offset": "IL_01ef",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01f0",
+        "opcode": "call",
+        "operand": "Actor::UpdateLaunchpadComponents",
+        "token": "token(0x060128FF)"
+      },
+      {
+        "offset": "IL_01f5",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_01f6",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "source_file": "v30_work/audio_code_evidence/fsm_actor.cil.json",
+    "type": "Actor",
+    "method": "ActivateAllSpellsDeathStates",
+    "token": "0x06012965",
+    "rva": "0x56da54",
+    "signature": "200001",
+    "parameters": [],
+    "code_size": 180,
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldfld",
+        "operand": "Actor::m_useSharedSpellTable",
+        "token": "token(0x0400F773)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "brfalse.s",
+        "operand": "IL_0054",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d934a0>::get_Values",
+        "token": "token(0x0A0042DE)"
+      },
+      {
+        "offset": "IL_0013",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93650>::GetEnumerator",
+        "token": "token(0x0A0042DF)"
+      },
+      {
+        "offset": "IL_0018",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "br.s",
+        "operand": "IL_003b",
+        "token": null
+      },
+      {
+        "offset": "IL_001b",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_001d",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>::get_Current",
+        "token": "token(0x0A0042E0)"
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0024",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0025",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "brfalse.s",
+        "operand": "IL_003b",
+        "token": null
+      },
+      {
+        "offset": "IL_002c",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002d",
+        "opcode": "callvirt",
+        "operand": "Blizzard.T5.Game.Spells.SpellBase::IsActive",
+        "token": "token(0x0A002633)"
+      },
+      {
+        "offset": "IL_0032",
+        "opcode": "brfalse.s",
+        "operand": "IL_003b",
+        "token": null
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0035",
+        "opcode": "ldc.i4.5",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "callvirt",
+        "operand": "Blizzard.T5.Game.Spells.SpellBase::ActivateState",
+        "token": "token(0x0A0002FF)"
+      },
+      {
+        "offset": "IL_003b",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_003d",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>::MoveNext",
+        "token": "token(0x0A0042E2)"
+      },
+      {
+        "offset": "IL_0042",
+        "opcode": "brtrue.s",
+        "operand": "IL_001b",
+        "token": null
+      },
+      {
+        "offset": "IL_0044",
+        "opcode": "leave.s",
+        "operand": "IL_00b3",
+        "token": null
+      },
+      {
+        "offset": "IL_0046",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_0048",
+        "opcode": "constrained.",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93800>",
+        "token": "token(0x1B001030)"
+      },
+      {
+        "offset": "IL_004e",
+        "opcode": "callvirt",
+        "operand": "System.IDisposable::Dispose",
+        "token": "token(0x0A000068)"
+      },
+      {
+        "offset": "IL_0053",
+        "opcode": "endfinally",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0054",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0055",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_005a",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005b",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0060",
+        "opcode": "brfalse.s",
+        "operand": "IL_00b3",
+        "token": null
+      },
+      {
+        "offset": "IL_0062",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0063",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_0068",
+        "opcode": "ldfld",
+        "operand": "SpellTable::m_Table",
+        "token": "token(0x04011CCF)"
+      },
+      {
+        "offset": "IL_006d",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93b60>::GetEnumerator",
+        "token": "token(0x0A004309)"
+      },
+      {
+        "offset": "IL_0072",
+        "opcode": "stloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0073",
+        "opcode": "br.s",
+        "operand": "IL_009a",
+        "token": null
+      },
+      {
+        "offset": "IL_0075",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0002)",
+        "token": null
+      },
+      {
+        "offset": "IL_0077",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da1190>::get_Current",
+        "token": "token(0x0A00430A)"
+      },
+      {
+        "offset": "IL_007c",
+        "opcode": "ldfld",
+        "operand": "SpellTableEntry::m_Spell",
+        "token": "token(0x04011CCD)"
+      },
+      {
+        "offset": "IL_0081",
+        "opcode": "stloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0082",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0083",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0084",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Equality",
+        "token": "token(0x0A000046)"
+      },
+      {
+        "offset": "IL_0089",
+        "opcode": "brtrue.s",
+        "operand": "IL_009a",
+        "token": null
+      },
+      {
+        "offset": "IL_008b",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008c",
+        "opcode": "callvirt",
+        "operand": "Blizzard.T5.Game.Spells.SpellBase::IsActive",
+        "token": "token(0x0A002633)"
+      },
+      {
+        "offset": "IL_0091",
+        "opcode": "brfalse.s",
+        "operand": "IL_009a",
+        "token": null
+      },
+      {
+        "offset": "IL_0093",
+        "opcode": "ldloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0094",
+        "opcode": "ldc.i4.5",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0095",
+        "opcode": "callvirt",
+        "operand": "Blizzard.T5.Game.Spells.SpellBase::ActivateState",
+        "token": "token(0x0A0002FF)"
+      },
+      {
+        "offset": "IL_009a",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0002)",
+        "token": null
+      },
+      {
+        "offset": "IL_009c",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da1190>::MoveNext",
+        "token": "token(0x0A00430B)"
+      },
+      {
+        "offset": "IL_00a1",
+        "opcode": "brtrue.s",
+        "operand": "IL_0075",
+        "token": null
+      },
+      {
+        "offset": "IL_00a3",
+        "opcode": "leave.s",
+        "operand": "IL_00b3",
+        "token": null
+      },
+      {
+        "offset": "IL_00a5",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0002)",
+        "token": null
+      },
+      {
+        "offset": "IL_00a7",
+        "opcode": "constrained.",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da1190>",
+        "token": "token(0x1B00103F)"
+      },
+      {
+        "offset": "IL_00ad",
+        "opcode": "callvirt",
+        "operand": "System.IDisposable::Dispose",
+        "token": "token(0x0A000068)"
+      },
+      {
+        "offset": "IL_00b2",
+        "opcode": "endfinally",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b3",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "source_file": "v30_work/audio_code_evidence/fsm_actor.cil.json",
+    "type": "Actor",
+    "method": "DeactivateAllSpells",
+    "token": "0x06012967",
+    "rva": "0x56dbb8",
+    "signature": "200001",
+    "parameters": [],
+    "code_size": 190,
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldfld",
+        "operand": "Actor::m_useSharedSpellTable",
+        "token": "token(0x0400F773)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "brfalse.s",
+        "operand": "IL_005d",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d934a0>::get_Keys",
+        "token": "token(0x0A004313)"
+      },
+      {
+        "offset": "IL_0013",
+        "opcode": "newobj",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da16a0>::.ctor",
+        "token": "token(0x0A004314)"
+      },
+      {
+        "offset": "IL_0018",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da16a0>::GetEnumerator",
+        "token": "token(0x0A004315)"
+      },
+      {
+        "offset": "IL_001d",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001e",
+        "opcode": "br.s",
+        "operand": "IL_0044",
+        "token": null
+      },
+      {
+        "offset": "IL_0020",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da1850>::get_Current",
+        "token": "token(0x0A004316)"
+      },
+      {
+        "offset": "IL_0027",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0028",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0029",
+        "opcode": "ldfld",
+        "operand": "Actor::m_ownedSpells",
+        "token": "token(0x0400F774)"
+      },
+      {
+        "offset": "IL_002e",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002f",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d934a0>::get_Item",
+        "token": "token(0x0A0042FB)"
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "stloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0035",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0037",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "brfalse.s",
+        "operand": "IL_0044",
+        "token": null
+      },
+      {
+        "offset": "IL_003e",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003f",
+        "opcode": "callvirt",
+        "operand": "Blizzard.T5.Game.Spells.SpellBase::Deactivate",
+        "token": "token(0x0A000D11)"
+      },
+      {
+        "offset": "IL_0044",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_0046",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da1850>::MoveNext",
+        "token": "token(0x0A004317)"
+      },
+      {
+        "offset": "IL_004b",
+        "opcode": "brtrue.s",
+        "operand": "IL_0020",
+        "token": null
+      },
+      {
+        "offset": "IL_004d",
+        "opcode": "leave.s",
+        "operand": "IL_00b6",
+        "token": null
+      },
+      {
+        "offset": "IL_004f",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0000)",
+        "token": null
+      },
+      {
+        "offset": "IL_0051",
+        "opcode": "constrained.",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da1850>",
+        "token": "token(0x1B001043)"
+      },
+      {
+        "offset": "IL_0057",
+        "opcode": "callvirt",
+        "operand": "System.IDisposable::Dispose",
+        "token": "token(0x0A000068)"
+      },
+      {
+        "offset": "IL_005c",
+        "opcode": "endfinally",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005e",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_0063",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0064",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0069",
+        "opcode": "brfalse.s",
+        "operand": "IL_00b6",
+        "token": null
+      },
+      {
+        "offset": "IL_006b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006c",
+        "opcode": "ldfld",
+        "operand": "Actor::m_localSpellTable",
+        "token": "token(0x0400F775)"
+      },
+      {
+        "offset": "IL_0071",
+        "opcode": "ldfld",
+        "operand": "SpellTable::m_Table",
+        "token": "token(0x04011CCF)"
+      },
+      {
+        "offset": "IL_0076",
+        "opcode": "callvirt",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515d93b60>::GetEnumerator",
+        "token": "token(0x0A004309)"
+      },
+      {
+        "offset": "IL_007b",
+        "opcode": "stloc.3",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007c",
+        "opcode": "br.s",
+        "operand": "IL_009d",
+        "token": null
+      },
+      {
+        "offset": "IL_007e",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0003)",
+        "token": null
+      },
+      {
+        "offset": "IL_0080",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da1190>::get_Current",
+        "token": "token(0x0A00430A)"
+      },
+      {
+        "offset": "IL_0085",
+        "opcode": "ldfld",
+        "operand": "SpellTableEntry::m_Spell",
+        "token": "token(0x04011CCD)"
+      },
+      {
+        "offset": "IL_008a",
+        "opcode": "stloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_008c",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_008e",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008f",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Equality",
+        "token": "token(0x0A000046)"
+      },
+      {
+        "offset": "IL_0094",
+        "opcode": "brtrue.s",
+        "operand": "IL_009d",
+        "token": null
+      },
+      {
+        "offset": "IL_0096",
+        "opcode": "ldloc.s",
+        "operand": "local(0x0004)",
+        "token": null
+      },
+      {
+        "offset": "IL_0098",
+        "opcode": "callvirt",
+        "operand": "Blizzard.T5.Game.Spells.SpellBase::Deactivate",
+        "token": "token(0x0A000D11)"
+      },
+      {
+        "offset": "IL_009d",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0003)",
+        "token": null
+      },
+      {
+        "offset": "IL_009f",
+        "opcode": "call",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da1190>::MoveNext",
+        "token": "token(0x0A00430B)"
+      },
+      {
+        "offset": "IL_00a4",
+        "opcode": "brtrue.s",
+        "operand": "IL_007e",
+        "token": null
+      },
+      {
+        "offset": "IL_00a6",
+        "opcode": "leave.s",
+        "operand": "IL_00b6",
+        "token": null
+      },
+      {
+        "offset": "IL_00a8",
+        "opcode": "ldloca.s",
+        "operand": "local(0x0003)",
+        "token": null
+      },
+      {
+        "offset": "IL_00aa",
+        "opcode": "constrained.",
+        "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fb515da1190>",
+        "token": "token(0x1B00103F)"
+      },
+      {
+        "offset": "IL_00b0",
+        "opcode": "callvirt",
+        "operand": "System.IDisposable::Dispose",
+        "token": "token(0x0A000068)"
+      },
+      {
+        "offset": "IL_00b5",
+        "opcode": "endfinally",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b6",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b7",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00b8",
+        "opcode": "stfld",
+        "operand": "Actor::m_lastDivineShieldEmpowered",
+        "token": "token(0x0400F795)"
+      },
+      {
+        "offset": "IL_00bd",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "source_file": "v30_work/audio_code_evidence/fsm_actor.cil.json",
+    "type": "Actor",
+    "method": "GetSpellParent",
+    "token": "0x06012987",
+    "rva": "0x56e6b4",
+    "signature": "20001280a5",
+    "parameters": [],
+    "code_size": 119,
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldfld",
+        "operand": "Actor::m_spellsParent",
+        "token": "token(0x0400F750)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_000c",
+        "opcode": "brfalse.s",
+        "operand": "IL_0015",
+        "token": null
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000f",
+        "opcode": "ldfld",
+        "operand": "Actor::m_spellsParent",
+        "token": "token(0x0400F750)"
+      },
+      {
+        "offset": "IL_0014",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0015",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0016",
+        "opcode": "ldstr",
+        "operand": "'Spells'",
+        "token": "string token(0x703A6CE3)"
+      },
+      {
+        "offset": "IL_001b",
+        "opcode": "newobj",
+        "operand": "UnityEngine.GameObject::.ctor",
+        "token": "token(0x0A000043)"
+      },
+      {
+        "offset": "IL_0020",
+        "opcode": "call",
+        "operand": "UnityEngine.GameObject::get_transform",
+        "token": "token(0x0A000164)"
+      },
+      {
+        "offset": "IL_0025",
+        "opcode": "stfld",
+        "operand": "Actor::m_spellsParent",
+        "token": "token(0x0400F750)"
+      },
+      {
+        "offset": "IL_002a",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002b",
+        "opcode": "ldfld",
+        "operand": "Actor::m_spellsParent",
+        "token": "token(0x0400F750)"
+      },
+      {
+        "offset": "IL_0030",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0031",
+        "opcode": "call",
+        "operand": "UnityEngine.Component::get_gameObject",
+        "token": "token(0x0A000045)"
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.GameObject::get_transform",
+        "token": "token(0x0A000164)"
+      },
+      {
+        "offset": "IL_003b",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Transform::set_parent",
+        "token": "token(0x0A000191)"
+      },
+      {
+        "offset": "IL_0040",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "ldfld",
+        "operand": "Actor::m_spellsParent",
+        "token": "token(0x0400F750)"
+      },
+      {
+        "offset": "IL_0046",
+        "opcode": "call",
+        "operand": "UnityEngine.Vector3::get_zero",
+        "token": "token(0x0A0000DD)"
+      },
+      {
+        "offset": "IL_004b",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Transform::set_localPosition",
+        "token": "token(0x0A000226)"
+      },
+      {
+        "offset": "IL_0050",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0051",
+        "opcode": "ldfld",
+        "operand": "Actor::m_spellsParent",
+        "token": "token(0x0400F750)"
+      },
+      {
+        "offset": "IL_0056",
+        "opcode": "call",
+        "operand": "UnityEngine.Vector3::get_one",
+        "token": "token(0x0A000165)"
+      },
+      {
+        "offset": "IL_005b",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Transform::set_localScale",
+        "token": "token(0x0A000166)"
+      },
+      {
+        "offset": "IL_0060",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0061",
+        "opcode": "ldfld",
+        "operand": "Actor::m_spellsParent",
+        "token": "token(0x0400F750)"
+      },
+      {
+        "offset": "IL_0066",
+        "opcode": "call",
+        "operand": "UnityEngine.Quaternion::get_identity",
+        "token": "token(0x0A00021E)"
+      },
+      {
+        "offset": "IL_006b",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Transform::set_localRotation",
+        "token": "token(0x0A00021F)"
+      },
+      {
+        "offset": "IL_0070",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0071",
+        "opcode": "ldfld",
+        "operand": "Actor::m_spellsParent",
+        "token": "token(0x0400F750)"
+      },
+      {
+        "offset": "IL_0076",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "source_file": "v30_work/audio_code_evidence/binding.cil.json",
+    "type": "Card",
+    "method": "OnSpellFinished_StandardSpawnCharacter",
+    "token": "0x06012dc1",
+    "rva": "0x581814",
+    "signature": "20020112c000ac1c1c",
+    "parameters": [
+      "spell",
+      "userData"
+    ],
+    "code_size": 67,
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0002",
+        "opcode": "stfld",
+        "operand": "Card::m_actorReady",
+        "token": "token(0x0400FA64)"
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "stfld",
+        "operand": "Card::m_inputEnabled",
+        "token": "token(0x0400FA7E)"
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000f",
+        "opcode": "ldfld",
+        "operand": "Card::m_actor",
+        "token": "token(0x0400FA62)"
+      },
+      {
+        "offset": "IL_0014",
+        "opcode": "callvirt",
+        "operand": "Actor::Show",
+        "token": "token(0x0601283A)"
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001a",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001b",
+        "opcode": "call",
+        "operand": "Card::ActivateStateSpells",
+        "token": "token(0x06012D87)"
+      },
+      {
+        "offset": "IL_0020",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0021",
+        "opcode": "call",
+        "operand": "Card::RefreshActor",
+        "token": "token(0x06012DE4)"
+      },
+      {
+        "offset": "IL_0026",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0027",
+        "opcode": "call",
+        "operand": "Card::UpdateActorComponents",
+        "token": "token(0x06012DDD)"
+      },
+      {
+        "offset": "IL_002c",
+        "opcode": "call",
+        "operand": "BoardEvents::Get",
+        "token": "token(0x06012C81)"
+      },
+      {
+        "offset": "IL_0031",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0032",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0033",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0039",
+        "opcode": "brfalse.s",
+        "operand": "78",
+        "token": null
+      },
+      {
+        "offset": "IL_003b",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003c",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_003d",
+        "opcode": "callvirt",
+        "operand": "BoardEvents::SummonedEvent",
+        "token": "token(0x06012C97)"
+      },
+      {
+        "offset": "IL_0042",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "source_file": "v30_work/audio_code_evidence/binding.cil.json",
+    "type": "Card",
+    "method": "OnSpellFinished_DefaultPlaySpawn",
+    "token": "0x06012dc5",
+    "rva": "0x5818cc",
+    "signature": "20020112c000ac1c1c",
+    "parameters": [
+      "spell",
+      "userData"
+    ],
+    "code_size": 53,
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "ldfld",
+        "operand": "Card::m_actor",
+        "token": "token(0x0400FA62)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "callvirt",
+        "operand": "Actor::ToggleForceIdle",
+        "token": "token(0x06012818)"
+      },
+      {
+        "offset": "IL_000c",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000d",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "stfld",
+        "operand": "Card::m_inputEnabled",
+        "token": "token(0x0400FA7E)"
+      },
+      {
+        "offset": "IL_0013",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0014",
+        "opcode": "ldfld",
+        "operand": "Card::m_zone",
+        "token": "token(0x0400FA68)"
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_001a",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_001f",
+        "opcode": "brfalse.s",
+        "operand": "41",
+        "token": null
+      },
+      {
+        "offset": "IL_0021",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0022",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0023",
+        "opcode": "call",
+        "operand": "Card::ActivateStateSpells",
+        "token": "token(0x06012D87)"
+      },
+      {
+        "offset": "IL_0028",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0029",
+        "opcode": "call",
+        "operand": "Card::RefreshActor",
+        "token": "token(0x06012DE4)"
+      },
+      {
+        "offset": "IL_002e",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_002f",
+        "opcode": "call",
+        "operand": "Card::UpdateActorComponents",
+        "token": "token(0x06012DDD)"
+      },
+      {
+        "offset": "IL_0034",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  },
+  {
+    "source_file": "v30_work/audio_code_evidence/binding.cil.json",
+    "type": "Card",
+    "method": "OnSpellFinished_HandToPlay_SummonIn",
+    "token": "0x06012e53",
+    "rva": "0x586d48",
+    "signature": "20020112c000ac1c1c",
+    "parameters": [
+      "spell",
+      "userData"
+    ],
+    "code_size": 290,
+    "instructions": [
+      {
+        "offset": "IL_0000",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0001",
+        "opcode": "call",
+        "operand": "Card::GetActor",
+        "token": "token(0x06012DD6)"
+      },
+      {
+        "offset": "IL_0006",
+        "opcode": "stloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0007",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0008",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0009",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_000e",
+        "opcode": "brfalse.s",
+        "operand": "98",
+        "token": null
+      },
+      {
+        "offset": "IL_0010",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0011",
+        "opcode": "callvirt",
+        "operand": "Actor::GetRootObject",
+        "token": "token(0x06012845)"
+      },
+      {
+        "offset": "IL_0016",
+        "opcode": "stloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0017",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0018",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0019",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_001e",
+        "opcode": "brfalse.s",
+        "operand": "92",
+        "token": null
+      },
+      {
+        "offset": "IL_0020",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0021",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.GameObject::get_transform",
+        "token": "token(0x0A000164)"
+      },
+      {
+        "offset": "IL_0026",
+        "opcode": "call",
+        "operand": "UnityEngine.Vector3::get_zero",
+        "token": "token(0x0A0000DD)"
+      },
+      {
+        "offset": "IL_002b",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Transform::set_localPosition",
+        "token": "token(0x0A000226)"
+      },
+      {
+        "offset": "IL_0030",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0031",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.GameObject::get_transform",
+        "token": "token(0x0A000164)"
+      },
+      {
+        "offset": "IL_0036",
+        "opcode": "call",
+        "operand": "UnityEngine.Quaternion::get_identity",
+        "token": "token(0x0A00021E)"
+      },
+      {
+        "offset": "IL_003b",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Transform::set_localRotation",
+        "token": "token(0x0A00021F)"
+      },
+      {
+        "offset": "IL_0040",
+        "opcode": "ldloc.2",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0041",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.GameObject::get_transform",
+        "token": "token(0x0A000164)"
+      },
+      {
+        "offset": "IL_0046",
+        "opcode": "call",
+        "operand": "UnityEngine.Vector3::get_one",
+        "token": "token(0x0A000165)"
+      },
+      {
+        "offset": "IL_004b",
+        "opcode": "callvirt",
+        "operand": "UnityEngine.Transform::set_localScale",
+        "token": "token(0x0A000166)"
+      },
+      {
+        "offset": "IL_0050",
+        "opcode": "ldloc.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0051",
+        "opcode": "callvirt",
+        "operand": "Actor::Show",
+        "token": "token(0x0601283A)"
+      },
+      {
+        "offset": "IL_0056",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0057",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0058",
+        "opcode": "stfld",
+        "operand": "Card::m_actorReady",
+        "token": "token(0x0400FA64)"
+      },
+      {
+        "offset": "IL_005d",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005e",
+        "opcode": "ldc.i4.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_005f",
+        "opcode": "stfld",
+        "operand": "Card::m_inputEnabled",
+        "token": "token(0x0400FA7E)"
+      },
+      {
+        "offset": "IL_0064",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0065",
+        "opcode": "ldc.i4.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0066",
+        "opcode": "call",
+        "operand": "Card::ActivateStateSpells",
+        "token": "token(0x06012D87)"
+      },
+      {
+        "offset": "IL_006b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_006c",
+        "opcode": "call",
+        "operand": "Card::RefreshActor",
+        "token": "token(0x06012DE4)"
+      },
+      {
+        "offset": "IL_0071",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0072",
+        "opcode": "ldfld",
+        "operand": "Card::m_entity",
+        "token": "token(0x0400FA41)"
+      },
+      {
+        "offset": "IL_0077",
+        "opcode": "callvirt",
+        "operand": "Entity::IsControlledByFriendlySidePlayer",
+        "token": "token(0x060137E1)"
+      },
+      {
+        "offset": "IL_007c",
+        "opcode": "brfalse.s",
+        "operand": "244",
+        "token": null
+      },
+      {
+        "offset": "IL_007e",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_007f",
+        "opcode": "ldfld",
+        "operand": "Card::m_entity",
+        "token": "token(0x0400FA41)"
+      },
+      {
+        "offset": "IL_0084",
+        "opcode": "callvirt",
+        "operand": "Entity::GetRealTimeIsDormant",
+        "token": "token(0x0601384E)"
+      },
+      {
+        "offset": "IL_0089",
+        "opcode": "brtrue.s",
+        "operand": "244",
+        "token": null
+      },
+      {
+        "offset": "IL_008b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_008c",
+        "opcode": "ldfld",
+        "operand": "Card::m_entity",
+        "token": "token(0x0400FA41)"
+      },
+      {
+        "offset": "IL_0091",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasSpellPower",
+        "token": "token(0x0601390D)"
+      },
+      {
+        "offset": "IL_0096",
+        "opcode": "brtrue.s",
+        "operand": "177",
+        "token": null
+      },
+      {
+        "offset": "IL_0098",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0099",
+        "opcode": "ldfld",
+        "operand": "Card::m_entity",
+        "token": "token(0x0400FA41)"
+      },
+      {
+        "offset": "IL_009e",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasSpellPowerDouble",
+        "token": "token(0x06013911)"
+      },
+      {
+        "offset": "IL_00a3",
+        "opcode": "brfalse.s",
+        "operand": "198",
+        "token": null
+      },
+      {
+        "offset": "IL_00a5",
+        "opcode": "call",
+        "operand": "ZoneMgr::Get",
+        "token": "token(0x06006502)"
+      },
+      {
+        "offset": "IL_00aa",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ab",
+        "opcode": "ldfld",
+        "operand": "Card::m_entity",
+        "token": "token(0x0400FA41)"
+      },
+      {
+        "offset": "IL_00b0",
+        "opcode": "callvirt",
+        "operand": "EntityBase::GetSpellPowerSchool",
+        "token": "token(0x0601390C)"
+      },
+      {
+        "offset": "IL_00b5",
+        "opcode": "callvirt",
+        "operand": "ZoneMgr::OnSpellPowerEntityEnteredPlay",
+        "token": "token(0x06006573)"
+      },
+      {
+        "offset": "IL_00ba",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00bb",
+        "opcode": "ldfld",
+        "operand": "Card::m_entity",
+        "token": "token(0x0400FA41)"
+      },
+      {
+        "offset": "IL_00c0",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasHealingDoesDamageHint",
+        "token": "token(0x06013912)"
+      },
+      {
+        "offset": "IL_00c5",
+        "opcode": "brfalse.s",
+        "operand": "221",
+        "token": null
+      },
+      {
+        "offset": "IL_00c7",
+        "opcode": "call",
+        "operand": "ZoneMgr::Get",
+        "token": "token(0x06006502)"
+      },
+      {
+        "offset": "IL_00cc",
+        "opcode": "callvirt",
+        "operand": "ZoneMgr::OnHealingDoesDamageEntityEnteredPlay",
+        "token": "token(0x06006569)"
+      },
+      {
+        "offset": "IL_00d1",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00d2",
+        "opcode": "ldfld",
+        "operand": "Card::m_entity",
+        "token": "token(0x0400FA41)"
+      },
+      {
+        "offset": "IL_00d7",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasLifestealDoesDamageHint",
+        "token": "token(0x06013913)"
+      },
+      {
+        "offset": "IL_00dc",
+        "opcode": "brfalse.s",
+        "operand": "244",
+        "token": null
+      },
+      {
+        "offset": "IL_00de",
+        "opcode": "call",
+        "operand": "ZoneMgr::Get",
+        "token": "token(0x06006502)"
+      },
+      {
+        "offset": "IL_00e3",
+        "opcode": "callvirt",
+        "operand": "ZoneMgr::OnLifestealDoesDamageEntityEnteredPlay",
+        "token": "token(0x0600656A)"
+      },
+      {
+        "offset": "IL_00e8",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00e9",
+        "opcode": "ldfld",
+        "operand": "Card::m_entity",
+        "token": "token(0x0400FA41)"
+      },
+      {
+        "offset": "IL_00ee",
+        "opcode": "callvirt",
+        "operand": "EntityBase::HasWindfury",
+        "token": "token(0x06013927)"
+      },
+      {
+        "offset": "IL_00f3",
+        "opcode": "brfalse.s",
+        "operand": "266",
+        "token": null
+      },
+      {
+        "offset": "IL_00f5",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00f6",
+        "opcode": "ldc.i4.s",
+        "operand": "49",
+        "token": null
+      },
+      {
+        "offset": "IL_00f8",
+        "opcode": "call",
+        "operand": "Card::ActivateActorSpell",
+        "token": "token(0x06012DA5)"
+      },
+      {
+        "offset": "IL_00fd",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00fe",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_00ff",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0100",
+        "opcode": "call",
+        "operand": "Card::ActivateActorBattlecrySpell",
+        "token": "token(0x06012DBF)"
+      },
+      {
+        "offset": "IL_0105",
+        "opcode": "call",
+        "operand": "UnityEngine.MonoBehaviour::StartCoroutine",
+        "token": "token(0x0A0000F1)"
+      },
+      {
+        "offset": "IL_010a",
+        "opcode": "pop",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_010b",
+        "opcode": "call",
+        "operand": "BoardEvents::Get",
+        "token": "token(0x06012C81)"
+      },
+      {
+        "offset": "IL_0110",
+        "opcode": "stloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0111",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0112",
+        "opcode": "ldnull",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_0113",
+        "opcode": "call",
+        "operand": "UnityEngine.Object::op_Inequality",
+        "token": "token(0x0A00006D)"
+      },
+      {
+        "offset": "IL_0118",
+        "opcode": "brfalse.s",
+        "operand": "301",
+        "token": null
+      },
+      {
+        "offset": "IL_011a",
+        "opcode": "ldloc.1",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_011b",
+        "opcode": "ldarg.0",
+        "operand": "",
+        "token": null
+      },
+      {
+        "offset": "IL_011c",
+        "opcode": "callvirt",
+        "operand": "BoardEvents::SummonedEvent",
+        "token": "token(0x06012C97)"
+      },
+      {
+        "offset": "IL_0121",
+        "opcode": "ret",
+        "operand": "",
+        "token": null
+      }
+    ]
+  }
+]

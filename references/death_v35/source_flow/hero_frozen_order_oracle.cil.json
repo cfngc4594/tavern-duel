@@ -1,0 +1,3275 @@
+{
+  "build": "37.0.0.255130.254477",
+  "assembly": "v30_work/original_code/Assembly-CSharp.dll",
+  "assembly_sha256": "7f81d2ab2277958dea4351c41812921a00ee263a6a7abf1a5cfb4eb0794f26e5",
+  "source_logs": [
+    {
+      "path": "v33_work/source_code/endgame_power_order.cil.json",
+      "sha256": "c775d7b4cc50f09dfea7a06f6be82bd3fc2206a960687ef29dce168bac3c260b"
+    },
+    {
+      "path": "v33_work/source_code/hero_endgame_dispatch.cil.json",
+      "sha256": "9b9276ef8f0de3e5d8ef24ebc9177bf6e1823e86f60fa0c42712ebb79500f8b6"
+    },
+    {
+      "path": "v35_work/source_death_flow/death_controllers.cil.json",
+      "sha256": "6530b8013029b629bb62d3992b186fddbbfef82368192cc32d5b676ba8b885c5"
+    },
+    {
+      "path": "v35_work/source_death_flow/death_queue_gates.cil.json",
+      "sha256": "56b6356532afb137ed01532aa2fb15c33e89b9193b9f39ab0f9230fb6e158614"
+    },
+    {
+      "path": "v35_work/source_death_flow/death_entrypoints.cil.json",
+      "sha256": "8ecba117154e5fde961ce004af4c8d754fac0ecbb2657ec6e66ddca7f9a24657"
+    }
+  ],
+  "methods": [
+    {
+      "type": "EntityBase",
+      "method": "IsCharacter",
+      "token": "0x0601392f",
+      "rva": "0x5c9267",
+      "signature": "200002",
+      "parameters": [],
+      "code_size": 17,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "EntityBase::IsHero",
+          "token": "token(0x060138D3)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brtrue.s",
+          "operand": "IL_000f",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "call",
+          "operand": "EntityBase::IsMinion",
+          "token": "token(0x060138DB)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v33_work/source_code/endgame_power_order.cil.json"
+    },
+    {
+      "type": "GameEntity",
+      "method": "BlowUpHero",
+      "token": "0x060054f2",
+      "rva": "0x18cb74",
+      "signature": "200212c000ac1c12c0009ebc118285",
+      "parameters": [
+        "card",
+        "spellType"
+      ],
+      "code_size": 60,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "brfalse.s",
+          "operand": "IL_000b",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "callvirt",
+          "operand": "Card::GetActor",
+          "token": "token(0x06012DD6)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "brfalse.s",
+          "operand": "IL_0021",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "callvirt",
+          "operand": "Actor::ActivateAllSpellsDeathStates",
+          "token": "token(0x06012965)"
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "callvirt",
+          "operand": "GameEntity::ActivateSpellForDestroyedHero",
+          "token": "token(0x060054F3)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "call",
+          "operand": "Gameplay::Get",
+          "token": "token(0x060057DC)"
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "call",
+          "operand": "GameEntity::HideOtherElements",
+          "token": "token(0x060054F7)"
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.MonoBehaviour::StartCoroutine",
+          "token": "token(0x0A0000F1)"
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v33_work/source_code/hero_endgame_dispatch.cil.json"
+    },
+    {
+      "type": "DeathSpellController",
+      "method": "OnProcessTaskList",
+      "token": "0x0601164e",
+      "rva": "0x518534",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 66,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "DeathSpellController::PickDeathSoundCardIndex",
+          "token": "token(0x06011651)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "br.s",
+          "operand": "IL_002d",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldfld",
+          "operand": "SpellController::m_targets",
+          "token": "token(0x04011C39)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f907fc79d30>::get_Item",
+          "token": "token(0x0A0004C1)"
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "beq.s",
+          "operand": "IL_0023",
+          "token": null
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "callvirt",
+          "operand": "Card::SuppressDeathSounds",
+          "token": "token(0x06012D01)"
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "callvirt",
+          "operand": "Card::ActivateCharacterDeathEffects",
+          "token": "token(0x06012D53)"
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldfld",
+          "operand": "SpellController::m_targets",
+          "token": "token(0x04011C39)"
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f907fc79d30>::get_Count",
+          "token": "token(0x0A0004C0)"
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "blt.s",
+          "operand": "IL_000b",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "call",
+          "operand": "SpellController::OnProcessTaskList",
+          "token": "token(0x060149CE)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_controllers.cil.json"
+    },
+    {
+      "type": "DeathSpellController",
+      "method": "AddDeadCardsToTargetList",
+      "token": "0x0601164f",
+      "rva": "0x518584",
+      "signature": "20010112b0f0",
+      "parameters": [
+        "taskList"
+      ],
+      "code_size": 114,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "SpellController::m_taskList",
+          "token": "token(0x04011C3A)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "PowerTaskList::GetTaskList",
+          "token": "token(0x06005F6E)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "br.s",
+          "operand": "IL_0068",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f907fb369c0>::get_Item",
+          "token": "token(0x0A00243F)"
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "callvirt",
+          "operand": "PowerTask::GetPower",
+          "token": "token(0x06005F27)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001e",
+          "opcode": "callvirt",
+          "operand": "PowerHistory::get_Type",
+          "token": "token(0x0600EF06)"
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldc.i4.4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "bne.un.s",
+          "operand": "IL_0064",
+          "token": null
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "isinst",
+          "operand": "HistTagChange",
+          "token": "token(0x02001F69)"
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "call",
+          "operand": "GameUtils::IsCharacterDeathTagChange",
+          "token": "token(0x06014CF9)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "brfalse.s",
+          "operand": "IL_0064",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "call",
+          "operand": "GameState::Get",
+          "token": "token(0x06005589)"
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "callvirt",
+          "operand": "HistTagChange::get_Entity",
+          "token": "token(0x0600EF69)"
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "callvirt",
+          "operand": "GameState::GetEntity",
+          "token": "token(0x060055A7)"
+        },
+        {
+          "offset": "IL_0045",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "callvirt",
+          "operand": "Entity::GetCard",
+          "token": "token(0x060137BF)"
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0050",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0051",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "call",
+          "operand": "DeathSpellController::CanAddTarget",
+          "token": "token(0x06011650)"
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "brfalse.s",
+          "operand": "IL_0064",
+          "token": null
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "call",
+          "operand": "SpellController::AddTarget",
+          "token": "token(0x060149C0)"
+        },
+        {
+          "offset": "IL_0064",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0065",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "add",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0069",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006a",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7f907fb369c0>::get_Count",
+          "token": "token(0x0A0023EC)"
+        },
+        {
+          "offset": "IL_006f",
+          "opcode": "blt.s",
+          "operand": "IL_0010",
+          "token": null
+        },
+        {
+          "offset": "IL_0071",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_controllers.cil.json"
+    },
+    {
+      "type": "DeathSpellController",
+      "method": "CanAddTarget",
+      "token": "0x06011650",
+      "rva": "0x518602",
+      "signature": "20020212c000a32012c0009ebc",
+      "parameters": [
+        "entity",
+        "card"
+      ],
+      "code_size": 12,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "callvirt",
+          "operand": "Card::WillSuppressDeathEffects",
+          "token": "token(0x06012CFE)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brfalse.s",
+          "operand": "IL_000a",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_controllers.cil.json"
+    },
+    {
+      "type": "SpellController",
+      "method": "OnProcessTaskList",
+      "token": "0x060149ce",
+      "rva": "0x51a2f2",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 13,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "callvirt",
+          "operand": "SpellController::OnFinishedTaskList",
+          "token": "token(0x060149CF)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "callvirt",
+          "operand": "SpellController::OnFinished",
+          "token": "token(0x060149D0)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_controllers.cil.json"
+    },
+    {
+      "type": "SpellController",
+      "method": "OnFinishedTaskList",
+      "token": "0x060149cf",
+      "rva": "0x61541d",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 54,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "call",
+          "operand": "GameState::Get",
+          "token": "token(0x06005589)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "brfalse.s",
+          "operand": "IL_0013",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "call",
+          "operand": "GameState::Get",
+          "token": "token(0x06005589)"
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "callvirt",
+          "operand": "GameState::RemoveServerBlockingSpellController",
+          "token": "token(0x0600562D)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "stfld",
+          "operand": "SpellController::m_processingTaskList",
+          "token": "token(0x04011C3C)"
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "call",
+          "operand": "SpellController::FireFinishedTaskListCallbacks",
+          "token": "token(0x060149D8)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldfld",
+          "operand": "SpellController::m_pendingFinish",
+          "token": "token(0x04011C3D)"
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "brfalse.s",
+          "operand": "IL_0035",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "stfld",
+          "operand": "SpellController::m_pendingFinish",
+          "token": "token(0x04011C3D)"
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "callvirt",
+          "operand": "SpellController::OnFinished",
+          "token": "token(0x060149D0)"
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_controllers.cil.json"
+    },
+    {
+      "type": "GameUtils",
+      "method": "IsCharacterDeathTagChange",
+      "token": "0x06014cf9",
+      "rva": "0x622278",
+      "signature": "00010212c0007da4",
+      "parameters": [
+        "tagChange"
+      ],
+      "code_size": 57,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "callvirt",
+          "operand": "HistTagChange::get_Tag",
+          "token": "token(0x0600EF6B)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "ldc.i4.s",
+          "operand": "49",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "beq.s",
+          "operand": "IL_000c",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "callvirt",
+          "operand": "HistTagChange::get_Value",
+          "token": "token(0x0600EF6D)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldc.i4.4",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "beq.s",
+          "operand": "IL_0017",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "call",
+          "operand": "GameState::Get",
+          "token": "token(0x06005589)"
+        },
+        {
+          "offset": "IL_001c",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "callvirt",
+          "operand": "HistTagChange::get_Entity",
+          "token": "token(0x0600EF69)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "callvirt",
+          "operand": "GameState::GetEntity",
+          "token": "token(0x060055A7)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "brtrue.s",
+          "operand": "IL_002d",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "callvirt",
+          "operand": "EntityBase::IsCharacter",
+          "token": "token(0x0601392F)"
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "brtrue.s",
+          "operand": "IL_0037",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_queue_gates.cil.json"
+    },
+    {
+      "type": "PowerProcessor",
+      "method": "OnSpellControllerFinishedTaskList",
+      "token": "0x06006002",
+      "rva": "0x1cf92a",
+      "signature": "20010112c000ac4c",
+      "parameters": [
+        "spellController"
+      ],
+      "code_size": 23,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "callvirt",
+          "operand": "SpellController::DetachPowerTaskList",
+          "token": "token(0x060149CA)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldfld",
+          "operand": "PowerProcessor::m_currentTaskList",
+          "token": "token(0x0400435C)"
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "brtrue.s",
+          "operand": "IL_0010",
+          "token": null
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "call",
+          "operand": "PowerProcessor::DoCurrentTaskList",
+          "token": "token(0x06005FF5)"
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_queue_gates.cil.json"
+    },
+    {
+      "type": "Card",
+      "method": "Check_HeroToGraveyard",
+      "token": "0x06012e28",
+      "rva": "0x584b68",
+      "signature": "20020212c0009cf81002",
+      "parameters": [
+        "oldActor",
+        "transitionHandled"
+      ],
+      "code_size": 52,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "Card::m_prevZone",
+          "token": "token(0x0400FA69)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "isinst",
+          "operand": "ZoneHero",
+          "token": "token(0x02000CC4)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "brfalse.s",
+          "operand": "IL_0032",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "ldfld",
+          "operand": "Card::m_zone",
+          "token": "token(0x0400FA68)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "isinst",
+          "operand": "ZoneGraveyard",
+          "token": "token(0x02000CC0)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "brfalse.s",
+          "operand": "IL_0032",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "callvirt",
+          "operand": "Actor::DoCardDeathVisuals",
+          "token": "token(0x06012966)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "call",
+          "operand": "Card::DeactivateCustomKeywordEffect",
+          "token": "token(0x06012D59)"
+        },
+        {
+          "offset": "IL_0026",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "stind.i1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0029",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "stfld",
+          "operand": "Card::m_actorReady",
+          "token": "token(0x0400FA64)"
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_entrypoints.cil.json"
+    },
+    {
+      "type": "Actor",
+      "method": "ActivateAllSpellsDeathStates",
+      "token": "0x06012965",
+      "rva": "0x56da54",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 180,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "Actor::m_useSharedSpellTable",
+          "token": "token(0x0400F773)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brfalse.s",
+          "operand": "IL_0054",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldfld",
+          "operand": "Actor::m_ownedSpells",
+          "token": "token(0x0400F774)"
+        },
+        {
+          "offset": "IL_000e",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8d63bc50>::get_Values",
+          "token": "token(0x0A0042DE)"
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8d63be00>::GetEnumerator",
+          "token": "token(0x0A0042DF)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "br.s",
+          "operand": "IL_003b",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8d63bfb0>::get_Current",
+          "token": "token(0x0A0042E0)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "brfalse.s",
+          "operand": "IL_003b",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Game.Spells.SpellBase::IsActive",
+          "token": "token(0x0A002633)"
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "brfalse.s",
+          "operand": "IL_003b",
+          "token": null
+        },
+        {
+          "offset": "IL_0034",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ldc.i4.5",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Game.Spells.SpellBase::ActivateState",
+          "token": "token(0x0A0002FF)"
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_003d",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8d63bfb0>::MoveNext",
+          "token": "token(0x0A0042E2)"
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "brtrue.s",
+          "operand": "IL_001b",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "leave.s",
+          "operand": "IL_00b3",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0000)",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8d63bfb0>",
+          "token": "token(0x1B001030)"
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "ldfld",
+          "operand": "Actor::m_localSpellTable",
+          "token": "token(0x0400F775)"
+        },
+        {
+          "offset": "IL_005a",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_0060",
+          "opcode": "brfalse.s",
+          "operand": "IL_00b3",
+          "token": null
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0063",
+          "opcode": "ldfld",
+          "operand": "Actor::m_localSpellTable",
+          "token": "token(0x0400F775)"
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "ldfld",
+          "operand": "SpellTable::m_Table",
+          "token": "token(0x04011CCF)"
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8d650350>::GetEnumerator",
+          "token": "token(0x0A004309)"
+        },
+        {
+          "offset": "IL_0072",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0073",
+          "opcode": "br.s",
+          "operand": "IL_009a",
+          "token": null
+        },
+        {
+          "offset": "IL_0075",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0002)",
+          "token": null
+        },
+        {
+          "offset": "IL_0077",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8d651940>::get_Current",
+          "token": "token(0x0A00430A)"
+        },
+        {
+          "offset": "IL_007c",
+          "opcode": "ldfld",
+          "operand": "SpellTableEntry::m_Spell",
+          "token": "token(0x04011CCD)"
+        },
+        {
+          "offset": "IL_0081",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0082",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0083",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0084",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0089",
+          "opcode": "brtrue.s",
+          "operand": "IL_009a",
+          "token": null
+        },
+        {
+          "offset": "IL_008b",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_008c",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Game.Spells.SpellBase::IsActive",
+          "token": "token(0x0A002633)"
+        },
+        {
+          "offset": "IL_0091",
+          "opcode": "brfalse.s",
+          "operand": "IL_009a",
+          "token": null
+        },
+        {
+          "offset": "IL_0093",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0094",
+          "opcode": "ldc.i4.5",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0095",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Game.Spells.SpellBase::ActivateState",
+          "token": "token(0x0A0002FF)"
+        },
+        {
+          "offset": "IL_009a",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0002)",
+          "token": null
+        },
+        {
+          "offset": "IL_009c",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8d651940>::MoveNext",
+          "token": "token(0x0A00430B)"
+        },
+        {
+          "offset": "IL_00a1",
+          "opcode": "brtrue.s",
+          "operand": "IL_0075",
+          "token": null
+        },
+        {
+          "offset": "IL_00a3",
+          "opcode": "leave.s",
+          "operand": "IL_00b3",
+          "token": null
+        },
+        {
+          "offset": "IL_00a5",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0002)",
+          "token": null
+        },
+        {
+          "offset": "IL_00a7",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8d651940>",
+          "token": "token(0x1B00103F)"
+        },
+        {
+          "offset": "IL_00ad",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_00b2",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b3",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_entrypoints.cil.json"
+    },
+    {
+      "type": "Actor",
+      "method": "DoCardDeathVisuals",
+      "token": "0x06012966",
+      "rva": "0x56db30",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 105,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldtoken",
+          "operand": "SpellType",
+          "token": "token(0x010000A1)"
+        },
+        {
+          "offset": "IL_0005",
+          "opcode": "call",
+          "operand": "System.Type::GetTypeFromHandle",
+          "token": "token(0x0A00010D)"
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "call",
+          "operand": "System.Enum::GetValues",
+          "token": "token(0x0A000AE0)"
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "callvirt",
+          "operand": "System.Array::GetEnumerator",
+          "token": "token(0x0A000AE1)"
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "br.s",
+          "operand": "IL_004d",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "callvirt",
+          "operand": "System.Collections.IEnumerator::get_Current",
+          "token": "token(0x0A0000F9)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "unbox.any",
+          "operand": "SpellType",
+          "token": "token(0x010000A1)"
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0023",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0024",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "call",
+          "operand": "Actor::IsSpellActive",
+          "token": "token(0x06012962)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "brfalse.s",
+          "operand": "IL_004d",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ldc.i4.s",
+          "operand": "127",
+          "token": null
+        },
+        {
+          "offset": "IL_002f",
+          "opcode": "beq.s",
+          "operand": "IL_004d",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "ldc.i4.5",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0033",
+          "opcode": "beq.s",
+          "operand": "IL_004d",
+          "token": null
+        },
+        {
+          "offset": "IL_0035",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0036",
+          "opcode": "ldc.i4.s",
+          "operand": "35",
+          "token": null
+        },
+        {
+          "offset": "IL_0038",
+          "opcode": "beq.s",
+          "operand": "IL_004d",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003b",
+          "opcode": "ldc.i4",
+          "operand": "150",
+          "token": null
+        },
+        {
+          "offset": "IL_0040",
+          "opcode": "beq.s",
+          "operand": "IL_004d",
+          "token": null
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "ldc.i4.7",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0044",
+          "opcode": "beq.s",
+          "operand": "IL_004d",
+          "token": null
+        },
+        {
+          "offset": "IL_0046",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0047",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "call",
+          "operand": "Actor::ActivateSpellDeathState",
+          "token": "token(0x06012963)"
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004e",
+          "opcode": "callvirt",
+          "operand": "System.Collections.IEnumerator::MoveNext",
+          "token": "token(0x0A000094)"
+        },
+        {
+          "offset": "IL_0053",
+          "opcode": "brtrue.s",
+          "operand": "IL_0017",
+          "token": null
+        },
+        {
+          "offset": "IL_0055",
+          "opcode": "leave.s",
+          "operand": "IL_0068",
+          "token": null
+        },
+        {
+          "offset": "IL_0057",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0058",
+          "opcode": "isinst",
+          "operand": "System.IDisposable",
+          "token": "token(0x01000037)"
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005e",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005f",
+          "opcode": "brfalse.s",
+          "operand": "IL_0067",
+          "token": null
+        },
+        {
+          "offset": "IL_0061",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0067",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0068",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_entrypoints.cil.json"
+    },
+    {
+      "type": "Card",
+      "method": "ActivateCharacterDeathEffects",
+      "token": "0x06012d53",
+      "rva": "0x57df12",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 46,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "Card::m_suppressDeathEffects",
+          "token": "token(0x0400FA83)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "brfalse.s",
+          "operand": "IL_0009",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "call",
+          "operand": "Card::IsHeroUsingDeathSpellOverride",
+          "token": "token(0x06012D55)"
+        },
+        {
+          "offset": "IL_000f",
+          "opcode": "brfalse.s",
+          "operand": "IL_0012",
+          "token": null
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldfld",
+          "operand": "Card::m_suppressDeathSounds",
+          "token": "token(0x0400FA84)"
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "brtrue.s",
+          "operand": "IL_0020",
+          "token": null
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "call",
+          "operand": "Card::ForceActivateDeathSoundSpells",
+          "token": "token(0x06012D54)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0021",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "stfld",
+          "operand": "Card::m_suppressDeathSounds",
+          "token": "token(0x0400FA84)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "call",
+          "operand": "Card::DeactivateLifetimeEffects",
+          "token": "token(0x06012D57)"
+        },
+        {
+          "offset": "IL_002d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_entrypoints.cil.json"
+    },
+    {
+      "type": "Card",
+      "method": "IsHeroUsingDeathSpellOverride",
+      "token": "0x06012d55",
+      "rva": "0x57dfa8",
+      "signature": "200002",
+      "parameters": [],
+      "code_size": 43,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "call",
+          "operand": "Card::GetEntity",
+          "token": "token(0x06012CC3)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0008",
+          "opcode": "brtrue.s",
+          "operand": "IL_000c",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000d",
+          "opcode": "callvirt",
+          "operand": "EntityBase::GetCardType",
+          "token": "token(0x060138F5)"
+        },
+        {
+          "offset": "IL_0012",
+          "opcode": "ldc.i4.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "beq.s",
+          "operand": "IL_0017",
+          "token": null
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0016",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0017",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0018",
+          "opcode": "callvirt",
+          "operand": "Entity::GetController",
+          "token": "token(0x060137DE)"
+        },
+        {
+          "offset": "IL_001d",
+          "opcode": "ldc.i4",
+          "operand": "2722",
+          "token": null
+        },
+        {
+          "offset": "IL_0022",
+          "opcode": "callvirt",
+          "operand": "EntityBase::GetTag",
+          "token": "token(0x060138A4)"
+        },
+        {
+          "offset": "IL_0027",
+          "opcode": "ldc.i4.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0028",
+          "opcode": "cgt.un",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_entrypoints.cil.json"
+    },
+    {
+      "type": "GameEntity",
+      "method": "ActivateSpellForDestroyedHero",
+      "token": "0x060054f3",
+      "rva": "0x18cbbc",
+      "signature": "200212c000ac1c12c0009ebc118285",
+      "parameters": [
+        "card",
+        "spellType"
+      ],
+      "code_size": 430,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0002",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0007",
+          "opcode": "brfalse.s",
+          "operand": "IL_000b",
+          "token": null
+        },
+        {
+          "offset": "IL_0009",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000a",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "call",
+          "operand": "GameState::Get",
+          "token": "token(0x06005589)"
+        },
+        {
+          "offset": "IL_0010",
+          "opcode": "callvirt",
+          "operand": "GameState::GetOpposingSidePlayer",
+          "token": "token(0x060055B9)"
+        },
+        {
+          "offset": "IL_0015",
+          "opcode": "callvirt",
+          "operand": "Entity::GetHeroCard",
+          "token": "token(0x060137E9)"
+        },
+        {
+          "offset": "IL_001a",
+          "opcode": "stloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_001b",
+          "opcode": "call",
+          "operand": "GameState::Get",
+          "token": "token(0x06005589)"
+        },
+        {
+          "offset": "IL_0020",
+          "opcode": "callvirt",
+          "operand": "GameState::GetFriendlySidePlayer",
+          "token": "token(0x060055B3)"
+        },
+        {
+          "offset": "IL_0025",
+          "opcode": "callvirt",
+          "operand": "Entity::GetHeroCard",
+          "token": "token(0x060137E9)"
+        },
+        {
+          "offset": "IL_002a",
+          "opcode": "stloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002b",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_002c",
+          "opcode": "ldc.i4.s",
+          "operand": "39",
+          "token": null
+        },
+        {
+          "offset": "IL_002e",
+          "opcode": "bne.un.s",
+          "operand": "IL_007e",
+          "token": null
+        },
+        {
+          "offset": "IL_0030",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0031",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0032",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0037",
+          "opcode": "brfalse.s",
+          "operand": "IL_0042",
+          "token": null
+        },
+        {
+          "offset": "IL_0039",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_003a",
+          "opcode": "ldc.i4.s",
+          "operand": "38",
+          "token": null
+        },
+        {
+          "offset": "IL_003c",
+          "opcode": "callvirt",
+          "operand": "Card::ActivateActorSpell",
+          "token": "token(0x06012DA5)"
+        },
+        {
+          "offset": "IL_0041",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0042",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0043",
+          "opcode": "callvirt",
+          "operand": "Card::GetEntity",
+          "token": "token(0x06012CC3)"
+        },
+        {
+          "offset": "IL_0048",
+          "opcode": "dup",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0049",
+          "opcode": "brtrue.s",
+          "operand": "IL_004f",
+          "token": null
+        },
+        {
+          "offset": "IL_004b",
+          "opcode": "pop",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004c",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_004d",
+          "opcode": "br.s",
+          "operand": "IL_0054",
+          "token": null
+        },
+        {
+          "offset": "IL_004f",
+          "opcode": "call",
+          "operand": "EntityBase::GetCardId",
+          "token": "token(0x06013947)"
+        },
+        {
+          "offset": "IL_0054",
+          "opcode": "call",
+          "operand": "GameUtils::GetCardRecord",
+          "token": "token(0x06014CB5)"
+        },
+        {
+          "offset": "IL_0059",
+          "opcode": "stloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_005b",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005c",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_005d",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_0062",
+          "opcode": "brfalse.s",
+          "operand": "IL_0076",
+          "token": null
+        },
+        {
+          "offset": "IL_0064",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0007)",
+          "token": null
+        },
+        {
+          "offset": "IL_0066",
+          "opcode": "call",
+          "operand": "RewardUtils::IsShopPremiumHeroSkin",
+          "token": "token(0x060104B9)"
+        },
+        {
+          "offset": "IL_006b",
+          "opcode": "brfalse.s",
+          "operand": "IL_0076",
+          "token": null
+        },
+        {
+          "offset": "IL_006d",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_006e",
+          "opcode": "ldc.i4.s",
+          "operand": "37",
+          "token": null
+        },
+        {
+          "offset": "IL_0070",
+          "opcode": "callvirt",
+          "operand": "Card::ActivateActorSpell",
+          "token": "token(0x06012DA5)"
+        },
+        {
+          "offset": "IL_0075",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0076",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0077",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0078",
+          "opcode": "callvirt",
+          "operand": "Card::ActivateActorSpell",
+          "token": "token(0x06012DA5)"
+        },
+        {
+          "offset": "IL_007d",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007e",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_007f",
+          "opcode": "callvirt",
+          "operand": "Card::GetController",
+          "token": "token(0x06012CC6)"
+        },
+        {
+          "offset": "IL_0084",
+          "opcode": "stloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0085",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0086",
+          "opcode": "ldc.i4",
+          "operand": "2722",
+          "token": null
+        },
+        {
+          "offset": "IL_008b",
+          "opcode": "callvirt",
+          "operand": "EntityBase::GetTag",
+          "token": "token(0x060138A4)"
+        },
+        {
+          "offset": "IL_0090",
+          "opcode": "stloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0091",
+          "opcode": "call",
+          "operand": "DeathSpellConfig::Get",
+          "token": "token(0x060148BA)"
+        },
+        {
+          "offset": "IL_0096",
+          "opcode": "ldloc.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0097",
+          "opcode": "callvirt",
+          "operand": "DeathSpellConfig::GetSpell",
+          "token": "token(0x060148BC)"
+        },
+        {
+          "offset": "IL_009c",
+          "opcode": "stloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_009e",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00a0",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00a1",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_00a6",
+          "opcode": "brfalse.s",
+          "operand": "IL_00e7",
+          "token": null
+        },
+        {
+          "offset": "IL_00a8",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00aa",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00ab",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_00b0",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Game.Spells.SpellBase::SetSource",
+          "token": "token(0x0A000574)"
+        },
+        {
+          "offset": "IL_00b5",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00b7",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00b8",
+          "opcode": "ldftn",
+          "operand": "GameEntity::OnFriendlyHeroDestroyed",
+          "token": "token(0x060054F4)"
+        },
+        {
+          "offset": "IL_00be",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8db31940>::.ctor",
+          "token": "token(0x0A00026C)"
+        },
+        {
+          "offset": "IL_00c3",
+          "opcode": "callvirt",
+          "operand": "Spell::AddFinishedCallback",
+          "token": "token(0x06014944)"
+        },
+        {
+          "offset": "IL_00c8",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00c9",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00cb",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00cc",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00ce",
+          "opcode": "call",
+          "operand": "GameEntity::EnsureHeroDestroyedCompletes",
+          "token": "token(0x060054F5)"
+        },
+        {
+          "offset": "IL_00d3",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.MonoBehaviour::StartCoroutine",
+          "token": "token(0x0A0000F1)"
+        },
+        {
+          "offset": "IL_00d8",
+          "opcode": "stfld",
+          "operand": "GameEntity::m_destroyHeroTrackingCoroutine",
+          "token": "token(0x04003BF2)"
+        },
+        {
+          "offset": "IL_00dd",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00df",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Game.Spells.SpellBase::Activate",
+          "token": "token(0x0A000450)"
+        },
+        {
+          "offset": "IL_00e4",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0004)",
+          "token": null
+        },
+        {
+          "offset": "IL_00e6",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00e7",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00e8",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00e9",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_00ee",
+          "opcode": "brtrue.s",
+          "operand": "IL_00f3",
+          "token": null
+        },
+        {
+          "offset": "IL_00f0",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00f1",
+          "opcode": "br.s",
+          "operand": "IL_00f4",
+          "token": null
+        },
+        {
+          "offset": "IL_00f3",
+          "opcode": "ldloc.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00f4",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00f5",
+          "opcode": "ldloc.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_00f6",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Equality",
+          "token": "token(0x0A000046)"
+        },
+        {
+          "offset": "IL_00fb",
+          "opcode": "brtrue.s",
+          "operand": "IL_0104",
+          "token": null
+        },
+        {
+          "offset": "IL_00fd",
+          "opcode": "ldc.i4",
+          "operand": "276",
+          "token": null
+        },
+        {
+          "offset": "IL_0102",
+          "opcode": "br.s",
+          "operand": "IL_0109",
+          "token": null
+        },
+        {
+          "offset": "IL_0104",
+          "opcode": "ldc.i4",
+          "operand": "275",
+          "token": null
+        },
+        {
+          "offset": "IL_0109",
+          "opcode": "stloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_010b",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0005)",
+          "token": null
+        },
+        {
+          "offset": "IL_010d",
+          "opcode": "ldc.i4.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_010e",
+          "opcode": "callvirt",
+          "operand": "Card::GetActorSpell",
+          "token": "token(0x06012DA4)"
+        },
+        {
+          "offset": "IL_0113",
+          "opcode": "stloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_0115",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_0117",
+          "opcode": "ldnull",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0118",
+          "opcode": "call",
+          "operand": "UnityEngine.Object::op_Inequality",
+          "token": "token(0x0A00006D)"
+        },
+        {
+          "offset": "IL_011d",
+          "opcode": "brfalse",
+          "operand": "IL_01a6",
+          "token": null
+        },
+        {
+          "offset": "IL_0122",
+          "opcode": "newobj",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8db3d9a0>::.ctor",
+          "token": "token(0x0A0002EB)"
+        },
+        {
+          "offset": "IL_0127",
+          "opcode": "stloc.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_0129",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_012a",
+          "opcode": "callvirt",
+          "operand": "Player::GetBattlefieldZone",
+          "token": "token(0x06005D96)"
+        },
+        {
+          "offset": "IL_012f",
+          "opcode": "callvirt",
+          "operand": "Zone::GetCards",
+          "token": "token(0x06006374)"
+        },
+        {
+          "offset": "IL_0134",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8db6ddc0>::GetEnumerator",
+          "token": "token(0x0A0011BA)"
+        },
+        {
+          "offset": "IL_0139",
+          "opcode": "stloc.s",
+          "operand": "local(0x0009)",
+          "token": null
+        },
+        {
+          "offset": "IL_013b",
+          "opcode": "br.s",
+          "operand": "IL_0179",
+          "token": null
+        },
+        {
+          "offset": "IL_013d",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0009)",
+          "token": null
+        },
+        {
+          "offset": "IL_013f",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8da8b4a0>::get_Current",
+          "token": "token(0x0A0011BB)"
+        },
+        {
+          "offset": "IL_0144",
+          "opcode": "stloc.s",
+          "operand": "local(0x000A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0146",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000A)",
+          "token": null
+        },
+        {
+          "offset": "IL_0148",
+          "opcode": "callvirt",
+          "operand": "Card::GetEntity",
+          "token": "token(0x06012CC3)"
+        },
+        {
+          "offset": "IL_014d",
+          "opcode": "stloc.s",
+          "operand": "local(0x000B)",
+          "token": null
+        },
+        {
+          "offset": "IL_014f",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000B)",
+          "token": null
+        },
+        {
+          "offset": "IL_0151",
+          "opcode": "callvirt",
+          "operand": "Entity::GetController",
+          "token": "token(0x060137DE)"
+        },
+        {
+          "offset": "IL_0156",
+          "opcode": "ldloc.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0157",
+          "opcode": "bne.un.s",
+          "operand": "IL_0179",
+          "token": null
+        },
+        {
+          "offset": "IL_0159",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000B)",
+          "token": null
+        },
+        {
+          "offset": "IL_015b",
+          "opcode": "callvirt",
+          "operand": "EntityBase::IsMinion",
+          "token": "token(0x060138DB)"
+        },
+        {
+          "offset": "IL_0160",
+          "opcode": "brtrue.s",
+          "operand": "IL_016b",
+          "token": null
+        },
+        {
+          "offset": "IL_0162",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000B)",
+          "token": null
+        },
+        {
+          "offset": "IL_0164",
+          "opcode": "callvirt",
+          "operand": "EntityBase::IsLocation",
+          "token": "token(0x060138E5)"
+        },
+        {
+          "offset": "IL_0169",
+          "opcode": "brfalse.s",
+          "operand": "IL_0179",
+          "token": null
+        },
+        {
+          "offset": "IL_016b",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_016d",
+          "opcode": "ldloc.s",
+          "operand": "local(0x000A)",
+          "token": null
+        },
+        {
+          "offset": "IL_016f",
+          "opcode": "callvirt",
+          "operand": "UnityEngine.Component::get_gameObject",
+          "token": "token(0x0A000045)"
+        },
+        {
+          "offset": "IL_0174",
+          "opcode": "callvirt",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8db3d9a0>::Add",
+          "token": "token(0x0A0002F8)"
+        },
+        {
+          "offset": "IL_0179",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0009)",
+          "token": null
+        },
+        {
+          "offset": "IL_017b",
+          "opcode": "call",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8da8b4a0>::MoveNext",
+          "token": "token(0x0A0011BC)"
+        },
+        {
+          "offset": "IL_0180",
+          "opcode": "brtrue.s",
+          "operand": "IL_013d",
+          "token": null
+        },
+        {
+          "offset": "IL_0182",
+          "opcode": "leave.s",
+          "operand": "IL_0192",
+          "token": null
+        },
+        {
+          "offset": "IL_0184",
+          "opcode": "ldloca.s",
+          "operand": "local(0x0009)",
+          "token": null
+        },
+        {
+          "offset": "IL_0186",
+          "opcode": "constrained.",
+          "operand": "<dnfile.mdtable.TypeSpecRow object at 0x7fbc8da8b4a0>",
+          "token": "token(0x1B0004DE)"
+        },
+        {
+          "offset": "IL_018c",
+          "opcode": "callvirt",
+          "operand": "System.IDisposable::Dispose",
+          "token": "token(0x0A000068)"
+        },
+        {
+          "offset": "IL_0191",
+          "opcode": "endfinally",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0192",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_0194",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0008)",
+          "token": null
+        },
+        {
+          "offset": "IL_0196",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Game.Spells.SpellBase::AddTargets",
+          "token": "token(0x0A0022D4)"
+        },
+        {
+          "offset": "IL_019b",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_019d",
+          "opcode": "ldc.i4.3",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_019e",
+          "opcode": "callvirt",
+          "operand": "Blizzard.T5.Game.Spells.SpellBase::ActivateState",
+          "token": "token(0x0A0002FF)"
+        },
+        {
+          "offset": "IL_01a3",
+          "opcode": "ldloc.s",
+          "operand": "local(0x0006)",
+          "token": null
+        },
+        {
+          "offset": "IL_01a5",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01a6",
+          "opcode": "ldarg.1",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01a7",
+          "opcode": "ldarg.2",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_01a8",
+          "opcode": "callvirt",
+          "operand": "Card::ActivateActorSpell",
+          "token": "token(0x06012DA5)"
+        },
+        {
+          "offset": "IL_01ad",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ],
+      "source_file": "v35_work/source_death_flow/death_entrypoints.cil.json"
+    }
+  ]
+}

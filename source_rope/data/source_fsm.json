@@ -1,0 +1,699 @@
+{
+  "source_sha256": "10513b83e7709ec02378b7593cd24061909682e48ba29628b6f9d5c46b886c69",
+  "source": "37.0.0.255130.254477 TurnTimer prefab PlayMaker FSM",
+  "normalization": "Exact scalar values and paths; 64-bit IDs preserved as strings; no actions invented",
+  "global_transitions": {
+    "Idle": "State 2",
+    "Death": "State 3",
+    "Cancel": "State 4",
+    "Birth": "State 5"
+  },
+  "states": {
+    "ready": {
+      "transitions": {},
+      "actions": [
+        {
+          "index": 0,
+          "type": "SetVisibilityRecursiveAction",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "file_id": 0,
+              "path_id": "-7775139079732154233",
+              "path": ""
+            },
+            "visible": 0,
+            "resetOnExit": false,
+            "includeChildren": true
+          }
+        }
+      ]
+    },
+    "State 1": {
+      "transitions": {
+        "FINISHED": "State 2"
+      },
+      "actions": [
+        {
+          "index": 0,
+          "type": "SetVisibilityRecursiveAction",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "file_id": 0,
+              "path_id": "-7775139079732154233",
+              "path": ""
+            },
+            "visible": 1,
+            "resetOnExit": false,
+            "includeChildren": true
+          }
+        },
+        {
+          "index": 1,
+          "type": "AnimatorPlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "-2082734300898676601",
+              "path": "TurnTimer_Spiral"
+            },
+            "m_StateName": "Unwrap",
+            "m_LayerName": "",
+            "m_StartTimePercent": 0.0
+          }
+        },
+        {
+          "index": 2,
+          "type": "AnimatorPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "-5464552782728875897",
+              "path": "TurnTimer_Wick"
+            },
+            "m_StateName": "TurnTimer",
+            "m_LayerName": "",
+            "m_StartTimePercent": 0.0
+          }
+        },
+        {
+          "index": 3,
+          "type": "AnimatorPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "path": ""
+            },
+            "m_StateName": "TurnTimer_Wick_mat",
+            "m_LayerName": "",
+            "m_StartTimePercent": 0.0
+          }
+        },
+        {
+          "index": 4,
+          "type": "Wait",
+          "enabled": true,
+          "params": {
+            "time": 0.8700000047683716,
+            "finishEvent": "FINISHED",
+            "realTime": true
+          }
+        },
+        {
+          "index": 5,
+          "type": "AudioPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "path": ""
+            },
+            "m_VolumeScale": {
+              "variable": "RopeRolloutVolume",
+              "default": 0.0
+            },
+            "m_OneShotClip": {
+              "file_id": 10,
+              "path_id": "1270442728999938488"
+            },
+            "m_Delay": 0.0,
+            "m_OneShotSound": {
+              "file_id": 0,
+              "path_id": "-2298793491738073100"
+            },
+            "m_FinishedEvent": "",
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          }
+        },
+        {
+          "index": 6,
+          "type": "AudioPlayClipAction",
+          "enabled": true,
+          "params": {
+            "m_ParentObject": {
+              "path": ""
+            },
+            "m_Sound": {
+              "file_id": 0,
+              "path_id": "1111460132624938210"
+            },
+            "m_Volume": {
+              "variable": "RopeRolloutVolume",
+              "default": 0.0
+            },
+            "m_Pitch": 1.0,
+            "m_SpatialBlend": 0.0,
+            "m_Category": 1,
+            "m_Delay": 0.0,
+            "m_TemplateSource": {
+              "file_id": 0,
+              "path_id": "0"
+            },
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_SkipSuppressEntitySoundCheck": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          }
+        }
+      ]
+    },
+    "State 3": {
+      "transitions": {
+        "FINISHED": "Play FX?"
+      },
+      "actions": [
+        {
+          "index": 0,
+          "type": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "path": ""
+            }
+          }
+        },
+        {
+          "index": 1,
+          "type": "ParticleStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "5770372512052064391",
+              "path": "Sparks/FX_Sparks"
+            },
+            "m_IncludeChildren": 1
+          }
+        },
+        {
+          "index": 2,
+          "type": "SetVisibilityRecursiveAction",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "file_id": 0,
+              "path_id": "-5464552782728875897",
+              "path": "TurnTimer_Wick"
+            },
+            "visible": 0,
+            "resetOnExit": false,
+            "includeChildren": true
+          }
+        },
+        {
+          "index": 3,
+          "type": "SetVisibilityRecursiveAction",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "file_id": 0,
+              "path_id": "-4023862018665303929",
+              "path": "TurnTimer_ShadowQuad"
+            },
+            "visible": 0,
+            "resetOnExit": false,
+            "includeChildren": false
+          }
+        },
+        {
+          "index": 4,
+          "type": "AudioStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "-789538757726523257",
+              "path": "Fuse Timer Music Stinger"
+            }
+          }
+        },
+        {
+          "index": 5,
+          "type": "AudioVolumeFadeAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "5822829536701952135",
+              "path": "Sparks/FX_Sparks/Fuse sound loop"
+            },
+            "m_FadeTime": 0.10000000149011612,
+            "m_TargetVolume": 0.0,
+            "m_StopWhenDone": 1,
+            "m_RealTime": 0
+          }
+        },
+        {
+          "index": 6,
+          "type": "AudioPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "path": ""
+            },
+            "m_VolumeScale": {
+              "variable": "EndTurnButtonExplosionVolume",
+              "default": 0.0
+            },
+            "m_OneShotClip": {
+              "file_id": 10,
+              "path_id": "6826161764574781572"
+            },
+            "m_Delay": 0.0,
+            "m_OneShotSound": {
+              "file_id": 0,
+              "path_id": "2308734705199135259"
+            },
+            "m_FinishedEvent": "",
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          }
+        },
+        {
+          "index": 7,
+          "type": "AudioPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "path": ""
+            },
+            "m_VolumeScale": {
+              "variable": "EndTurnButtonExplosionVolume",
+              "default": 0.0
+            },
+            "m_OneShotClip": {
+              "file_id": 10,
+              "path_id": "-8765447440310880597"
+            },
+            "m_Delay": 0.0,
+            "m_OneShotSound": {
+              "file_id": 0,
+              "path_id": "1948953871417246851"
+            },
+            "m_FinishedEvent": "",
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          }
+        }
+      ]
+    },
+    "State 2": {
+      "transitions": {
+        "FINISHED": "Play Stinger?"
+      },
+      "actions": [
+        {
+          "index": 0,
+          "type": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "path": ""
+            }
+          }
+        },
+        {
+          "index": 1,
+          "type": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "5770372512052064391",
+              "path": "Sparks/FX_Sparks"
+            },
+            "m_IncludeChildren": 1
+          }
+        },
+        {
+          "index": 2,
+          "type": "AudioPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "5822829536701952135",
+              "path": "Sparks/FX_Sparks/Fuse sound loop"
+            },
+            "m_VolumeScale": {
+              "variable": "RopeFuseVolume",
+              "default": 0.0
+            },
+            "m_OneShotClip": {
+              "file_id": 0,
+              "path_id": "0"
+            },
+            "m_Delay": 0.0,
+            "m_OneShotSound": {
+              "file_id": 0,
+              "path_id": "0"
+            },
+            "m_FinishedEvent": "",
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          }
+        },
+        {
+          "index": 3,
+          "type": "AudioVolumeFadeAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "5822829536701952135",
+              "path": "Sparks/FX_Sparks/Fuse sound loop"
+            },
+            "m_FadeTime": 0.30000001192092896,
+            "m_TargetVolume": {
+              "variable": "RopeFuseVolume",
+              "default": 0.0
+            },
+            "m_StopWhenDone": 0,
+            "m_RealTime": 0
+          }
+        }
+      ]
+    },
+    "State 4": {
+      "transitions": {},
+      "actions": [
+        {
+          "index": 0,
+          "type": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "path": ""
+            }
+          }
+        },
+        {
+          "index": 1,
+          "type": "ParticleStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "5770372512052064391",
+              "path": "Sparks/FX_Sparks"
+            },
+            "m_IncludeChildren": 1
+          }
+        },
+        {
+          "index": 2,
+          "type": "SetVisibility",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "file_id": 0,
+              "path_id": "-2082734300898676601",
+              "path": "TurnTimer_Spiral"
+            },
+            "toggle": 0,
+            "visible": 0,
+            "resetOnExit": true
+          }
+        },
+        {
+          "index": 3,
+          "type": "SetVisibilityRecursiveAction",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "file_id": 0,
+              "path_id": "-5464552782728875897",
+              "path": "TurnTimer_Wick"
+            },
+            "visible": 0,
+            "resetOnExit": false,
+            "includeChildren": true
+          }
+        },
+        {
+          "index": 4,
+          "type": "SetVisibilityRecursiveAction",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "file_id": 0,
+              "path_id": "-4023862018665303929",
+              "path": "TurnTimer_ShadowQuad"
+            },
+            "visible": 0,
+            "resetOnExit": false,
+            "includeChildren": true
+          }
+        },
+        {
+          "index": 5,
+          "type": "AudioStopAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "-789538757726523257",
+              "path": "Fuse Timer Music Stinger"
+            }
+          }
+        },
+        {
+          "index": 6,
+          "type": "AudioVolumeFadeAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "5822829536701952135",
+              "path": "Sparks/FX_Sparks/Fuse sound loop"
+            },
+            "m_FadeTime": 0.4000000059604645,
+            "m_TargetVolume": 0.0,
+            "m_StopWhenDone": 1,
+            "m_RealTime": 0
+          }
+        }
+      ]
+    },
+    "State 5": {
+      "transitions": {
+        "FINISHED": "State 1"
+      },
+      "actions": [
+        {
+          "index": 0,
+          "type": "SpellStateAction",
+          "enabled": true,
+          "params": {
+            "m_SpellObject": {
+              "path": ""
+            }
+          }
+        },
+        {
+          "index": 1,
+          "type": "AnimatorPlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "-2082734300898676601",
+              "path": "TurnTimer_Spiral"
+            },
+            "m_StateName": "Unwrap",
+            "m_LayerName": "",
+            "m_StartTimePercent": 0.0
+          }
+        },
+        {
+          "index": 2,
+          "type": "AnimatorPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "-5464552782728875897",
+              "path": "TurnTimer_Wick"
+            },
+            "m_StateName": "TurnTimer",
+            "m_LayerName": "",
+            "m_StartTimePercent": 0.0
+          }
+        },
+        {
+          "index": 3,
+          "type": "AnimatorPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "path": ""
+            },
+            "m_StateName": "TurnTimer_Wick_mat",
+            "m_LayerName": "",
+            "m_StartTimePercent": 0.0
+          }
+        },
+        {
+          "index": 4,
+          "type": "SetVisibilityRecursiveAction",
+          "enabled": true,
+          "params": {
+            "gameObject": {
+              "file_id": 0,
+              "path_id": "-7775139079732154233",
+              "path": ""
+            },
+            "visible": 0,
+            "resetOnExit": false,
+            "includeChildren": true
+          }
+        },
+        {
+          "index": 5,
+          "type": "Wait",
+          "enabled": true,
+          "params": {
+            "time": 0.009999999776482582,
+            "finishEvent": "FINISHED",
+            "realTime": false
+          }
+        }
+      ]
+    },
+    "Play Fx": {
+      "transitions": {},
+      "actions": [
+        {
+          "index": 0,
+          "type": "MainCameraShakerAction",
+          "enabled": true,
+          "params": {
+            "m_Amount": [
+              0.6000000238418579,
+              0.6000000238418579,
+              0.6000000238418579
+            ],
+            "m_Time": 0.699999988079071,
+            "m_Delay": 0.0,
+            "m_FinishedEvent": ""
+          }
+        },
+        {
+          "index": 1,
+          "type": "ParticlePlayAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "956347140476743815",
+              "path": "AfterSmoke"
+            },
+            "m_IncludeChildren": 0
+          }
+        }
+      ]
+    },
+    "Play FX?": {
+      "transitions": {
+        "Action": "Play Fx"
+      },
+      "actions": [
+        {
+          "index": 0,
+          "type": "BoolAllTrue",
+          "enabled": true,
+          "params": {
+            "boolVariables": [
+              {
+                "variable": "PlayTimeoutFx",
+                "default": false
+              }
+            ],
+            "sendEvent": "Action",
+            "storeResult": 0,
+            "everyFrame": false
+          }
+        }
+      ]
+    },
+    "Play Stinger?": {
+      "transitions": {
+        "Action": "Play Stinger"
+      },
+      "actions": [
+        {
+          "index": 0,
+          "type": "BoolAllTrue",
+          "enabled": true,
+          "params": {
+            "boolVariables": [
+              {
+                "variable": "PlayMusicStinger",
+                "default": false
+              }
+            ],
+            "sendEvent": "Action",
+            "storeResult": 0,
+            "everyFrame": false
+          }
+        }
+      ]
+    },
+    "Play Stinger": {
+      "transitions": {},
+      "actions": [
+        {
+          "index": 0,
+          "type": "AudioPlaythroughAction",
+          "enabled": true,
+          "params": {
+            "m_GameObject": {
+              "file_id": 0,
+              "path_id": "-789538757726523257",
+              "path": "Fuse Timer Music Stinger"
+            },
+            "m_VolumeScale": 1.0,
+            "m_OneShotClip": {
+              "file_id": 0,
+              "path_id": "0"
+            },
+            "m_Delay": 0.0,
+            "m_OneShotSound": {
+              "file_id": 0,
+              "path_id": "0"
+            },
+            "m_FinishedEvent": "",
+            "m_IsMinionSummonVO": false,
+            "m_IsKeywordVO": false,
+            "m_InstanceLimited": false,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          }
+        }
+      ]
+    }
+  }
+}

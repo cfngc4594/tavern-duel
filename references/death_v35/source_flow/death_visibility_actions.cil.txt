@@ -1,0 +1,142 @@
+
+TYPE HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction 0x0200003b
+FIELD 0x04000122 gameObject SIG 061280a1
+FIELD 0x04000123 visible SIG 061280c9
+FIELD 0x04000124 resetOnExit SIG 0602
+FIELD 0x04000125 includeChildren SIG 0602
+FIELD 0x04000126 m_initialVisibility SIG 0615120d0212812902
+
+0x06000111 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::Reset() RVA 0x673d SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::gameObject token(0x04000122)
+  IL_0007 ldarg.0         
+  IL_0008 ldc.i4.0        
+  IL_0009 call           HutongGames.PlayMaker.FsmBool::op_Implicit token(0x0A00006D)
+  IL_000e stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::visible token(0x04000123)
+  IL_0013 ldarg.0         
+  IL_0014 ldc.i4.1        
+  IL_0015 stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::resetOnExit token(0x04000124)
+  IL_001a ldarg.0         
+  IL_001b ldc.i4.0        
+  IL_001c stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::includeChildren token(0x04000125)
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::m_initialVisibility token(0x04000126)
+  IL_0027 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5f6519b5c0>::Clear token(0x0A00012B)
+  IL_002c ret             
+
+0x06000112 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::OnEnter() RVA 0x676c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::gameObject token(0x04000122)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldarg.0         
+  IL_0023 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::includeChildren token(0x04000125)
+  IL_0028 brfalse.s      IL_0071 
+  IL_002a ldloc.0         
+  IL_002b callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B000010)
+  IL_0030 stloc.1         
+  IL_0031 ldloc.1         
+  IL_0032 brfalse.s      IL_00a9 
+  IL_0034 ldloc.1         
+  IL_0035 stloc.2         
+  IL_0036 ldc.i4.0        
+  IL_0037 stloc.3         
+  IL_0038 br.s           IL_0069 
+  IL_003a ldloc.2         
+  IL_003b ldloc.3         
+  IL_003c ldelem.ref      
+  IL_003d stloc.s        local(0x0004) 
+  IL_003f ldarg.0         
+  IL_0040 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::m_initialVisibility token(0x04000126)
+  IL_0045 ldloc.s        local(0x0004) 
+  IL_0047 ldloc.s        local(0x0004) 
+  IL_0049 callvirt       UnityEngine.Renderer::get_enabled token(0x0A0000B8)
+  IL_004e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5f6519b5c0>::set_Item token(0x0A00012C)
+  IL_0053 ldloc.s        local(0x0004) 
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::visible token(0x04000123)
+  IL_005b callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0060 callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_0065 ldloc.3         
+  IL_0066 ldc.i4.1        
+  IL_0067 add             
+  IL_0068 stloc.3         
+  IL_0069 ldloc.3         
+  IL_006a ldloc.2         
+  IL_006b ldlen           
+  IL_006c conv.i4         
+  IL_006d blt.s          IL_003a 
+  IL_006f br.s           IL_00a9 
+  IL_0071 ldloc.0         
+  IL_0072 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000A)
+  IL_0077 stloc.s        local(0x0005) 
+  IL_0079 ldloc.s        local(0x0005) 
+  IL_007b ldnull          
+  IL_007c call           UnityEngine.Object::op_Inequality token(0x0A0000AB)
+  IL_0081 brfalse.s      IL_00a9 
+  IL_0083 ldarg.0         
+  IL_0084 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::m_initialVisibility token(0x04000126)
+  IL_0089 ldloc.s        local(0x0005) 
+  IL_008b ldloc.s        local(0x0005) 
+  IL_008d callvirt       UnityEngine.Renderer::get_enabled token(0x0A0000B8)
+  IL_0092 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5f6519b5c0>::set_Item token(0x0A00012C)
+  IL_0097 ldloc.s        local(0x0005) 
+  IL_0099 ldarg.0         
+  IL_009a ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::visible token(0x04000123)
+  IL_009f callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_00a4 callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_00a9 ldarg.0         
+  IL_00aa call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00af ret             
+
+0x06000113 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::OnExit() RVA 0x6828 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::resetOnExit token(0x04000124)
+  IL_0006 brtrue.s       IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::m_initialVisibility token(0x04000126)
+  IL_000f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f5f6519b5c0>::GetEnumerator token(0x0A00012D)
+  IL_0014 stloc.0         
+  IL_0015 br.s           IL_003d 
+  IL_0017 ldloca.s       local(0x0000) 
+  IL_0019 call           <dnfile.mdtable.TypeSpecRow object at 0x7f5f6519b770>::get_Current token(0x0A00012E)
+  IL_001e stloc.1         
+  IL_001f ldloca.s       local(0x0001) 
+  IL_0021 call           <dnfile.mdtable.TypeSpecRow object at 0x7f5f6519b920>::get_Key token(0x0A00012F)
+  IL_0026 stloc.2         
+  IL_0027 ldloc.2         
+  IL_0028 ldnull          
+  IL_0029 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_002e brtrue.s       IL_003d 
+  IL_0030 ldloc.2         
+  IL_0031 ldloca.s       local(0x0001) 
+  IL_0033 call           <dnfile.mdtable.TypeSpecRow object at 0x7f5f6519b920>::get_Value token(0x0A000130)
+  IL_0038 callvirt       UnityEngine.Renderer::set_enabled token(0x0A0000B9)
+  IL_003d ldloca.s       local(0x0000) 
+  IL_003f call           <dnfile.mdtable.TypeSpecRow object at 0x7f5f6519b770>::MoveNext token(0x0A000131)
+  IL_0044 brtrue.s       IL_0017 
+  IL_0046 leave.s        IL_0056 
+  IL_0048 ldloca.s       local(0x0000) 
+  IL_004a constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f5f6519b770> token(0x1B000013)
+  IL_0050 callvirt       System.IDisposable::Dispose token(0x0A000051)
+  IL_0055 endfinally      
+  IL_0056 ret             
+
+0x06000114 HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::.ctor() RVA 0x689c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f5f6519b5c0>::.ctor token(0x0A000132)
+  IL_0006 stfld          HutongGames.PlayMaker.Actions.SetVisibilityRecursiveAction::m_initialVisibility token(0x04000126)
+  IL_000b ldarg.0         
+  IL_000c call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00007E)
+  IL_0011 ret             

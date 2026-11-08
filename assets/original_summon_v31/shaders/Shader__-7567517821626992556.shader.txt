@@ -1,0 +1,22 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Card/Diffuse" {
+Properties {
+
+_MainTex ("Texture", 2D) = "white" { }
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 1.0
+
+}
+SubShader {
+ Tags { "CardAlpha" = "true" "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "CardAlpha" = "true" "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 57421
+}
+}
+Fall back "Utility/HearthstoneFallbackDiffuse"
+}

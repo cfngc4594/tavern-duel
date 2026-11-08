@@ -1,0 +1,27 @@
+
+TYPE CardTextBuilder 0x02002576
+FIELD 0x0400f00e m_controller SIG 0612c000a320
+FIELD 0x0400f00f m_source SIG 0612c000a320
+FIELD 0x0400f010 m_useEntityForTextInPlay SIG 0602
+FIELD 0x0400f011 m_useEntityForTextInHand SIG 0602
+FIELD 0x0400f012 m_fallbackCardTextBuilder SIG 0612c00095d8
+
+0x06011e0f CardTextBuilder::GetTargetingArrowText(entity) RVA 0x5399c4 SIG 20010e12c000a320
+  IL_0000 call           GameDbf::GetIndex token(0x06003669)
+  IL_0005 ldarg.1         
+  IL_0006 callvirt       EntityBase::GetCardId token(0x06013947)
+  IL_000b callvirt       GameDbfIndex::GetCardRecord token(0x06013A30)
+  IL_0010 stloc.0         
+  IL_0011 ldloc.0         
+  IL_0012 brfalse.s      IL_001c 
+  IL_0014 ldloc.0         
+  IL_0015 callvirt       CardDbfRecord::get_TargetArrowText token(0x0600329F)
+  IL_001a brtrue.s       IL_0022 
+  IL_001c ldsfld         System.String::Empty token(0x0A000135)
+  IL_0021 ret             
+  IL_0022 ldarg.1         
+  IL_0023 ldloc.0         
+  IL_0024 callvirt       CardDbfRecord::get_TargetArrowText token(0x0600329F)
+  IL_0029 callvirt       DbfLocValue::GetString token(0x06012009)
+  IL_002e call           TextUtils::TransformCardText token(0x06014F54)
+  IL_0033 ret             

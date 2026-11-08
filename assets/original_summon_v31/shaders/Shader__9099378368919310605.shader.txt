@@ -1,0 +1,47 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hero/Diffuse/DiffuseAlphaMaskScroller" {
+Properties {
+
+_MainTex ("_MainTex", 2D) = "black" { }
+
+_Intensity ("Intensity", Float) = 1.0
+
+_ScrollingTex ("_ScrollingTex", 2D) = "black" { }
+
+_TintColor ("Tint Color", Color) = (1,1,1,1)
+
+_tint ("Tint Effect", Color) = (1,1,1,1)
+
+_Fade ("_Fade", Color) = (1,1,1,1)
+
+_YSpeed ("_YSpeed", Float) = 0.10000000149011612
+
+_XSpeed ("_XSpeed", Float) = 0.10000000149011612
+
+_ScaleX ("FX Scale X", Float) = 1.0
+
+_ScaleY ("FX Scale Y", Float) = 1.0
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "CardAlpha" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+  Tags { "CardAlpha" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+  GpuProgramID 57608
+}
+ Pass {
+ Name "ShadowCaster"
+  LOD 300
+  Tags { "CardAlpha" = "true" "LIGHTMODE" = "SHADOWCASTER" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ ZTest Less
+ Cull Off
+  GpuProgramID 116851
+}
+}
+}

@@ -1,0 +1,27 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Hero/AddMultiply/AddMultiply" {
+Properties {
+
+_Color ("Tint Color", Color) = (1,1,1,1)
+
+_MainTex ("Main Texture", 2D) = "white" { }
+
+_Intensity ("Intensity", Float) = 1.0
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 27173
+}
+}
+}

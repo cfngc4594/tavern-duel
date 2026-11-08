@@ -1,0 +1,2309 @@
+{
+  "schema": "source-mill-door-v1",
+  "build": "37.0.0.255130.254477",
+  "source_manifest_sha256": "17d5f471f77759a5c640c295d1b6af2e776baa2f1f22074c6898896603f45f89",
+  "fsm": {
+    "key": "cab-995e7cbc44ff3e7f4314fc93360989d0:-2477408740405939087",
+    "game_object": "cab-995e7cbc44ff3e7f4314fc93360989d0:-6363536172860050319",
+    "path": "MOP/Board_MOP/Clickables/Mill/Mill_Door_Clickable",
+    "active_in_hierarchy": true,
+    "fsm_enabled": 1,
+    "name": "FSM",
+    "start_state": "State 1",
+    "global_transitions": [],
+    "variables": {
+      "floatVariables": [],
+      "intVariables": [],
+      "boolVariables": [],
+      "stringVariables": [],
+      "vector2Variables": [],
+      "vector3Variables": [],
+      "colorVariables": [],
+      "rectVariables": [],
+      "quaternionVariables": [],
+      "gameObjectVariables": [],
+      "objectVariables": [],
+      "materialVariables": [],
+      "textureVariables": [],
+      "arrayVariables": [],
+      "enumVariables": [],
+      "categories": [
+        ""
+      ],
+      "variableCategoryIDs": []
+    },
+    "states": [
+      {
+        "name": "State 1",
+        "state_index": 0,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [
+          {
+            "fsmEvent": {
+              "name": "FINISHED",
+              "isSystemEvent": 1,
+              "isGlobal": 1
+            },
+            "toState": "State 2",
+            "linkStyle": 0,
+            "linkConstraint": 0,
+            "linkTarget": 0,
+            "colorIndex": 0
+          }
+        ],
+        "actions": [
+          {
+            "index": 0,
+            "class_name": "MousePickRandomAction",
+            "enabled": true,
+            "params": {
+              "GameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 4700183809534063729
+                  }
+                }
+              },
+              "additionalColliders": [],
+              "RandomGateClicksMin": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "RandomGateClicksMax": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "ResetOnOpen": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1
+              },
+              "mouseDownGateOpen": "FINISHED",
+              "mouseDownGateClosed": "",
+              "mouseOver": "",
+              "mouseUp": "",
+              "mouseOff": "",
+              "checkFirstFrame": true,
+              "everyFrame": true,
+              "oneShot": false,
+              "ClickCount": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              }
+            }
+          }
+        ],
+        "entry_paths": [
+          [
+            "__start__",
+            "State 1"
+          ]
+        ]
+      },
+      {
+        "name": "State 2",
+        "state_index": 1,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [
+          {
+            "fsmEvent": {
+              "name": "FINISHED",
+              "isSystemEvent": 1,
+              "isGlobal": 1
+            },
+            "toState": "State 4",
+            "linkStyle": 0,
+            "linkConstraint": 0,
+            "linkTarget": 0,
+            "colorIndex": 0
+          }
+        ],
+        "actions": [
+          {
+            "index": 0,
+            "class_name": "PlayAnimation",
+            "enabled": true,
+            "params": {
+              "gameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 8367120315102262385
+                  }
+                }
+              },
+              "animName": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": "MOP_DoorOpen"
+              },
+              "playMode": 4,
+              "blendTime": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.0
+              },
+              "finishEvent": "FINISHED",
+              "loopEvent": "",
+              "stopOnExit": false
+            }
+          },
+          {
+            "index": 1,
+            "class_name": "AudioPlayRandomClipAction",
+            "enabled": true,
+            "params": {
+              "m_ParentObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 4628007443326628977
+                  }
+                }
+              },
+              "m_Sounds": [
+                {
+                  "m_FileID": 5,
+                  "m_PathID": 6426089038940596874
+                },
+                {
+                  "m_FileID": 5,
+                  "m_PathID": 2083559788949239857
+                },
+                {
+                  "m_FileID": 5,
+                  "m_PathID": -3614523928327508440
+                }
+              ],
+              "m_Weights": [
+                {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                }
+              ],
+              "m_MinVolume": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.800000011920929
+              },
+              "m_MaxVolume": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.800000011920929
+              },
+              "m_MinPitch": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.949999988079071
+              },
+              "m_MaxPitch": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1.0499999523162842
+              },
+              "m_SpatialBlend": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1.0
+              },
+              "m_Category": 1,
+              "m_Delay": 0.0,
+              "m_TemplateSource": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_InstanceLimited": false,
+              "m_InstanceLimitedDuration": 0.0,
+              "m_InstanceLimitMaximum": 1,
+              "m_LimitMaxOutOption": 0
+            }
+          }
+        ],
+        "entry_paths": [
+          [
+            "__start__",
+            "State 1",
+            "FINISHED",
+            "State 2"
+          ]
+        ]
+      },
+      {
+        "name": "State 3",
+        "state_index": 2,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [
+          {
+            "fsmEvent": {
+              "name": "FINISHED",
+              "isSystemEvent": 1,
+              "isGlobal": 1
+            },
+            "toState": "State 1",
+            "linkStyle": 0,
+            "linkConstraint": 0,
+            "linkTarget": 0,
+            "colorIndex": 0
+          }
+        ],
+        "actions": [
+          {
+            "index": 0,
+            "class_name": "PlayAnimation",
+            "enabled": true,
+            "params": {
+              "gameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 8367120315102262385
+                  }
+                }
+              },
+              "animName": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": "MOP_DoorClose"
+              },
+              "playMode": 4,
+              "blendTime": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.0
+              },
+              "finishEvent": "FINISHED",
+              "loopEvent": "",
+              "stopOnExit": false
+            }
+          },
+          {
+            "index": 1,
+            "class_name": "AudioPlayRandomClipAction",
+            "enabled": true,
+            "params": {
+              "m_ParentObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 4628007443326628977
+                  }
+                }
+              },
+              "m_Sounds": [
+                {
+                  "m_FileID": 5,
+                  "m_PathID": 4501262486086077068
+                },
+                {
+                  "m_FileID": 5,
+                  "m_PathID": 8358254159804827186
+                },
+                {
+                  "m_FileID": 5,
+                  "m_PathID": -3833478438197908566
+                }
+              ],
+              "m_Weights": [
+                {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                },
+                {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": 1.0
+                }
+              ],
+              "m_MinVolume": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.800000011920929
+              },
+              "m_MaxVolume": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0.800000011920929
+              },
+              "m_MinPitch": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1.0
+              },
+              "m_MaxPitch": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1.0
+              },
+              "m_SpatialBlend": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1.0
+              },
+              "m_Category": 1,
+              "m_Delay": 0.0,
+              "m_TemplateSource": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_InstanceLimited": false,
+              "m_InstanceLimitedDuration": 0.0,
+              "m_InstanceLimitMaximum": 1,
+              "m_LimitMaxOutOption": 0
+            }
+          }
+        ],
+        "entry_paths": [
+          [
+            "__start__",
+            "State 1",
+            "FINISHED",
+            "State 2",
+            "FINISHED",
+            "State 4",
+            "FINISHED",
+            "State 3"
+          ]
+        ]
+      },
+      {
+        "name": "State 4",
+        "state_index": 3,
+        "name_resolves_here": true,
+        "is_sequence": false,
+        "transitions": [
+          {
+            "fsmEvent": {
+              "name": "FINISHED",
+              "isSystemEvent": 1,
+              "isGlobal": 1
+            },
+            "toState": "State 3",
+            "linkStyle": 0,
+            "linkConstraint": 0,
+            "linkTarget": 0,
+            "colorIndex": 0
+          }
+        ],
+        "actions": [
+          {
+            "index": 0,
+            "class_name": "MousePickRandomAction",
+            "enabled": true,
+            "params": {
+              "GameObject": {
+                "ownerOption": 1,
+                "gameObject": {
+                  "useVariable": 0,
+                  "name": "",
+                  "tooltip": "",
+                  "showInInspector": 0,
+                  "networkSync": 0,
+                  "value": {
+                    "m_FileID": 0,
+                    "m_PathID": 4700183809534063729
+                  }
+                }
+              },
+              "additionalColliders": [],
+              "RandomGateClicksMin": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "RandomGateClicksMax": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              },
+              "ResetOnOpen": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 1
+              },
+              "mouseDownGateOpen": "FINISHED",
+              "mouseDownGateClosed": "",
+              "mouseOver": "",
+              "mouseUp": "",
+              "mouseOff": "",
+              "checkFirstFrame": true,
+              "everyFrame": true,
+              "oneShot": false,
+              "ClickCount": {
+                "useVariable": 0,
+                "name": "",
+                "tooltip": "",
+                "showInInspector": 0,
+                "networkSync": 0,
+                "value": 0
+              }
+            }
+          }
+        ],
+        "entry_paths": [
+          [
+            "__start__",
+            "State 1",
+            "FINISHED",
+            "State 2",
+            "FINISHED",
+            "State 4"
+          ]
+        ]
+      }
+    ],
+    "source_refs": {
+      ".m_GameObject": "cab-995e7cbc44ff3e7f4314fc93360989d0:-6363536172860050319",
+      ".m_Script": "cab-995e7cbc44ff3e7f4314fc93360989d0:7865650196755539231",
+      ".fsm.states[0].actionData.fsmOwnerDefaultParams[0].gameObject.value": "cab-995e7cbc44ff3e7f4314fc93360989d0:4700183809534063729",
+      ".fsm.states[1].actionData.unityObjectParams[0]": "cab-94702b40f3bc7e46c8686903984a1bff:6426089038940596874",
+      ".fsm.states[1].actionData.unityObjectParams[1]": "cab-94702b40f3bc7e46c8686903984a1bff:2083559788949239857",
+      ".fsm.states[1].actionData.unityObjectParams[2]": "cab-94702b40f3bc7e46c8686903984a1bff:-3614523928327508440",
+      ".fsm.states[1].actionData.fsmOwnerDefaultParams[0].gameObject.value": "cab-995e7cbc44ff3e7f4314fc93360989d0:8367120315102262385",
+      ".fsm.states[1].actionData.fsmOwnerDefaultParams[1].gameObject.value": "cab-995e7cbc44ff3e7f4314fc93360989d0:4628007443326628977",
+      ".fsm.states[2].actionData.unityObjectParams[0]": "cab-94702b40f3bc7e46c8686903984a1bff:4501262486086077068",
+      ".fsm.states[2].actionData.unityObjectParams[1]": "cab-94702b40f3bc7e46c8686903984a1bff:8358254159804827186",
+      ".fsm.states[2].actionData.unityObjectParams[2]": "cab-94702b40f3bc7e46c8686903984a1bff:-3833478438197908566",
+      ".fsm.states[2].actionData.fsmOwnerDefaultParams[0].gameObject.value": "cab-995e7cbc44ff3e7f4314fc93360989d0:8367120315102262385",
+      ".fsm.states[2].actionData.fsmOwnerDefaultParams[1].gameObject.value": "cab-995e7cbc44ff3e7f4314fc93360989d0:4628007443326628977",
+      ".fsm.states[3].actionData.fsmOwnerDefaultParams[0].gameObject.value": "cab-995e7cbc44ff3e7f4314fc93360989d0:4700183809534063729"
+    }
+  },
+  "nodes": {
+    "animation_root": "cab-995e7cbc44ff3e7f4314fc93360989d0:8367120315102262385",
+    "click_collider": "cab-995e7cbc44ff3e7f4314fc93360989d0:4700183809534063729",
+    "audio_anchor": "cab-995e7cbc44ff3e7f4314fc93360989d0:4628007443326628977",
+    "animated_targets": {
+      "": "cab-995e7cbc44ff3e7f4314fc93360989d0:8367120315102262385",
+      "Mill Door Sound": "cab-995e7cbc44ff3e7f4314fc93360989d0:4628007443326628977",
+      "Collision": "cab-995e7cbc44ff3e7f4314fc93360989d0:4700183809534063729",
+      "locator1": "cab-995e7cbc44ff3e7f4314fc93360989d0:-4269805930493447055",
+      "locator1/Door1_mesh": "cab-995e7cbc44ff3e7f4314fc93360989d0:-2713599853826476943",
+      "locator2": "cab-995e7cbc44ff3e7f4314fc93360989d0:4533807728327259249",
+      "locator2/Door2_mesh": "cab-995e7cbc44ff3e7f4314fc93360989d0:7310011883673678961"
+    }
+  },
+  "collider": {
+    "key": "cab-995e7cbc44ff3e7f4314fc93360989d0:-7828993586521049999",
+    "bundle": "initial_base_qualityhigh_global-0389051c-prefab-0.unity3d",
+    "cab": "CAB-995e7cbc44ff3e7f4314fc93360989d0",
+    "path_id": "-7828993586521049999",
+    "guid": null,
+    "source_object_sha256": "e589c0e286c4060a214a2c0a8a6cec04e3fc6f8aa753d67b3689f5135e516bdc",
+    "source_object_bytes": 60,
+    "type": "SphereCollider",
+    "class_name": "SphereCollider",
+    "name": "",
+    "data": {
+      "m_GameObject": {
+        "m_FileID": 0,
+        "m_PathID": 4700183809534063729
+      },
+      "m_Material": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "m_IncludeLayers": {
+        "m_Bits": 0
+      },
+      "m_ExcludeLayers": {
+        "m_Bits": 0
+      },
+      "m_LayerOverridePriority": 0,
+      "m_IsTrigger": false,
+      "m_ProvidesContacts": false,
+      "m_Enabled": true,
+      "m_Radius": 0.2199999988079071,
+      "m_Center": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    },
+    "refs": {
+      ".m_GameObject": "cab-995e7cbc44ff3e7f4314fc93360989d0:4700183809534063729"
+    },
+    "files": {}
+  },
+  "animation_component": {
+    "key": "cab-995e7cbc44ff3e7f4314fc93360989d0:853539167138083953",
+    "bundle": "initial_base_qualityhigh_global-0389051c-prefab-0.unity3d",
+    "cab": "CAB-995e7cbc44ff3e7f4314fc93360989d0",
+    "path_id": "853539167138083953",
+    "guid": null,
+    "source_object_sha256": "2204f64b9d91da7fe50321444b039ca1f91f91da7538d6243a6403db5c1e9728",
+    "source_object_bytes": 72,
+    "type": "Animation",
+    "class_name": "Animation",
+    "name": "",
+    "data": {
+      "m_GameObject": {
+        "m_FileID": 0,
+        "m_PathID": 8367120315102262385
+      },
+      "m_Enabled": 1,
+      "m_Animation": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "m_Animations": [
+        {
+          "m_FileID": 2,
+          "m_PathID": -4176182364775873988
+        },
+        {
+          "m_FileID": 2,
+          "m_PathID": -2623244055060104550
+        }
+      ],
+      "m_WrapMode": 0,
+      "m_PlayAutomatically": false,
+      "m_AnimatePhysics": false,
+      "m_UpdateMode": 0,
+      "m_CullingType": 0
+    },
+    "refs": {
+      ".m_GameObject": "cab-995e7cbc44ff3e7f4314fc93360989d0:8367120315102262385",
+      ".m_Animations[0]": "cab-864f9a45b92c6e114e2e569badb557ad:-4176182364775873988",
+      ".m_Animations[1]": "cab-864f9a45b92c6e114e2e569badb557ad:-2623244055060104550"
+    },
+    "files": {}
+  },
+  "audio_anchor_component_not_runtime_template": {
+    "key": "cab-995e7cbc44ff3e7f4314fc93360989d0:-2662152440899636111",
+    "bundle": "initial_base_qualityhigh_global-0389051c-prefab-0.unity3d",
+    "cab": "CAB-995e7cbc44ff3e7f4314fc93360989d0",
+    "path_id": "-2662152440899636111",
+    "guid": null,
+    "source_object_sha256": "1c7eaf233d5b4b487a209736ed1d918f7019515f55c508c7bca13e8f9dc25db1",
+    "source_object_bytes": 300,
+    "type": "AudioSource",
+    "class_name": "AudioSource",
+    "name": "",
+    "data": {
+      "m_GameObject": {
+        "m_FileID": 0,
+        "m_PathID": 4628007443326628977
+      },
+      "m_Enabled": 1,
+      "OutputAudioMixerGroup": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "m_audioClip": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "m_Resource": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "m_PlayOnAwake": false,
+      "m_Volume": 1.0,
+      "m_Pitch": 1.0,
+      "Loop": false,
+      "Mute": false,
+      "Spatialize": false,
+      "SpatializePostEffects": false,
+      "Priority": 128,
+      "DopplerLevel": 1.0,
+      "MinDistance": 1.0,
+      "MaxDistance": 500.0,
+      "Pan2D": 0.0,
+      "rolloffMode": 1,
+      "BypassEffects": false,
+      "BypassListenerEffects": false,
+      "BypassReverbZones": false,
+      "rolloffCustomCurve": {
+        "m_Curve": [
+          {
+            "time": 0.0,
+            "value": 1.0,
+            "inSlope": 0.0,
+            "outSlope": 0.0,
+            "weightedMode": 0,
+            "inWeight": 0.3333333432674408,
+            "outWeight": 0.3333333432674408
+          },
+          {
+            "time": 1.0,
+            "value": 0.0,
+            "inSlope": 0.0,
+            "outSlope": 0.0,
+            "weightedMode": 0,
+            "inWeight": 0.3333333432674408,
+            "outWeight": 0.3333333432674408
+          }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 4
+      },
+      "panLevelCustomCurve": {
+        "m_Curve": [
+          {
+            "time": 0.0,
+            "value": 1.0,
+            "inSlope": 0.0,
+            "outSlope": 0.0,
+            "weightedMode": 0,
+            "inWeight": 0.3333333432674408,
+            "outWeight": 0.3333333432674408
+          }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 4
+      },
+      "spreadCustomCurve": {
+        "m_Curve": [
+          {
+            "time": 0.0,
+            "value": 0.0,
+            "inSlope": 0.0,
+            "outSlope": 0.0,
+            "weightedMode": 0,
+            "inWeight": 0.3333333432674408,
+            "outWeight": 0.3333333432674408
+          }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 4
+      },
+      "reverbZoneMixCustomCurve": {
+        "m_Curve": [
+          {
+            "time": 0.0,
+            "value": 1.0,
+            "inSlope": 0.0,
+            "outSlope": 0.0,
+            "weightedMode": 0,
+            "inWeight": 0.3333333432674408,
+            "outWeight": 0.3333333432674408
+          }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 4
+      }
+    },
+    "refs": {
+      ".m_GameObject": "cab-995e7cbc44ff3e7f4314fc93360989d0:4628007443326628977"
+    },
+    "files": {}
+  },
+  "runtime_audio_source_template": {
+    "source_ref": {
+      "bundle": "essential_base_global-prefab-0.unity3d",
+      "path_id": -8545291008535992616,
+      "type": "AudioSource"
+    },
+    "audio_source": {
+      "m_GameObject": {
+        "m_FileID": 0,
+        "m_PathID": 662997401130002136
+      },
+      "m_Enabled": 1,
+      "OutputAudioMixerGroup": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "m_audioClip": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "m_Resource": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "m_PlayOnAwake": false,
+      "m_Volume": 1.0,
+      "m_Pitch": 1.0,
+      "Loop": false,
+      "Mute": false,
+      "Spatialize": false,
+      "SpatializePostEffects": false,
+      "Priority": 128,
+      "DopplerLevel": 1.0,
+      "MinDistance": 100.0,
+      "MaxDistance": 500.0,
+      "Pan2D": 0.0,
+      "rolloffMode": 1,
+      "BypassEffects": false,
+      "BypassListenerEffects": false,
+      "BypassReverbZones": false,
+      "rolloffCustomCurve": {
+        "m_Curve": [
+          {
+            "time": 0.0,
+            "value": 1.0,
+            "inSlope": 0.0,
+            "outSlope": 0.0,
+            "weightedMode": 0,
+            "inWeight": 0.3333333432674408,
+            "outWeight": 0.3333333432674408
+          },
+          {
+            "time": 1.0,
+            "value": 0.0,
+            "inSlope": 0.0,
+            "outSlope": 0.0,
+            "weightedMode": 0,
+            "inWeight": 0.3333333432674408,
+            "outWeight": 0.3333333432674408
+          }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 4
+      },
+      "panLevelCustomCurve": {
+        "m_Curve": [
+          {
+            "time": 0.0,
+            "value": 0.0,
+            "inSlope": 0.0,
+            "outSlope": 0.0,
+            "weightedMode": 0,
+            "inWeight": 0.3333333432674408,
+            "outWeight": 0.3333333432674408
+          }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 0
+      },
+      "spreadCustomCurve": {
+        "m_Curve": [
+          {
+            "time": 0.0,
+            "value": 0.0,
+            "inSlope": 0.0,
+            "outSlope": 0.0,
+            "weightedMode": 0,
+            "inWeight": 0.3333333432674408,
+            "outWeight": 0.3333333432674408
+          }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 0
+      },
+      "reverbZoneMixCustomCurve": {
+        "m_Curve": [
+          {
+            "time": 0.0,
+            "value": 1.0,
+            "inSlope": 0.0,
+            "outSlope": 0.0,
+            "weightedMode": 0,
+            "inWeight": 0.3333333432674408,
+            "outWeight": 0.3333333432674408
+          }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 0
+      }
+    }
+  },
+  "clips": {
+    "MOP_DoorOpen": {
+      "source_id": "cab-864f9a45b92c6e114e2e569badb557ad:-4176182364775873988",
+      "source_sha256": "76d3c39ed86bc931cce52d230a1267efbde4f04e4b1e59389f33f10400752d99",
+      "raw_file": "animations/MOP_DoorOpen__-4176182364775873988.json",
+      "raw_sha256": "dc99edd29e58e34f7d9c8c20804d5448f549c50075ec49f5fadfcfc390eaea5c",
+      "duration_seconds": 0.800000011920929,
+      "sample_rate": 60.0,
+      "legacy": true,
+      "wrap_mode_serialized": 0,
+      "rotation_tracks": [
+        {
+          "path": "locator2",
+          "target_node_id": "cab-995e7cbc44ff3e7f4314fc93360989d0:4533807728327259249",
+          "property": "local_quaternion_xyzw",
+          "curve": {
+            "m_Curve": [
+              {
+                "time": 0.0,
+                "value": {
+                  "x": -0.25969481468200684,
+                  "y": 0.18591326475143433,
+                  "z": -0.05414092540740967,
+                  "w": 0.9460780024528503
+                },
+                "inSlope": {
+                  "x": 0.0972980186343193,
+                  "y": -0.6204681992530823,
+                  "z": 0.1652379184961319,
+                  "w": 0.15416978299617767
+                },
+                "outSlope": {
+                  "x": 0.0972980186343193,
+                  "y": -0.6204681992530823,
+                  "z": 0.1652379184961319,
+                  "w": 0.15416978299617767
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.33333340287208557,
+                "value": {
+                  "x": -0.2470334768295288,
+                  "y": -0.057156290858983994,
+                  "z": 0.013546468690037727,
+                  "w": 0.9672249555587769
+                },
+                "inSlope": {
+                  "x": -0.0439738854765892,
+                  "y": -0.685940146446228,
+                  "z": 0.19175878167152405,
+                  "w": -0.05432184040546417
+                },
+                "outSlope": {
+                  "x": -0.0439738854765892,
+                  "y": -0.685940146446228,
+                  "z": 0.19175878167152405,
+                  "w": -0.05432184040546417
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.6666666865348816,
+                "value": {
+                  "x": -0.26360371708869934,
+                  "y": -0.1537906974554062,
+                  "z": 0.03887521103024483,
+                  "w": 0.9514989256858826
+                },
+                "inSlope": {
+                  "x": 0.004462305922061205,
+                  "y": 0.3272159695625305,
+                  "z": -0.09176337718963623,
+                  "w": 0.05773013457655907
+                },
+                "outSlope": {
+                  "x": 0.004462305922061205,
+                  "y": 0.3272159695625305,
+                  "z": -0.09176337718963623,
+                  "w": 0.05773013457655907
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.800000011920929,
+                "value": {
+                  "x": -0.2635892331600189,
+                  "y": -0.10505634546279907,
+                  "z": 0.025380805134773254,
+                  "w": 0.9585613012313843
+                },
+                "inSlope": {
+                  "x": -0.012599151581525803,
+                  "y": 0.28820961713790894,
+                  "z": -0.0799904614686966,
+                  "w": 0.031027602031826973
+                },
+                "outSlope": {
+                  "x": -0.012599151581525803,
+                  "y": 0.28820961713790894,
+                  "z": -0.0799904614686966,
+                  "w": 0.031027602031826973
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              }
+            ],
+            "m_PreInfinity": 2,
+            "m_PostInfinity": 2,
+            "m_RotationOrder": 4
+          }
+        },
+        {
+          "path": "locator1",
+          "target_node_id": "cab-995e7cbc44ff3e7f4314fc93360989d0:-4269805930493447055",
+          "property": "local_quaternion_xyzw",
+          "curve": {
+            "m_Curve": [
+              {
+                "time": 0.0,
+                "value": {
+                  "x": -0.2500253915786743,
+                  "y": 0.1987265944480896,
+                  "z": -0.006537383887916803,
+                  "w": 0.9476034045219421
+                },
+                "inSlope": {
+                  "x": 0.3694027364253998,
+                  "y": 1.203940749168396,
+                  "z": -0.15757130086421967,
+                  "w": -0.17052410542964935
+                },
+                "outSlope": {
+                  "x": 0.3694027364253998,
+                  "y": 1.203940749168396,
+                  "z": -0.15757130086421967,
+                  "w": -0.17052410542964935
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.21666666865348816,
+                "value": {
+                  "x": -0.18589149415493011,
+                  "y": 0.4870612919330597,
+                  "z": -0.06802761554718018,
+                  "w": 0.8506397604942322
+                },
+                "inSlope": {
+                  "x": 0.15429945290088654,
+                  "y": 1.309719204902649,
+                  "z": -0.3856179714202881,
+                  "w": -0.7469326853752136
+                },
+                "outSlope": {
+                  "x": 0.15429945290088654,
+                  "y": 1.309719204902649,
+                  "z": -0.3856179714202881,
+                  "w": -0.7469326853752136
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.4666668474674225,
+                "value": {
+                  "x": -0.19016055762767792,
+                  "y": 0.7232069373130798,
+                  "z": -0.15219677984714508,
+                  "w": 0.6462559103965759
+                },
+                "inSlope": {
+                  "x": -0.10855472087860107,
+                  "y": 0.4886855483055115,
+                  "z": -0.20678159594535828,
+                  "w": -0.6265259981155396
+                },
+                "outSlope": {
+                  "x": -0.10855472087860107,
+                  "y": 0.4886855483055115,
+                  "z": -0.20678159594535828,
+                  "w": -0.6265259981155396
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.6000000834465027,
+                "value": {
+                  "x": -0.19764727354049683,
+                  "y": 0.7384899854660034,
+                  "z": -0.1596885323524475,
+                  "w": 0.6245540380477905
+                },
+                "inSlope": {
+                  "x": 0.0014247014187276363,
+                  "y": -0.21336814761161804,
+                  "z": 0.07684044539928436,
+                  "w": 0.27208173274993896
+                },
+                "outSlope": {
+                  "x": 0.0014247014187276363,
+                  "y": -0.21336814761161804,
+                  "z": 0.07684044539928436,
+                  "w": 0.27208173274993896
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.699999988079071,
+                "value": {
+                  "x": -0.19778288900852203,
+                  "y": 0.7163128852844238,
+                  "z": -0.151926189661026,
+                  "w": 0.6516872644424438
+                },
+                "inSlope": {
+                  "x": -0.016352549195289612,
+                  "y": -0.14348043501377106,
+                  "z": 0.045001253485679626,
+                  "w": 0.16387954354286194
+                },
+                "outSlope": {
+                  "x": -0.016352549195289612,
+                  "y": -0.14348043501377106,
+                  "z": 0.045001253485679626,
+                  "w": 0.16387954354286194
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              }
+            ],
+            "m_PreInfinity": 2,
+            "m_PostInfinity": 2,
+            "m_RotationOrder": 4
+          }
+        }
+      ],
+      "other_curves": {
+        "m_CompressedRotationCurves": [],
+        "m_EulerCurves": [],
+        "m_PositionCurves": [],
+        "m_ScaleCurves": [],
+        "m_FloatCurves": [],
+        "m_PPtrCurves": []
+      },
+      "events": []
+    },
+    "MOP_DoorClose": {
+      "source_id": "cab-864f9a45b92c6e114e2e569badb557ad:-2623244055060104550",
+      "source_sha256": "3baa9a5f036fa5fdc840e48f4a8dac776115eae7cc32ea329a47c8b2b921a7a9",
+      "raw_file": "animations/MOP_DoorClose__-2623244055060104550.json",
+      "raw_sha256": "f3e7eb8a7f361ebd0dac0c7bbf772a21c7b8b66843e1eefe9f6363f56d25e629",
+      "duration_seconds": 0.5000000596046448,
+      "sample_rate": 60.0,
+      "legacy": true,
+      "wrap_mode_serialized": 0,
+      "rotation_tracks": [
+        {
+          "path": "locator1",
+          "target_node_id": "cab-995e7cbc44ff3e7f4314fc93360989d0:-4269805930493447055",
+          "property": "local_quaternion_xyzw",
+          "curve": {
+            "m_Curve": [
+              {
+                "time": 0.0,
+                "value": {
+                  "x": -0.19778288900852203,
+                  "y": 0.7163128852844238,
+                  "z": -0.151926189661026,
+                  "w": 0.6516872644424438
+                },
+                "inSlope": {
+                  "x": 0.010822712443768978,
+                  "y": -0.05308627709746361,
+                  "z": 0.021459458395838737,
+                  "w": 0.06653666496276855
+                },
+                "outSlope": {
+                  "x": 0.010822712443768978,
+                  "y": -0.05308627709746361,
+                  "z": 0.021459458395838737,
+                  "w": 0.06653666496276855
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.2666666805744171,
+                "value": {
+                  "x": -0.18758197128772736,
+                  "y": 0.5208999514579773,
+                  "z": -0.08138223737478256,
+                  "w": 0.8287659883499146
+                },
+                "inSlope": {
+                  "x": -0.0871654599905014,
+                  "y": -1.33152174949646,
+                  "z": 0.42166703939437866,
+                  "w": 0.8581506013870239
+                },
+                "outSlope": {
+                  "x": -0.0871654599905014,
+                  "y": -1.33152174949646,
+                  "z": 0.42166703939437866,
+                  "w": 0.8581506013870239
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.4666668474674225,
+                "value": {
+                  "x": -0.23840008676052094,
+                  "y": 0.2385869324207306,
+                  "z": -0.01246377732604742,
+                  "w": 0.941321611404419
+                },
+                "inSlope": {
+                  "x": -0.35199224948883057,
+                  "y": -1.2617833614349365,
+                  "z": 0.20499706268310547,
+                  "w": 0.23422102630138397
+                },
+                "outSlope": {
+                  "x": -0.35199224948883057,
+                  "y": -1.2617833614349365,
+                  "z": 0.20499706268310547,
+                  "w": 0.23422102630138397
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.5000000596046448,
+                "value": {
+                  "x": -0.2500253915786743,
+                  "y": 0.1987265944480896,
+                  "z": -0.006537383887916803,
+                  "w": 0.9476034045219421
+                },
+                "inSlope": {
+                  "x": -0.34584861993789673,
+                  "y": -1.1607550382614136,
+                  "z": 0.16440333425998688,
+                  "w": 0.16668812930583954
+                },
+                "outSlope": {
+                  "x": -0.34584861993789673,
+                  "y": -1.1607550382614136,
+                  "z": 0.16440333425998688,
+                  "w": 0.16668812930583954
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              }
+            ],
+            "m_PreInfinity": 2,
+            "m_PostInfinity": 2,
+            "m_RotationOrder": 4
+          }
+        },
+        {
+          "path": "locator2",
+          "target_node_id": "cab-995e7cbc44ff3e7f4314fc93360989d0:4533807728327259249",
+          "property": "local_quaternion_xyzw",
+          "curve": {
+            "m_Curve": [
+              {
+                "time": 0.0,
+                "value": {
+                  "x": -0.2635892331600189,
+                  "y": -0.10505634546279907,
+                  "z": 0.025380805134773254,
+                  "w": 0.9585613012313843
+                },
+                "inSlope": {
+                  "x": 0.005604028236120939,
+                  "y": 0.03752767667174339,
+                  "z": -0.009554809890687466,
+                  "w": 0.005886554252356291
+                },
+                "outSlope": {
+                  "x": 0.005604028236120939,
+                  "y": 0.03752767667174339,
+                  "z": -0.009554809890687466,
+                  "w": 0.005886554252356291
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.3666667640209198,
+                "value": {
+                  "x": -0.25231292843818665,
+                  "y": 0.09345019608736038,
+                  "z": -0.028514383360743523,
+                  "w": 0.9627004861831665
+                },
+                "inSlope": {
+                  "x": -0.027399636805057526,
+                  "y": 0.7713897228240967,
+                  "z": -0.21555057168006897,
+                  "w": -0.08839122951030731
+                },
+                "outSlope": {
+                  "x": -0.027399636805057526,
+                  "y": 0.7713897228240967,
+                  "z": -0.21555057168006897,
+                  "w": -0.08839122951030731
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              },
+              {
+                "time": 0.5000000596046448,
+                "value": {
+                  "x": -0.25969481468200684,
+                  "y": 0.18591326475143433,
+                  "z": -0.05414092540740967,
+                  "w": 0.9460780024528503
+                },
+                "inSlope": {
+                  "x": -0.07116851955652237,
+                  "y": 0.592711329460144,
+                  "z": -0.16209502518177032,
+                  "w": -0.14173980057239532
+                },
+                "outSlope": {
+                  "x": -0.07116851955652237,
+                  "y": 0.592711329460144,
+                  "z": -0.16209502518177032,
+                  "w": -0.14173980057239532
+                },
+                "weightedMode": 0,
+                "inWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                },
+                "outWeight": {
+                  "x": 0.3333333432674408,
+                  "y": 0.3333333432674408,
+                  "z": 0.3333333432674408,
+                  "w": 0.3333333432674408
+                }
+              }
+            ],
+            "m_PreInfinity": 2,
+            "m_PostInfinity": 2,
+            "m_RotationOrder": 4
+          }
+        }
+      ],
+      "other_curves": {
+        "m_CompressedRotationCurves": [],
+        "m_EulerCurves": [],
+        "m_PositionCurves": [],
+        "m_ScaleCurves": [],
+        "m_FloatCurves": [],
+        "m_PPtrCurves": []
+      },
+      "events": []
+    }
+  },
+  "audio": {
+    "open": {
+      "clips": [
+        {
+          "sound_def_id": "cab-94702b40f3bc7e46c8686903984a1bff:6426089038940596874",
+          "sound_def": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 1613265523390999178
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 5395326102866774978
+            },
+            "m_Name": "",
+            "m_AudioClip": "MOP_Mill_Door_Open_1.wav:6ac2afbe1f00f6140942bc4984ddcf96",
+            "m_Category": 1,
+            "m_RandomClips": [],
+            "m_RandomPitchMin": 1.0,
+            "m_RandomPitchMax": 1.0,
+            "m_RandomVolumeMin": 1.0,
+            "m_RandomVolumeMax": 1.0,
+            "m_IgnoreDucking": 0,
+            "m_persistPastGameEnd": 0,
+            "m_InstanceLimited": 0,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "guid": "6ac2afbe1f00f6140942bc4984ddcf96",
+          "file": "audio/global_MOP_Mill_Door_Open_1_6ac2afbe.wav",
+          "source_file": "v36_work/source_board_assets/audio/clips/global_MOP_Mill_Door_Open_1_6ac2afbe.wav",
+          "sha256": "6e1e9298c2d699d7ee47c3b3ae4125a3eef56f75332667e1ec0fbef03691e8dd",
+          "duration_seconds": 2.4,
+          "sample_rate": 44100,
+          "channels": 1,
+          "provenance": {
+            "requested_path": "MOP_Mill_Door_Open_1.wav:6ac2afbe1f00f6140942bc4984ddcf96",
+            "base_guid": "6ac2afbe1f00f6140942bc4984ddcf96",
+            "resolved_guid": "6ac2afbe1f00f6140942bc4984ddcf96",
+            "locale": "global",
+            "source": {
+              "bundle": "initial_base_global-9401fe9e-audio-1.unity3d",
+              "cab": "CAB-916ebe699d1422676bcaa70598bcf4e7",
+              "path_id": "4226362147904209115",
+              "guid": "6ac2afbe1f00f6140942bc4984ddcf96"
+            },
+            "source_audio_clip": {
+              "m_Name": "MOP_Mill_Door_Open_1",
+              "m_LoadType": 1,
+              "m_Channels": 1,
+              "m_Frequency": 44100,
+              "m_BitsPerSample": 16,
+              "m_Length": 2.4000000953674316,
+              "m_IsTrackerFormat": false,
+              "m_Ambisonic": false,
+              "m_SubsoundIndex": 0,
+              "m_PreloadAudioData": true,
+              "m_LoadInBackground": false,
+              "m_Legacy3D": true,
+              "m_Resource": {
+                "m_Source": "archive:/CAB-916ebe699d1422676bcaa70598bcf4e7/CAB-916ebe699d1422676bcaa70598bcf4e7.resource",
+                "m_Offset": 3429664,
+                "m_Size": 23328
+              },
+              "m_CompressionFormat": 1
+            },
+            "source_object_sha256": "bcaa6e0a55ab4e9828a8c4c6afdcab4ba52fa36cb6eb8044cd5e88f069dc6507",
+            "original_encoded_sha256": "65cf7aab4e92b5717fb3a1c213f8fed8490185a99e6f1fc83a96dcc457a73441",
+            "original_encoded_bytes": 23328,
+            "encoded_path": "original_fsb/6ac2afbe1f00f6140942bc4984ddcf96.fsb",
+            "export_sha256": "6e1e9298c2d699d7ee47c3b3ae4125a3eef56f75332667e1ec0fbef03691e8dd",
+            "export_bytes": 211724,
+            "source_path": "clips/global_MOP_Mill_Door_Open_1_6ac2afbe.wav",
+            "processing": "Full original FSB decoded by already-verified UnityPy/fmod_toolkit; no trim, gain, pitch, resample or remix.",
+            "sample_rate": 44100,
+            "channels": 1,
+            "sample_width": 2,
+            "sample_frames": 105840,
+            "duration_sec": 2.4
+          }
+        },
+        {
+          "sound_def_id": "cab-94702b40f3bc7e46c8686903984a1bff:2083559788949239857",
+          "sound_def": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": -6093914816328796111
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 5395326102866774978
+            },
+            "m_Name": "",
+            "m_AudioClip": "MOP_Mill_Door_Open_2.wav:69279ebe3aa0098498034f5cdd2c0a12",
+            "m_Category": 1,
+            "m_RandomClips": [],
+            "m_RandomPitchMin": 1.0,
+            "m_RandomPitchMax": 1.0,
+            "m_RandomVolumeMin": 1.0,
+            "m_RandomVolumeMax": 1.0,
+            "m_IgnoreDucking": 0,
+            "m_persistPastGameEnd": 0,
+            "m_InstanceLimited": 0,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "guid": "69279ebe3aa0098498034f5cdd2c0a12",
+          "file": "audio/global_MOP_Mill_Door_Open_2_69279ebe.wav",
+          "source_file": "v36_work/source_board_assets/audio/clips/global_MOP_Mill_Door_Open_2_69279ebe.wav",
+          "sha256": "4d369d2ac08d92ae753a07e2cd701e301266986fac0cc50a512047bb98da53a3",
+          "duration_seconds": 2.4006349206349205,
+          "sample_rate": 44100,
+          "channels": 1,
+          "provenance": {
+            "requested_path": "MOP_Mill_Door_Open_2.wav:69279ebe3aa0098498034f5cdd2c0a12",
+            "base_guid": "69279ebe3aa0098498034f5cdd2c0a12",
+            "resolved_guid": "69279ebe3aa0098498034f5cdd2c0a12",
+            "locale": "global",
+            "source": {
+              "bundle": "initial_base_global-9401fe9e-audio-1.unity3d",
+              "cab": "CAB-916ebe699d1422676bcaa70598bcf4e7",
+              "path_id": "-996163729916600398",
+              "guid": "69279ebe3aa0098498034f5cdd2c0a12"
+            },
+            "source_audio_clip": {
+              "m_Name": "MOP_Mill_Door_Open_2",
+              "m_LoadType": 1,
+              "m_Channels": 1,
+              "m_Frequency": 44100,
+              "m_BitsPerSample": 16,
+              "m_Length": 2.400635004043579,
+              "m_IsTrackerFormat": false,
+              "m_Ambisonic": false,
+              "m_SubsoundIndex": 0,
+              "m_PreloadAudioData": true,
+              "m_LoadInBackground": false,
+              "m_Legacy3D": true,
+              "m_Resource": {
+                "m_Source": "archive:/CAB-916ebe699d1422676bcaa70598bcf4e7/CAB-916ebe699d1422676bcaa70598bcf4e7.resource",
+                "m_Offset": 1530688,
+                "m_Size": 23200
+              },
+              "m_CompressionFormat": 1
+            },
+            "source_object_sha256": "481d926707abde396c0487f643959c38e0f093b56addc7e3a1b3d1bde02af311",
+            "original_encoded_sha256": "3599be406ce95e17c925493587c7069e1145eae1e67ce74fc93a1f53989b41d7",
+            "original_encoded_bytes": 23200,
+            "encoded_path": "original_fsb/69279ebe3aa0098498034f5cdd2c0a12.fsb",
+            "export_sha256": "4d369d2ac08d92ae753a07e2cd701e301266986fac0cc50a512047bb98da53a3",
+            "export_bytes": 211780,
+            "source_path": "clips/global_MOP_Mill_Door_Open_2_69279ebe.wav",
+            "processing": "Full original FSB decoded by already-verified UnityPy/fmod_toolkit; no trim, gain, pitch, resample or remix.",
+            "sample_rate": 44100,
+            "channels": 1,
+            "sample_width": 2,
+            "sample_frames": 105868,
+            "duration_sec": 2.4006349206349205
+          }
+        },
+        {
+          "sound_def_id": "cab-94702b40f3bc7e46c8686903984a1bff:-3614523928327508440",
+          "sound_def": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": -7612413840156086744
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 5395326102866774978
+            },
+            "m_Name": "",
+            "m_AudioClip": "MOP_Mill_Door_Open_3.wav:038e23664657a7346a8380d25a881c5d",
+            "m_Category": 1,
+            "m_RandomClips": [],
+            "m_RandomPitchMin": 1.0,
+            "m_RandomPitchMax": 1.0,
+            "m_RandomVolumeMin": 1.0,
+            "m_RandomVolumeMax": 1.0,
+            "m_IgnoreDucking": 0,
+            "m_persistPastGameEnd": 0,
+            "m_InstanceLimited": 0,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "guid": "038e23664657a7346a8380d25a881c5d",
+          "file": "audio/global_MOP_Mill_Door_Open_3_038e2366.wav",
+          "source_file": "v36_work/source_board_assets/audio/clips/global_MOP_Mill_Door_Open_3_038e2366.wav",
+          "sha256": "53696ee3154c90937a555ee4b1bf0b15fbe93226dfe01f85764ed14eabaa6b87",
+          "duration_seconds": 2.4,
+          "sample_rate": 44100,
+          "channels": 1,
+          "provenance": {
+            "requested_path": "MOP_Mill_Door_Open_3.wav:038e23664657a7346a8380d25a881c5d",
+            "base_guid": "038e23664657a7346a8380d25a881c5d",
+            "resolved_guid": "038e23664657a7346a8380d25a881c5d",
+            "locale": "global",
+            "source": {
+              "bundle": "initial_base_global-9401fe9e-audio-1.unity3d",
+              "cab": "CAB-916ebe699d1422676bcaa70598bcf4e7",
+              "path_id": "6304944947640757290",
+              "guid": "038e23664657a7346a8380d25a881c5d"
+            },
+            "source_audio_clip": {
+              "m_Name": "MOP_Mill_Door_Open_3",
+              "m_LoadType": 1,
+              "m_Channels": 1,
+              "m_Frequency": 44100,
+              "m_BitsPerSample": 16,
+              "m_Length": 2.4000000953674316,
+              "m_IsTrackerFormat": false,
+              "m_Ambisonic": false,
+              "m_SubsoundIndex": 0,
+              "m_PreloadAudioData": true,
+              "m_LoadInBackground": false,
+              "m_Legacy3D": true,
+              "m_Resource": {
+                "m_Source": "archive:/CAB-916ebe699d1422676bcaa70598bcf4e7/CAB-916ebe699d1422676bcaa70598bcf4e7.resource",
+                "m_Offset": 4028224,
+                "m_Size": 22752
+              },
+              "m_CompressionFormat": 1
+            },
+            "source_object_sha256": "a2e2d03ebae6a7d04977ef89b0d3803c87f91e36aa0e13e5ed6c538b228d9950",
+            "original_encoded_sha256": "932de7cc1ef4a20badc3cead3d3142c05217f4e883dee1fa29a282bf3c2fdde8",
+            "original_encoded_bytes": 22752,
+            "encoded_path": "original_fsb/038e23664657a7346a8380d25a881c5d.fsb",
+            "export_sha256": "53696ee3154c90937a555ee4b1bf0b15fbe93226dfe01f85764ed14eabaa6b87",
+            "export_bytes": 211724,
+            "source_path": "clips/global_MOP_Mill_Door_Open_3_038e2366.wav",
+            "processing": "Full original FSB decoded by already-verified UnityPy/fmod_toolkit; no trim, gain, pitch, resample or remix.",
+            "sample_rate": 44100,
+            "channels": 1,
+            "sample_width": 2,
+            "sample_frames": 105840,
+            "duration_sec": 2.4
+          }
+        }
+      ],
+      "weights": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "volume_min": 0.800000011920929,
+      "volume_max": 0.800000011920929,
+      "pitch_min": 0.949999988079071,
+      "pitch_max": 1.0499999523162842,
+      "spatial_blend": 1.0,
+      "delay_seconds": 0.0,
+      "category": 1,
+      "template_source_override": null,
+      "instance_limited": false,
+      "native_action": "AudioPlayRandomClipAction.Play 0x06016abe calls SoundManager.PlayClip(args, true, options), then Finish immediately; it does not await audio completion."
+    },
+    "close": {
+      "clips": [
+        {
+          "sound_def_id": "cab-94702b40f3bc7e46c8686903984a1bff:4501262486086077068",
+          "sound_def": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": -4538164347277161844
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 5395326102866774978
+            },
+            "m_Name": "",
+            "m_AudioClip": "MOP_Mill_Door_Close_1.wav:d9db88cad2b7cea41836d1bc563f7e9c",
+            "m_Category": 1,
+            "m_RandomClips": [],
+            "m_RandomPitchMin": 1.0,
+            "m_RandomPitchMax": 1.0,
+            "m_RandomVolumeMin": 1.0,
+            "m_RandomVolumeMax": 1.0,
+            "m_IgnoreDucking": 0,
+            "m_persistPastGameEnd": 0,
+            "m_InstanceLimited": 0,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "guid": "d9db88cad2b7cea41836d1bc563f7e9c",
+          "file": "audio/global_MOP_Mill_Door_Close_1_d9db88ca.wav",
+          "source_file": "v36_work/source_board_assets/audio/clips/global_MOP_Mill_Door_Close_1_d9db88ca.wav",
+          "sha256": "9333735b6c03284c80ff534feecc1f2c82b011170ef219a45aa6fd0db2fdb9b0",
+          "duration_seconds": 1.1496825396825396,
+          "sample_rate": 44100,
+          "channels": 1,
+          "provenance": {
+            "requested_path": "MOP_Mill_Door_Close_1.wav:d9db88cad2b7cea41836d1bc563f7e9c",
+            "base_guid": "d9db88cad2b7cea41836d1bc563f7e9c",
+            "resolved_guid": "d9db88cad2b7cea41836d1bc563f7e9c",
+            "locale": "global",
+            "source": {
+              "bundle": "initial_base_global-9401fe9e-audio-1.unity3d",
+              "cab": "CAB-916ebe699d1422676bcaa70598bcf4e7",
+              "path_id": "8497783997017264553",
+              "guid": "d9db88cad2b7cea41836d1bc563f7e9c"
+            },
+            "source_audio_clip": {
+              "m_Name": "MOP_Mill_Door_Close_1",
+              "m_LoadType": 1,
+              "m_Channels": 1,
+              "m_Frequency": 44100,
+              "m_BitsPerSample": 16,
+              "m_Length": 1.1496825218200684,
+              "m_IsTrackerFormat": false,
+              "m_Ambisonic": false,
+              "m_SubsoundIndex": 0,
+              "m_PreloadAudioData": true,
+              "m_LoadInBackground": false,
+              "m_Legacy3D": true,
+              "m_Resource": {
+                "m_Source": "archive:/CAB-916ebe699d1422676bcaa70598bcf4e7/CAB-916ebe699d1422676bcaa70598bcf4e7.resource",
+                "m_Offset": 4454112,
+                "m_Size": 10880
+              },
+              "m_CompressionFormat": 1
+            },
+            "source_object_sha256": "12f96a9da5cdf537b2263463654edf070bf7a217b2d3c54ee6ab1abbe0eac800",
+            "original_encoded_sha256": "7838a8a44f6e11af131d11ffc594bd982285ff1a96b67a1b1a4df2dfa89abb9e",
+            "original_encoded_bytes": 10880,
+            "encoded_path": "original_fsb/d9db88cad2b7cea41836d1bc563f7e9c.fsb",
+            "export_sha256": "9333735b6c03284c80ff534feecc1f2c82b011170ef219a45aa6fd0db2fdb9b0",
+            "export_bytes": 101446,
+            "source_path": "clips/global_MOP_Mill_Door_Close_1_d9db88ca.wav",
+            "processing": "Full original FSB decoded by already-verified UnityPy/fmod_toolkit; no trim, gain, pitch, resample or remix.",
+            "sample_rate": 44100,
+            "channels": 1,
+            "sample_width": 2,
+            "sample_frames": 50701,
+            "duration_sec": 1.1496825396825396
+          }
+        },
+        {
+          "sound_def_id": "cab-94702b40f3bc7e46c8686903984a1bff:8358254159804827186",
+          "sound_def": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": -7562365142249568718
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 5395326102866774978
+            },
+            "m_Name": "",
+            "m_AudioClip": "MOP_Mill_Door_Close_4.wav:bed669b02f77eac479fa06d99e167e3a",
+            "m_Category": 1,
+            "m_RandomClips": [],
+            "m_RandomPitchMin": 1.0,
+            "m_RandomPitchMax": 1.0,
+            "m_RandomVolumeMin": 1.0,
+            "m_RandomVolumeMax": 1.0,
+            "m_IgnoreDucking": 0,
+            "m_persistPastGameEnd": 0,
+            "m_InstanceLimited": 0,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "guid": "bed669b02f77eac479fa06d99e167e3a",
+          "file": "audio/global_MOP_Mill_Door_Close_4_bed669b0.wav",
+          "source_file": "v36_work/source_board_assets/audio/clips/global_MOP_Mill_Door_Close_4_bed669b0.wav",
+          "sha256": "f89c5d1669d8f942b606ee28bbb9b4ab1a95d0394f46facc560e678dc7b01b9d",
+          "duration_seconds": 1.1377777777777778,
+          "sample_rate": 44100,
+          "channels": 1,
+          "provenance": {
+            "requested_path": "MOP_Mill_Door_Close_4.wav:bed669b02f77eac479fa06d99e167e3a",
+            "base_guid": "bed669b02f77eac479fa06d99e167e3a",
+            "resolved_guid": "bed669b02f77eac479fa06d99e167e3a",
+            "locale": "global",
+            "source": {
+              "bundle": "initial_base_global-9401fe9e-audio-1.unity3d",
+              "cab": "CAB-916ebe699d1422676bcaa70598bcf4e7",
+              "path_id": "-7446874939093448074",
+              "guid": "bed669b02f77eac479fa06d99e167e3a"
+            },
+            "source_audio_clip": {
+              "m_Name": "MOP_Mill_Door_Close_4",
+              "m_LoadType": 1,
+              "m_Channels": 1,
+              "m_Frequency": 44100,
+              "m_BitsPerSample": 16,
+              "m_Length": 1.1377778053283691,
+              "m_IsTrackerFormat": false,
+              "m_Ambisonic": false,
+              "m_SubsoundIndex": 0,
+              "m_PreloadAudioData": true,
+              "m_LoadInBackground": false,
+              "m_Legacy3D": true,
+              "m_Resource": {
+                "m_Source": "archive:/CAB-916ebe699d1422676bcaa70598bcf4e7/CAB-916ebe699d1422676bcaa70598bcf4e7.resource",
+                "m_Offset": 304192,
+                "m_Size": 11968
+              },
+              "m_CompressionFormat": 1
+            },
+            "source_object_sha256": "8cdb8d7d58f04423887bd85108103f982e01bc7f5a0b8bc77f44dfce4aa4b287",
+            "original_encoded_sha256": "3f771d26206c93f05c7da5000aa15f0b52e0a5e2ee9bf467c2ac793964508391",
+            "original_encoded_bytes": 11968,
+            "encoded_path": "original_fsb/bed669b02f77eac479fa06d99e167e3a.fsb",
+            "export_sha256": "f89c5d1669d8f942b606ee28bbb9b4ab1a95d0394f46facc560e678dc7b01b9d",
+            "export_bytes": 100396,
+            "source_path": "clips/global_MOP_Mill_Door_Close_4_bed669b0.wav",
+            "processing": "Full original FSB decoded by already-verified UnityPy/fmod_toolkit; no trim, gain, pitch, resample or remix.",
+            "sample_rate": 44100,
+            "channels": 1,
+            "sample_width": 2,
+            "sample_frames": 50176,
+            "duration_sec": 1.1377777777777778
+          }
+        },
+        {
+          "sound_def_id": "cab-94702b40f3bc7e46c8686903984a1bff:-3833478438197908566",
+          "sound_def": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": -4700541483453043798
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 5395326102866774978
+            },
+            "m_Name": "",
+            "m_AudioClip": "MOP_Mill_Door_Close_3.wav:7f43bab25df112c4fbe8b4d54ca89b6a",
+            "m_Category": 1,
+            "m_RandomClips": [],
+            "m_RandomPitchMin": 1.0,
+            "m_RandomPitchMax": 1.0,
+            "m_RandomVolumeMin": 1.0,
+            "m_RandomVolumeMax": 1.0,
+            "m_IgnoreDucking": 0,
+            "m_persistPastGameEnd": 0,
+            "m_InstanceLimited": 0,
+            "m_InstanceLimitedDuration": 0.0,
+            "m_InstanceLimitMaximum": 1,
+            "m_LimitMaxOutOption": 0
+          },
+          "guid": "7f43bab25df112c4fbe8b4d54ca89b6a",
+          "file": "audio/global_MOP_Mill_Door_Close_3_7f43bab2.wav",
+          "source_file": "v36_work/source_board_assets/audio/clips/global_MOP_Mill_Door_Close_3_7f43bab2.wav",
+          "sha256": "28f7905685e0289902c79ccb11569214fb8171e27d30425a87b4b5c0942083ce",
+          "duration_seconds": 1.1817913832199547,
+          "sample_rate": 44100,
+          "channels": 1,
+          "provenance": {
+            "requested_path": "MOP_Mill_Door_Close_3.wav:7f43bab25df112c4fbe8b4d54ca89b6a",
+            "base_guid": "7f43bab25df112c4fbe8b4d54ca89b6a",
+            "resolved_guid": "7f43bab25df112c4fbe8b4d54ca89b6a",
+            "locale": "global",
+            "source": {
+              "bundle": "initial_base_global-9401fe9e-audio-1.unity3d",
+              "cab": "CAB-916ebe699d1422676bcaa70598bcf4e7",
+              "path_id": "-3050548171765311338",
+              "guid": "7f43bab25df112c4fbe8b4d54ca89b6a"
+            },
+            "source_audio_clip": {
+              "m_Name": "MOP_Mill_Door_Close_3",
+              "m_LoadType": 1,
+              "m_Channels": 1,
+              "m_Frequency": 44100,
+              "m_BitsPerSample": 16,
+              "m_Length": 1.1817914247512817,
+              "m_IsTrackerFormat": false,
+              "m_Ambisonic": false,
+              "m_SubsoundIndex": 0,
+              "m_PreloadAudioData": true,
+              "m_LoadInBackground": false,
+              "m_Legacy3D": true,
+              "m_Resource": {
+                "m_Source": "archive:/CAB-916ebe699d1422676bcaa70598bcf4e7/CAB-916ebe699d1422676bcaa70598bcf4e7.resource",
+                "m_Offset": 1056608,
+                "m_Size": 11488
+              },
+              "m_CompressionFormat": 1
+            },
+            "source_object_sha256": "7ec3593a2021b42dd3722a1d1a8d77fd4f00d903377230710a9203f1005ab899",
+            "original_encoded_sha256": "f485427d043d8fcb6176a169a65d7ca848ed74a1488e381c5020723c10dbb252",
+            "original_encoded_bytes": 11488,
+            "encoded_path": "original_fsb/7f43bab25df112c4fbe8b4d54ca89b6a.fsb",
+            "export_sha256": "28f7905685e0289902c79ccb11569214fb8171e27d30425a87b4b5c0942083ce",
+            "export_bytes": 104278,
+            "source_path": "clips/global_MOP_Mill_Door_Close_3_7f43bab2.wav",
+            "processing": "Full original FSB decoded by already-verified UnityPy/fmod_toolkit; no trim, gain, pitch, resample or remix.",
+            "sample_rate": 44100,
+            "channels": 1,
+            "sample_width": 2,
+            "sample_frames": 52117,
+            "duration_sec": 1.1817913832199547
+          }
+        }
+      ],
+      "weights": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "volume_min": 0.800000011920929,
+      "volume_max": 0.800000011920929,
+      "pitch_min": 1.0,
+      "pitch_max": 1.0,
+      "spatial_blend": 1.0,
+      "delay_seconds": 0.0,
+      "category": 1,
+      "template_source_override": null,
+      "instance_limited": false,
+      "native_action": "AudioPlayRandomClipAction.Play 0x06016abe calls SoundManager.PlayClip(args, true, options), then Finish immediately; it does not await audio completion."
+    }
+  },
+  "state_contract": {
+    "initial": "closed",
+    "closed": {
+      "source_state": "State 1",
+      "left_mouse_down_over_collider": "opening"
+    },
+    "opening": {
+      "source_state": "State 2",
+      "clip": "MOP_DoorOpen",
+      "audio": "open",
+      "on_animation_finished": "open",
+      "mouse_input": false
+    },
+    "open": {
+      "source_state": "State 4",
+      "left_mouse_down_over_collider": "closing"
+    },
+    "closing": {
+      "source_state": "State 3",
+      "clip": "MOP_DoorClose",
+      "audio": "close",
+      "on_animation_finished": "closed",
+      "mouse_input": false
+    },
+    "gate_click_min": 0,
+    "gate_click_max": 0,
+    "gate_reset_on_open": true,
+    "additional_colliders": [],
+    "animation_play_mode": 4,
+    "animation_play_mode_name": "StopAll",
+    "blend_time": 0.0,
+    "stop_on_exit": false,
+    "animation_speed": "No SetAnimationSpeed action in active door FSM; native default animation state speed assumed 1.0, not a serialized per-state speed.",
+    "finish_policy": "PlayAnimation.OnUpdate sends FINISHED when AnimationState.enabled=false; special wrapMode==8 also finishes when time>length. No audio wait. No explicit transform restore in PlayAnimation.OnExit when stopOnExit=false.",
+    "pose_persistence_boundary": "Raw Animation and clips have wrapMode=0, no PlayAutomatically; managed source does not resolve native Unity post-disable pose persistence. Holding sampled endpoint is a compatibility behavior unless native runtime sampled."
+  },
+  "known_boundaries": [
+    "Quaternion component Hermite then normalization is a declared adapter of original nonweighted legacy curves, not a native Unity interpolation golden sample.",
+    "Generated source uses SoundConfig default template minDistance100/max500/linear; do not use minDistance1 from unrelated audio-anchor component.",
+    "Source Unity spatialBlend1, listener position and native pan/mixer/ducking must be separately mapped; 2D mono playback is not equivalent spatialization.",
+    "Only this enabled FSM is the behavioral owner; disabled duplicate under MOP_Mill_Door must not run.",
+    "Source listener includes an enabled AudioReverbZone; unimplemented reverb/mixer behavior must remain an explicit audio compatibility gap."
+  ],
+  "runtime_audio_listener": {
+    "source_file": "v36_work/source_board_assets/runtime_support/board_cameras_source.json",
+    "source_sha256": "dcbd433dcd9c9d1834a3854512d1735c6ab1b9e012649e100ca1169a42aad546",
+    "hierarchy": {
+      "path": "BoardCameras/AudioListener",
+      "game_object": "cab-82d08c8cc01bd15ce55e7d57190fd3af:-7577891300566625992",
+      "layer": 0,
+      "tag_index": 0,
+      "active": true,
+      "components": [
+        "cab-82d08c8cc01bd15ce55e7d57190fd3af:-7043871136962440904",
+        "cab-82d08c8cc01bd15ce55e7d57190fd3af:-4492270232145686216",
+        "cab-82d08c8cc01bd15ce55e7d57190fd3af:-441073972368502472"
+      ]
+    },
+    "transform": {
+      "key": "cab-82d08c8cc01bd15ce55e7d57190fd3af:-7043871136962440904",
+      "cab": "CAB-82d08c8cc01bd15ce55e7d57190fd3af",
+      "path_id": "-7043871136962440904",
+      "type": "Transform",
+      "class_name": "Transform",
+      "name": "",
+      "source_object_sha256": "bd4a626a16a078d00216c47b400f24ce606dbf7efb098432007bbf04e0d88ffe",
+      "source_object_bytes": 68,
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -7577891300566625992
+        },
+        "m_LocalRotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "m_LocalPosition": {
+          "x": -7.801186561584473,
+          "y": 1.0,
+          "z": -4.937725067138672
+        },
+        "m_LocalScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "m_Children": [],
+        "m_Father": {
+          "m_FileID": 0,
+          "m_PathID": 4079236752428110136
+        }
+      },
+      "references": {
+        ".m_GameObject": "cab-82d08c8cc01bd15ce55e7d57190fd3af:-7577891300566625992",
+        ".m_Father": "cab-82d08c8cc01bd15ce55e7d57190fd3af:4079236752428110136"
+      }
+    },
+    "component": {
+      "key": "cab-82d08c8cc01bd15ce55e7d57190fd3af:-4492270232145686216",
+      "cab": "CAB-82d08c8cc01bd15ce55e7d57190fd3af",
+      "path_id": "-4492270232145686216",
+      "type": "AudioListener",
+      "class_name": "AudioListener",
+      "name": "",
+      "source_object_sha256": "15ae4bd72388f994075a207d84ed3e2be68e6326da29183f65c7ce6d3d184aa4",
+      "source_object_bytes": 16,
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -7577891300566625992
+        },
+        "m_Enabled": 1
+      },
+      "references": {
+        ".m_GameObject": "cab-82d08c8cc01bd15ce55e7d57190fd3af:-7577891300566625992"
+      }
+    },
+    "parent_transform": {
+      "key": "cab-82d08c8cc01bd15ce55e7d57190fd3af:4079236752428110136",
+      "cab": "CAB-82d08c8cc01bd15ce55e7d57190fd3af",
+      "path_id": "4079236752428110136",
+      "type": "Transform",
+      "class_name": "Transform",
+      "name": "",
+      "source_object_sha256": "6b23505ac6281315e56d6c1854127a0c146c2ff2382ac97261b43259273b9187",
+      "source_object_bytes": 92,
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 905065024333615416
+        },
+        "m_LocalRotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "m_LocalPosition": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_LocalScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "m_Children": [
+          {
+            "m_FileID": 0,
+            "m_PathID": -7043871136962440904
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -2010003766942297800
+          }
+        ],
+        "m_Father": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        }
+      },
+      "references": {
+        ".m_GameObject": "cab-82d08c8cc01bd15ce55e7d57190fd3af:905065024333615416",
+        ".m_Children[0]": "cab-82d08c8cc01bd15ce55e7d57190fd3af:-7043871136962440904",
+        ".m_Children[1]": "cab-82d08c8cc01bd15ce55e7d57190fd3af:-2010003766942297800"
+      }
+    },
+    "reverb_zone": {
+      "key": "cab-82d08c8cc01bd15ce55e7d57190fd3af:-441073972368502472",
+      "cab": "CAB-82d08c8cc01bd15ce55e7d57190fd3af",
+      "path_id": "-441073972368502472",
+      "type": "AudioReverbZone",
+      "class_name": "AudioReverbZone",
+      "name": "",
+      "source_object_sha256": "cf6cb5ba5a6e2501437fc33ec79093c2b1ea092d1c923ee11af746dc2df0258b",
+      "source_object_bytes": 80,
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -7577891300566625992
+        },
+        "m_Enabled": 1,
+        "m_MinDistance": 10.0,
+        "m_MaxDistance": 15.0,
+        "m_ReverbPreset": 27,
+        "m_Room": -1000,
+        "m_RoomHF": -500,
+        "m_DecayTime": 1.4900000095367432,
+        "m_DecayHFRatio": 0.8600000143051147,
+        "m_Reflections": -1204,
+        "m_ReflectionsDelay": 0.007000000216066837,
+        "m_Reverb": -1000,
+        "m_ReverbDelay": 0.010999999940395355,
+        "m_HFReference": 5000.0,
+        "m_Diffusion": 100.0,
+        "m_Density": 100.0,
+        "m_LFReference": 250.0,
+        "m_RoomLF": 0
+      },
+      "references": {
+        ".m_GameObject": "cab-82d08c8cc01bd15ce55e7d57190fd3af:-7577891300566625992"
+      }
+    },
+    "boundary": "Serialized independent rig listener, not MainCamera position. Unity native reverb preset 27 is source evidence, not a claim Godot reverb is equivalent."
+  }
+}

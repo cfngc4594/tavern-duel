@@ -1,0 +1,322 @@
+
+TYPE PremiumMaterialSwitcher 0x02002c52
+FIELD 0x04012352 m_PremiumMaterials SIG 061d1280b9
+FIELD 0x04012353 OrgMaterials SIG 06151249011280b9
+FIELD 0x04012354 m_renderer SIG 061280d1
+
+TYPE HutongGames.PlayMaker.Actions.GetCardPortraitTextureAction 0x02003085
+FIELD 0x04013b0e portraitObject SIG 061282b9
+FIELD 0x04013b0f storedTexture SIG 06128951
+
+TYPE HutongGames.PlayMaker.Actions.SpellInitActorVariables 0x020030ec
+FIELD 0x04013c97 m_actorObject SIG 061282b9
+FIELD 0x04013c98 m_rootObject SIG 061282b9
+FIELD 0x04013c99 m_rootObjectMesh SIG 061282b9
+
+0x06015334 PremiumMaterialSwitcher::Start() RVA 0x63ddfc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.0         
+  IL_0002 call           UnityEngine.Component::GetComponent<spec> token(0x2B000024)
+  IL_0007 stfld          PremiumMaterialSwitcher::m_renderer token(0x04012354)
+  IL_000c ret             
+
+0x06015335 PremiumMaterialSwitcher::SetToPremium(premium) RVA 0x63de0c SIG 20010108
+  IL_0000 ldarg.1         
+  IL_0001 ldc.i4.1        
+  IL_0002 bge.s          IL_006f 
+  IL_0004 ldarg.0         
+  IL_0005 ldfld          PremiumMaterialSwitcher::m_renderer token(0x04012354)
+  IL_000a call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterials token(0x0A0001D2)
+  IL_000f stloc.1         
+  IL_0010 ldloc.1         
+  IL_0011 brfalse.s      IL_001b 
+  IL_0013 ldarg.0         
+  IL_0014 ldfld          PremiumMaterialSwitcher::OrgMaterials token(0x04012353)
+  IL_0019 brtrue.s       IL_001c 
+  IL_001b ret             
+  IL_001c ldc.i4.0        
+  IL_001d stloc.2         
+  IL_001e br.s           IL_0047 
+  IL_0020 ldarg.0         
+  IL_0021 ldfld          PremiumMaterialSwitcher::m_PremiumMaterials token(0x04012352)
+  IL_0026 ldloc.2         
+  IL_0027 ldelem.ref      
+  IL_0028 ldnull          
+  IL_0029 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_002e brtrue.s       IL_0043 
+  IL_0030 ldloc.1         
+  IL_0031 ldloc.2         
+  IL_0032 ldarg.0         
+  IL_0033 ldfld          PremiumMaterialSwitcher::OrgMaterials token(0x04012353)
+  IL_0038 ldloc.2         
+  IL_0039 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fd98dce8e30>::get_Item token(0x0A0009A1)
+  IL_003e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fd98dce8e30>::set_Item token(0x0A0001D4)
+  IL_0043 ldloc.2         
+  IL_0044 ldc.i4.1        
+  IL_0045 add             
+  IL_0046 stloc.2         
+  IL_0047 ldloc.2         
+  IL_0048 ldarg.0         
+  IL_0049 ldfld          PremiumMaterialSwitcher::m_PremiumMaterials token(0x04012352)
+  IL_004e ldlen           
+  IL_004f conv.i4         
+  IL_0050 bge.s          IL_005b 
+  IL_0052 ldloc.2         
+  IL_0053 ldloc.1         
+  IL_0054 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fd98dce8e30>::get_Count token(0x0A0001D3)
+  IL_0059 blt.s          IL_0020 
+  IL_005b ldarg.0         
+  IL_005c ldfld          PremiumMaterialSwitcher::m_renderer token(0x04012354)
+  IL_0061 ldloc.1         
+  IL_0062 callvirt       UnityEngine.Renderer::SetMaterials token(0x0A0001D5)
+  IL_0067 ldarg.0         
+  IL_0068 ldnull          
+  IL_0069 stfld          PremiumMaterialSwitcher::OrgMaterials token(0x04012353)
+  IL_006e ret             
+  IL_006f ldarg.0         
+  IL_0070 ldfld          PremiumMaterialSwitcher::m_PremiumMaterials token(0x04012352)
+  IL_0075 ldlen           
+  IL_0076 conv.i4         
+  IL_0077 ldc.i4.1        
+  IL_0078 bge.s          IL_007b 
+  IL_007a ret             
+  IL_007b ldarg.0         
+  IL_007c ldfld          PremiumMaterialSwitcher::OrgMaterials token(0x04012353)
+  IL_0081 brtrue.s       IL_0094 
+  IL_0083 ldarg.0         
+  IL_0084 ldarg.0         
+  IL_0085 ldfld          PremiumMaterialSwitcher::m_renderer token(0x04012354)
+  IL_008a call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterials token(0x0A0001D2)
+  IL_008f stfld          PremiumMaterialSwitcher::OrgMaterials token(0x04012353)
+  IL_0094 ldarg.0         
+  IL_0095 ldfld          PremiumMaterialSwitcher::m_renderer token(0x04012354)
+  IL_009a call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterials token(0x0A0001D2)
+  IL_009f stloc.0         
+  IL_00a0 ldc.i4.0        
+  IL_00a1 stloc.3         
+  IL_00a2 br.s           IL_00c7 
+  IL_00a4 ldarg.0         
+  IL_00a5 ldfld          PremiumMaterialSwitcher::m_PremiumMaterials token(0x04012352)
+  IL_00aa ldloc.3         
+  IL_00ab ldelem.ref      
+  IL_00ac ldnull          
+  IL_00ad call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00b2 brtrue.s       IL_00c3 
+  IL_00b4 ldloc.0         
+  IL_00b5 ldloc.3         
+  IL_00b6 ldarg.0         
+  IL_00b7 ldfld          PremiumMaterialSwitcher::m_PremiumMaterials token(0x04012352)
+  IL_00bc ldloc.3         
+  IL_00bd ldelem.ref      
+  IL_00be callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fd98dce8e30>::set_Item token(0x0A0001D4)
+  IL_00c3 ldloc.3         
+  IL_00c4 ldc.i4.1        
+  IL_00c5 add             
+  IL_00c6 stloc.3         
+  IL_00c7 ldloc.3         
+  IL_00c8 ldarg.0         
+  IL_00c9 ldfld          PremiumMaterialSwitcher::m_PremiumMaterials token(0x04012352)
+  IL_00ce ldlen           
+  IL_00cf conv.i4         
+  IL_00d0 bge.s          IL_00db 
+  IL_00d2 ldloc.3         
+  IL_00d3 ldloc.0         
+  IL_00d4 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7fd98dce8e30>::get_Count token(0x0A0001D3)
+  IL_00d9 blt.s          IL_00a4 
+  IL_00db ldarg.0         
+  IL_00dc ldfld          PremiumMaterialSwitcher::m_renderer token(0x04012354)
+  IL_00e1 ldloc.0         
+  IL_00e2 callvirt       UnityEngine.Renderer::SetMaterials token(0x0A0001D5)
+  IL_00e7 ret             
+
+0x06015336 PremiumMaterialSwitcher::.ctor() RVA 0x24e0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_0006 ret             
+
+0x06016b76 HutongGames.PlayMaker.Actions.GetCardPortraitTextureAction::Reset() RVA 0x69d273 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldnull          
+  IL_0002 stfld          HutongGames.PlayMaker.Actions.GetCardPortraitTextureAction::portraitObject token(0x04013B0E)
+  IL_0007 ret             
+
+0x06016b77 HutongGames.PlayMaker.Actions.GetCardPortraitTextureAction::OnEnter() RVA 0x69d27c SIG 200001
+  IL_0000 ldnull          
+  IL_0001 stloc.0         
+  IL_0002 ldarg.0         
+  IL_0003 ldfld          HutongGames.PlayMaker.Actions.GetCardPortraitTextureAction::portraitObject token(0x04013B0E)
+  IL_0008 brfalse.s      IL_001d 
+  IL_000a ldarg.0         
+  IL_000b ldfld          HutongGames.PlayMaker.Actions.GetCardPortraitTextureAction::portraitObject token(0x04013B0E)
+  IL_0010 callvirt       HutongGames.PlayMaker.FsmGameObject::get_Value token(0x0A000579)
+  IL_0015 ldnull          
+  IL_0016 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001b brfalse.s      IL_0026 
+  IL_001d ldarg.0         
+  IL_001e call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_0023 stloc.0         
+  IL_0024 br.s           IL_0032 
+  IL_0026 ldarg.0         
+  IL_0027 ldfld          HutongGames.PlayMaker.Actions.GetCardPortraitTextureAction::portraitObject token(0x04013B0E)
+  IL_002c callvirt       HutongGames.PlayMaker.FsmGameObject::get_Value token(0x0A000579)
+  IL_0031 stloc.0         
+  IL_0032 ldloc.0         
+  IL_0033 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B0001E0)
+  IL_0038 stloc.1         
+  IL_0039 ldloc.1         
+  IL_003a ldnull          
+  IL_003b call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0040 brfalse.s      IL_0067 
+  IL_0042 ldstr          'Failed to find Actor in GetCardPortraitTextureAction: {0}' string token(0x704077B3)
+  IL_0047 ldc.i4.1        
+  IL_0048 newarr         System.Object token(0x01000001)
+  IL_004d dup             
+  IL_004e ldc.i4.0        
+  IL_004f ldarg.0         
+  IL_0050 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_0055 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B000C1A)
+  IL_005a stelem.ref      
+  IL_005b call           UnityEngine.Debug::LogWarningFormat token(0x0A00012C)
+  IL_0060 ldarg.0         
+  IL_0061 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0066 ret             
+  IL_0067 ldloc.1         
+  IL_0068 callvirt       Actor::get_HasCardDef token(0x06012999)
+  IL_006d brtrue.s       IL_0094 
+  IL_006f ldstr          'Failed to get CardDef in GetCardPortraitTextureAction: {0}' string token(0x70407827)
+  IL_0074 ldc.i4.1        
+  IL_0075 newarr         System.Object token(0x01000001)
+  IL_007a dup             
+  IL_007b ldc.i4.0        
+  IL_007c ldarg.0         
+  IL_007d call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_0082 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B000C1A)
+  IL_0087 stelem.ref      
+  IL_0088 call           UnityEngine.Debug::LogWarningFormat token(0x0A00012C)
+  IL_008d ldarg.0         
+  IL_008e call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0093 ret             
+  IL_0094 ldloc.1         
+  IL_0095 callvirt       Actor::GetPremium token(0x06012813)
+  IL_009a stloc.2         
+  IL_009b ldloc.2         
+  IL_009c ldc.i4.3        
+  IL_009d beq.s          IL_00a1 
+  IL_009f ldc.i4.0        
+  IL_00a0 stloc.2         
+  IL_00a1 ldloc.1         
+  IL_00a2 ldloc.2         
+  IL_00a3 callvirt       Actor::GetStaticPortraitTexture token(0x06012892)
+  IL_00a8 stloc.3         
+  IL_00a9 ldloc.3         
+  IL_00aa ldnull          
+  IL_00ab call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00b0 brfalse.s      IL_00d7 
+  IL_00b2 ldstr          'Failed to get GetPortraitTexture in GetCardPortraitTextureAction: {0}' string token(0x7040789D)
+  IL_00b7 ldc.i4.1        
+  IL_00b8 newarr         System.Object token(0x01000001)
+  IL_00bd dup             
+  IL_00be ldc.i4.0        
+  IL_00bf ldarg.0         
+  IL_00c0 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_00c5 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B000C1A)
+  IL_00ca stelem.ref      
+  IL_00cb call           UnityEngine.Debug::LogWarningFormat token(0x0A00012C)
+  IL_00d0 ldarg.0         
+  IL_00d1 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_00d6 ret             
+  IL_00d7 ldarg.0         
+  IL_00d8 ldfld          HutongGames.PlayMaker.Actions.GetCardPortraitTextureAction::storedTexture token(0x04013B0F)
+  IL_00dd ldloc.3         
+  IL_00de callvirt       HutongGames.PlayMaker.FsmTexture::set_Value token(0x0A00226B)
+  IL_00e3 ldarg.0         
+  IL_00e4 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_00e9 ret             
+
+0x06016b78 HutongGames.PlayMaker.Actions.GetCardPortraitTextureAction::.ctor() RVA 0x53731a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00406B)
+  IL_0006 ret             
+
+0x06016d08 HutongGames.PlayMaker.Actions.SpellInitActorVariables::GetActor() RVA 0x6a3658 SIG 200012c0009cf8
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_0006 call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B0001E0)
+  IL_000b stloc.0         
+  IL_000c ldloc.0         
+  IL_000d ldnull          
+  IL_000e call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0013 brfalse.s      IL_0031 
+  IL_0015 ldarg.0         
+  IL_0016 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A005910)
+  IL_001b call           Blizzard.T5.Core.Utils.GameObjectUtils::FindComponentInThisOrParents<spec> token(0x2B000C1A)
+  IL_0020 stloc.1         
+  IL_0021 ldloc.1         
+  IL_0022 ldnull          
+  IL_0023 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0028 brfalse.s      IL_0031 
+  IL_002a ldloc.1         
+  IL_002b callvirt       Card::GetActor token(0x06012DD6)
+  IL_0030 stloc.0         
+  IL_0031 ldloc.0         
+  IL_0032 ret             
+
+0x06016d09 HutongGames.PlayMaker.Actions.SpellInitActorVariables::Reset() RVA 0x4291 SIG 200001
+  IL_0000 ret             
+
+0x06016d0a HutongGames.PlayMaker.Actions.SpellInitActorVariables::OnEnter() RVA 0x6a3698 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.Actions.SpellInitActorVariables::GetActor token(0x06016D08)
+  IL_0006 stloc.0         
+  IL_0007 ldloc.0         
+  IL_0008 ldnull          
+  IL_0009 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000e brfalse.s      IL_0017 
+  IL_0010 ldarg.0         
+  IL_0011 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0016 ret             
+  IL_0017 ldloc.0         
+  IL_0018 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_001d stloc.1         
+  IL_001e ldarg.0         
+  IL_001f ldfld          HutongGames.PlayMaker.Actions.SpellInitActorVariables::m_actorObject token(0x04013C97)
+  IL_0024 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_0029 brtrue.s       IL_0037 
+  IL_002b ldarg.0         
+  IL_002c ldfld          HutongGames.PlayMaker.Actions.SpellInitActorVariables::m_actorObject token(0x04013C97)
+  IL_0031 ldloc.1         
+  IL_0032 callvirt       HutongGames.PlayMaker.FsmGameObject::set_Value token(0x0A000468)
+  IL_0037 ldarg.0         
+  IL_0038 ldfld          HutongGames.PlayMaker.Actions.SpellInitActorVariables::m_rootObject token(0x04013C98)
+  IL_003d callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_0042 brtrue.s       IL_0055 
+  IL_0044 ldarg.0         
+  IL_0045 ldfld          HutongGames.PlayMaker.Actions.SpellInitActorVariables::m_rootObject token(0x04013C98)
+  IL_004a ldloc.0         
+  IL_004b callvirt       Actor::GetRootObject token(0x06012845)
+  IL_0050 callvirt       HutongGames.PlayMaker.FsmGameObject::set_Value token(0x0A000468)
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          HutongGames.PlayMaker.Actions.SpellInitActorVariables::m_rootObjectMesh token(0x04013C99)
+  IL_005b callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_0060 brtrue.s       IL_0088 
+  IL_0062 ldloc.0         
+  IL_0063 ldc.i4.1        
+  IL_0064 callvirt       Actor::GetMeshRenderer token(0x06012846)
+  IL_0069 ldnull          
+  IL_006a call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_006f brfalse.s      IL_0088 
+  IL_0071 ldarg.0         
+  IL_0072 ldfld          HutongGames.PlayMaker.Actions.SpellInitActorVariables::m_rootObjectMesh token(0x04013C99)
+  IL_0077 ldloc.0         
+  IL_0078 ldc.i4.1        
+  IL_0079 callvirt       Actor::GetMeshRenderer token(0x06012846)
+  IL_007e callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0083 callvirt       HutongGames.PlayMaker.FsmGameObject::set_Value token(0x0A000468)
+  IL_0088 ldarg.0         
+  IL_0089 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_008e ret             
+
+0x06016d0b HutongGames.PlayMaker.Actions.SpellInitActorVariables::.ctor() RVA 0x53731a SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::.ctor token(0x0A00406B)
+  IL_0006 ret             

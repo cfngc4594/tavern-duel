@@ -1,0 +1,1343 @@
+{
+  "source_sha256": "7f81d2ab2277958dea4351c41812921a00ee263a6a7abf1a5cfb4eb0794f26e5",
+  "methods": [
+    {
+      "name": "Start",
+      "token": "0x6016042",
+      "rva": 6784372,
+      "instructions": [
+        {
+          "offset": 12,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 13,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 18,
+          "opcode": "ldc.r4",
+          "operand": "0.0"
+        },
+        {
+          "offset": 23,
+          "opcode": "ldc.r4",
+          "operand": "0.0"
+        },
+        {
+          "offset": 28,
+          "opcode": "call",
+          "operand": "0xa0009f7 iTween::FadeTo"
+        },
+        {
+          "offset": 33,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 34,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 39,
+          "opcode": "callvirt",
+          "operand": "0xa000164 GameObject::get_transform"
+        },
+        {
+          "offset": 44,
+          "opcode": "ldc.r4",
+          "operand": "-7.800000190734863"
+        },
+        {
+          "offset": 49,
+          "opcode": "ldc.r4",
+          "operand": "8.199999809265137"
+        },
+        {
+          "offset": 54,
+          "opcode": "ldc.r4",
+          "operand": "-5.0"
+        },
+        {
+          "offset": 59,
+          "opcode": "newobj",
+          "operand": "0xa00004c Vector3::.ctor"
+        },
+        {
+          "offset": 64,
+          "opcode": "callvirt",
+          "operand": "0xa00020f Transform::set_position"
+        },
+        {
+          "offset": 69,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 70,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 75,
+          "opcode": "callvirt",
+          "operand": "0xa000164 GameObject::get_transform"
+        },
+        {
+          "offset": 80,
+          "opcode": "ldc.r4",
+          "operand": "90.0"
+        },
+        {
+          "offset": 85,
+          "opcode": "ldc.r4",
+          "operand": "0.0"
+        },
+        {
+          "offset": 90,
+          "opcode": "ldc.r4",
+          "operand": "0.0"
+        },
+        {
+          "offset": 95,
+          "opcode": "newobj",
+          "operand": "0xa00004c Vector3::.ctor"
+        },
+        {
+          "offset": 100,
+          "opcode": "callvirt",
+          "operand": "0xa00057a Transform::set_eulerAngles"
+        },
+        {
+          "offset": 105,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 106,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 111,
+          "opcode": "ldc.i4.0",
+          "operand": "None"
+        },
+        {
+          "offset": 112,
+          "opcode": "callvirt",
+          "operand": "0xa000104 GameObject::SetActive"
+        },
+        {
+          "offset": 117,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 118,
+          "opcode": "ldstr",
+          "operand": ""
+        },
+        {
+          "offset": 123,
+          "opcode": "call",
+          "operand": "0x6016049 TurnStartIndicator::SetReminderText"
+        },
+        {
+          "offset": 128,
+          "opcode": "ret",
+          "operand": "None"
+        }
+      ]
+    },
+    {
+      "name": "IsShown",
+      "token": "0x6016043",
+      "rva": 350191,
+      "instructions": [
+        {
+          "offset": 1,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 2,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 7,
+          "opcode": "callvirt",
+          "operand": "0xa000362 GameObject::get_activeSelf"
+        },
+        {
+          "offset": 12,
+          "opcode": "ret",
+          "operand": "None"
+        }
+      ]
+    },
+    {
+      "name": "GetDesiredDelayDuration",
+      "token": "0x6016044",
+      "rva": 6784501,
+      "instructions": [
+        {
+          "offset": 1,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 2,
+          "opcode": "ldfld",
+          "operand": "0x4012ea2 TurnStartIndicator::m_desiredDelayDuration"
+        },
+        {
+          "offset": 7,
+          "opcode": "ret",
+          "operand": "None"
+        }
+      ]
+    },
+    {
+      "name": "Show",
+      "token": "0x6016045",
+      "rva": 6784512,
+      "instructions": [
+        {
+          "offset": 12,
+          "opcode": "ldsfld",
+          "operand": "0x4011771 UniversalInputManager::UsePhoneUI"
+        },
+        {
+          "offset": 17,
+          "opcode": "call",
+          "operand": "0xa000162 ::op_Implicit"
+        },
+        {
+          "offset": 22,
+          "opcode": "brfalse.s",
+          "operand": "62"
+        },
+        {
+          "offset": 24,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 25,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 30,
+          "opcode": "callvirt",
+          "operand": "0xa000164 GameObject::get_transform"
+        },
+        {
+          "offset": 35,
+          "opcode": "ldc.r4",
+          "operand": "-7.800000190734863"
+        },
+        {
+          "offset": 40,
+          "opcode": "ldc.r4",
+          "operand": "8.199999809265137"
+        },
+        {
+          "offset": 45,
+          "opcode": "ldc.r4",
+          "operand": "-4.199999809265137"
+        },
+        {
+          "offset": 50,
+          "opcode": "newobj",
+          "operand": "0xa00004c Vector3::.ctor"
+        },
+        {
+          "offset": 55,
+          "opcode": "callvirt",
+          "operand": "0xa00020f Transform::set_position"
+        },
+        {
+          "offset": 60,
+          "opcode": "br.s",
+          "operand": "98"
+        },
+        {
+          "offset": 62,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 63,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 68,
+          "opcode": "callvirt",
+          "operand": "0xa000164 GameObject::get_transform"
+        },
+        {
+          "offset": 73,
+          "opcode": "ldc.r4",
+          "operand": "-7.800000190734863"
+        },
+        {
+          "offset": 78,
+          "opcode": "ldc.r4",
+          "operand": "8.199999809265137"
+        },
+        {
+          "offset": 83,
+          "opcode": "ldc.r4",
+          "operand": "-5.0"
+        },
+        {
+          "offset": 88,
+          "opcode": "newobj",
+          "operand": "0xa00004c Vector3::.ctor"
+        },
+        {
+          "offset": 93,
+          "opcode": "callvirt",
+          "operand": "0xa00020f Transform::set_position"
+        },
+        {
+          "offset": 98,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 99,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 104,
+          "opcode": "ldc.i4.1",
+          "operand": "None"
+        },
+        {
+          "offset": 105,
+          "opcode": "callvirt",
+          "operand": "0xa000104 GameObject::SetActive"
+        },
+        {
+          "offset": 110,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 111,
+          "opcode": "ldfld",
+          "operand": "0x4012e9d TurnStartIndicator::m_labelTop"
+        },
+        {
+          "offset": 116,
+          "opcode": "ldnull",
+          "operand": "None"
+        },
+        {
+          "offset": 117,
+          "opcode": "call",
+          "operand": "0xa00006d Object::op_Inequality"
+        },
+        {
+          "offset": 122,
+          "opcode": "brfalse.s",
+          "operand": "145"
+        },
+        {
+          "offset": 124,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 125,
+          "opcode": "ldfld",
+          "operand": "0x4012e9d TurnStartIndicator::m_labelTop"
+        },
+        {
+          "offset": 130,
+          "opcode": "ldstr",
+          "operand": "GAMEPLAY_YOUR_TURN"
+        },
+        {
+          "offset": 135,
+          "opcode": "call",
+          "operand": "0x6013c11 GameStrings::Get"
+        },
+        {
+          "offset": 140,
+          "opcode": "callvirt",
+          "operand": "0xa0000ef UberText::set_Text"
+        },
+        {
+          "offset": 145,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 146,
+          "opcode": "ldfld",
+          "operand": "0x4012e9e TurnStartIndicator::m_labelMiddle"
+        },
+        {
+          "offset": 151,
+          "opcode": "ldnull",
+          "operand": "None"
+        },
+        {
+          "offset": 152,
+          "opcode": "call",
+          "operand": "0xa00006d Object::op_Inequality"
+        },
+        {
+          "offset": 157,
+          "opcode": "brfalse.s",
+          "operand": "180"
+        },
+        {
+          "offset": 159,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 160,
+          "opcode": "ldfld",
+          "operand": "0x4012e9e TurnStartIndicator::m_labelMiddle"
+        },
+        {
+          "offset": 165,
+          "opcode": "ldstr",
+          "operand": "GAMEPLAY_YOUR_TURN"
+        },
+        {
+          "offset": 170,
+          "opcode": "call",
+          "operand": "0x6013c11 GameStrings::Get"
+        },
+        {
+          "offset": 175,
+          "opcode": "callvirt",
+          "operand": "0xa0000ef UberText::set_Text"
+        },
+        {
+          "offset": 180,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 181,
+          "opcode": "ldfld",
+          "operand": "0x4012e9f TurnStartIndicator::m_labelBottom"
+        },
+        {
+          "offset": 186,
+          "opcode": "ldnull",
+          "operand": "None"
+        },
+        {
+          "offset": 187,
+          "opcode": "call",
+          "operand": "0xa00006d Object::op_Inequality"
+        },
+        {
+          "offset": 192,
+          "opcode": "brfalse.s",
+          "operand": "215"
+        },
+        {
+          "offset": 194,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 195,
+          "opcode": "ldfld",
+          "operand": "0x4012e9f TurnStartIndicator::m_labelBottom"
+        },
+        {
+          "offset": 200,
+          "opcode": "ldstr",
+          "operand": "GAMEPLAY_YOUR_TURN"
+        },
+        {
+          "offset": 205,
+          "opcode": "call",
+          "operand": "0x6013c11 GameStrings::Get"
+        },
+        {
+          "offset": 210,
+          "opcode": "callvirt",
+          "operand": "0xa0000ef UberText::set_Text"
+        },
+        {
+          "offset": 215,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 216,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 221,
+          "opcode": "ldc.r4",
+          "operand": "1.0"
+        },
+        {
+          "offset": 226,
+          "opcode": "ldc.r4",
+          "operand": "0.25"
+        },
+        {
+          "offset": 231,
+          "opcode": "call",
+          "operand": "0xa0009f7 iTween::FadeTo"
+        },
+        {
+          "offset": 236,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 237,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 242,
+          "opcode": "callvirt",
+          "operand": "0xa000164 GameObject::get_transform"
+        },
+        {
+          "offset": 247,
+          "opcode": "ldc.r4",
+          "operand": "1.0"
+        },
+        {
+          "offset": 252,
+          "opcode": "ldc.r4",
+          "operand": "1.0"
+        },
+        {
+          "offset": 257,
+          "opcode": "ldc.r4",
+          "operand": "1.0"
+        },
+        {
+          "offset": 262,
+          "opcode": "newobj",
+          "operand": "0xa00004c Vector3::.ctor"
+        },
+        {
+          "offset": 267,
+          "opcode": "callvirt",
+          "operand": "0xa000166 Transform::set_localScale"
+        },
+        {
+          "offset": 272,
+          "opcode": "call",
+          "operand": "0xa000228 iTweenManager::Get"
+        },
+        {
+          "offset": 277,
+          "opcode": "callvirt",
+          "operand": "0xa000229 iTweenManager::GetTweenHashTable"
+        },
+        {
+          "offset": 282,
+          "opcode": "stloc.0",
+          "operand": "None"
+        },
+        {
+          "offset": 283,
+          "opcode": "ldloc.0",
+          "operand": "None"
+        },
+        {
+          "offset": 284,
+          "opcode": "ldstr",
+          "operand": "scale"
+        },
+        {
+          "offset": 289,
+          "opcode": "ldc.r4",
+          "operand": "10.0"
+        },
+        {
+          "offset": 294,
+          "opcode": "ldc.r4",
+          "operand": "10.0"
+        },
+        {
+          "offset": 299,
+          "opcode": "ldc.r4",
+          "operand": "10.0"
+        },
+        {
+          "offset": 304,
+          "opcode": "newobj",
+          "operand": "0xa00004c Vector3::.ctor"
+        },
+        {
+          "offset": 309,
+          "opcode": "box",
+          "operand": "0x1000017 ::Vector3"
+        },
+        {
+          "offset": 314,
+          "opcode": "callvirt",
+          "operand": "0xa00022b Hashtable::Add"
+        },
+        {
+          "offset": 319,
+          "opcode": "ldloc.0",
+          "operand": "None"
+        },
+        {
+          "offset": 320,
+          "opcode": "ldstr",
+          "operand": "time"
+        },
+        {
+          "offset": 325,
+          "opcode": "ldc.r4",
+          "operand": "0.25"
+        },
+        {
+          "offset": 330,
+          "opcode": "box",
+          "operand": "0x1000074 ::Single"
+        },
+        {
+          "offset": 335,
+          "opcode": "callvirt",
+          "operand": "0xa00022b Hashtable::Add"
+        },
+        {
+          "offset": 340,
+          "opcode": "ldloc.0",
+          "operand": "None"
+        },
+        {
+          "offset": 341,
+          "opcode": "ldstr",
+          "operand": "oncomplete"
+        },
+        {
+          "offset": 346,
+          "opcode": "ldstr",
+          "operand": "PunchTurnStartInstance"
+        },
+        {
+          "offset": 351,
+          "opcode": "callvirt",
+          "operand": "0xa00022b Hashtable::Add"
+        },
+        {
+          "offset": 356,
+          "opcode": "ldloc.0",
+          "operand": "None"
+        },
+        {
+          "offset": 357,
+          "opcode": "ldstr",
+          "operand": "oncompletetarget"
+        },
+        {
+          "offset": 362,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 363,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 368,
+          "opcode": "callvirt",
+          "operand": "0xa00022b Hashtable::Add"
+        },
+        {
+          "offset": 373,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 374,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 379,
+          "opcode": "ldloc.0",
+          "operand": "None"
+        },
+        {
+          "offset": 380,
+          "opcode": "call",
+          "operand": "0xa00016b iTween::ScaleTo"
+        },
+        {
+          "offset": 385,
+          "opcode": "call",
+          "operand": "0xa000228 iTweenManager::Get"
+        },
+        {
+          "offset": 390,
+          "opcode": "callvirt",
+          "operand": "0xa000229 iTweenManager::GetTweenHashTable"
+        },
+        {
+          "offset": 395,
+          "opcode": "stloc.1",
+          "operand": "None"
+        },
+        {
+          "offset": 396,
+          "opcode": "ldloc.1",
+          "operand": "None"
+        },
+        {
+          "offset": 397,
+          "opcode": "ldstr",
+          "operand": "position"
+        },
+        {
+          "offset": 402,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 403,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 408,
+          "opcode": "callvirt",
+          "operand": "0xa000164 GameObject::get_transform"
+        },
+        {
+          "offset": 413,
+          "opcode": "callvirt",
+          "operand": "0xa0000fb Transform::get_position"
+        },
+        {
+          "offset": 418,
+          "opcode": "ldc.r4",
+          "operand": "0.019999999552965164"
+        },
+        {
+          "offset": 423,
+          "opcode": "ldc.r4",
+          "operand": "0.019999999552965164"
+        },
+        {
+          "offset": 428,
+          "opcode": "ldc.r4",
+          "operand": "0.019999999552965164"
+        },
+        {
+          "offset": 433,
+          "opcode": "newobj",
+          "operand": "0xa00004c Vector3::.ctor"
+        },
+        {
+          "offset": 438,
+          "opcode": "call",
+          "operand": "0xa0002fd Vector3::op_Addition"
+        },
+        {
+          "offset": 443,
+          "opcode": "box",
+          "operand": "0x1000017 ::Vector3"
+        },
+        {
+          "offset": 448,
+          "opcode": "callvirt",
+          "operand": "0xa00022b Hashtable::Add"
+        },
+        {
+          "offset": 453,
+          "opcode": "ldloc.1",
+          "operand": "None"
+        },
+        {
+          "offset": 454,
+          "opcode": "ldstr",
+          "operand": "time"
+        },
+        {
+          "offset": 459,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 460,
+          "opcode": "ldfld",
+          "operand": "0x4012ea1 TurnStartIndicator::m_desiredDisplayDuration"
+        },
+        {
+          "offset": 465,
+          "opcode": "box",
+          "operand": "0x1000074 ::Single"
+        },
+        {
+          "offset": 470,
+          "opcode": "callvirt",
+          "operand": "0xa00022b Hashtable::Add"
+        },
+        {
+          "offset": 475,
+          "opcode": "ldloc.1",
+          "operand": "None"
+        },
+        {
+          "offset": 476,
+          "opcode": "ldstr",
+          "operand": "oncomplete"
+        },
+        {
+          "offset": 481,
+          "opcode": "ldstr",
+          "operand": "HideTurnStartInstance"
+        },
+        {
+          "offset": 486,
+          "opcode": "callvirt",
+          "operand": "0xa00022b Hashtable::Add"
+        },
+        {
+          "offset": 491,
+          "opcode": "ldloc.1",
+          "operand": "None"
+        },
+        {
+          "offset": 492,
+          "opcode": "ldstr",
+          "operand": "oncompletetarget"
+        },
+        {
+          "offset": 497,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 498,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 503,
+          "opcode": "callvirt",
+          "operand": "0xa00022b Hashtable::Add"
+        },
+        {
+          "offset": 508,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 509,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 514,
+          "opcode": "ldloc.1",
+          "operand": "None"
+        },
+        {
+          "offset": 515,
+          "opcode": "call",
+          "operand": "0xa00022c iTween::MoveTo"
+        },
+        {
+          "offset": 520,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 521,
+          "opcode": "ldfld",
+          "operand": "0x4012e9b TurnStartIndicator::m_explosionFX"
+        },
+        {
+          "offset": 526,
+          "opcode": "callvirt",
+          "operand": "MethodSpec 0xa00006c GameObject::GetComponent"
+        },
+        {
+          "offset": 531,
+          "opcode": "callvirt",
+          "operand": "0xa000c61 ParticleSystem::Play"
+        },
+        {
+          "offset": 536,
+          "opcode": "ret",
+          "operand": "None"
+        }
+      ]
+    },
+    {
+      "name": "PunchTurnStartInstance",
+      "token": "0x6016046",
+      "rva": 6785049,
+      "instructions": [
+        {
+          "offset": 1,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 2,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 7,
+          "opcode": "ldc.r4",
+          "operand": "9.800000190734863"
+        },
+        {
+          "offset": 12,
+          "opcode": "ldc.r4",
+          "operand": "9.800000190734863"
+        },
+        {
+          "offset": 17,
+          "opcode": "ldc.r4",
+          "operand": "9.800000190734863"
+        },
+        {
+          "offset": 22,
+          "opcode": "newobj",
+          "operand": "0xa00004c Vector3::.ctor"
+        },
+        {
+          "offset": 27,
+          "opcode": "ldc.r4",
+          "operand": "0.15000000596046448"
+        },
+        {
+          "offset": 32,
+          "opcode": "call",
+          "operand": "0xa00022e iTween::ScaleTo"
+        },
+        {
+          "offset": 37,
+          "opcode": "ret",
+          "operand": "None"
+        }
+      ]
+    },
+    {
+      "name": "HideTurnStartInstance",
+      "token": "0x6016047",
+      "rva": 6785088,
+      "instructions": [
+        {
+          "offset": 12,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 13,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 18,
+          "opcode": "ldc.r4",
+          "operand": "0.0"
+        },
+        {
+          "offset": 23,
+          "opcode": "ldc.r4",
+          "operand": "0.25"
+        },
+        {
+          "offset": 28,
+          "opcode": "call",
+          "operand": "0xa0009f7 iTween::FadeTo"
+        },
+        {
+          "offset": 33,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 34,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 39,
+          "opcode": "ldc.i4.8",
+          "operand": "None"
+        },
+        {
+          "offset": 40,
+          "opcode": "newarr",
+          "operand": "0x1000001 ::Object"
+        },
+        {
+          "offset": 45,
+          "opcode": "dup",
+          "operand": "None"
+        },
+        {
+          "offset": 46,
+          "opcode": "ldc.i4.0",
+          "operand": "None"
+        },
+        {
+          "offset": 47,
+          "opcode": "ldstr",
+          "operand": "scale"
+        },
+        {
+          "offset": 52,
+          "opcode": "stelem.ref",
+          "operand": "None"
+        },
+        {
+          "offset": 53,
+          "opcode": "dup",
+          "operand": "None"
+        },
+        {
+          "offset": 54,
+          "opcode": "ldc.i4.1",
+          "operand": "None"
+        },
+        {
+          "offset": 55,
+          "opcode": "ldc.r4",
+          "operand": "0.009999999776482582"
+        },
+        {
+          "offset": 60,
+          "opcode": "ldc.r4",
+          "operand": "0.009999999776482582"
+        },
+        {
+          "offset": 65,
+          "opcode": "ldc.r4",
+          "operand": "0.009999999776482582"
+        },
+        {
+          "offset": 70,
+          "opcode": "newobj",
+          "operand": "0xa00004c Vector3::.ctor"
+        },
+        {
+          "offset": 75,
+          "opcode": "box",
+          "operand": "0x1000017 ::Vector3"
+        },
+        {
+          "offset": 80,
+          "opcode": "stelem.ref",
+          "operand": "None"
+        },
+        {
+          "offset": 81,
+          "opcode": "dup",
+          "operand": "None"
+        },
+        {
+          "offset": 82,
+          "opcode": "ldc.i4.2",
+          "operand": "None"
+        },
+        {
+          "offset": 83,
+          "opcode": "ldstr",
+          "operand": "time"
+        },
+        {
+          "offset": 88,
+          "opcode": "stelem.ref",
+          "operand": "None"
+        },
+        {
+          "offset": 89,
+          "opcode": "dup",
+          "operand": "None"
+        },
+        {
+          "offset": 90,
+          "opcode": "ldc.i4.3",
+          "operand": "None"
+        },
+        {
+          "offset": 91,
+          "opcode": "ldc.r4",
+          "operand": "0.25"
+        },
+        {
+          "offset": 96,
+          "opcode": "box",
+          "operand": "0x1000074 ::Single"
+        },
+        {
+          "offset": 101,
+          "opcode": "stelem.ref",
+          "operand": "None"
+        },
+        {
+          "offset": 102,
+          "opcode": "dup",
+          "operand": "None"
+        },
+        {
+          "offset": 103,
+          "opcode": "ldc.i4.4",
+          "operand": "None"
+        },
+        {
+          "offset": 104,
+          "opcode": "ldstr",
+          "operand": "oncomplete"
+        },
+        {
+          "offset": 109,
+          "opcode": "stelem.ref",
+          "operand": "None"
+        },
+        {
+          "offset": 110,
+          "opcode": "dup",
+          "operand": "None"
+        },
+        {
+          "offset": 111,
+          "opcode": "ldc.i4.5",
+          "operand": "None"
+        },
+        {
+          "offset": 112,
+          "opcode": "ldstr",
+          "operand": "DeactivateTurnStartInstance"
+        },
+        {
+          "offset": 117,
+          "opcode": "stelem.ref",
+          "operand": "None"
+        },
+        {
+          "offset": 118,
+          "opcode": "dup",
+          "operand": "None"
+        },
+        {
+          "offset": 119,
+          "opcode": "ldc.i4.6",
+          "operand": "None"
+        },
+        {
+          "offset": 120,
+          "opcode": "ldstr",
+          "operand": "oncompletetarget"
+        },
+        {
+          "offset": 125,
+          "opcode": "stelem.ref",
+          "operand": "None"
+        },
+        {
+          "offset": 126,
+          "opcode": "dup",
+          "operand": "None"
+        },
+        {
+          "offset": 127,
+          "opcode": "ldc.i4.7",
+          "operand": "None"
+        },
+        {
+          "offset": 128,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 129,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 134,
+          "opcode": "stelem.ref",
+          "operand": "None"
+        },
+        {
+          "offset": 135,
+          "opcode": "call",
+          "operand": "0xa00016a iTween::Hash"
+        },
+        {
+          "offset": 140,
+          "opcode": "call",
+          "operand": "0xa00016b iTween::ScaleTo"
+        },
+        {
+          "offset": 145,
+          "opcode": "ret",
+          "operand": "None"
+        }
+      ]
+    },
+    {
+      "name": "DeactivateTurnStartInstance",
+      "token": "0x6016048",
+      "rva": 360570,
+      "instructions": [
+        {
+          "offset": 1,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 2,
+          "opcode": "call",
+          "operand": "0xa000045 Component::get_gameObject"
+        },
+        {
+          "offset": 7,
+          "opcode": "ldc.i4.0",
+          "operand": "None"
+        },
+        {
+          "offset": 8,
+          "opcode": "callvirt",
+          "operand": "0xa000104 GameObject::SetActive"
+        },
+        {
+          "offset": 13,
+          "opcode": "ret",
+          "operand": "None"
+        }
+      ]
+    },
+    {
+      "name": "SetReminderText",
+      "token": "0x6016049",
+      "rva": 6785234,
+      "instructions": [
+        {
+          "offset": 1,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 2,
+          "opcode": "ldfld",
+          "operand": "0x4012ea0 TurnStartIndicator::m_reminderText"
+        },
+        {
+          "offset": 7,
+          "opcode": "ldnull",
+          "operand": "None"
+        },
+        {
+          "offset": 8,
+          "opcode": "call",
+          "operand": "0xa00006d Object::op_Inequality"
+        },
+        {
+          "offset": 13,
+          "opcode": "brfalse.s",
+          "operand": "27"
+        },
+        {
+          "offset": 15,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 16,
+          "opcode": "ldfld",
+          "operand": "0x4012ea0 TurnStartIndicator::m_reminderText"
+        },
+        {
+          "offset": 21,
+          "opcode": "ldarg.1",
+          "operand": "None"
+        },
+        {
+          "offset": 22,
+          "opcode": "callvirt",
+          "operand": "0xa0000ef UberText::set_Text"
+        },
+        {
+          "offset": 27,
+          "opcode": "ret",
+          "operand": "None"
+        }
+      ]
+    },
+    {
+      "name": ".ctor",
+      "token": "0x601604a",
+      "rva": 6785262,
+      "instructions": [
+        {
+          "offset": 1,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 2,
+          "opcode": "ldc.r4",
+          "operand": "1.5"
+        },
+        {
+          "offset": 7,
+          "opcode": "stfld",
+          "operand": "0x4012ea1 TurnStartIndicator::m_desiredDisplayDuration"
+        },
+        {
+          "offset": 12,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 13,
+          "opcode": "ldc.r4",
+          "operand": "1.0"
+        },
+        {
+          "offset": 18,
+          "opcode": "stfld",
+          "operand": "0x4012ea2 TurnStartIndicator::m_desiredDelayDuration"
+        },
+        {
+          "offset": 23,
+          "opcode": "ldarg.0",
+          "operand": "None"
+        },
+        {
+          "offset": 24,
+          "opcode": "call",
+          "operand": "0xa000018 MonoBehaviour::.ctor"
+        },
+        {
+          "offset": 29,
+          "opcode": "ret",
+          "operand": "None"
+        }
+      ]
+    }
+  ]
+}

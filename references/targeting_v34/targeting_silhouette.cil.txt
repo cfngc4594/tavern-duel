@@ -1,0 +1,1580 @@
+
+TYPE HighlightRender 0x02002c2b
+FIELD 0x040121ec MULTISAMPLE_SHADER_NAME SIG 060e
+FIELD 0x040121ed MULTISAMPLE_BLEND_SHADER_NAME SIG 060e
+FIELD 0x040121ee BLEND_SHADER_NAME SIG 060e
+FIELD 0x040121ef HIGHLIGHT_SHADER_NAME SIG 060e
+FIELD 0x040121f0 UNLIT_COLOR_SHADER_NAME SIG 060e
+FIELD 0x040121f1 UNLIT_GREY_SHADER_NAME SIG 060e
+FIELD 0x040121f2 UNLIT_LIGHTGREY_SHADER_NAME SIG 060e
+FIELD 0x040121f3 UNLIT_DARKGREY_SHADER_NAME SIG 060e
+FIELD 0x040121f4 UNLIT_BLACK_SHADER_NAME SIG 060e
+FIELD 0x040121f5 UNLIT_WHITE_SHADER_NAME SIG 060e
+FIELD 0x040121f6 s_whiteMaterial SIG 061280b9
+FIELD 0x040121f7 s_lightGreyMaterial SIG 061280b9
+FIELD 0x040121f8 s_greyMaterial SIG 061280b9
+FIELD 0x040121f9 s_darkGreyMaterial SIG 061280b9
+FIELD 0x040121fa s_blurMaterial SIG 061280b9
+FIELD 0x040121fb s_blurBlendMaterial SIG 061280b9
+FIELD 0x040121fc s_maskBlendMaterial SIG 061280b9
+FIELD 0x040121fd RENDER_SIZE1 SIG 060c
+FIELD 0x040121fe RENDER_SIZE2 SIG 060c
+FIELD 0x040121ff RENDER_SIZE3 SIG 060c
+FIELD 0x04012200 RENDER_SIZE4 SIG 060c
+FIELD 0x04012201 ORTHO_SIZE1 SIG 060c
+FIELD 0x04012202 ORTHO_SIZE2 SIG 060c
+FIELD 0x04012203 ORTHO_SIZE3 SIG 060c
+FIELD 0x04012204 ORTHO_SIZE4 SIG 060c
+FIELD 0x04012205 BLUR_BLEND1 SIG 060c
+FIELD 0x04012206 BLUR_BLEND2 SIG 060c
+FIELD 0x04012207 BLUR_BLEND3 SIG 060c
+FIELD 0x04012208 BLUR_BLEND4 SIG 060c
+FIELD 0x04012209 SILHOUETTE_RENDER_SIZE SIG 0608
+FIELD 0x0401220a MAX_HIGHLIGHT_EXCLUDE_PARENT_SEARCH SIG 0608
+FIELD 0x0401220b s_sid0 SIG 0608
+FIELD 0x0401220c s_sid1 SIG 0608
+FIELD 0x0401220d s_sid2 SIG 0608
+FIELD 0x0401220e s_blurOffsetsId SIG 0608
+FIELD 0x0401220f s_blendTexId SIG 0608
+FIELD 0x04012210 s_cachedRenderers SIG 06151249011280d1
+FIELD 0x04012211 s_cachedCommands SIG 061512490111c000b204
+FIELD 0x04012212 s_cachedMaterials SIG 06151249011280b9
+FIELD 0x04012213 m_RootTransform SIG 061280a5
+FIELD 0x04012214 m_SilouetteRenderSize SIG 060c
+FIELD 0x04012215 m_SilouetteClipSize SIG 060c
+FIELD 0x04012216 m_OverrideMeshRenderer SIG 061280d1
+FIELD 0x04012217 m_RenderPlane SIG 0612808d
+FIELD 0x04012218 m_RenderScale SIG 060c
+FIELD 0x04012219 m_OrgRotation SIG 06118215
+FIELD 0x0401221a m_OrgScale SIG 06115d
+FIELD 0x0401221b m_MultiSampleShader SIG 061280c9
+FIELD 0x0401221c m_MultiSampleBlendShader SIG 061280c9
+FIELD 0x0401221d m_BlendShader SIG 061280c9
+FIELD 0x0401221e m_HighlightShader SIG 061280c9
+FIELD 0x0401221f m_UnlitColorShader SIG 061280c9
+FIELD 0x04012220 m_UnlitGreyShader SIG 061280c9
+FIELD 0x04012221 m_UnlitLightGreyShader SIG 061280c9
+FIELD 0x04012222 m_UnlitDarkGreyShader SIG 061280c9
+FIELD 0x04012223 m_UnlitBlackShader SIG 061280c9
+FIELD 0x04012224 m_UnlitWhiteShader SIG 061280c9
+FIELD 0x04012225 m_CameraTexture SIG 06128315
+FIELD 0x04012226 m_CameraOrthoSize SIG 060c
+FIELD 0x04012227 m_VisibilityStates SIG 06151281a1021280d102
+FIELD 0x04012228 m_ObjectsOrginalPosition SIG 06151281a1021280a5115d
+FIELD 0x04012229 m_RenderSizeX SIG 0608
+FIELD 0x0401222a m_RenderSizeY SIG 0608
+FIELD 0x0401222b m_renderOverrides SIG 0612c000b0b0
+FIELD 0x0401222c m_Initialized SIG 0602
+
+0x06015272 HighlightRender::OnDisable() RVA 0x638a58 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HighlightRender::m_VisibilityStates token(0x04012227)
+  IL_0006 brfalse.s      IL_0013 
+  IL_0008 ldarg.0         
+  IL_0009 ldfld          HighlightRender::m_VisibilityStates token(0x04012227)
+  IL_000e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f22211f9610>::Clear token(0x0A0050F0)
+  IL_0013 ldarg.0         
+  IL_0014 ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_0019 ldnull          
+  IL_001a call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_001f brfalse.s      IL_0050 
+  IL_0021 call           UnityEngine.RenderTexture::get_active token(0x0A000987)
+  IL_0026 ldarg.0         
+  IL_0027 ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_002c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0031 brfalse.s      IL_0039 
+  IL_0033 ldnull          
+  IL_0034 call           UnityEngine.RenderTexture::set_active token(0x0A000988)
+  IL_0039 call           RenderTextureTracker::Get token(0x06004590)
+  IL_003e ldarg.0         
+  IL_003f ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_0044 callvirt       RenderTextureTracker::DestroyRenderTexture token(0x06004592)
+  IL_0049 ldarg.0         
+  IL_004a ldnull          
+  IL_004b stfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_0050 ldarg.0         
+  IL_0051 ldc.i4.0        
+  IL_0052 stfld          HighlightRender::m_Initialized token(0x0401222C)
+  IL_0057 ret             
+
+0x06015273 HighlightRender::Initialize() RVA 0x638abc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HighlightRender::m_Initialized token(0x0401222C)
+  IL_0006 brfalse.s      IL_0009 
+  IL_0008 ret             
+  IL_0009 ldarg.0         
+  IL_000a ldc.i4.1        
+  IL_000b stfld          HighlightRender::m_Initialized token(0x0401222C)
+  IL_0010 ldarg.0         
+  IL_0011 ldfld          HighlightRender::m_HighlightShader token(0x0401221E)
+  IL_0016 ldnull          
+  IL_0017 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_001c brfalse.s      IL_002f 
+  IL_001e ldarg.0         
+  IL_001f ldarg.0         
+  IL_0020 ldfld          HighlightRender::HIGHLIGHT_SHADER_NAME token(0x040121EF)
+  IL_0025 call           ShaderUtils::FindShader token(0x06015550)
+  IL_002a stfld          HighlightRender::m_HighlightShader token(0x0401221E)
+  IL_002f ldarg.0         
+  IL_0030 ldfld          HighlightRender::m_HighlightShader token(0x0401221E)
+  IL_0035 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_003a brtrue.s       IL_0058 
+  IL_003c ldstr          'Failed to load Highlight Shader: ' string token(0x703F6D79)
+  IL_0041 ldarg.0         
+  IL_0042 ldfld          HighlightRender::HIGHLIGHT_SHADER_NAME token(0x040121EF)
+  IL_0047 call           System.String::Concat token(0x0A0000C0)
+  IL_004c call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0051 ldarg.0         
+  IL_0052 ldc.i4.0        
+  IL_0053 call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0058 ldarg.0         
+  IL_0059 call           UnityEngine.Component::GetComponent<spec> token(0x2B000024)
+  IL_005e call           Blizzard.T5.MaterialService.Extensions.RendererExtension::GetMaterial token(0x0A000222)
+  IL_0063 ldarg.0         
+  IL_0064 ldfld          HighlightRender::m_HighlightShader token(0x0401221E)
+  IL_0069 callvirt       UnityEngine.Material::set_shader token(0x0A0009EC)
+  IL_006e ldarg.0         
+  IL_006f ldfld          HighlightRender::m_MultiSampleShader token(0x0401221B)
+  IL_0074 ldnull          
+  IL_0075 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_007a brfalse.s      IL_008d 
+  IL_007c ldarg.0         
+  IL_007d ldarg.0         
+  IL_007e ldfld          HighlightRender::MULTISAMPLE_SHADER_NAME token(0x040121EC)
+  IL_0083 call           ShaderUtils::FindShader token(0x06015550)
+  IL_0088 stfld          HighlightRender::m_MultiSampleShader token(0x0401221B)
+  IL_008d ldarg.0         
+  IL_008e ldfld          HighlightRender::m_MultiSampleShader token(0x0401221B)
+  IL_0093 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0098 brtrue.s       IL_00b6 
+  IL_009a ldstr          'Failed to load Highlight Shader: ' string token(0x703F6D79)
+  IL_009f ldarg.0         
+  IL_00a0 ldfld          HighlightRender::MULTISAMPLE_SHADER_NAME token(0x040121EC)
+  IL_00a5 call           System.String::Concat token(0x0A0000C0)
+  IL_00aa call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_00af ldarg.0         
+  IL_00b0 ldc.i4.0        
+  IL_00b1 call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_00b6 ldarg.0         
+  IL_00b7 ldfld          HighlightRender::m_MultiSampleBlendShader token(0x0401221C)
+  IL_00bc ldnull          
+  IL_00bd call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00c2 brfalse.s      IL_00d5 
+  IL_00c4 ldarg.0         
+  IL_00c5 ldarg.0         
+  IL_00c6 ldfld          HighlightRender::MULTISAMPLE_BLEND_SHADER_NAME token(0x040121ED)
+  IL_00cb call           ShaderUtils::FindShader token(0x06015550)
+  IL_00d0 stfld          HighlightRender::m_MultiSampleBlendShader token(0x0401221C)
+  IL_00d5 ldarg.0         
+  IL_00d6 ldfld          HighlightRender::m_MultiSampleBlendShader token(0x0401221C)
+  IL_00db call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_00e0 brtrue.s       IL_00fe 
+  IL_00e2 ldstr          'Failed to load Highlight Shader: ' string token(0x703F6D79)
+  IL_00e7 ldarg.0         
+  IL_00e8 ldfld          HighlightRender::MULTISAMPLE_BLEND_SHADER_NAME token(0x040121ED)
+  IL_00ed call           System.String::Concat token(0x0A0000C0)
+  IL_00f2 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_00f7 ldarg.0         
+  IL_00f8 ldc.i4.0        
+  IL_00f9 call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_00fe ldarg.0         
+  IL_00ff ldfld          HighlightRender::m_BlendShader token(0x0401221D)
+  IL_0104 ldnull          
+  IL_0105 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_010a brfalse.s      IL_011d 
+  IL_010c ldarg.0         
+  IL_010d ldarg.0         
+  IL_010e ldfld          HighlightRender::BLEND_SHADER_NAME token(0x040121EE)
+  IL_0113 call           ShaderUtils::FindShader token(0x06015550)
+  IL_0118 stfld          HighlightRender::m_BlendShader token(0x0401221D)
+  IL_011d ldarg.0         
+  IL_011e ldfld          HighlightRender::m_BlendShader token(0x0401221D)
+  IL_0123 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0128 brtrue.s       IL_0146 
+  IL_012a ldstr          'Failed to load Highlight Shader: ' string token(0x703F6D79)
+  IL_012f ldarg.0         
+  IL_0130 ldfld          HighlightRender::BLEND_SHADER_NAME token(0x040121EE)
+  IL_0135 call           System.String::Concat token(0x0A0000C0)
+  IL_013a call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_013f ldarg.0         
+  IL_0140 ldc.i4.0        
+  IL_0141 call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_0146 ldarg.0         
+  IL_0147 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_014c ldnull          
+  IL_014d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0152 brfalse.s      IL_01a6 
+  IL_0154 ldarg.0         
+  IL_0155 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_015a callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_015f callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_0164 stloc.1         
+  IL_0165 ldloc.1         
+  IL_0166 callvirt       UnityEngine.Component::GetComponent<spec> token(0x2B0009C7)
+  IL_016b call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0170 brfalse.s      IL_0180 
+  IL_0172 ldarg.0         
+  IL_0173 ldloc.1         
+  IL_0174 callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_0179 stfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_017e br.s           IL_0187 
+  IL_0180 ldarg.0         
+  IL_0181 ldloc.1         
+  IL_0182 stfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_0187 ldarg.0         
+  IL_0188 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_018d ldnull          
+  IL_018e call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0193 brfalse.s      IL_01a6 
+  IL_0195 ldstr          'm_RootTransform is null. Highlighting disabled!' string token(0x703F6DBD)
+  IL_019a call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_019f ldarg.0         
+  IL_01a0 ldc.i4.0        
+  IL_01a1 call           UnityEngine.Behaviour::set_enabled token(0x0A00046B)
+  IL_01a6 ldarg.0         
+  IL_01a7 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f22211f9610>::.ctor token(0x0A0050F1)
+  IL_01ac stfld          HighlightRender::m_VisibilityStates token(0x04012227)
+  IL_01b1 ldarg.0         
+  IL_01b2 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_01b7 callvirt       UnityEngine.Component::GetComponentsInChildren<spec> token(0x2B0009C8)
+  IL_01bc stloc.0         
+  IL_01bd ldloc.0         
+  IL_01be brfalse.s      IL_01f7 
+  IL_01c0 ldloc.0         
+  IL_01c1 stloc.2         
+  IL_01c2 ldc.i4.0        
+  IL_01c3 stloc.3         
+  IL_01c4 br.s           IL_01f1 
+  IL_01c6 ldloc.2         
+  IL_01c7 ldloc.3         
+  IL_01c8 ldelem.ref      
+  IL_01c9 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_01ce callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000007)
+  IL_01d3 stloc.s        local(0x0004) 
+  IL_01d5 ldloc.s        local(0x0004) 
+  IL_01d7 ldnull          
+  IL_01d8 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_01dd brtrue.s       IL_01ed 
+  IL_01df ldarg.0         
+  IL_01e0 ldfld          HighlightRender::m_VisibilityStates token(0x04012227)
+  IL_01e5 ldloc.s        local(0x0004) 
+  IL_01e7 ldc.i4.0        
+  IL_01e8 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f22211f9610>::Add token(0x0A0050F2)
+  IL_01ed ldloc.3         
+  IL_01ee ldc.i4.1        
+  IL_01ef add             
+  IL_01f0 stloc.3         
+  IL_01f1 ldloc.3         
+  IL_01f2 ldloc.2         
+  IL_01f3 ldlen           
+  IL_01f4 conv.i4         
+  IL_01f5 blt.s          IL_01c6 
+  IL_01f7 ldarg.0         
+  IL_01f8 ldarg.0         
+  IL_01f9 ldfld          HighlightRender::UNLIT_COLOR_SHADER_NAME token(0x040121F0)
+  IL_01fe call           ShaderUtils::FindShader token(0x06015550)
+  IL_0203 stfld          HighlightRender::m_UnlitColorShader token(0x0401221F)
+  IL_0208 ldarg.0         
+  IL_0209 ldfld          HighlightRender::m_UnlitColorShader token(0x0401221F)
+  IL_020e call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0213 brtrue.s       IL_022a 
+  IL_0215 ldstr          'Failed to load Highlight Rendering Shader: ' string token(0x703F6E1D)
+  IL_021a ldarg.0         
+  IL_021b ldfld          HighlightRender::UNLIT_COLOR_SHADER_NAME token(0x040121F0)
+  IL_0220 call           System.String::Concat token(0x0A0000C0)
+  IL_0225 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_022a ldarg.0         
+  IL_022b ldarg.0         
+  IL_022c ldfld          HighlightRender::UNLIT_GREY_SHADER_NAME token(0x040121F1)
+  IL_0231 call           ShaderUtils::FindShader token(0x06015550)
+  IL_0236 stfld          HighlightRender::m_UnlitGreyShader token(0x04012220)
+  IL_023b ldarg.0         
+  IL_023c ldfld          HighlightRender::m_UnlitGreyShader token(0x04012220)
+  IL_0241 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0246 brtrue.s       IL_025d 
+  IL_0248 ldstr          'Failed to load Highlight Rendering Shader: ' string token(0x703F6E1D)
+  IL_024d ldarg.0         
+  IL_024e ldfld          HighlightRender::UNLIT_GREY_SHADER_NAME token(0x040121F1)
+  IL_0253 call           System.String::Concat token(0x0A0000C0)
+  IL_0258 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_025d ldarg.0         
+  IL_025e ldarg.0         
+  IL_025f ldfld          HighlightRender::UNLIT_LIGHTGREY_SHADER_NAME token(0x040121F2)
+  IL_0264 call           ShaderUtils::FindShader token(0x06015550)
+  IL_0269 stfld          HighlightRender::m_UnlitLightGreyShader token(0x04012221)
+  IL_026e ldarg.0         
+  IL_026f ldfld          HighlightRender::m_UnlitLightGreyShader token(0x04012221)
+  IL_0274 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0279 brtrue.s       IL_0290 
+  IL_027b ldstr          'Failed to load Highlight Rendering Shader: ' string token(0x703F6E1D)
+  IL_0280 ldarg.0         
+  IL_0281 ldfld          HighlightRender::UNLIT_LIGHTGREY_SHADER_NAME token(0x040121F2)
+  IL_0286 call           System.String::Concat token(0x0A0000C0)
+  IL_028b call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0290 ldarg.0         
+  IL_0291 ldarg.0         
+  IL_0292 ldfld          HighlightRender::UNLIT_DARKGREY_SHADER_NAME token(0x040121F3)
+  IL_0297 call           ShaderUtils::FindShader token(0x06015550)
+  IL_029c stfld          HighlightRender::m_UnlitDarkGreyShader token(0x04012222)
+  IL_02a1 ldarg.0         
+  IL_02a2 ldfld          HighlightRender::m_UnlitDarkGreyShader token(0x04012222)
+  IL_02a7 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_02ac brtrue.s       IL_02c3 
+  IL_02ae ldstr          'Failed to load Highlight Rendering Shader: ' string token(0x703F6E1D)
+  IL_02b3 ldarg.0         
+  IL_02b4 ldfld          HighlightRender::UNLIT_DARKGREY_SHADER_NAME token(0x040121F3)
+  IL_02b9 call           System.String::Concat token(0x0A0000C0)
+  IL_02be call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_02c3 ldarg.0         
+  IL_02c4 ldarg.0         
+  IL_02c5 ldfld          HighlightRender::UNLIT_BLACK_SHADER_NAME token(0x040121F4)
+  IL_02ca call           ShaderUtils::FindShader token(0x06015550)
+  IL_02cf stfld          HighlightRender::m_UnlitBlackShader token(0x04012223)
+  IL_02d4 ldarg.0         
+  IL_02d5 ldfld          HighlightRender::m_UnlitBlackShader token(0x04012223)
+  IL_02da call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_02df brtrue.s       IL_02f6 
+  IL_02e1 ldstr          'Failed to load Highlight Rendering Shader: ' string token(0x703F6E1D)
+  IL_02e6 ldarg.0         
+  IL_02e7 ldfld          HighlightRender::UNLIT_BLACK_SHADER_NAME token(0x040121F4)
+  IL_02ec call           System.String::Concat token(0x0A0000C0)
+  IL_02f1 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_02f6 ldarg.0         
+  IL_02f7 ldarg.0         
+  IL_02f8 ldfld          HighlightRender::UNLIT_WHITE_SHADER_NAME token(0x040121F5)
+  IL_02fd call           ShaderUtils::FindShader token(0x06015550)
+  IL_0302 stfld          HighlightRender::m_UnlitWhiteShader token(0x04012224)
+  IL_0307 ldarg.0         
+  IL_0308 ldfld          HighlightRender::m_UnlitWhiteShader token(0x04012224)
+  IL_030d call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0312 brtrue.s       IL_0329 
+  IL_0314 ldstr          'Failed to load Highlight Rendering Shader: ' string token(0x703F6E1D)
+  IL_0319 ldarg.0         
+  IL_031a ldfld          HighlightRender::UNLIT_WHITE_SHADER_NAME token(0x040121F5)
+  IL_031f call           System.String::Concat token(0x0A0000C0)
+  IL_0324 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0329 ldsfld         HighlightRender::s_whiteMaterial token(0x040121F6)
+  IL_032e ldnull          
+  IL_032f call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0334 brfalse.s      IL_03a6 
+  IL_0336 ldarg.0         
+  IL_0337 ldfld          HighlightRender::m_UnlitWhiteShader token(0x04012224)
+  IL_033c newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_0341 stsfld         HighlightRender::s_whiteMaterial token(0x040121F6)
+  IL_0346 ldarg.0         
+  IL_0347 ldfld          HighlightRender::m_UnlitLightGreyShader token(0x04012221)
+  IL_034c newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_0351 stsfld         HighlightRender::s_lightGreyMaterial token(0x040121F7)
+  IL_0356 ldarg.0         
+  IL_0357 ldfld          HighlightRender::m_UnlitGreyShader token(0x04012220)
+  IL_035c newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_0361 stsfld         HighlightRender::s_greyMaterial token(0x040121F8)
+  IL_0366 ldarg.0         
+  IL_0367 ldfld          HighlightRender::m_UnlitDarkGreyShader token(0x04012222)
+  IL_036c newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_0371 stsfld         HighlightRender::s_darkGreyMaterial token(0x040121F9)
+  IL_0376 ldarg.0         
+  IL_0377 ldfld          HighlightRender::m_MultiSampleShader token(0x0401221B)
+  IL_037c newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_0381 stsfld         HighlightRender::s_blurMaterial token(0x040121FA)
+  IL_0386 ldarg.0         
+  IL_0387 ldfld          HighlightRender::m_MultiSampleBlendShader token(0x0401221C)
+  IL_038c newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_0391 stsfld         HighlightRender::s_blurBlendMaterial token(0x040121FB)
+  IL_0396 ldarg.0         
+  IL_0397 ldfld          HighlightRender::m_BlendShader token(0x0401221D)
+  IL_039c newobj         UnityEngine.Material::.ctor token(0x0A000060)
+  IL_03a1 stsfld         HighlightRender::s_maskBlendMaterial token(0x040121FC)
+  IL_03a6 ret             
+
+0x06015274 HighlightRender::Update() RVA 0x638e6f SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000b brfalse.s      IL_0029 
+  IL_000d ldarg.0         
+  IL_000e ldfld          HighlightRender::m_Initialized token(0x0401222C)
+  IL_0013 brfalse.s      IL_0029 
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_001b callvirt       UnityEngine.RenderTexture::IsCreated token(0x0A0050F3)
+  IL_0020 brtrue.s       IL_0029 
+  IL_0022 ldarg.0         
+  IL_0023 ldc.i4.0        
+  IL_0024 call           HighlightRender::CreateSilhouetteTexture token(0x0601527A)
+  IL_0029 ret             
+
+0x06015275 HighlightRender::ExportSilhouetteTexture() RVA 0x638e9c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_0006 call           UnityEngine.RenderTexture::set_active token(0x0A000988)
+  IL_000b ldarg.0         
+  IL_000c ldfld          HighlightRender::m_RenderSizeX token(0x04012229)
+  IL_0011 ldarg.0         
+  IL_0012 ldfld          HighlightRender::m_RenderSizeY token(0x0401222A)
+  IL_0017 ldc.i4.3        
+  IL_0018 ldc.i4.0        
+  IL_0019 newobj         UnityEngine.Texture2D::.ctor token(0x0A0050F4)
+  IL_001e stloc.0         
+  IL_001f ldloc.0         
+  IL_0020 ldc.r4         0.0 
+  IL_0025 ldc.r4         0.0 
+  IL_002a ldarg.0         
+  IL_002b ldfld          HighlightRender::m_RenderSizeX token(0x04012229)
+  IL_0030 conv.r4         
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          HighlightRender::m_RenderSizeY token(0x0401222A)
+  IL_0037 conv.r4         
+  IL_0038 newobj         UnityEngine.Rect::.ctor token(0x0A000027)
+  IL_003d ldc.i4.0        
+  IL_003e ldc.i4.0        
+  IL_003f ldc.i4.0        
+  IL_0040 callvirt       UnityEngine.Texture2D::ReadPixels token(0x0A0050F5)
+  IL_0045 ldloc.0         
+  IL_0046 callvirt       UnityEngine.Texture2D::Apply token(0x0A000048)
+  IL_004b call           UnityEngine.Application::get_dataPath token(0x0A00473A)
+  IL_0050 ldstr          '/SilhouetteTexture.png' string token(0x703F6E75)
+  IL_0055 call           System.String::Concat token(0x0A0000C0)
+  IL_005a stloc.1         
+  IL_005b ldloc.1         
+  IL_005c ldloc.0         
+  IL_005d call           UnityEngine.ImageConversion::EncodeToPNG token(0x0A0050F6)
+  IL_0062 call           System.IO.File::WriteAllBytes token(0x0A0050F7)
+  IL_0067 ldnull          
+  IL_0068 call           UnityEngine.RenderTexture::set_active token(0x0A000988)
+  IL_006d ldstr          'Silhouette Texture Created: {0}' string token(0x703F6EA3)
+  IL_0072 ldloc.1         
+  IL_0073 call           System.String::Format token(0x0A0000B7)
+  IL_0078 call           UnityEngine.Debug::Log token(0x0A0001D7)
+  IL_007d ret             
+
+0x06015276 HighlightRender::DrawRenderers(cmd,material) RVA 0x638f28 SIG 000201128ae51280b9
+  IL_0000 ldsfld         HighlightRender::s_cachedCommands token(0x04012211)
+  IL_0005 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2221529730>::GetEnumerator token(0x0A0027D4)
+  IL_000a stloc.0         
+  IL_000b br.s           IL_0028 
+  IL_000d ldloca.s       local(0x0000) 
+  IL_000f call           <dnfile.mdtable.TypeSpecRow object at 0x7f22215298e0>::get_Current token(0x0A0027D5)
+  IL_0014 stloc.1         
+  IL_0015 ldarg.0         
+  IL_0016 ldloc.1         
+  IL_0017 ldfld          RenderCommand::Renderer token(0x04012526)
+  IL_001c ldarg.1         
+  IL_001d ldloc.1         
+  IL_001e ldfld          RenderCommand::MeshIndex token(0x04012528)
+  IL_0023 callvirt       UnityEngine.Rendering.CommandBuffer::DrawRenderer token(0x0A0050F8)
+  IL_0028 ldloca.s       local(0x0000) 
+  IL_002a call           <dnfile.mdtable.TypeSpecRow object at 0x7f22215298e0>::MoveNext token(0x0A0027D6)
+  IL_002f brtrue.s       IL_000d 
+  IL_0031 leave.s        IL_0041 
+  IL_0033 ldloca.s       local(0x0000) 
+  IL_0035 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f22215298e0> token(0x1B000AB9)
+  IL_003b callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0040 endfinally      
+  IL_0041 ret             
+
+0x06015277 HighlightRender::BlendBlit(cmd,src,blend,dst,blur,material) RVA 0x638f88 SIG 000601128ae5118af9118af9118af90c1280b9
+  IL_0000 ldarg.0         
+  IL_0001 ldsfld         HighlightRender::s_blendTexId token(0x0401220F)
+  IL_0006 ldarg.2         
+  IL_0007 callvirt       UnityEngine.Rendering.CommandBuffer::SetGlobalTexture token(0x0A0027CD)
+  IL_000c ldarg.0         
+  IL_000d ldsfld         HighlightRender::s_blurOffsetsId token(0x0401220E)
+  IL_0012 call           UnityEngine.Vector4::get_one token(0x0A0050F9)
+  IL_0017 ldarg.s        argument(0x0004) 
+  IL_0019 neg             
+  IL_001a call           UnityEngine.Vector4::op_Multiply token(0x0A000DCD)
+  IL_001f callvirt       UnityEngine.Rendering.CommandBuffer::SetGlobalVector token(0x0A0027CC)
+  IL_0024 ldarg.0         
+  IL_0025 ldarg.1         
+  IL_0026 ldarg.3         
+  IL_0027 ldarg.s        argument(0x0005) 
+  IL_0029 callvirt       UnityEngine.Rendering.CommandBuffer::Blit token(0x0A004073)
+  IL_002e ret             
+
+0x06015278 HighlightRender::SetProjectionMatrix(cmd,orthoSize) RVA 0x638fb8 SIG 200201128ae50c
+  IL_0000 ldarg.2         
+  IL_0001 neg             
+  IL_0002 ldarg.2         
+  IL_0003 ldarg.2         
+  IL_0004 neg             
+  IL_0005 ldarg.2         
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HighlightRender::m_RenderScale token(0x04012218)
+  IL_000c neg             
+  IL_000d ldc.r4         1.0 
+  IL_0012 add             
+  IL_0013 ldarg.0         
+  IL_0014 ldfld          HighlightRender::m_RenderScale token(0x04012218)
+  IL_0019 ldc.r4         1.0 
+  IL_001e add             
+  IL_001f call           UnityEngine.Matrix4x4::Ortho token(0x0A0027BF)
+  IL_0024 stloc.0         
+  IL_0025 ldarg.1         
+  IL_0026 ldloc.0         
+  IL_0027 callvirt       UnityEngine.Rendering.CommandBuffer::SetProjectionMatrix token(0x0A0050FA)
+  IL_002c ret             
+
+0x06015279 HighlightRender::InitializeOverrideMeshRenderer() RVA 0x638ff4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_000d callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0012 callvirt       UnityEngine.GameObject::GetComponentInChildren<spec> token(0x2B0009C9)
+  IL_0017 stloc.1         
+  IL_0018 ldloc.1         
+  IL_0019 ldnull          
+  IL_001a call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_001f brfalse.s      IL_0028 
+  IL_0021 ldloc.1         
+  IL_0022 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0027 stloc.0         
+  IL_0028 ldstr          'HighlightMesh' string token(0x703F6EE3)
+  IL_002d newobj         UnityEngine.GameObject::.ctor token(0x0A000043)
+  IL_0032 stloc.2         
+  IL_0033 ldloc.2         
+  IL_0034 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_0039 ldloc.0         
+  IL_003a callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_003f ldc.i4.0        
+  IL_0040 callvirt       UnityEngine.Transform::SetParent token(0x0A000576)
+  IL_0045 ldarg.0         
+  IL_0046 ldloc.2         
+  IL_0047 callvirt       UnityEngine.GameObject::AddComponent<spec> token(0x2B000005)
+  IL_004c stfld          HighlightRender::m_OverrideMeshRenderer token(0x04012216)
+  IL_0051 ldarg.0         
+  IL_0052 ldfld          HighlightRender::m_OverrideMeshRenderer token(0x04012216)
+  IL_0057 ldc.i4.0        
+  IL_0058 callvirt       UnityEngine.Renderer::set_enabled token(0x0A00022D)
+  IL_005d ldloc.2         
+  IL_005e callvirt       UnityEngine.GameObject::AddComponent<spec> token(0x2B000003)
+  IL_0063 ldarg.0         
+  IL_0064 ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_0069 ldfld          HighlightRenderOverrides::OverrideSilouetteMesh token(0x04012233)
+  IL_006e call           MeshFilterExtension::SetMesh token(0x060126EF)
+  IL_0073 ldarg.0         
+  IL_0074 ldfld          HighlightRender::m_OverrideMeshRenderer token(0x04012216)
+  IL_0079 ldarg.0         
+  IL_007a ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_007f ldfld          HighlightRenderOverrides::OverrideSilouetteMeshMaterials token(0x04012234)
+  IL_0084 call           Blizzard.T5.MaterialService.Extensions.RendererExtension::SetSharedMaterials token(0x0A000D4D)
+  IL_0089 ret             
+
+0x0601527a HighlightRender::CreateSilhouetteTexture(force) RVA 0x63908c SIG 20010102
+  IL_0000 ldarg.0         
+  IL_0001 call           HighlightRender::Initialize token(0x06015273)
+  IL_0006 ldarg.0         
+  IL_0007 call           HighlightRender::VisibilityStatesChanged token(0x0601527F)
+  IL_000c brtrue.s       IL_0012 
+  IL_000e ldarg.1         
+  IL_000f brtrue.s       IL_0012 
+  IL_0011 ret             
+  IL_0012 ldarg.0         
+  IL_0013 call           HighlightRender::SetupRenderObjects token(0x0601527D)
+  IL_0018 ldarg.0         
+  IL_0019 ldfld          HighlightRender::m_RenderPlane token(0x04012217)
+  IL_001e ldnull          
+  IL_001f call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0024 brfalse.s      IL_0027 
+  IL_0026 ret             
+  IL_0027 ldarg.0         
+  IL_0028 ldfld          HighlightRender::m_RenderSizeX token(0x04012229)
+  IL_002d ldc.i4.1        
+  IL_002e blt.s          IL_0039 
+  IL_0030 ldarg.0         
+  IL_0031 ldfld          HighlightRender::m_RenderSizeY token(0x0401222A)
+  IL_0036 ldc.i4.1        
+  IL_0037 bge.s          IL_003a 
+  IL_0039 ret             
+  IL_003a ldarg.0         
+  IL_003b call           UnityEngine.Component::GetComponent<spec> token(0x2B000024)
+  IL_0040 stloc.0         
+  IL_0041 ldloc.0         
+  IL_0042 callvirt       UnityEngine.Renderer::get_enabled token(0x0A000D18)
+  IL_0047 stloc.1         
+  IL_0048 ldloc.0         
+  IL_0049 ldc.i4.0        
+  IL_004a callvirt       UnityEngine.Renderer::set_enabled token(0x0A00022D)
+  IL_004f ldarg.0         
+  IL_0050 ldfld          HighlightRender::m_OverrideMeshRenderer token(0x04012216)
+  IL_0055 ldnull          
+  IL_0056 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_005b brfalse.s      IL_0084 
+  IL_005d ldarg.0         
+  IL_005e ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_0063 ldnull          
+  IL_0064 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0069 brfalse.s      IL_0084 
+  IL_006b ldarg.0         
+  IL_006c ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_0071 ldfld          HighlightRenderOverrides::OverrideSilouetteMesh token(0x04012233)
+  IL_0076 ldnull          
+  IL_0077 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_007c brfalse.s      IL_0084 
+  IL_007e ldarg.0         
+  IL_007f call           HighlightRender::InitializeOverrideMeshRenderer token(0x06015279)
+  IL_0084 ldarg.0         
+  IL_0085 ldfld          HighlightRender::m_OverrideMeshRenderer token(0x04012216)
+  IL_008a ldnull          
+  IL_008b call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0090 brfalse.s      IL_00fa 
+  IL_0092 ldarg.0         
+  IL_0093 ldfld          HighlightRender::m_OverrideMeshRenderer token(0x04012216)
+  IL_0098 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_009d ldarg.0         
+  IL_009e ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_00a3 ldfld          HighlightRenderOverrides::OverrideSilouetteMeshOrientation token(0x04012235)
+  IL_00a8 call           UnityEngine.Quaternion::Euler token(0x0A0004C7)
+  IL_00ad callvirt       UnityEngine.Transform::set_localRotation token(0x0A00021F)
+  IL_00b2 ldarg.0         
+  IL_00b3 ldfld          HighlightRender::m_OverrideMeshRenderer token(0x04012216)
+  IL_00b8 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_00bd ldarg.0         
+  IL_00be ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_00c3 ldfld          HighlightRenderOverrides::OverrideSilouetteScale token(0x04012236)
+  IL_00c8 ldarg.0         
+  IL_00c9 ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_00ce ldfld          HighlightRenderOverrides::OverrideSilouetteScale token(0x04012236)
+  IL_00d3 ldarg.0         
+  IL_00d4 ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_00d9 ldfld          HighlightRenderOverrides::OverrideSilouetteScale token(0x04012236)
+  IL_00de newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_00e3 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_00e8 ldsfld         HighlightRender::s_cachedRenderers token(0x04012210)
+  IL_00ed ldarg.0         
+  IL_00ee ldfld          HighlightRender::m_OverrideMeshRenderer token(0x04012216)
+  IL_00f3 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f222169de80>::Add token(0x0A0027A9)
+  IL_00f8 br.s           IL_010a 
+  IL_00fa ldarg.0         
+  IL_00fb ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_0100 ldsfld         HighlightRender::s_cachedRenderers token(0x04012210)
+  IL_0105 callvirt       UnityEngine.Component::GetComponentsInChildren<spec> token(0x2B0009C0)
+  IL_010a ldsfld         HighlightRender::s_cachedRenderers token(0x04012210)
+  IL_010f callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f222169de80>::GetEnumerator token(0x0A000F7D)
+  IL_0114 stloc.s        local(0x0010) 
+  IL_0116 br             IL_01f6 
+  IL_011b ldloca.s       local(0x0010) 
+  IL_011d call           <dnfile.mdtable.TypeSpecRow object at 0x7f222170e390>::get_Current token(0x0A000F7E)
+  IL_0122 stloc.s        local(0x0011) 
+  IL_0124 ldloc.s        local(0x0011) 
+  IL_0126 callvirt       UnityEngine.Renderer::get_enabled token(0x0A000D18)
+  IL_012b brtrue.s       IL_013d 
+  IL_012d ldarg.0         
+  IL_012e ldfld          HighlightRender::m_OverrideMeshRenderer token(0x04012216)
+  IL_0133 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0138 brfalse        IL_01f6 
+  IL_013d ldloc.s        local(0x0011) 
+  IL_013f callvirt       UnityEngine.Component::GetComponent<spec> token(0x2B0001F9)
+  IL_0144 stloc.s        local(0x0012) 
+  IL_0146 ldloc.s        local(0x0012) 
+  IL_0148 ldnull          
+  IL_0149 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_014e brtrue         IL_01f6 
+  IL_0153 ldloc.s        local(0x0012) 
+  IL_0155 callvirt       UnityEngine.MeshFilter::get_sharedMesh token(0x0A000DA8)
+  IL_015a ldnull          
+  IL_015b call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0160 brtrue         IL_01f6 
+  IL_0165 ldloc.s        local(0x0011) 
+  IL_0167 ldsfld         HighlightRender::s_cachedMaterials token(0x04012212)
+  IL_016c callvirt       UnityEngine.Renderer::GetSharedMaterials token(0x0A000D7A)
+  IL_0171 ldloc.s        local(0x0012) 
+  IL_0173 callvirt       UnityEngine.MeshFilter::get_sharedMesh token(0x0A000DA8)
+  IL_0178 callvirt       UnityEngine.Mesh::get_subMeshCount token(0x0A0027DC)
+  IL_017d ldsfld         HighlightRender::s_cachedMaterials token(0x04012212)
+  IL_0182 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f22217d4e30>::get_Count token(0x0A0001D3)
+  IL_0187 call           UnityEngine.Mathf::Min token(0x0A000265)
+  IL_018c stloc.s        local(0x0013) 
+  IL_018e ldc.i4.0        
+  IL_018f stloc.s        local(0x0014) 
+  IL_0191 br.s           IL_01f0 
+  IL_0193 ldsfld         HighlightRender::s_cachedMaterials token(0x04012212)
+  IL_0198 ldloc.s        local(0x0014) 
+  IL_019a callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f22217d4e30>::get_Item token(0x0A0009A1)
+  IL_019f stloc.s        local(0x0015) 
+  IL_01a1 ldloc.s        local(0x0015) 
+  IL_01a3 ldnull          
+  IL_01a4 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_01a9 brfalse.s      IL_01ea 
+  IL_01ab ldloc.s        local(0x0015) 
+  IL_01ad ldstr          'Highlight' string token(0x703F6EFF)
+  IL_01b2 ldc.i4.0        
+  IL_01b3 callvirt       UnityEngine.Material::GetTag token(0x0A0027DF)
+  IL_01b8 ldstr          '' string token(0x70000E3C)
+  IL_01bd call           System.String::op_Inequality token(0x0A00018E)
+  IL_01c2 brfalse.s      IL_01ea 
+  IL_01c4 ldsfld         HighlightRender::s_cachedCommands token(0x04012211)
+  IL_01c9 ldloca.s       local(0x0016) 
+  IL_01cb initobj        RenderCommand token(0x02002C81)
+  IL_01d1 ldloca.s       local(0x0016) 
+  IL_01d3 ldloc.s        local(0x0011) 
+  IL_01d5 stfld          RenderCommand::Renderer token(0x04012526)
+  IL_01da ldloca.s       local(0x0016) 
+  IL_01dc ldloc.s        local(0x0014) 
+  IL_01de stfld          RenderCommand::MeshIndex token(0x04012528)
+  IL_01e3 ldloc.s        local(0x0016) 
+  IL_01e5 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2221529730>::Add token(0x0A0027DE)
+  IL_01ea ldloc.s        local(0x0014) 
+  IL_01ec ldc.i4.1        
+  IL_01ed add             
+  IL_01ee stloc.s        local(0x0014) 
+  IL_01f0 ldloc.s        local(0x0014) 
+  IL_01f2 ldloc.s        local(0x0013) 
+  IL_01f4 blt.s          IL_0193 
+  IL_01f6 ldloca.s       local(0x0010) 
+  IL_01f8 call           <dnfile.mdtable.TypeSpecRow object at 0x7f222170e390>::MoveNext token(0x0A000F80)
+  IL_01fd brtrue         IL_011b 
+  IL_0202 leave.s        IL_0212 
+  IL_0204 ldloca.s       local(0x0010) 
+  IL_0206 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f222170e390> token(0x1B00043C)
+  IL_020c callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_0211 endfinally      
+  IL_0212 ldsfld         HighlightRender::s_cachedRenderers token(0x04012210)
+  IL_0217 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f222169de80>::Clear token(0x0A004234)
+  IL_021c ldsfld         HighlightRender::s_cachedMaterials token(0x04012212)
+  IL_0221 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f22217d4e30>::Clear token(0x0A0050FB)
+  IL_0226 ldloca.s       local(0x0002) 
+  IL_0228 ldsfld         HighlightRender::s_sid0 token(0x0401220B)
+  IL_022d call           UnityEngine.Rendering.RenderTargetIdentifier::.ctor token(0x0A004070)
+  IL_0232 ldloca.s       local(0x0003) 
+  IL_0234 ldsfld         HighlightRender::s_sid1 token(0x0401220C)
+  IL_0239 call           UnityEngine.Rendering.RenderTargetIdentifier::.ctor token(0x0A004070)
+  IL_023e ldloca.s       local(0x0004) 
+  IL_0240 ldsfld         HighlightRender::s_sid2 token(0x0401220D)
+  IL_0245 call           UnityEngine.Rendering.RenderTargetIdentifier::.ctor token(0x0A004070)
+  IL_024a ldstr          'Create Silhouette Texture' string token(0x703F6F13)
+  IL_024f call           UnityEngine.Rendering.CommandBufferPool::Get token(0x0A0040CF)
+  IL_0254 stloc.s        local(0x0005) 
+  IL_0256 ldarg.0         
+  IL_0257 ldfld          HighlightRender::m_RenderSizeX token(0x04012229)
+  IL_025c stloc.s        local(0x0006) 
+  IL_025e ldarg.0         
+  IL_025f ldfld          HighlightRender::m_RenderSizeY token(0x0401222A)
+  IL_0264 stloc.s        local(0x0007) 
+  IL_0266 ldc.i4.1        
+  IL_0267 stloc.s        local(0x0008) 
+  IL_0269 ldc.i4.s       16 
+  IL_026b stloc.s        local(0x0009) 
+  IL_026d ldsfld         RenderTextureTracker::TEXTURE_DEPTH token(0x0400309D)
+  IL_0272 stloc.s        local(0x000A) 
+  IL_0274 ldarg.0         
+  IL_0275 ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_027a callvirt       UnityEngine.RenderTexture::DiscardContents token(0x0A0050FC)
+  IL_027f ldarg.0         
+  IL_0280 ldfld          HighlightRender::m_RenderPlane token(0x04012217)
+  IL_0285 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_028a stloc.s        local(0x000B) 
+  IL_028c ldarg.0         
+  IL_028d ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_0292 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0297 brtrue.s       IL_02a0 
+  IL_0299 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_029e br.s           IL_02ab 
+  IL_02a0 ldarg.0         
+  IL_02a1 ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_02a6 ldfld          HighlightRenderOverrides::SilouetteRenderOffset token(0x04012232)
+  IL_02ab stloc.s        local(0x000C) 
+  IL_02ad ldloc.s        local(0x000B) 
+  IL_02af callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_02b4 ldloc.s        local(0x000C) 
+  IL_02b6 call           UnityEngine.Vector3::op_Addition token(0x0A0002FD)
+  IL_02bb ldloc.s        local(0x000B) 
+  IL_02bd callvirt       UnityEngine.Transform::get_rotation token(0x0A000B4F)
+  IL_02c2 ldc.r4         90.0 
+  IL_02c7 ldc.r4         180.0 
+  IL_02cc ldc.r4         0.0 
+  IL_02d1 call           UnityEngine.Quaternion::Euler token(0x0A000D67)
+  IL_02d6 call           UnityEngine.Quaternion::op_Multiply token(0x0A000D6B)
+  IL_02db ldc.r4         1.0 
+  IL_02e0 ldc.r4         1.0 
+  IL_02e5 ldc.r4         -1.0 
+  IL_02ea newobj         UnityEngine.Vector3::.ctor token(0x0A00004C)
+  IL_02ef call           UnityEngine.Matrix4x4::TRS token(0x0A0027BD)
+  IL_02f4 stloc.s        local(0x0017) 
+  IL_02f6 ldloca.s       local(0x0017) 
+  IL_02f8 call           UnityEngine.Matrix4x4::get_inverse token(0x0A0027BE)
+  IL_02fd stloc.s        local(0x000D) 
+  IL_02ff ldloc.s        local(0x0005) 
+  IL_0301 ldloc.s        local(0x000D) 
+  IL_0303 callvirt       UnityEngine.Rendering.CommandBuffer::SetViewMatrix token(0x0A0050FD)
+  IL_0308 ldarg.0         
+  IL_0309 ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_030e call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0313 brtrue.s       IL_031d 
+  IL_0315 ldarg.0         
+  IL_0316 ldfld          HighlightRender::m_SilouetteRenderSize token(0x04012214)
+  IL_031b br.s           IL_0328 
+  IL_031d ldarg.0         
+  IL_031e ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_0323 ldfld          HighlightRenderOverrides::SilouetteRenderSize token(0x04012230)
+  IL_0328 stloc.s        local(0x000E) 
+  IL_032a ldarg.0         
+  IL_032b ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_0330 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_0335 brtrue.s       IL_033f 
+  IL_0337 ldarg.0         
+  IL_0338 ldfld          HighlightRender::m_SilouetteClipSize token(0x04012215)
+  IL_033d br.s           IL_034a 
+  IL_033f ldarg.0         
+  IL_0340 ldfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_0345 ldfld          HighlightRenderOverrides::SilouetteClipSize token(0x04012231)
+  IL_034a stloc.s        local(0x000F) 
+  IL_034c ldloc.s        local(0x0005) 
+  IL_034e ldsfld         HighlightRender::s_sid0 token(0x0401220B)
+  IL_0353 ldloc.s        local(0x0006) 
+  IL_0355 conv.r4         
+  IL_0356 ldc.r4         0.30000001192092896 
+  IL_035b mul             
+  IL_035c conv.i4         
+  IL_035d ldloc.s        local(0x0007) 
+  IL_035f conv.r4         
+  IL_0360 ldc.r4         0.30000001192092896 
+  IL_0365 mul             
+  IL_0366 conv.i4         
+  IL_0367 ldloc.s        local(0x000A) 
+  IL_0369 ldloc.s        local(0x0008) 
+  IL_036b ldloc.s        local(0x0009) 
+  IL_036d callvirt       UnityEngine.Rendering.CommandBuffer::GetTemporaryRT token(0x0A0027C3)
+  IL_0372 ldloc.s        local(0x0005) 
+  IL_0374 ldloc.2         
+  IL_0375 callvirt       UnityEngine.Rendering.CommandBuffer::SetRenderTarget token(0x0A004071)
+  IL_037a ldloc.s        local(0x0005) 
+  IL_037c ldc.i4.1        
+  IL_037d ldc.i4.1        
+  IL_037e call           UnityEngine.Color::get_clear token(0x0A0000BC)
+  IL_0383 callvirt       UnityEngine.Rendering.CommandBuffer::ClearRenderTarget token(0x0A0027C7)
+  IL_0388 ldarg.0         
+  IL_0389 ldloc.s        local(0x0005) 
+  IL_038b ldarg.0         
+  IL_038c ldfld          HighlightRender::m_CameraOrthoSize token(0x04012226)
+  IL_0391 ldc.r4         0.20000000298023224 
+  IL_0396 ldloc.s        local(0x000E) 
+  IL_0398 mul             
+  IL_0399 sub             
+  IL_039a call           HighlightRender::SetProjectionMatrix token(0x06015278)
+  IL_039f ldloc.s        local(0x0005) 
+  IL_03a1 ldsfld         HighlightRender::s_darkGreyMaterial token(0x040121F9)
+  IL_03a6 call           HighlightRender::DrawRenderers token(0x06015276)
+  IL_03ab ldloc.s        local(0x0005) 
+  IL_03ad ldsfld         HighlightRender::s_sid1 token(0x0401220C)
+  IL_03b2 ldloc.s        local(0x0006) 
+  IL_03b4 conv.r4         
+  IL_03b5 ldc.r4         0.30000001192092896 
+  IL_03ba mul             
+  IL_03bb conv.i4         
+  IL_03bc ldloc.s        local(0x0007) 
+  IL_03be conv.r4         
+  IL_03bf ldc.r4         0.30000001192092896 
+  IL_03c4 mul             
+  IL_03c5 conv.i4         
+  IL_03c6 ldloc.s        local(0x000A) 
+  IL_03c8 ldloc.s        local(0x0008) 
+  IL_03ca ldloc.s        local(0x0009) 
+  IL_03cc callvirt       UnityEngine.Rendering.CommandBuffer::GetTemporaryRT token(0x0A0027C3)
+  IL_03d1 ldloc.s        local(0x0005) 
+  IL_03d3 ldloc.3         
+  IL_03d4 callvirt       UnityEngine.Rendering.CommandBuffer::SetRenderTarget token(0x0A004071)
+  IL_03d9 ldloc.s        local(0x0005) 
+  IL_03db ldc.i4.1        
+  IL_03dc ldc.i4.1        
+  IL_03dd call           UnityEngine.Color::get_clear token(0x0A0000BC)
+  IL_03e2 callvirt       UnityEngine.Rendering.CommandBuffer::ClearRenderTarget token(0x0A0027C7)
+  IL_03e7 ldarg.0         
+  IL_03e8 ldloc.s        local(0x0005) 
+  IL_03ea ldarg.0         
+  IL_03eb ldfld          HighlightRender::m_CameraOrthoSize token(0x04012226)
+  IL_03f0 ldc.r4         0.25 
+  IL_03f5 ldloc.s        local(0x000E) 
+  IL_03f7 mul             
+  IL_03f8 sub             
+  IL_03f9 call           HighlightRender::SetProjectionMatrix token(0x06015278)
+  IL_03fe ldloc.s        local(0x0005) 
+  IL_0400 ldsfld         HighlightRender::s_greyMaterial token(0x040121F8)
+  IL_0405 call           HighlightRender::DrawRenderers token(0x06015276)
+  IL_040a ldloc.s        local(0x0005) 
+  IL_040c ldsfld         HighlightRender::s_sid2 token(0x0401220D)
+  IL_0411 ldloc.s        local(0x0006) 
+  IL_0413 conv.r4         
+  IL_0414 ldc.r4         0.30000001192092896 
+  IL_0419 mul             
+  IL_041a conv.i4         
+  IL_041b ldloc.s        local(0x0007) 
+  IL_041d conv.r4         
+  IL_041e ldc.r4         0.30000001192092896 
+  IL_0423 mul             
+  IL_0424 conv.i4         
+  IL_0425 ldc.i4.0        
+  IL_0426 ldloc.s        local(0x0008) 
+  IL_0428 ldloc.s        local(0x0009) 
+  IL_042a callvirt       UnityEngine.Rendering.CommandBuffer::GetTemporaryRT token(0x0A0027C3)
+  IL_042f ldloc.s        local(0x0005) 
+  IL_0431 ldloc.s        local(0x0004) 
+  IL_0433 callvirt       UnityEngine.Rendering.CommandBuffer::SetRenderTarget token(0x0A004071)
+  IL_0438 ldloc.s        local(0x0005) 
+  IL_043a ldc.i4.1        
+  IL_043b ldc.i4.1        
+  IL_043c call           UnityEngine.Color::get_clear token(0x0A0000BC)
+  IL_0441 callvirt       UnityEngine.Rendering.CommandBuffer::ClearRenderTarget token(0x0A0027C7)
+  IL_0446 ldloc.s        local(0x0005) 
+  IL_0448 ldloc.2         
+  IL_0449 ldloc.3         
+  IL_044a ldloc.s        local(0x0004) 
+  IL_044c ldc.r4         1.25 
+  IL_0451 ldsfld         HighlightRender::s_blurBlendMaterial token(0x040121FB)
+  IL_0456 call           HighlightRender::BlendBlit token(0x06015277)
+  IL_045b ldloc.s        local(0x0005) 
+  IL_045d ldsfld         HighlightRender::s_sid0 token(0x0401220B)
+  IL_0462 callvirt       UnityEngine.Rendering.CommandBuffer::ReleaseTemporaryRT token(0x0A0050FE)
+  IL_0467 ldloc.s        local(0x0005) 
+  IL_0469 ldsfld         HighlightRender::s_sid1 token(0x0401220C)
+  IL_046e callvirt       UnityEngine.Rendering.CommandBuffer::ReleaseTemporaryRT token(0x0A0050FE)
+  IL_0473 ldloc.s        local(0x0005) 
+  IL_0475 ldsfld         HighlightRender::s_sid0 token(0x0401220B)
+  IL_047a ldloc.s        local(0x0006) 
+  IL_047c conv.r4         
+  IL_047d ldc.r4         0.5 
+  IL_0482 mul             
+  IL_0483 conv.i4         
+  IL_0484 ldloc.s        local(0x0007) 
+  IL_0486 conv.r4         
+  IL_0487 ldc.r4         0.5 
+  IL_048c mul             
+  IL_048d conv.i4         
+  IL_048e ldloc.s        local(0x000A) 
+  IL_0490 ldloc.s        local(0x0008) 
+  IL_0492 ldloc.s        local(0x0009) 
+  IL_0494 callvirt       UnityEngine.Rendering.CommandBuffer::GetTemporaryRT token(0x0A0027C3)
+  IL_0499 ldloc.s        local(0x0005) 
+  IL_049b ldloc.2         
+  IL_049c callvirt       UnityEngine.Rendering.CommandBuffer::SetRenderTarget token(0x0A004071)
+  IL_04a1 ldloc.s        local(0x0005) 
+  IL_04a3 ldc.i4.1        
+  IL_04a4 ldc.i4.1        
+  IL_04a5 call           UnityEngine.Color::get_clear token(0x0A0000BC)
+  IL_04aa callvirt       UnityEngine.Rendering.CommandBuffer::ClearRenderTarget token(0x0A0027C7)
+  IL_04af ldarg.0         
+  IL_04b0 ldloc.s        local(0x0005) 
+  IL_04b2 ldarg.0         
+  IL_04b3 ldfld          HighlightRender::m_CameraOrthoSize token(0x04012226)
+  IL_04b8 ldc.r4         0.009999999776482582 
+  IL_04bd ldloc.s        local(0x000E) 
+  IL_04bf mul             
+  IL_04c0 sub             
+  IL_04c1 call           HighlightRender::SetProjectionMatrix token(0x06015278)
+  IL_04c6 ldloc.s        local(0x0005) 
+  IL_04c8 ldsfld         HighlightRender::s_lightGreyMaterial token(0x040121F7)
+  IL_04cd call           HighlightRender::DrawRenderers token(0x06015276)
+  IL_04d2 ldloc.s        local(0x0005) 
+  IL_04d4 ldsfld         HighlightRender::s_sid1 token(0x0401220C)
+  IL_04d9 ldloc.s        local(0x0006) 
+  IL_04db conv.r4         
+  IL_04dc ldc.r4         0.5 
+  IL_04e1 mul             
+  IL_04e2 conv.i4         
+  IL_04e3 ldloc.s        local(0x0007) 
+  IL_04e5 conv.r4         
+  IL_04e6 ldc.r4         0.5 
+  IL_04eb mul             
+  IL_04ec conv.i4         
+  IL_04ed ldc.i4.0        
+  IL_04ee ldloc.s        local(0x0008) 
+  IL_04f0 ldloc.s        local(0x0009) 
+  IL_04f2 callvirt       UnityEngine.Rendering.CommandBuffer::GetTemporaryRT token(0x0A0027C3)
+  IL_04f7 ldloc.s        local(0x0005) 
+  IL_04f9 ldloc.3         
+  IL_04fa callvirt       UnityEngine.Rendering.CommandBuffer::SetRenderTarget token(0x0A004071)
+  IL_04ff ldloc.s        local(0x0005) 
+  IL_0501 ldc.i4.1        
+  IL_0502 ldc.i4.1        
+  IL_0503 call           UnityEngine.Color::get_clear token(0x0A0000BC)
+  IL_0508 callvirt       UnityEngine.Rendering.CommandBuffer::ClearRenderTarget token(0x0A0027C7)
+  IL_050d ldloc.s        local(0x0005) 
+  IL_050f ldloc.s        local(0x0004) 
+  IL_0511 ldloc.2         
+  IL_0512 ldloc.3         
+  IL_0513 ldc.r4         1.25 
+  IL_0518 ldsfld         HighlightRender::s_blurBlendMaterial token(0x040121FB)
+  IL_051d call           HighlightRender::BlendBlit token(0x06015277)
+  IL_0522 ldloc.s        local(0x0005) 
+  IL_0524 ldsfld         HighlightRender::s_sid2 token(0x0401220D)
+  IL_0529 callvirt       UnityEngine.Rendering.CommandBuffer::ReleaseTemporaryRT token(0x0A0050FE)
+  IL_052e ldloc.s        local(0x0005) 
+  IL_0530 ldsfld         HighlightRender::s_sid0 token(0x0401220B)
+  IL_0535 callvirt       UnityEngine.Rendering.CommandBuffer::ReleaseTemporaryRT token(0x0A0050FE)
+  IL_053a ldloc.s        local(0x0005) 
+  IL_053c ldsfld         HighlightRender::s_sid0 token(0x0401220B)
+  IL_0541 ldloc.s        local(0x0006) 
+  IL_0543 ldloc.s        local(0x0007) 
+  IL_0545 ldloc.s        local(0x000A) 
+  IL_0547 ldloc.s        local(0x0008) 
+  IL_0549 ldloc.s        local(0x0009) 
+  IL_054b callvirt       UnityEngine.Rendering.CommandBuffer::GetTemporaryRT token(0x0A0027C3)
+  IL_0550 ldloc.s        local(0x0005) 
+  IL_0552 ldloc.2         
+  IL_0553 callvirt       UnityEngine.Rendering.CommandBuffer::SetRenderTarget token(0x0A004071)
+  IL_0558 ldloc.s        local(0x0005) 
+  IL_055a ldc.i4.1        
+  IL_055b ldc.i4.1        
+  IL_055c call           UnityEngine.Color::get_clear token(0x0A0000BC)
+  IL_0561 callvirt       UnityEngine.Rendering.CommandBuffer::ClearRenderTarget token(0x0A0027C7)
+  IL_0566 ldarg.0         
+  IL_0567 ldloc.s        local(0x0005) 
+  IL_0569 ldarg.0         
+  IL_056a ldfld          HighlightRender::m_CameraOrthoSize token(0x04012226)
+  IL_056f ldc.r4         -0.05000000074505806 
+  IL_0574 ldloc.s        local(0x000E) 
+  IL_0576 mul             
+  IL_0577 sub             
+  IL_0578 call           HighlightRender::SetProjectionMatrix token(0x06015278)
+  IL_057d ldloc.s        local(0x0005) 
+  IL_057f ldsfld         HighlightRender::s_lightGreyMaterial token(0x040121F7)
+  IL_0584 call           HighlightRender::DrawRenderers token(0x06015276)
+  IL_0589 ldloc.s        local(0x0005) 
+  IL_058b ldsfld         HighlightRender::s_sid2 token(0x0401220D)
+  IL_0590 ldloc.s        local(0x0006) 
+  IL_0592 ldloc.s        local(0x0007) 
+  IL_0594 ldc.i4.0        
+  IL_0595 ldloc.s        local(0x0008) 
+  IL_0597 ldloc.s        local(0x0009) 
+  IL_0599 callvirt       UnityEngine.Rendering.CommandBuffer::GetTemporaryRT token(0x0A0027C3)
+  IL_059e ldloc.s        local(0x0005) 
+  IL_05a0 ldloc.s        local(0x0004) 
+  IL_05a2 callvirt       UnityEngine.Rendering.CommandBuffer::SetRenderTarget token(0x0A004071)
+  IL_05a7 ldloc.s        local(0x0005) 
+  IL_05a9 ldc.i4.1        
+  IL_05aa ldc.i4.1        
+  IL_05ab call           UnityEngine.Color::get_clear token(0x0A0000BC)
+  IL_05b0 callvirt       UnityEngine.Rendering.CommandBuffer::ClearRenderTarget token(0x0A0027C7)
+  IL_05b5 ldloc.s        local(0x0005) 
+  IL_05b7 ldloc.3         
+  IL_05b8 ldloc.2         
+  IL_05b9 ldloc.s        local(0x0004) 
+  IL_05bb ldc.r4         1.0 
+  IL_05c0 ldsfld         HighlightRender::s_blurBlendMaterial token(0x040121FB)
+  IL_05c5 call           HighlightRender::BlendBlit token(0x06015277)
+  IL_05ca ldloc.s        local(0x0005) 
+  IL_05cc ldsfld         HighlightRender::s_sid1 token(0x0401220C)
+  IL_05d1 callvirt       UnityEngine.Rendering.CommandBuffer::ReleaseTemporaryRT token(0x0A0050FE)
+  IL_05d6 ldloc.s        local(0x0005) 
+  IL_05d8 ldsfld         HighlightRender::s_sid0 token(0x0401220B)
+  IL_05dd callvirt       UnityEngine.Rendering.CommandBuffer::ReleaseTemporaryRT token(0x0A0050FE)
+  IL_05e2 ldloc.s        local(0x0005) 
+  IL_05e4 ldsfld         HighlightRender::s_blurOffsetsId token(0x0401220E)
+  IL_05e9 call           UnityEngine.Vector4::get_one token(0x0A0050F9)
+  IL_05ee ldc.r4         -1.5 
+  IL_05f3 call           UnityEngine.Vector4::op_Multiply token(0x0A000DCD)
+  IL_05f8 callvirt       UnityEngine.Rendering.CommandBuffer::SetGlobalVector token(0x0A0027CC)
+  IL_05fd ldloc.s        local(0x0005) 
+  IL_05ff ldsfld         HighlightRender::s_sid0 token(0x0401220B)
+  IL_0604 ldloc.s        local(0x0006) 
+  IL_0606 ldloc.s        local(0x0007) 
+  IL_0608 ldc.i4.0        
+  IL_0609 ldloc.s        local(0x0008) 
+  IL_060b ldloc.s        local(0x0009) 
+  IL_060d callvirt       UnityEngine.Rendering.CommandBuffer::GetTemporaryRT token(0x0A0027C3)
+  IL_0612 ldloc.s        local(0x0005) 
+  IL_0614 ldloc.2         
+  IL_0615 callvirt       UnityEngine.Rendering.CommandBuffer::SetRenderTarget token(0x0A004071)
+  IL_061a ldloc.s        local(0x0005) 
+  IL_061c ldc.i4.1        
+  IL_061d ldc.i4.1        
+  IL_061e call           UnityEngine.Color::get_clear token(0x0A0000BC)
+  IL_0623 callvirt       UnityEngine.Rendering.CommandBuffer::ClearRenderTarget token(0x0A0027C7)
+  IL_0628 ldloc.s        local(0x0005) 
+  IL_062a ldloc.s        local(0x0004) 
+  IL_062c ldloc.2         
+  IL_062d ldsfld         HighlightRender::s_blurMaterial token(0x040121FA)
+  IL_0632 callvirt       UnityEngine.Rendering.CommandBuffer::Blit token(0x0A004073)
+  IL_0637 ldloc.s        local(0x0005) 
+  IL_0639 ldsfld         HighlightRender::s_sid2 token(0x0401220D)
+  IL_063e callvirt       UnityEngine.Rendering.CommandBuffer::ReleaseTemporaryRT token(0x0A0050FE)
+  IL_0643 ldloc.s        local(0x0005) 
+  IL_0645 ldsfld         HighlightRender::s_sid1 token(0x0401220C)
+  IL_064a ldloc.s        local(0x0006) 
+  IL_064c conv.r4         
+  IL_064d ldc.r4         0.9200000166893005 
+  IL_0652 mul             
+  IL_0653 conv.i4         
+  IL_0654 ldloc.s        local(0x0007) 
+  IL_0656 conv.r4         
+  IL_0657 ldc.r4         0.9200000166893005 
+  IL_065c mul             
+  IL_065d conv.i4         
+  IL_065e ldloc.s        local(0x000A) 
+  IL_0660 ldloc.s        local(0x0008) 
+  IL_0662 ldloc.s        local(0x0009) 
+  IL_0664 callvirt       UnityEngine.Rendering.CommandBuffer::GetTemporaryRT token(0x0A0027C3)
+  IL_0669 ldloc.s        local(0x0005) 
+  IL_066b ldloc.3         
+  IL_066c callvirt       UnityEngine.Rendering.CommandBuffer::SetRenderTarget token(0x0A004071)
+  IL_0671 ldloc.s        local(0x0005) 
+  IL_0673 ldc.i4.1        
+  IL_0674 ldc.i4.1        
+  IL_0675 call           UnityEngine.Color::get_clear token(0x0A0000BC)
+  IL_067a callvirt       UnityEngine.Rendering.CommandBuffer::ClearRenderTarget token(0x0A0027C7)
+  IL_067f ldarg.0         
+  IL_0680 ldloc.s        local(0x0005) 
+  IL_0682 ldarg.0         
+  IL_0683 ldfld          HighlightRender::m_CameraOrthoSize token(0x04012226)
+  IL_0688 ldc.r4         0.10000000149011612 
+  IL_068d ldloc.s        local(0x000F) 
+  IL_068f mul             
+  IL_0690 add             
+  IL_0691 call           HighlightRender::SetProjectionMatrix token(0x06015278)
+  IL_0696 ldloc.s        local(0x0005) 
+  IL_0698 ldsfld         HighlightRender::s_whiteMaterial token(0x040121F6)
+  IL_069d call           HighlightRender::DrawRenderers token(0x06015276)
+  IL_06a2 ldloc.s        local(0x0005) 
+  IL_06a4 ldloc.2         
+  IL_06a5 ldloc.3         
+  IL_06a6 ldarg.0         
+  IL_06a7 ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_06ac call           UnityEngine.Rendering.RenderTargetIdentifier::op_Implicit token(0x0A0027CB)
+  IL_06b1 ldc.r4         0.800000011920929 
+  IL_06b6 ldsfld         HighlightRender::s_maskBlendMaterial token(0x040121FC)
+  IL_06bb call           HighlightRender::BlendBlit token(0x06015277)
+  IL_06c0 ldloc.s        local(0x0005) 
+  IL_06c2 call           UnityEngine.Graphics::ExecuteCommandBuffer token(0x0A004074)
+  IL_06c7 ldloc.s        local(0x0005) 
+  IL_06c9 ldsfld         HighlightRender::s_sid0 token(0x0401220B)
+  IL_06ce callvirt       UnityEngine.Rendering.CommandBuffer::ReleaseTemporaryRT token(0x0A0050FE)
+  IL_06d3 ldloc.s        local(0x0005) 
+  IL_06d5 ldsfld         HighlightRender::s_sid1 token(0x0401220C)
+  IL_06da callvirt       UnityEngine.Rendering.CommandBuffer::ReleaseTemporaryRT token(0x0A0050FE)
+  IL_06df ldloc.s        local(0x0005) 
+  IL_06e1 call           UnityEngine.Rendering.CommandBufferPool::Release token(0x0A0050FF)
+  IL_06e6 ldloc.0         
+  IL_06e7 ldloc.1         
+  IL_06e8 callvirt       UnityEngine.Renderer::set_enabled token(0x0A00022D)
+  IL_06ed ldarg.0         
+  IL_06ee call           HighlightRender::RestoreRenderObjects token(0x0601527E)
+  IL_06f3 ldsfld         HighlightRender::s_cachedCommands token(0x04012211)
+  IL_06f8 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f2221529730>::Clear token(0x0A005100)
+  IL_06fd ret             
+
+0x0601527b HighlightRender::get_SilhouetteTexture() RVA 0x6397a8 SIG 2000128315
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_0006 ret             
+
+0x0601527c HighlightRender::isTextureCreated() RVA 0x6397b0 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_0006 call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_000b brfalse.s      IL_0019 
+  IL_000d ldarg.0         
+  IL_000e ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_0013 callvirt       UnityEngine.RenderTexture::IsCreated token(0x0A0050F3)
+  IL_0018 ret             
+  IL_0019 ldc.i4.0        
+  IL_001a ret             
+
+0x0601527d HighlightRender::SetupRenderObjects() RVA 0x6397cc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_0006 ldnull          
+  IL_0007 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_000c brfalse.s      IL_0016 
+  IL_000e ldarg.0         
+  IL_000f ldnull          
+  IL_0010 stfld          HighlightRender::m_RenderPlane token(0x04012217)
+  IL_0015 ret             
+  IL_0016 ldarg.0         
+  IL_0017 ldarg.0         
+  IL_0018 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_001d callvirt       UnityEngine.Transform::get_rotation token(0x0A000B4F)
+  IL_0022 stfld          HighlightRender::m_OrgRotation token(0x04012219)
+  IL_0027 ldarg.0         
+  IL_0028 ldarg.0         
+  IL_0029 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_002e callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0033 stfld          HighlightRender::m_OrgScale token(0x0401221A)
+  IL_0038 ldarg.0         
+  IL_0039 ldarg.0         
+  IL_003a ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_003f call           UnityEngine.Vector3::get_one token(0x0A000165)
+  IL_0044 call           HighlightRender::SetWorldScale token(0x06015281)
+  IL_0049 ldarg.0         
+  IL_004a ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_004f call           UnityEngine.Quaternion::get_identity token(0x0A00021E)
+  IL_0054 callvirt       UnityEngine.Transform::set_rotation token(0x0A000B50)
+  IL_0059 ldarg.0         
+  IL_005a call           UnityEngine.Component::GetComponent<spec> token(0x2B000024)
+  IL_005f callvirt       UnityEngine.Renderer::get_bounds token(0x0A0000FD)
+  IL_0064 stloc.0         
+  IL_0065 ldloca.s       local(0x0000) 
+  IL_0067 call           UnityEngine.Bounds::get_size token(0x0A0003DA)
+  IL_006c ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_0071 stloc.1         
+  IL_0072 ldloca.s       local(0x0000) 
+  IL_0074 call           UnityEngine.Bounds::get_size token(0x0A0003DA)
+  IL_0079 ldfld          UnityEngine.Vector3::z token(0x0A00025C)
+  IL_007e stloc.2         
+  IL_007f ldloc.2         
+  IL_0080 ldloca.s       local(0x0000) 
+  IL_0082 call           UnityEngine.Bounds::get_size token(0x0A0003DA)
+  IL_0087 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_008c bge.un.s       IL_009b 
+  IL_008e ldloca.s       local(0x0000) 
+  IL_0090 call           UnityEngine.Bounds::get_size token(0x0A0003DA)
+  IL_0095 ldfld          UnityEngine.Vector3::y token(0x0A000022)
+  IL_009a stloc.2         
+  IL_009b ldloc.1         
+  IL_009c ldloc.2         
+  IL_009d ble.un.s       IL_00bc 
+  IL_009f ldarg.0         
+  IL_00a0 ldc.i4         256 
+  IL_00a5 stfld          HighlightRender::m_RenderSizeX token(0x04012229)
+  IL_00aa ldarg.0         
+  IL_00ab ldc.r4         256.0 
+  IL_00b0 ldloc.2         
+  IL_00b1 ldloc.1         
+  IL_00b2 div             
+  IL_00b3 mul             
+  IL_00b4 conv.i4         
+  IL_00b5 stfld          HighlightRender::m_RenderSizeY token(0x0401222A)
+  IL_00ba br.s           IL_00d7 
+  IL_00bc ldarg.0         
+  IL_00bd ldc.r4         256.0 
+  IL_00c2 ldloc.1         
+  IL_00c3 ldloc.2         
+  IL_00c4 div             
+  IL_00c5 mul             
+  IL_00c6 conv.i4         
+  IL_00c7 stfld          HighlightRender::m_RenderSizeX token(0x04012229)
+  IL_00cc ldarg.0         
+  IL_00cd ldc.i4         256 
+  IL_00d2 stfld          HighlightRender::m_RenderSizeY token(0x0401222A)
+  IL_00d7 ldarg.0         
+  IL_00d8 ldloc.2         
+  IL_00d9 ldc.r4         0.5 
+  IL_00de mul             
+  IL_00df stfld          HighlightRender::m_CameraOrthoSize token(0x04012226)
+  IL_00e4 ldarg.0         
+  IL_00e5 ldfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_00ea ldnull          
+  IL_00eb call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00f0 brfalse.s      IL_013e 
+  IL_00f2 ldarg.0         
+  IL_00f3 ldfld          HighlightRender::m_RenderSizeX token(0x04012229)
+  IL_00f8 ldc.i4.1        
+  IL_00f9 blt.s          IL_0104 
+  IL_00fb ldarg.0         
+  IL_00fc ldfld          HighlightRender::m_RenderSizeY token(0x0401222A)
+  IL_0101 ldc.i4.1        
+  IL_0102 bge.s          IL_011a 
+  IL_0104 ldarg.0         
+  IL_0105 ldc.i4         256 
+  IL_010a stfld          HighlightRender::m_RenderSizeX token(0x04012229)
+  IL_010f ldarg.0         
+  IL_0110 ldc.i4         256 
+  IL_0115 stfld          HighlightRender::m_RenderSizeY token(0x0401222A)
+  IL_011a ldarg.0         
+  IL_011b call           RenderTextureTracker::Get token(0x06004590)
+  IL_0120 ldarg.0         
+  IL_0121 ldfld          HighlightRender::m_RenderSizeX token(0x04012229)
+  IL_0126 ldarg.0         
+  IL_0127 ldfld          HighlightRender::m_RenderSizeY token(0x0401222A)
+  IL_012c ldsfld         RenderTextureTracker::TEXTURE_DEPTH token(0x0400309D)
+  IL_0131 ldc.i4.s       16 
+  IL_0133 ldc.i4.0        
+  IL_0134 callvirt       RenderTextureTracker::CreateNewTexture token(0x06004591)
+  IL_0139 stfld          HighlightRender::m_CameraTexture token(0x04012225)
+  IL_013e ldarg.0         
+  IL_013f ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_0144 callvirt       UnityEngine.Component::GetComponentInChildren<spec> token(0x2B0000A0)
+  IL_0149 stloc.3         
+  IL_014a ldarg.0         
+  IL_014b ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_0150 callvirt       UnityEngine.Component::GetComponentInChildren<spec> token(0x2B0009CA)
+  IL_0155 stloc.s        local(0x0004) 
+  IL_0157 ldloc.3         
+  IL_0158 ldnull          
+  IL_0159 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_015e brfalse.s      IL_016a 
+  IL_0160 ldloc.3         
+  IL_0161 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0166 stloc.s        local(0x0005) 
+  IL_0168 br.s           IL_0191 
+  IL_016a ldloc.s        local(0x0004) 
+  IL_016c ldnull          
+  IL_016d call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0172 brfalse.s      IL_017f 
+  IL_0174 ldloc.s        local(0x0004) 
+  IL_0176 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_017b stloc.s        local(0x0005) 
+  IL_017d br.s           IL_0191 
+  IL_017f ldstr          'Cannot find Highlight object (HighlightState or HighlightController) for selection highlighting.' string token(0x703F6F47)
+  IL_0184 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0189 ldarg.0         
+  IL_018a ldnull          
+  IL_018b stfld          HighlightRender::m_RenderPlane token(0x04012217)
+  IL_0190 ret             
+  IL_0191 ldloc.s        local(0x0005) 
+  IL_0193 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0198 callvirt       UnityEngine.Transform::set_localPosition token(0x0A000226)
+  IL_019d ldarg.0         
+  IL_019e ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_01a3 callvirt       UnityEngine.Component::GetComponentInChildren<spec> token(0x2B00004E)
+  IL_01a8 stloc.s        local(0x0006) 
+  IL_01aa ldloc.s        local(0x0006) 
+  IL_01ac ldnull          
+  IL_01ad call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_01b2 brfalse.s      IL_01c6 
+  IL_01b4 ldstr          'Can not find render plane object(HighlightRender component) for selection highlighting.' string token(0x703F700A)
+  IL_01b9 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_01be ldarg.0         
+  IL_01bf ldnull          
+  IL_01c0 stfld          HighlightRender::m_RenderPlane token(0x04012217)
+  IL_01c5 ret             
+  IL_01c6 ldarg.0         
+  IL_01c7 ldloc.s        local(0x0006) 
+  IL_01c9 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_01ce stfld          HighlightRender::m_RenderPlane token(0x04012217)
+  IL_01d3 ldarg.0         
+  IL_01d4 ldarg.0         
+  IL_01d5 ldfld          HighlightRender::m_RenderPlane token(0x04012217)
+  IL_01da callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_01df call           HighlightRender::GetWorldScale token(0x06015280)
+  IL_01e4 ldfld          UnityEngine.Vector3::x token(0x0A00001F)
+  IL_01e9 stfld          HighlightRender::m_RenderScale token(0x04012218)
+  IL_01ee ret             
+
+0x0601527e HighlightRender::RestoreRenderObjects() RVA 0x6399c7 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HighlightRender::m_OrgRotation token(0x04012219)
+  IL_000c callvirt       UnityEngine.Transform::set_rotation token(0x0A000B50)
+  IL_0011 ldarg.0         
+  IL_0012 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_0017 ldarg.0         
+  IL_0018 ldfld          HighlightRender::m_OrgScale token(0x0401221A)
+  IL_001d callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0022 ldarg.0         
+  IL_0023 ldnull          
+  IL_0024 stfld          HighlightRender::m_RenderPlane token(0x04012217)
+  IL_0029 ret             
+
+0x0601527f HighlightRender::VisibilityStatesChanged() RVA 0x6399f4 SIG 200002
+  IL_0000 ldc.i4.0        
+  IL_0001 stloc.0         
+  IL_0002 ldarg.0         
+  IL_0003 ldfld          HighlightRender::m_RootTransform token(0x04012213)
+  IL_0008 callvirt       UnityEngine.Component::GetComponentsInChildren<spec> token(0x2B0009C8)
+  IL_000d newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f222169de80>::.ctor token(0x0A00099C)
+  IL_0012 stloc.1         
+  IL_0013 stloc.2         
+  IL_0014 ldc.i4.0        
+  IL_0015 stloc.3         
+  IL_0016 br.s           IL_003d 
+  IL_0018 ldloc.2         
+  IL_0019 ldloc.3         
+  IL_001a ldelem.ref      
+  IL_001b callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0020 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000007)
+  IL_0025 stloc.s        local(0x0004) 
+  IL_0027 ldloc.s        local(0x0004) 
+  IL_0029 ldnull          
+  IL_002a call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_002f brfalse.s      IL_0039 
+  IL_0031 ldloc.1         
+  IL_0032 ldloc.s        local(0x0004) 
+  IL_0034 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f222169de80>::Add token(0x0A0027A9)
+  IL_0039 ldloc.3         
+  IL_003a ldc.i4.1        
+  IL_003b add             
+  IL_003c stloc.3         
+  IL_003d ldloc.3         
+  IL_003e ldloc.2         
+  IL_003f ldlen           
+  IL_0040 conv.i4         
+  IL_0041 blt.s          IL_0018 
+  IL_0043 ldloc.1         
+  IL_0044 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f222169de80>::GetEnumerator token(0x0A000F7D)
+  IL_0049 stloc.s        local(0x0005) 
+  IL_004b br.s           IL_00b8 
+  IL_004d ldloca.s       local(0x0005) 
+  IL_004f call           <dnfile.mdtable.TypeSpecRow object at 0x7f222170e390>::get_Current token(0x0A000F7E)
+  IL_0054 stloc.s        local(0x0006) 
+  IL_0056 ldloc.s        local(0x0006) 
+  IL_0058 callvirt       UnityEngine.Renderer::get_enabled token(0x0A000D18)
+  IL_005d brfalse.s      IL_006d 
+  IL_005f ldloc.s        local(0x0006) 
+  IL_0061 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0066 callvirt       UnityEngine.GameObject::get_activeInHierarchy token(0x0A0002F6)
+  IL_006b br.s           IL_006e 
+  IL_006d ldc.i4.0        
+  IL_006e stloc.s        local(0x0007) 
+  IL_0070 ldarg.0         
+  IL_0071 ldfld          HighlightRender::m_VisibilityStates token(0x04012227)
+  IL_0076 ldloc.s        local(0x0006) 
+  IL_0078 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f22211f9610>::ContainsKey token(0x0A005101)
+  IL_007d brtrue.s       IL_0096 
+  IL_007f ldarg.0         
+  IL_0080 ldfld          HighlightRender::m_VisibilityStates token(0x04012227)
+  IL_0085 ldloc.s        local(0x0006) 
+  IL_0087 ldloc.s        local(0x0007) 
+  IL_0089 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f22211f9610>::Add token(0x0A0050F2)
+  IL_008e ldloc.s        local(0x0007) 
+  IL_0090 brfalse.s      IL_00b8 
+  IL_0092 ldc.i4.1        
+  IL_0093 stloc.0         
+  IL_0094 br.s           IL_00b8 
+  IL_0096 ldarg.0         
+  IL_0097 ldfld          HighlightRender::m_VisibilityStates token(0x04012227)
+  IL_009c ldloc.s        local(0x0006) 
+  IL_009e callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f22211f9610>::get_Item token(0x0A005102)
+  IL_00a3 ldloc.s        local(0x0007) 
+  IL_00a5 beq.s          IL_00b8 
+  IL_00a7 ldarg.0         
+  IL_00a8 ldfld          HighlightRender::m_VisibilityStates token(0x04012227)
+  IL_00ad ldloc.s        local(0x0006) 
+  IL_00af ldloc.s        local(0x0007) 
+  IL_00b1 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f22211f9610>::set_Item token(0x0A005103)
+  IL_00b6 ldc.i4.1        
+  IL_00b7 stloc.0         
+  IL_00b8 ldloca.s       local(0x0005) 
+  IL_00ba call           <dnfile.mdtable.TypeSpecRow object at 0x7f222170e390>::MoveNext token(0x0A000F80)
+  IL_00bf brtrue.s       IL_004d 
+  IL_00c1 leave.s        IL_00d1 
+  IL_00c3 ldloca.s       local(0x0005) 
+  IL_00c5 constrained.   <dnfile.mdtable.TypeSpecRow object at 0x7f222170e390> token(0x1B00043C)
+  IL_00cb callvirt       System.IDisposable::Dispose token(0x0A000068)
+  IL_00d0 endfinally      
+  IL_00d1 ldloc.0         
+  IL_00d2 ret             
+
+0x06015280 HighlightRender::GetWorldScale(transform) RVA 0x639ae4 SIG 0001115d1280a5
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_000d stloc.1         
+  IL_000e br.s           IL_0024 
+  IL_0010 ldloc.0         
+  IL_0011 ldloc.1         
+  IL_0012 callvirt       UnityEngine.Transform::get_localScale token(0x0A00004A)
+  IL_0017 call           UnityEngine.Vector3::Scale token(0x0A001134)
+  IL_001c stloc.0         
+  IL_001d ldloc.1         
+  IL_001e callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_0023 stloc.1         
+  IL_0024 ldloc.1         
+  IL_0025 ldnull          
+  IL_0026 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_002b brtrue.s       IL_0010 
+  IL_002d ldloc.0         
+  IL_002e ret             
+
+0x06015281 HighlightRender::SetWorldScale(xform,scale) RVA 0x639b20 SIG 2002011280a5115d
+  IL_0000 newobj         UnityEngine.GameObject::.ctor token(0x0A000583)
+  IL_0005 dup             
+  IL_0006 callvirt       UnityEngine.GameObject::get_transform token(0x0A000164)
+  IL_000b stloc.0         
+  IL_000c ldloc.0         
+  IL_000d ldnull          
+  IL_000e callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0013 ldloc.0         
+  IL_0014 call           UnityEngine.Quaternion::get_identity token(0x0A00021E)
+  IL_0019 callvirt       UnityEngine.Transform::set_localRotation token(0x0A00021F)
+  IL_001e ldloc.0         
+  IL_001f call           UnityEngine.Vector3::get_one token(0x0A000165)
+  IL_0024 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0029 ldarg.1         
+  IL_002a callvirt       UnityEngine.Transform::get_parent token(0x0A000266)
+  IL_002f stloc.1         
+  IL_0030 ldarg.1         
+  IL_0031 ldloc.0         
+  IL_0032 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0037 ldarg.1         
+  IL_0038 ldarg.2         
+  IL_0039 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_003e ldarg.1         
+  IL_003f ldloc.1         
+  IL_0040 callvirt       UnityEngine.Transform::set_parent token(0x0A000191)
+  IL_0045 call           UnityEngine.Object::Destroy token(0x0A000059)
+  IL_004a ret             
+
+0x06015282 HighlightRender::SetRenderOverrides(renderOverrides) RVA 0x639b77 SIG 20010112c000b0b0
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          HighlightRender::m_renderOverrides token(0x0401222B)
+  IL_0007 ret             
+
+0x06015283 HighlightRender::.ctor() RVA 0x639b80 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldstr          'Custom/Selection/HighlightMultiSample' string token(0x703F70BB)
+  IL_0006 stfld          HighlightRender::MULTISAMPLE_SHADER_NAME token(0x040121EC)
+  IL_000b ldarg.0         
+  IL_000c ldstr          'Custom/Selection/HighlightMultiSampleBlend' string token(0x703F7107)
+  IL_0011 stfld          HighlightRender::MULTISAMPLE_BLEND_SHADER_NAME token(0x040121ED)
+  IL_0016 ldarg.0         
+  IL_0017 ldstr          'Custom/Selection/HighlightMaskBlend' string token(0x703F715D)
+  IL_001c stfld          HighlightRender::BLEND_SHADER_NAME token(0x040121EE)
+  IL_0021 ldarg.0         
+  IL_0022 ldstr          'Custom/Selection/Highlight' string token(0x700B0973)
+  IL_0027 stfld          HighlightRender::HIGHLIGHT_SHADER_NAME token(0x040121EF)
+  IL_002c ldarg.0         
+  IL_002d ldstr          'Custom/UnlitColor' string token(0x703F71A5)
+  IL_0032 stfld          HighlightRender::UNLIT_COLOR_SHADER_NAME token(0x040121F0)
+  IL_0037 ldarg.0         
+  IL_0038 ldstr          'Custom/Unlit/Color/Grey' string token(0x703F71C9)
+  IL_003d stfld          HighlightRender::UNLIT_GREY_SHADER_NAME token(0x040121F1)
+  IL_0042 ldarg.0         
+  IL_0043 ldstr          'Custom/Unlit/Color/LightGrey' string token(0x703F71F9)
+  IL_0048 stfld          HighlightRender::UNLIT_LIGHTGREY_SHADER_NAME token(0x040121F2)
+  IL_004d ldarg.0         
+  IL_004e ldstr          'Custom/Unlit/Color/DarkGrey' string token(0x703F7233)
+  IL_0053 stfld          HighlightRender::UNLIT_DARKGREY_SHADER_NAME token(0x040121F3)
+  IL_0058 ldarg.0         
+  IL_0059 ldstr          'Custom/Unlit/Color/BlackOverlay' string token(0x703F726B)
+  IL_005e stfld          HighlightRender::UNLIT_BLACK_SHADER_NAME token(0x040121F4)
+  IL_0063 ldarg.0         
+  IL_0064 ldstr          'Custom/Unlit/Color/White' string token(0x703F72AB)
+  IL_0069 stfld          HighlightRender::UNLIT_WHITE_SHADER_NAME token(0x040121F5)
+  IL_006e ldarg.0         
+  IL_006f ldc.r4         1.0 
+  IL_0074 stfld          HighlightRender::m_SilouetteRenderSize token(0x04012214)
+  IL_0079 ldarg.0         
+  IL_007a ldc.r4         1.0 
+  IL_007f stfld          HighlightRender::m_SilouetteClipSize token(0x04012215)
+  IL_0084 ldarg.0         
+  IL_0085 ldc.r4         1.0 
+  IL_008a stfld          HighlightRender::m_RenderScale token(0x04012218)
+  IL_008f ldarg.0         
+  IL_0090 ldc.i4         256 
+  IL_0095 stfld          HighlightRender::m_RenderSizeX token(0x04012229)
+  IL_009a ldarg.0         
+  IL_009b ldc.i4         256 
+  IL_00a0 stfld          HighlightRender::m_RenderSizeY token(0x0401222A)
+  IL_00a5 ldarg.0         
+  IL_00a6 call           UnityEngine.MonoBehaviour::.ctor token(0x0A000018)
+  IL_00ab ret             
+
+0x06015284 HighlightRender::.cctor() RVA 0x639c38 SIG 000001
+  IL_0000 ldstr          'temp_id_0' string token(0x703F72DD)
+  IL_0005 call           UnityEngine.Shader::PropertyToID token(0x0A000CBD)
+  IL_000a stsfld         HighlightRender::s_sid0 token(0x0401220B)
+  IL_000f ldstr          'temp_id_1' string token(0x703F72F1)
+  IL_0014 call           UnityEngine.Shader::PropertyToID token(0x0A000CBD)
+  IL_0019 stsfld         HighlightRender::s_sid1 token(0x0401220C)
+  IL_001e ldstr          'temp_id_2' string token(0x703F7305)
+  IL_0023 call           UnityEngine.Shader::PropertyToID token(0x0A000CBD)
+  IL_0028 stsfld         HighlightRender::s_sid2 token(0x0401220D)
+  IL_002d ldstr          '_BlurOffsets' string token(0x703F7319)
+  IL_0032 call           UnityEngine.Shader::PropertyToID token(0x0A000CBD)
+  IL_0037 stsfld         HighlightRender::s_blurOffsetsId token(0x0401220E)
+  IL_003c ldstr          '_BlendTex' string token(0x703F7333)
+  IL_0041 call           UnityEngine.Shader::PropertyToID token(0x0A000CBD)
+  IL_0046 stsfld         HighlightRender::s_blendTexId token(0x0401220F)
+  IL_004b newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f222169de80>::.ctor token(0x0A00099C)
+  IL_0050 stsfld         HighlightRender::s_cachedRenderers token(0x04012210)
+  IL_0055 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f2221529730>::.ctor token(0x0A0027DB)
+  IL_005a stsfld         HighlightRender::s_cachedCommands token(0x04012211)
+  IL_005f newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f22217d4e30>::.ctor token(0x0A00099D)
+  IL_0064 stsfld         HighlightRender::s_cachedMaterials token(0x04012212)
+  IL_0069 ret             

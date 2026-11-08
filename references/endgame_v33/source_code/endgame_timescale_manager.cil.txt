@@ -1,0 +1,93 @@
+
+TYPE Blizzard.T5.Core.Time.TimeScaleMgr 0x0200001b
+FIELD 0x04000055 s_instance SIG 06126c
+FIELD 0x04000056 m_temporarySpeedIncrease SIG 06151280d9010c
+FIELD 0x04000057 m_gameTimeScale SIG 060c
+FIELD 0x04000058 m_timeScaleMultiplier SIG 060c
+
+0x0600008e Blizzard.T5.Core.Time.TimeScaleMgr::Get() RVA 0x393f SIG 0000126c
+  IL_0000 ldsfld         Blizzard.T5.Core.Time.TimeScaleMgr::s_instance token(0x04000055)
+  IL_0005 brtrue.s       IL_0011 
+  IL_0007 newobj         Blizzard.T5.Core.Time.TimeScaleMgr::.ctor token(0x06000091)
+  IL_000c stsfld         Blizzard.T5.Core.Time.TimeScaleMgr::s_instance token(0x04000055)
+  IL_0011 ldsfld         Blizzard.T5.Core.Time.TimeScaleMgr::s_instance token(0x04000055)
+  IL_0016 ret             
+
+0x0600008f Blizzard.T5.Core.Time.TimeScaleMgr::PushTemporarySpeedIncrease(t) RVA 0x3957 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_temporarySpeedIncrease token(0x04000056)
+  IL_0006 ldarg.0         
+  IL_0007 call           Blizzard.T5.Core.Time.TimeScaleMgr::GetTimeScaleMultiplier token(0x06000094)
+  IL_000c callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f689009fec0>::Push token(0x0A0000B7)
+  IL_0011 ldarg.1         
+  IL_0012 ldarg.0         
+  IL_0013 call           Blizzard.T5.Core.Time.TimeScaleMgr::GetTimeScaleMultiplier token(0x06000094)
+  IL_0018 ble.un.s       IL_0021 
+  IL_001a ldarg.0         
+  IL_001b ldarg.1         
+  IL_001c call           Blizzard.T5.Core.Time.TimeScaleMgr::SetTimeScaleMultiplier token(0x06000095)
+  IL_0021 ret             
+
+0x06000090 Blizzard.T5.Core.Time.TimeScaleMgr::PopTemporarySpeedIncrease() RVA 0x397a SIG 20000c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_temporarySpeedIncrease token(0x04000056)
+  IL_0006 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f689009fec0>::get_Count token(0x0A0000B8)
+  IL_000b ldc.i4.0        
+  IL_000c ble.s          IL_001f 
+  IL_000e ldarg.0         
+  IL_000f ldarg.0         
+  IL_0010 ldfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_temporarySpeedIncrease token(0x04000056)
+  IL_0015 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f689009fec0>::Pop token(0x0A0000B9)
+  IL_001a call           Blizzard.T5.Core.Time.TimeScaleMgr::SetTimeScaleMultiplier token(0x06000095)
+  IL_001f ldarg.0         
+  IL_0020 call           Blizzard.T5.Core.Time.TimeScaleMgr::GetTimeScaleMultiplier token(0x06000094)
+  IL_0025 ret             
+
+0x06000091 Blizzard.T5.Core.Time.TimeScaleMgr::.ctor() RVA 0x39a1 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f689009fec0>::.ctor token(0x0A0000BA)
+  IL_0006 stfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_temporarySpeedIncrease token(0x04000056)
+  IL_000b ldarg.0         
+  IL_000c ldc.r4         1.0 
+  IL_0011 stfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_gameTimeScale token(0x04000057)
+  IL_0016 ldarg.0         
+  IL_0017 ldc.r4         1.0 
+  IL_001c stfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_timeScaleMultiplier token(0x04000058)
+  IL_0021 ldarg.0         
+  IL_0022 call           System.Object::.ctor token(0x0A000021)
+  IL_0027 ret             
+
+0x06000092 Blizzard.T5.Core.Time.TimeScaleMgr::GetGameTimeScale() RVA 0x39ca SIG 20000c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_gameTimeScale token(0x04000057)
+  IL_0006 ret             
+
+0x06000093 Blizzard.T5.Core.Time.TimeScaleMgr::SetGameTimeScale(t) RVA 0x39d2 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_gameTimeScale token(0x04000057)
+  IL_0007 ldarg.0         
+  IL_0008 call           Blizzard.T5.Core.Time.TimeScaleMgr::Update token(0x06000096)
+  IL_000d ret             
+
+0x06000094 Blizzard.T5.Core.Time.TimeScaleMgr::GetTimeScaleMultiplier() RVA 0x39e1 SIG 20000c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_timeScaleMultiplier token(0x04000058)
+  IL_0006 ret             
+
+0x06000095 Blizzard.T5.Core.Time.TimeScaleMgr::SetTimeScaleMultiplier(x) RVA 0x39e9 SIG 2001010c
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_timeScaleMultiplier token(0x04000058)
+  IL_0007 ldarg.0         
+  IL_0008 call           Blizzard.T5.Core.Time.TimeScaleMgr::Update token(0x06000096)
+  IL_000d ret             
+
+0x06000096 Blizzard.T5.Core.Time.TimeScaleMgr::Update() RVA 0x39f8 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_gameTimeScale token(0x04000057)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          Blizzard.T5.Core.Time.TimeScaleMgr::m_timeScaleMultiplier token(0x04000058)
+  IL_000c mul             
+  IL_000d call           UnityEngine.Time::set_timeScale token(0x0A0000BB)
+  IL_0012 ret             

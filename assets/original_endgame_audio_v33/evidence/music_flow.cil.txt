@@ -1,0 +1,244 @@
+
+TYPE MusicTrack 0x02002aae
+FIELD 0x040119e2 m_trackType SIG 0611c000aab4
+FIELD 0x040119e3 m_name SIG 060e
+FIELD 0x040119e4 m_volume SIG 060c
+FIELD 0x040119e5 m_shuffle SIG 0602
+FIELD 0x040119e6 m_fallback SIG 060e
+
+TYPE MusicManager 0x02002ab2
+FIELD 0x040119ef m_currentPlaylist SIG 0611c000aab0
+FIELD 0x040119f0 <Config>k__BackingField SIG 0612c000aac0
+
+TYPE HutongGames.PlayMaker.Actions.AudioLoadAndPlayAction 0x0200304b
+FIELD 0x040139fa m_ParentObject SIG 061295bd
+FIELD 0x040139fb m_PrefabName SIG 06128959
+FIELD 0x040139fc m_VolumeScale SIG 06128aa1
+
+TYPE HutongGames.PlayMaker.Actions.AudioVolumeFadeAction 0x02003062
+FIELD 0x04013a6c m_GameObject SIG 061295bd
+FIELD 0x04013a6d m_AudioSource SIG 06129ec5
+FIELD 0x04013a6e m_FadeTime SIG 06128aa1
+FIELD 0x04013a6f m_TargetVolume SIG 06128aa1
+FIELD 0x04013a70 m_StopWhenDone SIG 061282c1
+FIELD 0x04013a71 m_RealTime SIG 061282c1
+FIELD 0x04013a72 m_audio SIG 06128351
+FIELD 0x04013a73 m_startVolume SIG 060c
+FIELD 0x04013a74 m_startTime SIG 060c
+FIELD 0x04013a75 m_currentTime SIG 060c
+FIELD 0x04013a76 m_endTime SIG 060c
+
+0x060146df MusicManager::StartPlaylist(type) RVA 0x60ad74 SIG 20010211c000aab0
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          MusicManager::m_currentPlaylist token(0x040119EF)
+  IL_0006 ldarg.1         
+  IL_0007 bne.un.s       IL_000b 
+  IL_0009 ldc.i4.1        
+  IL_000a ret             
+  IL_000b ldloca.s       local(0x0000) 
+  IL_000d call           Blizzard.T5.Services.ServiceManager::TryGet<spec> token(0x2B000822)
+  IL_0012 brtrue.s       IL_0020 
+  IL_0014 ldstr          'MusicManager.StartPlaylist() - SoundManager does not exist.' string token(0x703EDF8E)
+  IL_0019 call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_001e ldc.i4.0        
+  IL_001f ret             
+  IL_0020 ldarg.0         
+  IL_0021 ldarg.1         
+  IL_0022 call           MusicManager::FindPlaylist token(0x060146E5)
+  IL_0027 stloc.1         
+  IL_0028 ldloc.1         
+  IL_0029 brtrue.s       IL_0042 
+  IL_002b ldstr          'MusicManager.StartPlaylist() - failed to find playlist for type {0}' string token(0x703EE006)
+  IL_0030 ldarg.1         
+  IL_0031 box            MusicPlaylistType token(0x02002AAC)
+  IL_0036 call           System.String::Format token(0x0A0000B7)
+  IL_003b call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0040 ldc.i4.0        
+  IL_0041 ret             
+  IL_0042 ldloc.1         
+  IL_0043 callvirt       MusicPlaylist::GetMusicTracks token(0x060146D0)
+  IL_0048 stloc.2         
+  IL_0049 ldloc.0         
+  IL_004a callvirt       SoundManager::GetCurrentMusicTracks token(0x0601473C)
+  IL_004f stloc.3         
+  IL_0050 ldarg.0         
+  IL_0051 ldloc.2         
+  IL_0052 ldloc.3         
+  IL_0053 call           MusicManager::AreTracksEqual token(0x060146E6)
+  IL_0058 brtrue.s       IL_0073 
+  IL_005a ldloc.0         
+  IL_005b callvirt       SoundManager::NukeMusicAndStopPlayingCurrentTrack token(0x06014745)
+  IL_0060 ldloc.2         
+  IL_0061 brfalse.s      IL_0073 
+  IL_0063 ldloc.2         
+  IL_0064 callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f29237413a0>::get_Count token(0x0A004D62)
+  IL_0069 ldc.i4.0        
+  IL_006a ble.s          IL_0073 
+  IL_006c ldloc.0         
+  IL_006d ldloc.2         
+  IL_006e callvirt       SoundManager::AddMusicTracks token(0x0601473A)
+  IL_0073 ldloc.1         
+  IL_0074 callvirt       MusicPlaylist::GetAmbienceTracks token(0x060146D1)
+  IL_0079 stloc.s        local(0x0004) 
+  IL_007b ldloc.0         
+  IL_007c callvirt       SoundManager::GetCurrentAmbienceTracks token(0x0601473D)
+  IL_0081 stloc.s        local(0x0005) 
+  IL_0083 ldarg.0         
+  IL_0084 ldloc.s        local(0x0004) 
+  IL_0086 ldloc.s        local(0x0005) 
+  IL_0088 call           MusicManager::AreTracksEqual token(0x060146E6)
+  IL_008d brtrue.s       IL_00ab 
+  IL_008f ldloc.0         
+  IL_0090 callvirt       SoundManager::NukeAmbienceAndStopPlayingCurrentTrack token(0x06014746)
+  IL_0095 ldloc.s        local(0x0004) 
+  IL_0097 brfalse.s      IL_00ab 
+  IL_0099 ldloc.s        local(0x0004) 
+  IL_009b callvirt       <dnfile.mdtable.TypeSpecRow object at 0x7f29237413a0>::get_Count token(0x0A004D62)
+  IL_00a0 ldc.i4.0        
+  IL_00a1 ble.s          IL_00ab 
+  IL_00a3 ldloc.0         
+  IL_00a4 ldloc.s        local(0x0004) 
+  IL_00a6 callvirt       SoundManager::AddAmbienceTracks token(0x0601473B)
+  IL_00ab ldarg.0         
+  IL_00ac ldloc.1         
+  IL_00ad ldfld          MusicPlaylist::m_type token(0x040119E7)
+  IL_00b2 stfld          MusicManager::m_currentPlaylist token(0x040119EF)
+  IL_00b7 ldc.i4.1        
+  IL_00b8 ret             
+
+0x060146e0 MusicManager::StopPlaylist() RVA 0x60ae3c SIG 200002
+  IL_0000 call           SoundManager::Get token(0x06014710)
+  IL_0005 stloc.0         
+  IL_0006 ldloc.0         
+  IL_0007 brtrue.s       IL_0015 
+  IL_0009 ldstr          'MusicManager.StopPlaylist() - SoundManager does not exist.' string token(0x703EE08F)
+  IL_000e call           UnityEngine.Debug::LogError token(0x0A0000C1)
+  IL_0013 ldc.i4.0        
+  IL_0014 ret             
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          MusicManager::m_currentPlaylist token(0x040119EF)
+  IL_001b brtrue.s       IL_001f 
+  IL_001d ldc.i4.0        
+  IL_001e ret             
+  IL_001f ldarg.0         
+  IL_0020 ldc.i4.0        
+  IL_0021 stfld          MusicManager::m_currentPlaylist token(0x040119EF)
+  IL_0026 ldloc.0         
+  IL_0027 callvirt       SoundManager::NukePlaylistsAndStopPlayingCurrentTracks token(0x06014744)
+  IL_002c ldc.i4.1        
+  IL_002d ret             
+
+0x06016a8e HutongGames.PlayMaker.Actions.AudioLoadAndPlayAction::OnEnter() RVA 0x699404 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.AudioLoadAndPlayAction::m_PrefabName token(0x040139FB)
+  IL_0006 brtrue.s       IL_000f 
+  IL_0008 ldarg.0         
+  IL_0009 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_000e ret             
+  IL_000f ldarg.0         
+  IL_0010 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          HutongGames.PlayMaker.Actions.AudioLoadAndPlayAction::m_ParentObject token(0x040139FA)
+  IL_001b callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0020 stloc.0         
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          HutongGames.PlayMaker.Actions.AudioLoadAndPlayAction::m_VolumeScale token(0x040139FC)
+  IL_0027 callvirt       HutongGames.PlayMaker.NamedVariable::get_IsNone token(0x0A0058FE)
+  IL_002c brfalse.s      IL_004b 
+  IL_002e call           SoundManager::Get token(0x06014710)
+  IL_0033 ldarg.0         
+  IL_0034 ldfld          HutongGames.PlayMaker.Actions.AudioLoadAndPlayAction::m_PrefabName token(0x040139FB)
+  IL_0039 callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A00449C)
+  IL_003e call           AssetReference::op_Implicit token(0x0A0000BB)
+  IL_0043 ldloc.0         
+  IL_0044 callvirt       SoundManager::LoadAndPlay token(0x0601472D)
+  IL_0049 br.s           IL_0071 
+  IL_004b call           SoundManager::Get token(0x06014710)
+  IL_0050 ldarg.0         
+  IL_0051 ldfld          HutongGames.PlayMaker.Actions.AudioLoadAndPlayAction::m_PrefabName token(0x040139FB)
+  IL_0056 callvirt       HutongGames.PlayMaker.FsmString::get_Value token(0x0A00449C)
+  IL_005b call           AssetReference::op_Implicit token(0x0A0000BB)
+  IL_0060 ldloc.0         
+  IL_0061 ldarg.0         
+  IL_0062 ldfld          HutongGames.PlayMaker.Actions.AudioLoadAndPlayAction::m_VolumeScale token(0x040139FC)
+  IL_0067 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_006c callvirt       SoundManager::LoadAndPlay token(0x0601472E)
+  IL_0071 ldarg.0         
+  IL_0072 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0077 ret             
+
+0x06016afc HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::OnEnter() RVA 0x69ab50 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_AudioSource token(0x04013A6D)
+  IL_0006 callvirt       HutongGames.PlayMaker.FsmObject::get_Value token(0x0A0058FF)
+  IL_000b ldnull          
+  IL_000c call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0011 brfalse.s      IL_0043 
+  IL_0013 ldarg.0         
+  IL_0014 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A004068)
+  IL_0019 ldarg.0         
+  IL_001a ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_GameObject token(0x04013A6C)
+  IL_001f callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A004069)
+  IL_0024 stloc.0         
+  IL_0025 ldloc.0         
+  IL_0026 ldnull          
+  IL_0027 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_002c brfalse.s      IL_0035 
+  IL_002e ldarg.0         
+  IL_002f call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0034 ret             
+  IL_0035 ldarg.0         
+  IL_0036 ldloc.0         
+  IL_0037 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B0001AF)
+  IL_003c stfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio token(0x04013A72)
+  IL_0041 br.s           IL_0059 
+  IL_0043 ldarg.0         
+  IL_0044 ldarg.0         
+  IL_0045 ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_AudioSource token(0x04013A6D)
+  IL_004a callvirt       HutongGames.PlayMaker.FsmObject::get_Value token(0x0A0058FF)
+  IL_004f isinst         UnityEngine.AudioSource token(0x010000D4)
+  IL_0054 stfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio token(0x04013A72)
+  IL_0059 ldarg.0         
+  IL_005a ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio token(0x04013A72)
+  IL_005f ldnull          
+  IL_0060 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0065 brfalse.s      IL_006e 
+  IL_0067 ldarg.0         
+  IL_0068 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_006d ret             
+  IL_006e ldarg.0         
+  IL_006f ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_FadeTime token(0x04013A6E)
+  IL_0074 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_0079 ldsfld         UnityEngine.Mathf::Epsilon token(0x0A0004BC)
+  IL_007e bgt.un.s       IL_0087 
+  IL_0080 ldarg.0         
+  IL_0081 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A004067)
+  IL_0086 ret             
+  IL_0087 ldarg.0         
+  IL_0088 call           SoundManager::Get token(0x06014710)
+  IL_008d ldarg.0         
+  IL_008e ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio token(0x04013A72)
+  IL_0093 callvirt       SoundManager::GetVolume token(0x06014725)
+  IL_0098 stfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startVolume token(0x04013A73)
+  IL_009d ldarg.0         
+  IL_009e call           HutongGames.PlayMaker.FsmTime::get_RealtimeSinceStartup token(0x0A00591E)
+  IL_00a3 stfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startTime token(0x04013A74)
+  IL_00a8 ldarg.0         
+  IL_00a9 ldarg.0         
+  IL_00aa ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startTime token(0x04013A74)
+  IL_00af stfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_currentTime token(0x04013A75)
+  IL_00b4 ldarg.0         
+  IL_00b5 ldarg.0         
+  IL_00b6 ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startTime token(0x04013A74)
+  IL_00bb ldarg.0         
+  IL_00bc ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_FadeTime token(0x04013A6E)
+  IL_00c1 callvirt       HutongGames.PlayMaker.FsmFloat::get_Value token(0x0A003708)
+  IL_00c6 add             
+  IL_00c7 stfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_endTime token(0x04013A76)
+  IL_00cc call           SoundManager::Get token(0x06014710)
+  IL_00d1 ldarg.0         
+  IL_00d2 ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_audio token(0x04013A72)
+  IL_00d7 ldarg.0         
+  IL_00d8 ldfld          HutongGames.PlayMaker.Actions.AudioVolumeFadeAction::m_startVolume token(0x04013A73)
+  IL_00dd callvirt       SoundManager::SetVolume token(0x06014726)
+  IL_00e2 ret             

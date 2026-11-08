@@ -1,0 +1,151 @@
+368: 	protected readonly Vector2 GEM_TEXTURE_OFFSET_RARE = new Vector2(0.5f, 0f);
+369: 
+370: 	protected readonly Vector2 GEM_TEXTURE_OFFSET_EPIC = new Vector2(0f, 0.5f);
+371: 
+372: 	protected readonly Vector2 GEM_TEXTURE_OFFSET_LEGENDARY = new Vector2(0.5f, 0.5f);
+373: 
+374: 	protected readonly Vector2 GEM_TEXTURE_OFFSET_COMMON = new Vector2(0f, 0f);
+375: 
+376: 	protected readonly Color GEM_COLOR_RARE = new Color(0.1529f, 0.498f, 1f);
+377: 
+378: 	protected readonly Color GEM_COLOR_EPIC = new Color(0.596f, 0.1568f, 0.7333f);
+379: 
+380: 	protected readonly Color GEM_COLOR_LEGENDARY = new Color(1f, 0.5333f, 0f);
+381: 
+382: 	protected readonly Color GEM_COLOR_COMMON = new Color(0.549f, 0.549f, 0.549f);
+383: 
+5251: 
+5252: 	private void UpdateRarityComponent()
+5253: 	{
+5254: 		if (GetPremium() == TAG_PREMIUM.SIGNATURE)
+5255: 		{
+5256: 			if (m_card != null)
+5257: 			{
+5258: 				if (m_card.GetEntity() != null && ActorNames.GetSignatureFrameId(m_card.GetEntity().GetCardId()) != 1)
+5259: 				{
+5260: 					SetRarityGemShape(GetRarity(), m_card.GetEntity().GetCardId());
+5261: 				}
+5262: 			}
+5263: 			else if (m_entityDef != null)
+5264: 			{
+5265: 				if (ActorNames.GetSignatureFrameId(m_entityDef.GetCardId()) != 1)
+5266: 				{
+5267: 					SetRarityGemShape(GetRarity(), m_entityDef.GetCardId());
+5268: 				}
+5269: 			}
+5270: 			else if (m_entity != null && ActorNames.GetSignatureFrameId(m_entity.GetCardId()) != 1)
+5271: 			{
+5272: 				SetRarityGemShape(GetRarity(), m_entity.GetCardId());
+5273: 			}
+5274: 		}
+5275: 		if ((bool)m_rarityGemMesh)
+5276: 		{
+5277: 			Vector2 offset;
+5278: 			Color tint;
+5279: 			bool rarityTextureOffset = GetRarityTextureOffset(out offset, out tint);
+5280: 			RenderUtils.EnableRenderers(m_rarityGemMesh, rarityTextureOffset, includeInactive: true);
+5281: 			if ((bool)m_rarityFrameMesh)
+5282: 			{
+5283: 				RenderUtils.EnableRenderers(m_rarityFrameMesh, rarityTextureOffset, includeInactive: true);
+5284: 			}
+5285: 			bool flag = false;
+5286: 			if (m_entity != null)
+5287: 			{
+5288: 				flag = m_entity.IsLocation();
+5289: 			}
+5290: 			else if (m_entityDef != null)
+5291: 			{
+5292: 				flag = m_entityDef.IsLocation();
+5293: 			}
+5294: 			if (flag && m_rarityNoGemMesh != null)
+5295: 			{
+5296: 				m_rarityNoGemMesh.SetActive(!rarityTextureOffset);
+5297: 			}
+5298: 			if (rarityTextureOffset)
+5299: 			{
+5300: 				Material materialInstance = GetMaterialInstance(m_rarityGemMesh.GetComponent<Renderer>());
+5301: 				materialInstance.mainTextureOffset = offset;
+5302: 				materialInstance.SetColor("_tint", tint);
+5303: 			}
+5304: 		}
+5305: 	}
+5306: 
+5307: 	private void SetRarityGemShape(TAG_RARITY rarity, string cardId)
+5308: 	{
+5309: 		if (ActorNames.GetSignatureFrameId(cardId) != 1 && !(m_gemMeshCommon == null) && !(m_gemMeshRare == null) && !(m_gemMeshEpic == null) && !(m_gemMeshLegendary == null))
+5310: 		{
+5311: 			m_gemMeshCommon.SetActive(rarity == TAG_RARITY.COMMON || rarity == TAG_RARITY.FREE);
+5312: 			m_gemMeshRare.SetActive(rarity == TAG_RARITY.RARE);
+5313: 			m_gemMeshEpic.SetActive(rarity == TAG_RARITY.EPIC);
+5314: 			m_gemMeshLegendary.SetActive(rarity == TAG_RARITY.LEGENDARY);
+5315: 			SetRarityGemMesh(rarity);
+5316: 		}
+5317: 	}
+5318: 
+5319: 	private void SetRarityGemMesh(TAG_RARITY rarity)
+5320: 	{
+5321: 		switch (rarity)
+5322: 		{
+5323: 		case TAG_RARITY.COMMON:
+5324: 		case TAG_RARITY.FREE:
+5325: 			m_rarityGemMesh = m_gemMeshCommon;
+5326: 			break;
+5327: 		case TAG_RARITY.RARE:
+5328: 			m_rarityGemMesh = m_gemMeshRare;
+5329: 			break;
+5330: 		case TAG_RARITY.EPIC:
+5331: 			m_rarityGemMesh = m_gemMeshEpic;
+5332: 			break;
+5333: 		case TAG_RARITY.LEGENDARY:
+5334: 			m_rarityGemMesh = m_gemMeshLegendary;
+5335: 			break;
+5336: 		}
+5337: 	}
+5338: 
+5339: 	private bool GetRarityTextureOffset(out Vector2 offset, out Color tint)
+5340: 	{
+5341: 		offset = GEM_TEXTURE_OFFSET_COMMON;
+5342: 		tint = GEM_COLOR_COMMON;
+5343: 		if (m_entityDef == null && m_entity == null)
+5344: 		{
+5345: 			return false;
+5346: 		}
+5347: 		TAG_CARD_SET tAG_CARD_SET = ((m_entityDef == null) ? m_entity.GetCardSet() : m_entityDef.GetCardSet());
+5348: 		if (tAG_CARD_SET == TAG_CARD_SET.MISSIONS)
+5349: 		{
+5350: 			return false;
+5351: 		}
+5352: 		if (m_entityDef != null)
+5353: 		{
+5354: 			if (m_premiumType == TAG_PREMIUM.SIGNATURE && ActorNames.GetSignatureFrameId(m_entityDef.GetCardId()) != 1)
+5355: 			{
+5356: 				return true;
+5357: 			}
+5358: 		}
+5359: 		else if (m_entity != null && m_premiumType == TAG_PREMIUM.SIGNATURE && ActorNames.GetSignatureFrameId(m_entity.GetCardId()) != 1)
+5360: 		{
+5361: 			return true;
+5362: 		}
+5363: 		switch (GetRarity())
+5364: 		{
+5365: 		case TAG_RARITY.COMMON:
+5366: 			offset = GEM_TEXTURE_OFFSET_COMMON;
+5367: 			tint = GEM_COLOR_COMMON;
+5368: 			break;
+5369: 		case TAG_RARITY.RARE:
+5370: 			offset = GEM_TEXTURE_OFFSET_RARE;
+5371: 			tint = GEM_COLOR_RARE;
+5372: 			break;
+5373: 		case TAG_RARITY.EPIC:
+5374: 			offset = GEM_TEXTURE_OFFSET_EPIC;
+5375: 			tint = GEM_COLOR_EPIC;
+5376: 			break;
+5377: 		case TAG_RARITY.LEGENDARY:
+5378: 			offset = GEM_TEXTURE_OFFSET_LEGENDARY;
+5379: 			tint = GEM_COLOR_LEGENDARY;
+5380: 			break;
+5381: 		default:
+5382: 			return false;
+5383: 		}
+5384: 		return true;
+5385: 	}

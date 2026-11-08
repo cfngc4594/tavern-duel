@@ -1,0 +1,1713 @@
+# Exact extracts from same-build card_actor_spell.cil.txt; no new decompiler normalization.
+
+0x06012d22 Card::SetCardDef(cardDef,updateActor) RVA 0x57d3b4 SIG 20020112c000a28402
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_0006 dup             
+  IL_0007 brtrue.s       IL_000d 
+  IL_0009 pop             
+  IL_000a ldnull          
+  IL_000b br.s           IL_0012 
+  IL_000d call           DisposableCardDef::get_CardDef token(0x0601366B)
+  IL_0012 ldarg.1         
+  IL_0013 brtrue.s       IL_0018 
+  IL_0015 ldnull          
+  IL_0016 br.s           IL_001e 
+  IL_0018 ldarg.1         
+  IL_0019 call           DisposableCardDef::get_CardDef token(0x0601366B)
+  IL_001e call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0023 brfalse.s      IL_0026 
+  IL_0025 ret             
+  IL_0026 ldarg.0         
+  IL_0027 call           Card::ReleaseCardDef token(0x06012D6C)
+  IL_002c ldarg.0         
+  IL_002d ldarg.1         
+  IL_002e callvirt       DisposableCardDef::Share token(0x0601366F)
+  IL_0033 stfld          Card::m_cardDef token(0x0400FA42)
+  IL_0038 ldarg.0         
+  IL_0039 call           Card::InitCardDefAssets token(0x06012D63)
+  IL_003e ldarg.0         
+  IL_003f ldfld          Card::m_actor token(0x0400FA62)
+  IL_0044 ldnull          
+  IL_0045 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_004a brfalse.s      IL_006c 
+  IL_004c ldarg.2         
+  IL_004d brtrue.s       IL_006c 
+  IL_004f ldarg.0         
+  IL_0050 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_005b callvirt       Actor::SetCardDef token(0x06012807)
+  IL_0060 ldarg.0         
+  IL_0061 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0066 ldc.i4.1        
+  IL_0067 callvirt       Actor::UpdateAllComponents token(0x0601285E)
+  IL_006c ret             
+
+
+0x06012db8 Card::ActivateMinionSpawnEffects() RVA 0x5815c4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0006 callvirt       Entity::GetCreator token(0x060137E5)
+  IL_000b stloc.0         
+  IL_000c ldnull          
+  IL_000d stloc.1         
+  IL_000e ldloc.0         
+  IL_000f brfalse.s      IL_0020 
+  IL_0011 ldloc.0         
+  IL_0012 callvirt       EntityBase::IsMinion token(0x060138DB)
+  IL_0017 brfalse.s      IL_0020 
+  IL_0019 ldloc.0         
+  IL_001a callvirt       Entity::GetCard token(0x060137BF)
+  IL_001f stloc.1         
+  IL_0020 ldloc.1         
+  IL_0021 ldnull          
+  IL_0022 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0027 brfalse.s      IL_0045 
+  IL_0029 ldloc.1         
+  IL_002a callvirt       Card::GetZone token(0x06012DE5)
+  IL_002f isinst         ZonePlay token(0x02000CDA)
+  IL_0034 brtrue.s       IL_0045 
+  IL_0036 ldloc.1         
+  IL_0037 callvirt       Card::GetZone token(0x06012DE5)
+  IL_003c isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0041 brtrue.s       IL_0045 
+  IL_0043 ldnull          
+  IL_0044 stloc.1         
+  IL_0045 ldloc.1         
+  IL_0046 ldnull          
+  IL_0047 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_004c brfalse.s      IL_005f 
+  IL_004e ldarg.0         
+  IL_004f call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0054 ldloc.1         
+  IL_0055 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_005a call           TransformUtil::CopyWorld token(0x06014FF2)
+  IL_005f ldarg.0         
+  IL_0060 ldloca.s       local(0x0002) 
+  IL_0062 call           Card::GetBestSpawnSpell token(0x06012D4A)
+  IL_0067 stloc.3         
+  IL_0068 ldloc.2         
+  IL_0069 brfalse.s      IL_008b 
+  IL_006b ldloc.1         
+  IL_006c ldnull          
+  IL_006d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0072 brfalse.s      IL_007b 
+  IL_0074 ldarg.0         
+  IL_0075 call           Card::ActivateStandardSpawnMinionSpell token(0x06012DBB)
+  IL_007a ret             
+  IL_007b ldarg.0         
+  IL_007c ldarg.0         
+  IL_007d ldloc.0         
+  IL_007e ldloc.1         
+  IL_007f call           Card::ActivateCreatorSpawnMinionSpell token(0x06012DB9)
+  IL_0084 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_0089 pop             
+  IL_008a ret             
+  IL_008b ldarg.0         
+  IL_008c ldloc.3         
+  IL_008d ldloc.1         
+  IL_008e call           Card::ActivateCustomSpawnMinionSpell token(0x06012DBD)
+  IL_0093 ret             
+
+
+0x06012dbb Card::ActivateStandardSpawnMinionSpell() RVA 0x5816a4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0006 callvirt       Entity::IsControlledByFriendlySidePlayer token(0x060137E1)
+  IL_000b brfalse.s      IL_0029 
+  IL_000d ldarg.0         
+  IL_000e ldarg.0         
+  IL_000f ldc.i4.s       26 
+  IL_0011 ldarg.0         
+  IL_0012 ldftn          Card::OnSpellFinished_StandardSpawnCharacter token(0x06012DC1)
+  IL_0018 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6e98ba50a0>::.ctor token(0x0A00026C)
+  IL_001d call           Card::ActivateActorSpell token(0x06012DA6)
+  IL_0022 stfld          Card::m_activeSpawnSpell token(0x0400FA8F)
+  IL_0027 br.s           IL_0043 
+  IL_0029 ldarg.0         
+  IL_002a ldarg.0         
+  IL_002b ldc.i4.s       31 
+  IL_002d ldarg.0         
+  IL_002e ldftn          Card::OnSpellFinished_StandardSpawnCharacter token(0x06012DC1)
+  IL_0034 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6e98ba50a0>::.ctor token(0x0A00026C)
+  IL_0039 call           Card::ActivateActorSpell token(0x06012DA6)
+  IL_003e stfld          Card::m_activeSpawnSpell token(0x0400FA8F)
+  IL_0043 ldarg.0         
+  IL_0044 call           Card::ActivateCharacterPlayEffects token(0x06012D4F)
+  IL_0049 ret             
+
+
+0x06012e10 Card::OnActorLoaded(assetRef,go,callbackData) RVA 0x583778 SIG 20030112813512808d1c
+  IL_0000 ldarg.2         
+  IL_0001 ldnull          
+  IL_0002 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0007 brfalse.s      IL_001a 
+  IL_0009 ldstr          'Card.OnActorLoaded() - FAILED to load actor "{0}"' string token(0x703AE5C5)
+  IL_000e ldarg.1         
+  IL_000f call           System.String::Format token(0x0A0000B7)
+  IL_0014 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_0019 ret             
+  IL_001a ldarg.2         
+  IL_001b callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B000038)
+  IL_0020 stloc.0         
+  IL_0021 ldloc.0         
+  IL_0022 ldnull          
+  IL_0023 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0028 brfalse.s      IL_003b 
+  IL_002a ldstr          'Card.OnActorLoaded() - ERROR actor "{0}" has no Actor component' string token(0x703AE629)
+  IL_002f ldarg.1         
+  IL_0030 call           System.String::Format token(0x0A0000B7)
+  IL_0035 call           UnityEngine.Debug::LogWarning token(0x0A0000B0)
+  IL_003a ret             
+  IL_003b ldarg.0         
+  IL_003c ldfld          Card::m_actor token(0x0400FA62)
+  IL_0041 stloc.1         
+  IL_0042 ldarg.0         
+  IL_0043 ldloc.0         
+  IL_0044 stfld          Card::m_actor token(0x0400FA62)
+  IL_0049 ldarg.0         
+  IL_004a ldarg.1         
+  IL_004b callvirt       System.Object::ToString token(0x0A00000C)
+  IL_0050 stfld          Card::m_actorPath token(0x0400FA61)
+  IL_0055 ldarg.0         
+  IL_0056 ldfld          Card::m_actor token(0x0400FA62)
+  IL_005b ldarg.0         
+  IL_005c ldfld          Card::m_entity token(0x0400FA41)
+  IL_0061 callvirt       Actor::SetEntity token(0x0601280F)
+  IL_0066 ldarg.0         
+  IL_0067 ldfld          Card::m_actor token(0x0400FA62)
+  IL_006c ldarg.0         
+  IL_006d callvirt       Actor::SetCard token(0x060127F5)
+  IL_0072 ldarg.0         
+  IL_0073 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0078 ldarg.0         
+  IL_0079 ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_007e callvirt       Actor::SetCardDef token(0x06012807)
+  IL_0083 call           GameMgr::Get token(0x06013AFF)
+  IL_0088 callvirt       GameMgr::IsBattlegrounds token(0x06013B5B)
+  IL_008d brfalse.s      IL_009c 
+  IL_008f ldarg.0         
+  IL_0090 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0095 callvirt       EntityBase::IsBobQuest token(0x060138FD)
+  IL_009a br.s           IL_009d 
+  IL_009c ldc.i4.0        
+  IL_009d brfalse.s      IL_00a5 
+  IL_009f ldarg.0         
+  IL_00a0 call           Card::UseBobQuestComponent token(0x06012E15)
+  IL_00a5 ldarg.0         
+  IL_00a6 ldfld          Card::m_actor token(0x0400FA62)
+  IL_00ab ldc.i4.1        
+  IL_00ac callvirt       Actor::UpdateAllComponents token(0x0601285E)
+  IL_00b1 ldarg.0         
+  IL_00b2 ldloc.1         
+  IL_00b3 call           Card::FinishActorLoad token(0x06012E11)
+  IL_00b8 ret             
+
+
+0x06012e11 Card::FinishActorLoad(oldActor) RVA 0x58383d SIG 20010112c0009cf8
+  IL_0000 ldarg.0         
+  IL_0001 ldc.i4.0        
+  IL_0002 stfld          Card::m_actorLoading token(0x0400FA65)
+  IL_0007 ldarg.0         
+  IL_0008 call           Card::OnZoneChanged token(0x06012E1B)
+  IL_000d ldarg.0         
+  IL_000e ldarg.1         
+  IL_000f call           Card::OnActorChanged token(0x06012E38)
+  IL_0014 ldarg.0         
+  IL_0015 ldfld          Card::m_isBattleCrySource token(0x0400FA8B)
+  IL_001a brfalse.s      IL_002e 
+  IL_001c ldarg.0         
+  IL_001d ldfld          Card::m_actor token(0x0400FA62)
+  IL_0022 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0027 ldc.i4.s       19 
+  IL_0029 call           LayerUtils::SetLayer token(0x06014DF0)
+  IL_002e ldarg.0         
+  IL_002f call           Card::RefreshActor token(0x06012DE4)
+  IL_0034 ret             
+
+
+0x06012e38 Card::OnActorChanged(oldActor) RVA 0x585404 SIG 20010112c0009cf8
+  IL_0000 ldarg.0         
+  IL_0001 call           Card::HideTooltip token(0x06012CF3)
+  IL_0006 ldc.i4.0        
+  IL_0007 stloc.0         
+  IL_0008 call           GameState::Get token(0x06005589)
+  IL_000d callvirt       GameState::IsGameCreating token(0x060055F2)
+  IL_0012 stloc.1         
+  IL_0013 call           GameState::Get token(0x06005589)
+  IL_0018 callvirt       GameState::IsGameReseting token(0x060055F5)
+  IL_001d stloc.2         
+  IL_001e ldarg.0         
+  IL_001f ldfld          Card::m_entity token(0x0400FA41)
+  IL_0024 callvirt       EntityBase::IsMinion token(0x060138DB)
+  IL_0029 brfalse.s      IL_003d 
+  IL_002b ldarg.0         
+  IL_002c ldfld          Card::m_entity token(0x0400FA41)
+  IL_0031 ldc.i4         1653 
+  IL_0036 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_003b br.s           IL_003e 
+  IL_003d ldc.i4.0        
+  IL_003e stloc.3         
+  IL_003f ldarg.0         
+  IL_0040 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0045 ldnull          
+  IL_0046 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_004b brfalse.s      IL_00a2 
+  IL_004d ldarg.0         
+  IL_004e ldfld          Card::m_zone token(0x0400FA68)
+  IL_0053 isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0058 brfalse.s      IL_00a2 
+  IL_005a ldarg.1         
+  IL_005b ldnull          
+  IL_005c call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0061 brfalse.s      IL_0077 
+  IL_0063 ldarg.1         
+  IL_0064 ldarg.0         
+  IL_0065 ldfld          Card::m_actor token(0x0400FA62)
+  IL_006a call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_006f brfalse.s      IL_0077 
+  IL_0071 ldarg.1         
+  IL_0072 callvirt       Actor::Destroy token(0x060127EF)
+  IL_0077 ldarg.0         
+  IL_0078 call           Card::IsShown token(0x06012D10)
+  IL_007d brfalse.s      IL_0087 
+  IL_007f ldarg.0         
+  IL_0080 call           Card::HideCard token(0x06012D13)
+  IL_0085 br.s           IL_008d 
+  IL_0087 ldarg.0         
+  IL_0088 call           Card::HideImpl token(0x06012D14)
+  IL_008d ldarg.0         
+  IL_008e ldnull          
+  IL_008f call           Card::DeactivateHandStateSpells token(0x06012D8A)
+  IL_0094 ldc.i4.1        
+  IL_0095 stloc.0         
+  IL_0096 ldarg.0         
+  IL_0097 ldc.i4.1        
+  IL_0098 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_009d br             IL_0f9e 
+  IL_00a2 ldarg.1         
+  IL_00a3 ldnull          
+  IL_00a4 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_00a9 brfalse        IL_0597 
+  IL_00ae call           GameState::Get token(0x06005589)
+  IL_00b3 callvirt       GameState::IsMulliganPhaseNowOrPending token(0x060055EF)
+  IL_00b8 stloc.s        local(0x0004) 
+  IL_00ba ldarg.0         
+  IL_00bb ldfld          Card::m_zone token(0x0400FA68)
+  IL_00c0 isinst         ZoneHand token(0x02000CC1)
+  IL_00c5 brfalse        IL_01cc 
+  IL_00ca call           GameState::Get token(0x06005589)
+  IL_00cf callvirt       GameState::IsBeginPhase token(0x060055EA)
+  IL_00d4 brfalse        IL_01cc 
+  IL_00d9 call           CosmeticCoinManager::Get token(0x06001CA5)
+  IL_00de ldarg.0         
+  IL_00df ldfld          Card::m_entity token(0x0400FA41)
+  IL_00e4 callvirt       EntityBase::GetCardId token(0x06013947)
+  IL_00e9 callvirt       CosmeticCoinManager::IsOwnedCoinCard token(0x06001CC1)
+  IL_00ee stloc.s        local(0x0005) 
+  IL_00f0 ldloc.s        local(0x0004) 
+  IL_00f2 brfalse        IL_01a5 
+  IL_00f7 call           GameState::Get token(0x06005589)
+  IL_00fc callvirt       GameState::HasTheCoinBeenSpawned token(0x060055E5)
+  IL_0101 brtrue         IL_01a5 
+  IL_0106 ldloc.s        local(0x0005) 
+  IL_0108 brfalse.s      IL_0153 
+  IL_010a call           GameState::Get token(0x06005589)
+  IL_010f callvirt       GameState::NotifyOfCoinSpawn token(0x060055E6)
+  IL_0114 ldarg.0         
+  IL_0115 ldfld          Card::m_actor token(0x0400FA62)
+  IL_011a callvirt       Actor::TurnOffCollider token(0x06012819)
+  IL_011f ldarg.0         
+  IL_0120 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0125 callvirt       Actor::Hide token(0x0601283D)
+  IL_012a ldarg.0         
+  IL_012b ldc.i4.1        
+  IL_012c stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0131 ldc.i4.1        
+  IL_0132 stloc.0         
+  IL_0133 ldarg.0         
+  IL_0134 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0139 call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_013e callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0143 ldarg.0         
+  IL_0144 ldc.i4.1        
+  IL_0145 stfld          Card::m_doNotWarpToNewZone token(0x0400FA72)
+  IL_014a ldarg.0         
+  IL_014b ldc.i4.1        
+  IL_014c stfld          Card::m_doNotSort token(0x0400FA6E)
+  IL_0151 br.s           IL_01a5 
+  IL_0153 ldarg.0         
+  IL_0154 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0159 callvirt       Entity::GetController token(0x060137DE)
+  IL_015e stloc.s        local(0x0006) 
+  IL_0160 ldloc.s        local(0x0006) 
+  IL_0162 callvirt       Player::IsOpposingSide token(0x06005D66)
+  IL_0167 brfalse.s      IL_01a5 
+  IL_0169 ldarg.0         
+  IL_016a ldarg.0         
+  IL_016b ldfld          Card::m_zone token(0x0400FA68)
+  IL_0170 callvirt       Zone::GetLastCard token(0x06006378)
+  IL_0175 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_017a brfalse.s      IL_01a5 
+  IL_017c ldloc.s        local(0x0006) 
+  IL_017e ldc.i4.s       24 
+  IL_0180 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0185 brtrue.s       IL_01a5 
+  IL_0187 call           GameState::Get token(0x06005589)
+  IL_018c callvirt       GameState::NotifyOfCoinSpawn token(0x060055E6)
+  IL_0191 ldarg.0         
+  IL_0192 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0197 callvirt       Actor::TurnOffCollider token(0x06012819)
+  IL_019c ldarg.0         
+  IL_019d ldc.i4.1        
+  IL_019e stfld          Card::m_actorReady token(0x0400FA64)
+  IL_01a3 ldc.i4.1        
+  IL_01a4 stloc.0         
+  IL_01a5 ldloc.s        local(0x0005) 
+  IL_01a7 brtrue         IL_0f9e 
+  IL_01ac call           ZoneMgr::Get token(0x06006502)
+  IL_01b1 ldarg.0         
+  IL_01b2 ldfld          Card::m_zone token(0x0400FA68)
+  IL_01b7 ldfld          Zone::m_Side token(0x040045FC)
+  IL_01bc callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003D1)
+  IL_01c1 ldarg.0         
+  IL_01c2 callvirt       ZoneDeck::SetCardToInDeckState token(0x06006409)
+  IL_01c7 br             IL_0f9e 
+  IL_01cc ldloc.1         
+  IL_01cd ldloc.2         
+  IL_01ce or              
+  IL_01cf brfalse.s      IL_0250 
+  IL_01d1 ldarg.0         
+  IL_01d2 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_01d7 ldarg.0         
+  IL_01d8 ldfld          Card::m_zone token(0x0400FA68)
+  IL_01dd callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_01e2 call           TransformUtil::CopyWorld token(0x06014FF2)
+  IL_01e7 ldarg.0         
+  IL_01e8 ldfld          Card::m_zone token(0x0400FA68)
+  IL_01ed isinst         ZonePlay token(0x02000CDA)
+  IL_01f2 brtrue.s       IL_0245 
+  IL_01f4 ldarg.0         
+  IL_01f5 ldfld          Card::m_zone token(0x0400FA68)
+  IL_01fa isinst         ZoneHero token(0x02000CC4)
+  IL_01ff brtrue.s       IL_0245 
+  IL_0201 ldarg.0         
+  IL_0202 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0207 isinst         ZoneHeroPower token(0x02000CC5)
+  IL_020c brtrue.s       IL_0245 
+  IL_020e ldarg.0         
+  IL_020f ldfld          Card::m_zone token(0x0400FA68)
+  IL_0214 isinst         ZoneWeapon token(0x02000CE0)
+  IL_0219 brtrue.s       IL_0245 
+  IL_021b ldarg.0         
+  IL_021c ldfld          Card::m_zone token(0x0400FA68)
+  IL_0221 isinst         ZoneBattlegroundHeroBuddy token(0x02000CB7)
+  IL_0226 brtrue.s       IL_0245 
+  IL_0228 ldarg.0         
+  IL_0229 ldfld          Card::m_zone token(0x0400FA68)
+  IL_022e isinst         ZoneBattlegroundQuestReward token(0x02000CB9)
+  IL_0233 brtrue.s       IL_0245 
+  IL_0235 ldarg.0         
+  IL_0236 ldfld          Card::m_zone token(0x0400FA68)
+  IL_023b isinst         ZoneBattlegroundTrinket token(0x02000CBB)
+  IL_0240 brfalse        IL_0f9e 
+  IL_0245 ldarg.0         
+  IL_0246 call           Card::ActivateLifetimeEffects token(0x06012D56)
+  IL_024b br             IL_0f9e 
+  IL_0250 ldarg.0         
+  IL_0251 ldfld          Card::m_doNotWarpToNewZone token(0x0400FA72)
+  IL_0256 brtrue.s       IL_026e 
+  IL_0258 ldarg.0         
+  IL_0259 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_025e ldarg.0         
+  IL_025f ldfld          Card::m_zone token(0x0400FA68)
+  IL_0264 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0269 call           TransformUtil::CopyWorld token(0x06014FF2)
+  IL_026e ldarg.0         
+  IL_026f ldfld          Card::m_zone token(0x0400FA68)
+  IL_0274 isinst         ZoneHand token(0x02000CC1)
+  IL_0279 brfalse        IL_03b6 
+  IL_027e ldarg.0         
+  IL_027f ldfld          Card::m_doNotWarpToNewZone token(0x0400FA72)
+  IL_0284 brtrue.s       IL_02cb 
+  IL_0286 ldarg.0         
+  IL_0287 ldfld          Card::m_zone token(0x0400FA68)
+  IL_028c castclass      ZoneHand token(0x02000CC1)
+  IL_0291 stloc.s        local(0x000A) 
+  IL_0293 ldarg.0         
+  IL_0294 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_0299 ldloc.s        local(0x000A) 
+  IL_029b callvirt       ZoneHand::GetCardScale token(0x06006473)
+  IL_02a0 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_02a5 ldarg.0         
+  IL_02a6 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_02ab ldloc.s        local(0x000A) 
+  IL_02ad ldarg.0         
+  IL_02ae callvirt       ZoneHand::GetCardRotation token(0x06006470)
+  IL_02b3 callvirt       UnityEngine.Transform::set_localEulerAngles token(0x0A0009F8)
+  IL_02b8 ldarg.0         
+  IL_02b9 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_02be ldloc.s        local(0x000A) 
+  IL_02c0 ldarg.0         
+  IL_02c1 callvirt       ZoneHand::GetCardPosition token(0x0600646D)
+  IL_02c6 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_02cb call           GameState::Get token(0x06005589)
+  IL_02d0 ldarg.0         
+  IL_02d1 ldfld          Card::m_entity token(0x0400FA41)
+  IL_02d6 ldc.i4         313 
+  IL_02db callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_02e0 callvirt       GameState::GetEntity token(0x060055A7)
+  IL_02e5 stloc.s        local(0x0008) 
+  IL_02e7 ldloc.s        local(0x0008) 
+  IL_02e9 brfalse.s      IL_0306 
+  IL_02eb ldloc.s        local(0x0008) 
+  IL_02ed callvirt       EntityBase::HasReplacementsWhenPlayed token(0x06013908)
+  IL_02f2 brfalse.s      IL_0306 
+  IL_02f4 ldarg.0         
+  IL_02f5 ldfld          Card::m_entity token(0x0400FA41)
+  IL_02fa ldc.i4         3882 
+  IL_02ff callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0304 br.s           IL_0307 
+  IL_0306 ldc.i4.0        
+  IL_0307 stloc.s        local(0x0009) 
+  IL_0309 ldloc.s        local(0x0008) 
+  IL_030b brfalse.s      IL_035c 
+  IL_030d ldloc.s        local(0x0008) 
+  IL_030f callvirt       EntityBase::IsMinion token(0x060138DB)
+  IL_0314 brfalse.s      IL_035c 
+  IL_0316 ldloc.s        local(0x0008) 
+  IL_0318 ldc.i4         3318 
+  IL_031d callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0322 brfalse.s      IL_0339 
+  IL_0324 ldarg.0         
+  IL_0325 ldfld          Card::m_entity token(0x0400FA41)
+  IL_032a ldc.i4         3433 
+  IL_032f callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0334 brtrue.s       IL_0339 
+  IL_0336 ldc.i4.0        
+  IL_0337 stloc.s        local(0x0009) 
+  IL_0339 ldloc.s        local(0x0008) 
+  IL_033b ldc.i4         3399 
+  IL_0340 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0345 brfalse.s      IL_035c 
+  IL_0347 ldarg.0         
+  IL_0348 ldfld          Card::m_entity token(0x0400FA41)
+  IL_034d ldc.i4         3434 
+  IL_0352 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0357 brtrue.s       IL_035c 
+  IL_0359 ldc.i4.0        
+  IL_035a stloc.s        local(0x0009) 
+  IL_035c ldloc.s        local(0x0009) 
+  IL_035e brfalse.s      IL_038d 
+  IL_0360 ldarg.0         
+  IL_0361 ldc.i4.3        
+  IL_0362 stfld          Card::m_transitionStyle token(0x0400FA71)
+  IL_0367 ldarg.0         
+  IL_0368 call           Card::ActivateHandSpawnSpell token(0x06012DB2)
+  IL_036d call           InputManager::Get token(0x060059DB)
+  IL_0372 callvirt       InputManager::GetFriendlyHand token(0x060059EB)
+  IL_0377 callvirt       ZoneHand::ActivateCardWithReplacementsDeath token(0x06006480)
+  IL_037c call           InputManager::Get token(0x060059DB)
+  IL_0381 callvirt       InputManager::GetFriendlyHand token(0x060059EB)
+  IL_0386 callvirt       ZoneHand::ClearReservedCard token(0x0600644C)
+  IL_038b br.s           IL_03b6 
+  IL_038d ldarg.0         
+  IL_038e ldc.i4.1        
+  IL_038f stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0394 ldarg.0         
+  IL_0395 ldc.i4.1        
+  IL_0396 stfld          Card::m_shown token(0x0400FA7D)
+  IL_039b ldarg.0         
+  IL_039c ldfld          Card::m_doNotWarpToNewZone token(0x0400FA72)
+  IL_03a1 brtrue.s       IL_03b6 
+  IL_03a3 ldarg.0         
+  IL_03a4 ldfld          Card::m_actor token(0x0400FA62)
+  IL_03a9 callvirt       Actor::Hide token(0x0601283D)
+  IL_03ae ldarg.0         
+  IL_03af call           Card::ActivateHandSpawnSpell token(0x06012DB2)
+  IL_03b4 ldc.i4.1        
+  IL_03b5 stloc.0         
+  IL_03b6 ldarg.0         
+  IL_03b7 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_03bc ldnull          
+  IL_03bd call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_03c2 brfalse        IL_048f 
+  IL_03c7 ldarg.0         
+  IL_03c8 ldfld          Card::m_zone token(0x0400FA68)
+  IL_03cd isinst         ZonePlay token(0x02000CDA)
+  IL_03d2 stloc.s        local(0x0007) 
+  IL_03d4 ldloc.s        local(0x0007) 
+  IL_03d6 brfalse        IL_048f 
+  IL_03db ldarg.0         
+  IL_03dc ldfld          Card::m_doNotWarpToNewZone token(0x0400FA72)
+  IL_03e1 brtrue.s       IL_03f6 
+  IL_03e3 ldarg.0         
+  IL_03e4 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_03e9 ldloc.s        local(0x0007) 
+  IL_03eb ldarg.0         
+  IL_03ec callvirt       ZonePlay::GetCardPosition token(0x060065BD)
+  IL_03f1 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_03f6 ldarg.0         
+  IL_03f7 ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_03fc callvirt       DisposableCardDef::get_CardDef token(0x0601366B)
+  IL_0401 ldfld          CardDef::m_SuppressPlaySoundsDuringMulligan token(0x0400FC2F)
+  IL_0406 brfalse.s      IL_041b 
+  IL_0408 call           GameState::Get token(0x06005589)
+  IL_040d callvirt       GameState::IsMulliganPhaseNowOrPending token(0x060055EF)
+  IL_0412 brfalse.s      IL_041b 
+  IL_0414 ldarg.0         
+  IL_0415 ldc.i4.1        
+  IL_0416 call           Card::SuppressPlaySounds token(0x06012D0D)
+  IL_041b ldarg.0         
+  IL_041c ldfld          Card::m_entity token(0x0400FA41)
+  IL_0421 ldc.i4         262 
+  IL_0426 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_042b brfalse.s      IL_0477 
+  IL_042d ldarg.0         
+  IL_042e ldfld          Card::m_customSpawnSpellOverride token(0x0400FA5B)
+  IL_0433 brfalse.s      IL_043d 
+  IL_0435 ldarg.0         
+  IL_0436 call           Card::ActivateMinionSpawnEffects token(0x06012DB8)
+  IL_043b br.s           IL_0488 
+  IL_043d ldarg.0         
+  IL_043e ldc.i4.3        
+  IL_043f stfld          Card::m_transitionStyle token(0x0400FA71)
+  IL_0444 call           Board::Get token(0x06012C1F)
+  IL_0449 ldstr          'SpawnOffscreen' string token(0x703AEB7C)
+  IL_044e callvirt       Board::FindBone token(0x06012C2B)
+  IL_0453 stloc.s        local(0x000B) 
+  IL_0455 ldarg.0         
+  IL_0456 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_045b ldloc.s        local(0x000B) 
+  IL_045d callvirt       UnityEngine.Transform::get_position token(0x0A0000FB)
+  IL_0462 callvirt       UnityEngine.Transform::set_position token(0x0A00020F)
+  IL_0467 ldarg.0         
+  IL_0468 call           Card::ActivateCharacterPlayEffects token(0x06012D4F)
+  IL_046d ldarg.0         
+  IL_046e ldnull          
+  IL_046f ldnull          
+  IL_0470 call           Card::OnSpellFinished_StandardSpawnCharacter token(0x06012DC1)
+  IL_0475 br.s           IL_0488 
+  IL_0477 ldarg.0         
+  IL_0478 ldfld          Card::m_actor token(0x0400FA62)
+  IL_047d callvirt       Actor::Hide token(0x0601283D)
+  IL_0482 ldarg.0         
+  IL_0483 call           Card::ActivateMinionSpawnEffects token(0x06012DB8)
+  IL_0488 ldc.i4.1        
+  IL_0489 stloc.0         
+  IL_048a br             IL_0f9e 
+  IL_048f ldloc.s        local(0x0004) 
+  IL_0491 brtrue.s       IL_04f4 
+  IL_0493 ldarg.0         
+  IL_0494 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0499 isinst         ZoneHeroPower token(0x02000CC5)
+  IL_049e brtrue.s       IL_04d4 
+  IL_04a0 ldarg.0         
+  IL_04a1 ldfld          Card::m_zone token(0x0400FA68)
+  IL_04a6 isinst         ZoneWeapon token(0x02000CE0)
+  IL_04ab brtrue.s       IL_04d4 
+  IL_04ad ldarg.0         
+  IL_04ae ldfld          Card::m_zone token(0x0400FA68)
+  IL_04b3 isinst         ZoneBattlegroundHeroBuddy token(0x02000CB7)
+  IL_04b8 brtrue.s       IL_04d4 
+  IL_04ba ldarg.0         
+  IL_04bb ldfld          Card::m_zone token(0x0400FA68)
+  IL_04c0 isinst         ZoneBattlegroundQuestReward token(0x02000CB9)
+  IL_04c5 brtrue.s       IL_04d4 
+  IL_04c7 ldarg.0         
+  IL_04c8 ldfld          Card::m_zone token(0x0400FA68)
+  IL_04cd isinst         ZoneBattlegroundTrinket token(0x02000CBB)
+  IL_04d2 brfalse.s      IL_04f4 
+  IL_04d4 ldarg.0         
+  IL_04d5 call           Card::IsShown token(0x06012D10)
+  IL_04da brfalse        IL_0f9e 
+  IL_04df ldarg.0         
+  IL_04e0 ldc.i4.1        
+  IL_04e1 call           Card::ActivatePlaySpawnEffects token(0x06012DB3)
+  IL_04e6 ldc.i4.1        
+  IL_04e7 stloc.0         
+  IL_04e8 ldarg.0         
+  IL_04e9 ldc.i4.1        
+  IL_04ea stfld          Card::m_actorReady token(0x0400FA64)
+  IL_04ef br             IL_0f9e 
+  IL_04f4 ldarg.0         
+  IL_04f5 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_04fa ldnull          
+  IL_04fb call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0500 brfalse        IL_0f9e 
+  IL_0505 ldarg.0         
+  IL_0506 ldfld          Card::m_zone token(0x0400FA68)
+  IL_050b isinst         ZoneHero token(0x02000CC4)
+  IL_0510 brfalse        IL_0f9e 
+  IL_0515 ldarg.0         
+  IL_0516 ldfld          Card::m_entity token(0x0400FA41)
+  IL_051b stloc.s        local(0x000C) 
+  IL_051d call           GameState::Get token(0x06005589)
+  IL_0522 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0527 callvirt       GameEntity::UpdateNameDisplay token(0x06005512)
+  IL_052c ldloc.s        local(0x000C) 
+  IL_052e ldc.i4         1016 
+  IL_0533 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0538 brfalse        IL_0f9e 
+  IL_053d ldloc.s        local(0x000C) 
+  IL_053f ldc.i4         3438 
+  IL_0544 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0549 brtrue         IL_0f9e 
+  IL_054e ldloc.s        local(0x000C) 
+  IL_0550 callvirt       Entity::GetCard token(0x060137BF)
+  IL_0555 call           HeroCustomSummonSpell::GetOldHeroCard token(0x06012315)
+  IL_055a stloc.s        local(0x000D) 
+  IL_055c ldloc.s        local(0x000D) 
+  IL_055e ldnull          
+  IL_055f call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0564 brfalse.s      IL_058a 
+  IL_0566 ldloc.s        local(0x000C) 
+  IL_0568 callvirt       Entity::GetCard token(0x060137BF)
+  IL_056d callvirt       Card::GetActor token(0x06012DD6)
+  IL_0572 callvirt       Actor::Hide token(0x0601283D)
+  IL_0577 ldloc.s        local(0x000D) 
+  IL_0579 call           HeroCustomSummonSpell::HideStats token(0x06012316)
+  IL_057e ldloc.s        local(0x000D) 
+  IL_0580 ldc.r4         0.800000011920929 
+  IL_0585 callvirt       Card::SetDelayBeforeHideInNullZoneVisuals token(0x06012E7E)
+  IL_058a ldarg.0         
+  IL_058b call           Card::ActivateStandardSpawnHeroSpell token(0x06012DBC)
+  IL_0590 ldc.i4.1        
+  IL_0591 stloc.0         
+  IL_0592 br             IL_0f9e 
+  IL_0597 ldarg.0         
+  IL_0598 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_059d ldnull          
+  IL_059e call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_05a3 brfalse        IL_0637 
+  IL_05a8 ldarg.0         
+  IL_05a9 ldfld          Card::m_zone token(0x0400FA68)
+  IL_05ae isinst         ZoneHeroPower token(0x02000CC5)
+  IL_05b3 brtrue.s       IL_05e9 
+  IL_05b5 ldarg.0         
+  IL_05b6 ldfld          Card::m_zone token(0x0400FA68)
+  IL_05bb isinst         ZoneWeapon token(0x02000CE0)
+  IL_05c0 brtrue.s       IL_05e9 
+  IL_05c2 ldarg.0         
+  IL_05c3 ldfld          Card::m_zone token(0x0400FA68)
+  IL_05c8 isinst         ZoneBattlegroundHeroBuddy token(0x02000CB7)
+  IL_05cd brtrue.s       IL_05e9 
+  IL_05cf ldarg.0         
+  IL_05d0 ldfld          Card::m_zone token(0x0400FA68)
+  IL_05d5 isinst         ZoneBattlegroundQuestReward token(0x02000CB9)
+  IL_05da brtrue.s       IL_05e9 
+  IL_05dc ldarg.0         
+  IL_05dd ldfld          Card::m_zone token(0x0400FA68)
+  IL_05e2 isinst         ZoneBattlegroundTrinket token(0x02000CBB)
+  IL_05e7 brfalse.s      IL_0637 
+  IL_05e9 ldarg.0         
+  IL_05ea call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_05ef ldarg.0         
+  IL_05f0 ldfld          Card::m_zone token(0x0400FA68)
+  IL_05f5 callvirt       UnityEngine.Component::get_transform token(0x0A000049)
+  IL_05fa call           TransformUtil::CopyWorld token(0x06014FF2)
+  IL_05ff ldarg.0         
+  IL_0600 ldc.i4.3        
+  IL_0601 stfld          Card::m_transitionStyle token(0x0400FA71)
+  IL_0606 ldarg.1         
+  IL_0607 ldarg.0         
+  IL_0608 ldfld          Card::m_actor token(0x0400FA62)
+  IL_060d call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0612 brfalse.s      IL_0623 
+  IL_0614 ldarg.1         
+  IL_0615 callvirt       Actor::Destroy token(0x060127EF)
+  IL_061a ldarg.0         
+  IL_061b ldc.i4.1        
+  IL_061c call           Card::ActivatePlaySpawnEffects token(0x06012DB3)
+  IL_0621 br.s           IL_0629 
+  IL_0623 ldarg.0         
+  IL_0624 call           Card::ShowCard token(0x06012D11)
+  IL_0629 ldc.i4.1        
+  IL_062a stloc.0         
+  IL_062b ldarg.0         
+  IL_062c ldc.i4.1        
+  IL_062d stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0632 br             IL_0f9e 
+  IL_0637 ldarg.0         
+  IL_0638 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_063d ldnull          
+  IL_063e call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0643 brfalse.s      IL_067d 
+  IL_0645 ldarg.0         
+  IL_0646 ldfld          Card::m_zone token(0x0400FA68)
+  IL_064b isinst         ZoneHand token(0x02000CC1)
+  IL_0650 brfalse.s      IL_067d 
+  IL_0652 ldarg.1         
+  IL_0653 ldarg.0         
+  IL_0654 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0659 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_065e brfalse.s      IL_067d 
+  IL_0660 ldarg.0         
+  IL_0661 ldfld          Card::m_goingThroughDeathrattleReturnfromGraveyard token(0x0400FA6A)
+  IL_0666 brtrue.s       IL_067d 
+  IL_0668 ldarg.0         
+  IL_0669 ldc.i4.0        
+  IL_066a call           Card::ActivateHandStateSpells token(0x06012D89)
+  IL_066f ldc.i4.1        
+  IL_0670 stloc.0         
+  IL_0671 ldarg.0         
+  IL_0672 ldc.i4.1        
+  IL_0673 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0678 br             IL_0f9e 
+  IL_067d ldarg.0         
+  IL_067e ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0683 ldnull          
+  IL_0684 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0689 brfalse.s      IL_06c0 
+  IL_068b ldarg.0         
+  IL_068c ldfld          Card::m_zone token(0x0400FA68)
+  IL_0691 isinst         ZonePlay token(0x02000CDA)
+  IL_0696 brfalse.s      IL_06c0 
+  IL_0698 ldarg.1         
+  IL_0699 ldarg.0         
+  IL_069a ldfld          Card::m_actor token(0x0400FA62)
+  IL_069f call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_06a4 brfalse.s      IL_06c0 
+  IL_06a6 ldarg.0         
+  IL_06a7 call           Card::ActivateMinionSpawnEffects token(0x06012DB8)
+  IL_06ac ldarg.0         
+  IL_06ad call           Card::ShowCard token(0x06012D11)
+  IL_06b2 ldc.i4.1        
+  IL_06b3 stloc.0         
+  IL_06b4 ldarg.0         
+  IL_06b5 ldc.i4.1        
+  IL_06b6 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_06bb br             IL_0f9e 
+  IL_06c0 ldarg.0         
+  IL_06c1 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_06c6 isinst         ZoneHand token(0x02000CC1)
+  IL_06cb brfalse        IL_07af 
+  IL_06d0 ldarg.0         
+  IL_06d1 ldfld          Card::m_zone token(0x0400FA68)
+  IL_06d6 isinst         ZonePlay token(0x02000CDA)
+  IL_06db brtrue.s       IL_06ed 
+  IL_06dd ldarg.0         
+  IL_06de ldfld          Card::m_zone token(0x0400FA68)
+  IL_06e3 isinst         ZoneHero token(0x02000CC4)
+  IL_06e8 brfalse        IL_07af 
+  IL_06ed ldarg.0         
+  IL_06ee ldarg.1         
+  IL_06ef call           Card::ActivateActorSpells_HandToPlay token(0x06012E50)
+  IL_06f4 ldarg.0         
+  IL_06f5 ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_06fa callvirt       DisposableCardDef::get_CardDef token(0x0601366B)
+  IL_06ff ldfld          CardDef::m_SuppressPlaySoundsOnSummon token(0x0400FC2E)
+  IL_0704 brtrue.s       IL_0718 
+  IL_0706 ldarg.0         
+  IL_0707 ldfld          Card::m_entity token(0x0400FA41)
+  IL_070c ldc.i4         1075 
+  IL_0711 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0716 brfalse.s      IL_071f 
+  IL_0718 ldarg.0         
+  IL_0719 ldc.i4.1        
+  IL_071a call           Card::SuppressPlaySounds token(0x06012D0D)
+  IL_071f ldarg.0         
+  IL_0720 call           Card::ActivateCharacterPlayEffects token(0x06012D4F)
+  IL_0725 ldarg.0         
+  IL_0726 ldfld          Card::m_actor token(0x0400FA62)
+  IL_072b callvirt       Actor::Hide token(0x0601283D)
+  IL_0730 ldc.i4.1        
+  IL_0731 stloc.0         
+  IL_0732 call           CardTypeBanner::Get token(0x06005204)
+  IL_0737 ldnull          
+  IL_0738 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_073d brfalse.s      IL_076c 
+  IL_073f call           CardTypeBanner::Get token(0x06005204)
+  IL_0744 callvirt       CardTypeBanner::get_HasCardDef token(0x0600520D)
+  IL_0749 brfalse.s      IL_076c 
+  IL_074b call           CardTypeBanner::Get token(0x06005204)
+  IL_0750 ldarg.0         
+  IL_0751 ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_0756 callvirt       DisposableCardDef::get_CardDef token(0x0601366B)
+  IL_075b callvirt       CardTypeBanner::HasSameCardDef token(0x0600520E)
+  IL_0760 brfalse.s      IL_076c 
+  IL_0762 call           CardTypeBanner::Get token(0x06005204)
+  IL_0767 callvirt       CardTypeBanner::Hide token(0x06005207)
+  IL_076c ldarg.0         
+  IL_076d ldfld          Card::m_entity token(0x0400FA41)
+  IL_0772 callvirt       EntityBase::IsMinion token(0x060138DB)
+  IL_0777 brfalse.s      IL_0790 
+  IL_0779 ldarg.0         
+  IL_077a ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_077f callvirt       Zone::GetController token(0x06006371)
+  IL_0784 callvirt       Entity::GetHeroCard token(0x060137E9)
+  IL_0789 ldc.i4.s       11 
+  IL_078b call           LegendaryHeroCardExtensions::ActivateLegendaryHeroAnimEvent token(0x06012CBB)
+  IL_0790 ldarg.0         
+  IL_0791 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0796 callvirt       EntityBase::IsNozdormuDormantEffectHelper token(0x06013915)
+  IL_079b brfalse        IL_0f9e 
+  IL_07a0 call           ZoneMgr::Get token(0x06006502)
+  IL_07a5 callvirt       ZoneMgr::OnNozdormuHelperEntityMousedOut token(0x06006570)
+  IL_07aa br             IL_0f9e 
+  IL_07af ldarg.0         
+  IL_07b0 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_07b5 isinst         ZoneHand token(0x02000CC1)
+  IL_07ba brfalse.s      IL_0838 
+  IL_07bc ldarg.0         
+  IL_07bd ldfld          Card::m_zone token(0x0400FA68)
+  IL_07c2 isinst         ZoneWeapon token(0x02000CE0)
+  IL_07c7 brfalse.s      IL_0838 
+  IL_07c9 ldarg.0         
+  IL_07ca ldarg.1         
+  IL_07cb call           Card::ActivateActorSpells_HandToWeapon token(0x06012E54)
+  IL_07d0 brfalse.s      IL_0819 
+  IL_07d2 ldarg.0         
+  IL_07d3 ldfld          Card::m_actor token(0x0400FA62)
+  IL_07d8 callvirt       Actor::Hide token(0x0601283D)
+  IL_07dd ldc.i4.1        
+  IL_07de stloc.0         
+  IL_07df call           CardTypeBanner::Get token(0x06005204)
+  IL_07e4 ldnull          
+  IL_07e5 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_07ea brfalse.s      IL_0819 
+  IL_07ec call           CardTypeBanner::Get token(0x06005204)
+  IL_07f1 callvirt       CardTypeBanner::get_HasCardDef token(0x0600520D)
+  IL_07f6 brfalse.s      IL_0819 
+  IL_07f8 call           CardTypeBanner::Get token(0x06005204)
+  IL_07fd ldarg.0         
+  IL_07fe ldfld          Card::m_cardDef token(0x0400FA42)
+  IL_0803 callvirt       DisposableCardDef::get_CardDef token(0x0601366B)
+  IL_0808 callvirt       CardTypeBanner::HasSameCardDef token(0x0600520E)
+  IL_080d brfalse.s      IL_0819 
+  IL_080f call           CardTypeBanner::Get token(0x06005204)
+  IL_0814 callvirt       CardTypeBanner::Hide token(0x06005207)
+  IL_0819 ldarg.0         
+  IL_081a ldfld          Card::m_entity token(0x0400FA41)
+  IL_081f callvirt       EntityBase::IsNozdormuDormantEffectHelper token(0x06013915)
+  IL_0824 brfalse        IL_0f9e 
+  IL_0829 call           ZoneMgr::Get token(0x06006502)
+  IL_082e callvirt       ZoneMgr::OnNozdormuHelperEntityMousedOut token(0x06006570)
+  IL_0833 br             IL_0f9e 
+  IL_0838 ldarg.0         
+  IL_0839 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_083e isinst         ZonePlay token(0x02000CDA)
+  IL_0843 brtrue.s       IL_0855 
+  IL_0845 ldarg.0         
+  IL_0846 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_084b isinst         ZoneHero token(0x02000CC4)
+  IL_0850 brfalse        IL_092e 
+  IL_0855 ldarg.0         
+  IL_0856 ldfld          Card::m_zone token(0x0400FA68)
+  IL_085b isinst         ZoneHand token(0x02000CC1)
+  IL_0860 brfalse        IL_092e 
+  IL_0865 ldarg.0         
+  IL_0866 call           Card::DeactivateLifetimeEffects token(0x06012D57)
+  IL_086b ldarg.0         
+  IL_086c ldfld          Card::m_mousedOver token(0x0400FA7A)
+  IL_0871 brfalse.s      IL_08d0 
+  IL_0873 ldarg.0         
+  IL_0874 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0879 callvirt       Entity::IsControlledByFriendlySidePlayer token(0x060137E1)
+  IL_087e brfalse.s      IL_08d0 
+  IL_0880 ldarg.0         
+  IL_0881 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0886 callvirt       EntityBase::HasSpellPower token(0x0601390D)
+  IL_088b brfalse.s      IL_08a2 
+  IL_088d call           ZoneMgr::Get token(0x06006502)
+  IL_0892 ldarg.0         
+  IL_0893 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0898 callvirt       EntityBase::GetSpellPowerSchool token(0x0601390C)
+  IL_089d callvirt       ZoneMgr::OnSpellPowerEntityMousedOut token(0x0600656C)
+  IL_08a2 ldarg.0         
+  IL_08a3 ldfld          Card::m_entity token(0x0400FA41)
+  IL_08a8 callvirt       EntityBase::HasHealingDoesDamageHint token(0x06013912)
+  IL_08ad brfalse.s      IL_08b9 
+  IL_08af call           ZoneMgr::Get token(0x06006502)
+  IL_08b4 callvirt       ZoneMgr::OnHealingDoesDamageEntityMousedOut token(0x06006566)
+  IL_08b9 ldarg.0         
+  IL_08ba ldfld          Card::m_entity token(0x0400FA41)
+  IL_08bf callvirt       EntityBase::IsNozdormuDormantEffectWatcher token(0x06013914)
+  IL_08c4 brfalse.s      IL_08d0 
+  IL_08c6 call           ZoneMgr::Get token(0x06006502)
+  IL_08cb callvirt       ZoneMgr::OnNozdormuWatcherEntityMousedOut token(0x0600656E)
+  IL_08d0 ldarg.0         
+  IL_08d1 ldfld          Card::m_suppressPlayToHandTransition token(0x0400FA87)
+  IL_08d6 brfalse.s      IL_08ff 
+  IL_08d8 ldarg.1         
+  IL_08d9 ldnull          
+  IL_08da call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_08df brfalse        IL_0f9e 
+  IL_08e4 ldarg.1         
+  IL_08e5 callvirt       Actor::Destroy token(0x060127EF)
+  IL_08ea ldarg.0         
+  IL_08eb ldc.i4.1        
+  IL_08ec stfld          Card::m_actorReady token(0x0400FA64)
+  IL_08f1 ldc.i4.1        
+  IL_08f2 stloc.0         
+  IL_08f3 ldarg.0         
+  IL_08f4 ldc.i4.0        
+  IL_08f5 stfld          Card::m_suppressHandToDeckTransition token(0x0400FA86)
+  IL_08fa br             IL_0f9e 
+  IL_08ff call           GameState::Get token(0x06005589)
+  IL_0904 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0909 ldc.i4         1402 
+  IL_090e callvirt       EntityBase::GetTag token(0x060138A4)
+  IL_0913 ldc.i4.0        
+  IL_0914 cgt             
+  IL_0916 stloc.s        local(0x000E) 
+  IL_0918 ldarg.0         
+  IL_0919 ldarg.1         
+  IL_091a ldc.i4.0        
+  IL_091b ldloc.s        local(0x000E) 
+  IL_091d call           Card::DoPlayToHandTransition token(0x06012E58)
+  IL_0922 brfalse        IL_0f9e 
+  IL_0927 ldc.i4.1        
+  IL_0928 stloc.0         
+  IL_0929 br             IL_0f9e 
+  IL_092e ldarg.0         
+  IL_092f ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0934 isinst         ZoneHero token(0x02000CC4)
+  IL_0939 brfalse.s      IL_0962 
+  IL_093b ldarg.0         
+  IL_093c ldfld          Card::m_zone token(0x0400FA68)
+  IL_0941 isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0946 brfalse.s      IL_0962 
+  IL_0948 ldarg.1         
+  IL_0949 callvirt       Actor::DoCardDeathVisuals token(0x06012966)
+  IL_094e ldarg.0         
+  IL_094f call           Card::DeactivateCustomKeywordEffect token(0x06012D59)
+  IL_0954 ldc.i4.1        
+  IL_0955 stloc.0         
+  IL_0956 ldarg.0         
+  IL_0957 ldc.i4.1        
+  IL_0958 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_095d br             IL_0f9e 
+  IL_0962 ldarg.0         
+  IL_0963 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0968 ldnull          
+  IL_0969 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_096e brfalse        IL_0b19 
+  IL_0973 ldarg.0         
+  IL_0974 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0979 isinst         ZonePlay token(0x02000CDA)
+  IL_097e brtrue.s       IL_09c4 
+  IL_0980 ldarg.0         
+  IL_0981 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0986 isinst         ZoneWeapon token(0x02000CE0)
+  IL_098b brtrue.s       IL_09c4 
+  IL_098d ldarg.0         
+  IL_098e ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0993 isinst         ZoneHeroPower token(0x02000CC5)
+  IL_0998 brtrue.s       IL_09c4 
+  IL_099a ldarg.0         
+  IL_099b ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_09a0 isinst         ZoneBattlegroundHeroBuddy token(0x02000CB7)
+  IL_09a5 brtrue.s       IL_09c4 
+  IL_09a7 ldarg.0         
+  IL_09a8 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_09ad isinst         ZoneBattlegroundQuestReward token(0x02000CB9)
+  IL_09b2 brtrue.s       IL_09c4 
+  IL_09b4 ldarg.0         
+  IL_09b5 ldfld          Card::m_zone token(0x0400FA68)
+  IL_09ba isinst         ZoneBattlegroundTrinket token(0x02000CBB)
+  IL_09bf brfalse        IL_0b19 
+  IL_09c4 ldarg.0         
+  IL_09c5 ldfld          Card::m_zone token(0x0400FA68)
+  IL_09ca isinst         ZoneGraveyard token(0x02000CC0)
+  IL_09cf brfalse        IL_0b19 
+  IL_09d4 ldarg.0         
+  IL_09d5 ldfld          Card::m_mousedOver token(0x0400FA7A)
+  IL_09da brfalse.s      IL_0a46 
+  IL_09dc ldarg.0         
+  IL_09dd ldfld          Card::m_entity token(0x0400FA41)
+  IL_09e2 callvirt       Entity::IsControlledByFriendlySidePlayer token(0x060137E1)
+  IL_09e7 brfalse.s      IL_0a46 
+  IL_09e9 ldarg.0         
+  IL_09ea ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_09ef isinst         ZonePlay token(0x02000CDA)
+  IL_09f4 brfalse.s      IL_0a46 
+  IL_09f6 ldarg.0         
+  IL_09f7 ldfld          Card::m_entity token(0x0400FA41)
+  IL_09fc callvirt       EntityBase::HasSpellPower token(0x0601390D)
+  IL_0a01 brfalse.s      IL_0a18 
+  IL_0a03 call           ZoneMgr::Get token(0x06006502)
+  IL_0a08 ldarg.0         
+  IL_0a09 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0a0e callvirt       EntityBase::GetSpellPowerSchool token(0x0601390C)
+  IL_0a13 callvirt       ZoneMgr::OnSpellPowerEntityMousedOut token(0x0600656C)
+  IL_0a18 ldarg.0         
+  IL_0a19 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0a1e callvirt       EntityBase::HasHealingDoesDamageHint token(0x06013912)
+  IL_0a23 brfalse.s      IL_0a2f 
+  IL_0a25 call           ZoneMgr::Get token(0x06006502)
+  IL_0a2a callvirt       ZoneMgr::OnHealingDoesDamageEntityMousedOut token(0x06006566)
+  IL_0a2f ldarg.0         
+  IL_0a30 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0a35 callvirt       EntityBase::IsNozdormuDormantEffectWatcher token(0x06013914)
+  IL_0a3a brfalse.s      IL_0a46 
+  IL_0a3c call           ZoneMgr::Get token(0x06006502)
+  IL_0a41 callvirt       ZoneMgr::OnNozdormuWatcherEntityMousedOut token(0x0600656E)
+  IL_0a46 ldarg.0         
+  IL_0a47 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0a4c ldc.i4         382 
+  IL_0a51 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0a56 brfalse        IL_0b06 
+  IL_0a5b ldarg.0         
+  IL_0a5c call           Card::DoesCardReturnFromGraveyard token(0x06012E7A)
+  IL_0a61 brfalse        IL_0b06 
+  IL_0a66 ldarg.0         
+  IL_0a67 ldarg.0         
+  IL_0a68 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0a6d ldfld          Zone::m_Side token(0x040045FC)
+  IL_0a72 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6e98876bd0>::.ctor token(0x0A002204)
+  IL_0a77 stfld          Card::m_playZoneBlockerSide token(0x0400FA90)
+  IL_0a7c ldarg.0         
+  IL_0a7d ldfld          Card::m_entity token(0x0400FA41)
+  IL_0a82 callvirt       EntityBase::IsWeapon token(0x060138E4)
+  IL_0a87 brtrue.s       IL_0a94 
+  IL_0a89 ldarg.0         
+  IL_0a8a ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0a8f callvirt       Zone::AddLayoutBlocker token(0x0600638A)
+  IL_0a94 ldarg.0         
+  IL_0a95 ldc.i4.1        
+  IL_0a96 stfld          Card::m_goingThroughDeathrattleReturnfromGraveyard token(0x0400FA6A)
+  IL_0a9b ldarg.0         
+  IL_0a9c ldfld          Card::m_entity token(0x0400FA41)
+  IL_0aa1 ldc.i4         382 
+  IL_0aa6 callvirt       EntityBase::GetTag<spec> token(0x2B0003A9)
+  IL_0aab stloc.s        local(0x000F) 
+  IL_0aad ldarg.0         
+  IL_0aae call           Card::GetCardFutureController token(0x06012E7C)
+  IL_0ab3 stloc.s        local(0x0010) 
+  IL_0ab5 call           ZoneMgr::Get token(0x06006502)
+  IL_0aba ldloc.s        local(0x0010) 
+  IL_0abc ldloc.s        local(0x000F) 
+  IL_0abe ldarg.0         
+  IL_0abf ldfld          Card::m_entity token(0x0400FA41)
+  IL_0ac4 callvirt       EntityBase::GetCardType token(0x060138F5)
+  IL_0ac9 ldarg.0         
+  IL_0aca ldfld          Card::m_entity token(0x0400FA41)
+  IL_0acf callvirt       ZoneMgr::FindZoneForTags token(0x06006504)
+  IL_0ad4 stloc.s        local(0x0011) 
+  IL_0ad6 ldloc.s        local(0x0011) 
+  IL_0ad8 isinst         ZoneDeck token(0x02000CBE)
+  IL_0add brfalse.s      IL_0ae6 
+  IL_0adf ldloc.s        local(0x0011) 
+  IL_0ae1 callvirt       Zone::AddLayoutBlocker token(0x0600638A)
+  IL_0ae6 ldarg.0         
+  IL_0ae7 ldarg.1         
+  IL_0ae8 stfld          Card::m_actorWaitingToBeReplaced token(0x0400FA63)
+  IL_0aed ldarg.0         
+  IL_0aee ldfld          Card::m_actor token(0x0400FA62)
+  IL_0af3 callvirt       Actor::Hide token(0x0601283D)
+  IL_0af8 ldc.i4.1        
+  IL_0af9 stloc.0         
+  IL_0afa ldarg.0         
+  IL_0afb ldc.i4.1        
+  IL_0afc stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0b01 br             IL_0f9e 
+  IL_0b06 ldarg.0         
+  IL_0b07 ldarg.1         
+  IL_0b08 call           Card::HandlePlayActorDeath token(0x06012E79)
+  IL_0b0d brfalse        IL_0f9e 
+  IL_0b12 ldc.i4.1        
+  IL_0b13 stloc.0         
+  IL_0b14 br             IL_0f9e 
+  IL_0b19 ldarg.0         
+  IL_0b1a ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0b1f isinst         ZoneDeck token(0x02000CBE)
+  IL_0b24 brfalse        IL_0bd8 
+  IL_0b29 ldarg.0         
+  IL_0b2a ldfld          Card::m_zone token(0x0400FA68)
+  IL_0b2f isinst         ZoneHand token(0x02000CC1)
+  IL_0b34 brfalse        IL_0bd8 
+  IL_0b39 ldarg.0         
+  IL_0b3a ldfld          Card::m_zone token(0x0400FA68)
+  IL_0b3f ldfld          Zone::m_Side token(0x040045FC)
+  IL_0b44 ldc.i4.1        
+  IL_0b45 bne.un.s       IL_0ba2 
+  IL_0b47 call           GameState::Get token(0x06005589)
+  IL_0b4c callvirt       GameState::IsPastBeginPhase token(0x060055EB)
+  IL_0b51 brfalse.s      IL_0b86 
+  IL_0b53 ldarg.0         
+  IL_0b54 ldarg.1         
+  IL_0b55 stfld          Card::m_actorWaitingToBeReplaced token(0x0400FA63)
+  IL_0b5a ldarg.0         
+  IL_0b5b ldc.i4.0        
+  IL_0b5c stfld          Card::m_cardStandInInteractive token(0x0400FA70)
+  IL_0b61 call           TurnStartManager::Get token(0x060062D5)
+  IL_0b66 ldarg.0         
+  IL_0b67 callvirt       TurnStartManager::IsCardDrawHandled token(0x060062E9)
+  IL_0b6c brtrue.s       IL_0b7f 
+  IL_0b6e ldarg.0         
+  IL_0b6f ldarg.0         
+  IL_0b70 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0b75 isinst         ZoneDeck token(0x02000CBE)
+  IL_0b7a call           Card::DrawFriendlyCard token(0x06012E40)
+  IL_0b7f ldc.i4.1        
+  IL_0b80 stloc.0         
+  IL_0b81 br             IL_0f9e 
+  IL_0b86 ldarg.0         
+  IL_0b87 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0b8c callvirt       Actor::TurnOffCollider token(0x06012819)
+  IL_0b91 ldarg.0         
+  IL_0b92 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0b97 ldc.i4.1        
+  IL_0b98 callvirt       Actor::SetActorState token(0x06012816)
+  IL_0b9d br             IL_0f9e 
+  IL_0ba2 call           GameState::Get token(0x06005589)
+  IL_0ba7 callvirt       GameState::IsPastBeginPhase token(0x060055EB)
+  IL_0bac brfalse        IL_0f9e 
+  IL_0bb1 ldarg.1         
+  IL_0bb2 ldnull          
+  IL_0bb3 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0bb8 brfalse.s      IL_0bc0 
+  IL_0bba ldarg.1         
+  IL_0bbb callvirt       Actor::Destroy token(0x060127EF)
+  IL_0bc0 ldarg.0         
+  IL_0bc1 ldarg.0         
+  IL_0bc2 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0bc7 isinst         ZoneDeck token(0x02000CBE)
+  IL_0bcc call           Card::DrawOpponentCard token(0x06012E44)
+  IL_0bd1 ldc.i4.1        
+  IL_0bd2 stloc.0         
+  IL_0bd3 br             IL_0f9e 
+  IL_0bd8 ldarg.0         
+  IL_0bd9 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0bde isinst         ZoneSecret token(0x02000CDD)
+  IL_0be3 brfalse.s      IL_0c51 
+  IL_0be5 ldarg.0         
+  IL_0be6 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0beb isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0bf0 brfalse.s      IL_0c51 
+  IL_0bf2 call           GameState::Get token(0x06005589)
+  IL_0bf7 callvirt       GameState::GetGameEntity token(0x060055A9)
+  IL_0bfc ldc.i4         1199 
+  IL_0c01 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0c06 brfalse.s      IL_0c51 
+  IL_0c08 ldarg.0         
+  IL_0c09 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0c0e callvirt       EntityBase::IsSecretLike token(0x06013906)
+  IL_0c13 brfalse.s      IL_0c51 
+  IL_0c15 ldc.i4.1        
+  IL_0c16 stloc.0         
+  IL_0c17 ldarg.0         
+  IL_0c18 ldc.i4.1        
+  IL_0c19 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0c1e ldarg.0         
+  IL_0c1f ldc.i4.0        
+  IL_0c20 stfld          Card::m_shown token(0x0400FA7D)
+  IL_0c25 ldarg.0         
+  IL_0c26 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0c2b callvirt       Actor::Hide token(0x0601283D)
+  IL_0c30 ldarg.0         
+  IL_0c31 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0c36 callvirt       EntityBase::IsObjective token(0x06013903)
+  IL_0c3b brfalse        IL_0f9e 
+  IL_0c40 ldarg.1         
+  IL_0c41 callvirt       UnityEngine.Component::GetComponent<spec> token(0x2B0001ED)
+  IL_0c46 ldc.i4.5        
+  IL_0c47 callvirt       Blizzard.T5.Game.Spells.SpellBase::SafeActivateState token(0x0A0021FA)
+  IL_0c4c br             IL_0f9e 
+  IL_0c51 ldarg.0         
+  IL_0c52 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0c57 isinst         ZoneSecret token(0x02000CDD)
+  IL_0c5c brfalse.s      IL_0ca7 
+  IL_0c5e ldarg.0         
+  IL_0c5f ldfld          Card::m_zone token(0x0400FA68)
+  IL_0c64 isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0c69 brfalse.s      IL_0ca7 
+  IL_0c6b ldarg.0         
+  IL_0c6c ldfld          Card::m_entity token(0x0400FA41)
+  IL_0c71 callvirt       EntityBase::IsSecret token(0x060138FC)
+  IL_0c76 brfalse.s      IL_0ca7 
+  IL_0c78 ldc.i4.1        
+  IL_0c79 stloc.0         
+  IL_0c7a ldarg.0         
+  IL_0c7b ldc.i4.1        
+  IL_0c7c stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0c81 ldarg.0         
+  IL_0c82 call           Card::CanShowSecretDeath token(0x06012E6B)
+  IL_0c87 brfalse.s      IL_0c90 
+  IL_0c89 ldarg.0         
+  IL_0c8a ldarg.1         
+  IL_0c8b call           Card::ShowSecretDeath token(0x06012E6C)
+  IL_0c90 ldarg.0         
+  IL_0c91 ldc.i4.0        
+  IL_0c92 stfld          Card::m_shown token(0x0400FA7D)
+  IL_0c97 ldarg.0         
+  IL_0c98 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0c9d callvirt       Actor::Hide token(0x0601283D)
+  IL_0ca2 br             IL_0f9e 
+  IL_0ca7 ldarg.0         
+  IL_0ca8 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0cad isinst         ZoneSecret token(0x02000CDD)
+  IL_0cb2 brfalse.s      IL_0d0b 
+  IL_0cb4 ldarg.0         
+  IL_0cb5 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0cba isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0cbf brfalse.s      IL_0d0b 
+  IL_0cc1 ldarg.0         
+  IL_0cc2 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0cc7 callvirt       EntityBase::IsSigil token(0x06013902)
+  IL_0ccc brfalse.s      IL_0d0b 
+  IL_0cce ldc.i4.1        
+  IL_0ccf stloc.0         
+  IL_0cd0 ldarg.0         
+  IL_0cd1 ldc.i4.1        
+  IL_0cd2 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0cd7 ldarg.0         
+  IL_0cd8 ldc.i4.0        
+  IL_0cd9 stfld          Card::m_shown token(0x0400FA7D)
+  IL_0cde ldarg.1         
+  IL_0cdf ldnull          
+  IL_0ce0 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0ce5 brfalse.s      IL_0cfb 
+  IL_0ce7 ldarg.1         
+  IL_0ce8 ldarg.0         
+  IL_0ce9 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0cee call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0cf3 brfalse.s      IL_0cfb 
+  IL_0cf5 ldarg.1         
+  IL_0cf6 callvirt       Actor::Destroy token(0x060127EF)
+  IL_0cfb ldarg.0         
+  IL_0cfc ldfld          Card::m_actor token(0x0400FA62)
+  IL_0d01 callvirt       Actor::Hide token(0x0601283D)
+  IL_0d06 br             IL_0f9e 
+  IL_0d0b ldarg.0         
+  IL_0d0c ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0d11 isinst         ZoneSecret token(0x02000CDD)
+  IL_0d16 brfalse.s      IL_0d4c 
+  IL_0d18 ldarg.0         
+  IL_0d19 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0d1e isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0d23 brfalse.s      IL_0d4c 
+  IL_0d25 ldarg.0         
+  IL_0d26 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0d2b callvirt       EntityBase::IsObjective token(0x06013903)
+  IL_0d30 brfalse.s      IL_0d4c 
+  IL_0d32 ldc.i4.1        
+  IL_0d33 stloc.0         
+  IL_0d34 ldarg.0         
+  IL_0d35 ldc.i4.1        
+  IL_0d36 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0d3b ldarg.1         
+  IL_0d3c callvirt       UnityEngine.Component::GetComponent<spec> token(0x2B0001ED)
+  IL_0d41 ldc.i4.5        
+  IL_0d42 callvirt       Blizzard.T5.Game.Spells.SpellBase::SafeActivateState token(0x0A0021FA)
+  IL_0d47 br             IL_0f9e 
+  IL_0d4c ldarg.0         
+  IL_0d4d ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0d52 isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0d57 brfalse.s      IL_0d85 
+  IL_0d59 ldarg.0         
+  IL_0d5a ldfld          Card::m_zone token(0x0400FA68)
+  IL_0d5f isinst         ZonePlay token(0x02000CDA)
+  IL_0d64 brfalse.s      IL_0d85 
+  IL_0d66 ldarg.0         
+  IL_0d67 ldfld          Card::m_actor token(0x0400FA62)
+  IL_0d6c callvirt       Actor::Hide token(0x0601283D)
+  IL_0d71 ldarg.0         
+  IL_0d72 ldarg.0         
+  IL_0d73 call           Card::ActivateReviveSpell token(0x06012DBE)
+  IL_0d78 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_0d7d pop             
+  IL_0d7e ldc.i4.1        
+  IL_0d7f stloc.0         
+  IL_0d80 br             IL_0f9e 
+  IL_0d85 ldarg.0         
+  IL_0d86 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0d8b isinst         ZoneDeck token(0x02000CBE)
+  IL_0d90 brfalse.s      IL_0dac 
+  IL_0d92 ldarg.0         
+  IL_0d93 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0d98 isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0d9d brfalse.s      IL_0dac 
+  IL_0d9f ldarg.0         
+  IL_0da0 call           Card::MillCard token(0x06012E4E)
+  IL_0da5 ldc.i4.1        
+  IL_0da6 stloc.0         
+  IL_0da7 br             IL_0f9e 
+  IL_0dac ldarg.0         
+  IL_0dad ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0db2 isinst         ZoneDeck token(0x02000CBE)
+  IL_0db7 brfalse.s      IL_0de5 
+  IL_0db9 ldarg.0         
+  IL_0dba ldfld          Card::m_zone token(0x0400FA68)
+  IL_0dbf isinst         ZonePlay token(0x02000CDA)
+  IL_0dc4 brfalse.s      IL_0de5 
+  IL_0dc6 ldloc.3         
+  IL_0dc7 brtrue.s       IL_0de5 
+  IL_0dc9 ldarg.1         
+  IL_0dca ldnull          
+  IL_0dcb call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0dd0 brfalse.s      IL_0dd8 
+  IL_0dd2 ldarg.1         
+  IL_0dd3 callvirt       Actor::Destroy token(0x060127EF)
+  IL_0dd8 ldarg.0         
+  IL_0dd9 call           Card::AnimateDeckToPlay token(0x06012E4A)
+  IL_0dde ldc.i4.1        
+  IL_0ddf stloc.0         
+  IL_0de0 br             IL_0f9e 
+  IL_0de5 ldarg.0         
+  IL_0de6 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0deb isinst         ZonePlay token(0x02000CDA)
+  IL_0df0 brfalse.s      IL_0e4e 
+  IL_0df2 ldarg.0         
+  IL_0df3 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0df8 isinst         ZoneDeck token(0x02000CBE)
+  IL_0dfd brfalse.s      IL_0e4e 
+  IL_0dff ldarg.0         
+  IL_0e00 call           Card::DeactivateLifetimeEffects token(0x06012D57)
+  IL_0e05 ldarg.0         
+  IL_0e06 ldarg.0         
+  IL_0e07 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0e0c ldfld          Zone::m_Side token(0x040045FC)
+  IL_0e11 newobj         <dnfile.mdtable.TypeSpecRow object at 0x7f6e98876bd0>::.ctor token(0x0A002204)
+  IL_0e16 stfld          Card::m_playZoneBlockerSide token(0x0400FA90)
+  IL_0e1b ldarg.0         
+  IL_0e1c ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0e21 callvirt       Zone::AddLayoutBlocker token(0x0600638A)
+  IL_0e26 call           ZoneMgr::Get token(0x06006502)
+  IL_0e2b ldarg.0         
+  IL_0e2c ldfld          Card::m_zone token(0x0400FA68)
+  IL_0e31 ldfld          Zone::m_Side token(0x040045FC)
+  IL_0e36 callvirt       ZoneMgr::FindZoneOfType<spec> token(0x2B0003D1)
+  IL_0e3b callvirt       Zone::AddLayoutBlocker token(0x0600638A)
+  IL_0e40 ldarg.0         
+  IL_0e41 ldarg.1         
+  IL_0e42 call           Card::DoPlayToDeckTransition token(0x06012E61)
+  IL_0e47 ldc.i4.1        
+  IL_0e48 stloc.0         
+  IL_0e49 br             IL_0f9e 
+  IL_0e4e ldarg.0         
+  IL_0e4f ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0e54 isinst         ZoneHand token(0x02000CC1)
+  IL_0e59 brfalse        IL_0ee1 
+  IL_0e5e ldarg.0         
+  IL_0e5f ldfld          Card::m_zone token(0x0400FA68)
+  IL_0e64 isinst         ZoneDeck token(0x02000CBE)
+  IL_0e69 brfalse.s      IL_0ee1 
+  IL_0e6b call           GameState::Get token(0x06005589)
+  IL_0e70 callvirt       GameState::IsPastBeginPhase token(0x060055EB)
+  IL_0e75 brfalse.s      IL_0ee1 
+  IL_0e77 ldarg.0         
+  IL_0e78 ldfld          Card::m_suppressHandToDeckTransition token(0x0400FA86)
+  IL_0e7d brtrue.s       IL_0eaf 
+  IL_0e7f ldarg.0         
+  IL_0e80 ldarg.0         
+  IL_0e81 ldarg.1         
+  IL_0e82 call           Card::DoHandToDeckTransition token(0x06012E60)
+  IL_0e87 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_0e8c pop             
+  IL_0e8d ldarg.1         
+  IL_0e8e callvirt       Actor::GetEntity token(0x0601280E)
+  IL_0e93 brfalse.s      IL_0ebc 
+  IL_0e95 ldarg.1         
+  IL_0e96 callvirt       Actor::GetEntity token(0x0601280E)
+  IL_0e9b ldc.i4         2045 
+  IL_0ea0 callvirt       EntityBase::HasTag token(0x060138A1)
+  IL_0ea5 brfalse.s      IL_0ebc 
+  IL_0ea7 ldarg.0         
+  IL_0ea8 call           Card::ActivateCharacterTradeEffects token(0x06012D50)
+  IL_0ead br.s           IL_0ebc 
+  IL_0eaf ldarg.1         
+  IL_0eb0 callvirt       Actor::Destroy token(0x060127EF)
+  IL_0eb5 ldarg.0         
+  IL_0eb6 ldc.i4.1        
+  IL_0eb7 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0ebc ldarg.0         
+  IL_0ebd ldfld          Card::m_entity token(0x0400FA41)
+  IL_0ec2 callvirt       EntityBase::IsNozdormuDormantEffectWatcher token(0x06013914)
+  IL_0ec7 brfalse.s      IL_0ed3 
+  IL_0ec9 call           ZoneMgr::Get token(0x06006502)
+  IL_0ece callvirt       ZoneMgr::OnNozdormuWatcherEntityMousedOut token(0x0600656E)
+  IL_0ed3 ldarg.0         
+  IL_0ed4 ldc.i4.0        
+  IL_0ed5 stfld          Card::m_suppressHandToDeckTransition token(0x0400FA86)
+  IL_0eda ldc.i4.1        
+  IL_0edb stloc.0         
+  IL_0edc br             IL_0f9e 
+  IL_0ee1 ldarg.0         
+  IL_0ee2 ldfld          Card::m_goingThroughDeathrattleReturnfromGraveyard token(0x0400FA6A)
+  IL_0ee7 brfalse.s      IL_0f10 
+  IL_0ee9 ldarg.0         
+  IL_0eea ldfld          Card::m_zone token(0x0400FA68)
+  IL_0eef isinst         ZoneDeck token(0x02000CBE)
+  IL_0ef4 brfalse.s      IL_0f10 
+  IL_0ef6 ldarg.0         
+  IL_0ef7 ldc.i4.0        
+  IL_0ef8 stfld          Card::m_goingThroughDeathrattleReturnfromGraveyard token(0x0400FA6A)
+  IL_0efd ldarg.0         
+  IL_0efe ldarg.1         
+  IL_0eff call           Card::HandleGraveyardToDeck token(0x06012E3A)
+  IL_0f04 brfalse        IL_0f9e 
+  IL_0f09 ldc.i4.1        
+  IL_0f0a stloc.0         
+  IL_0f0b br             IL_0f9e 
+  IL_0f10 ldarg.0         
+  IL_0f11 ldfld          Card::m_goingThroughDeathrattleReturnfromGraveyard token(0x0400FA6A)
+  IL_0f16 brfalse.s      IL_0f39 
+  IL_0f18 ldarg.0         
+  IL_0f19 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0f1e isinst         ZoneHand token(0x02000CC1)
+  IL_0f23 brfalse.s      IL_0f39 
+  IL_0f25 ldarg.0         
+  IL_0f26 ldc.i4.0        
+  IL_0f27 stfld          Card::m_goingThroughDeathrattleReturnfromGraveyard token(0x0400FA6A)
+  IL_0f2c ldarg.0         
+  IL_0f2d ldarg.1         
+  IL_0f2e call           Card::HandleGraveyardToHand token(0x06012E3B)
+  IL_0f33 brfalse.s      IL_0f9e 
+  IL_0f35 ldc.i4.1        
+  IL_0f36 stloc.0         
+  IL_0f37 br.s           IL_0f9e 
+  IL_0f39 ldarg.0         
+  IL_0f3a ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0f3f isinst         ZoneGraveyard token(0x02000CC0)
+  IL_0f44 brfalse.s      IL_0f81 
+  IL_0f46 ldarg.0         
+  IL_0f47 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0f4c isinst         ZoneHand token(0x02000CC1)
+  IL_0f51 brfalse.s      IL_0f81 
+  IL_0f53 ldarg.0         
+  IL_0f54 ldfld          Card::m_goingThroughDeathrattleReturnfromGraveyard token(0x0400FA6A)
+  IL_0f59 brtrue.s       IL_0f81 
+  IL_0f5b ldarg.0         
+  IL_0f5c ldc.i4.1        
+  IL_0f5d stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0f62 ldarg.0         
+  IL_0f63 ldc.i4.1        
+  IL_0f64 stfld          Card::m_inputEnabled token(0x0400FA7E)
+  IL_0f69 ldarg.0         
+  IL_0f6a ldfld          Card::m_actor token(0x0400FA62)
+  IL_0f6f ldc.i4.1        
+  IL_0f70 ldc.i4.1        
+  IL_0f71 callvirt       Actor::SetVisibility token(0x06012837)
+  IL_0f76 ldarg.0         
+  IL_0f77 ldc.i4.0        
+  IL_0f78 call           Card::SetDoNotSort token(0x06012DF3)
+  IL_0f7d ldc.i4.1        
+  IL_0f7e stloc.0         
+  IL_0f7f br.s           IL_0f9e 
+  IL_0f81 ldarg.0         
+  IL_0f82 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0f87 isinst         ZoneLettuceAbility token(0x02000CC6)
+  IL_0f8c brfalse.s      IL_0f9e 
+  IL_0f8e ldarg.0         
+  IL_0f8f ldc.i4.0        
+  IL_0f90 call           Card::ActivateStateSpells token(0x06012D87)
+  IL_0f95 ldarg.0         
+  IL_0f96 ldc.i4.1        
+  IL_0f97 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0f9c ldc.i4.1        
+  IL_0f9d stloc.0         
+  IL_0f9e ldloc.0         
+  IL_0f9f brtrue         IL_1057 
+  IL_0fa4 ldarg.0         
+  IL_0fa5 ldfld          Card::m_entity token(0x0400FA41)
+  IL_0faa callvirt       Entity::IsMercenary token(0x0601387D)
+  IL_0faf brfalse        IL_1057 
+  IL_0fb4 ldarg.0         
+  IL_0fb5 ldfld          Card::m_zone token(0x0400FA68)
+  IL_0fba isinst         ZonePlay token(0x02000CDA)
+  IL_0fbf brfalse        IL_1057 
+  IL_0fc4 ldloc.1         
+  IL_0fc5 brfalse.s      IL_0fdc 
+  IL_0fc7 ldarg.0         
+  IL_0fc8 call           Card::ShowCard token(0x06012D11)
+  IL_0fcd ldarg.0         
+  IL_0fce ldc.i4.0        
+  IL_0fcf call           Card::ActivateStateSpells token(0x06012D87)
+  IL_0fd4 ldarg.0         
+  IL_0fd5 ldc.i4.1        
+  IL_0fd6 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_0fdb ret             
+  IL_0fdc ldarg.0         
+  IL_0fdd ldfld          Card::m_actor token(0x0400FA62)
+  IL_0fe2 ldarg.1         
+  IL_0fe3 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0fe8 brfalse.s      IL_1018 
+  IL_0fea ldarg.0         
+  IL_0feb ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0ff0 ldnull          
+  IL_0ff1 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0ff6 brfalse.s      IL_1018 
+  IL_0ff8 ldarg.0         
+  IL_0ff9 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_0ffe ldfld          Zone::m_Side token(0x040045FC)
+  IL_1003 ldarg.0         
+  IL_1004 ldfld          Card::m_zone token(0x0400FA68)
+  IL_1009 ldfld          Zone::m_Side token(0x040045FC)
+  IL_100e beq.s          IL_1018 
+  IL_1010 ldarg.0         
+  IL_1011 ldc.i4.1        
+  IL_1012 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_1017 ret             
+  IL_1018 ldarg.1         
+  IL_1019 ldnull          
+  IL_101a call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_101f brfalse.s      IL_1027 
+  IL_1021 ldarg.1         
+  IL_1022 callvirt       Actor::Destroy token(0x060127EF)
+  IL_1027 ldarg.0         
+  IL_1028 ldfld          Card::m_actor token(0x0400FA62)
+  IL_102d callvirt       Actor::Hide token(0x0601283D)
+  IL_1032 ldarg.0         
+  IL_1033 ldc.i4.1        
+  IL_1034 stfld          Card::m_shown token(0x0400FA7D)
+  IL_1039 ldarg.0         
+  IL_103a ldfld          Card::m_zone token(0x0400FA68)
+  IL_103f castclass      ZonePlay token(0x02000CDA)
+  IL_1044 ldarg.0         
+  IL_1045 ldc.i4.3        
+  IL_1046 call           Card::SetTransitionStyle token(0x06012DED)
+  IL_104b callvirt       Zone::UpdateLayout token(0x0600639B)
+  IL_1050 ldarg.0         
+  IL_1051 call           Card::ActivateMinionSpawnEffects token(0x06012DB8)
+  IL_1056 ret             
+  IL_1057 ldloc.0         
+  IL_1058 brtrue         IL_10f4 
+  IL_105d ldarg.1         
+  IL_105e ldarg.0         
+  IL_105f ldfld          Card::m_actor token(0x0400FA62)
+  IL_1064 call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_1069 brfalse        IL_10f4 
+  IL_106e ldarg.0         
+  IL_106f ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_1074 ldnull          
+  IL_1075 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_107a brfalse.s      IL_10e9 
+  IL_107c ldarg.0         
+  IL_107d ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_1082 ldfld          Zone::m_Side token(0x040045FC)
+  IL_1087 ldarg.0         
+  IL_1088 ldfld          Card::m_zone token(0x0400FA68)
+  IL_108d ldfld          Zone::m_Side token(0x040045FC)
+  IL_1092 beq.s          IL_10e9 
+  IL_1094 ldarg.0         
+  IL_1095 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_109a isinst         ZoneSecret token(0x02000CDD)
+  IL_109f brfalse.s      IL_10bf 
+  IL_10a1 ldarg.0         
+  IL_10a2 ldfld          Card::m_zone token(0x0400FA68)
+  IL_10a7 isinst         ZoneSecret token(0x02000CDD)
+  IL_10ac brfalse.s      IL_10bf 
+  IL_10ae ldarg.0         
+  IL_10af ldarg.0         
+  IL_10b0 call           Card::SwitchSecretSides token(0x06012E6E)
+  IL_10b5 call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_10ba pop             
+  IL_10bb ldc.i4.1        
+  IL_10bc stloc.0         
+  IL_10bd br.s           IL_10e9 
+  IL_10bf ldarg.0         
+  IL_10c0 ldfld          Card::m_prevZone token(0x0400FA69)
+  IL_10c5 isinst         ZonePlay token(0x02000CDA)
+  IL_10ca brfalse.s      IL_10e9 
+  IL_10cc ldarg.0         
+  IL_10cd ldfld          Card::m_zone token(0x0400FA68)
+  IL_10d2 isinst         ZonePlay token(0x02000CDA)
+  IL_10d7 brfalse.s      IL_10e9 
+  IL_10d9 ldarg.0         
+  IL_10da ldc.i4.0        
+  IL_10db call           Card::ActivateStateSpells token(0x06012D87)
+  IL_10e0 ldarg.0         
+  IL_10e1 ldc.i4.1        
+  IL_10e2 stfld          Card::m_actorReady token(0x0400FA64)
+  IL_10e7 ldc.i4.1        
+  IL_10e8 stloc.0         
+  IL_10e9 ldloc.0         
+  IL_10ea brtrue.s       IL_10f3 
+  IL_10ec ldarg.0         
+  IL_10ed ldc.i4.1        
+  IL_10ee stfld          Card::m_actorReady token(0x0400FA64)
+  IL_10f3 ret             
+  IL_10f4 ldloc.0         
+  IL_10f5 brtrue.s       IL_1169 
+  IL_10f7 ldarg.0         
+  IL_10f8 ldfld          Card::m_zone token(0x0400FA68)
+  IL_10fd isinst         ZoneSecret token(0x02000CDD)
+  IL_1102 brfalse.s      IL_1169 
+  IL_1104 ldarg.0         
+  IL_1105 ldc.i4.1        
+  IL_1106 stfld          Card::m_shown token(0x0400FA7D)
+  IL_110b ldarg.1         
+  IL_110c call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_1111 brfalse.s      IL_113a 
+  IL_1113 ldarg.0         
+  IL_1114 ldarg.0         
+  IL_1115 ldarg.1         
+  IL_1116 call           Card::HandleSecretZoneTransitionActorCleanup token(0x06012E39)
+  IL_111b call           UnityEngine.MonoBehaviour::StartCoroutine token(0x0A0000F1)
+  IL_1120 pop             
+  IL_1121 ldarg.0         
+  IL_1122 ldfld          Card::m_questRewardActor token(0x0400FAA1)
+  IL_1127 ldnull          
+  IL_1128 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_112d brfalse.s      IL_113a 
+  IL_112f ldarg.0         
+  IL_1130 ldfld          Card::m_questRewardActor token(0x0400FAA1)
+  IL_1135 callvirt       Actor::Destroy token(0x060127EF)
+  IL_113a ldarg.0         
+  IL_113b ldc.i4.3        
+  IL_113c stfld          Card::m_transitionStyle token(0x0400FA71)
+  IL_1141 ldarg.0         
+  IL_1142 ldfld          Card::m_zone token(0x0400FA68)
+  IL_1147 callvirt       Zone::UpdateLayout token(0x0600639B)
+  IL_114c ldarg.0         
+  IL_114d ldc.i4.0        
+  IL_114e call           Card::ActivatePlaySpawnEffects token(0x06012DB3)
+  IL_1153 ldarg.0         
+  IL_1154 call           Card::ShowSecretQuestBirth token(0x06012E6A)
+  IL_1159 ldc.i4.1        
+  IL_115a stloc.0         
+  IL_115b ldarg.0         
+  IL_115c ldc.i4.1        
+  IL_115d stfld          Card::m_actorReady token(0x0400FA64)
+  IL_1162 ldarg.0         
+  IL_1163 ldc.i4.0        
+  IL_1164 call           Card::ActivateStateSpells token(0x06012D87)
+  IL_1169 ldloc.0         
+  IL_116a brtrue.s       IL_11d7 
+  IL_116c ldarg.1         
+  IL_116d call           UnityEngine.Object::op_Implicit token(0x0A00006A)
+  IL_1172 brfalse.s      IL_117a 
+  IL_1174 ldarg.1         
+  IL_1175 callvirt       Actor::Destroy token(0x060127EF)
+  IL_117a ldarg.0         
+  IL_117b ldfld          Card::m_zone token(0x0400FA68)
+  IL_1180 ldfld          Zone::m_ServerTag token(0x040045FB)
+  IL_1185 ldc.i4.1        
+  IL_1186 beq.s          IL_11a6 
+  IL_1188 ldarg.0         
+  IL_1189 ldfld          Card::m_zone token(0x0400FA68)
+  IL_118e ldfld          Zone::m_ServerTag token(0x040045FB)
+  IL_1193 ldc.i4.7        
+  IL_1194 beq.s          IL_11a6 
+  IL_1196 ldarg.0         
+  IL_1197 ldfld          Card::m_zone token(0x0400FA68)
+  IL_119c ldfld          Zone::m_ServerTag token(0x040045FB)
+  IL_11a1 ldc.i4.3        
+  IL_11a2 ceq             
+  IL_11a4 br.s           IL_11a7 
+  IL_11a6 ldc.i4.1        
+  IL_11a7 stloc.s        local(0x0012) 
+  IL_11a9 ldarg.0         
+  IL_11aa call           Card::IsShown token(0x06012D10)
+  IL_11af ldloc.s        local(0x0012) 
+  IL_11b1 and             
+  IL_11b2 brfalse.s      IL_11bb 
+  IL_11b4 ldarg.0         
+  IL_11b5 ldc.i4.0        
+  IL_11b6 call           Card::ActivateStateSpells token(0x06012D87)
+  IL_11bb ldarg.0         
+  IL_11bc ldc.i4.1        
+  IL_11bd stfld          Card::m_actorReady token(0x0400FA64)
+  IL_11c2 ldarg.0         
+  IL_11c3 call           Card::IsShown token(0x06012D10)
+  IL_11c8 brfalse.s      IL_11d1 
+  IL_11ca ldarg.0         
+  IL_11cb call           Card::ShowImpl token(0x06012D12)
+  IL_11d0 ret             
+  IL_11d1 ldarg.0         
+  IL_11d2 call           Card::HideImpl token(0x06012D14)
+  IL_11d7 ret             
+

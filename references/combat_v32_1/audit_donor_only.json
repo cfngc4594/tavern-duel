@@ -1,0 +1,23 @@
+{
+  "before_sha256": "36b3f861b62f0e6edd29f7f88403805abefb801268627f397d65f08875525617",
+  "after_sha256": "80b6f9c9e5ed8767b5c02a9b6b4af6b6a92c2a9b4730f07cc64635308aa6e88f",
+  "changed_file": "scripts/game.gd",
+  "changed_expression": "Only source_unit_id in presentation event audit is selected as the combat pair member other than the target.",
+  "consumption": "native_damage.record copies source into event; present stores the event; rendering consumes target_id/target_type/side/unit_id/card_id/amount, never source or source_unit_id. Replay passes the recorded event to present without damage execution. dual_class_rules.gd has no source_unit_id dependency.",
+  "not_changed": [
+    "target",
+    "amount",
+    "HP mutations",
+    "event serial",
+    "rule resolution",
+    "rules RNG",
+    "audio",
+    "material",
+    "geometry",
+    "transform",
+    "time",
+    "alpha",
+    "visible ordering"
+  ],
+  "video_inheritance": "Actual GUI 4case28 and remaining10case72 were recorded against before_sha256. This exact one-expression audit-only diff does not change their rendered pixels or rule outcomes."
+}

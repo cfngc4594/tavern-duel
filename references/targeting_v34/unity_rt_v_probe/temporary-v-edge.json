@@ -1,0 +1,63 @@
+{
+    "status": "measured",
+    "unityVersion": "6000.3.10f1",
+    "graphicsAPI": "Metal",
+    "graphicsDevice": "Apple M3",
+    "activeColorSpace": "Gamma",
+    "projectColorSpace": "Gamma",
+    "notes": "Exact CommandBuffer.GetTemporaryRT(id,16,16,16,FilterMode.Bilinear,(RenderTextureFormat)16); no wrap assigned, no RenderTexture.GetTemporary. Source single red channel R8. Pattern shader red0.2 when UV.y<0.5,red0.8 when UV.y>=0.5. Unity Texture2D.GetPixel origin bottom-left: exported patternBottomPixel=(8,2),patternTopPixel=(8,13). PNG display top row maps to Unity top, bottom row to Unity bottom. Edge output is horizontal four-pixel strip left-to-right v=-0.25,0.25,0.75,1.25, fixed u0.5. Diagnostic capture/destination ARGB32 Linear separate from source. No W sampling or inference.",
+    "patternBottomPixel": {
+        "r": 0.20000000298023225,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+    },
+    "patternTopPixel": {
+        "r": 0.800000011920929,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+    },
+    "samples": [
+        {
+            "u": 0.5,
+            "v": -0.25,
+            "rgba": {
+                "r": 0.20000000298023225,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+            }
+        },
+        {
+            "u": 0.5,
+            "v": 0.25,
+            "rgba": {
+                "r": 0.20000000298023225,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+            }
+        },
+        {
+            "u": 0.5,
+            "v": 0.75,
+            "rgba": {
+                "r": 0.800000011920929,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+            }
+        },
+        {
+            "u": 0.5,
+            "v": 1.25,
+            "rgba": {
+                "r": 0.800000011920929,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+            }
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/Card/UnlitTexture" {
+Properties {
+
+_MainTex ("Texture", 2D) = "white" { }
+
+_LightingBlend ("Ambient Lighting Blend", Float) = 0.0
+
+}
+SubShader {
+ Tags { "Highlight" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Pass {
+ Name "ShadowCaster"
+  Tags { "Highlight" = "true" "LIGHTMODE" = "SHADOWCASTER" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Cull Off
+  GpuProgramID 65249
+}
+ Pass {
+  Tags { "Highlight" = "true" "LIGHTMODE" = "UniversalForward" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+ Cull Off
+  GpuProgramID 77948
+}
+}
+}

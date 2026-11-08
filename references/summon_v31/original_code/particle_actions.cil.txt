@@ -1,0 +1,197 @@
+
+TYPE HutongGames.PlayMaker.Actions.ParticlePauseAction 0x02000031
+FIELD 0x04000100 m_GameObject SIG 061280a1
+FIELD 0x04000101 m_IncludeChildren SIG 061280c9
+
+TYPE HutongGames.PlayMaker.Actions.ParticlePlayAction 0x02000032
+FIELD 0x04000102 m_GameObject SIG 061280a1
+FIELD 0x04000103 m_IncludeChildren SIG 061280c9
+
+TYPE HutongGames.PlayMaker.Actions.ParticleStopAction 0x02000034
+FIELD 0x04000107 m_GameObject SIG 061280a1
+FIELD 0x04000108 m_IncludeChildren SIG 061280c9
+
+0x060000eb HutongGames.PlayMaker.Actions.ParticlePauseAction::OnEnter() RVA 0x5ff0 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticlePauseAction::m_GameObject token(0x04000100)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldloc.0         
+  IL_0023 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0028 stloc.1         
+  IL_0029 ldloc.1         
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0030 brfalse.s      IL_0049 
+  IL_0032 ldstr          'ParticlePauseAction.OnEnter() - GameObject {0} has no ParticleSystem component' string token(0x70000B2D)
+  IL_0037 ldloc.0         
+  IL_0038 call           System.String::Format token(0x0A00011B)
+  IL_003d call           UnityEngine.Debug::LogWarning token(0x0A0000F5)
+  IL_0042 ldarg.0         
+  IL_0043 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0048 ret             
+  IL_0049 ldloc.1         
+  IL_004a ldarg.0         
+  IL_004b ldfld          HutongGames.PlayMaker.Actions.ParticlePauseAction::m_IncludeChildren token(0x04000101)
+  IL_0050 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0055 callvirt       UnityEngine.ParticleSystem::Pause token(0x0A000122)
+  IL_005a ldarg.0         
+  IL_005b call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0060 ret             
+
+0x060000ee HutongGames.PlayMaker.Actions.ParticlePlayAction::OnEnter() RVA 0x6074 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_GameObject token(0x04000102)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldloc.0         
+  IL_0023 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0028 stloc.1         
+  IL_0029 ldloc.1         
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0030 brfalse.s      IL_005c 
+  IL_0032 ldarg.0         
+  IL_0033 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_0038 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_003d brtrue.s       IL_005c 
+  IL_003f ldstr          'ParticlePlayAction.OnEnter() - {0} has no ParticleSystem component. Owner={1}' string token(0x70000BCC)
+  IL_0044 ldloc.0         
+  IL_0045 ldarg.0         
+  IL_0046 call           HutongGames.PlayMaker.FsmStateAction::get_Owner token(0x0A0000D3)
+  IL_004b call           System.String::Format token(0x0A000123)
+  IL_0050 call           UnityEngine.Debug::LogWarning token(0x0A0000F5)
+  IL_0055 ldarg.0         
+  IL_0056 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_005b ret             
+  IL_005c ldloc.1         
+  IL_005d ldnull          
+  IL_005e call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0063 brfalse.s      IL_00a1 
+  IL_0065 ldarg.0         
+  IL_0066 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_006b callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0070 brfalse.s      IL_00a1 
+  IL_0072 ldloc.0         
+  IL_0073 callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B00000C)
+  IL_0078 stloc.2         
+  IL_0079 ldc.i4.0        
+  IL_007a stloc.3         
+  IL_007b br.s           IL_0094 
+  IL_007d ldloc.2         
+  IL_007e ldloc.3         
+  IL_007f ldelem.ref      
+  IL_0080 ldarg.0         
+  IL_0081 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_0086 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_008b callvirt       UnityEngine.ParticleSystem::Play token(0x0A0000EA)
+  IL_0090 ldloc.3         
+  IL_0091 ldc.i4.1        
+  IL_0092 add             
+  IL_0093 stloc.3         
+  IL_0094 ldloc.3         
+  IL_0095 ldloc.2         
+  IL_0096 ldlen           
+  IL_0097 conv.i4         
+  IL_0098 blt.s          IL_007d 
+  IL_009a ldarg.0         
+  IL_009b call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00a0 ret             
+  IL_00a1 ldloc.1         
+  IL_00a2 ldarg.0         
+  IL_00a3 ldfld          HutongGames.PlayMaker.Actions.ParticlePlayAction::m_IncludeChildren token(0x04000103)
+  IL_00a8 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_00ad callvirt       UnityEngine.ParticleSystem::Play token(0x0A0000EA)
+  IL_00b2 ldarg.0         
+  IL_00b3 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00b8 ret             
+
+0x060000f4 HutongGames.PlayMaker.Actions.ParticleStopAction::OnEnter() RVA 0x61dc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           HutongGames.PlayMaker.FsmStateAction::get_Fsm token(0x0A000006)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_GameObject token(0x04000107)
+  IL_000c callvirt       HutongGames.PlayMaker.Fsm::GetOwnerDefaultTarget token(0x0A000071)
+  IL_0011 stloc.0         
+  IL_0012 ldloc.0         
+  IL_0013 ldnull          
+  IL_0014 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0019 brfalse.s      IL_0022 
+  IL_001b ldarg.0         
+  IL_001c call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0021 ret             
+  IL_0022 ldloc.0         
+  IL_0023 callvirt       UnityEngine.GameObject::GetComponent<spec> token(0x2B00000B)
+  IL_0028 stloc.1         
+  IL_0029 ldloc.1         
+  IL_002a ldnull          
+  IL_002b call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_0030 brfalse.s      IL_0056 
+  IL_0032 ldarg.0         
+  IL_0033 ldfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_IncludeChildren token(0x04000108)
+  IL_0038 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_003d brtrue.s       IL_0056 
+  IL_003f ldstr          'ParticleStopAction.OnEnter() - GameObject {0} has no ParticleSystem component' string token(0x70000D0E)
+  IL_0044 ldloc.0         
+  IL_0045 call           System.String::Format token(0x0A00011B)
+  IL_004a call           UnityEngine.Debug::LogWarning token(0x0A0000F5)
+  IL_004f ldarg.0         
+  IL_0050 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_0055 ret             
+  IL_0056 ldloc.1         
+  IL_0057 ldnull          
+  IL_0058 call           UnityEngine.Object::op_Equality token(0x0A000072)
+  IL_005d brfalse.s      IL_0096 
+  IL_005f ldarg.0         
+  IL_0060 ldfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_IncludeChildren token(0x04000108)
+  IL_0065 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_006a brfalse.s      IL_0096 
+  IL_006c ldloc.0         
+  IL_006d callvirt       UnityEngine.GameObject::GetComponentsInChildren<spec> token(0x2B00000C)
+  IL_0072 stloc.2         
+  IL_0073 ldc.i4.0        
+  IL_0074 stloc.3         
+  IL_0075 br.s           IL_008e 
+  IL_0077 ldloc.2         
+  IL_0078 ldloc.3         
+  IL_0079 ldelem.ref      
+  IL_007a ldarg.0         
+  IL_007b ldfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_IncludeChildren token(0x04000108)
+  IL_0080 callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_0085 callvirt       UnityEngine.ParticleSystem::Stop token(0x0A000126)
+  IL_008a ldloc.3         
+  IL_008b ldc.i4.1        
+  IL_008c add             
+  IL_008d stloc.3         
+  IL_008e ldloc.3         
+  IL_008f ldloc.2         
+  IL_0090 ldlen           
+  IL_0091 conv.i4         
+  IL_0092 blt.s          IL_0077 
+  IL_0094 br.s           IL_00a7 
+  IL_0096 ldloc.1         
+  IL_0097 ldarg.0         
+  IL_0098 ldfld          HutongGames.PlayMaker.Actions.ParticleStopAction::m_IncludeChildren token(0x04000108)
+  IL_009d callvirt       HutongGames.PlayMaker.FsmBool::get_Value token(0x0A00007C)
+  IL_00a2 callvirt       UnityEngine.ParticleSystem::Stop token(0x0A000126)
+  IL_00a7 ldarg.0         
+  IL_00a8 call           HutongGames.PlayMaker.FsmStateAction::Finish token(0x0A000008)
+  IL_00ad ret             

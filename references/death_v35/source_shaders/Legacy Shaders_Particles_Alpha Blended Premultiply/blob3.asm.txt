@@ -1,0 +1,45 @@
+// ISGN
+// POSITION0: register0.xyzw systemvalue=0 componenttype=3
+// COLOR0: register1.xyzw systemvalue=0 componenttype=3
+// TEXCOORD0: register2.xy systemvalue=0 componenttype=3
+// OSGN
+// SV_POSITION0: register0.xyzw systemvalue=1 componenttype=3
+// COLOR0: register1.xyzw systemvalue=0 componenttype=3
+// TEXCOORD0: register2.xy systemvalue=0 componenttype=3
+// TEXCOORD1: register3.xyzw systemvalue=0 componenttype=3
+// SHDR
+// shader kind=1, model=4.0, length=219
+0002: dcl_constant_buffer cb0[4].xyzw
+0006: dcl_constant_buffer cb1[6].xyzw
+0010: dcl_constant_buffer cb2[4].xyzw
+0014: dcl_constant_buffer cb3[21].xyzw
+0018: dcl_input v0.xyz
+0021: dcl_input v1.xyzw
+0024: dcl_input v2.xy
+0027: dcl_output_siv o0.xyzw, meta(1)
+0031: dcl_output o1.xyzw
+0034: dcl_output o2.xy
+0037: dcl_output o3.xyzw
+0040: dcl_temps 2
+0042: mul r0.xyzw, v0.yyyy, cb2[1].xyzw
+0050: mad r0.xyzw, cb2[0].xyzw, v0.xxxx, r0.xyzw
+0060: mad r0.xyzw, cb2[2].xyzw, v0.zzzz, r0.xyzw
+0070: add r0.xyzw, r0.xyzw, cb2[3].xyzw
+0078: mul r1.xyzw, r0.yyyy, cb3[18].xyzw
+0086: mad r1.xyzw, cb3[17].xyzw, r0.xxxx, r1.xyzw
+0096: mad r1.xyzw, cb3[19].xyzw, r0.zzzz, r1.xyzw
+0106: mad r1.xyzw, cb3[20].xyzw, r0.wwww, r1.xyzw
+0116: mov o0.xyzw, r1.xyzw
+0121: mov o1.xyzw, v1.xyzw
+0126: mad o2.xy, v2.xyxx, cb0[3].xyxx, cb0[3].zwzz
+0137: mul r0.y, r0.y, cb3[10].z
+0145: mad r0.x, cb3[9].z, r0.x, r0.y
+0155: mad r0.x, cb3[11].z, r0.z, r0.x
+0165: mad r0.x, cb3[12].z, r0.w, r0.x
+0175: mov o3.z, -r0.x
+0181: mul r0.x, r1.y, cb1[5].x
+0189: mul r0.w, r0.x, l(0.5)
+0196: mul r0.xz, r1.xxwx, l(0.5,0,0.5,0)
+0206: mov o3.w, r1.w
+0211: add o3.xy, r0.zzzz, r0.xwxx
+0218: ret 

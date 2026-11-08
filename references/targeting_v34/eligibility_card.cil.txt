@@ -1,0 +1,877 @@
+
+0x06012816 Actor::SetActorState
+IL_0000 ldarg.0 
+IL_0001 ldarg.1 
+IL_0002 stfld Actor::m_actorState
+IL_0007 ldarg.0 
+IL_0008 ldfld Actor::m_actorStateMgr
+IL_000d ldnull 
+IL_000e call UnityEngine.Object::op_Equality
+IL_0013 brfalse.s IL_0016
+IL_0015 ret 
+IL_0016 ldarg.0 
+IL_0017 ldfld Actor::forceIdleState
+IL_001c brfalse.s IL_0025
+IL_001e ldarg.0 
+IL_001f ldc.i4.1 
+IL_0020 stfld Actor::m_actorState
+IL_0025 ldarg.0 
+IL_0026 ldfld Actor::m_actorStateMgr
+IL_002b callvirt ActorStateMgr::GetActiveStateType
+IL_0030 stloc.0 
+IL_0031 ldarg.0 
+IL_0032 ldfld Actor::m_actorStateMgr
+IL_0037 ldarg.0 
+IL_0038 ldfld Actor::m_actorState
+IL_003d callvirt ActorStateMgr::ChangeState
+IL_0042 pop 
+IL_0043 ldarg.0 
+IL_0044 ldloc.0 
+IL_0045 ldarg.0 
+IL_0046 ldfld Actor::m_actorState
+IL_004b call Actor::UpdateUsableAbilityGlow
+IL_0050 ldarg.0 
+IL_0051 ldloc.0 
+IL_0052 ldarg.0 
+IL_0053 ldfld Actor::m_actorState
+IL_0058 call Actor::UpdateInteractiveObjectTargetGlow
+IL_005d ret 
+
+0x060128f6 Actor::UpdateHighlights
+IL_0000 ldarg.0 
+IL_0001 call UnityEngine.Component::GetComponentsInChildren<spec>
+IL_0006 stloc.0 
+IL_0007 ldloc.0 
+IL_0008 brfalse.s IL_0022
+IL_000a ldloc.0 
+IL_000b stloc.1 
+IL_000c ldc.i4.0 
+IL_000d stloc.2 
+IL_000e br.s IL_001c
+IL_0010 ldloc.1 
+IL_0011 ldloc.2 
+IL_0012 ldelem.ref 
+IL_0013 callvirt HighlightState::ForceUpdate
+IL_0018 ldloc.2 
+IL_0019 ldc.i4.1 
+IL_001a add 
+IL_001b stloc.2 
+IL_001c ldloc.2 
+IL_001d ldloc.1 
+IL_001e ldlen 
+IL_001f conv.i4 
+IL_0020 blt.s IL_0010
+IL_0022 ret 
+
+0x06012dcd Card::UpdateActorState
+IL_0000 ldarg.0 
+IL_0001 ldfld Card::m_actor
+IL_0006 ldnull 
+IL_0007 call UnityEngine.Object::op_Equality
+IL_000c brfalse.s IL_000f
+IL_000e ret 
+IL_000f ldarg.0 
+IL_0010 ldfld Card::m_shown
+IL_0015 brtrue.s IL_0018
+IL_0017 ret 
+IL_0018 ldarg.0 
+IL_0019 ldfld Card::m_entity
+IL_001e callvirt Entity::IsBusy
+IL_0023 brfalse.s IL_0026
+IL_0025 ret 
+IL_0026 ldarg.0 
+IL_0027 ldfld Card::m_zone
+IL_002c isinst ZoneGraveyard
+IL_0031 brfalse.s IL_0034
+IL_0033 ret 
+IL_0034 ldarg.0 
+IL_0035 ldfld Card::m_inputEnabled
+IL_003a brfalse.s IL_0057
+IL_003c ldarg.0 
+IL_003d ldfld Card::m_zone
+IL_0042 ldnull 
+IL_0043 call UnityEngine.Object::op_Inequality
+IL_0048 brfalse.s IL_0070
+IL_004a ldarg.0 
+IL_004b ldfld Card::m_zone
+IL_0050 callvirt Zone::IsInputEnabled
+IL_0055 brtrue.s IL_0070
+IL_0057 ldarg.0 
+IL_0058 ldfld Card::m_actor
+IL_005d ldc.i4.1 
+IL_005e callvirt Actor::SetActorState
+IL_0063 ldarg.0 
+IL_0064 ldfld Card::m_actor
+IL_0069 ldc.i4.2 
+IL_006a callvirt Actor::SetDeckActionHighlightState
+IL_006f ret 
+IL_0070 ldarg.0 
+IL_0071 ldfld Card::m_mousedOverByTeammate
+IL_0076 brfalse.s IL_0085
+IL_0078 ldarg.0 
+IL_0079 ldfld Card::m_actor
+IL_007e ldc.i4.2 
+IL_007f callvirt Actor::SetActorState
+IL_0084 ret 
+IL_0085 call GameState::Get
+IL_008a stloc.0 
+IL_008b ldloc.0 
+IL_008c brfalse IL_0111
+IL_0091 ldloc.0 
+IL_0092 ldarg.0 
+IL_0093 ldfld Card::m_entity
+IL_0098 callvirt GameState::IsEntityInputEnabled
+IL_009d brfalse.s IL_0111
+IL_009f ldarg.1 
+IL_00a0 brfalse.s IL_00ba
+IL_00a2 ldarg.0 
+IL_00a3 ldfld Card::m_actor
+IL_00a8 ldc.i4.1 
+IL_00a9 callvirt Actor::SetActorState
+IL_00ae ldarg.0 
+IL_00af ldfld Card::m_actor
+IL_00b4 ldc.i4.2 
+IL_00b5 callvirt Actor::SetDeckActionHighlightState
+IL_00ba ldloc.0 
+IL_00bb callvirt GameState::GetResponseMode
+IL_00c0 stloc.1 
+IL_00c1 ldloc.1 
+IL_00c2 ldc.i4.1 
+IL_00c3 sub 
+IL_00c4 switch [IL_00e9, IL_00f3, IL_00fd, IL_00df, IL_0107]
+IL_00dd br.s IL_011d
+IL_00df ldarg.0 
+IL_00e0 ldloc.0 
+IL_00e1 call Card::DoChoiceHighlight
+IL_00e6 brfalse.s IL_011d
+IL_00e8 ret 
+IL_00e9 ldarg.0 
+IL_00ea ldloc.0 
+IL_00eb call Card::DoOptionHighlight
+IL_00f0 brfalse.s IL_011d
+IL_00f2 ret 
+IL_00f3 ldarg.0 
+IL_00f4 ldloc.0 
+IL_00f5 call Card::DoSubOptionHighlight
+IL_00fa brfalse.s IL_011d
+IL_00fc ret 
+IL_00fd ldarg.0 
+IL_00fe ldloc.0 
+IL_00ff call Card::DoOptionTargetHighlight
+IL_0104 brfalse.s IL_011d
+IL_0106 ret 
+IL_0107 ldarg.0 
+IL_0108 ldloc.0 
+IL_0109 call Card::DoOptionReverseTargetHighlight
+IL_010e brfalse.s IL_011d
+IL_0110 ret 
+IL_0111 ldarg.0 
+IL_0112 ldfld Card::m_actor
+IL_0117 ldc.i4.2 
+IL_0118 callvirt Actor::SetDeckActionHighlightState
+IL_011d ldarg.0 
+IL_011e ldfld Card::m_mousedOver
+IL_0123 brfalse.s IL_015a
+IL_0125 ldarg.0 
+IL_0126 ldfld Card::m_zone
+IL_012b isinst ZoneHand
+IL_0130 brtrue.s IL_015a
+IL_0132 ldarg.0 
+IL_0133 ldfld Card::m_actor
+IL_0138 callvirt Actor::UseBGQuestSiloutte
+IL_013d brfalse.s IL_014d
+IL_013f ldarg.0 
+IL_0140 ldfld Card::m_actor
+IL_0145 ldc.i4.s 49
+IL_0147 callvirt Actor::SetActorState
+IL_014c ret 
+IL_014d ldarg.0 
+IL_014e ldfld Card::m_actor
+IL_0153 ldc.i4.2 
+IL_0154 callvirt Actor::SetActorState
+IL_0159 ret 
+IL_015a ldarg.0 
+IL_015b ldfld Card::m_mousedOverByOpponent
+IL_0160 brfalse.s IL_016f
+IL_0162 ldarg.0 
+IL_0163 ldfld Card::m_actor
+IL_0168 ldc.i4.3 
+IL_0169 callvirt Actor::SetActorState
+IL_016e ret 
+IL_016f ldarg.0 
+IL_0170 ldloc.0 
+IL_0171 call Card::ShouldHighlightSelectedLettuceCharacter
+IL_0176 brfalse.s IL_0185
+IL_0178 ldarg.0 
+IL_0179 ldfld Card::m_actor
+IL_017e ldc.i4.2 
+IL_017f callvirt Actor::SetActorState
+IL_0184 ret 
+IL_0185 ldarg.0 
+IL_0186 ldfld Card::m_actor
+IL_018b ldc.i4.1 
+IL_018c callvirt Actor::SetActorState
+IL_0191 ret 
+
+0x06012dd1 Card::DoChoiceHighlight
+IL_0000 ldarg.0 
+IL_0001 ldfld Card::m_actor
+IL_0006 ldc.i4.2 
+IL_0007 callvirt Actor::SetDeckActionHighlightState
+IL_000c ldarg.1 
+IL_000d callvirt GameState::GetLocalEntityChoices
+IL_0012 stloc.0 
+IL_0013 ldloc.0 
+IL_0014 brfalse IL_012f
+IL_0019 ldloc.0 
+IL_001a callvirt EntityChoices::get_Entities
+IL_001f ldarg.0 
+IL_0020 ldfld Card::m_entity
+IL_0025 callvirt EntityBase::GetEntityId
+IL_002a callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f6e98b93740>::Contains
+IL_002f brfalse IL_012f
+IL_0034 ldarg.1 
+IL_0035 callvirt GameState::GetChosenEntities
+IL_003a ldarg.0 
+IL_003b ldfld Card::m_entity
+IL_0040 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f6e98a36f60>::Contains
+IL_0045 brfalse.s IL_006b
+IL_0047 ldarg.0 
+IL_0048 ldfld Card::m_mousedOver
+IL_004d brfalse.s IL_005d
+IL_004f ldarg.0 
+IL_0050 ldfld Card::m_actor
+IL_0055 ldc.i4.7 
+IL_0056 callvirt Actor::SetActorState
+IL_005b br.s IL_0069
+IL_005d ldarg.0 
+IL_005e ldfld Card::m_actor
+IL_0063 ldc.i4.5 
+IL_0064 callvirt Actor::SetActorState
+IL_0069 ldc.i4.1 
+IL_006a ret 
+IL_006b call GameState::Get
+IL_0070 callvirt GameState::IsMulliganManagerActive
+IL_0075 brfalse.s IL_00d5
+IL_0077 call GameState::Get
+IL_007c ldc.i4.6 
+IL_007d callvirt GameState::GetBooleanGameOption
+IL_0082 brfalse.s IL_00b9
+IL_0084 ldarg.0 
+IL_0085 ldfld Card::m_mousedOver
+IL_008a brfalse.s IL_00ab
+IL_008c ldarg.0 
+IL_008d ldfld Card::m_actor
+IL_0092 call GameState::Get
+IL_0097 callvirt GameState::GetGameEntity
+IL_009c callvirt GameEntity::GetMulliganChoiceHighlightState
+IL_00a1 callvirt Actor::SetActorState
+IL_00a6 br IL_012d
+IL_00ab ldarg.0 
+IL_00ac ldfld Card::m_actor
+IL_00b1 ldc.i4.1 
+IL_00b2 callvirt Actor::SetActorState
+IL_00b7 br.s IL_012d
+IL_00b9 ldarg.0 
+IL_00ba ldfld Card::m_actor
+IL_00bf call GameState::Get
+IL_00c4 callvirt GameState::GetGameEntity
+IL_00c9 callvirt GameEntity::GetMulliganChoiceHighlightState
+IL_00ce callvirt Actor::SetActorState
+IL_00d3 br.s IL_012d
+IL_00d5 ldloc.0 
+IL_00d6 callvirt EntityChoices::get_ChoiceType
+IL_00db ldc.i4.3 
+IL_00dc bne.un.s IL_00ed
+IL_00de ldarg.0 
+IL_00df ldfld Card::m_actor
+IL_00e4 ldc.i4.s 26
+IL_00e6 callvirt Actor::SetActorState
+IL_00eb br.s IL_012d
+IL_00ed ldarg.0 
+IL_00ee ldfld Card::m_actor
+IL_00f3 callvirt Actor::UseBGQuestSiloutte
+IL_00f8 brfalse.s IL_0109
+IL_00fa ldarg.0 
+IL_00fb ldfld Card::m_actor
+IL_0100 ldc.i4.s 48
+IL_0102 callvirt Actor::SetActorState
+IL_0107 br.s IL_012d
+IL_0109 ldarg.0 
+IL_010a ldfld Card::m_entity
+IL_010f callvirt EntityBase::IsBattlegroundTrinket
+IL_0114 brtrue.s IL_012d
+IL_0116 ldarg.0 
+IL_0117 ldfld Card::m_actor
+IL_011c ldarg.0 
+IL_011d ldfld Card::m_mousedOver
+IL_0122 brtrue.s IL_0127
+IL_0124 ldc.i4.4 
+IL_0125 br.s IL_0128
+IL_0127 ldc.i4.7 
+IL_0128 callvirt Actor::SetActorState
+IL_012d ldc.i4.1 
+IL_012e ret 
+IL_012f ldc.i4.0 
+IL_0130 ret 
+
+0x06012dd2 Card::DoOptionHighlight
+IL_0000 ldarg.0 
+IL_0001 ldfld Card::m_actor
+IL_0006 ldnull 
+IL_0007 call UnityEngine.Object::op_Equality
+IL_000c brfalse.s IL_0010
+IL_000e ldc.i4.0 
+IL_000f ret 
+IL_0010 ldarg.0 
+IL_0011 ldfld Card::m_entity
+IL_0016 brfalse.s IL_0035
+IL_0018 ldarg.0 
+IL_0019 ldfld Card::m_entity
+IL_001e ldc.i4 4877
+IL_0023 callvirt EntityBase::HasTag
+IL_0028 brfalse.s IL_0035
+IL_002a ldarg.0 
+IL_002b ldfld Card::m_actor
+IL_0030 callvirt Actor::SetCorrectStateForInteractableObjectSpell
+IL_0035 call GameState::Get
+IL_003a ldarg.0 
+IL_003b ldfld Card::m_entity
+IL_0040 ldc.i4.1 
+IL_0041 newobj <dnfile.mdtable.TypeSpecRow object at 0x7f6e98c0ad80>::.ctor
+IL_0046 ldloca.s local(0x0007)
+IL_0048 initobj <dnfile.mdtable.TypeSpecRow object at 0x7f6e98c0ad80>
+IL_004e ldloc.s local(0x0007)
+IL_0050 ldloca.s local(0x0007)
+IL_0052 initobj <dnfile.mdtable.TypeSpecRow object at 0x7f6e98c0ad80>
+IL_0058 ldloc.s local(0x0007)
+IL_005a callvirt GameState::IsValidOption
+IL_005f stloc.0 
+IL_0060 ldloc.0 
+IL_0061 brtrue.s IL_0071
+IL_0063 ldarg.0 
+IL_0064 ldfld Card::m_actor
+IL_0069 ldc.i4.2 
+IL_006a callvirt Actor::SetDeckActionHighlightState
+IL_006f br.s IL_00b7
+IL_0071 ldarg.0 
+IL_0072 ldfld Card::m_overPlayfield
+IL_0077 brtrue.s IL_0087
+IL_0079 ldarg.0 
+IL_007a ldfld Card::m_actor
+IL_007f ldc.i4.0 
+IL_0080 callvirt Actor::SetDeckActionHighlightState
+IL_0085 br.s IL_00b7
+IL_0087 ldarg.0 
+IL_0088 call Card::IsInDeckActionArea
+IL_008d brtrue.s IL_009d
+IL_008f ldarg.0 
+IL_0090 ldfld Card::m_actor
+IL_0095 ldc.i4.2 
+IL_0096 callvirt Actor::SetDeckActionHighlightState
+IL_009b br.s IL_00b7
+IL_009d ldarg.0 
+IL_009e ldfld Card::m_actor
+IL_00a3 ldc.i4.1 
+IL_00a4 callvirt Actor::SetDeckActionHighlightState
+IL_00a9 ldarg.0 
+IL_00aa ldfld Card::m_actor
+IL_00af ldc.i4.8 
+IL_00b0 callvirt Actor::SetActorState
+IL_00b5 ldc.i4.1 
+IL_00b6 ret 
+IL_00b7 ldarg.0 
+IL_00b8 ldfld Card::m_entity
+IL_00bd ldc.i4 1693
+IL_00c2 callvirt EntityBase::HasTag
+IL_00c7 brfalse.s IL_00ff
+IL_00c9 ldarg.0 
+IL_00ca ldfld Card::m_entity
+IL_00cf callvirt Entity::IsControlledByFriendlySidePlayer
+IL_00d4 brfalse.s IL_00ff
+IL_00d6 ldarg.0 
+IL_00d7 ldfld Card::m_mousedOver
+IL_00dc brtrue.s IL_00e7
+IL_00de ldarg.0 
+IL_00df ldarg.1 
+IL_00e0 call Card::ShouldHighlightSelectedLettuceCharacter
+IL_00e5 br.s IL_00e8
+IL_00e7 ldc.i4.1 
+IL_00e8 stloc.s local(0x0008)
+IL_00ea ldarg.0 
+IL_00eb ldfld Card::m_actor
+IL_00f0 ldloc.s local(0x0008)
+IL_00f2 brtrue.s IL_00f7
+IL_00f4 ldc.i4.6 
+IL_00f5 br.s IL_00f8
+IL_00f7 ldc.i4.7 
+IL_00f8 callvirt Actor::SetActorState
+IL_00fd ldc.i4.1 
+IL_00fe ret 
+IL_00ff call GameState::Get
+IL_0104 callvirt GameState::GetGameEntity
+IL_0109 ldarg.0 
+IL_010a ldfld Card::m_entity
+IL_010f callvirt GameEntity::ShouldSuppressOptionHighlight
+IL_0114 brfalse.s IL_0118
+IL_0116 ldc.i4.0 
+IL_0117 ret 
+IL_0118 call GameState::Get
+IL_011d ldarg.0 
+IL_011e ldfld Card::m_entity
+IL_0123 ldc.i4.0 
+IL_0124 newobj <dnfile.mdtable.TypeSpecRow object at 0x7f6e98c0ad80>::.ctor
+IL_0129 ldloca.s local(0x0007)
+IL_012b initobj <dnfile.mdtable.TypeSpecRow object at 0x7f6e98c0ad80>
+IL_0131 ldloc.s local(0x0007)
+IL_0133 ldc.i4.0 
+IL_0134 newobj <dnfile.mdtable.TypeSpecRow object at 0x7f6e98c0ad80>::.ctor
+IL_0139 callvirt GameState::IsValidOption
+IL_013e brtrue.s IL_0142
+IL_0140 ldc.i4.0 
+IL_0141 ret 
+IL_0142 ldarg.0 
+IL_0143 call Card::IsOverMoveMinionTarget
+IL_0148 brfalse.s IL_0159
+IL_014a ldarg.0 
+IL_014b ldfld Card::m_actor
+IL_0150 ldc.i4.s 50
+IL_0152 callvirt Actor::SetActorState
+IL_0157 ldc.i4.1 
+IL_0158 ret 
+IL_0159 ldarg.0 
+IL_015a ldfld Card::m_overPlayfield
+IL_015f brfalse.s IL_01b3
+IL_0161 ldarg.0 
+IL_0162 call Card::GetEntity
+IL_0167 dup 
+IL_0168 brtrue.s IL_016e
+IL_016a pop 
+IL_016b ldc.i4.0 
+IL_016c br.s IL_0173
+IL_016e call EntityBase::HasDeckAction
+IL_0173 brfalse.s IL_018e
+IL_0175 ldarg.0 
+IL_0176 call Card::IsInDeckActionArea
+IL_017b brfalse.s IL_018e
+IL_017d ldloc.0 
+IL_017e brtrue.s IL_018e
+IL_0180 ldarg.0 
+IL_0181 ldfld Card::m_actor
+IL_0186 ldc.i4.1 
+IL_0187 callvirt Actor::SetActorState
+IL_018c br.s IL_01b1
+IL_018e ldarg.0 
+IL_018f ldfld Card::m_overOpposingPlayfield
+IL_0194 brfalse.s IL_01a5
+IL_0196 ldarg.0 
+IL_0197 ldfld Card::m_actor
+IL_019c ldc.i4.s 55
+IL_019e callvirt Actor::SetActorState
+IL_01a3 br.s IL_01b1
+IL_01a5 ldarg.0 
+IL_01a6 ldfld Card::m_actor
+IL_01ab ldc.i4.8 
+IL_01ac callvirt Actor::SetActorState
+IL_01b1 ldc.i4.1 
+IL_01b2 ret 
+IL_01b3 ldarg.0 
+IL_01b4 ldfld Card::m_entity
+IL_01b9 callvirt EntityBase::GetZone
+IL_01be ldc.i4.1 
+IL_01bf beq.s IL_01f4
+IL_01c1 ldarg.0 
+IL_01c2 ldfld Card::m_latestZoneChange
+IL_01c7 brfalse.s IL_01f1
+IL_01c9 ldarg.0 
+IL_01ca ldfld Card::m_latestZoneChange
+IL_01cf callvirt ZoneChange::GetDestinationZone
+IL_01d4 ldnull 
+IL_01d5 call UnityEngine.Object::op_Inequality
+IL_01da brfalse.s IL_01f1
+IL_01dc ldarg.0 
+IL_01dd ldfld Card::m_latestZoneChange
+IL_01e2 callvirt ZoneChange::GetDestinationZone
+IL_01e7 ldfld Zone::m_ServerTag
+IL_01ec ldc.i4.1 
+IL_01ed ceq 
+IL_01ef br.s IL_01f5
+IL_01f1 ldc.i4.0 
+IL_01f2 br.s IL_01f5
+IL_01f4 ldc.i4.1 
+IL_01f5 stloc.1 
+IL_01f6 ldloc.1 
+IL_01f7 brtrue.s IL_0209
+IL_01f9 ldarg.0 
+IL_01fa ldfld Card::m_entity
+IL_01ff callvirt EntityBase::GetZone
+IL_0204 ldc.i4.3 
+IL_0205 ceq 
+IL_0207 br.s IL_020a
+IL_0209 ldc.i4.0 
+IL_020a stloc.2 
+IL_020b ldarg.0 
+IL_020c ldfld Card::m_entity
+IL_0211 callvirt Entity::GetController
+IL_0216 callvirt Player::IsRealTimeComboActive
+IL_021b stloc.3 
+IL_021c ldloc.2 
+IL_021d brtrue.s IL_022c
+IL_021f ldarg.0 
+IL_0220 ldfld Card::m_entity
+IL_0225 callvirt EntityBase::IsCardButton
+IL_022a br.s IL_022d
+IL_022c ldc.i4.1 
+IL_022d ldloc.3 
+IL_022e and 
+IL_022f brfalse.s IL_0252
+IL_0231 ldarg.0 
+IL_0232 ldfld Card::m_entity
+IL_0237 ldc.i4 220
+IL_023c callvirt EntityBase::HasTag
+IL_0241 brfalse.s IL_0252
+IL_0243 ldarg.0 
+IL_0244 ldfld Card::m_actor
+IL_0249 ldc.i4.s 9
+IL_024b callvirt Actor::SetActorState
+IL_0250 ldc.i4.1 
+IL_0251 ret 
+IL_0252 ldarg.0 
+IL_0253 ldfld Card::m_entity
+IL_0258 callvirt Entity::GetRealTimePoweredUp
+IL_025d stloc.s local(0x0004)
+IL_025f ldloc.2 
+IL_0260 brtrue.s IL_026f
+IL_0262 ldarg.0 
+IL_0263 ldfld Card::m_entity
+IL_0268 callvirt EntityBase::IsCardButton
+IL_026d br.s IL_0270
+IL_026f ldc.i4.1 
+IL_0270 ldloc.s local(0x0004)
+IL_0272 and 
+IL_0273 brfalse.s IL_0284
+IL_0275 ldarg.0 
+IL_0276 ldfld Card::m_actor
+IL_027b ldc.i4.s 16
+IL_027d callvirt Actor::SetActorState
+IL_0282 ldc.i4.1 
+IL_0283 ret 
+IL_0284 ldarg.1 
+IL_0285 callvirt GameState::GetGameEntity
+IL_028a ldc.i4 1356
+IL_028f callvirt EntityBase::HasTag
+IL_0294 brfalse.s IL_02a3
+IL_0296 ldarg.0 
+IL_0297 ldfld Card::m_entity
+IL_029c callvirt EntityBase::IsMinion
+IL_02a1 br.s IL_02a4
+IL_02a3 ldc.i4.0 
+IL_02a4 stloc.s local(0x0005)
+IL_02a6 ldarg.1 
+IL_02a7 callvirt GameState::GetGameEntity
+IL_02ac ldc.i4 3111
+IL_02b1 callvirt EntityBase::HasTag
+IL_02b6 brfalse.s IL_02c5
+IL_02b8 ldarg.0 
+IL_02b9 ldfld Card::m_entity
+IL_02be callvirt EntityBase::IsBaconSpell
+IL_02c3 br.s IL_02c6
+IL_02c5 ldc.i4.0 
+IL_02c6 stloc.s local(0x0006)
+IL_02c8 ldloc.1 
+IL_02c9 brfalse IL_037b
+IL_02ce ldloc.s local(0x0005)
+IL_02d0 ldloc.s local(0x0006)
+IL_02d2 or 
+IL_02d3 brfalse IL_037b
+IL_02d8 ldarg.0 
+IL_02d9 ldfld Card::m_entity
+IL_02de callvirt EntityBase::IsInteractableObject
+IL_02e3 brfalse.s IL_031f
+IL_02e5 ldarg.0 
+IL_02e6 ldfld Card::m_entity
+IL_02eb callvirt Entity::IsControlledByFriendlySidePlayer
+IL_02f0 brfalse.s IL_031f
+IL_02f2 ldarg.0 
+IL_02f3 ldfld Card::m_entity
+IL_02f8 callvirt Entity::InteractableObjectCanBeActivatedNow
+IL_02fd stloc.s local(0x0009)
+IL_02ff ldloca.s local(0x0009)
+IL_0301 call <dnfile.mdtable.TypeSpecRow object at 0x7f6e98c0ad80>::get_HasValue
+IL_0306 brfalse.s IL_031f
+IL_0308 ldloca.s local(0x0009)
+IL_030a call <dnfile.mdtable.TypeSpecRow object at 0x7f6e98c0ad80>::get_Value
+IL_030f brfalse.s IL_031f
+IL_0311 ldarg.0 
+IL_0312 ldfld Card::m_actor
+IL_0317 ldc.i4.6 
+IL_0318 callvirt Actor::SetActorState
+IL_031d ldc.i4.1 
+IL_031e ret 
+IL_031f call GameState::Get
+IL_0324 ldarg.0 
+IL_0325 ldfld Card::m_entity
+IL_032a callvirt GameState::HasEnoughManaForMoveMinionHoverTarget
+IL_032f brtrue.s IL_0355
+IL_0331 ldarg.0 
+IL_0332 ldfld Card::m_mousedOver
+IL_0337 brfalse.s IL_0347
+IL_0339 ldarg.0 
+IL_033a ldfld Card::m_actor
+IL_033f ldc.i4.2 
+IL_0340 callvirt Actor::SetActorState
+IL_0345 br.s IL_0353
+IL_0347 ldarg.0 
+IL_0348 ldfld Card::m_actor
+IL_034d ldc.i4.1 
+IL_034e callvirt Actor::SetActorState
+IL_0353 ldc.i4.1 
+IL_0354 ret 
+IL_0355 ldarg.0 
+IL_0356 ldfld Card::m_mousedOver
+IL_035b brfalse.s IL_036c
+IL_035d ldarg.0 
+IL_035e ldfld Card::m_actor
+IL_0363 ldc.i4.s 46
+IL_0365 callvirt Actor::SetActorState
+IL_036a br.s IL_0379
+IL_036c ldarg.0 
+IL_036d ldfld Card::m_actor
+IL_0372 ldc.i4.s 45
+IL_0374 callvirt Actor::SetActorState
+IL_0379 ldc.i4.1 
+IL_037a ret 
+IL_037b ldloc.2 
+IL_037c brtrue IL_051f
+IL_0381 ldarg.0 
+IL_0382 ldfld Card::m_entity
+IL_0387 callvirt Entity::GetController
+IL_038c call GameUtils::StarshipLaunchCost
+IL_0391 stloc.s local(0x000A)
+IL_0393 ldarg.0 
+IL_0394 ldfld Card::m_entity
+IL_0399 callvirt Entity::GetController
+IL_039e callvirt Player::GetNumAvailableResources
+IL_03a3 ldloc.s local(0x000A)
+IL_03a5 clt 
+IL_03a7 ldc.i4.0 
+IL_03a8 ceq 
+IL_03aa stloc.s local(0x000B)
+IL_03ac ldarg.0 
+IL_03ad ldfld Card::m_mousedOver
+IL_03b2 brfalse IL_046e
+IL_03b7 ldarg.0 
+IL_03b8 ldfld Card::m_entity
+IL_03bd callvirt Entity::GetRealTimeAttackableByRush
+IL_03c2 brfalse.s IL_03e3
+IL_03c4 ldarg.0 
+IL_03c5 ldfld Card::m_entity
+IL_03ca callvirt EntityBase::IsLaunchpad
+IL_03cf brtrue.s IL_03e3
+IL_03d1 ldarg.0 
+IL_03d2 ldfld Card::m_actor
+IL_03d7 ldc.i4.s 44
+IL_03d9 callvirt Actor::SetActorState
+IL_03de br IL_046c
+IL_03e3 ldarg.0 
+IL_03e4 ldfld Card::m_entity
+IL_03e9 callvirt Entity::GetRealTimeTitanAbilityUsable
+IL_03ee brfalse.s IL_03ff
+IL_03f0 ldarg.0 
+IL_03f1 ldfld Card::m_actor
+IL_03f6 ldc.i4.s 52
+IL_03f8 callvirt Actor::SetActorState
+IL_03fd br.s IL_046c
+IL_03ff ldarg.0 
+IL_0400 ldfld Card::m_entity
+IL_0405 callvirt EntityBase::IsInteractableObject
+IL_040a brfalse.s IL_041a
+IL_040c ldarg.0 
+IL_040d ldfld Card::m_actor
+IL_0412 ldc.i4.6 
+IL_0413 callvirt Actor::SetActorState
+IL_0418 br.s IL_046c
+IL_041a ldarg.0 
+IL_041b ldfld Card::m_entity
+IL_0420 callvirt EntityBase::IsLaunchpad
+IL_0425 brfalse.s IL_043a
+IL_0427 ldloc.s local(0x000B)
+IL_0429 brfalse.s IL_046c
+IL_042b ldarg.0 
+IL_042c ldfld Card::m_actor
+IL_0431 ldc.i4.s 52
+IL_0433 callvirt Actor::SetActorState
+IL_0438 br.s IL_046c
+IL_043a ldarg.0 
+IL_043b ldfld Card::m_entity
+IL_0440 callvirt EntityBase::GetCardId
+IL_0445 ldstr 'THO_005'
+IL_044a call System.String::op_Equality
+IL_044f brfalse.s IL_0460
+IL_0451 ldarg.0 
+IL_0452 ldfld Card::m_actor
+IL_0457 ldc.i4.s 52
+IL_0459 callvirt Actor::SetActorState
+IL_045e ldc.i4.1 
+IL_045f ret 
+IL_0460 ldarg.0 
+IL_0461 ldfld Card::m_actor
+IL_0466 ldc.i4.7 
+IL_0467 callvirt Actor::SetActorState
+IL_046c ldc.i4.1 
+IL_046d ret 
+IL_046e ldarg.0 
+IL_046f ldfld Card::m_mousedOver
+IL_0474 brtrue IL_051f
+IL_0479 ldarg.0 
+IL_047a ldfld Card::m_entity
+IL_047f callvirt Entity::GetRealTimeAttackableByRush
+IL_0484 brfalse.s IL_04a2
+IL_0486 ldarg.0 
+IL_0487 ldfld Card::m_entity
+IL_048c callvirt EntityBase::IsLaunchpad
+IL_0491 brtrue.s IL_04a2
+IL_0493 ldarg.0 
+IL_0494 ldfld Card::m_actor
+IL_0499 ldc.i4.s 43
+IL_049b callvirt Actor::SetActorState
+IL_04a0 ldc.i4.1 
+IL_04a1 ret 
+IL_04a2 ldarg.0 
+IL_04a3 ldfld Card::m_entity
+IL_04a8 callvirt Entity::GetRealTimeTitanAbilityUsable
+IL_04ad brfalse.s IL_04be
+IL_04af ldarg.0 
+IL_04b0 ldfld Card::m_actor
+IL_04b5 ldc.i4.s 51
+IL_04b7 callvirt Actor::SetActorState
+IL_04bc ldc.i4.1 
+IL_04bd ret 
+IL_04be ldarg.0 
+IL_04bf ldfld Card::m_entity
+IL_04c4 callvirt EntityBase::IsInteractableObject
+IL_04c9 brfalse.s IL_04d9
+IL_04cb ldarg.0 
+IL_04cc ldfld Card::m_actor
+IL_04d1 ldc.i4.6 
+IL_04d2 callvirt Actor::SetActorState
+IL_04d7 ldc.i4.1 
+IL_04d8 ret 
+IL_04d9 ldarg.0 
+IL_04da ldfld Card::m_entity
+IL_04df callvirt EntityBase::IsLaunchpad
+IL_04e4 brfalse.s IL_04f9
+IL_04e6 ldloc.s local(0x000B)
+IL_04e8 brfalse.s IL_04f7
+IL_04ea ldarg.0 
+IL_04eb ldfld Card::m_actor
+IL_04f0 ldc.i4.s 51
+IL_04f2 callvirt Actor::SetActorState
+IL_04f7 ldc.i4.1 
+IL_04f8 ret 
+IL_04f9 ldarg.0 
+IL_04fa ldfld Card::m_entity
+IL_04ff callvirt EntityBase::GetCardId
+IL_0504 ldstr 'THO_005'
+IL_0509 call System.String::op_Equality
+IL_050e brfalse.s IL_051f
+IL_0510 ldarg.0 
+IL_0511 ldfld Card::m_actor
+IL_0516 ldc.i4.s 51
+IL_0518 callvirt Actor::SetActorState
+IL_051d ldc.i4.1 
+IL_051e ret 
+IL_051f ldarg.0 
+IL_0520 ldfld Card::m_actor
+IL_0525 ldc.i4.6 
+IL_0526 callvirt Actor::SetActorState
+IL_052b ldc.i4.1 
+IL_052c ret 
+
+0x06012dd3 Card::DoSubOptionHighlight
+IL_0000 ldarg.0 
+IL_0001 ldfld Card::m_actor
+IL_0006 ldc.i4.2 
+IL_0007 callvirt Actor::SetDeckActionHighlightState
+IL_000c ldarg.1 
+IL_000d callvirt GameState::GetSelectedNetworkOption
+IL_0012 ldarg.0 
+IL_0013 ldfld Card::m_entity
+IL_0018 callvirt EntityBase::GetEntityId
+IL_001d stloc.0 
+IL_001e callvirt Option::get_Subs
+IL_0023 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f6e98883ce0>::GetEnumerator
+IL_0028 stloc.1 
+IL_0029 br.s IL_0073
+IL_002b ldloca.s local(0x0001)
+IL_002d call <dnfile.mdtable.TypeSpecRow object at 0x7f6e9889fbf0>::get_Current
+IL_0032 stloc.2 
+IL_0033 ldloc.0 
+IL_0034 ldloc.2 
+IL_0035 callvirt SubOption::get_ID
+IL_003a bne.un.s IL_0073
+IL_003c ldloc.2 
+IL_003d callvirt SubOption::get_PlayErrorInfo
+IL_0042 callvirt PlayErrorInfo::IsValid
+IL_0047 brtrue.s IL_004d
+IL_0049 ldc.i4.0 
+IL_004a stloc.3 
+IL_004b leave.s IL_008e
+IL_004d ldarg.0 
+IL_004e ldfld Card::m_mousedOver
+IL_0053 brfalse.s IL_0063
+IL_0055 ldarg.0 
+IL_0056 ldfld Card::m_actor
+IL_005b ldc.i4.7 
+IL_005c callvirt Actor::SetActorState
+IL_0061 br.s IL_006f
+IL_0063 ldarg.0 
+IL_0064 ldfld Card::m_actor
+IL_0069 ldc.i4.6 
+IL_006a callvirt Actor::SetActorState
+IL_006f ldc.i4.1 
+IL_0070 stloc.3 
+IL_0071 leave.s IL_008e
+IL_0073 ldloca.s local(0x0001)
+IL_0075 call <dnfile.mdtable.TypeSpecRow object at 0x7f6e9889fbf0>::MoveNext
+IL_007a brtrue.s IL_002b
+IL_007c leave.s IL_008c
+IL_007e ldloca.s local(0x0001)
+IL_0080 constrained. <dnfile.mdtable.TypeSpecRow object at 0x7f6e9889fbf0>
+IL_0086 callvirt System.IDisposable::Dispose
+IL_008b endfinally 
+IL_008c ldc.i4.0 
+IL_008d ret 
+IL_008e ldloc.3 
+IL_008f ret 
+
+0x06012dd4 Card::DoOptionTargetHighlight
+IL_0000 ldarg.0 
+IL_0001 ldfld Card::m_actor
+IL_0006 ldc.i4.2 
+IL_0007 callvirt Actor::SetDeckActionHighlightState
+IL_000c ldarg.1 
+IL_000d callvirt GameState::GetSelectedNetworkSubOption
+IL_0012 ldarg.0 
+IL_0013 ldfld Card::m_entity
+IL_0018 callvirt EntityBase::GetEntityId
+IL_001d stloc.0 
+IL_001e ldloc.0 
+IL_001f callvirt SubOption::IsValidTarget
+IL_0024 brfalse.s IL_004c
+IL_0026 ldarg.0 
+IL_0027 ldfld Card::m_mousedOver
+IL_002c brfalse.s IL_003d
+IL_002e ldarg.0 
+IL_002f ldfld Card::m_actor
+IL_0034 ldc.i4.s 27
+IL_0036 callvirt Actor::SetActorState
+IL_003b br.s IL_004a
+IL_003d ldarg.0 
+IL_003e ldfld Card::m_actor
+IL_0043 ldc.i4.s 26
+IL_0045 callvirt Actor::SetActorState
+IL_004a ldc.i4.1 
+IL_004b ret 
+IL_004c ldc.i4.0 
+IL_004d ret 

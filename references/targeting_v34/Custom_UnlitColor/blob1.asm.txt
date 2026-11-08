@@ -1,0 +1,20 @@
+// ISGN
+// POSITION0: register0.xyzw systemvalue=0 componenttype=3
+// OSGN
+// SV_POSITION0: register0.xyzw systemvalue=1 componenttype=3
+// SHDR
+// shader kind=1, model=4.0, length=94
+0002: dcl_constant_buffer cb0[83].xyzw
+0006: dcl_constant_buffer cb1[4].xyzw
+0010: dcl_input v0.xyz
+0013: dcl_output_siv o0.xyzw, meta(1)
+0017: dcl_temps 2
+0019: mul r0.xyzw, v0.yyyy, cb1[1].xyzw
+0027: mad r0.xyzw, cb1[0].xyzw, v0.xxxx, r0.xyzw
+0037: mad r0.xyzw, cb1[2].xyzw, v0.zzzz, r0.xyzw
+0047: add r0.xyzw, r0.xyzw, cb1[3].xyzw
+0055: mul r1.xyzw, r0.yyyy, cb0[80].xyzw
+0063: mad r1.xyzw, cb0[79].xyzw, r0.xxxx, r1.xyzw
+0073: mad r1.xyzw, cb0[81].xyzw, r0.zzzz, r1.xyzw
+0083: mad o0.xyzw, cb0[82].xyzw, r0.wwww, r1.xyzw
+0093: ret 

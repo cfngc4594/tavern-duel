@@ -1,0 +1,742 @@
+
+TYPE DamageSplatSpell 0x02002480
+FIELD 0x0400eb5f m_StandardSplat SIG 0612808d
+FIELD 0x0400eb60 m_HealthSplat SIG 0612808d
+FIELD 0x0400eb61 m_ArmorSplat SIG 0612808d
+FIELD 0x0400eb62 m_CorpseSplat SIG 0612808d
+FIELD 0x0400eb63 m_PoisonSplat SIG 0612808d
+FIELD 0x0400eb64 m_HealSplat SIG 0612808d
+FIELD 0x0400eb65 m_BloodCritSplat SIG 0612808d
+FIELD 0x0400eb66 m_DamageTextMesh SIG 06128169
+FIELD 0x0400eb67 m_activeSplat SIG 0612808d
+FIELD 0x0400eb68 m_damage SIG 0608
+FIELD 0x0400eb69 m_poison SIG 0602
+FIELD 0x0400eb6a m_damageIsCrit SIG 0602
+FIELD 0x0400eb6b SCALE_IN_TIME SIG 060c
+FIELD 0x0400eb6c DELAY_ASYNC_ANIM SIG 060c
+FIELD 0x0400eb6d FADE_IN_TIME SIG 060c
+FIELD 0x0400eb6e m_animTokenSource SIG 06128749
+FIELD 0x0400eb6f m_alternateCostSplat SIG 0611c000a994
+FIELD 0x0400eb70 m_splats SIG 061d12808d
+
+TYPE <SplatAnimAsync>d__28 0x02002481
+FIELD 0x0400eb71 <>1__state SIG 0608
+FIELD 0x0400eb72 <>t__builder SIG 0611871d
+FIELD 0x0400eb73 <>4__this SIG 0612c0009200
+FIELD 0x0400eb74 token SIG 06118731
+FIELD 0x0400eb75 <>u__1 SIG 0611872d
+
+0x06011832 DamageSplatSpell::Awake() RVA 0x520b24 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           Spell::Awake token(0x060148FC)
+  IL_0006 ldarg.0         
+  IL_0007 ldc.i4.7        
+  IL_0008 newarr         UnityEngine.GameObject token(0x01000023)
+  IL_000d dup             
+  IL_000e ldc.i4.0        
+  IL_000f ldarg.0         
+  IL_0010 ldfld          DamageSplatSpell::m_StandardSplat token(0x0400EB5F)
+  IL_0015 stelem.ref      
+  IL_0016 dup             
+  IL_0017 ldc.i4.1        
+  IL_0018 ldarg.0         
+  IL_0019 ldfld          DamageSplatSpell::m_HealthSplat token(0x0400EB60)
+  IL_001e stelem.ref      
+  IL_001f dup             
+  IL_0020 ldc.i4.2        
+  IL_0021 ldarg.0         
+  IL_0022 ldfld          DamageSplatSpell::m_ArmorSplat token(0x0400EB61)
+  IL_0027 stelem.ref      
+  IL_0028 dup             
+  IL_0029 ldc.i4.3        
+  IL_002a ldarg.0         
+  IL_002b ldfld          DamageSplatSpell::m_CorpseSplat token(0x0400EB62)
+  IL_0030 stelem.ref      
+  IL_0031 dup             
+  IL_0032 ldc.i4.4        
+  IL_0033 ldarg.0         
+  IL_0034 ldfld          DamageSplatSpell::m_PoisonSplat token(0x0400EB63)
+  IL_0039 stelem.ref      
+  IL_003a dup             
+  IL_003b ldc.i4.5        
+  IL_003c ldarg.0         
+  IL_003d ldfld          DamageSplatSpell::m_HealSplat token(0x0400EB64)
+  IL_0042 stelem.ref      
+  IL_0043 dup             
+  IL_0044 ldc.i4.6        
+  IL_0045 ldarg.0         
+  IL_0046 ldfld          DamageSplatSpell::m_BloodCritSplat token(0x0400EB65)
+  IL_004b stelem.ref      
+  IL_004c stfld          DamageSplatSpell::m_splats token(0x0400EB70)
+  IL_0051 ldarg.0         
+  IL_0052 ldc.i4.0        
+  IL_0053 call           DamageSplatSpell::EnableAllRenderers token(0x06011844)
+  IL_0058 ret             
+
+0x06011833 DamageSplatSpell::OnDestroy() RVA 0x520b89 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           Spell::OnDestroy token(0x060148FD)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_000c brfalse.s      IL_0024 
+  IL_000e ldarg.0         
+  IL_000f ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_0014 callvirt       System.Threading.CancellationTokenSource::Cancel token(0x0A0010D9)
+  IL_0019 ldarg.0         
+  IL_001a ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_001f callvirt       System.Threading.CancellationTokenSource::Dispose token(0x0A0010DA)
+  IL_0024 ret             
+
+0x06011834 DamageSplatSpell::GetDamage() RVA 0x520baf SIG 20000c
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          DamageSplatSpell::m_damage token(0x0400EB68)
+  IL_0006 conv.r4         
+  IL_0007 ret             
+
+0x06011835 DamageSplatSpell::SetDamage(damage) RVA 0x520bb8 SIG 20010108
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          DamageSplatSpell::m_damage token(0x0400EB68)
+  IL_0007 ret             
+
+0x06011836 DamageSplatSpell::SetPoisonous(isPoisonous) RVA 0x520bc1 SIG 20010102
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          DamageSplatSpell::m_poison token(0x0400EB69)
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          DamageSplatSpell::m_DamageTextMesh token(0x0400EB66)
+  IL_000d callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0012 ldarg.0         
+  IL_0013 ldfld          DamageSplatSpell::m_poison token(0x0400EB69)
+  IL_0018 ldc.i4.0        
+  IL_0019 ceq             
+  IL_001b callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_0020 ret             
+
+0x06011837 DamageSplatSpell::IsPoisonous() RVA 0x520be3 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          DamageSplatSpell::m_poison token(0x0400EB69)
+  IL_0006 ret             
+
+0x06011838 DamageSplatSpell::SetDamageIsCrit(isCrit) RVA 0x520beb SIG 20010102
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          DamageSplatSpell::m_damageIsCrit token(0x0400EB6A)
+  IL_0007 ret             
+
+0x06011839 DamageSplatSpell::IsDamageCritical() RVA 0x520bf4 SIG 200002
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          DamageSplatSpell::m_damageIsCrit token(0x0400EB6A)
+  IL_0006 ret             
+
+0x0601183a DamageSplatSpell::SetAlternateCostSplat(splatType) RVA 0x520bfc SIG 20010111c000a994
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 stfld          DamageSplatSpell::m_alternateCostSplat token(0x0400EB6F)
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          Spell::m_fsm token(0x04011C12)
+  IL_000d ldnull          
+  IL_000e call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0013 brfalse.s      IL_0047 
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          Spell::m_fsm token(0x04011C12)
+  IL_001b callvirt       PlayMakerFSM::get_FsmVariables token(0x0A000466)
+  IL_0020 ldstr          'splat' string token(0x70398F88)
+  IL_0025 callvirt       HutongGames.PlayMaker.FsmVariables::GetFsmInt token(0x0A0021BC)
+  IL_002a brfalse.s      IL_0047 
+  IL_002c ldarg.0         
+  IL_002d ldfld          Spell::m_fsm token(0x04011C12)
+  IL_0032 callvirt       PlayMakerFSM::get_FsmVariables token(0x0A000466)
+  IL_0037 ldstr          'splat' string token(0x70398F88)
+  IL_003c callvirt       HutongGames.PlayMaker.FsmVariables::GetFsmInt token(0x0A0021BC)
+  IL_0041 ldarg.1         
+  IL_0042 callvirt       HutongGames.PlayMaker.FsmInt::set_Value token(0x0A0021BD)
+  IL_0047 ret             
+
+0x0601183b DamageSplatSpell::DoSplatAnims() RVA 0x520c50 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       Spell::StopAllAsyncs token(0x0601496F)
+  IL_0006 ldarg.0         
+  IL_0007 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_000c call           iTween::Stop token(0x0A000169)
+  IL_0011 ldarg.0         
+  IL_0012 ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_0017 brtrue.s       IL_0026 
+  IL_0019 ldarg.0         
+  IL_001a newobj         System.Threading.CancellationTokenSource::.ctor token(0x0A0010D7)
+  IL_001f stfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_0024 br.s           IL_0051 
+  IL_0026 ldarg.0         
+  IL_0027 ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_002c brfalse.s      IL_0051 
+  IL_002e ldarg.0         
+  IL_002f ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_0034 callvirt       System.Threading.CancellationTokenSource::get_IsCancellationRequested token(0x0A003F31)
+  IL_0039 brfalse.s      IL_0051 
+  IL_003b ldarg.0         
+  IL_003c ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_0041 callvirt       System.Threading.CancellationTokenSource::Dispose token(0x0A0010DA)
+  IL_0046 ldarg.0         
+  IL_0047 newobj         System.Threading.CancellationTokenSource::.ctor token(0x0A0010D7)
+  IL_004c stfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_0051 ldarg.0         
+  IL_0052 ldarg.0         
+  IL_0053 ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_0058 callvirt       System.Threading.CancellationTokenSource::get_Token token(0x0A0010D8)
+  IL_005d call           DamageSplatSpell::SplatAnimAsync token(0x0601183C)
+  IL_0062 stloc.0         
+  IL_0063 ldloca.s       local(0x0000) 
+  IL_0065 call           Cysharp.Threading.Tasks.UniTaskVoid::Forget token(0x0A00102B)
+  IL_006a ret             
+
+0x0601183c DamageSplatSpell::SplatAnimAsync(token) RVA 0x520cc8 SIG 2001118719118731
+  IL_0000 ldloca.s       local(0x0000) 
+  IL_0002 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::Create token(0x0A00102D)
+  IL_0007 stfld          <SplatAnimAsync>d__28::<>t__builder token(0x0400EB72)
+  IL_000c ldloca.s       local(0x0000) 
+  IL_000e ldarg.0         
+  IL_000f stfld          <SplatAnimAsync>d__28::<>4__this token(0x0400EB73)
+  IL_0014 ldloca.s       local(0x0000) 
+  IL_0016 ldarg.1         
+  IL_0017 stfld          <SplatAnimAsync>d__28::token token(0x0400EB74)
+  IL_001c ldloca.s       local(0x0000) 
+  IL_001e ldc.i4.m1       
+  IL_001f stfld          <SplatAnimAsync>d__28::<>1__state token(0x0400EB71)
+  IL_0024 ldloca.s       local(0x0000) 
+  IL_0026 ldflda         <SplatAnimAsync>d__28::<>t__builder token(0x0400EB72)
+  IL_002b ldloca.s       local(0x0000) 
+  IL_002d call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::Start<spec> token(0x2B000768)
+  IL_0032 ldloca.s       local(0x0000) 
+  IL_0034 ldflda         <SplatAnimAsync>d__28::<>t__builder token(0x0400EB72)
+  IL_0039 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::get_Task token(0x0A00102F)
+  IL_003e ret             
+
+0x0601183d DamageSplatSpell::OnIdle(prevStateType) RVA 0x520d13 SIG 200101118281
+  IL_0000 ldarg.0         
+  IL_0001 callvirt       Spell::StopAllAsyncs token(0x0601496F)
+  IL_0006 ldarg.0         
+  IL_0007 call           DamageSplatSpell::UpdateElements token(0x06011843)
+  IL_000c ldarg.0         
+  IL_000d ldarg.1         
+  IL_000e call           Spell::OnIdle token(0x06014964)
+  IL_0013 ret             
+
+0x0601183e DamageSplatSpell::OnAction(prevStateType) RVA 0x520d28 SIG 200101118281
+  IL_0000 ldarg.0         
+  IL_0001 call           DamageSplatSpell::UpdateElements token(0x06011843)
+  IL_0006 ldarg.0         
+  IL_0007 ldarg.1         
+  IL_0008 call           Spell::OnAction token(0x06014965)
+  IL_000d ldarg.0         
+  IL_000e call           DamageSplatSpell::DoSplatAnims token(0x0601183B)
+  IL_0013 ret             
+
+0x0601183f DamageSplatSpell::OnNone(prevStateType) RVA 0x520d3d SIG 200101118281
+  IL_0000 ldarg.0         
+  IL_0001 ldarg.1         
+  IL_0002 call           Spell::OnAction token(0x06014965)
+  IL_0007 ldarg.0         
+  IL_0008 ldnull          
+  IL_0009 stfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_000e ret             
+
+0x06011840 DamageSplatSpell::ShowImpl() RVA 0x520d50 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           Spell::ShowImpl token(0x06014988)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_000c ldnull          
+  IL_000d call           UnityEngine.Object::op_Equality token(0x0A000046)
+  IL_0012 brfalse.s      IL_0015 
+  IL_0014 ret             
+  IL_0015 ldarg.0         
+  IL_0016 ldfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_001b callvirt       UnityEngine.GameObject::get_gameObject token(0x0A0002FC)
+  IL_0020 ldc.i4.1        
+  IL_0021 call           RenderUtils::EnableRenderers token(0x06014F23)
+  IL_0026 ldarg.0         
+  IL_0027 ldfld          DamageSplatSpell::m_DamageTextMesh token(0x0400EB66)
+  IL_002c callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          DamageSplatSpell::m_poison token(0x0400EB69)
+  IL_0037 ldc.i4.0        
+  IL_0038 ceq             
+  IL_003a callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_003f ret             
+
+0x06011841 DamageSplatSpell::HideImpl() RVA 0x520d9c SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           Spell::HideImpl token(0x06014989)
+  IL_0006 ldarg.0         
+  IL_0007 callvirt       Spell::StopAllAsyncs token(0x0601496F)
+  IL_000c ldarg.0         
+  IL_000d call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0012 call           iTween::Stop token(0x0A000169)
+  IL_0017 ldarg.0         
+  IL_0018 ldc.i4.0        
+  IL_0019 call           DamageSplatSpell::EnableAllRenderers token(0x06011844)
+  IL_001e ret             
+
+0x06011842 DamageSplatSpell::StopAllAsyncs() RVA 0x520dbc SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           Spell::StopAllAsyncs token(0x0601496F)
+  IL_0006 ldarg.0         
+  IL_0007 ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_000c brfalse.s      IL_0026 
+  IL_000e ldarg.0         
+  IL_000f ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_0014 callvirt       System.Threading.CancellationTokenSource::get_IsCancellationRequested token(0x0A003F31)
+  IL_0019 brtrue.s       IL_0026 
+  IL_001b ldarg.0         
+  IL_001c ldfld          DamageSplatSpell::m_animTokenSource token(0x0400EB6E)
+  IL_0021 callvirt       System.Threading.CancellationTokenSource::Cancel token(0x0A0010D9)
+  IL_0026 ret             
+
+0x06011843 DamageSplatSpell::UpdateElements() RVA 0x520de4 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0006 call           iTween::Stop token(0x0A000169)
+  IL_000b ldarg.0         
+  IL_000c call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0011 ldc.r4         1.0 
+  IL_0016 ldc.r4         0.0 
+  IL_001b call           iTween::FadeTo token(0x0A0009F7)
+  IL_0020 ldc.i4.0        
+  IL_0021 stloc.3         
+  IL_0022 br.s           IL_0049 
+  IL_0024 ldarg.0         
+  IL_0025 ldfld          DamageSplatSpell::m_splats token(0x0400EB70)
+  IL_002a ldloc.3         
+  IL_002b ldelem.ref      
+  IL_002c stloc.s        local(0x0004) 
+  IL_002e ldloc.s        local(0x0004) 
+  IL_0030 ldnull          
+  IL_0031 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0036 brfalse.s      IL_0045 
+  IL_0038 ldloc.s        local(0x0004) 
+  IL_003a callvirt       UnityEngine.GameObject::get_gameObject token(0x0A0002FC)
+  IL_003f ldc.i4.0        
+  IL_0040 call           RenderUtils::EnableRenderers token(0x06014F23)
+  IL_0045 ldloc.3         
+  IL_0046 ldc.i4.1        
+  IL_0047 add             
+  IL_0048 stloc.3         
+  IL_0049 ldloc.3         
+  IL_004a ldarg.0         
+  IL_004b ldfld          DamageSplatSpell::m_splats token(0x0400EB70)
+  IL_0050 ldlen           
+  IL_0051 conv.i4         
+  IL_0052 blt.s          IL_0024 
+  IL_0054 ldstr          '-{0}' string token(0x70398F94)
+  IL_0059 stloc.0         
+  IL_005a ldarg.0         
+  IL_005b ldfld          DamageSplatSpell::m_damage token(0x0400EB68)
+  IL_0060 stloc.1         
+  IL_0061 ldc.i4.1        
+  IL_0062 stloc.2         
+  IL_0063 ldarg.0         
+  IL_0064 ldfld          DamageSplatSpell::m_damage token(0x0400EB68)
+  IL_0069 ldc.i4.0        
+  IL_006a bge.s          IL_009d 
+  IL_006c ldarg.0         
+  IL_006d ldfld          DamageSplatSpell::m_HealSplat token(0x0400EB64)
+  IL_0072 ldnull          
+  IL_0073 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0078 brfalse.s      IL_009d 
+  IL_007a ldarg.0         
+  IL_007b ldarg.0         
+  IL_007c ldfld          DamageSplatSpell::m_HealSplat token(0x0400EB64)
+  IL_0081 stfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_0086 ldstr          '+{0}' string token(0x7000E4B3)
+  IL_008b stloc.0         
+  IL_008c ldarg.0         
+  IL_008d ldfld          DamageSplatSpell::m_damage token(0x0400EB68)
+  IL_0092 call           UnityEngine.Mathf::Abs token(0x0A003841)
+  IL_0097 stloc.1         
+  IL_0098 br             IL_017c 
+  IL_009d ldarg.0         
+  IL_009e ldfld          DamageSplatSpell::m_poison token(0x0400EB69)
+  IL_00a3 brfalse.s      IL_00c6 
+  IL_00a5 ldarg.0         
+  IL_00a6 ldfld          DamageSplatSpell::m_PoisonSplat token(0x0400EB63)
+  IL_00ab ldnull          
+  IL_00ac call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00b1 brfalse.s      IL_00c6 
+  IL_00b3 ldarg.0         
+  IL_00b4 ldarg.0         
+  IL_00b5 ldfld          DamageSplatSpell::m_PoisonSplat token(0x0400EB63)
+  IL_00ba stfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_00bf ldc.i4.0        
+  IL_00c0 stloc.2         
+  IL_00c1 br             IL_017c 
+  IL_00c6 ldarg.0         
+  IL_00c7 ldfld          DamageSplatSpell::m_damageIsCrit token(0x0400EB6A)
+  IL_00cc brfalse.s      IL_00f3 
+  IL_00ce ldarg.0         
+  IL_00cf ldfld          DamageSplatSpell::m_BloodCritSplat token(0x0400EB65)
+  IL_00d4 ldnull          
+  IL_00d5 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00da brfalse.s      IL_00f3 
+  IL_00dc ldarg.0         
+  IL_00dd ldarg.0         
+  IL_00de ldfld          DamageSplatSpell::m_BloodCritSplat token(0x0400EB65)
+  IL_00e3 stfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_00e8 ldstr          '-{0}!' string token(0x70398F9E)
+  IL_00ed stloc.0         
+  IL_00ee br             IL_017c 
+  IL_00f3 ldarg.0         
+  IL_00f4 ldfld          DamageSplatSpell::m_HealthSplat token(0x0400EB60)
+  IL_00f9 ldnull          
+  IL_00fa call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_00ff brfalse.s      IL_0118 
+  IL_0101 ldarg.0         
+  IL_0102 ldfld          DamageSplatSpell::m_alternateCostSplat token(0x0400EB6F)
+  IL_0107 ldc.i4.1        
+  IL_0108 bne.un.s       IL_0118 
+  IL_010a ldarg.0         
+  IL_010b ldarg.0         
+  IL_010c ldfld          DamageSplatSpell::m_HealthSplat token(0x0400EB60)
+  IL_0111 stfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_0116 br.s           IL_017c 
+  IL_0118 ldarg.0         
+  IL_0119 ldfld          DamageSplatSpell::m_ArmorSplat token(0x0400EB61)
+  IL_011e ldnull          
+  IL_011f call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0124 brfalse.s      IL_013d 
+  IL_0126 ldarg.0         
+  IL_0127 ldfld          DamageSplatSpell::m_alternateCostSplat token(0x0400EB6F)
+  IL_012c ldc.i4.2        
+  IL_012d bne.un.s       IL_013d 
+  IL_012f ldarg.0         
+  IL_0130 ldarg.0         
+  IL_0131 ldfld          DamageSplatSpell::m_ArmorSplat token(0x0400EB61)
+  IL_0136 stfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_013b br.s           IL_017c 
+  IL_013d ldarg.0         
+  IL_013e ldfld          DamageSplatSpell::m_CorpseSplat token(0x0400EB62)
+  IL_0143 ldnull          
+  IL_0144 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0149 brfalse.s      IL_0162 
+  IL_014b ldarg.0         
+  IL_014c ldfld          DamageSplatSpell::m_alternateCostSplat token(0x0400EB6F)
+  IL_0151 ldc.i4.3        
+  IL_0152 bne.un.s       IL_0162 
+  IL_0154 ldarg.0         
+  IL_0155 ldarg.0         
+  IL_0156 ldfld          DamageSplatSpell::m_CorpseSplat token(0x0400EB62)
+  IL_015b stfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_0160 br.s           IL_017c 
+  IL_0162 ldarg.0         
+  IL_0163 ldfld          DamageSplatSpell::m_StandardSplat token(0x0400EB5F)
+  IL_0168 ldnull          
+  IL_0169 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_016e brfalse.s      IL_017c 
+  IL_0170 ldarg.0         
+  IL_0171 ldarg.0         
+  IL_0172 ldfld          DamageSplatSpell::m_StandardSplat token(0x0400EB5F)
+  IL_0177 stfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_017c ldarg.0         
+  IL_017d ldfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_0182 ldnull          
+  IL_0183 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0188 brfalse.s      IL_01be 
+  IL_018a ldarg.0         
+  IL_018b ldfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_0190 callvirt       UnityEngine.GameObject::get_gameObject token(0x0A0002FC)
+  IL_0195 callvirt       UnityEngine.GameObject::get_activeSelf token(0x0A000362)
+  IL_019a brtrue.s       IL_01ad 
+  IL_019c ldarg.0         
+  IL_019d ldfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_01a2 callvirt       UnityEngine.GameObject::get_gameObject token(0x0A0002FC)
+  IL_01a7 ldc.i4.1        
+  IL_01a8 callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_01ad ldarg.0         
+  IL_01ae ldfld          DamageSplatSpell::m_activeSplat token(0x0400EB67)
+  IL_01b3 callvirt       UnityEngine.GameObject::get_gameObject token(0x0A0002FC)
+  IL_01b8 ldc.i4.1        
+  IL_01b9 call           RenderUtils::EnableRenderers token(0x06014F23)
+  IL_01be ldarg.0         
+  IL_01bf ldfld          DamageSplatSpell::m_DamageTextMesh token(0x0400EB66)
+  IL_01c4 ldnull          
+  IL_01c5 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_01ca brfalse.s      IL_01ff 
+  IL_01cc ldloc.1         
+  IL_01cd call           System.Convert::ToString token(0x0A00100D)
+  IL_01d2 stloc.s        local(0x0005) 
+  IL_01d4 ldloca.s       local(0x0005) 
+  IL_01d6 call           GameUtils::SwapToInfinityIfNecessary token(0x06014DA9)
+  IL_01db ldarg.0         
+  IL_01dc ldfld          DamageSplatSpell::m_DamageTextMesh token(0x0400EB66)
+  IL_01e1 ldloc.0         
+  IL_01e2 ldloc.s        local(0x0005) 
+  IL_01e4 call           System.String::Format token(0x0A0000B7)
+  IL_01e9 callvirt       UberText::set_Text token(0x0A0000EF)
+  IL_01ee ldarg.0         
+  IL_01ef ldfld          DamageSplatSpell::m_DamageTextMesh token(0x0400EB66)
+  IL_01f4 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_01f9 ldloc.2         
+  IL_01fa callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_01ff ret             
+
+0x06011844 DamageSplatSpell::EnableAllRenderers(enabled) RVA 0x520ff0 SIG 20010102
+  IL_0000 ldc.i4.0        
+  IL_0001 stloc.0         
+  IL_0002 br.s           IL_0026 
+  IL_0004 ldarg.0         
+  IL_0005 ldfld          DamageSplatSpell::m_splats token(0x0400EB70)
+  IL_000a ldloc.0         
+  IL_000b ldelem.ref      
+  IL_000c stloc.1         
+  IL_000d ldloc.1         
+  IL_000e ldnull          
+  IL_000f call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_0014 brfalse.s      IL_0022 
+  IL_0016 ldloc.1         
+  IL_0017 callvirt       UnityEngine.GameObject::get_gameObject token(0x0A0002FC)
+  IL_001c ldarg.1         
+  IL_001d call           RenderUtils::EnableRenderers token(0x06014F23)
+  IL_0022 ldloc.0         
+  IL_0023 ldc.i4.1        
+  IL_0024 add             
+  IL_0025 stloc.0         
+  IL_0026 ldloc.0         
+  IL_0027 ldarg.0         
+  IL_0028 ldfld          DamageSplatSpell::m_splats token(0x0400EB70)
+  IL_002d ldlen           
+  IL_002e conv.i4         
+  IL_002f blt.s          IL_0004 
+  IL_0031 ldarg.0         
+  IL_0032 ldfld          DamageSplatSpell::m_DamageTextMesh token(0x0400EB66)
+  IL_0037 ldnull          
+  IL_0038 call           UnityEngine.Object::op_Inequality token(0x0A00006D)
+  IL_003d brfalse.s      IL_0050 
+  IL_003f ldarg.0         
+  IL_0040 ldfld          DamageSplatSpell::m_DamageTextMesh token(0x0400EB66)
+  IL_0045 callvirt       UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_004a ldarg.1         
+  IL_004b callvirt       UnityEngine.GameObject::SetActive token(0x0A000104)
+  IL_0050 ret             
+
+0x06011845 DamageSplatSpell::.ctor() RVA 0x87040 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 call           Spell::.ctor token(0x0601498E)
+  IL_0006 ret             
+
+0x06011846 <SplatAnimAsync>d__28::MoveNext() RVA 0x521050 SIG 200001
+  IL_0000 ldarg.0         
+  IL_0001 ldfld          <SplatAnimAsync>d__28::<>1__state token(0x0400EB71)
+  IL_0006 stloc.0         
+  IL_0007 ldarg.0         
+  IL_0008 ldfld          <SplatAnimAsync>d__28::<>4__this token(0x0400EB73)
+  IL_000d stloc.1         
+  IL_000e ldloc.0         
+  IL_000f switch         [IL_0078, IL_0158, IL_01de] 
+  IL_0020 ldloc.1         
+  IL_0021 call           DamageSplatSpell::UpdateElements token(0x06011843)
+  IL_0026 ldloc.1         
+  IL_0027 call           UnityEngine.Component::get_transform token(0x0A000049)
+  IL_002c call           UnityEngine.Vector3::get_zero token(0x0A0000DD)
+  IL_0031 callvirt       UnityEngine.Transform::set_localScale token(0x0A000166)
+  IL_0036 ldc.i4.8        
+  IL_0037 ldarg.0         
+  IL_0038 ldfld          <SplatAnimAsync>d__28::token token(0x0400EB74)
+  IL_003d call           Cysharp.Threading.Tasks.UniTask::Yield token(0x0A002462)
+  IL_0042 stloc.s        local(0x0004) 
+  IL_0044 ldloca.s       local(0x0004) 
+  IL_0046 call           Cysharp.Threading.Tasks.UniTask::GetAwaiter token(0x0A00103B)
+  IL_004b stloc.3         
+  IL_004c ldloca.s       local(0x0003) 
+  IL_004e call           Awaiter::get_IsCompleted token(0x0A00103C)
+  IL_0053 brtrue.s       IL_0094 
+  IL_0055 ldarg.0         
+  IL_0056 ldc.i4.0        
+  IL_0057 dup             
+  IL_0058 stloc.0         
+  IL_0059 stfld          <SplatAnimAsync>d__28::<>1__state token(0x0400EB71)
+  IL_005e ldarg.0         
+  IL_005f ldloc.3         
+  IL_0060 stfld          <SplatAnimAsync>d__28::<>u__1 token(0x0400EB75)
+  IL_0065 ldarg.0         
+  IL_0066 ldflda         <SplatAnimAsync>d__28::<>t__builder token(0x0400EB72)
+  IL_006b ldloca.s       local(0x0003) 
+  IL_006d ldarg.0         
+  IL_006e call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::AwaitUnsafeOnCompleted<spec> token(0x2B000769)
+  IL_0073 leave          IL_0244 
+  IL_0078 ldarg.0         
+  IL_0079 ldfld          <SplatAnimAsync>d__28::<>u__1 token(0x0400EB75)
+  IL_007e stloc.3         
+  IL_007f ldarg.0         
+  IL_0080 ldflda         <SplatAnimAsync>d__28::<>u__1 token(0x0400EB75)
+  IL_0085 initobj        Awaiter token(0x010001CB)
+  IL_008b ldarg.0         
+  IL_008c ldc.i4.m1       
+  IL_008d dup             
+  IL_008e stloc.0         
+  IL_008f stfld          <SplatAnimAsync>d__28::<>1__state token(0x0400EB71)
+  IL_0094 ldloca.s       local(0x0003) 
+  IL_0096 call           Awaiter::GetResult token(0x0A00103E)
+  IL_009b ldloc.1         
+  IL_009c callvirt       Spell::OnSpellFinished token(0x0601495F)
+  IL_00a1 ldloc.1         
+  IL_00a2 ldc.i4.0        
+  IL_00a3 call           DamageSplatSpell::SetDamageIsCrit token(0x06011838)
+  IL_00a8 ldloc.1         
+  IL_00a9 call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_00ae ldc.i4.6        
+  IL_00af newarr         System.Object token(0x01000001)
+  IL_00b4 dup             
+  IL_00b5 ldc.i4.0        
+  IL_00b6 ldstr          'scale' string token(0x70001966)
+  IL_00bb stelem.ref      
+  IL_00bc dup             
+  IL_00bd ldc.i4.1        
+  IL_00be call           UnityEngine.Vector3::get_one token(0x0A000165)
+  IL_00c3 box            UnityEngine.Vector3 token(0x01000017)
+  IL_00c8 stelem.ref      
+  IL_00c9 dup             
+  IL_00ca ldc.i4.2        
+  IL_00cb ldstr          'time' string token(0x70001972)
+  IL_00d0 stelem.ref      
+  IL_00d1 dup             
+  IL_00d2 ldc.i4.3        
+  IL_00d3 ldc.r4         1.0 
+  IL_00d8 box            System.Single token(0x01000074)
+  IL_00dd stelem.ref      
+  IL_00de dup             
+  IL_00df ldc.i4.4        
+  IL_00e0 ldstr          'easetype' string token(0x700061FD)
+  IL_00e5 stelem.ref      
+  IL_00e6 dup             
+  IL_00e7 ldc.i4.5        
+  IL_00e8 ldc.i4.s       30 
+  IL_00ea box            EaseType token(0x01000089)
+  IL_00ef stelem.ref      
+  IL_00f0 call           iTween::Hash token(0x0A00016A)
+  IL_00f5 call           iTween::ScaleTo token(0x0A00016B)
+  IL_00fa ldc.r4         2.0 
+  IL_00ff stloc.2         
+  IL_0100 ldloc.1         
+  IL_0101 call           DamageSplatSpell::IsPoisonous token(0x06011837)
+  IL_0106 brfalse.s      IL_010e 
+  IL_0108 ldc.r4         0.800000011920929 
+  IL_010d stloc.2         
+  IL_010e ldloc.2         
+  IL_010f conv.r8         
+  IL_0110 call           System.TimeSpan::FromSeconds token(0x0A001039)
+  IL_0115 ldc.i4.0        
+  IL_0116 ldc.i4.8        
+  IL_0117 ldarg.0         
+  IL_0118 ldfld          <SplatAnimAsync>d__28::token token(0x0400EB74)
+  IL_011d call           Cysharp.Threading.Tasks.UniTask::Delay token(0x0A00103A)
+  IL_0122 stloc.s        local(0x0004) 
+  IL_0124 ldloca.s       local(0x0004) 
+  IL_0126 call           Cysharp.Threading.Tasks.UniTask::GetAwaiter token(0x0A00103B)
+  IL_012b stloc.3         
+  IL_012c ldloca.s       local(0x0003) 
+  IL_012e call           Awaiter::get_IsCompleted token(0x0A00103C)
+  IL_0133 brtrue.s       IL_0174 
+  IL_0135 ldarg.0         
+  IL_0136 ldc.i4.1        
+  IL_0137 dup             
+  IL_0138 stloc.0         
+  IL_0139 stfld          <SplatAnimAsync>d__28::<>1__state token(0x0400EB71)
+  IL_013e ldarg.0         
+  IL_013f ldloc.3         
+  IL_0140 stfld          <SplatAnimAsync>d__28::<>u__1 token(0x0400EB75)
+  IL_0145 ldarg.0         
+  IL_0146 ldflda         <SplatAnimAsync>d__28::<>t__builder token(0x0400EB72)
+  IL_014b ldloca.s       local(0x0003) 
+  IL_014d ldarg.0         
+  IL_014e call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::AwaitUnsafeOnCompleted<spec> token(0x2B000769)
+  IL_0153 leave          IL_0244 
+  IL_0158 ldarg.0         
+  IL_0159 ldfld          <SplatAnimAsync>d__28::<>u__1 token(0x0400EB75)
+  IL_015e stloc.3         
+  IL_015f ldarg.0         
+  IL_0160 ldflda         <SplatAnimAsync>d__28::<>u__1 token(0x0400EB75)
+  IL_0165 initobj        Awaiter token(0x010001CB)
+  IL_016b ldarg.0         
+  IL_016c ldc.i4.m1       
+  IL_016d dup             
+  IL_016e stloc.0         
+  IL_016f stfld          <SplatAnimAsync>d__28::<>1__state token(0x0400EB71)
+  IL_0174 ldloca.s       local(0x0003) 
+  IL_0176 call           Awaiter::GetResult token(0x0A00103E)
+  IL_017b ldloc.1         
+  IL_017c call           UnityEngine.Component::get_gameObject token(0x0A000045)
+  IL_0181 ldc.r4         0.0 
+  IL_0186 ldc.r4         1.0 
+  IL_018b call           iTween::FadeTo token(0x0A0009F7)
+  IL_0190 ldc.r8         1.100000023841858 
+  IL_0199 call           System.TimeSpan::FromSeconds token(0x0A001039)
+  IL_019e ldc.i4.0        
+  IL_019f ldc.i4.8        
+  IL_01a0 ldarg.0         
+  IL_01a1 ldfld          <SplatAnimAsync>d__28::token token(0x0400EB74)
+  IL_01a6 call           Cysharp.Threading.Tasks.UniTask::Delay token(0x0A00103A)
+  IL_01ab stloc.s        local(0x0004) 
+  IL_01ad ldloca.s       local(0x0004) 
+  IL_01af call           Cysharp.Threading.Tasks.UniTask::GetAwaiter token(0x0A00103B)
+  IL_01b4 stloc.3         
+  IL_01b5 ldloca.s       local(0x0003) 
+  IL_01b7 call           Awaiter::get_IsCompleted token(0x0A00103C)
+  IL_01bc brtrue.s       IL_01fa 
+  IL_01be ldarg.0         
+  IL_01bf ldc.i4.2        
+  IL_01c0 dup             
+  IL_01c1 stloc.0         
+  IL_01c2 stfld          <SplatAnimAsync>d__28::<>1__state token(0x0400EB71)
+  IL_01c7 ldarg.0         
+  IL_01c8 ldloc.3         
+  IL_01c9 stfld          <SplatAnimAsync>d__28::<>u__1 token(0x0400EB75)
+  IL_01ce ldarg.0         
+  IL_01cf ldflda         <SplatAnimAsync>d__28::<>t__builder token(0x0400EB72)
+  IL_01d4 ldloca.s       local(0x0003) 
+  IL_01d6 ldarg.0         
+  IL_01d7 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::AwaitUnsafeOnCompleted<spec> token(0x2B000769)
+  IL_01dc leave.s        IL_0244 
+  IL_01de ldarg.0         
+  IL_01df ldfld          <SplatAnimAsync>d__28::<>u__1 token(0x0400EB75)
+  IL_01e4 stloc.3         
+  IL_01e5 ldarg.0         
+  IL_01e6 ldflda         <SplatAnimAsync>d__28::<>u__1 token(0x0400EB75)
+  IL_01eb initobj        Awaiter token(0x010001CB)
+  IL_01f1 ldarg.0         
+  IL_01f2 ldc.i4.m1       
+  IL_01f3 dup             
+  IL_01f4 stloc.0         
+  IL_01f5 stfld          <SplatAnimAsync>d__28::<>1__state token(0x0400EB71)
+  IL_01fa ldloca.s       local(0x0003) 
+  IL_01fc call           Awaiter::GetResult token(0x0A00103E)
+  IL_0201 ldloc.1         
+  IL_0202 ldc.i4.0        
+  IL_0203 call           DamageSplatSpell::EnableAllRenderers token(0x06011844)
+  IL_0208 ldloc.1         
+  IL_0209 ldfld          Spell::m_activeStateType token(0x04011C08)
+  IL_020e brfalse.s      IL_0216 
+  IL_0210 ldloc.1         
+  IL_0211 callvirt       Spell::OnStateFinished token(0x0601495E)
+  IL_0216 leave.s        IL_0231 
+  IL_0218 stloc.s        local(0x0005) 
+  IL_021a ldarg.0         
+  IL_021b ldc.i4.s       -2 
+  IL_021d stfld          <SplatAnimAsync>d__28::<>1__state token(0x0400EB71)
+  IL_0222 ldarg.0         
+  IL_0223 ldflda         <SplatAnimAsync>d__28::<>t__builder token(0x0400EB72)
+  IL_0228 ldloc.s        local(0x0005) 
+  IL_022a call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::SetException token(0x0A00103F)
+  IL_022f leave.s        IL_0244 
+  IL_0231 ldarg.0         
+  IL_0232 ldc.i4.s       -2 
+  IL_0234 stfld          <SplatAnimAsync>d__28::<>1__state token(0x0400EB71)
+  IL_0239 ldarg.0         
+  IL_023a ldflda         <SplatAnimAsync>d__28::<>t__builder token(0x0400EB72)
+  IL_023f call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::SetResult token(0x0A001040)
+  IL_0244 ret             
+
+0x06011847 <SplatAnimAsync>d__28::SetStateMachine(stateMachine) RVA 0x5212c0 SIG 200101128725
+  IL_0000 ldarg.0         
+  IL_0001 ldflda         <SplatAnimAsync>d__28::<>t__builder token(0x0400EB72)
+  IL_0006 ldarg.1         
+  IL_0007 call           Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoidMethodBuilder::SetStateMachine token(0x0A001042)
+  IL_000c ret             

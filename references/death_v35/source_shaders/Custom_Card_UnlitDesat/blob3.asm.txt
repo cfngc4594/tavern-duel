@@ -1,0 +1,25 @@
+// ISGN
+// SV_Position0: register0.xyzw systemvalue=1 componenttype=3
+// TEXCOORD0: register1.xy systemvalue=0 componenttype=3
+// COLOR0: register2.xyzw systemvalue=0 componenttype=3
+// OSGN
+// SV_Target0: register0.xyzw systemvalue=0 componenttype=3
+// SHDR
+// shader kind=0, model=4.0, length=100
+0002: dcl_constant_buffer cb0[5].xyzw
+0006: dcl_constant_buffer cb1[2].xyzw
+0010: dcl_sampler s0
+0013: dcl_resource t0, dimension=3,returntype=0x5555
+0017: dcl_input_ps v1.xy
+0020: dcl_input_ps v2.xyzw
+0023: dcl_output o0.xyzw
+0026: dcl_temps 2
+0028: mul r0.x, cb1[0].x, l(0.300000012)
+0036: sample_b r1.xyzw, v1.xyxx, t0.xyzw, s0, cb0[4].x
+0048: mul r0.yz, r0.xxxx, r1.xxyx
+0055: add r0.y, r0.z, r0.y
+0062: mad r0.x, r1.z, r0.x, r0.y
+0071: mad r0.xyzw, cb1[1].xyzw, r0.xxxx, -r1.xyzw
+0082: mad r0.xyzw, cb1[0].yyyy, r0.xyzw, r1.xyzw
+0092: mul o0.xyzw, r0.xyzw, v2.xyzw
+0099: ret 

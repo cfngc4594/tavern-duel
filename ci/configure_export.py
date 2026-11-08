@@ -1,0 +1,21 @@
+from pathlib import Path
+import os
+p=Path("export_presets.cfg")
+t=p.read_text(encoding="utf-8")
+lines=[]
+for line in t.splitlines():
+    if line.startswith("custom_template/debug="):
+        line='custom_template/debug="'+str(Path.home()/".local/share/godot/export_templates/4.7.1.stable/android_debug.apk")+'"'
+    elif line.startswith("custom_template/release="):
+        line='custom_template/release=""'
+    elif line.startswith("version/code="):
+        line="version/code="+str(37415+int(os.environ.get("GITHUB_RUN_NUMBER","1")))
+    elif line.startswith("version/name="):
+        line='version/name="37.4.15-child-ci'+os.environ.get("GITHUB_RUN_NUMBER","1")+'"'
+    elif line.startswith("export_path="):
+        line='export_path="build/TavernDuel-latest-candidate.apk"'
+    lines.append(line)
+p.write_text("\n".join(lines)+"\n",encoding="utf-8")
+settings=Path.home()/".config/godot/editor_settings-4.7.tres"
+settings.parent.mkdir(parents=True,exist_ok=True)
+settings.write_text('[gd_resource type="EditorSettings" format=3]\n\n[resource]\nexport/android/android_sdk_path = "'+os.environ["ANDROID_HOME"]+'"\nexport/android/java_sdk_path = "'+os.environ["JAVA_HOME"]+'"\n',encoding="utf-8")

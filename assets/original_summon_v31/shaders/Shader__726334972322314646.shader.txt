@@ -1,0 +1,45 @@
+//////////////////////////////////////////
+//
+// NOTE: This is *not* a valid shader file
+//
+///////////////////////////////////////////
+Shader "Custom/FX_GhostCard" {
+Properties {
+
+_Color ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
+
+_SaturateColor ("Saturate Color", Color) = (0.5,0.5,0.5,0.5)
+
+_MainTex ("Main Texture", 2D) = "black" { }
+
+_TexIntensity ("Main Texture Intensity", Float) = 1.0
+
+_Intensity ("Intensity", Float) = 1.0
+
+_FxTex ("FX Texture", 2D) = "black" { }
+
+_FxIntensity ("FX Intensity", Float) = 1.0
+
+_FxDistortion ("FX Distortion", Float) = 1.0
+
+_ScrollX ("FX Scroll X", Float) = 0.0
+
+_ScrollY ("FX Scroll Y", Float) = 0.0
+
+_ScaleX ("FX Scale X", Float) = 1.0
+
+_ScaleY ("FX Scale Y", Float) = 1.0
+
+_Seed ("Seed", Float) = 0.0
+
+}
+SubShader {
+ Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderType" = "Transparent" }
+ Pass {
+  Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderType" = "Transparent" }
+ ZWrite Off
+ Cull Off
+  GpuProgramID 8611
+}
+}
+}

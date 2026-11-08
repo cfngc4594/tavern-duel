@@ -1,0 +1,129 @@
+extends Node
+## Source HighlightState routing and real mesh silhouette compatibility adapter.
+## Minions use their displayed native Actor. Heroes use original Actor geometry
+## registered to existing 2D hero positions, not a claim of full hero replacement.
+const Vector3Helper=preload("res://scripts/native_summon_curves.gd")
+const Assets=preload("res://scripts/native_state_assets.gd")
+var game: Node
+var assets=Assets.new()
+var hero_assets
+var renderer: Node
+var heroes: Dictionary={}
+var state_audit: Dictionary={}
+var blockers: Array=[]
+
+func setup(owner_game: Node):
+ game=owner_game
+ assets.setup(game.native_card_renderer,"res://assets/original_summon_v31/")
+ var metadata: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/original_targeting_v34/data/mesh_color_channels.json"))
+ assets.mesh_color_channels.merge(metadata.get("meshes",metadata),true)
+ renderer=preload("res://scripts/native_target_highlight_gpu.gd").new();add_child(renderer)
+ renderer.setup(game,assets)
+
+func _attachments(subject: String,actor: Dictionary) -> Array:
+ var result: Array=[]
+ if not is_instance_valid(game.native_status):return result
+ for effect in game.native_status.effects.effects:
+  if effect.get("subject","")==subject and not effect.get("cached_none",false) and not effect.state.is_empty():
+   var attachment: Dictionary=effect.state.duplicate()
+   # Minion status projection is assigned the exact Actor transform each frame.
+   # Hero status uses the existing registration before the original hero root's
+   # authored local scale1.11; cancel only that constant local root transform.
+   attachment.actor_relative_anchor=effect.projection
+   attachment.actor_relative_transform=actor.root.transform.affine_inverse() if subject.begins_with("hero:") else Transform3D.IDENTITY
+   result.append(attachment)
+ return result
+
+func _retire(id):
+ if renderer.entries.has(id):
+  var mesh=renderer.entries[id].mesh
+  if is_instance_valid(mesh):mesh.queue_free()
+  renderer.entries.erase(id)
+ if renderer.gpu_pipelines.has(id):
+  renderer.gpu_pipelines[id].root.queue_free();renderer.gpu_pipelines.erase(id)
+
+func _show(id,actor: Dictionary,kind: String,state: int,attachments: Array):
+ if renderer.entries.has(id) and renderer.entries[id].actor.get("root")!=actor.get("root"):_retire(id)
+ var ok: bool=renderer.set_actor_state(id,actor,kind,state,attachments)
+ if ok and renderer.entries.has(id) and renderer.entries[id].material is ShaderMaterial:
+  var material: ShaderMaterial=renderer.entries[id].material
+  if not material.has_meta("status_cull_compensated"):
+   game.native_damage._compensate_reflected_culling(material);material.set_meta("status_cull_compensated",true)
+ state_audit[id]={"state":state,"kind":kind,"source_state_bound":ok,"attachments":attachments.size(),"actor_binding":"displayed original minion" if kind=="minion" else "Original hero mesh registered to existing 2D hero position"}
+
+func _hero(side: int) -> Dictionary:
+ if heroes.has(side):return heroes[side].actor
+ var holder:=Node3D.new();holder.name="OriginalHeroSilhouette_%d"%side;game.spatial_scene.add_child(holder)
+ var projection:=Node3D.new();holder.add_child(projection);projection.basis=game.native_targeting._projection_basis()
+ if hero_assets==null:
+  hero_assets=Assets.new();hero_assets.setup(null,"res://assets/original_endgame_v33/")
+  hero_assets.mesh_color_channels.merge(assets.mesh_color_channels,true)
+ var actor: Dictionary={"root":null,"nodes":{},"renderers":{}}
+ _hero_node("cab-69c88b234dfa427e02d1fcee9337ae34:-2507336562026496370",projection,actor,true)
+ heroes[side]={"holder":holder,"actor":actor}
+ return actor
+
+func _hero_node(key: String,parent: Node3D,actor: Dictionary,is_root: bool=false):
+ var go: Dictionary=hero_assets.objects[key]
+ var tr: Dictionary=hero_assets.component(key,"Transform")
+ var node:=Node3D.new();node.name=str(go.name).replace("/","_");parent.add_child(node)
+ var data: Dictionary=tr.data
+ node.position=Vector3.ZERO if is_root else Vector3Helper.vec(data.m_LocalPosition)
+ node.quaternion=Quaternion(data.m_LocalRotation.x,data.m_LocalRotation.y,data.m_LocalRotation.z,data.m_LocalRotation.w)
+ node.scale=Vector3Helper.vec(data.m_LocalScale);node.visible=bool(go.data.get("m_IsActive",true))
+ node.set_meta("source_key",key);actor.nodes[key]=node
+ if is_root:actor.root=node;node.visible=true
+ var route: Dictionary=renderer.surfaces.hero.get(key,{})
+ if not route.is_empty() and route.surfaces.any(func(s):return bool(s.eligible)):
+  var mi:=MeshInstance3D.new();mi.mesh=hero_assets.geometry(str(route.mesh_key));mi.layers=0;node.add_child(mi);actor.renderers[key]=mi
+ for field in tr.get("refs",{}):
+  if str(field).begins_with(".m_Children["):
+   var child: Dictionary=hero_assets.objects[tr.refs[field]]
+   _hero_node(str(child.refs[".m_GameObject"]),node,actor)
+
+func sync_from_game(delta: float=0.0):
+ if not is_instance_valid(renderer):return
+ renderer.advance(delta)
+ state_audit={}
+ if game.game_over or game.help_visible or game.settings_visible or not game.flow.accepts_actions():clear("not_action_surface");return
+ var aiming: bool=game._is_aiming() and game.player_turn and not game.busy
+ var live: Dictionary={}
+ for board in game._presentation_boards():
+  for unit in board:
+   var id: String="unit:%d"%int(unit.id);live[id]=true
+   var state: int=1
+   var visible: bool=not unit.get("dead",true) and not unit.get("hidden",false) and not unit.get("native_summon_hidden",false) and int(unit.hp)>0
+   if visible:
+    var hovered: bool=game.hover_unit==unit.id
+    if aiming:
+     # Original response mode3 does NOT fall through to ordinary options.
+     if game._target_is_legal({"type":"unit","unit":unit,"pos":unit.pos}):state=27 if hovered else 26
+     elif hovered:state=2
+    elif int(unit.side)==0 and game.player_turn and game.can_attack(unit):state=7 if hovered else 6
+    elif hovered:state=2
+   if game.headless:state_audit[id]={"state":state,"kind":"minion","gpu":false};continue
+   var piece: Dictionary=game.spatial_scene.pieces.get(int(unit.id),{})
+   if piece.get("native_actor",false):_show(id,piece.actor,"minion",state,_attachments(id,piece.actor))
+   else:renderer.hide(id)
+ for side in [0,1]:
+  var id: String="hero:%d"%side;live[id]=true
+  var pos: Vector2=game.PLAYER_HERO if side==0 else game.ENEMY_HERO
+  var target: Dictionary=game.target_at(game.pointer,side)
+  var hovered: bool=target.get("type","")=="hero"
+  var state: int=27 if hovered else 26
+  if not aiming or not game._target_is_legal({"type":"hero","side":side,"pos":pos}):state=2 if hovered else 1
+  if game.headless:state_audit[id]={"state":state,"kind":"hero","gpu":false};continue
+  if state==1 and not heroes.has(side):continue
+  var actor: Dictionary=_hero(side)
+  heroes[side].holder.position=game.spatial_scene.screen_to_world(pos+game.shake_offset)
+  _show(id,actor,"hero",state,_attachments(id,actor))
+ for id in renderer.entries.keys():
+  if not live.has(id):_retire(id)
+ while renderer.history.size()>256:renderer.history.pop_front()
+
+func clear(_reason: String="clear"):
+ if is_instance_valid(renderer):renderer.hide_all()
+ state_audit={}
+
+func get_audit() -> Dictionary:
+ return {"states":state_audit.duplicate(true),"renderer":renderer.snapshot() if is_instance_valid(renderer) else {},"blockers":blockers.duplicate(),"hero_registration":"Original source eligible hero mesh + source plane; existing hero body remains 2D. Shared fixed-board source projection, no visual fit tuning.","rules_mutated":false,"hand_drawn_eligibility":false}

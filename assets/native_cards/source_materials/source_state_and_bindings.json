@@ -1,0 +1,188 @@
+{
+  "source_url": "https://us.cdn.blizzard.com/tpr/hs/data/5f/67/5f67fdbf7fa1fb4b604bd9418a0a7424",
+  "bundle_sha256": "977fcca0ff8837376307ea0a5c185b767a8b6adeffa6f1ada7732fad5d283f3c",
+  "notes": [
+    "Metal shader code matches same build archived source bundle hash. Windows parsed pass-state separately matches six PathIDs.",
+    "Selected complete single-program source texts only; other exploratory parser output with binary tails is not evidence.",
+    "No shader here clips/discards. One/Zero overwrites alpha, even if fragment alpha is below 1.",
+    "Not proof of source Unity project colorSpace. No blanket RGB correction recommended.",
+    "Back fragment is one forward lighting variant; alpha is Main.a*_Color.a, other lighting variants not claimed identical RGB."
+  ],
+  "shaders": [
+    {
+      "name": "portrait",
+      "path_id": "-2508996697480494289",
+      "alpha": "min(1,1.14999998 * V.a)",
+      "vertex_alpha": "V.a=mix(meshColor.a,1,LightingBlend)*_Color.a",
+      "blend_rgba": [
+        "One",
+        "Zero"
+      ],
+      "zwrite": true,
+      "ztest": "LEqual",
+      "cull": "Back",
+      "discard": false,
+      "files": [
+        {
+          "stage": "fragment",
+          "file": "portrait.fragment.metal",
+          "sha256": "61d4a7e9d7bef3a50979c7437fb545c9f21638ed11776392e6490028d8f1da3a"
+        },
+        {
+          "stage": "vertex",
+          "file": "portrait.vertex.metal",
+          "sha256": "f61d996feddde54cc267cde3ce2dc8f85aa16940f24f923c9093dc7f52bf910c"
+        }
+      ]
+    },
+    {
+      "name": "second_texture",
+      "path_id": "-1982294586754922726",
+      "alpha": "min(Q.a,(Q.a+0.150000006)*V.a); Q=Main+(Main*S-Main)*S.a; S=Second*_SecondTint*_BlendIntensity",
+      "vertex_alpha": "V.a=mix(meshColor.a,1,LightingBlend)*_Color.a",
+      "blend_rgba": [
+        "One",
+        "Zero"
+      ],
+      "zwrite": true,
+      "ztest": "LEqual",
+      "cull": "Back",
+      "discard": false,
+      "files": [
+        {
+          "stage": "fragment",
+          "file": "second_texture.fragment.metal",
+          "sha256": "79b5e7326bc8f24de3e222df7e77bdad129b0de688ce046e45ee090d0ab0debd"
+        },
+        {
+          "stage": "vertex",
+          "file": "second_texture.vertex.metal",
+          "sha256": "e63d2bb562090a8729194dc6a52511bbe81d6a61795a9529632c96eb6bfd019f"
+        }
+      ]
+    },
+    {
+      "name": "frame",
+      "path_id": "3271891197657001233",
+      "alpha": "uv.x<=_MiddleValue ? Main.a*V.a : ((1-_EnableDualClass)*Main.a+_EnableDualClass*Second.a)*V.a",
+      "vertex_alpha": "V.a=mix(meshColor.a,1,LightingBlend)",
+      "blend_rgba": [
+        "One",
+        "Zero"
+      ],
+      "zwrite": true,
+      "ztest": "LEqual",
+      "cull": "Off",
+      "discard": false,
+      "files": [
+        {
+          "stage": "fragment",
+          "file": "frame.fragment.metal",
+          "sha256": "981b04f5f8b5ac168a37ebc25eb08a3b1887a5b8b4896764afc57196279a5662"
+        },
+        {
+          "stage": "vertex",
+          "file": "frame.vertex.metal",
+          "sha256": "d1af9490d86c721bd5e5b10fa3788b1f2a0d563db7ac04c9732322c5a82148de"
+        }
+      ]
+    },
+    {
+      "name": "banner_race",
+      "path_id": "-4440234706065032223",
+      "alpha": "Main.a*V.a",
+      "vertex_alpha": "V.a=mix(meshColor.a,1,LightingBlend)",
+      "blend_rgba": [
+        "One",
+        "Zero"
+      ],
+      "zwrite": true,
+      "ztest": "LEqual",
+      "cull": "Off",
+      "discard": false,
+      "files": [
+        {
+          "stage": "fragment",
+          "file": "banner_race.fragment.metal",
+          "sha256": "19f812b3328ff3d3aad83b960e2764701a998ef46985039ac52cd4f120e064b8"
+        },
+        {
+          "stage": "vertex",
+          "file": "banner_race.vertex.metal",
+          "sha256": "22b551a6821cea839bb7658701b8738713ae9bbb9ab0a80c9514e2217a8ac360"
+        }
+      ]
+    },
+    {
+      "name": "gem",
+      "path_id": "9099378368919310605",
+      "alpha": "_TintColor.a",
+      "vertex_alpha": "V.a=_TintColor.a; vertex LightingBlend term has w=0",
+      "blend_rgba": [
+        "One",
+        "Zero"
+      ],
+      "zwrite": true,
+      "ztest": "LEqual",
+      "cull": "Back",
+      "discard": false,
+      "files": [
+        {
+          "stage": "fragment",
+          "file": "gem.fragment.metal",
+          "sha256": "65570e41928af698dfc2bd7b81d75e91afd56ded686c5036050817e3571ed90c"
+        },
+        {
+          "stage": "vertex",
+          "file": "gem.vertex.metal",
+          "sha256": "4c82375ced6cbee85230cee8c2edb67137ef0eaaf28ebe01abccc4cf5fa98d5d"
+        }
+      ]
+    },
+    {
+      "name": "back",
+      "path_id": "-5812771937585292081",
+      "alpha": "Main.a*_Color.a",
+      "vertex_alpha": "no interpolated color used in selected forward fragment",
+      "blend_rgba": [
+        "One",
+        "Zero"
+      ],
+      "zwrite": true,
+      "ztest": "LEqual",
+      "cull": "Back",
+      "discard": false,
+      "files": [
+        {
+          "stage": "fragment",
+          "file": "back.fragment.metal",
+          "sha256": "0e18c96423d4c4517357cb05b1dd57bea9a071f2f7f320854d89de82a6e9580f"
+        }
+      ]
+    }
+  ],
+  "godot_interface": {
+    "shader_kind": {
+      "banner_race": 0,
+      "frame": 1,
+      "portrait": 2,
+      "second_texture": 3,
+      "gem": 4,
+      "back": 5
+    },
+    "mesh_inputs": [
+      "COLOR original mesh byte colors normalized/255; absent channel must explicitly supply white",
+      "UV original UV0",
+      "UV2 original UV1 for portrait/second_texture",
+      "NORMAL original normal transformed with MODEL_NORMAL_MATRIX"
+    ],
+    "mask": "alpha_mask_pass=true; duplicate same geometry/depth/cull and opaque classification; same mask viewport as text. No ALPHA assignment.",
+    "limitations": [
+      "Lighting values here explicit input defaults, not original scene evidence. Back ambient is constant surrogate for original pervertex SH until bound.",
+      "source_color texture decode preserves existing Godot path but source Unity project colorSpace still not validated. Do not claim RGB pixel parity.",
+      "filter_linear/repeat defaults are compatibility placeholders; bind actual sampler states if recovered.",
+      "20-step transfer inverse verified current Godot4.6.3 GLES llvmpipe numeric mask only. Not portable guarantee for Vulkan/Forward+.",
+      "Shader parse/render verification pending module/GUI."
+    ]
+  }
+}

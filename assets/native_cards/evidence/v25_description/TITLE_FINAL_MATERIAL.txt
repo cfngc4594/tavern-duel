@@ -1,0 +1,30 @@
+TITLE RTT FINAL MATERIAL: actual enabled AA path
+
+Ordinary minion and ordinary spell NameUberText serialized values: m_AntiAlias=1, m_AntiAliasAmount=.5, m_AntiAliasEdge=.5, m_Shadow=0; gradientUpper=gradientLower=(1,1,1,1). Original mesh is m_RenderOnObject (not generated plane).
+Source configuration: name_mesh_probe/text_pipeline/name-serialized-anchors.json; original raw source_selection.json.
+
+Actual control-flow, not inferred from fields:
+UberText.cs1763 SetupRenderToTexture;1768 if RTT, DoRenderToTexture(renderer);1771 if(m_AntiAlias), ApplyAntialiasing().
+SetupRenderToTexture.cs2230 chooses InitOnRenderObject for name; ONLY its ELSE branch SetupRenderOnPlane/SetupShadow creates gradient plane/shadow. Thus name has no created shadow (also serialized disabled), no missing gradient needed (bothwhite anyway).
+SetupAntialias2261 sets edge and amount iff enabled.
+REA UberTextRenderToTexture.DoRenderToTexture0x0600019f binds m_planeMaterialQuery initially to RenderOnObject; ApplyAntialiasing0x060001a0 then replaces that renderer's material using m_antialiasingMaterialQuery. This is the actual final visible curved mesh material, not postprocess of RTT texture itself.
+SetAntialiasOffset0x060001aa: offset=renderTexture.texelSize*amount; SetAntialiasEdge0x060001ab sets query Edge. CreateRenderTexture0x060001bd binds same RT to both plane and antialias queries.
+Shader manager name Hidden/TextAntialiasing; original shader PathID3442879436887144160.
+
+Exact original Metal:
+Source Library current_target_richtext_evidence_37.0_readable.txt libfile_d7c1faf0d5148191b73587cd7a984ebb lines18801 onward.
+Original file shaders/OSX_CAB-69c88b234dfa427e02d1fcee9337ae34_3442879436887144160_0_0.metal, declared5778bytes SHA256 c1bfa04967a8714fa0831c69dfdae562ed4b0a5368ca088de83d6b30c61faac9. Local title_antialias_original.metal is extracted readable text (line-ending conversion can differ byte hash).
+Original OSX bundle SHA2560c25742caab110201185ce97d5fe497d3684be9a4e32f09544c6ed03638bdb20; matching Windows shader metadata path same PathID in prefab bundle SHA564d2f936d5298d302123050a253a75c998b96f1a34fa90731f7245e779d0324.
+
+Formula:
+uvCenter=uv*ST.xy+ST.zw
+uv1..4=(uv+(+ox,+oy),uv+(-ox,-oy),uv+(+ox,-oy),uv+(-ox,+oy))*ST.xy+ST.zw
+ox=.5/RTwidth; oy=.5/RTheight
+rgb=sample(RT,uvCenter).rgb
+alpha=.5*(A(uv1)+A(uv2)+A(uv3)+A(uv4))
+output=(rgb,alpha)*meshVertexColor*_Color
+No center alpha. No divide by4. No shader clamp. RT is color+alpha input, not raw font atlas.
+All samples use actual sampler and _GlobalMipBias.x; value of global mip bias is not proven here and must not silently claim captured.
+Metadata blend: src5,dst10,srcAlpha5,dstAlpha10,blendOp0;zwrite0,ztest4,cull2. Preserve recorded enum values unless verified against engine enums. Godot blend/depth/color space matching remains platform-specific verification, not a claim of identical driver results.
+
+v25 gap identified and handed to renderer agent: StandardMaterial3D directly sampling RT skipped this shader entirely. Agent reports implemented source_title_antialias.gdshader on final name surface. No new text raster or manual appearance tuning is required by this change.

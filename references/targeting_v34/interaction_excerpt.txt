@@ -1,0 +1,782 @@
+
+0x060059d1 InputManager::ShouldCancelTargeting
+IL_0000 ldc.i4.0 
+IL_0001 stloc.0 
+IL_0002 ldarg.1 
+IL_0003 brtrue IL_0111
+IL_0008 ldarg.0 
+IL_0009 call InputManager::GetBattlecrySourceCard
+IL_000e ldnull 
+IL_000f call UnityEngine.Object::op_Equality
+IL_0014 brfalse IL_0111
+IL_0019 call ChoiceCardMgr::Get
+IL_001e callvirt ChoiceCardMgr::GetSubOptionParentCard
+IL_0023 ldnull 
+IL_0024 call UnityEngine.Object::op_Equality
+IL_0029 brfalse IL_0111
+IL_002e ldarg.0 
+IL_002f call InputManager::HasPendingChoiceTarget
+IL_0034 brtrue IL_0111
+IL_0039 ldc.i4.1 
+IL_003a stloc.0 
+IL_003b ldsfld UniversalInputManager::UsePhoneUI
+IL_0040 call <dnfile.mdtable.TypeSpecRow object at 0x7f567193d9d0>::op_Implicit
+IL_0045 brfalse.s IL_008b
+IL_0047 ldarg.0 
+IL_0048 ldfld InputManager::m_universalInputManager
+IL_004d call UnityEngine.Camera::get_main
+IL_0052 ldc.i4.s 16
+IL_0054 callvirt UniversalInputManager::InputHitAnyObject
+IL_0059 stloc.1 
+IL_005a ldarg.0 
+IL_005b ldfld InputManager::m_targettingHeroPower
+IL_0060 brtrue.s IL_007c
+IL_0062 ldarg.0 
+IL_0063 ldfld InputManager::m_gameState
+IL_0068 callvirt GameState::IsSelectedOptionFriendlyHero
+IL_006d brtrue.s IL_007c
+IL_006f ldarg.0 
+IL_0070 ldfld InputManager::m_gameState
+IL_0075 callvirt GameState::DoesSelectedOptionHaveHandTarget
+IL_007a br.s IL_007d
+IL_007c ldc.i4.1 
+IL_007d ldloc.1 
+IL_007e or 
+IL_007f brfalse IL_0111
+IL_0084 ldc.i4.0 
+IL_0085 stloc.0 
+IL_0086 br IL_0111
+IL_008b ldarg.0 
+IL_008c ldfld InputManager::m_gameState
+IL_0091 callvirt GameState::IsSelectedOptionFriendlyHero
+IL_0096 brfalse.s IL_00c6
+IL_0098 ldarg.0 
+IL_0099 ldfld InputManager::m_gameState
+IL_009e callvirt GameState::GetFriendlySidePlayer
+IL_00a3 dup 
+IL_00a4 callvirt Entity::GetHeroCard
+IL_00a9 stloc.2 
+IL_00aa callvirt Entity::GetWeaponCard
+IL_00af stloc.3 
+IL_00b0 ldarg.0 
+IL_00b1 ldloc.2 
+IL_00b2 call InputManager::IsInputOverCard
+IL_00b7 brtrue.s IL_00c2
+IL_00b9 ldarg.0 
+IL_00ba ldloc.3 
+IL_00bb call InputManager::IsInputOverCard
+IL_00c0 brfalse.s IL_0102
+IL_00c2 ldc.i4.0 
+IL_00c3 stloc.0 
+IL_00c4 br.s IL_0102
+IL_00c6 ldarg.0 
+IL_00c7 ldfld InputManager::m_gameState
+IL_00cc callvirt GameState::IsSelectedOptionFriendlyHeroPower
+IL_00d1 brfalse.s IL_00f3
+IL_00d3 ldarg.0 
+IL_00d4 ldfld InputManager::m_gameState
+IL_00d9 callvirt GameState::GetFriendlySidePlayer
+IL_00de callvirt Entity::GetHeroPowerCard
+IL_00e3 stloc.s local(0x0004)
+IL_00e5 ldarg.0 
+IL_00e6 ldloc.s local(0x0004)
+IL_00e8 call InputManager::IsInputOverCard
+IL_00ed brfalse.s IL_0102
+IL_00ef ldc.i4.0 
+IL_00f0 stloc.0 
+IL_00f1 br.s IL_0102
+IL_00f3 ldarg.0 
+IL_00f4 ldfld InputManager::m_gameState
+IL_00f9 callvirt GameState::IsSelectedOptionMercenariesAbility
+IL_00fe brfalse.s IL_0102
+IL_0100 ldc.i4.0 
+IL_0101 stloc.0 
+IL_0102 ldarg.0 
+IL_0103 ldfld InputManager::m_gameState
+IL_0108 callvirt GameState::DoesSelectedOptionHaveHandTarget
+IL_010d brfalse.s IL_0111
+IL_010f ldc.i4.0 
+IL_0110 stloc.0 
+IL_0111 ldarg.0 
+IL_0112 ldfld InputManager::m_heldCard
+IL_0117 ldnull 
+IL_0118 call UnityEngine.Object::op_Inequality
+IL_011d brfalse.s IL_017e
+IL_011f ldarg.0 
+IL_0120 ldfld InputManager::m_heldCard
+IL_0125 callvirt Card::GetEntity
+IL_012a stloc.s local(0x0005)
+IL_012c ldloc.s local(0x0005)
+IL_012e brfalse.s IL_017e
+IL_0130 ldloc.s local(0x0005)
+IL_0132 callvirt EntityBase::HasDeckAction
+IL_0137 brfalse.s IL_017e
+IL_0139 ldarg.0 
+IL_013a ldfld InputManager::m_universalInputManager
+IL_013f call UnityEngine.Camera::get_main
+IL_0144 ldc.i4.s 9
+IL_0146 ldloca.s local(0x0006)
+IL_0148 ldc.i4.0 
+IL_0149 ldc.i4.0 
+IL_014a callvirt UniversalInputManager::GetInputHitInfo
+IL_014f brfalse.s IL_017e
+IL_0151 ldarg.0 
+IL_0152 ldfld InputManager::m_heldCard
+IL_0157 ldloca.s local(0x0006)
+IL_0159 call UnityEngine.RaycastHit::get_point
+IL_015e callvirt Card::IsInAlternateActionArea
+IL_0163 brfalse.s IL_017e
+IL_0165 ldc.i4.1 
+IL_0166 stloc.0 
+IL_0167 ldarg.0 
+IL_0168 ldfld InputManager::m_heldCard
+IL_016d callvirt UnityEngine.Component::get_transform
+IL_0172 ldloca.s local(0x0006)
+IL_0174 call UnityEngine.RaycastHit::get_point
+IL_0179 callvirt UnityEngine.Transform::set_position
+IL_017e ldloc.0 
+IL_017f ret 
+
+0x06005a05 InputManager::CancelTargetMode
+IL_0000 ldarg.0 
+IL_0001 ldfld InputManager::m_gameState
+IL_0006 callvirt GameState::IsInTargetMode
+IL_000b brtrue.s IL_0017
+IL_000d ldarg.0 
+IL_000e ldfld InputManager::m_hadPendingChoiceTargetLastFrame
+IL_0013 brtrue.s IL_0017
+IL_0015 ldc.i4.0 
+IL_0016 ret 
+IL_0017 ldc.i4.1 
+IL_0018 stloc.0 
+IL_0019 ldarg.0 
+IL_001a ldfld InputManager::m_gameState
+IL_001f callvirt GameState::GetSelectedNetworkOption
+IL_0024 stloc.1 
+IL_0025 ldloc.1 
+IL_0026 brfalse.s IL_0053
+IL_0028 ldarg.0 
+IL_0029 ldfld InputManager::m_gameState
+IL_002e ldloc.1 
+IL_002f callvirt Option::get_Main
+IL_0034 callvirt SubOption::get_ID
+IL_0039 callvirt GameState::GetEntity
+IL_003e stloc.2 
+IL_003f ldloc.2 
+IL_0040 brfalse.s IL_004c
+IL_0042 ldloc.2 
+IL_0043 callvirt EntityBase::IsLettuceAbility
+IL_0048 brfalse.s IL_004c
+IL_004a ldc.i4.0 
+IL_004b stloc.0 
+IL_004c ldarg.0 
+IL_004d ldloc.2 
+IL_004e call InputManager::HandleLegendaryHeroPowerCancel
+IL_0053 ldloc.0 
+IL_0054 brfalse.s IL_006a
+IL_0056 call SoundManager::Get
+IL_005b ldstr 'CancelAttack.prefab:9cde7207a78024e46aa5a0a657807845'
+IL_0060 call AssetReference::op_Implicit
+IL_0065 callvirt SoundManager::LoadAndPlay
+IL_006a ldarg.0 
+IL_006b ldfld InputManager::m_mousedOverCard
+IL_0070 call UnityEngine.Object::op_Implicit
+IL_0075 brfalse.s IL_0083
+IL_0077 ldarg.0 
+IL_0078 ldarg.0 
+IL_0079 ldfld InputManager::m_mousedOverCard
+IL_007e call InputManager::DisableSkullIfNeeded
+IL_0083 ldarg.0 
+IL_0084 ldfld InputManager::m_targetReticleManager
+IL_0089 dup 
+IL_008a brtrue.s IL_008f
+IL_008c pop 
+IL_008d br.s IL_0095
+IL_008f ldc.i4.1 
+IL_0090 call TargetReticleManager::DestroyFriendlyTargetArrow
+IL_0095 call ZoneMgr::Get
+IL_009a callvirt ZoneMgr::DisplayLettuceAbilitiesForPreviouslySelectedCard
+IL_009f ldarg.0 
+IL_00a0 ldfld InputManager::m_battlecrySourceCard
+IL_00a5 ldnull 
+IL_00a6 call UnityEngine.Object::op_Inequality
+IL_00ab brfalse.s IL_00c9
+IL_00ad ldarg.0 
+IL_00ae ldfld InputManager::m_myHandZone
+IL_00b3 ldarg.0 
+IL_00b4 ldfld InputManager::m_battlecrySourceCard
+IL_00b9 callvirt ZoneHand::OnCardWithReplacementsDropped
+IL_00be ldarg.0 
+IL_00bf ldfld InputManager::m_myHandZone
+IL_00c4 callvirt ZoneHand::ClearReservedCard
+IL_00c9 ldarg.0 
+IL_00ca call InputManager::ResetBattlecrySourceCard
+IL_00cf ldarg.0 
+IL_00d0 call InputManager::CancelSubOptions
+IL_00d5 ldarg.0 
+IL_00d6 ldfld InputManager::m_gameState
+IL_00db callvirt GameState::CancelCurrentOptionMode
+IL_00e0 ldc.i4.1 
+IL_00e1 ret 
+
+0x06005a45 InputManager::DoNetworkOptionTarget
+IL_0000 ldarg.1 
+IL_0001 callvirt EntityBase::GetEntityId
+IL_0006 stloc.0 
+IL_0007 ldarg.0 
+IL_0008 ldfld InputManager::m_gameState
+IL_000d callvirt GameState::GetSelectedNetworkSubOption
+IL_0012 stloc.1 
+IL_0013 ldarg.0 
+IL_0014 ldfld InputManager::m_gameState
+IL_0019 ldloc.1 
+IL_001a callvirt SubOption::get_ID
+IL_001f callvirt GameState::GetEntity
+IL_0024 stloc.2 
+IL_0025 ldloc.1 
+IL_0026 ldloc.0 
+IL_0027 callvirt SubOption::IsValidTarget
+IL_002c brtrue.s IL_005d
+IL_002e ldarg.0 
+IL_002f ldfld InputManager::m_gameState
+IL_0034 ldloc.0 
+IL_0035 callvirt GameState::GetEntity
+IL_003a stloc.3 
+IL_003b ldloc.3 
+IL_003c callvirt EntityBase::GetEntityId
+IL_0041 stloc.s local(0x0004)
+IL_0043 ldloc.1 
+IL_0044 ldloc.s local(0x0004)
+IL_0046 callvirt SubOption::GetErrorForTarget
+IL_004b ldloc.1 
+IL_004c ldloc.s local(0x0004)
+IL_004e callvirt SubOption::GetErrorParamForTarget
+IL_0053 ldloc.2 
+IL_0054 ldloc.3 
+IL_0055 ldnull 
+IL_0056 call PlayErrors::DisplayPlayError
+IL_005b ldc.i4.0 
+IL_005c ret 
+IL_005d ldarg.0 
+IL_005e ldfld InputManager::m_targetReticleManager
+IL_0063 dup 
+IL_0064 brtrue.s IL_0069
+IL_0066 pop 
+IL_0067 br.s IL_006f
+IL_0069 ldc.i4.0 
+IL_006a call TargetReticleManager::DestroyFriendlyTargetArrow
+IL_006f call RemoteActionHandler::Get
+IL_0074 dup 
+IL_0075 brtrue.s IL_007a
+IL_0077 pop 
+IL_0078 br.s IL_007f
+IL_007a call RemoteActionHandler::NotifyOpponentOfCardDropped
+IL_007f ldarg.0 
+IL_0080 call InputManager::ClearBattlecrySourceCard
+IL_0085 ldarg.0 
+IL_0086 call InputManager::FinishSubOptions
+IL_008b ldloc.2 
+IL_008c callvirt EntityBase::IsHeroPower
+IL_0091 brtrue.s IL_00b9
+IL_0093 ldloc.2 
+IL_0094 callvirt EntityBase::IsGameModeButton
+IL_0099 brfalse.s IL_00a8
+IL_009b ldloc.2 
+IL_009c ldc.i4 4873
+IL_00a1 callvirt EntityBase::HasTag
+IL_00a6 brtrue.s IL_00b9
+IL_00a8 ldloc.2 
+IL_00a9 callvirt EntityBase::IsCoinBasedHeroBuddy
+IL_00ae brfalse.s IL_00d6
+IL_00b0 ldloc.2 
+IL_00b1 ldc.i4.5 
+IL_00b2 callvirt EntityBase::HasTag
+IL_00b7 brtrue.s IL_00d6
+IL_00b9 ldloc.2 
+IL_00ba ldc.i4 4088
+IL_00bf callvirt EntityBase::HasTag
+IL_00c4 brtrue.s IL_00cf
+IL_00c6 ldloc.2 
+IL_00c7 ldc.i4.s 43
+IL_00c9 ldc.i4.1 
+IL_00ca callvirt Entity::SetTagAndHandleChange<spec>
+IL_00cf ldarg.0 
+IL_00d0 ldloc.2 
+IL_00d1 call InputManager::PredictSpentMana
+IL_00d6 ldarg.0 
+IL_00d7 ldfld InputManager::m_gameState
+IL_00dc ldloc.0 
+IL_00dd callvirt GameState::SetSelectedOptionTarget
+IL_00e2 ldarg.0 
+IL_00e3 ldfld InputManager::m_gameState
+IL_00e8 callvirt GameState::SendOption
+IL_00ed ldc.i4.1 
+IL_00ee ret 
+
+0x06005a47 InputManager::EnterOptionTargetMode
+IL_0000 ldarg.0 
+IL_0001 ldfld InputManager::m_gameState
+IL_0006 ldarg.1 
+IL_0007 callvirt GameState::EnterOptionTargetMode
+IL_000c ldarg.0 
+IL_000d ldfld InputManager::m_useHandEnlarge
+IL_0012 brfalse.s IL_0089
+IL_0014 ldarg.0 
+IL_0015 ldfld InputManager::m_myHandZone
+IL_001a ldarg.0 
+IL_001b ldfld InputManager::m_gameState
+IL_0020 callvirt GameState::FriendlyHeroIsTargetable
+IL_0025 callvirt ZoneHand::SetFriendlyHeroTargetingMode
+IL_002a ldarg.0 
+IL_002b ldfld InputManager::m_myHandZone
+IL_0030 callvirt ZoneHand::HandEnlarged
+IL_0035 stloc.0 
+IL_0036 ldarg.0 
+IL_0037 ldloc.0 
+IL_0038 brtrue.s IL_0046
+IL_003a call ChoiceCardMgr::Get
+IL_003f callvirt ChoiceCardMgr::RestoreEnlargedHandAfterChoice
+IL_0044 br.s IL_0047
+IL_0046 ldc.i4.1 
+IL_0047 stfld InputManager::m_enlargeHandAfterDropCard
+IL_004c ldloc.0 
+IL_004d brfalse.s IL_0064
+IL_004f ldarg.0 
+IL_0050 ldfld InputManager::m_gameState
+IL_0055 callvirt GameState::CanTargetCardsInHand
+IL_005a brtrue.s IL_0064
+IL_005c ldarg.0 
+IL_005d call InputManager::HidePhoneHand
+IL_0062 br.s IL_0089
+IL_0064 ldloc.0 
+IL_0065 brtrue.s IL_007c
+IL_0067 ldarg.0 
+IL_0068 ldfld InputManager::m_gameState
+IL_006d callvirt GameState::CanTargetCardsInHand
+IL_0072 brfalse.s IL_007c
+IL_0074 ldarg.0 
+IL_0075 call InputManager::ShowPhoneHand
+IL_007a br.s IL_0089
+IL_007c ldarg.0 
+IL_007d ldfld InputManager::m_myHandZone
+IL_0082 ldnull 
+IL_0083 ldc.i4.1 
+IL_0084 callvirt ZoneHand::UpdateLayout
+IL_0089 ldarg.1 
+IL_008a ldc.i4 4089
+IL_008f callvirt EntityBase::HasTag
+IL_0094 brfalse.s IL_00a9
+IL_0096 call GameMgr::Get
+IL_009b dup 
+IL_009c brtrue.s IL_00a2
+IL_009e pop 
+IL_009f ldc.i4.0 
+IL_00a0 br.s IL_00aa
+IL_00a2 call GameMgr::IsBattlegrounds
+IL_00a7 br.s IL_00aa
+IL_00a9 ldc.i4.0 
+IL_00aa brfalse.s IL_00d6
+IL_00ac ldarg.0 
+IL_00ad ldfld InputManager::m_gameState
+IL_00b2 callvirt GameState::GetSelectedNetworkOption
+IL_00b7 stloc.1 
+IL_00b8 ldarg.0 
+IL_00b9 ldloc.1 
+IL_00ba brtrue.s IL_00bf
+IL_00bc ldnull 
+IL_00bd br.s IL_00d1
+IL_00bf ldloc.1 
+IL_00c0 call Option::get_Main
+IL_00c5 dup 
+IL_00c6 brtrue.s IL_00cc
+IL_00c8 pop 
+IL_00c9 ldnull 
+IL_00ca br.s IL_00d1
+IL_00cc call SubOption::get_Targets
+IL_00d1 call InputManager::StartMobileTargetingEffect
+IL_00d6 ret 
+
+0x06006106 TargetReticleManager::DisableCollidersForUntargetableCards
+IL_0000 newobj <dnfile.mdtable.TypeSpecRow object at 0x7f567198dca0>::.ctor
+IL_0005 stloc.0 
+IL_0006 call GameState::Get
+IL_000b callvirt GameState::GetPlayerMap
+IL_0010 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f56717e31d0>::get_Values
+IL_0015 callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f56717e3380>::GetEnumerator
+IL_001a stloc.1 
+IL_001b br.s IL_0080
+IL_001d ldloca.s local(0x0001)
+IL_001f call <dnfile.mdtable.TypeSpecRow object at 0x7f56717e3530>::get_Current
+IL_0024 stloc.2 
+IL_0025 ldarg.0 
+IL_0026 ldarg.1 
+IL_0027 ldloc.0 
+IL_0028 ldloc.2 
+IL_0029 callvirt Entity::GetHeroPowerCard
+IL_002e call TargetReticleManager::AddUntargetableCard
+IL_0033 ldarg.0 
+IL_0034 ldarg.1 
+IL_0035 ldloc.0 
+IL_0036 ldloc.2 
+IL_0037 callvirt Entity::GetWeaponCard
+IL_003c call TargetReticleManager::AddUntargetableCard
+IL_0041 ldloc.2 
+IL_0042 callvirt Player::GetSecretZone
+IL_0047 callvirt Zone::GetCards
+IL_004c callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f567198dca0>::GetEnumerator
+IL_0051 stloc.3 
+IL_0052 br.s IL_0067
+IL_0054 ldloca.s local(0x0003)
+IL_0056 call <dnfile.mdtable.TypeSpecRow object at 0x7f56718ab380>::get_Current
+IL_005b stloc.s local(0x0004)
+IL_005d ldarg.0 
+IL_005e ldarg.1 
+IL_005f ldloc.0 
+IL_0060 ldloc.s local(0x0004)
+IL_0062 call TargetReticleManager::AddUntargetableCard
+IL_0067 ldloca.s local(0x0003)
+IL_0069 call <dnfile.mdtable.TypeSpecRow object at 0x7f56718ab380>::MoveNext
+IL_006e brtrue.s IL_0054
+IL_0070 leave.s IL_0080
+IL_0072 ldloca.s local(0x0003)
+IL_0074 constrained. <dnfile.mdtable.TypeSpecRow object at 0x7f56718ab380>
+IL_007a callvirt System.IDisposable::Dispose
+IL_007f endfinally 
+IL_0080 ldloca.s local(0x0001)
+IL_0082 call <dnfile.mdtable.TypeSpecRow object at 0x7f56717e3530>::MoveNext
+IL_0087 brtrue.s IL_001d
+IL_0089 leave.s IL_0099
+IL_008b ldloca.s local(0x0001)
+IL_008d constrained. <dnfile.mdtable.TypeSpecRow object at 0x7f56717e3530>
+IL_0093 callvirt System.IDisposable::Dispose
+IL_0098 endfinally 
+IL_0099 ldloc.0 
+IL_009a callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f567198dca0>::GetEnumerator
+IL_009f stloc.3 
+IL_00a0 br.s IL_00cf
+IL_00a2 ldloca.s local(0x0003)
+IL_00a4 call <dnfile.mdtable.TypeSpecRow object at 0x7f56718ab380>::get_Current
+IL_00a9 stloc.s local(0x0005)
+IL_00ab ldloc.s local(0x0005)
+IL_00ad ldnull 
+IL_00ae call UnityEngine.Object::op_Equality
+IL_00b3 brtrue.s IL_00cf
+IL_00b5 ldloc.s local(0x0005)
+IL_00b7 callvirt Card::GetActor
+IL_00bc stloc.s local(0x0006)
+IL_00be ldloc.s local(0x0006)
+IL_00c0 ldnull 
+IL_00c1 call UnityEngine.Object::op_Equality
+IL_00c6 brtrue.s IL_00cf
+IL_00c8 ldloc.s local(0x0006)
+IL_00ca callvirt Actor::TurnOffCollider
+IL_00cf ldloca.s local(0x0003)
+IL_00d1 call <dnfile.mdtable.TypeSpecRow object at 0x7f56718ab380>::MoveNext
+IL_00d6 brtrue.s IL_00a2
+IL_00d8 leave.s IL_00e8
+IL_00da ldloca.s local(0x0003)
+IL_00dc constrained. <dnfile.mdtable.TypeSpecRow object at 0x7f56718ab380>
+IL_00e2 callvirt System.IDisposable::Dispose
+IL_00e7 endfinally 
+IL_00e8 ret 
+
+0x06006107 TargetReticleManager::AddUntargetableCard
+IL_0000 ldarg.1 
+IL_0001 ldarg.3 
+IL_0002 call UnityEngine.Object::op_Equality
+IL_0007 brfalse.s IL_000a
+IL_0009 ret 
+IL_000a ldarg.2 
+IL_000b ldarg.3 
+IL_000c callvirt <dnfile.mdtable.TypeSpecRow object at 0x7f567198dca0>::Add
+IL_0011 ret 
+
+0x06006109 TargetReticleManager::CreateTargetArrow
+IL_0000 ldarg.0 
+IL_0001 call TargetReticleManager::IsActive
+IL_0006 brfalse.s IL_0023
+IL_0008 call Log::get_Gameplay
+IL_000d ldstr 'Uh-oh... creating a targeting arrow but one is already active...'
+IL_0012 call System.Array::Empty<spec>
+IL_0017 callvirt Logger::Print
+IL_001c ldarg.0 
+IL_001d ldc.i4.0 
+IL_001e call TargetReticleManager::DestroyCurrentArrow
+IL_0023 call TeammateBoardViewer::Get
+IL_0028 ldnull 
+IL_0029 call UnityEngine.Object::op_Inequality
+IL_002e brfalse.s IL_003c
+IL_0030 call TeammateBoardViewer::Get
+IL_0035 callvirt TeammateBoardViewer::IsViewingTeammate
+IL_003a br.s IL_003d
+IL_003c ldc.i4.0 
+IL_003d stloc.0 
+IL_003e ldarg.0 
+IL_003f ldarg.1 
+IL_0040 stfld TargetReticleManager::m_targetArrowType
+IL_0045 ldarg.0 
+IL_0046 ldarg.3 
+IL_0047 stfld TargetReticleManager::m_sourceEntityID
+IL_004c ldarg.0 
+IL_004d ldarg.2 
+IL_004e stfld TargetReticleManager::m_originLocationEntity
+IL_0053 ldarg.0 
+IL_0054 ldarg.s argument(0x0005)
+IL_0056 stfld TargetReticleManager::m_showArrow
+IL_005b ldarg.0 
+IL_005c ldarg.s argument(0x0006)
+IL_005e stfld TargetReticleManager::m_useHandAsOrigin
+IL_0063 ldarg.0 
+IL_0064 call TargetReticleManager::UpdateArrowOriginPosition
+IL_0069 call GameMgr::Get
+IL_006e brfalse.s IL_007c
+IL_0070 call GameMgr::Get
+IL_0075 callvirt GameMgr::IsSpectator
+IL_007a br.s IL_007d
+IL_007c ldc.i4.0 
+IL_007d stloc.1 
+IL_007e ldarg.0 
+IL_007f call TargetReticleManager::IsEnemyArrow
+IL_0084 ldloc.1 
+IL_0085 or 
+IL_0086 ldloc.0 
+IL_0087 or 
+IL_0088 brfalse.s IL_00b4
+IL_008a ldarg.0 
+IL_008b call TargetReticleManager::IsStaticArrow
+IL_0090 brtrue.s IL_00b4
+IL_0092 ldarg.0 
+IL_0093 ldarg.0 
+IL_0094 ldfld TargetReticleManager::m_targetArrowOrigin
+IL_0099 stfld TargetReticleManager::m_remoteArrowPosition
+IL_009e ldarg.0 
+IL_009f ldfld TargetReticleManager::m_arrow
+IL_00a4 callvirt UnityEngine.GameObject::get_transform
+IL_00a9 ldarg.0 
+IL_00aa ldfld TargetReticleManager::m_targetArrowOrigin
+IL_00af callvirt UnityEngine.Transform::set_position
+IL_00b4 ldarg.0 
+IL_00b5 ldc.i4.1 
+IL_00b6 call TargetReticleManager::ActivateArrow
+IL_00bb ldarg.0 
+IL_00bc ldc.i4.0 
+IL_00bd call TargetReticleManager::ShowBullseye
+IL_00c2 ldarg.0 
+IL_00c3 ldarg.0 
+IL_00c4 call TargetReticleManager::IsEnemyArrow
+IL_00c9 ldc.i4.0 
+IL_00ca ceq 
+IL_00cc call TargetReticleManager::ShowDamageIndicator
+IL_00d1 ldarg.0 
+IL_00d2 call TargetReticleManager::UpdateArrowPosition
+IL_00d7 ldarg.0 
+IL_00d8 call TargetReticleManager::IsEnemyArrow
+IL_00dd brtrue.s IL_0106
+IL_00df ldarg.0 
+IL_00e0 ldarg.0 
+IL_00e1 ldarg.s argument(0x0004)
+IL_00e3 call TargetReticleManager::SetDamageText
+IL_00e8 call UnityEngine.MonoBehaviour::StartCoroutine
+IL_00ed pop 
+IL_00ee ldloc.1 
+IL_00ef brtrue.s IL_0106
+IL_00f1 ldarg.0 
+IL_00f2 call TargetReticleManager::IsStaticArrow
+IL_00f7 brtrue.s IL_0106
+IL_00f9 ldloc.0 
+IL_00fa brtrue.s IL_0106
+IL_00fc call PegCursor::Get
+IL_0101 callvirt PegCursor::Hide
+IL_0106 ldarg.0 
+IL_0107 ldfld TargetReticleManager::OnBeginTargetingCallback
+IL_010c dup 
+IL_010d brtrue.s IL_0111
+IL_010f pop 
+IL_0110 ret 
+IL_0111 ldarg.0 
+IL_0112 ldfld TargetReticleManager::m_arrow
+IL_0117 ldarg.0 
+IL_0118 ldfld TargetReticleManager::m_targetArrowType
+IL_011d callvirt TargetArrowCallback::Invoke
+IL_0122 ret 
+
+0x0600610c TargetReticleManager::LoadArrowCallback
+IL_0000 ldarg.0 
+IL_0001 ldarg.2 
+IL_0002 stfld TargetReticleManager::m_arrow
+IL_0007 ldarg.0 
+IL_0008 ldc.i4.0 
+IL_0009 call TargetReticleManager::ShowBullseye
+IL_000e ret 
+
+0x0600610e TargetReticleManager::LoadLinkCallback
+IL_0000 ldarg.0 
+IL_0001 ldarg.0 
+IL_0002 ldarg.2 
+IL_0003 call TargetReticleManager::OnLinkLoaded
+IL_0008 call UnityEngine.MonoBehaviour::StartCoroutine
+IL_000d pop 
+IL_000e ret 
+
+0x06006112 TargetReticleManager::OnLinkLoaded
+IL_0000 ldc.i4.0 
+IL_0001 newobj <OnLinkLoaded>d__85::.ctor
+IL_0006 dup 
+IL_0007 ldarg.0 
+IL_0008 stfld <OnLinkLoaded>d__85::<>4__this
+IL_000d dup 
+IL_000e ldarg.1 
+IL_000f stfld <OnLinkLoaded>d__85::linkActorObject
+IL_0014 ret 
+
+0x0600611d TargetReticleManager::ActivateArrow
+IL_0000 ldarg.0 
+IL_0001 ldarg.1 
+IL_0002 stfld TargetReticleManager::m_isActive
+IL_0007 ldarg.0 
+IL_0008 ldfld TargetReticleManager::m_arrow
+IL_000d callvirt UnityEngine.GameObject::get_gameObject
+IL_0012 ldc.i4.0 
+IL_0013 call RenderUtils::EnableRenderers
+IL_0018 ldarg.0 
+IL_0019 ldfld TargetReticleManager::m_hunterReticle
+IL_001e ldc.i4.0 
+IL_001f callvirt UnityEngine.GameObject::SetActive
+IL_0024 ldarg.0 
+IL_0025 ldfld TargetReticleManager::m_gruntyReticle
+IL_002a ldc.i4.0 
+IL_002b callvirt UnityEngine.GameObject::SetActive
+IL_0030 ldarg.0 
+IL_0031 ldfld TargetReticleManager::m_questionMark
+IL_0036 callvirt UnityEngine.GameObject::get_gameObject
+IL_003b ldc.i4.0 
+IL_003c call RenderUtils::EnableRenderers
+IL_0041 ldarg.1 
+IL_0042 brtrue.s IL_0045
+IL_0044 ret 
+IL_0045 ldarg.0 
+IL_0046 ldfld TargetReticleManager::m_reticleType
+IL_004b brtrue.s IL_006a
+IL_004d ldarg.0 
+IL_004e ldfld TargetReticleManager::m_arrow
+IL_0053 callvirt UnityEngine.GameObject::get_gameObject
+IL_0058 ldarg.1 
+IL_0059 brfalse.s IL_0063
+IL_005b ldarg.0 
+IL_005c ldfld TargetReticleManager::m_showArrow
+IL_0061 br.s IL_0064
+IL_0063 ldc.i4.0 
+IL_0064 call RenderUtils::EnableRenderers
+IL_0069 ret 
+IL_006a ldarg.0 
+IL_006b ldfld TargetReticleManager::m_reticleType
+IL_0070 ldc.i4.1 
+IL_0071 bne.un.s IL_008b
+IL_0073 ldarg.0 
+IL_0074 ldfld TargetReticleManager::m_hunterReticle
+IL_0079 ldarg.1 
+IL_007a brfalse.s IL_0084
+IL_007c ldarg.0 
+IL_007d ldfld TargetReticleManager::m_showArrow
+IL_0082 br.s IL_0085
+IL_0084 ldc.i4.0 
+IL_0085 callvirt UnityEngine.GameObject::SetActive
+IL_008a ret 
+IL_008b ldarg.0 
+IL_008c ldfld TargetReticleManager::m_reticleType
+IL_0091 ldc.i4.2 
+IL_0092 bne.un.s IL_00b1
+IL_0094 ldarg.0 
+IL_0095 ldfld TargetReticleManager::m_questionMark
+IL_009a callvirt UnityEngine.GameObject::get_gameObject
+IL_009f ldarg.1 
+IL_00a0 brfalse.s IL_00aa
+IL_00a2 ldarg.0 
+IL_00a3 ldfld TargetReticleManager::m_showArrow
+IL_00a8 br.s IL_00ab
+IL_00aa ldc.i4.0 
+IL_00ab call RenderUtils::EnableRenderers
+IL_00b0 ret 
+IL_00b1 ldarg.0 
+IL_00b2 ldfld TargetReticleManager::m_reticleType
+IL_00b7 ldc.i4.3 
+IL_00b8 bne.un.s IL_00d2
+IL_00ba ldarg.0 
+IL_00bb ldfld TargetReticleManager::m_gruntyReticle
+IL_00c0 ldarg.1 
+IL_00c1 brfalse.s IL_00cb
+IL_00c3 ldarg.0 
+IL_00c4 ldfld TargetReticleManager::m_showArrow
+IL_00c9 br.s IL_00cc
+IL_00cb ldc.i4.0 
+IL_00cc callvirt UnityEngine.GameObject::SetActive
+IL_00d1 ret 
+IL_00d2 ldstr 'Unknown Target Reticle Type!'
+IL_00d7 call UnityEngine.Debug::LogError
+IL_00dc ret 
+
+0x0600611e TargetReticleManager::ShowArrow
+IL_0000 ldarg.0 
+IL_0001 ldarg.1 
+IL_0002 stfld TargetReticleManager::m_showArrow
+IL_0007 ldarg.0 
+IL_0008 ldfld TargetReticleManager::m_arrow
+IL_000d callvirt UnityEngine.GameObject::get_gameObject
+IL_0012 ldc.i4.0 
+IL_0013 call RenderUtils::EnableRenderers
+IL_0018 ldarg.0 
+IL_0019 ldfld TargetReticleManager::m_hunterReticle
+IL_001e ldc.i4.0 
+IL_001f callvirt UnityEngine.GameObject::SetActive
+IL_0024 ldarg.0 
+IL_0025 ldfld TargetReticleManager::m_gruntyReticle
+IL_002a ldc.i4.0 
+IL_002b callvirt UnityEngine.GameObject::SetActive
+IL_0030 ldarg.0 
+IL_0031 ldfld TargetReticleManager::m_questionMark
+IL_0036 callvirt UnityEngine.GameObject::get_gameObject
+IL_003b ldc.i4.0 
+IL_003c call RenderUtils::EnableRenderers
+IL_0041 ldarg.1 
+IL_0042 brtrue.s IL_0045
+IL_0044 ret 
+IL_0045 ldarg.0 
+IL_0046 ldfld TargetReticleManager::m_reticleType
+IL_004b brtrue.s IL_005f
+IL_004d ldarg.0 
+IL_004e ldfld TargetReticleManager::m_arrow
+IL_0053 callvirt UnityEngine.GameObject::get_gameObject
+IL_0058 ldarg.1 
+IL_0059 call RenderUtils::EnableRenderers
+IL_005e ret 
+IL_005f ldarg.0 
+IL_0060 ldfld TargetReticleManager::m_reticleType
+IL_0065 ldc.i4.1 
+IL_0066 bne.un.s IL_0075
+IL_0068 ldarg.0 
+IL_0069 ldfld TargetReticleManager::m_hunterReticle
+IL_006e ldarg.1 
+IL_006f callvirt UnityEngine.GameObject::SetActive
+IL_0074 ret 
+IL_0075 ldarg.0 
+IL_0076 ldfld TargetReticleManager::m_reticleType
+IL_007b ldc.i4.2 
+IL_007c bne.un.s IL_0090
+IL_007e ldarg.0 
+IL_007f ldfld TargetReticleManager::m_questionMark
+IL_0084 callvirt UnityEngine.GameObject::get_gameObject
+IL_0089 ldarg.1 
+IL_008a call RenderUtils::EnableRenderers
+IL_008f ret 
+IL_0090 ldarg.0 
+IL_0091 ldfld TargetReticleManager::m_reticleType
+IL_0096 ldc.i4.3 
+IL_0097 bne.un.s IL_00a6
+IL_0099 ldarg.0 
+IL_009a ldfld TargetReticleManager::m_gruntyReticle
+IL_009f ldarg.1 
+IL_00a0 callvirt UnityEngine.GameObject::SetActive
+IL_00a5 ret 
+IL_00a6 ldstr 'Unknown Target Reticle Type!'
+IL_00ab call UnityEngine.Debug::LogError
+IL_00b0 ret 

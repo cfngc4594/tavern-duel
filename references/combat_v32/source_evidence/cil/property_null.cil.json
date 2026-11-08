@@ -1,0 +1,122 @@
+{
+  "types": [
+    {
+      "type": "HutongGames.PlayMaker.Actions.SetProperty",
+      "token": "0x020003bb",
+      "fields": [
+        {
+          "name": "targetProperty",
+          "token": "0x04001315",
+          "signature": "06128589"
+        },
+        {
+          "name": "everyFrame",
+          "token": "0x04001316",
+          "signature": "0602"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "type": "HutongGames.PlayMaker.Actions.SetProperty",
+      "method": "OnEnter",
+      "token": "0x0600112e",
+      "rva": "0x3d50b",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 26,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.SetProperty::targetProperty",
+          "token": "token(0x04001315)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmProperty::SetValue",
+          "token": "token(0x0A0006B8)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_000c",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.SetProperty::everyFrame",
+          "token": "token(0x04001316)"
+        },
+        {
+          "offset": "IL_0011",
+          "opcode": "brtrue.s",
+          "operand": "IL_0019",
+          "token": null
+        },
+        {
+          "offset": "IL_0013",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0014",
+          "opcode": "call",
+          "operand": "HutongGames.PlayMaker.FsmStateAction::Finish",
+          "token": "token(0x0A0000B8)"
+        },
+        {
+          "offset": "IL_0019",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    },
+    {
+      "type": "HutongGames.PlayMaker.Actions.SetProperty",
+      "method": "OnUpdate",
+      "token": "0x0600112f",
+      "rva": "0x3d526",
+      "signature": "200001",
+      "parameters": [],
+      "code_size": 12,
+      "instructions": [
+        {
+          "offset": "IL_0000",
+          "opcode": "ldarg.0",
+          "operand": "",
+          "token": null
+        },
+        {
+          "offset": "IL_0001",
+          "opcode": "ldfld",
+          "operand": "HutongGames.PlayMaker.Actions.SetProperty::targetProperty",
+          "token": "token(0x04001315)"
+        },
+        {
+          "offset": "IL_0006",
+          "opcode": "callvirt",
+          "operand": "HutongGames.PlayMaker.FsmProperty::SetValue",
+          "token": "token(0x0A0006B8)"
+        },
+        {
+          "offset": "IL_000b",
+          "opcode": "ret",
+          "operand": "",
+          "token": null
+        }
+      ]
+    }
+  ]
+}

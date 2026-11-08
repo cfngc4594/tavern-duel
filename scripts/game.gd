@@ -1123,6 +1123,19 @@ func _pointer_press():
 	if not player_turn or busy or not flow.accepts_actions():
 		if flow.accepts_actions():_try_original_board_press()
 		return
+	# Phone hand stand-ins are in front of the board actors. Claim the touch
+	# before overlapping hero-power/end-turn hitboxes can receive it.
+	if _phone_hand_enabled():
+		if hover_card >= 0:
+			if not native_phone_hand.enlarged and not native_phone_hand.mini_hand_play_enabled:return
+			native_phone_hand.begin_touch(hover_card,_touch_window_position(screen_pointer))
+			pressed_card=hover_card
+			if definitions[cards[hover_card].key].cost > mana: show_toast("法力值不足"); play_sound("error")
+			return
+		# Source HandleLeftMouseDown -> HidePhoneHand on a non-hand press;
+		# HidePhoneHand does not interrupt the enlargement transition.
+		if native_phone_hand.enlarged and native_phone_hand.enlarging_remaining<=0:
+			native_phone_hand.set_enlarged(false)
 	if flow.visuals.press_button(): return
 	if (source_phone_layout.contains("friendly_power",pointer) if _phone_hand_enabled() else (pointer - Vector2(948, 690)).length() < 55):
 		if power_used: show_toast("本回合已使用英雄技能"); return
@@ -1131,9 +1144,6 @@ func _pointer_press():
 			_spend_mana(2);power_used=true;_use_life_tap_with_audio(0);play_sound("mana");return
 		targeting_power = true; _begin_spell_audio_preview("CS2_034"); _update_interaction(); play_sound("pickup"); return
 	if hover_card >= 0:
-		if _phone_hand_enabled():
-			if not native_phone_hand.enlarged and not native_phone_hand.mini_hand_play_enabled:return
-			native_phone_hand.begin_touch(hover_card,_touch_window_position(screen_pointer))
 		pressed_card = hover_card
 		if definitions[cards[hover_card].key].cost > mana: show_toast("法力值不足"); play_sound("error")
 		return

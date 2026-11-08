@@ -5,3 +5,5 @@ func play_sound(_kind):pass
 func _event(_name):pass
 func _update_interaction(_allow:bool=true):pass
 func _exit_tree():pass
+func _try_original_board_press():pass
+func _begin_spell_audio_preview(_key):pass

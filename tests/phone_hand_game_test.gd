@@ -6,9 +6,17 @@ class Bridge extends Node:
  var viewport:SubViewport
 class Visuals:
  func release_button():return false
+ func press_button():return false
 class Flow:
  var visuals=Visuals.new()
  func accepts_actions():return true
+ func pointer_press():return false
+class PhoneLayout:
+ var overlap_power:=true
+ var power_checks:=0
+ func contains(key,_point):
+  if key=="friendly_power":power_checks+=1;return overlap_power
+  return false
 class Motion:
  var game
  var point=Vector3(-7,4,-3)
@@ -33,7 +41,11 @@ func run():
  assert(game.cards[0].source_world_position.is_equal_approx(game.native_phone_hand.source_pose(0,1).position))
  var point=game.native_phone_hand.project(game.cards[0].source_world_position)
  game.pointer=point;game.screen_pointer=point;game.mouse_down=true;game.active_touch_index=0
- game.native_phone_hand.begin_touch(0,game._touch_window_position(point));game.pressed_card=0
+ game.source_phone_layout=PhoneLayout.new();game.mana=10;game.busy=false
+ game.hover_card=game.native_phone_hand.hit_card(point);assert(game.hover_card==0)
+ game._pointer_press()
+ assert(game.pressed_card==0 and game.native_phone_hand.touched_slot==0)
+ assert(not game.targeting_power and game.source_phone_layout.power_checks==0)
  game._update_hand(.05);assert(game.native_phone_hand.focus==-1)
  game._update_hand(.06);assert(game.native_phone_hand.focus==0)
  game.native_phone_hand.mini_hand_play_enabled=false
@@ -41,6 +53,15 @@ func run():
  game.native_phone_hand.mini_hand_play_enabled=true
  game.native_phone_hand.begin_touch(0,game._touch_window_position(point));game.pressed_card=0
  game._pointer_release();assert(game.native_phone_hand.enlarged and game.native_phone_hand.focus==-1)
+ game.source_phone_layout.overlap_power=false
+ game.hover_card=-1;game.pointer=Vector2(800,300);game.screen_pointer=game.pointer
+ game._pointer_press();assert(game.native_phone_hand.enlarged) # Do not interrupt enlargement.
+ game.native_phone_hand.enlarging_remaining=0
+ game.hover_card=0;game.pointer=point;game.screen_pointer=point
+ game._pointer_press();assert(game.native_phone_hand.enlarged) # Hand touch keeps it open.
+ game.native_phone_hand.release_touch();game.pressed_card=-1
+ game.hover_card=-1;game.pointer=Vector2(800,300);game.screen_pointer=game.pointer
+ game._pointer_press();assert(not game.native_phone_hand.enlarged)
  game.native_phone_hand.set_enlarged(false);game.native_phone_hand.enlarging_remaining=0
  game._begin_card_drag(0);assert(game.drag_index==0)
  var motion=Motion.new();motion.game=game;game.source_held_motion=motion
@@ -60,5 +81,5 @@ func run():
  assert(game.cards[0].source_world_position.is_equal_approx(Vector3(end_bone[0],end_bone[1],end_bone[2])))
  game._update_hand(.31);assert(not game.cards[0].drawing)
  game._update_hand(.2);assert(game.cards[0].source_world_position.is_equal_approx(game.native_phone_hand.source_pose(0,1).position))
- print("PHONE_HAND_GAME_PASS source layout, .1s hold, raw held hit, .7 scale, quaternion handout, .5s source return; unregistered draw refused")
+ print("PHONE_HAND_GAME_PASS hand claims overlapping power touch, tap expands, outside press collapses, transition guarded; source layout, held hit, draw and return")
  quit()

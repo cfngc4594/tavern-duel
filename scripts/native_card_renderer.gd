@@ -652,6 +652,7 @@ func build_world_minion(key: String, definition: Dictionary, portrait: Texture2D
 			mi.set_surface_override_material(surface,mat);material_nodes[source_key].append(mat)
 	var state: Dictionary={"root":actor,"nodes":{},"paths":paths,"renderers":render_nodes,"materials":material_nodes,"particles":{},"source_key":"cab-69c88b234dfa427e02d1fcee9337ae34:"+str(prof.rootId),"stats":{},"stat_nodes":{},"card":key,"native_board_actor":true,"portrait_lighting":"Recovered 6322982158558142423 formula; scene SH/light compatibility inputs"}
 	for id in nodes:state.nodes[nodes[id].get_meta("source_key")]=nodes[id]
+	state.base_health=int(definition.hp)
 	update_world_minion_stats(state,int(definition.atk),int(definition.hp))
 	return state
 
@@ -672,10 +673,11 @@ func update_world_minion_card(state: Dictionary,key: String,definition: Dictiona
 		if material==null:return false
 		mi.set_surface_override_material(surface,material);state.materials[source_key][surface]=material
 	state.card=key
+	state.base_health=int(definition.hp)
 	update_world_minion_stats(state,int(definition.atk),int(definition.hp))
 	return true
 
-func update_world_minion_stats(state: Dictionary, attack: int, health: int):
+func update_world_minion_stats(state: Dictionary, attack: int, health: int, max_health: int=-1, base_health: int=-1):
 	var prof: Dictionary=profiles.minion_in_play
 	for spec in prof.labels:
 		if spec.role not in ["attack","health"]:continue
@@ -687,6 +689,22 @@ func update_world_minion_stats(state: Dictionary, attack: int, health: int):
 		var parent: Node=state.nodes["cab-69c88b234dfa427e02d1fcee9337ae34:"+str(spec.nodeId)]
 		var result=_add_direct_glyphs(parent,str(value),spec,number_bundle.glyphs,number_bundle.atlas,number_bundle.size,74,{"ascent":900.0,"descent":-124.0,"line_gap":6.0,"units":1024.0})
 		if result!=null:state.stat_nodes[spec.role]=result.node
+	var base: int=base_health if base_health>=0 else int(state.get("base_health",health))
+	_update_health_stat_tint(state,health,max_health if max_health>=0 else base,base)
+
+static func health_stat_color(health: int, max_health: int, base_health: int, phone: bool) -> Color:
+	# Actor.UpdateHealthTextMesh 0x060128c9 gives damage priority over buffs.
+	# UpdateTextColor 0x060128e3 uses a lighter red for UsePhoneUI.
+	if health<max_health:return Color(1.0,50.0/255.0,50.0/255.0) if phone else Color.RED
+	if max_health>base_health:return Color.GREEN
+	return Color.WHITE
+
+func _update_health_stat_tint(state: Dictionary, health: int, max_health: int, base_health: int):
+	var node=state.stat_nodes.get("health")
+	if not is_instance_valid(node) or not node is MeshInstance3D:return
+	var material=node.mesh.surface_get_material(0)
+	if material is ShaderMaterial:
+		material.set_shader_parameter("text_tint",health_stat_color(health,max_health,base_health,OS.has_feature("android") or OS.has_feature("ios")))
 
 func clone_world_hand(key: String) -> Dictionary:
 	# Duplicate real source geometry/glyphs, not a new card-face quad.
@@ -767,6 +785,11 @@ func _build_world_source_character(profile_name: String, key: String, definition
 
 func update_world_character_stats(state: Dictionary, definition: Dictionary) -> void:
 	var prof: Dictionary=profiles[state.source_profile]
+	# Source Actor.UpdateAttackTextMesh 0x060128a9 hides the entire hero gem
+	# at zero attack, not just its text. Minion zero-attack gems stay visible.
+	if state.source_profile=="hero_in_play" and definition.has("atk"):
+		var attack_object=state.paths.get("RootObject/DecorationRoot/AttackObject")
+		if is_instance_valid(attack_object):attack_object.visible=int(definition.atk)!=0
 	for spec in prof.labels:
 		var field: String={"attack":"atk","health":"hp","cost":"cost"}.get(spec.role,spec.role)
 		if not definition.has(field):continue
@@ -778,6 +801,8 @@ func update_world_character_stats(state: Dictionary, definition: Dictionary) -> 
 		var parent: Node=state.nodes["cab-69c88b234dfa427e02d1fcee9337ae34:"+str(spec.nodeId)]
 		var result=_add_direct_glyphs(parent,str(value),spec,number_bundle.glyphs,number_bundle.atlas,number_bundle.size,int(spec.fontSize),{"ascent":900.0,"descent":-124.0,"line_gap":6.0,"units":1024.0})
 		if result!=null:state.stat_nodes[spec.role]=result.node
+	if state.source_profile=="hero_in_play" and definition.has("hp"):
+		_update_health_stat_tint(state,int(definition.hp),int(definition.get("max_hp",30)),int(definition.get("base_hp",30)))
 
 func _world_character_material(md: Dictionary, main_texture: Texture2D) -> Material:
 	var shader_id: String=str(md.sourceShaderKey).get_slice(":",1)

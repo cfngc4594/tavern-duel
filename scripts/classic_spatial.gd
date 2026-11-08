@@ -203,7 +203,7 @@ func sync_from_game() -> void:
 				actor.scale=unit.get("native_combat_scale",Vector3.ONE)
 				actor.position+=unit.get("native_shake_position",Vector3.ZERO)
 				actor.quaternion=actor.quaternion*unit.get("native_shake_rotation",Quaternion.IDENTITY)
-				game.native_card_renderer.update_world_minion_stats(piece.actor,int(unit.atk),maxi(0,int(unit.hp)))
+				game.native_card_renderer.update_world_minion_stats(piece.actor,int(unit.atk),maxi(0,int(unit.hp)),int(unit.max_hp),int(game.definitions[unit.key].hp))
 				_register_native_shield_depth(piece)
 				continue
 			var portrait_material: StandardMaterial3D = piece.portrait_material
@@ -233,7 +233,7 @@ func _sync_phone_unit(piece:Dictionary,unit:Dictionary):
 	actor.position=unit.get("native_combat_position",unit.get("native_summon_position",Vector3.ZERO))+unit.get("native_shake_position",Vector3.ZERO)
 	actor.quaternion=unit.get("native_combat_rotation",unit.get("native_summon_rotation",Quaternion.IDENTITY))*unit.get("native_shake_rotation",Quaternion.IDENTITY)
 	actor.scale=unit.get("native_combat_scale",Vector3.ONE)
-	game.native_card_renderer.update_world_minion_stats(piece.actor,int(unit.atk),maxi(0,int(unit.hp)))
+	game.native_card_renderer.update_world_minion_stats(piece.actor,int(unit.atk),maxi(0,int(unit.hp)),int(unit.max_hp),int(game.definitions[unit.key].hp))
 
 func _dispose_piece(id: int) -> void:
 	var root: Node3D = pieces[id].root

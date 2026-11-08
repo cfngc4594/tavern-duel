@@ -4,7 +4,10 @@ apk=Path(sys.argv[1]);project=Path(sys.argv[2]);out=Path(sys.argv[3])
 exts={'.png','.webp','.json','.bin','.sha256','.source_sha256','.value_sha256','.rgba8-mips','.dxt-mips','.wav','.ogg'}
 with zipfile.ZipFile(apk) as z:
  names=set(z.namelist());missing=[];different=[];checked={};raw_png=0
- for p in (project/'assets').rglob('*'):
+ # Runtime raw-file loaders also live below original_board and source_rope.
+ # Imported Godot textures/audio do not replace files read with FileAccess.
+ runtime_roots=('assets','original_board','source_rope')
+ for p in (p for root in runtime_roots for p in (project/root).rglob('*')):
   if not p.is_file() or p.suffix not in exts:continue
   rel=p.relative_to(project).as_posix();entry='assets/'+rel
   if entry not in names:missing.append(rel);continue

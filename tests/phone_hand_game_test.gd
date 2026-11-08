@@ -62,6 +62,26 @@ func run():
  game.native_phone_hand.release_touch();game.pressed_card=-1
  game.hover_card=-1;game.pointer=Vector2(800,300);game.screen_pointer=game.pointer
  game._pointer_press();assert(not game.native_phone_hand.enlarged)
+ # Opponent turn permits browsing, but neither card dragging nor hero power.
+ game.player_turn=false;game.native_phone_hand.enlarging_remaining=0
+ game.pointer=point;game.screen_pointer=point;game._update_hover(false)
+ assert(game.hover_card==0)
+ game.source_phone_layout.overlap_power=true
+ var power_checks=game.source_phone_layout.power_checks
+ game._pointer_press();assert(game.native_phone_hand.touched_slot==0)
+ game._begin_card_drag(0);assert(game.drag_index==-1)
+ game._pointer_release();assert(game.native_phone_hand.enlarged)
+ assert(not game.targeting_power and game.source_phone_layout.power_checks==power_checks)
+ game.native_phone_hand.enlarging_remaining=0
+ game.pointer=Vector2(800,300);game.screen_pointer=game.pointer;game._update_hover(false)
+ assert(game.hover_card==-1)
+ game._pointer_press();assert(not game.native_phone_hand.enlarged)
+ assert(not game.targeting_power and game.source_phone_layout.power_checks==power_checks)
+ # Busy state still rejects hand gestures; target/drag guards remain earlier.
+ game.busy=true;game.pointer=point;game.screen_pointer=point;game._update_hover(false)
+ game._pointer_press();assert(game.native_phone_hand.touched_slot==-1)
+ game._begin_card_drag(0);assert(game.drag_index==-1)
+ game.busy=false;game.player_turn=true;game.source_phone_layout.overlap_power=false
  game.native_phone_hand.set_enlarged(false);game.native_phone_hand.enlarging_remaining=0
  game._begin_card_drag(0);assert(game.drag_index==0)
  var motion=Motion.new();motion.game=game;game.source_held_motion=motion
@@ -81,5 +101,5 @@ func run():
  assert(game.cards[0].source_world_position.is_equal_approx(Vector3(end_bone[0],end_bone[1],end_bone[2])))
  game._update_hand(.31);assert(not game.cards[0].drawing)
  game._update_hand(.2);assert(game.cards[0].source_world_position.is_equal_approx(game.native_phone_hand.source_pose(0,1).position))
- print("PHONE_HAND_GAME_PASS hand claims overlapping power touch, tap expands, outside press collapses, transition guarded; source layout, held hit, draw and return")
+ print("PHONE_HAND_GAME_PASS hand claims overlapping power touch; opponent-turn browsing without card/power actions; busy guard; tap expands, outside press collapses, transition guarded; source layout, held hit, draw and return")
  quit()

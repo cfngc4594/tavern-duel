@@ -1,6 +1,6 @@
 extends "res://scripts/native_combat_effects.gd"
 ## Source Arrow_Targeted_FX graph, meshes, textures and clips. Presentation only.
-## Damage/death remains the existing immediate battlecry rule operation.
+## Damage/death is committed by the caller at this missile's actual impact.
 var archer_shots:Array=[]
 var archer_serial:int=1000000
 var archer_audio_owners:Dictionary={}
@@ -19,11 +19,12 @@ func setup(owner_game:Node,source_assets):
 	var data:Dictionary=SourceDictionary.load_source_dictionary("res://assets/original_combat_v32/archer/routes.json")
 	routes.merge(data.routes);cards.CS2_189=data.card
 
-func play_archer(unit:Dictionary,target:Dictionary,audio_scope:String="")->int:
+func play_archer(unit:Dictionary,target:Dictionary,audio_scope:String="",on_impact:Callable=Callable(),on_complete:Callable=Callable(),on_cancel:Callable=Callable())->int:
 
 	archer_serial+=1
 	archer_audio_owners[archer_serial]={"scope":audio_scope,"side":unit.side,"target":target.duplicate(true)}
 	var entry:Dictionary={"key":"CS2_189","side":unit.side,"source":unit.pos,"target":target.duplicate(true),"serial":archer_serial,"age":0.0,"route":spell_route("CS2_189",target,unit.side)}
+	entry.on_impact=on_impact;entry.on_complete=on_complete;entry.on_cancel=on_cancel
 	spell_launch(entry)
 	# SuperSpell.OnMissileSpellStateFinished (0x06014b24) starts the path
 	# only after Birth completes. Reuse this instance's sampled FSM wait.
@@ -87,6 +88,9 @@ func _sample(effect:Dictionary):
 	if effect.has("archer_skin"):effect.archer_skin._skin()
 
 func cancel_all():
+	for shot in archer_shots:
+		var cancel:Callable=shot.get("on_cancel",Callable())
+		if cancel.is_valid():cancel.call()
 	archer_shots.clear()
 	for scope in archer_audio_scopes:get_node("/root/SoundManager").original_audio.stop_scope(scope)
 	archer_audio_scopes.clear();archer_audio_owners.clear()
@@ -129,15 +133,20 @@ func retain_death_audio(owner:int,deaths:Array):
 		archer_audio_owners[owner].death_audio_consumed=false
 
 func spell_impact(entry:Dictionary):
+	# Remove before calling: re-entry or cancellation cannot commit damage twice.
+	var commit:Callable=entry.get("on_impact",Callable())
+	entry.erase("on_impact");entry.erase("on_cancel")
+	if commit.is_valid():commit.call()
 	super.spell_impact(entry)
 	if str(entry.get("key",""))!="CS2_189":return
 	var owner:Dictionary=archer_audio_owners.get(entry.serial,{})
-	if owner.is_empty() or bool(owner.get("death_audio_consumed",false)):return
-	owner.death_audio_consumed=true
-	var deaths:Array=owner.get("death_audio",[])
-	owner.erase("death_audio")
-	if not deaths.is_empty():
-		# Compatibility with the existing observed-death queue, not a change to
-		# native_death's independent source Birth/voice lifecycle or game rules.
-		game._audio_flush_deaths(deaths,{},{})
-		archer_audio_history.append({"event":"observed_death_audio_flushed","owner_serial":entry.serial,"count":deaths.size(),"visual_clock":clock_seconds})
+	if not owner.is_empty() and not bool(owner.get("death_audio_consumed",false)):
+		owner.death_audio_consumed=true
+		var deaths:Array=owner.get("death_audio",[])
+		owner.erase("death_audio")
+		if not deaths.is_empty():
+			game._audio_flush_deaths(deaths,{},{})
+			archer_audio_history.append({"event":"observed_death_audio_flushed","owner_serial":entry.serial,"count":deaths.size(),"visual_clock":clock_seconds})
+	var complete:Callable=entry.get("on_complete",Callable())
+	entry.erase("on_complete")
+	if complete.is_valid():complete.call()

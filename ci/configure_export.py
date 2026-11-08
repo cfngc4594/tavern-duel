@@ -12,6 +12,12 @@ for line in t.splitlines():
         line="version/code="+str(37415+int(os.environ.get("GITHUB_RUN_NUMBER","1")))
     elif line.startswith("version/name="):
         line='version/name="37.4.15-child-ci'+os.environ.get("GITHUB_RUN_NUMBER","1")+'"'
+    elif line.startswith("package/unique_name="):
+        # Disposable CI keys cannot update an APK signed by a previous run.
+        # Use a distinct application ID so testing never requires deleting data.
+        line='package/unique_name="org.dot.tavernduel.childcandidate.ci'+os.environ.get("GITHUB_RUN_NUMBER","1")+'"'
+    elif line.startswith("package/name="):
+        line='package/name="Tavern Duel Test CI'+os.environ.get("GITHUB_RUN_NUMBER","1")+'"'
     elif line.startswith("export_path="):
         line='export_path="build/TavernDuel-latest-candidate.apk"'
     lines.append(line)

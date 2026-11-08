@@ -789,7 +789,7 @@ func _update_hover(emit_hover_audio:bool=true):
 		last_hover = -1
 		return
 	if help_visible or settings_visible or game_over or not flow.accepts_actions(): return
-	if drag_index < 0 and selected_unit < 0 and not targeting_power and pending_battlecry.is_empty() and player_turn:
+	if drag_index < 0 and selected_unit < 0 and not targeting_power and pending_battlecry.is_empty() and (player_turn or _phone_hand_enabled()):
 		if _phone_hand_enabled():
 			hover_card=native_phone_hand.hit_card(pointer)
 			if native_phone_hand.touched_slot>=0: hover_card=native_phone_hand.focus
@@ -1120,7 +1120,7 @@ func _pointer_press():
 	if drag_index >= 0:return
 	if selected_unit >= 0 or targeting_power or not pending_battlecry.is_empty():
 		_resolve_target(pointer); return
-	if not player_turn or busy or not flow.accepts_actions():
+	if busy or not flow.accepts_actions():
 		if flow.accepts_actions():_try_original_board_press()
 		return
 	# Phone hand stand-ins are in front of the board actors. Claim the touch
@@ -1130,12 +1130,17 @@ func _pointer_press():
 			if not native_phone_hand.enlarged and not native_phone_hand.mini_hand_play_enabled:return
 			native_phone_hand.begin_touch(hover_card,_touch_window_position(screen_pointer))
 			pressed_card=hover_card
-			if definitions[cards[hover_card].key].cost > mana: show_toast("法力值不足"); play_sound("error")
+			if player_turn and definitions[cards[hover_card].key].cost > mana: show_toast("法力值不足"); play_sound("error")
 			return
 		# Source HandleLeftMouseDown -> HidePhoneHand on a non-hand press;
 		# HidePhoneHand does not interrupt the enlargement transition.
 		if native_phone_hand.enlarged and native_phone_hand.enlarging_remaining<=0:
 			native_phone_hand.set_enlarged(false)
+	# Browsing the phone hand does not grant permission to play out of turn.
+	# Dragging remains independently guarded by _begin_card_drag.
+	if not player_turn:
+		_try_original_board_press()
+		return
 	if flow.visuals.press_button(): return
 	if (source_phone_layout.contains("friendly_power",pointer) if _phone_hand_enabled() else (pointer - Vector2(948, 690)).length() < 55):
 		if power_used: show_toast("本回合已使用英雄技能"); return
@@ -1486,7 +1491,7 @@ func _summon_effect(u, source={}, battlecry_target={}):
 	# effect meshes/materials and particle lifetime. No legacy v18 release timeline.
 	busy=true
 	native_summon.begin(u,source,"hand",func():
-		_resolve_battlecry(u,battlecry_target);_history_complete(history_id);busy=false;_check_victory();_announce_charge_ready(u)
+		_resolve_battlecry(u,battlecry_target,func():_history_complete(history_id);busy=false;_check_victory();_announce_charge_ready(u))
 	)
 
 func _summon_generated(u: Dictionary):
@@ -1718,7 +1723,7 @@ func _valid_character(t: Dictionary) -> bool:
 	if t.get("type", "")=="unit": return not t.unit.dead and (allies.has(t.unit) or enemies.has(t.unit))
 	return false
 
-func _resolve_battlecry(u: Dictionary, target: Dictionary):
+func _resolve_battlecry(u: Dictionary, target: Dictionary, completed:Callable=Callable()):
 	var scope = _next_audio_scope("battlecry")
 	_audio_scope_sides[scope] = u.side
 	var effect_does_nothing = u.key == "EX1_066" and rules.weapons[1-u.side].is_empty()
@@ -1728,6 +1733,24 @@ func _resolve_battlecry(u: Dictionary, target: Dictionary):
 	if not effect_does_nothing:
 		if SoundManager.has_original_event(u.key,"cast"): _spell_audio(u.key,"cast",scope)
 		if not archer_source_audio and SoundManager.has_original_event(u.key,"launch"): launch = _spell_audio(u.key,"launch",scope)
+	if archer_source_audio:
+		busy=true
+		# The recovered source missile schedules its impact after Birth + flight.
+		# Keep HP, death and the play-history completion behind that exact event.
+		var owner={"id":-1}
+		var impact=func():
+			_audio_resolution={"key":u.key,"scope":scope,"targets":[],"deaths":[]}
+			if _valid_character(target):
+				_damage(target,1);_event("battlecry_damage1")
+				_log(definitions[u.key].name,"战吼 · 造成1点伤害",GOLD);_clear_dead()
+			var observed_damage=_audio_resolution;_audio_resolution={}
+			native_combat.effect_player.retain_death_audio(owner.id,observed_damage.deaths)
+		var finish=func():
+			_finish_spell_scope(scope);busy=false
+			if completed.is_valid():completed.call()
+		var cancel=func():_finish_spell_scope(scope);busy=false
+		owner.id=native_combat.effect_player.play_archer(u,target,scope,impact,finish,cancel)
+		return
 	_audio_resolution = {"key":u.key,"scope":scope,"targets":[],"deaths":[]}
 	var observed_weapon_target = {"type":"hero","side":1-u.side,"pos":ENEMY_HERO if u.side==0 else PLAYER_HERO} if u.key=="EX1_066" and not effect_does_nothing else {}
 	var prior_capacity = max_mana if u.side == 0 else enemy_max_mana
@@ -1757,6 +1780,7 @@ func _resolve_battlecry(u: Dictionary, target: Dictionary):
 		var hit_delays = _audio_hit_targets(u.key,scope,observed.targets,flight,origin)
 		_audio_flush_deaths(observed.deaths,hit_delays,origin)
 	_finish_spell_scope(scope)
+	if completed.is_valid():completed.call()
 
 func _clear_dead():
 	# Remove the whole simultaneous death wave before any deathrattle resolves.

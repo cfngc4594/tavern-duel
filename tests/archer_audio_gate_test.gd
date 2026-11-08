@@ -10,7 +10,7 @@ func run():
  var unit=game._new_unit("CS2_189",0,Vector2(890,game.FRIEND_Y))
  var hp=game.health[1]
  game._resolve_battlecry(unit,{"type":"hero","side":1,"pos":game.ENEMY_HERO})
- assert(game.health[1]==hp-1)
+ assert(game.health[1]==hp)
  assert(fx.archer_audio_history.is_empty())
  var shot=fx.archer_shots[0]
  var birth:float=shot.missile_effect.motion.begin
@@ -52,9 +52,10 @@ func run():
  print("ARCHER_AUDIO_CANCEL_PASS")
  var victim=game._new_unit("CS2_189",1,Vector2(890,game.ENEMY_Y));game.enemies.append(victim)
  game._resolve_battlecry(unit,{"type":"unit","unit":victim,"pos":victim.pos})
- assert(victim.dead and not game.enemies.has(victim))
+ assert(not victim.dead and game.enemies.has(victim))
  assert(fx.archer_shots.size()==1)
  fx.advance(5.0)
+ assert(victim.dead and not game.enemies.has(victim))
  assert(fx.archer_shots.is_empty() and fx.archer_audio_owners.is_empty())
- print("ARCHER_LETHAL_IMMEDIATE_RULE_PASS")
+ print("ARCHER_LETHAL_IMPACT_RULE_PASS")
  game.queue_free();quit()

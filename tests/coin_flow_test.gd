@@ -11,6 +11,7 @@ class Host extends Node:
  var sound_enabled=false
  func _resting_hand_pose(_i,_n):return {"pos":Vector2(800,850),"scale":0.8,"angle":0.0}
 class Mock extends Node:
+ var player:Node
  var events=[]
  var gather_started=false
  var advanced=0.0
@@ -24,6 +25,7 @@ class Mock extends Node:
  func begin_hand_transition(_pose):gather_started=true;events.append(["gather",0])
  func sample_hand_transition(t):events.append(["gather_sample",t])
  func set_active(value):events.append(["active",value])
+ func finish_coin_object():events.append(["finished",true])
 func _initialize():call_deferred("run")
 func run():
  var host=Host.new();root.add_child(host)
@@ -42,5 +44,13 @@ func run():
  host.flow.phase="gather";host.flow.phase_time=0;visuals._tick_source_coin(0.2);assert(source.gather_started)
  assert(is_equal_approx(visuals.COIN_PHASE_SECONDS,2.11666668057442));assert(visuals.COIN_FLY_SECONDS==1.0)
  visuals._clear_source_coin();assert(not visuals.source_birth_sent and not visuals.source_card_started)
+ host.flow.first_side=0;host.flow.phase="coin";host.flow.phase_time=0
+ source=Mock.new();source.player=source;host.add_child(source);visuals.source_coin=source
+ visuals._tick_source_coin(0.8)
+ assert(not visuals.source_birth_sent and not visuals.source_card_started)
+ assert(not source.card_started and source.events==[["finished",true],["active",false]])
+ host.flow.phase="gather";visuals._tick_source_coin(0.2)
+ assert(not source.gather_started and not source.card_started)
+ visuals._clear_source_coin()
  print("COIN_FLOW_PASS exact0.5 Birth/0.6 card boundaries across coarse frame; one-shot events;1s gather; lifecycle")
  host.queue_free();quit()

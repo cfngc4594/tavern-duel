@@ -8,6 +8,7 @@ var selector
 var pieces:Array[Dictionary]=[]
 var blockers:Array[String]=[]
 var audit:Dictionary={}
+var battlecry_preview:Dictionary={}
 func setup(host,highlight_selector):
  game=host;selector=highlight_selector
  basis=Basis(Vector3.RIGHT,Vector3.UP,-Vector3.BACK)
@@ -15,6 +16,7 @@ func clear():
  for piece in pieces:
   if piece.has("root"):piece.root.queue_free()
  pieces.clear()
+ if not battlecry_preview.is_empty():battlecry_preview.root.queue_free();battlecry_preview={}
 func profile_path(profile:Dictionary,id:String)->NodePath:
  var parts:Array[String]=[]
  while id!="":
@@ -56,6 +58,7 @@ func sync():
  # One reflection snapshot per synchronous hand update; never retained across frames.
  var highlight_uniforms:Dictionary={}
  blockers.clear();audit={"cards":0,"meshes":0,"vertices":0,"backend":"source geometry and glyphs; Godot material translations"}
+ _sync_battlecry_preview()
  while pieces.size()>game.cards.size():
   var removed=pieces.pop_back()
   if removed.has("root"):removed.root.queue_free()
@@ -77,12 +80,32 @@ func sync():
    blockers.append("Source pose missing for hand slot %d"%i);continue
   var b=Hand.source_basis(pose.rotation)
   piece.root.transform=Transform3D(Basis(b.x*pose.scale.x,b.y*pose.scale.y,b.z*pose.scale.z),pose.position)
-  piece.root.visible=not card.get("source_phone_hidden",false)
+  var pending=not game.pending_battlecry.is_empty() and int(game.pending_battlecry.index)==i
+  piece.root.visible=not card.get("source_phone_hidden",false) and not pending
   sync_highlight(piece,selector.state_for(card,i),highlight_uniforms)
   audit.cards+=1
   for mesh in piece.actor.renderers.values():
    audit.meshes+=1
    for surface in mesh.mesh.get_surface_count():audit.vertices+=mesh.mesh.surface_get_array_len(surface)
+func _sync_battlecry_preview():
+ var pending:Dictionary=game.pending_battlecry
+ if pending.is_empty():
+  if not battlecry_preview.is_empty():battlecry_preview.root.visible=false
+  return
+ var key:String=game.cards[int(pending.index)].key
+ if not battlecry_preview.is_empty() and battlecry_preview.key!=key:
+  battlecry_preview.root.queue_free();battlecry_preview={}
+ if battlecry_preview.is_empty():
+  var definition:Dictionary=game.definitions[key]
+  var actor:Dictionary=game.native_card_renderer.build_world_minion(key,definition,game.raw_portraits[int(definition.art)])
+  var container=Node3D.new();container.name="PendingBattlecryMinion";add_child(container);container.add_child(actor.root)
+  actor.root.transform=Transform3D.IDENTITY
+  var root_object=actor.root.get_node_or_null("RootObject")
+  if root_object!=null:root_object.transform=Transform3D.IDENTITY
+  battlecry_preview={"root":container,"actor":actor,"key":key}
+ battlecry_preview.root.position=pending.source_world_position
+ battlecry_preview.root.scale=pending.source_world_scale
+ battlecry_preview.root.visible=true
 func sync_highlight(piece:Dictionary,state:int,shared_uniforms:Variant=null):
  if not is_instance_valid(piece.highlight):return
  var glow:MeshInstance3D=piece.highlight;glow.visible=false

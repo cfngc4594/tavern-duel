@@ -941,7 +941,11 @@ func _update_source_phone_hand(dt:float):
 		if card.get("drawing",false) and card.get("source_draw_phase","")!="seat":
 			continue # Source flight owns pose; queued/unregistered cards stay hidden.
 		card.source_phone_hidden=false
-		if i==drag_index:
+		if not pending_battlecry.is_empty() and i==int(pending_battlecry.index):
+			# Keep the provisionally placed card on the board until target commit
+			# or cancel. Ordinary hand layout must not pull it back each frame.
+			_publish_source_hand_pose(card,pending_battlecry.source_phone_pose)
+		elif i==drag_index:
 			if source_held_motion.game==null:source_held_motion.setup(self)
 			var pose:Dictionary=card.get("source_phone_pose",native_phone_hand.source_pose(i,cards.size())).duplicate(true)
 			if interaction_state!=Interaction.SPELL_AIM:
@@ -1300,7 +1304,10 @@ func cancel_interaction():
 	_clear_selection()
 
 func _source_play_contains(point:Vector2)->bool:
-	if source_projection!=null and source_projection.is_enabled():return source_phone_layout.contains("friendly_play",point)
+	if source_projection!=null and source_projection.is_enabled():
+		if source_phone_layout.contains("friendly_play",point):return true
+		var rows:Dictionary=source_phone_layout.source_items
+		return not preload("res://scripts/native_phone_placement.gd").friendly_drop_hit(source_projection,point,rows.friendly_play.source_row,rows.opposing_play.source_row).is_empty()
 	return PLAY_RECT.has_point(point)
 
 func _insertion_index(x):
@@ -1451,6 +1458,16 @@ func play_card(index: int, target: Vector2, insertion_override: int = -1, battle
 		if insertion<0:return false
 		if d.get("battlecry", "")=="damage1" and battlecry_target.is_empty():
 			pending_battlecry={"index":index,"pos":target,"insertion":insertion}
+			if _phone_hand_enabled():
+				var row:Dictionary=source_phone_layout.source_items.friendly_play.source_row
+				var slots=preload("res://scripts/source_phone_board_layout.gd").normal_slots(row,allies.size()+1,-1)
+				var pose:Dictionary=c.source_phone_pose.duplicate(true)
+				pose.position=slots[insertion];pose.rotation=Vector3.ZERO
+				pending_battlecry.source_phone_pose=pose
+				pending_battlecry.source_world_position=pose.position
+				pending_battlecry.source_world_scale=preload("res://scripts/source_phone_board_layout.gd").vector(row.phone_card_target_scale)
+				pending_battlecry.pos=source_projection.source_to_screen(pose.position)
+				_publish_source_hand_pose(c,pose)
 			drag_index=-1;pressed_card=-1;_update_interaction()
 			if not is_instance_valid(native_targeting):show_toast("精灵弓箭手：选择战吼目标 · 右键取消")
 			_event("battlecry_aim_begin");return true
@@ -1530,6 +1547,10 @@ func target_at(pos: Vector2, side: int) -> Dictionary:
 
 func _resolve_target(pos):
 	if not pending_battlecry.is_empty():
+		# Touch users have no right mouse button. Returning to the hand is an
+		# explicit cancel; retain card/mana and animate from its placed pose.
+		if _phone_hand_enabled() and native_phone_hand.hit_card(pos)>=0:
+			cancel_interaction();return
 		var t=target_at(pos,1)
 		if t.is_empty(): t=target_at(pos,0)
 		if t.is_empty():

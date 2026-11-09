@@ -34,6 +34,7 @@ func refresh():
  var temporary=int(flow.temporary_mana[0]) if flow!=null else 0
  var options={"aspect":canvas.x/canvas.y,"permanent_mana_count":game.max_mana,"temporary_mana_count":temporary,"end_turn_enabled":game.player_turn}
  if game.interaction_state==game.Interaction.PLACEMENT_PREVIEW:options.moused_over_slot=game.preview_index+1
+ elif not game.pending_battlecry.is_empty():options.moused_over_slot=int(game.pending_battlecry.insertion)+1
  source_items=Layout.recovered_items(game.allies.size(),game.enemies.size(),options)
  options.mana_tray_position=_mana_tray_position(source_items.friendly_mana.tray_endpoints)
  source_items=Layout.recovered_items(game.allies.size(),game.enemies.size(),options)

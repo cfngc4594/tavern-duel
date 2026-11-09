@@ -15,3 +15,18 @@ static func source_slot(row:Dictionary,count:int,previous:int,hit_x:float,held_x
 static func ray_hit(context,point:Vector2)->Dictionary:
  # Original layer12 hit, filtered to Battlefield only after friendly-play gate.
  return preload("res://scripts/native_phone_input_hitboxes.gd").hit(context,point,12,{},"BattlefieldHitbox")
+
+static func friendly_drop_hit(context,point:Vector2,friendly_row:Dictionary,opposing_row:Dictionary)->Dictionary:
+ # The narrow ZonePlay collider lays out the minion row. It must not also
+ # require a phone finger to land exactly on that strip. Accept the friendly
+ # half of the recovered battlefield, then snap to the existing row slots.
+ # This is our mobile usability policy, not a claim of recovered client logic.
+ var hit=ray_hit(context,point)
+ if hit.is_empty():return {}
+ var center_x=float(friendly_row.collider_bounds.center[0])
+ if absf(hit.position.x-center_x)>float(friendly_row.collider_bounds.size[0])*0.5:return {}
+ var friendly_z=float(friendly_row.collider_bounds.center[2])
+ var opposing_z=float(opposing_row.collider_bounds.center[2])
+ var midpoint=(friendly_z+opposing_z)*0.5
+ if (hit.position.z-midpoint)*(friendly_z-midpoint)<0.0:return {}
+ return hit

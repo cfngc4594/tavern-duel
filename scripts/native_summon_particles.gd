@@ -5,6 +5,8 @@ const Curves = preload("res://scripts/native_summon_curves.gd")
 const STEP := 1.0 / 120.0
 const EPSILON := 0.00000001
 const SUPPORTED_MODULES := ["InitialModule", "ShapeModule", "EmissionModule", "SizeModule", "ColorModule", "UVModule", "VelocityModule", "ClampVelocityModule", "RotationModule", "RotationBySpeedModule"]
+var constant_plan_enabled := true
+var _constant_plan:RefCounted
 var fraction_snapshot_enabled := true
 var uv_snapshot_enabled := true
 var size_snapshot_enabled := true
@@ -362,12 +364,12 @@ func _particle_state(p: Dictionary, age: float) -> Dictionary:
 		p.sim_age = 0.0; p.displacement = Vector3.ZERO; p.sim_velocity = p.velocity + _velocity_over_life(p, 0.0); p.sim_rotation = p.rotation
 	var state: Dictionary = {"age": p.sim_age, "position": p.displacement, "velocity": p.sim_velocity, "rotation": p.sim_rotation}
 	if _constant_step_valid:
-		state = _advance_constant_steps(p, state, age)
+		state = _plan_advance(p, state, age) if _constant_plan != null else _advance_constant_steps(p, state, age)
 	else:
 		while float(state.age) + STEP <= age + EPSILON: state = _integrate(p, state, STEP)
 	p.sim_age = state.age; p.displacement = state.position; p.sim_velocity = state.velocity; p.sim_rotation = state.rotation
 	if age > float(state.age) + EPSILON:
-		state = _constant_fraction(p, state, age - float(state.age)) if fraction_snapshot_enabled and _constant_step_valid else _integrate(p, state, age - float(state.age))
+		state = (_plan_fraction(p, state, age - float(state.age)) if _constant_plan != null else _constant_fraction(p, state, age - float(state.age))) if fraction_snapshot_enabled and _constant_step_valid else _integrate(p, state, age - float(state.age))
 	return state
 
 func _position(p: Dictionary, time: float) -> Vector3:
@@ -433,6 +435,9 @@ func seek(seconds: float) -> void:
 	var color_sampler = _frame_color_sampler() if not particles.is_empty() else null
 	var size_sampler = _frame_size_sampler() if not particles.is_empty() else null
 	var uv_sampler = _frame_uv_snapshot() if not particles.is_empty() else null
+	if constant_plan_enabled and _constant_step_valid and not particles.is_empty():
+		_constant_plan = preload("res://scripts/summon_constant_plan.gd").new()
+		_constant_plan.setup(raw, Curves)
 	for p in particles:
 		var age := now - float(p.birth)
 		if age < 0.0 or age >= float(p.life) or float(p.birth) > stop_time: continue
@@ -469,6 +474,7 @@ func seek(seconds: float) -> void:
 		for offset in [-x + y, x + y, x - y, -x - y]: vertices.append(center + offset); colors.append(color); normals.append(normal)
 		for uv in (uv_sampler.sample(p, age, state.velocity.length()) if uv_sampler != null else _uv_corners(p, age, state.velocity.length())): uvs.append(uv)
 		indices.append_array(PackedInt32Array([start, start + 1, start + 2, start, start + 2, start + 3]))
+	_constant_plan = null
 	var can_emit := bool(raw.get("EmissionModule", {}).get("enabled", false)) and not period_events.is_empty() and now < stop_time and (bool(raw.get("looping", false)) or now <= start_delay + duration)
 	active = live_count > 0 or can_emit
 	mesh_instance.visible = bool(source_renderer.get("m_Enabled", true)) and (not is_instance_valid(source_node) or source_node.is_visible_in_tree())
@@ -483,6 +489,7 @@ func get_audit() -> Dictionary:
 # Rebuilt each seek: no cross-frame module or curve assumptions. All unsupported
 # signatures use the original integrator, including their fractional steps.
 func _prepare_constant_steps() -> void:
+	_constant_plan = null
 	_constant_step_valid = false
 	if not constant_step_enabled or get_script().get_base_script() != null: return
 	var velocity: Dictionary = raw.get("VelocityModule", {})
@@ -572,3 +579,40 @@ func _constant_fraction(p: Dictionary, state: Dictionary, dt: float) -> Dictiona
 	var module: Dictionary = raw.get("VelocityModule", {})
 	if bool(module.get("enabled", false)): multiplier = Curves.minmax(module.get("speedModifier", {"scalar": 1.0}), 0.0, p.velocity_mix.x)
 	return {"age": float(state.age) + dt, "position": state.position + velocity * multiplier * dt, "velocity": velocity, "rotation": rotation}
+
+func _plan_advance(p:Dictionary,state:Dictionary,until:float)->Dictionary:
+	var age:float=state.age
+	if age+STEP>until+EPSILON:return state
+	var velocity:Vector3=state.velocity
+	var position:Vector3=state.position
+	var rotation:float=state.rotation
+	var additive:Vector3=_constant_plan.velocity(p,compatibility_basis)
+	var additive_delta:=additive-additive
+	var multiplier:float=_constant_plan.scalar(3,p.velocity_mix.x) if _constant_plan.velocity_enabled else 1.0
+	var limited:bool=_constant_plan.limited
+	var cap:float=maxf(0.0,_constant_plan.scalar(4,p.limit_mix)) if limited else 0.0
+	var rotates:bool=_constant_plan.rotates
+	var rotation_step:float=_constant_plan.scalar(5,p.rotation_mix)*STEP if rotates else 0.0
+	while age+STEP<=until+EPSILON:
+		velocity+=additive_delta
+		if limited:
+			var speed:=velocity.length()
+			if speed>cap:velocity*=lerpf(speed,cap,_constant_limit_amount)/speed
+		if rotates:rotation+=rotation_step
+		position=position+velocity*multiplier*STEP
+		age=age+STEP
+	return {"age":age,"position":position,"velocity":velocity,"rotation":rotation}
+func _plan_fraction(p:Dictionary,state:Dictionary,dt:float)->Dictionary:
+	var velocity:Vector3=state.velocity
+	var additive:Vector3=_constant_plan.velocity(p,compatibility_basis)
+	velocity+=additive-additive
+	if _constant_plan.limited:
+		var amount:=1.0-pow(_constant_plan.dampen_base,dt/STEP)
+		var cap:=maxf(0.0,_constant_plan.scalar(4,p.limit_mix))
+		var speed:=velocity.length()
+		if speed>cap:velocity*=lerpf(speed,cap,amount)/speed
+	var rotation:float=state.rotation
+	if _constant_plan.rotates:rotation+=_constant_plan.scalar(5,p.rotation_mix)*dt
+	var multiplier:=1.0
+	if _constant_plan.velocity_enabled:multiplier=_constant_plan.scalar(3,p.velocity_mix.x)
+	return {"age":float(state.age)+dt,"position":state.position+velocity*multiplier*dt,"velocity":velocity,"rotation":rotation}

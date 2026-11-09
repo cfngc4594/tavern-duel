@@ -5,6 +5,8 @@ const Curves = preload("res://scripts/native_summon_curves.gd")
 const STEP := 1.0 / 120.0
 const EPSILON := 0.00000001
 const SUPPORTED_MODULES := ["InitialModule", "ShapeModule", "EmissionModule", "SizeModule", "ColorModule", "UVModule", "VelocityModule", "ClampVelocityModule", "RotationModule", "RotationBySpeedModule"]
+var fraction_snapshot_enabled := true
+var uv_snapshot_enabled := true
 var size_snapshot_enabled := true
 var color_snapshot_enabled := true
 var constant_step_enabled := true
@@ -364,7 +366,8 @@ func _particle_state(p: Dictionary, age: float) -> Dictionary:
 	else:
 		while float(state.age) + STEP <= age + EPSILON: state = _integrate(p, state, STEP)
 	p.sim_age = state.age; p.displacement = state.position; p.sim_velocity = state.velocity; p.sim_rotation = state.rotation
-	if age > float(state.age) + EPSILON: state = _integrate(p, state, age - float(state.age))
+	if age > float(state.age) + EPSILON:
+		state = _constant_fraction(p, state, age - float(state.age)) if fraction_snapshot_enabled and _constant_step_valid else _integrate(p, state, age - float(state.age))
 	return state
 
 func _position(p: Dictionary, time: float) -> Vector3:
@@ -429,6 +432,7 @@ func seek(seconds: float) -> void:
 	var view_normal := view_right.cross(view_up).normalized()
 	var color_sampler = _frame_color_sampler() if not particles.is_empty() else null
 	var size_sampler = _frame_size_sampler() if not particles.is_empty() else null
+	var uv_sampler = _frame_uv_snapshot() if not particles.is_empty() else null
 	for p in particles:
 		var age := now - float(p.birth)
 		if age < 0.0 or age >= float(p.life) or float(p.birth) > stop_time: continue
@@ -463,7 +467,7 @@ func seek(seconds: float) -> void:
 		var y := up * size * scale_y * 0.5
 		var start := vertices.size()
 		for offset in [-x + y, x + y, x - y, -x - y]: vertices.append(center + offset); colors.append(color); normals.append(normal)
-		for uv in _uv_corners(p, age, state.velocity.length()): uvs.append(uv)
+		for uv in (uv_sampler.sample(p, age, state.velocity.length()) if uv_sampler != null else _uv_corners(p, age, state.velocity.length())): uvs.append(uv)
 		indices.append_array(PackedInt32Array([start, start + 1, start + 2, start, start + 2, start + 3]))
 	var can_emit := bool(raw.get("EmissionModule", {}).get("enabled", false)) and not period_events.is_empty() and now < stop_time and (bool(raw.get("looping", false)) or now <= start_delay + duration)
 	active = live_count > 0 or can_emit
@@ -477,7 +481,7 @@ func get_audit() -> Dictionary:
 	return {"source_key": source_key, "original_count": emitted_count, "live_count": live_count, "elapsed": elapsed_seconds, "active": active, "emission_enabled": raw.get("EmissionModule", {}).get("enabled", false), "stop_seconds": stop_time / maxf(EPSILON, float(raw.get("simulationSpeed", 1.0))) if is_finite(stop_time) else -1.0, "start_delay": start_delay, "simulation_space": raw.get("moveWithTransform", 0), "scaling_mode": raw.get("scalingMode", 0), "shape_type": raw.get("ShapeModule", {}).get("type"), "shape_mesh_key": shape_mesh_key, "source_mesh_triangles": mesh_triangles.size(), "render_mode": source_renderer.get("m_RenderMode"), "enabled_modules": enabled_modules.duplicate(), "original_modules": unsupported.is_empty(), "unsupported": unsupported.duplicate(), "dropped_at_capacity": dropped_at_capacity, "source_destroyed": source_destroyed, "solver": "Godot compatibility: fixed 1/120 velocity/limit/rotation integration; source curves and module enable flags", "birth_transform_sampling": "source emitter transforms interpolated between seek calls; not native Unity frame scheduling", "renderer_compatibility": "source billboard/horizontal/stretch modes; Godot camera, triangle rasterization, and screen-size clamp are not Unity-native", "rng": "instance-local Godot PCG; not Unity RNG; never game.rng", "native_pixel_equivalence": false}
 
 # Rebuilt each seek: no cross-frame module or curve assumptions. All unsupported
-# signatures use the original integrator. Fractional steps are unchanged too.
+# signatures use the original integrator, including their fractional steps.
 func _prepare_constant_steps() -> void:
 	_constant_step_valid = false
 	if not constant_step_enabled or get_script().get_base_script() != null: return
@@ -545,3 +549,26 @@ func _frame_size_sampler() -> RefCounted:
 	var sampler = preload("res://scripts/particle_size_sampler.gd").new()
 	sampler.setup(module.curve, Curves)
 	return sampler
+
+func _frame_uv_snapshot():
+	if not uv_snapshot_enabled or get_script().get_base_script()!=null:return null
+	var sampler=preload("res://scripts/particle_uv_sampler.gd").new()
+	return sampler if sampler.setup(raw.get("UVModule",{})) else null
+# Exact fractional Euler step for the existing base-only constant-module guard.
+func _constant_fraction(p: Dictionary, state: Dictionary, dt: float) -> Dictionary:
+	var velocity: Vector3 = state.velocity
+	var additive := _velocity_over_life(p, 0.0)
+	velocity += additive - additive
+	var limit: Dictionary = raw.get("ClampVelocityModule", {})
+	if bool(limit.get("enabled", false)):
+		var amount := 1.0 - pow(1.0 - clampf(float(limit.get("dampen", 0.0)), 0.0, 1.0), dt / STEP)
+		var cap := maxf(0.0, Curves.minmax(limit.get("magnitude", {}), 0.0, p.limit_mix))
+		var speed := velocity.length()
+		if speed > cap: velocity *= lerpf(speed, cap, amount) / speed
+	var rotation: float = state.rotation
+	var rotation_module: Dictionary = raw.get("RotationModule", {})
+	if bool(rotation_module.get("enabled", false)): rotation += Curves.minmax(rotation_module.get("curve", {}), 0.0, p.rotation_mix) * dt
+	var multiplier := 1.0
+	var module: Dictionary = raw.get("VelocityModule", {})
+	if bool(module.get("enabled", false)): multiplier = Curves.minmax(module.get("speedModifier", {"scalar": 1.0}), 0.0, p.velocity_mix.x)
+	return {"age": float(state.age) + dt, "position": state.position + velocity * multiplier * dt, "velocity": velocity, "rotation": rotation}

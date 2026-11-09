@@ -21,6 +21,8 @@ var shake_update_id:=0
 var shake_update_delta:=0.0
 var minion_shake=preload("res://scripts/native_combat_minion_shake.gd").new()
 
+var profile_rows:Array=[]
+
 func setup(owner_game: Node,source_assets):
 	game=owner_game;assets=source_assets;visual_rng.seed=320947;minion_shake.setup(game)
 	var path:="res://references/combat_v32/runtime_routes.json"
@@ -243,6 +245,7 @@ func _spawn_route(route_id: String,anchor: Vector2,event: String,owner_serial: i
 
 func _spawn(root_key: String,anchor: Vector2,route_id: String,owner_serial: int) -> Dictionary:
 	if not assets.objects.has(root_key):return {}
+	var profile_started:int=Time.get_ticks_usec() if game!=null and bool(game.get("profile_frame_stages")) else -1
 	serial+=1
 	var effect: Dictionary={"serial":serial,"owner_serial":owner_serial,"root_key":root_key,"route_id":route_id,"anchor":anchor,"age":0.0,"container":null,"projection":null,"state":{},"schedules":[],"clips":{},"particles":{},"variables":{},"animations":[],"continuous":[],"events":[],"unsupported":[],"observed_materials":{},"expires":0.0,"source_event":"","shakes":[],"restores":[]}
 	for entries in routes.get(route_id,{}).get("variables",{}).values():
@@ -269,6 +272,7 @@ func _spawn(root_key: String,anchor: Vector2,route_id: String,owner_serial: int)
 		if bool(spec.system.data.get("playOnAwake",false)) and spec.node.is_visible_in_tree():_particles(effect,particle_key,0.0,false,true)
 	if not game.headless and ResourceLoader.exists("res://scripts/native_combat_rendertexture.gd"):
 		var rt=load("res://scripts/native_combat_rendertexture.gd").new();add_child(rt);rt.setup(effect.state,assets,effect.projection,owner_serial);effect.rendertexture=rt
+	if profile_started>=0:_profile_effect_row(effect,"spawn",profile_started,{})
 	return effect
 
 func _setup_source_lights(effect: Dictionary):
@@ -648,12 +652,20 @@ func sync_projection():
 	for effect in effects:_project(effect)
 
 func _sample(effect: Dictionary):
+	var profiling:bool=game!=null and bool(game.get("profile_frame_stages"))
+	var profile_started:int=Time.get_ticks_usec() if profiling else 0
+	var stage_started:int=profile_started
+	var stages:Dictionary={}
 	_project(effect)
+	if profiling:stage_started=_profile_effect_stage(stages,"project",stage_started)
 	if effect.has("pending_death") and float(effect.age)>=float(effect.pending_death):
 		var moment: float=effect.pending_death;effect.erase("pending_death");_start_event(effect,"Death",moment)
 	_run_schedules(effect)
+	if profiling:stage_started=_profile_effect_stage(stages,"schedules",stage_started)
 	if effect.has("components"):effect.components.update(float(effect.age))
+	if profiling:stage_started=_profile_effect_stage(stages,"components_update",stage_started)
 	_sample_animations(effect,float(effect.age))
+	if profiling:stage_started=_profile_effect_stage(stages,"animations",stage_started)
 	for player in effect.clips.values():
 		var time: float=maxf(0.0,(float(effect.age)-float(player.start))*float(player.speed))
 		assets.sample_clip(effect.state,player.clip,time,player.path)
@@ -664,23 +676,35 @@ func _sample(effect: Dictionary):
 			var events: Array=assets.clips[player.clip].data.get("m_Events",[])
 			while int(player.event_cursor)<events.size() and float(events[int(player.event_cursor)].time)<=time+0.0000001:
 				var event: Dictionary=events[int(player.event_cursor)];_animation_event(effect,player,event,float(player.start)+float(event.time)/float(player.speed));player.event_cursor+=1
+	if profiling:stage_started=_profile_effect_stage(stages,"clips",stage_started)
 	for action in effect.continuous:_apply_continuous(effect,action)
+	if profiling:stage_started=_profile_effect_stage(stages,"continuous",stage_started)
 	if effect.has("components"):effect.components.late_update(float(effect.age))
+	if profiling:stage_started=_profile_effect_stage(stages,"components_late",stage_started)
 	for player in effect.particles.values():
 		player.node.seek(float(effect.age)-float(player.start))
 		if is_instance_valid(player.node.source_node):player.node.mesh_instance.visible=player.node.source_node.is_visible_in_tree()
+	if profiling:stage_started=_profile_effect_stage(stages,"particles",stage_started)
 	for node_materials in effect.state.get("materials",{}).values():
 		for mat in node_materials:
 			if mat is ShaderMaterial:mat.set_shader_parameter("_UnityTimeX",clock_seconds*0.05)
+	if profiling:stage_started=_profile_effect_stage(stages,"materials",stage_started)
 	if effect.has("trails"):effect.trails.advance(float(effect.age))
+	if profiling:stage_started=_profile_effect_stage(stages,"trails",stage_started)
 	_bind_scene_inputs(effect)
+	if profiling:stage_started=_profile_effect_stage(stages,"scene_inputs",stage_started)
 	if effect.has("rendertexture") and is_instance_valid(effect.rendertexture):effect.rendertexture.sync(effect.age)
+	if profiling:stage_started=_profile_effect_stage(stages,"rendertexture",stage_started)
 	for shake_action in effect.shakes:game.camera_shake.update_action(shake_action,shake_update_delta,shake_update_id)
 	if effect.has("hit_unit") and str(effect.hit_unit.key)==str(effect.hit_unit_key) and float(effect.age)<assets.clip_length(effect.actor_clip):
 		game.native_combat._pose(effect.hit_unit,effect.actor_clip,effect.age)
 	elif effect.has("hit_unit") and str(effect.hit_unit.key)==str(effect.hit_unit_key):
 		game.native_combat._clear_pose(effect.hit_unit);effect.erase("hit_unit")
+	if profiling:stage_started=_profile_effect_stage(stages,"shake_actor_pose",stage_started)
 	_record_materials(effect)
+	if profiling:
+		stage_started=_profile_effect_stage(stages,"audit",stage_started)
+		_profile_effect_row(effect,"sample",profile_started,stages)
 
 func _bind_scene_inputs(effect: Dictionary):
 	if game.headless or not is_instance_valid(game.spatial_scene):return
@@ -832,6 +856,7 @@ func _audit(effect: Dictionary) -> Dictionary:
 	return {"serial":effect.serial,"owner_serial":effect.owner_serial,"root_key":effect.root_key,"route_id":effect.route_id,"age":effect.age,"expires":effect.expires,"source_event":effect.source_event,"events":effect.events.duplicate(true),"unsupported":effect.unsupported.duplicate(),"observed_materials":effect.observed_materials.values(),"particles":particles,"trails":effect.trails.get_audit() if effect.has("trails") else {},"components":effect.components.get_audit() if effect.has("components") else {},"rendertexture":effect.rendertexture.get_audit() if effect.has("rendertexture") and is_instance_valid(effect.rendertexture) else {}}
 
 func _dispose(effect: Dictionary):
+	var profile_started:int=Time.get_ticks_usec() if game!=null and bool(game.get("profile_frame_stages")) else -1
 	# Retirement must reach both rendered worlds before the RT textures are freed.
 	# queue_free alone leaves the independent transmission mirror visible until
 	# its next sync, which can sample a released ViewportTexture on this frame.
@@ -852,6 +877,7 @@ func _dispose(effect: Dictionary):
 	if effect.has("rendertexture") and is_instance_valid(effect.rendertexture):effect.rendertexture.dispose();effect.rendertexture.queue_free()
 	if is_instance_valid(effect.container):effect.container.queue_free()
 	effects.erase(effect)
+	if profile_started>=0:_profile_effect_row(effect,"dispose",profile_started,{})
 
 func cancel_all():
 	for effect in effects.duplicate():_dispose(effect)
@@ -861,3 +887,14 @@ func get_audit() -> Dictionary:
 	var active: Array=[]
 	for effect in effects:active.append(_audit(effect))
 	return {"active_count":effects.size(),"active":active,"history":history.duplicate(true),"untranslated_materials":assets.material_audit.duplicate(),"minion_shake":minion_shake.get_audit(),"source_routes":routes.keys(),"projection":("Source phone camera; raw source anchors/paths, missing placements fail closed" if SourceProjection.from_game(game)!=null else "Original local transforms under fixed 15-degree board registration; not recovered camera")}
+
+# Opt-in CPU stage records; callers own draining this array.
+func _profile_effect_stage(stages:Dictionary,label:String,started:int)->int:
+	var now:=Time.get_ticks_usec()
+	stages[label]=now-started
+	return now
+
+func _profile_effect_row(effect:Dictionary,operation:String,started:int,stages:Dictionary)->void:
+	var cost:=Time.get_ticks_usec()-started
+	if cost<=5000:return
+	profile_rows.append({"frame":Engine.get_process_frames(),"operation":operation,"source_key":effect.get("root_key",""),"route":effect.get("route_id",""),"serial":effect.get("serial",-1),"age":effect.get("age",0.0),"usec":cost,"stages":stages})

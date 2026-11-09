@@ -1,4 +1,6 @@
 extends Node3D
+static var profile_setup:=false
+static var setup_rows:Array=[]
 ## Source ParticleSystem modules, with an explicit Godot compatibility solver.
 ## Unity's native RNG, integration and billboard rasterization are not recovered.
 const Curves = preload("res://scripts/native_summon_curves.gd")
@@ -85,6 +87,9 @@ var death_events := 0
 var screen_size_clamped := 0
 
 func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> void:
+	var profile_start:int=Time.get_ticks_usec() if profile_setup else 0
+	var stage:int=profile_start
+	var stages:Dictionary={}
 	emission_playing = bool(spec.get("autoplay", true))
 	raw = spec.system.data.duplicate(true)
 	playback_speed = float(raw.get("simulationSpeed", 1.0))
@@ -108,7 +113,9 @@ func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> vo
 	last_emitter = source_node.global_transform
 	last_local_scale = source_node.scale
 	source_transform = last_emitter
+	if profile_setup:stages.before_material=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	material = assets.material(str(spec.renderer.get("refs", {}).get(".m_Materials[0]", "")))
+	if profile_setup:stages.material=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	mesh_instance = MeshInstance3D.new()
 	mesh_instance.mesh = mesh
 	mesh_instance.material_override = material
@@ -126,12 +133,21 @@ func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> vo
 			enabled_modules.append(module)
 			if not SUPPORTED_MODULES.has(module): _unsupported(module)
 	_load_collision_planes(spec, assets, source_scope_root)
+	if profile_setup:stages.collision=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	_validate_used_fields()
+	if profile_setup:stages.validate=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	_load_shape_mesh(spec, assets)
+	if profile_setup:stages.shape=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	_load_renderer_mesh(spec, assets)
+	if profile_setup:stages.renderer=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	_build_emission_period()
+	if profile_setup:stages.emission=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	_load_subemitters(spec)
+	if profile_setup:stages.subemitters=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	seek(0.0)
+	if profile_setup:
+		stages.initial_seek=Time.get_ticks_usec()-stage
+		setup_rows.append({"frame":Engine.get_process_frames(),"source_key":source_key,"depth":subemitter_ancestry.size(),"usec":Time.get_ticks_usec()-profile_start,"stages":stages})
 
 func _unsupported(field: String) -> void:
 	if not unsupported.has(field): unsupported.append(field)

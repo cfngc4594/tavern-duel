@@ -13,6 +13,7 @@ var serial:=0
 var pending_voices: Array=[]
 var audio_history: Array=[]
 var timing: Dictionary={}
+var profile_rows:Array=[]
 
 func setup(owner_game: Node):
  game=owner_game
@@ -27,19 +28,28 @@ func sync():
  _dispatch_voices()
  for id in game.native_damage.dying:
   var retained: Dictionary=game.native_damage.dying[id]
-  if not active.has(id):_begin(retained)
+  if not active.has(id):
+   var begin_started:int=Time.get_ticks_usec() if bool(game.get("profile_frame_stages")) else -1
+   _begin(retained)
+   if begin_started>=0:_profile_death_row("begin",id,active.get(id,{}),begin_started)
   if not active.has(id):continue
   var entry: Dictionary=active[id]
   entry.effect.age=maxf(0.0,float(game.native_damage.clock_seconds)-float(entry.start))
+  var sample_started:int=Time.get_ticks_usec() if bool(game.get("profile_frame_stages")) else -1
   effects._sample(entry.effect)
+  if sample_started>=0:_profile_death_row("sample",id,entry,sample_started)
  for id in active.keys():
   if game.native_damage.dying.has(id):continue
   var entry: Dictionary=active[id]
   # The retained Actor is released at None, not at the intermediate body hide.
   # Sampling the last boundary also records DisableShadow/None on coarse frames.
   entry.effect.age=maxf(float(entry.effect.age),float(timing.release_seconds))
+  var sample_started:int=Time.get_ticks_usec() if bool(game.get("profile_frame_stages")) else -1
   effects._sample(entry.effect)
+  if sample_started>=0:_profile_death_row("sample",id,entry,sample_started)
+  var release_started:int=Time.get_ticks_usec() if bool(game.get("profile_frame_stages")) else -1
   _release(id,"actor_none_release")
+  if release_started>=0:_profile_death_row("release",id,entry,release_started)
 
 func _begin(record: Dictionary):
  var unit: Dictionary=record.unit
@@ -103,3 +113,9 @@ func dispatch_body_audio(effect: Dictionary,source_moment: float):
  game._audio_actor(int(effect.unit_id),str(effect.card_id),5)
  audio_history.append({"event":"body_birth_sound","unit_id":effect.unit_id,"card_id":effect.card_id,"body_origin":effect.source_origin,"source_time":source_moment,"clock":game.native_damage.clock_seconds,"delay_adapter":0.0})
  while audio_history.size()>128:audio_history.pop_front()
+
+func _profile_death_row(operation:String,id:int,entry:Dictionary,started:int)->void:
+ var cost:=Time.get_ticks_usec()-started
+ if cost<=5000:return
+ var effect:Dictionary=entry.get("effect",{})
+ profile_rows.append({"frame":Engine.get_process_frames(),"operation":operation,"unit_id":id,"source_key":effect.get("root_key",""),"age":effect.get("age",0.0),"usec":cost,"stages":{operation:cost}})

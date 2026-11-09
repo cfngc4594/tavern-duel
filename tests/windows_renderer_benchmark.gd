@@ -3,6 +3,9 @@ extends Node
 ## Runs the production game through a tiny fixed-clock subclass, never source copies.
 ## Capture runs write rendered frames but must not be used for timing comparisons.
 var failed := false
+const CombatParticles=preload("res://scripts/native_combat_particles.gd")
+const ShaderCache=preload("res://scripts/immutable_shader_cache.gd")
+const Particles=preload("res://scripts/native_summon_particles.gd")
 const Resident=preload("res://scripts/summon_resident.gd")
 const Compute=preload("res://scripts/summon_compute.gd")
 var root: Window:
@@ -32,15 +35,29 @@ func stats(values:Array)->Dictionary:
  if values.is_empty():return {"count":0}
  return {"count":values.size(),"mean":values.reduce(func(a,b):return a+b,0.0)/values.size(),"p50":values[values.size()/2],"p95":values[int(values.size()*.95)],"p99":values[int(values.size()*.99)],"max":values[-1]}
 func measure(label:String,count:int,action:Callable):
+ CombatParticles.setup_rows.clear()
+ Particles.source_times.clear()
+ if Particles.profile_sources:
+  game.native_combat.effect_player.profile_rows.clear()
+  game.native_death.effects.profile_rows.clear()
+  game.native_death.profile_rows.clear()
  var compute_before=Compute.get_stats()
  var viewports:Array=[];collect_viewports(root,viewports)
  var samples:Dictionary={"frame_ms":[],"process_ms":[],"physics_ms":[],"draw_calls":[],"render_objects":[],"primitives":[],"video_memory_bytes":[]}
  print("PROFILE_SCENE_BEGIN ",label)
+ var frame_profile:Array=[]
+ var particle_previous:=0
  var previous=Time.get_ticks_usec()
  action.call()
+ var action_usec:int=Time.get_ticks_usec()-previous
  for i in count:
   await get_tree().process_frame
   var now=Time.get_ticks_usec();samples.frame_ms.append((now-previous)/1000.0);previous=now
+  if Particles.profile_sources:
+   var particle_now:=0
+   for row in Particles.source_times.values():particle_now+=int(row.usec)
+   frame_profile.append({"frame":i,"frame_ms":samples.frame_ms[-1],"game_usec":game.last_process_usec,"particle_usec":particle_now-particle_previous,"stages":game.last_frame_stages.duplicate()})
+   particle_previous=particle_now
   samples.process_ms.append(Performance.get_monitor(Performance.TIME_PROCESS)*1000.0)
   samples.physics_ms.append(Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)*1000.0)
   samples.draw_calls.append(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
@@ -68,7 +85,13 @@ func measure(label:String,count:int,action:Callable):
  var compute_delta:Dictionary={}
  for key in compute_after:
   if compute_after[key] is int:compute_delta[key]=compute_after[key]-int(compute_before.get(key,0))
- print("MONITOR_PHASE ",JSON.stringify({"phase":label,"metrics":summary,"compute_delta":compute_delta,"compute_total":compute_after,"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
+ print("MONITOR_PHASE ",JSON.stringify({"phase":label,"metrics":summary,"compute_delta":compute_delta,"compute_total":compute_after,"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
+ if Particles.profile_sources:
+  print("PARTICLE_SETUP_PROFILE ",JSON.stringify({"phase":label,"rows":CombatParticles.setup_rows}))
+  print("EFFECT_STAGE_PROFILE ",JSON.stringify({"phase":label,"combat":game.native_combat.effect_player.profile_rows,"death_effects":game.native_death.effects.profile_rows,"death":game.native_death.profile_rows}))
+  print("PARTICLE_SOURCE_TIMES ",JSON.stringify({"phase":label,"sources":Particles.source_times}))
+  frame_profile.sort_custom(func(a,b):return a.frame_ms>b.frame_ms)
+  print("LONG_FRAME_PROFILE ",JSON.stringify({"phase":label,"action_usec":action_usec,"frames":frame_profile.slice(0,10)}))
  print("PROFILE_SCENE_END ",label)
 func card_index(key):
  for i in game.cards.size():
@@ -81,12 +104,17 @@ func run():
   if arg.begins_with("--capture-dir="):capture_dir=arg.trim_prefix("--capture-dir=")
   if arg=="--gpu-compute":Compute.enabled=true
   if arg=="--gpu-resident":Resident.enabled=true
+  if arg=="--profile-sources":Particles.profile_sources=true;CombatParticles.profile_setup=true
+  if arg=="--skip-hidden-geometry":Particles.skip_hidden_geometry=true
+  if arg=="--retain-shaders":ShaderCache.enabled=true
+  if arg=="--no-retain-shaders":ShaderCache.enabled=false
   if arg=="--resident-profile-gpu":Resident.profile_gpu=true
  if not capture_dir.is_empty():DirAccess.make_dir_recursive_absolute(capture_dir)
  print("RUNNER_MODE ",JSON.stringify({"debug_build":OS.is_debug_build(),"editor":OS.has_feature("editor"),"version":Engine.get_version_info()}))
  require(not preload("res://scripts/source_board_camera_policy.gd").qa_phone_platform)
  DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED);Engine.max_fps=0
  game=make_game()
+ game.profile_frame_stages=Particles.profile_sources
  if "--smoke" in OS.get_cmdline_user_args():
   game.free();print("SUMMON_BENCH_SMOKE_PASS");quit();return
  root.add_child(game)

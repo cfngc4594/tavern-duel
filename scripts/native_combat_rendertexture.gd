@@ -235,7 +235,7 @@ func _plane_material(entry: Dictionary, bloom: bool) -> Material:
 		var original: Material=assets.material(key)
 		if original!=null:return _plane_culling(original,entry)
 		_warn("RT custom material missing: "+str(entry.key))
-	var material:=ShaderMaterial.new(); material.shader=load("res://shaders/native_combat_r2t_"+suffix+".gdshader")
+	var material:=ShaderMaterial.new(); material.shader=preload("res://scripts/immutable_shader_cache.gd").load_shader("res://shaders/native_combat_r2t_"+suffix+".gdshader")
 	material.set_meta("source_colors",{"_Color":Color.WHITE})
 	material.set_meta("r2t_generated",true)
 	return _plane_culling(material,entry)
@@ -250,13 +250,13 @@ func _capture_shader(shader: Shader, reverse_cull: bool) -> Shader:
 	var id:=shader.get_instance_id()
 	if not _capture_shader_cache.has(id):
 		# Share only immutable GLSL, never material parameters or viewport textures.
-		# Weak references allow every effect scope to release the last shader owner.
+		# Weak scope sharing coexists with the bounded immutable Shader cache.
 		var code:=shader.code.replace("cull_back","R2T_CULL_SWAP").replace("cull_front","cull_back").replace("R2T_CULL_SWAP","cull_front")
 		for stale in _shared_capture_shaders.keys():
 			if _shared_capture_shaders[stale].get_ref()==null:_shared_capture_shaders.erase(stale)
 		var result:Shader=_shared_capture_shaders[code].get_ref() if _shared_capture_shaders.has(code) else null
 		if result==null:
-			result=Shader.new();result.code=code
+			result=preload("res://scripts/immutable_shader_cache.gd").get_or_create(code)
 			_shared_capture_shaders[code]=weakref(result);_shared_shader_created+=1
 		else:_shared_shader_reused+=1
 		_capture_shader_cache[id]=result

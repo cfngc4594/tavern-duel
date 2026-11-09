@@ -9,7 +9,7 @@ func build(key:String,assets,texture_override:Texture2D=null)->Material:
  var shader_key:String=str(record.get("refs",{}).get(".m_Shader",""))
  if not routes.has(shader_key):return null
  var route:Dictionary=routes[shader_key]
- var mat:=ShaderMaterial.new();mat.shader=load(route.godot_shader)
+ var mat:=ShaderMaterial.new();mat.shader=preload("res://scripts/immutable_shader_cache.gd").load_shader(route.godot_shader)
  assets._bind_render_order(mat,record)
  assets._apply_source_samplers(mat,record)
  var source_shader:Dictionary=assets.objects.get(shader_key,{})

@@ -55,8 +55,8 @@ func variant(shader: Shader,bindings: Dictionary) -> Shader:
 	if shared_shaders.has(code):result=shared_shaders[code].get_ref()
 	if is_instance_valid(result):reused_variants+=1
 	else:
-		result=Shader.new();result.code=code;shared_shaders[code]=weakref(result);created_variants+=1
-		# Keep only live weak entries, never retain ended effect resources.
+		result=preload("res://scripts/immutable_shader_cache.gd").get_or_create(code);shared_shaders[code]=weakref(result);created_variants+=1
+		# Prune weak scope entries; the bounded cache owns only immutable shaders.
 		for old_code in shared_shaders.keys():
 			if shared_shaders[old_code].get_ref()==null:shared_shaders.erase(old_code)
 	cache[signature]=result

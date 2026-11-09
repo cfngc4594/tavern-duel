@@ -48,7 +48,7 @@ func _capture_material(source: Material, light_mode: String, kind: String, targe
  var cache: Dictionary = _color_cache if kind == "color" else _alpha_cache
  if not cache.has(key) or str(cache[key].get_meta("source_capture_shader_path", "")) != capture_path:
   var capture := ShaderMaterial.new()
-  capture.shader = load(capture_path)
+  capture.shader = preload("res://scripts/immutable_shader_cache.gd").load_shader(capture_path)
   for meta in source.get_meta_list(): capture.set_meta(meta,source.get_meta(meta))
   capture.set_meta("source_light_mode", source.get_meta("source_light_mode",light_mode))
   capture.set_meta("original_framebuffer_alpha_in_rgb", kind == "alpha")
@@ -56,7 +56,7 @@ func _capture_material(source: Material, light_mode: String, kind: String, targe
   capture.set_meta("source_capture_shader_path", capture_path)
   cache[key] = capture
  var result: ShaderMaterial = cache[key]
- var variant: Shader = _samplers.variant(load(capture_path), source.get_meta("source_sampler_bindings", {}))
+ var variant: Shader = _samplers.variant(preload("res://scripts/immutable_shader_cache.gd").load_shader(capture_path), source.get_meta("source_sampler_bindings", {}))
  if result.shader != variant: result.shader = variant
  sync(material, result)
  return result

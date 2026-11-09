@@ -199,6 +199,8 @@ var native_last_load_frame=-1
 var original_board_bridge
 var source_projection
 var source_visual_delta:=0.0
+var profile_frame_stages: bool=false
+var last_frame_stages: Dictionary={}
 var source_mana_controller
 var source_mana_proposal_id=-1
 var source_phone_layout
@@ -699,10 +701,19 @@ func _add_card(key: String, animate: bool = true, source_deck_count:int=-1, sour
 	if animate and announce_now: play_sound("draw"); _event("draw_depart")
 
 func _process(dt):
-	if face_render_mode: return
+	var profile_started: int=Time.get_ticks_usec() if profile_frame_stages else 0
+	var stage_started: int=profile_started
+	if profile_frame_stages:last_frame_stages={}
+	if face_render_mode:
+		if profile_frame_stages:last_frame_stages["total_usec"]=Time.get_ticks_usec()-profile_started
+		return
 	_refresh_render_resolution()
 	if native_initial_loading:
-		_advance_initial_loading(maxf(dt,0.0));return
+		_advance_initial_loading(maxf(dt,0.0))
+		if profile_frame_stages:
+			stage_started=_profile_frame_stage("initial_loading",stage_started)
+			last_frame_stages["total_usec"]=Time.get_ticks_usec()-profile_started
+		return
 	_sync_native_card_costs()
 	_retire_native_renderers()
 	indicator_time += maxf(dt, 0.0)
@@ -714,9 +725,11 @@ func _process(dt):
 		camera_shake.advance(visual_delta);camera_shake.present_source_camera(source_projection)
 		source_phone_layout.reproject()
 
+	if profile_frame_stages:stage_started=_profile_frame_stage("initial_setup",stage_started)
 	if is_instance_valid(original_board_bridge):
 		original_board_bridge.set_audio(sound_enabled and SoundManager.sfx_enabled)
 		original_board_bridge.advance(visual_delta)
+	if profile_frame_stages:stage_started=_profile_frame_stage("board_advance",stage_started)
 	dt = minf(dt, 0.05)
 	elapsed += dt; demo_clock += dt; opening = maxf(0, opening - dt * 1.1)
 	if _phone_hand_enabled() and DisplayServer.get_name()=="headless":
@@ -734,23 +747,32 @@ func _process(dt):
 	shake_offset=Vector2.ZERO
 	for i in range(2): hit_flash[i] = maxf(0, hit_flash[i] - dt * 3)
 	for i in range(4): corner_pulse[i] = maxf(0, corner_pulse[i] - dt * 0.8)
+	if profile_frame_stages:stage_started=_profile_frame_stage("frame_clock_input",stage_started)
 	flow.tick(dt)
 	flow.tick_clock(visual_delta)
+	if profile_frame_stages:stage_started=_profile_frame_stage("flow",stage_started)
 	_update_interaction()
 	_update_hover()
 	_sync_source_mana_proposal()
 	_update_hand(dt)
 	_update_units(dt)
+	if profile_frame_stages:stage_started=_profile_frame_stage("interaction_hand_units",stage_started)
 	combat_replay.advance(dt)
+	if profile_frame_stages:stage_started=_profile_frame_stage("combat_replay",stage_started)
 	if is_instance_valid(native_damage):native_damage.advance(visual_delta)
+	if profile_frame_stages:stage_started=_profile_frame_stage("damage_advance",stage_started)
 	if is_instance_valid(native_summon):
 		native_summon.advance(visual_delta)
+	if profile_frame_stages:stage_started=_profile_frame_stage("summon",stage_started)
 	if is_instance_valid(native_combat):
 		native_combat.advance(visual_delta)
 		if is_instance_valid(native_combat.effect_player):native_combat.effect_player.sync_projection()
+	if profile_frame_stages:stage_started=_profile_frame_stage("combat",stage_started)
 	if is_instance_valid(native_endgame):
 		native_endgame.advance(unscaled_visual_delta)
+	if profile_frame_stages:stage_started=_profile_frame_stage("endgame_advance",stage_started)
 	_update_effects(dt)
+	if profile_frame_stages:stage_started=_profile_frame_stage("effects",stage_started)
 	if not player_turn and not busy and not game_over and flow.accepts_actions():
 		ai_timer -= dt
 		if ai_timer <= 0: _ai_action()
@@ -767,18 +789,37 @@ func _process(dt):
 	# preview, replay hover audio or perform another input state transition.
 	if not demo_mode and not scripted_pointer and world_canvas.position!=previous_camera_offset:
 		_update_screen_pointer(screen_pointer);_update_interaction(false);_update_hover(false)
+	if profile_frame_stages:stage_started=_profile_frame_stage("tail_logic_camera",stage_started)
 	if is_instance_valid(spatial_scene): spatial_scene.sync_from_game()
+	if profile_frame_stages:stage_started=_profile_frame_stage("spatial_sync",stage_started)
 	if is_instance_valid(native_targeting):native_targeting.sync_from_game(visual_delta)
+	if profile_frame_stages:stage_started=_profile_frame_stage("targeting_sync",stage_started)
 	if is_instance_valid(native_status):native_status.sync_from_game(visual_delta)
+	if profile_frame_stages:stage_started=_profile_frame_stage("status_sync",stage_started)
 	if is_instance_valid(native_highlight):native_highlight.sync_from_game(visual_delta)
+	if profile_frame_stages:stage_started=_profile_frame_stage("highlight_sync",stage_started)
 	if is_instance_valid(native_damage):native_damage.sync()
+	if profile_frame_stages:stage_started=_profile_frame_stage("damage_sync",stage_started)
 	if is_instance_valid(native_death):native_death.sync()
+	if profile_frame_stages:stage_started=_profile_frame_stage("death_sync",stage_started)
 	if is_instance_valid(native_endgame):native_endgame.sync()
+	if profile_frame_stages:stage_started=_profile_frame_stage("endgame_sync",stage_started)
 	if is_instance_valid(native_transmission):native_transmission.sync()
+	if profile_frame_stages:stage_started=_profile_frame_stage("transmission_sync",stage_started)
 	if is_instance_valid(native_screen_effects):native_screen_effects.sync(native_combat.effect_player.effects,spatial_scene.camera)
+	if profile_frame_stages:stage_started=_profile_frame_stage("screen_effects_sync",stage_started)
 	if is_instance_valid(spatial_post):spatial_post.queue_redraw()
 	world_canvas.queue_redraw();fixed_canvas.queue_redraw()
 	queue_redraw()
+	if profile_frame_stages:
+		stage_started=_profile_frame_stage("redraw_requests",stage_started)
+		last_frame_stages["total_usec"]=Time.get_ticks_usec()-profile_started
+
+# Opt-in CPU timings; preserve original _process operation order.
+func _profile_frame_stage(label:String,started:int)->int:
+	var now:=Time.get_ticks_usec()
+	last_frame_stages[label]=now-started
+	return now
 
 func is_pointer_hover_allowed() -> bool:
 	return not touch_input_active or active_touch_index >= 0 or scripted_pointer or demo_mode

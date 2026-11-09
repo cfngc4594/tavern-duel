@@ -166,7 +166,7 @@ func material(key: String, texture_override: Texture2D = null) -> Material:
 	if remaining_shaders.has(shader_id):combat_shader=str(remaining_shaders[shader_id].suffix)
 	if combat_shader=="multiply" and record.name in ["GenFX_Frost_WipeMotes","GenFX_BlackStreamer1","GenFX_FireAE_BlackParticleMat"]:combat_shader="multiply_rgb"
 	if combat_shader!="" and ResourceLoader.exists("res://shaders/native_combat_"+combat_shader+".gdshader"):
-		var mat:=ShaderMaterial.new();mat.shader=load("res://shaders/native_combat_"+combat_shader+".gdshader")
+		var mat:=ShaderMaterial.new();mat.shader=preload("res://scripts/immutable_shader_cache.gd").load_shader("res://shaders/native_combat_"+combat_shader+".gdshader")
 		_bind_render_order(mat,record)
 		_apply_source_samplers(mat,record)
 		for property in floats:mat.set_shader_parameter(property,floats[property])
@@ -182,7 +182,7 @@ func material(key: String, texture_override: Texture2D = null) -> Material:
 		return mat
 	var shader_file: String={"4454903573088140019":"flash","-8682043857861559096":"rays","6322982158558142423":"portrait","-2557555604182605517":"shadow","-1327719733717699995":"highlight"}.get(shader_id,"")
 	if shader_file!="" and ResourceLoader.exists("res://shaders/native_summon_"+shader_file+".gdshader"):
-		var mat:=ShaderMaterial.new();mat.shader=load("res://shaders/native_summon_"+shader_file+".gdshader")
+		var mat:=ShaderMaterial.new();mat.shader=preload("res://scripts/immutable_shader_cache.gd").load_shader("res://shaders/native_summon_"+shader_file+".gdshader")
 		_bind_render_order(mat,record)
 		# Runtime material/animation parameters keep their source spelling.
 		for property in floats:mat.set_shader_parameter(property,floats[property])

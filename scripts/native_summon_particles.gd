@@ -5,6 +5,9 @@ const Curves = preload("res://scripts/native_summon_curves.gd")
 const STEP := 1.0 / 120.0
 const EPSILON := 0.00000001
 const SUPPORTED_MODULES := ["InitialModule", "ShapeModule", "EmissionModule", "SizeModule", "ColorModule", "UVModule", "VelocityModule", "ClampVelocityModule", "RotationModule", "RotationBySpeedModule"]
+static var skip_hidden_geometry := false
+static var profile_sources := false
+static var source_times:Dictionary = {}
 var constant_plan_enabled := true
 var _constant_plan:RefCounted
 var _resident:RefCounted
@@ -410,6 +413,18 @@ func _uv_corners(p: Dictionary, age: float, speed: float) -> Array:
 	return corners
 
 func seek(seconds: float) -> void:
+	if not profile_sources:
+		_seek_impl(seconds)
+		return
+	var started:=Time.get_ticks_usec()
+	_seek_impl(seconds)
+	var key:=source_key+('/visible' if is_instance_valid(mesh_instance) and mesh_instance.is_visible_in_tree() else '/hidden')
+	var row:Dictionary=source_times.get(key,{"calls":0,"usec":0,"max_usec":0,"max_live":0})
+	var cost:=Time.get_ticks_usec()-started
+	row.calls+=1;row.usec+=cost;row.max_usec=maxi(row.max_usec,cost);row.max_live=maxi(row.max_live,live_count)
+	source_times[key]=row
+
+func _seek_impl(seconds: float) -> void:
 	_prepare_constant_steps()
 	elapsed_seconds = maxf(seconds, 0.0)
 	# The wrapper is not the original emitter GO. Destroying that GO must also
@@ -438,6 +453,7 @@ func seek(seconds: float) -> void:
 			p.sim_age=0.0;p.displacement=Vector3.ZERO;p.sim_velocity=p.velocity+_velocity_over_life(p,0.0);p.sim_rotation=p.rotation
 	if preload("res://scripts/summon_compute.gd").enabled and _constant_step_valid:
 		preload("res://scripts/summon_compute.gd").apply(particles,raw,now,stop_time)
+	var render_geometry:=not skip_hidden_geometry or (bool(source_renderer.get("m_Enabled",true)) and source_node.is_visible_in_tree())
 	mesh.clear_surfaces()
 	live_count = 0
 	var vertices := PackedVector3Array(); var uvs := PackedVector2Array(); var colors := PackedColorArray(); var indices := PackedInt32Array(); var normals := PackedVector3Array()
@@ -445,9 +461,9 @@ func seek(seconds: float) -> void:
 	var view_right := camera.global_basis.x.normalized() if camera != null else compatibility_basis.x.normalized()
 	var view_up := camera.global_basis.y.normalized() if camera != null else compatibility_basis.y.normalized()
 	var view_normal := view_right.cross(view_up).normalized()
-	var color_sampler = _frame_color_sampler() if not particles.is_empty() else null
-	var size_sampler = _frame_size_sampler() if not particles.is_empty() else null
-	var uv_sampler = _frame_uv_snapshot() if not particles.is_empty() else null
+	var color_sampler = _frame_color_sampler() if render_geometry and not particles.is_empty() else null
+	var size_sampler = _frame_size_sampler() if render_geometry and not particles.is_empty() else null
+	var uv_sampler = _frame_uv_snapshot() if render_geometry and not particles.is_empty() else null
 	if constant_plan_enabled and _constant_step_valid and not particles.is_empty():
 		_constant_plan = preload("res://scripts/summon_constant_plan.gd").new()
 		_constant_plan.setup(raw, Curves)
@@ -455,6 +471,9 @@ func seek(seconds: float) -> void:
 		var age := now - float(p.birth)
 		if age < 0.0 or age >= float(p.life) or float(p.birth) > stop_time: continue
 		live_count += 1
+		if not render_geometry:
+			_particle_state(p,age)
+			continue
 		var normalized := age / float(p.life)
 		var size: float = p.size
 		if size_sampler != null: size *= size_sampler.sample(normalized, p.size_mix)

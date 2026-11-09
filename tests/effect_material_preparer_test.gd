@@ -8,8 +8,13 @@ class Host extends Node:
  var assets
  var effect_player
  var routes:Dictionary={}
+ var instances:Array=[]
+ var serial:int=0
+ var source_clock:float=0.0
+ var highlight_rng=RandomNumberGenerator.new()
 class MockGame extends Node:
  var native_combat
+ var native_summon
  var native_damage
  var native_card_renderer
  var native_death
@@ -21,6 +26,7 @@ func require(ok:bool,label:String):
  if not ok:failed=true;push_error("EFFECT_PREP_FAIL "+label)
 func _initialize():call_deferred("run")
 func run():
+ Preparer.summon_enabled=false
  Preparer.extended=false
  var game=MockGame.new();root.add_child(game)
  game.native_combat=Host.new();game.add_child(game.native_combat)
@@ -34,6 +40,10 @@ func run():
  game.native_combat.effect_player.routes=Source.load_source_dictionary("res://assets/original_combat_v32/archer/routes.json").routes
  game.native_damage=preload("res://scripts/native_damage_splat.gd").new()
  game.add_child(game.native_damage);game.native_damage.setup(game)
+ game.native_summon=Host.new();game.add_child(game.native_summon)
+ game.native_summon.assets=preload("res://scripts/native_summon_assets.gd").new()
+ game.native_summon.assets.setup()
+ game.native_summon.highlight_rng.seed=9876
  game.rng.seed=12345
  var before_rng:int=game.rng.state;var before_nodes:int=game.get_child_count()
  var prep=Preparer.new();prep.setup(game)
@@ -82,6 +92,21 @@ func run():
  require(not damage.reflected_shaders.is_empty(),"actual owner retains reflected shader variants")
  var expanded_cursor:int=expanded.cursor;expanded.advance()
  require(expanded.cursor==expanded_cursor,"extended done idempotent")
+ # Summon adds only reachable effect materials, never actors or highlight draws.
+ Preparer.summon_enabled=true
+ var summon_rng:int=game.native_summon.highlight_rng.state
+ var summon_prep=Preparer.new();summon_prep.setup(game)
+ require(summon_prep.summon_tasks==19 and summon_prep.total==69,"19 summon material tasks")
+ var summon_calls:int=0
+ while not summon_prep.done and summon_calls<100:
+  var before:int=summon_prep.cursor;summon_prep.advance();summon_calls+=1
+  require(summon_prep.cursor==before+1,"summon one job per advance")
+ require(summon_prep.done and summon_prep.prepared_sources==59 and summon_prep.prepared_transmissions==61,"summon source/transmission totals")
+ require(game.native_summon.highlight_rng.state==summon_rng and game.rng.state==before_rng,"summon RNG unchanged")
+ require(game.native_summon.serial==0 and game.native_summon.source_clock==0.0 and game.native_summon.instances.is_empty(),"summon state unchanged")
+ require(game.get_child_count()==before_nodes,"summon creates no scene nodes")
+ print("EFFECT_MATERIAL_PREPARER_SUMMON_AUDIT ",JSON.stringify(summon_prep.audit()))
+ Preparer.summon_enabled=false
  # Aborting mid-queue must release the detached Transmission node immediately.
  var interrupted=Preparer.new();interrupted.setup(game)
  var interrupted_node:WeakRef=weakref(interrupted._transmission)

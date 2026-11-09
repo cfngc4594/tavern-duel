@@ -1,4 +1,6 @@
 extends Node
+static var profile_begin:bool=false
+var profile_rows:Array=[]
 ## Source-driven 37.0 generic summon actor/effect player; rule state stays in game.
 const SourceProjection=preload("res://scripts/source_board_projection.gd")
 const SourceRotation=preload("res://scripts/source_itween_rotation.gd")
@@ -52,6 +54,8 @@ func _prefab(name: String) -> String:
 	return ""
 
 func begin(unit: Dictionary,source: Dictionary={},route: String="hand",on_settle: Callable=Callable()) -> int:
+	var profile_start:int=Time.get_ticks_usec() if profile_begin else 0
+	var profile_row:Dictionary={"key":str(unit.key),"route":route} if profile_begin else {}
 	assets.renderer=game.native_card_renderer
 	for previous in instances.duplicate():
 		if int(previous.unit.id)==int(unit.id):_cancel_entry(previous,"replaced_actor")
@@ -70,7 +74,11 @@ func begin(unit: Dictionary,source: Dictionary={},route: String="hand",on_settle
 	else:unit.native_summon_hidden=true
 	unit.summon_shadow=true
 	instances.append(entry)
-	if not game.headless:_build_visual(entry)
+	var profile_stage:int=Time.get_ticks_usec() if profile_begin else 0
+	if not game.headless:_build_visual(entry,profile_row)
+	if profile_begin:
+		profile_row.build_visual_usec=Time.get_ticks_usec()-profile_stage
+		profile_stage=Time.get_ticks_usec()
 	if route=="hand":
 		_emit(entry,"out_start",0.0);game._audio_hand_actor(unit,false);game._event("summon_lift")
 		game._card_audio(unit.key,"play",{"scope_id":"unit:"+str(unit.id),"event_token":"summon","unit_id":unit.id})
@@ -78,11 +86,21 @@ func begin(unit: Dictionary,source: Dictionary={},route: String="hand",on_settle
 		_emit(entry,"in_start",0.0)
 		game._audio_actor(unit.id,unit.key,int(config.actor_type))
 		game._card_audio(unit.key,"play",{"scope_id":"unit:"+str(unit.id),"event_token":"summon","unit_id":unit.id,"summoned":true})
+	if profile_begin:
+		profile_row.audio_usec=Time.get_ticks_usec()-profile_stage
+		profile_stage=Time.get_ticks_usec()
 	_sample(entry)
+	if profile_begin:
+		profile_row.sample_usec=Time.get_ticks_usec()-profile_stage
+		profile_row.total_usec=Time.get_ticks_usec()-profile_start
+		profile_rows.append(profile_row)
+		if profile_rows.size()>128:profile_rows.pop_front()
 	return serial
 
-func _build_visual(entry: Dictionary):
+func _build_visual(entry: Dictionary,profile_row:Dictionary={}):
+	var profile_stage:int=Time.get_ticks_usec() if profile_begin else 0
 	game.spatial_scene.sync_from_game()
+	if profile_begin:profile_row.spatial_sync_usec=Time.get_ticks_usec()-profile_stage
 	var container:=Node3D.new();container.name="OriginalSummon_%d"%entry.serial;game.spatial_scene.add_child(container);entry.container=container
 	var projection:=Node3D.new();projection.name="BoardProjectionCompatibility";container.add_child(projection)
 	projection.basis=Basis(Vector3.RIGHT,Vector3(0,sin(PI/12.0),cos(PI/12.0)),Vector3(0,cos(PI/12.0),-sin(PI/12.0)))*PROJECTION_SCALE
@@ -96,8 +114,13 @@ func _build_visual(entry: Dictionary):
 			for go_key in entry.hand.renderers:
 				if str(assets.objects[go_key].name)=="Highlight_Card_Plane":entry.hand.renderers[go_key].visible=false
 		else:
+			if profile_begin:profile_stage=Time.get_ticks_usec()
 			entry.hand=game.native_card_renderer.clone_world_hand(entry.key);projection.add_child(entry.hand.root)
+			if profile_begin:
+				profile_row.clone_hand_usec=Time.get_ticks_usec()-profile_stage
+				profile_stage=Time.get_ticks_usec()
 			_attach_hand_highlight(entry)
+			if profile_begin:profile_row.highlight_usec=Time.get_ticks_usec()-profile_stage
 		if source_projection!=null and not entry.hand.is_empty():
 			# Actor.SetCard0x060127f5: Card owns world TRS; Actor and RootObject
 			# start at identity before the original AllyInHandDeath local curves.
@@ -105,10 +128,16 @@ func _build_visual(entry: Dictionary):
 			var body:Node3D=entry.hand.paths.get("RootObject")
 			if is_instance_valid(body):body.transform=Transform3D.IDENTITY
 		var key: String=assets.manifest.root_labels.get(entry.config.out_label,"")
-		if key!="":entry.out=assets.instantiate(key,entry.hand.root)
+		if key!="":
+			if profile_begin:profile_stage=Time.get_ticks_usec()
+			entry.out=assets.instantiate(key,entry.hand.root)
+			if profile_begin:profile_row.out_instantiate_usec=Time.get_ticks_usec()-profile_stage
 		else:entry.visual_missing.append(entry.config.out_name)
 	var key: String=assets.manifest.root_labels.get(entry.config.in_label,"")
-	if key!="":entry["in"]=assets.instantiate(key,game.spatial_scene.pieces[entry.unit.id].actor.root);entry["in"].root.visible=entry.config.route=="token"
+	if key!="":
+		if profile_begin:profile_stage=Time.get_ticks_usec()
+		entry["in"]=assets.instantiate(key,game.spatial_scene.pieces[entry.unit.id].actor.root);entry["in"].root.visible=entry.config.route=="token"
+		if profile_begin:profile_row.in_instantiate_usec=Time.get_ticks_usec()-profile_stage
 	else:entry.visual_missing.append(entry.config.in_name)
 
 func _attach_hand_highlight(entry: Dictionary):

@@ -1,4 +1,5 @@
 extends RefCounted
+static var retain_shader:bool=true
 ## Original object identities, local hierarchy, mesh surfaces and runtime clips.
 ## Projection and Unity renderer compatibility are intentionally separate.
 const BASE := "res://assets/original_summon_v31/"
@@ -84,7 +85,7 @@ func material(key: String, texture_override: Texture2D = null) -> Material:
 	var shader_id: String=str(record.refs.get(".m_Shader","")).get_slice(":",1)
 	var shader_file: String={"4454903573088140019":"flash","-8682043857861559096":"rays","-666151408197827071":"scroll","1610204260223125505":"dust","6322982158558142423":"portrait","3410991767739636778":"addmultiply","-230275896195282385":"hidden_glow","-2557555604182605517":"shadow","-1327719733717699995":"highlight"}.get(shader_id,"")
 	if shader_file!="" and ResourceLoader.exists("res://shaders/native_summon_"+shader_file+".gdshader"):
-		var mat:=ShaderMaterial.new();mat.shader=load("res://shaders/native_summon_"+shader_file+".gdshader")
+		var mat:=ShaderMaterial.new();mat.shader=preload("res://scripts/immutable_shader_cache.gd").load_shader("res://shaders/native_summon_"+shader_file+".gdshader") if retain_shader else load("res://shaders/native_summon_"+shader_file+".gdshader")
 		if shader_file=="hidden_glow":mat.render_priority=99
 		elif shader_file=="highlight":mat.render_priority=50
 		# Runtime material/animation parameters keep their source spelling.

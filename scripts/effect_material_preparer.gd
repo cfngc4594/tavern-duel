@@ -2,6 +2,7 @@ extends RefCounted
 ## Optional, bounded loading-screen preparation. Never creates/plays an effect.
 static var enabled:bool=true
 static var extended:bool=true
+static var summon_enabled:bool=true
 const Transmission=preload("res://scripts/native_combat_transmission.gd")
 const CaptureMaterials=preload("res://scripts/native_combat_capture_materials.gd")
 const ATTACK_ROOTS=["attack_friendly","attack_opponent","attack_impact_small","attack_impact_medium","attack_impact_large","attack_impact_mega"]
@@ -15,6 +16,8 @@ var prepared_glyphs:int=0
 var prepared_transmissions:int=0
 var transmission_cpu_usec:int=0
 var _extended:bool=false
+var _summon_enabled:bool=false
+var summon_tasks:int=0
 var _transmission:Node
 var _damage:Node
 var prepared_captures:int=0
@@ -31,7 +34,8 @@ var _capture_factory=CaptureMaterials.new()
 func setup(game:Node)->void:
  _started_usec=Time.get_ticks_usec()
  _extended=extended
- if _extended:_transmission=Transmission.new()
+ _summon_enabled=summon_enabled
+ if _extended or _summon_enabled:_transmission=Transmission.new()
  if not is_instance_valid(game.native_combat) or not is_instance_valid(game.native_death):
   _warn("Effect material preparation requires initialized combat/death assets.")
   _finish();return
@@ -70,6 +74,17 @@ func setup(game:Node)->void:
    glyph_keys.sort()
    for key in glyph_keys:_jobs.append({"kind":"glyph","key":key,"spec":_damage.assets.objects[key].data})
   else:_warn("Extended preparation requires initialized damage assets.")
+ if _summon_enabled:
+  if is_instance_valid(game.native_summon):
+   var summon=game.native_summon.assets
+   var summon_roots:Array=[]
+   for label in summon.manifest.get("root_labels",{}):
+    if str(label).begins_with("hand_out_") or str(label).begins_with("play_in_") or str(label).begins_with("spawn_"):
+     summon_roots.append(str(summon.manifest.root_labels[label]))
+   var before:int=_jobs.size()
+   _queue_scope(summon,summon_roots,"summon",false)
+   summon_tasks=_jobs.size()-before
+  else:_warn("Summon preparation requires initialized summon assets.")
  total=_jobs.size();setup_usec=Time.get_ticks_usec()-_started_usec
  if total==0:_finish()
 
@@ -133,7 +148,7 @@ func advance()->bool:
   if material==null:_warn("Effect material preparation returned null: "+str(job.key))
   else:
    prepared_sources+=1
-   if _extended:
+   if _extended or (_summon_enabled and job.get("scope","")=="summon"):
     if job.get("scope","")=="damage":_damage._compensate_reflected_culling(material)
     _prepare_transmission(material)
    if job.capture_needed:_capture_sources[job.identity]=material
@@ -184,4 +199,4 @@ func progress()->int:
  return cursor
 
 func audit()->Dictionary:
- return {"enabled":enabled,"extended":_extended,"prepared_glyphs":prepared_glyphs,"prepared_transmissions":prepared_transmissions,"transmission_cpu_usec":transmission_cpu_usec,"done":done,"error":error,"warnings":warnings.duplicate(),"completed":cursor,"total":total,"prepared_sources":prepared_sources,"prepared_captures":prepared_captures,"skipped_captures":skipped_captures.duplicate(true),"setup_usec":setup_usec,"item_cpu_usec":item_cpu_usec,"max_item_usec":max_item_usec,"wall_usec":(_finished_usec if done else Time.get_ticks_usec())-_started_usec}
+ return {"enabled":enabled,"extended":_extended,"summon_enabled":_summon_enabled,"summon_tasks":summon_tasks,"prepared_glyphs":prepared_glyphs,"prepared_transmissions":prepared_transmissions,"transmission_cpu_usec":transmission_cpu_usec,"done":done,"error":error,"warnings":warnings.duplicate(),"completed":cursor,"total":total,"prepared_sources":prepared_sources,"prepared_captures":prepared_captures,"skipped_captures":skipped_captures.duplicate(true),"setup_usec":setup_usec,"item_cpu_usec":item_cpu_usec,"max_item_usec":max_item_usec,"wall_usec":(_finished_usec if done else Time.get_ticks_usec())-_started_usec}

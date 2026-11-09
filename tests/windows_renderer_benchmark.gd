@@ -38,6 +38,7 @@ func stats(values:Array)->Dictionary:
  return {"count":values.size(),"mean":values.reduce(func(a,b):return a+b,0.0)/values.size(),"p50":values[values.size()/2],"p95":values[int(values.size()*.95)],"p99":values[int(values.size()*.99)],"max":values[-1]}
 func measure(label:String,count:int,action:Callable):
  CombatParticles.setup_rows.clear()
+ game.native_summon.profile_rows.clear()
  Particles.source_times.clear()
  if Particles.profile_sources:
   game.native_combat.effect_player.profile_rows.clear()
@@ -89,6 +90,7 @@ func measure(label:String,count:int,action:Callable):
   if compute_after[key] is int:compute_delta[key]=compute_after[key]-int(compute_before.get(key,0))
  print("MONITOR_PHASE ",JSON.stringify({"phase":label,"metrics":summary,"compute_delta":compute_delta,"compute_total":compute_after,"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
  if Particles.profile_sources:
+  print("SUMMON_BEGIN_PROFILE ",JSON.stringify({"phase":label,"rows":game.native_summon.profile_rows}))
   print("PARTICLE_SETUP_PROFILE ",JSON.stringify({"phase":label,"rows":CombatParticles.setup_rows}))
   print("EFFECT_STAGE_PROFILE ",JSON.stringify({"phase":label,"combat":game.native_combat.effect_player.profile_rows,"death_effects":game.native_death.effects.profile_rows,"death":game.native_death.profile_rows}))
   print("PARTICLE_SOURCE_TIMES ",JSON.stringify({"phase":label,"sources":Particles.source_times}))
@@ -114,6 +116,8 @@ func run():
   if arg=="--no-prepare-transmission-materials":EffectPreparer.extended=false
   if arg=="--cache-mesh-surfaces":CombatParticles.mesh_surface_cache_enabled=true
   if arg=="--prepare-effect-materials":EffectPreparer.enabled=true
+  if arg=="--no-prepare-summon-materials":EffectPreparer.summon_enabled=false;preload("res://scripts/native_summon_assets.gd").retain_shader=false
+  if arg=="--prepare-summon-materials":EffectPreparer.summon_enabled=true;preload("res://scripts/native_summon_assets.gd").retain_shader=true
   if arg=="--retain-damage-shader":Damage.retain_glyph_shader=true
   if arg=="--prepare-transmission-materials":EffectPreparer.enabled=true;EffectPreparer.extended=true
   if arg=="--retain-shaders":ShaderCache.enabled=true
@@ -126,6 +130,7 @@ func run():
  var loading_started:int=Time.get_ticks_usec()
  game=make_game()
  game.profile_frame_stages=Particles.profile_sources
+ preload("res://scripts/native_summon_player.gd").profile_begin=Particles.profile_sources
  if "--smoke" in OS.get_cmdline_user_args():
   game.free();print("SUMMON_BENCH_SMOKE_PASS");quit();return
  root.add_child(game)

@@ -5,6 +5,7 @@ const Curves = preload("res://scripts/native_summon_curves.gd")
 const STEP := 1.0 / 120.0
 const EPSILON := 0.00000001
 const SUPPORTED_MODULES := ["InitialModule", "ShapeModule", "EmissionModule", "SizeModule", "ColorModule", "UVModule", "VelocityModule", "ClampVelocityModule", "RotationModule", "RotationBySpeedModule"]
+var size_snapshot_enabled := true
 var color_snapshot_enabled := true
 var constant_step_enabled := true
 var _constant_step_valid := false
@@ -427,13 +428,15 @@ func seek(seconds: float) -> void:
 	var view_up := camera.global_basis.y.normalized() if camera != null else compatibility_basis.y.normalized()
 	var view_normal := view_right.cross(view_up).normalized()
 	var color_sampler = _frame_color_sampler() if not particles.is_empty() else null
+	var size_sampler = _frame_size_sampler() if not particles.is_empty() else null
 	for p in particles:
 		var age := now - float(p.birth)
 		if age < 0.0 or age >= float(p.life) or float(p.birth) > stop_time: continue
 		live_count += 1
 		var normalized := age / float(p.life)
 		var size: float = p.size
-		if bool(raw.get("SizeModule", {}).get("enabled", false)): size *= Curves.minmax(raw.SizeModule.curve, normalized, p.size_mix)
+		if size_sampler != null: size *= size_sampler.sample(normalized, p.size_mix)
+		elif bool(raw.get("SizeModule", {}).get("enabled", false)): size *= Curves.minmax(raw.SizeModule.curve, normalized, p.size_mix)
 		var color: Color = p.color
 		if color_sampler != null: color *= color_sampler.sample(normalized, p.color_mix)
 		elif bool(raw.get("ColorModule", {}).get("enabled", false)): color *= sample_color(raw.ColorModule.gradient, normalized, p.color_mix)
@@ -532,4 +535,13 @@ func _frame_color_sampler() -> RefCounted:
 	if not bool(module.get("enabled", false)): return null
 	var sampler = preload("res://scripts/particle_color_sampler.gd").new()
 	sampler.setup(module.gradient, Curves)
+	return sampler
+
+func _frame_size_sampler() -> RefCounted:
+	if not size_snapshot_enabled or get_script().get_base_script() != null: return null
+	var module: Dictionary = raw.get("SizeModule", {})
+	if not bool(module.get("enabled", false)): return null
+	# setup assumes a fresh object; do not retain this sampler across seeks.
+	var sampler = preload("res://scripts/particle_size_sampler.gd").new()
+	sampler.setup(module.curve, Curves)
 	return sampler

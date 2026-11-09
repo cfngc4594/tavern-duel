@@ -1,7 +1,7 @@
 extends SceneTree
 ## Manual graphical benchmark, excluded from CI. Run with -- --reference for
 ## original integrator; --color-reference disables only the color snapshot
-## (constant integrator stays enabled). Omit both for optimized. Fixed 1/60 by
+## (constant integrator stays enabled). --size-reference disables only size. Omit flags for optimized. Fixed 1/60 by
 ## default; --real-delta observes normal variable-delta behavior instead.
 ## Requires development checkout source. Only user:// temporary scripts are written.
 var game
@@ -20,7 +20,7 @@ func measure(label:String,count:int,action:Callable):
   if value>16.667:slow16+=1
   if value>33.333:slow33+=1
   if value>50:slow50+=1
- print("WINDOWS_PHASE ",JSON.stringify({"phase":label,"frames":count,"p50_ms":times[count/2],"p95_ms":times[int(count*.95)],"p99_ms":times[int(count*.99)],"over16_7_pct":100.0*slow16/count,"over33_3_pct":100.0*slow33/count,"over50_pct":100.0*slow50/count,"draw_p50":draws[count/2],"draw_p95":draws[int(count*.95)],"busy_end":game.busy,"summon_active_end":game.native_summon.instances.size(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size()}))
+ print("WINDOWS_PHASE ",JSON.stringify({"phase":label,"frames":count,"mean_ms":times.reduce(func(total,value):return total+value,0.0)/count,"p50_ms":times[count/2],"p95_ms":times[int(count*.95)],"p99_ms":times[int(count*.99)],"over16_7_pct":100.0*slow16/count,"over33_3_pct":100.0*slow33/count,"over50_pct":100.0*slow50/count,"draw_p50":draws[count/2],"draw_p95":draws[int(count*.95)],"busy_end":game.busy,"summon_active_end":game.native_summon.instances.size(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size()}))
 func card_index(key):
  for i in game.cards.size():
   if game.cards[i].key==key:return i
@@ -67,8 +67,9 @@ func run_round(round_index:int):
 
 
 func make_game():
+ var size_reference="--size-reference" in OS.get_cmdline_user_args()
  var color_reference="--color-reference" in OS.get_cmdline_user_args()
- var reference=color_reference or "--reference" in OS.get_cmdline_user_args()
+ var reference=size_reference or color_reference or "--reference" in OS.get_cmdline_user_args()
  var fixed=not "--real-delta" in OS.get_cmdline_user_args()
  var source=FileAccess.get_file_as_string("res://scripts/game.gd")
  assert(not source.is_empty())
@@ -77,11 +78,11 @@ func make_game():
   var player=FileAccess.get_file_as_string("res://scripts/native_summon_player.gd")
   var original="var particle=Particles.new();particle.setup"
   assert(player.contains(original),"Update reference injection if summon factory changes")
-  player=player.replace(original,"var particle=Particles.new();particle."+("color_snapshot_enabled" if color_reference else "constant_step_enabled")+"=false;particle.setup")
+  player=player.replace(original,"var particle=Particles.new();particle."+("size_snapshot_enabled" if size_reference else "color_snapshot_enabled" if color_reference else "constant_step_enabled")+"=false;particle.setup")
   var out=FileAccess.open("user://summon_graphics_reference_player.gd",FileAccess.WRITE);out.store_string(player);out.close()
   source=source.replace("res://scripts/native_summon_player.gd","user://summon_graphics_reference_player.gd")
  var file=FileAccess.open("user://summon_graphics_game.gd",FileAccess.WRITE);file.store_string(source);file.close()
  var script=ResourceLoader.load("user://summon_graphics_game.gd","",ResourceLoader.CACHE_MODE_IGNORE)
  assert(script!=null)
- print("SUMMON_BENCH_MODE ",JSON.stringify({"reference":reference,"color_reference":color_reference,"fixed_main_visual_dt":fixed,"dt":1.0/60.0 if fixed else -1,"window_frames":180,"note":"Compare second round; fixed window is 3 simulated seconds, including still-active tails. Main clock fixed, rendering remains real."}))
+ print("SUMMON_BENCH_MODE ",JSON.stringify({"reference":reference,"color_reference":color_reference,"size_reference":size_reference,"fixed_main_visual_dt":fixed,"dt":1.0/60.0 if fixed else -1,"window_frames":180,"note":"Compare second round; fixed window is 3 simulated seconds, including still-active tails. Main clock fixed, rendering remains real."}))
  return script.new()

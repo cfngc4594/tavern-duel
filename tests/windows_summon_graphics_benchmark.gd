@@ -4,6 +4,16 @@ extends SceneTree
 ## (constant integrator stays enabled). --size-reference disables only size. Omit flags for optimized. Fixed 1/60 by
 ## default; --real-delta observes normal variable-delta behavior instead.
 ## Requires development checkout source. Only user:// temporary scripts are written.
+# Assertions are compiled out in release builds, including their arguments.
+# These checks deliberately evaluate actions in every runner configuration.
+var failed := false
+func require(ok: bool, label: String = "benchmark runtime check") -> void:
+ if not ok:
+  failed = true
+  push_error("SUMMON_BENCH_FAIL: " + label)
+  quit(1)
+func finish() -> void:
+ quit(1 if failed else 0)
 var game
 func _initialize():call_deferred("run")
 func measure(label:String,count:int,action:Callable):
@@ -26,44 +36,47 @@ func card_index(key):
   if game.cards[i].key==key:return i
  return -1
 func run():
- assert(not preload("res://scripts/source_board_camera_policy.gd").qa_phone_platform)
+ print("RUNNER_MODE ",JSON.stringify({"debug_build":OS.is_debug_build(),"editor":OS.has_feature("editor"),"version":Engine.get_version_info()}))
+ require(not preload("res://scripts/source_board_camera_policy.gd").qa_phone_platform,"desktop policy")
  DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED);Engine.max_fps=0
  game=make_game()
  if "--smoke" in OS.get_cmdline_user_args():
-  game.free();print("SUMMON_BENCH_SMOKE_PASS");quit();return
+  game.free()
+  if not failed:print("SUMMON_BENCH_SMOKE_PASS")
+  finish();return
  root.add_child(game)
  for i in 1500:
   await process_frame
   if not game.native_initial_loading:break
- assert(not game.native_initial_loading)
+ require(not game.native_initial_loading,"loading finished")
  # No assets override.
  game.start_match("practice");game.flow.test_clock_delta=0;game.mana=10;game.max_mana=10;game.tutorial_hint=false
  for i in 180:await process_frame
- assert(not game._phone_hand_enabled())
+ require(not game._phone_hand_enabled(),"desktop layout")
  print("WINDOWS_SETUP ",JSON.stringify({"gpu":RenderingServer.get_video_adapter_name(),"method":RenderingServer.get_current_rendering_method(),"size":str(root.size),"phone":game._phone_hand_enabled(),"board_variant":game.original_board_bridge.probe.get("board_variant"),"vsync":DisplayServer.window_get_vsync_mode()}))
  var wp=game.original_board_bridge.probe.water_particles
  if is_instance_valid(wp):print("WINDOWS_PARTICLES ",JSON.stringify(wp.get_audit()))
  for round_index in 2:
   await run_round(round_index)
- quit()
+ finish()
 func run_round(round_index:int):
  if round_index>0:
   game.start_match("practice");game.flow.test_clock_delta=0;game.mana=10;game.max_mana=10;game.tutorial_hint=false
   for i in 180:await process_frame
  print("SUMMON_BENCH_ROUND ",round_index)
  await measure("idle",120,func():pass)
- await measure("play_senjin",180,func():assert(game.play_card(card_index("CS2_179"),Vector2(800,500),1)))
- assert(not game.busy and game.allies.size()==3)
+ await measure("play_senjin",180,func():require(game.play_card(card_index("CS2_179"),Vector2(800,500),1),"senjin play"))
+ require(not game.busy and game.allies.size()==3,"senjin settled")
  var attacker=game.allies[0];var target=game.enemies[0];var target_hp=target.hp
- await measure("attack_taunt",180,func():assert(game.attack(attacker,{"type":"unit","unit":target,"pos":target.pos})))
- assert(target.hp<target_hp and not game.busy)
+ await measure("attack_taunt",180,func():require(game.attack(attacker,{"type":"unit","unit":target,"pos":target.pos}),"taunt attack"))
+ require(target.hp<target_hp and not game.busy,"attack damage and settled")
  var hp=game.health[1]
  await measure("archer_battlecry",180,func():
-  assert(game.play_card(card_index("CS2_189"),Vector2(800,500),1))
-  assert(not game.pending_battlecry.is_empty())
+  require(game.play_card(card_index("CS2_189"),Vector2(800,500),1),"archer play")
+  require(not game.pending_battlecry.is_empty(),"archer target pending")
   game._resolve_target(game.ENEMY_HERO))
- assert(game.health[1]==hp-1 and not game.busy)
- print("WINDOWS_ACTIONS_PASS ",JSON.stringify(game.event_trace))
+ require(game.health[1]==hp-1 and not game.busy,"archer damage and settled")
+ if not failed:print("WINDOWS_ACTIONS_PASS ",JSON.stringify(game.event_trace))
 
 
 func make_game():
@@ -72,17 +85,17 @@ func make_game():
  var reference=size_reference or color_reference or "--reference" in OS.get_cmdline_user_args()
  var fixed=not "--real-delta" in OS.get_cmdline_user_args()
  var source=FileAccess.get_file_as_string("res://scripts/game.gd")
- assert(not source.is_empty())
+ require(not source.is_empty(),"game source readable")
  if fixed:source=source.replace("func _process(dt):","func _process(dt):\n\tdt = 1.0 / 60.0")
  if reference:
   var player=FileAccess.get_file_as_string("res://scripts/native_summon_player.gd")
   var original="var particle=Particles.new();particle.setup"
-  assert(player.contains(original),"Update reference injection if summon factory changes")
+  require(player.contains(original),"Update reference injection if summon factory changes")
   player=player.replace(original,"var particle=Particles.new();particle."+("size_snapshot_enabled" if size_reference else "color_snapshot_enabled" if color_reference else "constant_step_enabled")+"=false;particle.setup")
   var out=FileAccess.open("user://summon_graphics_reference_player.gd",FileAccess.WRITE);out.store_string(player);out.close()
   source=source.replace("res://scripts/native_summon_player.gd","user://summon_graphics_reference_player.gd")
  var file=FileAccess.open("user://summon_graphics_game.gd",FileAccess.WRITE);file.store_string(source);file.close()
  var script=ResourceLoader.load("user://summon_graphics_game.gd","",ResourceLoader.CACHE_MODE_IGNORE)
- assert(script!=null)
+ require(script!=null,"generated game script loaded")
  print("SUMMON_BENCH_MODE ",JSON.stringify({"reference":reference,"color_reference":color_reference,"size_reference":size_reference,"fixed_main_visual_dt":fixed,"dt":1.0/60.0 if fixed else -1,"window_frames":180,"note":"Compare second round; fixed window is 3 simulated seconds, including still-active tails. Main clock fixed, rendering remains real."}))
  return script.new()

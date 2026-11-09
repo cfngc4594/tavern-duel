@@ -243,6 +243,9 @@ func _spawn_route(route_id: String,anchor: Vector2,event: String,owner_serial: i
 		_start_event(effect,event,0.0)
 	return effect
 
+func _take_prepared_scene(_root_key:String)->Dictionary:
+	return {}
+
 func _spawn(root_key: String,anchor: Vector2,route_id: String,owner_serial: int) -> Dictionary:
 	if not assets.objects.has(root_key):return {}
 	var profile_started:int=Time.get_ticks_usec() if game!=null and bool(game.get("profile_frame_stages")) else -1
@@ -253,14 +256,21 @@ func _spawn(root_key: String,anchor: Vector2,route_id: String,owner_serial: int)
 			for variable in entries:
 				if variable is Dictionary and variable.has("name"):effect.variables[variable.name]=variable.get("value")
 	if not game.headless:
-		var container:=Node3D.new();container.name="OriginalCombat_%d"%serial;game.spatial_scene.add_child(container);effect.container=container
 		var source_projection=SourceProjection.from_game(game)
-		if source_projection!=null:container.visible=false
-		else:container.position=game.spatial_scene.screen_to_world(anchor+game.shake_offset)
-		var projection:=Node3D.new();container.add_child(projection);effect.projection=projection
+		var prepared:Dictionary=_take_prepared_scene(root_key)
+		var container:Node3D=prepared.container if not prepared.is_empty() else Node3D.new()
+		if not prepared.is_empty():
+			container.visible=false
+			container.reparent(game.spatial_scene,false);effect.prepared_scene=prepared
+		else:game.spatial_scene.add_child(container)
+		container.name="OriginalCombat_%d"%serial;container.visible=source_projection==null;effect.container=container
+		if source_projection==null:container.position=game.spatial_scene.screen_to_world(anchor+game.shake_offset)
+		var projection:Node3D=prepared.projection if not prepared.is_empty() else Node3D.new()
+		if prepared.is_empty():container.add_child(projection)
+		effect.projection=projection
 		projection.basis=Basis(Vector3.RIGHT,Vector3(0,sin(PI/12.0),cos(PI/12.0)),Vector3(0,cos(PI/12.0),-sin(PI/12.0)))*PROJECTION_SCALE
 		if source_projection!=null:projection.basis=SourceProjection.REFLECTION
-		effect.state=assets.instantiate(root_key,projection);effect.state.root.visible=true
+		effect.state=prepared.state if not prepared.is_empty() else assets.instantiate(root_key,projection);effect.state.root.visible=true
 		effect.state.particle_players=effect.particles
 		_setup_source_lights(effect)
 		effect.components=preload("res://scripts/native_combat_components.gd").new();effect.components.setup(effect.state,assets,effect.serial*32003)

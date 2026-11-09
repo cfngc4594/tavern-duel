@@ -1,6 +1,8 @@
 extends "res://scripts/native_combat_effects.gd"
 ## Source Arrow_Targeted_FX graph, meshes, textures and clips. Presentation only.
 ## Damage/death is committed by the caller at this missile's actual impact.
+const PreparedPool=preload("res://scripts/archer_prepared_scene_pool.gd")
+var prepared_pool:RefCounted
 var archer_shots:Array=[]
 var archer_serial:int=1000000
 var archer_audio_owners:Dictionary={}
@@ -18,6 +20,18 @@ func setup(owner_game:Node,source_assets):
 	assets._prepare_render_order()
 	var data:Dictionary=SourceDictionary.load_source_dictionary("res://assets/original_combat_v32/archer/routes.json")
 	routes.merge(data.routes);cards.CS2_189=data.card
+
+func get_prepared_pool():
+	if prepared_pool==null:
+		prepared_pool=PreparedPool.new();prepared_pool.setup(self,game,assets,routes)
+	return prepared_pool
+
+func _take_prepared_scene(root_key:String)->Dictionary:
+	if not PreparedPool.available():return {}
+	return get_prepared_pool().take(root_key)
+
+func _exit_tree():
+	if prepared_pool!=null:prepared_pool.dispose()
 
 func play_archer(unit:Dictionary,target:Dictionary,audio_scope:String="",on_impact:Callable=Callable(),on_complete:Callable=Callable(),on_cancel:Callable=Callable())->int:
 
@@ -56,6 +70,7 @@ func advance(delta:float):
 				spell_impact(shot);archer_shots.erase(shot)
 				if profile_started>=0:stages.impact_dispatch+=Time.get_ticks_usec()-impact_started
 	if profile_started>=0:_archer_profile_row({"route_id":"archer_outer_advance"},"archer_advance_total",profile_started,stages)
+	if PreparedPool.available() and prepared_pool!=null:prepared_pool.refill_if_idle()
 
 func _spawn(root_key:String,anchor:Vector2,route_id:String,owner_serial:int)->Dictionary:
 	var archer_profile_started:int=Time.get_ticks_usec() if game!=null and bool(game.get("profile_frame_stages")) else -1
@@ -64,8 +79,12 @@ func _spawn(root_key:String,anchor:Vector2,route_id:String,owner_serial:int)->Di
 	var effect:Dictionary=super._spawn(root_key,anchor,route_id,owner_serial)
 	if archer_profile_started>=0:stage_started=_profile_effect_stage(profile_stages,"super_spawn",stage_started)
 	if route_id.begins_with("CS2_189/") and not game.headless:
-		effect.archer_skin=preload("res://scripts/native_archer_skin.gd").new()
-		effect.archer_skin.setup(assets,effect.state)
+		if effect.has("prepared_scene"):
+			effect.archer_skin=get_prepared_pool().install(effect.prepared_scene,effect.state)
+			effect.erase("prepared_scene")
+		else:
+			effect.archer_skin=preload("res://scripts/native_archer_skin.gd").new()
+			effect.archer_skin.setup(assets,effect.state)
 		if archer_profile_started>=0:stage_started=_profile_effect_stage(profile_stages,"skin_setup",stage_started)
 		# Source Awake is independent of the projection container visibility gate.
 		for key in effect.state.particles:

@@ -51,13 +51,15 @@ func measure(label:String,count:int,action:Callable):
  var samples:Dictionary={"frame_ms":[],"process_ms":[],"physics_ms":[],"draw_calls":[],"render_objects":[],"primitives":[],"video_memory_bytes":[]}
  print("PROFILE_SCENE_BEGIN ",label)
  var frame_profile:Array=[]
+ var frame_start_usec_trace:Array=[]
+ var frame_end_usec_trace:Array=[]
  var particle_previous:=0
  var previous=Time.get_ticks_usec()
  action.call()
  var action_usec:int=Time.get_ticks_usec()-previous
  for i in count:
   await get_tree().process_frame
-  var now=Time.get_ticks_usec();samples.frame_ms.append((now-previous)/1000.0);previous=now
+  var now=Time.get_ticks_usec();frame_start_usec_trace.append(previous);frame_end_usec_trace.append(now);samples.frame_ms.append((now-previous)/1000.0);previous=now
   if Particles.profile_sources:
    var particle_now:=0
    for row in Particles.source_times.values():particle_now+=int(row.usec)
@@ -79,9 +81,9 @@ func measure(label:String,count:int,action:Callable):
      if not samples.has(key):samples[key]=[]
      var value=RenderingServer.viewport_get_measured_render_time_cpu(viewport.get_viewport_rid()) if metric=="cpu" else RenderingServer.viewport_get_measured_render_time_gpu(viewport.get_viewport_rid())
      samples[key].append(value)
-  if not capture_dir.is_empty() and current_round==1 and ((label=="idle" and i==60) or (label=="play_senjin" and i==90) or (label=="attack_taunt" and i in [45,99,129,130,150]) or (label=="archer_battlecry" and i in [60,120])):
+  if not capture_dir.is_empty() and ((current_round==1 and ((label=="idle" and i==60) or (label=="play_senjin" and i==90) or (label=="attack_taunt" and i in [45,99,129,130,150]) or (label=="archer_battlecry" and i in [60,89,90,91,112,113,114,120,150]))) or (current_round==0 and label=="archer_battlecry" and i in [118,119,120])):
    await RenderingServer.frame_post_draw
-   var filename=capture_dir+"/"+RenderingServer.get_current_rendering_method()+"_"+label+"_"+str(i)+".png"
+   var filename=capture_dir+"/"+("cold_" if current_round==0 else "")+RenderingServer.get_current_rendering_method()+"_"+label+"_"+str(i)+".png"
    var error=root.get_texture().get_image().save_png(filename)
    print("CAPTURE ",filename," error=",error)
  var chronological_frame_ms:Array=samples.frame_ms.duplicate()
@@ -91,7 +93,7 @@ func measure(label:String,count:int,action:Callable):
  var compute_delta:Dictionary={}
  for key in compute_after:
   if compute_after[key] is int:compute_delta[key]=compute_after[key]-int(compute_before.get(key,0))
- print("MONITOR_PHASE ",JSON.stringify({"phase":label,"metrics":summary,"frame_ms_trace":chronological_frame_ms,"compute_delta":compute_delta,"compute_total":compute_after,"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
+ print("MONITOR_PHASE ",JSON.stringify({"phase":label,"round":current_round,"metrics":summary,"frame_ms_trace":chronological_frame_ms,"frame_start_usec_trace":frame_start_usec_trace,"frame_end_usec_trace":frame_end_usec_trace,"compute_delta":compute_delta,"compute_total":compute_after,"prepared_pool":game.native_combat.effect_player.prepared_pool.audit() if game.native_combat.effect_player.prepared_pool!=null else {"enabled":false},"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
  if Particles.profile_sources:
   print("SUMMON_BEGIN_PROFILE ",JSON.stringify({"phase":label,"rows":game.native_summon.profile_rows}))
   print("COMBAT_SEEK_PROFILE ",JSON.stringify({"phase":label,"rows":CombatParticles.seek_rows,"totals":CombatParticles.seek_source_totals}))
@@ -113,6 +115,8 @@ func run():
   if arg.begins_with("--capture-dir="):capture_dir=arg.trim_prefix("--capture-dir=")
   if arg=="--gpu-compute":Compute.enabled=true
   if arg=="--gpu-resident":Resident.enabled=true
+  if arg=="--archer-prepared-scenes":preload("res://scripts/archer_prepared_scene_pool.gd").enabled=true
+  if arg=="--no-archer-prepared-scenes":preload("res://scripts/archer_prepared_scene_pool.gd").enabled=false
   if arg=="--archer-skin-inputs":preload("res://scripts/native_archer_skin.gd").cache_inputs=true
   if arg=="--archer-skin-unchanged":preload("res://scripts/native_archer_skin.gd").skip_unchanged=true
   if arg=="--no-archer-skin-inputs":preload("res://scripts/native_archer_skin.gd").cache_inputs=false
@@ -151,8 +155,8 @@ func run():
  require(not game.native_initial_loading)
  print("STARTUP_PREPARATION ",JSON.stringify({"wall_usec":Time.get_ticks_usec()-loading_started,"preparer":game.effect_material_preparer.audit() if game.effect_material_preparer!=null else {}}))
  # No assets override.
- game.start_match("practice");game.flow.test_clock_delta=0;game.mana=10;game.max_mana=10;game.tutorial_hint=false
- for i in 180:await get_tree().process_frame
+ await measure("startup_settle",180,func():
+  game.start_match("practice");game.flow.test_clock_delta=0;game.mana=10;game.max_mana=10;game.tutorial_hint=false)
  require(not game._phone_hand_enabled())
  print("WINDOWS_SETUP ",JSON.stringify({"gpu":RenderingServer.get_video_adapter_name(),"method":RenderingServer.get_current_rendering_method(),"size":str(root.size),"phone":game._phone_hand_enabled(),"board_variant":game.original_board_bridge.probe.get("board_variant"),"vsync":DisplayServer.window_get_vsync_mode()}))
  var wp=game.original_board_bridge.probe.water_particles
@@ -165,8 +169,8 @@ func run():
 func run_round(round_index:int):
  current_round=round_index
  if round_index>0:
-  game.start_match("practice");game.flow.test_clock_delta=0;game.mana=10;game.max_mana=10;game.tutorial_hint=false
-  for i in 180:await get_tree().process_frame
+  await measure("round_reset_settle",180,func():
+   game.start_match("practice");game.flow.test_clock_delta=0;game.mana=10;game.max_mana=10;game.tutorial_hint=false)
  print("SUMMON_BENCH_ROUND ",round_index)
  await measure("idle",120,func():pass)
  await measure("play_senjin",180,func():require(game.play_card(card_index("CS2_179"),Vector2(800,500),1)))
@@ -180,6 +184,7 @@ func run_round(round_index:int):
   require(not game.pending_battlecry.is_empty())
   game._resolve_target(game.ENEMY_HERO))
  require(game.health[1]==hp-1 and not game.busy)
+ await measure("archer_recovery_idle",180,func():pass)
  print("WINDOWS_ACTIONS_PASS ",JSON.stringify(game.event_trace))
 
 

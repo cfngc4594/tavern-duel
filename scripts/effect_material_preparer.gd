@@ -85,6 +85,8 @@ func setup(game:Node)->void:
    _queue_scope(summon,summon_roots,"summon",false)
    summon_tasks=_jobs.size()-before
   else:_warn("Summon preparation requires initialized summon assets.")
+ if preload("res://scripts/archer_prepared_scene_pool.gd").available() and game.native_combat.effect_player.has_method("get_prepared_pool"):
+  for stage in range(4):_jobs.append({"kind":"prepared_scene","owner":game.native_combat.effect_player})
  total=_jobs.size();setup_usec=Time.get_ticks_usec()-_started_usec
  if total==0:_finish()
 
@@ -135,7 +137,9 @@ func advance()->bool:
  if done:return true
  var started:int=Time.get_ticks_usec()
  var job:Dictionary=_jobs[cursor]
- if job.kind=="glyph":
+ if job.kind=="prepared_scene":
+  job.owner.get_prepared_pool().prepare_step()
+ elif job.kind=="glyph":
   if _damage.glyph_bundle.is_empty():_warn("Missing damage glyph bundle: "+str(job.key))
   else:
    var material:Material=_damage._make_text_material(job.spec)

@@ -194,6 +194,7 @@ var native_loading_error_layer:CanvasLayer
 var native_initial_loading=false
 var native_banner_pending=false
 var native_initial_sounds:Array=[]
+var effect_material_preparer:RefCounted
 var native_load_frames=0
 var native_last_load_frame=-1
 var original_board_bridge
@@ -346,6 +347,7 @@ func shutdown_presentation_audio():
 	if is_instance_valid(native_rope_host):await native_rope_host.shutdown()
 
 func _exit_tree():
+	if effect_material_preparer!=null:effect_material_preparer.dispose()
 	if face_render_mode: return
 	native_startup_timing.stop_watching()
 	if is_instance_valid(original_board_bridge):original_board_bridge.close()
@@ -434,6 +436,7 @@ func _native_loading_problem()->String:
 	return ""
 
 func _fail_native_loading(message:String):
+	if effect_material_preparer!=null:effect_material_preparer.dispose()
 	if not native_loading_error.is_empty():return
 	native_startup_timing.mark("loading_failed",{"message":message})
 	native_loading_error=message
@@ -452,7 +455,7 @@ func _fail_native_loading(message:String):
 
 func _advance_initial_loading(dt:float):
 	if not native_loading_error.is_empty():return
-	var progress=JSON.stringify([native_card_loader.built.size(),native_card_loader.active,native_card_loader.pending.size(),original_board_bridge.generation if is_instance_valid(original_board_bridge) else -1])
+	var progress=JSON.stringify([native_card_loader.built.size(),native_card_loader.active,native_card_loader.pending.size(),original_board_bridge.generation if is_instance_valid(original_board_bridge) else -1,effect_material_preparer.progress() if effect_material_preparer!=null else -1])
 	var error=native_load_guard.check(Time.get_ticks_msec(),progress,_native_loading_problem())
 	if not error.is_empty():_fail_native_loading(error);return
 	native_load_frames+=1
@@ -465,6 +468,17 @@ func _advance_initial_loading(dt:float):
 		original_board_bridge.advance(dt)
 		if is_instance_valid(original_board_bridge.probe):native_startup_timing.once("board_probe_ready_observed",str(original_board_bridge.generation),{"created_this_advance":not had_probe,"advance_cpu_ms":(Time.get_ticks_usec()-board_advance_start)/1000.0 if native_startup_timing.enabled else 0.0})
 	if native_card_loader.has_pending() or not is_instance_valid(original_board_bridge) or not is_instance_valid(original_board_bridge.probe):return
+	if preload("res://scripts/effect_material_preparer.gd").enabled and OS.get_name()=="Windows" and RenderingServer.get_current_rendering_method()=="forward_plus":
+		var was_done:bool=effect_material_preparer!=null and effect_material_preparer.done
+		if effect_material_preparer==null:
+			native_startup_timing.begin("effect_material_prepare_wall")
+			effect_material_preparer=preload("res://scripts/effect_material_preparer.gd").new()
+			effect_material_preparer.setup(self)
+		if not effect_material_preparer.done:effect_material_preparer.advance()
+		if not effect_material_preparer.done:return
+		if not was_done:
+			native_startup_timing.mark("effect_material_prepare_complete",effect_material_preparer.audit())
+			native_startup_timing.end("effect_material_prepare_wall")
 	native_startup_timing.begin("reveal_sync_cpu")
 	native_initial_loading=false
 	if is_instance_valid(spatial_scene):spatial_scene.sync_from_game();spatial_scene.refresh_card_face_textures()

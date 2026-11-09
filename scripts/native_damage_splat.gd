@@ -17,6 +17,7 @@ var death_timing: Dictionary={}
 var glyph_bundle: Dictionary={}
 var unavailable: Array=[]
 var reflected_shaders: Dictionary={}
+static var retain_glyph_shader:bool=true
 
 func setup(owner_game: Node):
  game=owner_game;assets.setup(game.native_card_renderer,BASE)
@@ -203,14 +204,18 @@ func _make_text(parent: Node3D,text: String,spec: Dictionary) -> MeshInstance3D:
   cursor+=float(glyph.advance)
  var arrays:=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=vertices;arrays[Mesh.ARRAY_TEX_UV]=uvs;arrays[Mesh.ARRAY_INDEX]=indices
  var mesh:=ArrayMesh.new();mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
- var material:=ShaderMaterial.new();material.shader=load("res://shaders/native_damage_text_outline.gdshader")
+ var material:=_make_text_material(spec)
+ var node:=MeshInstance3D.new();node.name="OriginalDamageGlyphs";node.mesh=mesh;node.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+ node.set_surface_override_material(0,material);parent.add_child(node);return node
+
+func _make_text_material(spec: Dictionary) -> ShaderMaterial:
+ var material:=ShaderMaterial.new();material.shader=preload("res://scripts/immutable_shader_cache.gd").load_shader("res://shaders/native_damage_text_outline.gdshader") if retain_glyph_shader else load("res://shaders/native_damage_text_outline.gdshader")
  material.set_shader_parameter("glyph_atlas",glyph_bundle.atlas);material.set_shader_parameter("atlas_texel",Vector2(1.0/glyph_bundle.source.atlasWidth,1.0/glyph_bundle.source.atlasHeight))
  material.set_shader_parameter("outline_texels",float(spec.m_OutlineSize));material.set_shader_parameter("text_mode",1 if spec.m_Outline else 0)
  material.set_shader_parameter("text_tint",Curves.color(spec.m_TextColor));material.set_shader_parameter("outline_color",Curves.color(spec.m_OutlineColor))
  var source_increment: int=int(spec.m_RenderQueue)
  material.set_meta("source_render_queue",clampi(3000+source_increment,1,5000));assets.apply_render_order(material,source_increment)
- var node:=MeshInstance3D.new();node.name="OriginalDamageGlyphs";node.mesh=mesh;node.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
- node.set_surface_override_material(0,material);parent.add_child(node);return node
+ return material
 
 static func elastic_out(t: float) -> float:
  if t<=0.0:return 0.0

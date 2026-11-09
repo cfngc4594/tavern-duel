@@ -4,6 +4,8 @@ extends Node
 ## Capture runs write rendered frames but must not be used for timing comparisons.
 var failed := false
 const CombatParticles=preload("res://scripts/native_combat_particles.gd")
+const Damage=preload("res://scripts/native_damage_splat.gd")
+const EffectPreparer=preload("res://scripts/effect_material_preparer.gd")
 const ShaderCache=preload("res://scripts/immutable_shader_cache.gd")
 const Particles=preload("res://scripts/native_summon_particles.gd")
 const Resident=preload("res://scripts/summon_resident.gd")
@@ -106,6 +108,14 @@ func run():
   if arg=="--gpu-resident":Resident.enabled=true
   if arg=="--profile-sources":Particles.profile_sources=true;CombatParticles.profile_setup=true
   if arg=="--skip-hidden-geometry":Particles.skip_hidden_geometry=true
+  if arg=="--no-cache-mesh-surfaces":CombatParticles.mesh_surface_cache_enabled=false
+  if arg=="--no-prepare-effect-materials":EffectPreparer.enabled=false
+  if arg=="--no-retain-damage-shader":Damage.retain_glyph_shader=false
+  if arg=="--no-prepare-transmission-materials":EffectPreparer.extended=false
+  if arg=="--cache-mesh-surfaces":CombatParticles.mesh_surface_cache_enabled=true
+  if arg=="--prepare-effect-materials":EffectPreparer.enabled=true
+  if arg=="--retain-damage-shader":Damage.retain_glyph_shader=true
+  if arg=="--prepare-transmission-materials":EffectPreparer.enabled=true;EffectPreparer.extended=true
   if arg=="--retain-shaders":ShaderCache.enabled=true
   if arg=="--no-retain-shaders":ShaderCache.enabled=false
   if arg=="--resident-profile-gpu":Resident.profile_gpu=true
@@ -113,6 +123,7 @@ func run():
  print("RUNNER_MODE ",JSON.stringify({"debug_build":OS.is_debug_build(),"editor":OS.has_feature("editor"),"version":Engine.get_version_info()}))
  require(not preload("res://scripts/source_board_camera_policy.gd").qa_phone_platform)
  DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED);Engine.max_fps=0
+ var loading_started:int=Time.get_ticks_usec()
  game=make_game()
  game.profile_frame_stages=Particles.profile_sources
  if "--smoke" in OS.get_cmdline_user_args():
@@ -122,6 +133,7 @@ func run():
   await get_tree().process_frame
   if not game.native_initial_loading:break
  require(not game.native_initial_loading)
+ print("STARTUP_PREPARATION ",JSON.stringify({"wall_usec":Time.get_ticks_usec()-loading_started,"preparer":game.effect_material_preparer.audit() if game.effect_material_preparer!=null else {}}))
  # No assets override.
  game.start_match("practice");game.flow.test_clock_delta=0;game.mana=10;game.max_mana=10;game.tutorial_hint=false
  for i in 180:await get_tree().process_frame

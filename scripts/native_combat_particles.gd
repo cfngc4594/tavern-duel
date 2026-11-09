@@ -55,7 +55,11 @@ var last_local_scale := Vector3.ONE
 var mesh_triangles: Array = []
 var mesh_area := 0.0
 var shape_mesh_vertices: Array = []
+static var mesh_surface_cache_enabled:bool=true
 var source_render_mesh: ArrayMesh
+var _cached_renderer_mesh:ArrayMesh
+var _cached_renderer_surfaces:Array=[]
+var _cached_renderer_surfaces_valid:bool=false
 var renderer_mesh_key := ""
 var emitted_count := 0
 var live_count := 0
@@ -1058,11 +1062,38 @@ func _load_renderer_mesh(spec: Dictionary, assets) -> void:
 	if source_render_mesh == null: _unsupported("missing original renderer mesh " + renderer_mesh_key)
 	if bool(raw.get("UVModule", {}).get("enabled", false)): _unsupported("mesh renderer with UV animation")
 
+func _invalidate_renderer_surface_cache()->void:
+	_cached_renderer_surfaces.clear()
+	_cached_renderer_surfaces_valid=false
+
+func _release_renderer_surface_cache()->void:
+	if _cached_renderer_mesh!=null and _cached_renderer_mesh.changed.is_connected(_invalidate_renderer_surface_cache):
+		_cached_renderer_mesh.changed.disconnect(_invalidate_renderer_surface_cache)
+	_cached_renderer_mesh=null
+	_invalidate_renderer_surface_cache()
+
+func _prepare_renderer_surface_cache()->void:
+	if _cached_renderer_mesh!=source_render_mesh:
+		_release_renderer_surface_cache()
+		_cached_renderer_mesh=source_render_mesh
+		if _cached_renderer_mesh!=null:
+			_cached_renderer_mesh.changed.connect(_invalidate_renderer_surface_cache)
+	if _cached_renderer_mesh==null:return
+	if _cached_renderer_surfaces_valid and _cached_renderer_surfaces.size()==source_render_mesh.get_surface_count():return
+	_cached_renderer_surfaces.clear()
+	for surface in range(source_render_mesh.get_surface_count()):
+		_cached_renderer_surfaces.append(source_render_mesh.surface_get_arrays(surface))
+	_cached_renderer_surfaces_valid=true
+
 func _mesh_particle_geometry(frame: Transform3D, particle_color: Color, first_vertex: int) -> Dictionary:
 	var output: Dictionary = {"vertices": PackedVector3Array(), "normals": PackedVector3Array(), "uvs": PackedVector2Array(), "colors": PackedColorArray(), "indices": PackedInt32Array()}
+	# Source surface arrays are read-only here; output PackedArrays remain per particle.
+	# Geometry edits must emit Resource.changed, as normal ArrayMesh rebuilds do.
+	if mesh_surface_cache_enabled:_prepare_renderer_surface_cache()
+	elif _cached_renderer_mesh!=null:_release_renderer_surface_cache()
 	if source_render_mesh == null: return output
 	for surface in range(source_render_mesh.get_surface_count()):
-		var arrays: Array = source_render_mesh.surface_get_arrays(surface)
+		var arrays: Array = _cached_renderer_surfaces[surface] if mesh_surface_cache_enabled else source_render_mesh.surface_get_arrays(surface)
 		var points: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
 		var source_normals = arrays[Mesh.ARRAY_NORMAL]
 		var source_colors = arrays[Mesh.ARRAY_COLOR]

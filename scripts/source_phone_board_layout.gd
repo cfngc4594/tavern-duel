@@ -132,6 +132,12 @@ static func recovered_items(friendly_count:int,opposing_count:int,options:Dictio
   else:
    item.interactive=false # Deck zone anchors are visual/draw endpoints, not guessed hit boxes.
   item.merge(pose_fields(pose));result[key]=item
+ result.merge(recovered_mana_items(options))
+ return result
+
+static func recovered_mana_items(options:Dictionary={})->Dictionary:
+ # Mana-only callers must not rebuild every hero/play zone and hit polygon.
+ var interaction=source_json(INTERACTION_PATH);var result:Dictionary={}
  # Mana counters are display-only. Their matrices are source prefab bindings.
  for side in ["friendly","opposing"]:
   var data=interaction.mana[side+"_large_resource"];var pose=matrix(data.root_world_matrix)

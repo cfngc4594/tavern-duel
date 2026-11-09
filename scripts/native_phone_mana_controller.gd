@@ -201,7 +201,7 @@ func _display_records()->Array:
 func _bind_slots():
  var rows=_display_records();var mapping:Dictionary={}
  var options=_source_options()
- var source=Layout.recovered_items(0,0,options).friendly_mana
+ var source=Layout.recovered_mana_items(options).friendly_mana
  var parent_pose=_source_parent_pose(options)
  for i in rows.size():
   if rows[i].slot>=0:mapping[int(rows[i].slot)]=i
@@ -263,7 +263,7 @@ func _display_snapshot(snapshot:Dictionary)->Dictionary:
  var options=_source_options()
  # Reuse the one recovered source layout function for the loaded source lists;
  # logical counts may already include prefabs still in the original .2s queue.
- var source=Layout.recovered_items(0,0,options).friendly_mana
+ var source=Layout.recovered_mana_items(options).friendly_mana
  friendly.crystals=source.crystals;result.items.friendly_mana=friendly
  var parent_pose=_source_parent_pose(options)
  hidden_crystal_poses.clear()

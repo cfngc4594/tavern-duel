@@ -3,6 +3,14 @@ const Layout=preload("res://scripts/source_phone_board_layout.gd")
 const CameraPolicy=preload("res://scripts/source_board_camera_policy.gd")
 func _initialize():call_deferred("run")
 func run():
+ for aspect in [1.5,16.0/9.0,2.04,2.4]:
+  for permanent in [0,1,4,10,12]:
+   for temporary in [0,1,3]:
+    for tray in [{},{"mana_tray_hidden":true},{"mana_tray_position":Vector3(1.2,3.4,5.6)}]:
+     var options={"aspect":aspect,"permanent_mana_count":permanent,"temporary_mana_count":temporary};options.merge(tray)
+     var full=Layout.recovered_items(3,7,options);var mana=Layout.recovered_mana_items(options)
+     assert(mana.size()==2 and mana.friendly_mana==full.friendly_mana and mana.opposing_mana==full.opposing_mana)
+ assert(Layout.recovered_mana_items().friendly_mana==Layout.recovered_items(0,0).friendly_mana)
  var config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
  var vp=SubViewport.new();vp.size=Vector2i(2400,1080);root.add_child(vp)
  var cr=Node3D.new();vp.add_child(cr);var camera=Camera3D.new();cr.add_child(camera)

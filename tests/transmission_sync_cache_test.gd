@@ -47,6 +47,7 @@ func run():
  assert(mirror.get_surface_override_material(0).get_shader_parameter("amount")==.12)
  assert(source.material_override==new_material and new_material.shader.code==CODE and new_material.get_shader_parameter("amount")==.12)
  source.free();tx.sync();assert(not tx.mirrors.has(key) and tx.material_cache.is_empty() and tx._uniform_values.is_empty())
+ base_material_values(tx)
  await geometry_lifecycle(tx,view,scene)
  print("TRANSMISSION_SYNC_CACHE_PASS uniforms/null/texture/next-pass/shader edits, source immutability, hidden reveal and free cleanup")
  tx.queue_free();view.queue_free();quit()
@@ -68,6 +69,10 @@ func geometry_lifecycle(tx,view,scene):
  # Reparent a previously mirrored node into an independent RTT and back.
  mesh.reparent(nested);tx.sync();assert(not tx.mirrors.has(id))
  mesh.reparent(parent);tx.sync();assert(tx.mirrors.has(id))
+ var geometry_changes={"sorting_offset":2.5,"sorting_use_aabb_center":false,"custom_aabb":AABB(Vector3(-2,-2,-2),Vector3(4,4,4)),"extra_cull_margin":3.0,"transparency":.3,"visibility_range_begin":2.0,"visibility_range_end":50.0,"visibility_range_begin_margin":1.0,"visibility_range_end_margin":4.0,"visibility_range_fade_mode":GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF,"ignore_occlusion_culling":true}
+ for prop in geometry_changes:
+  mesh.set(prop,geometry_changes[prop]);tx.sync()
+  assert(tx.mirrors[id].get(prop)==mesh.get(prop),str(prop))
  var other=Node3D.new();view.add_child(other)
  mesh.reparent(other);tx.sync();assert(not tx.mirrors.has(id))
  tx.setup(view,other);tx.sync();assert(tx.mirrors.has(id) and tx.mirrors.size()==1)
@@ -88,3 +93,35 @@ func geometry_lifecycle(tx,view,scene):
  root.add_child(tx);tx.sync();assert(tx.mirrors.has(fresh.get_instance_id()),"Re-entering tree must rebuild cleared geometry list")
  fresh.free();tx.sync();assert(tx.mirrors.is_empty())
  print("TRANSMISSION_GEOMETRY_CACHE_PASS add/free/reparent/RTT/ancestor visibility/root replacement/signal lifecycle")
+func base_material_values(tx):
+ var source=StandardMaterial3D.new()
+ var texture=GradientTexture1D.new()
+ for i in 8:
+  source.transparency=i%4
+  source.blend_mode=i%5
+  source.albedo_color=Color(.2+i*.05,.7,.4,.25+i*.07)
+  source.albedo_texture=texture if i%2 else null
+  source.emission_enabled=i%2==1
+  source.emission=Color(.2,.3,.7)
+  source.normal_enabled=i%2==0
+  source.normal_scale=i*.1
+  source.roughness=i*.1
+  source.metallic=i*.1
+  source.cull_mode=i%3
+  source.uv1_scale=Vector3.ONE*(i+1)
+  tx._material_seen.clear()
+  var mirrored=tx.transmission_material(source)
+  assert(mirrored!=source)
+  assert(mirrored.albedo_texture==source.albedo_texture)
+  assert(mirrored.shading_mode==BaseMaterial3D.SHADING_MODE_UNSHADED and not mirrored.emission_enabled)
+  var color=source.albedo_color if source.blend_mode==BaseMaterial3D.BLEND_MODE_MUL else Color(0,0,0,source.albedo_color.a)
+  assert(mirrored.albedo_color==color)
+  for property in source.get_property_list():
+   if (int(property.usage)&PROPERTY_USAGE_STORAGE)==0 or property.name in ["next_pass","resource_path","resource_name","script","shading_mode","emission_enabled","albedo_color"]:continue
+   assert(mirrored.get(property.name)==source.get(property.name),str(property.name))
+  assert(source.shading_mode==BaseMaterial3D.SHADING_MODE_PER_PIXEL)
+  assert(source.emission_enabled==(i%2==1))
+ # Explicit invalidation must rebuild names without losing values.
+ source.notify_property_list_changed();tx._material_seen.clear()
+ assert(tx.transmission_material(source).roughness==source.roughness)
+ print("TRANSMISSION_BASE_MATERIAL_PASS dynamic storage properties, flags, textures and source immutability")

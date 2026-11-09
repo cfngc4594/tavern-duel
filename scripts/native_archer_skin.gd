@@ -1,6 +1,8 @@
 extends RefCounted
 static var cache_inputs:bool=true
 static var skip_unchanged:bool=true
+static var profile_setup:bool=false
+static var setup_rows:Array=[]
 ## Original weights/bind poses; explicit CPU linear blend skinning compatibility.
 class CacheInvalidator extends RefCounted:
  var cache:Dictionary
@@ -10,24 +12,42 @@ var assets
 var state:Dictionary
 var skinned:Array=[]
 func setup(a,s:Dictionary):
+ var started:int=Time.get_ticks_usec() if profile_setup else 0
  assets=a;state=s;_make_skin()
+ if profile_setup:_record_setup({"operation":"setup_total","root":str(state.get("source_key","")),"models":skinned.size(),"total_usec":Time.get_ticks_usec()-started})
 func _matrix(d:Dictionary)->Transform3D:
  return Transform3D(Basis(Vector3(d.e00,d.e10,d.e20),Vector3(d.e01,d.e11,d.e21),Vector3(d.e02,d.e12,d.e22)),Vector3(d.e03,d.e13,d.e23))
 func _make_skin():
  for key in state.nodes:
   var r:Dictionary=assets.component(key,'SkinnedMeshRenderer')
   if r.is_empty():continue
-  var mesh_key:String=r.refs['.m_Mesh'];var d:Dictionary=JSON.parse_string(FileAccess.get_file_as_string(assets.base_path+assets.objects[mesh_key].files.mesh))
+  var started:int=Time.get_ticks_usec() if profile_setup else 0
+  var stage:int=started
+  var times:Dictionary={}
+  var mesh_key:String=r.refs['.m_Mesh']
+  var json_text:String=FileAccess.get_file_as_string(assets.base_path+assets.objects[mesh_key].files.mesh)
+  if profile_setup:times.read_usec=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
+  var d:Dictionary=JSON.parse_string(json_text)
+  if profile_setup:times.parse_usec=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
   var source_mesh:ArrayMesh=assets.geometry(mesh_key);var mesh:=ArrayMesh.new();var mi:=MeshInstance3D.new();mi.mesh=mesh;mi.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF;mi.visible=bool(r.data.get('m_Enabled',true));state.nodes[key].add_child(mi)
+  if profile_setup:times.mesh_node_usec=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
   var mats:Array=[]
   for i in range(source_mesh.get_surface_count()):mats.append(assets.material(r.refs['.m_Materials[%d]'%i]))
   state.renderers[key]=mi;state.materials[key]=mats
+  if profile_setup:times.materials_usec=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
   var bones:Array=[];var binds:Array=[]
   for i in range(d.bind_pose.size()):
    var t:Dictionary=assets.objects[r.refs['.m_Bones[%d]'%i]]
    bones.append(state.nodes[t.refs['.m_GameObject']]);binds.append(_matrix(d.bind_pose[i]))
   skinned.append({'node':state.nodes[key],'instance':mi,'mesh':mesh,'source':source_mesh,'data':d,'bones':bones,'binds':binds,'materials':mats})
+  if profile_setup:
+   times.bones_usec=Time.get_ticks_usec()-stage
+   times.operation="model_prepare";times.root=str(state.get("source_key",""));times.node=key;times.mesh_key=mesh_key
+   times.vertices=d.vertices.size();times.bones=bones.size();times.total_usec=Time.get_ticks_usec()-started
+   _record_setup(times)
+ var first_started:int=Time.get_ticks_usec() if profile_setup else 0
  _skin()
+ if profile_setup:_record_setup({"operation":"first_skin","root":str(state.get("source_key","")),"models":skinned.size(),"total_usec":Time.get_ticks_usec()-first_started})
 func _skin_baseline():
  for s in skinned:
   var matrices:Array=[]
@@ -117,3 +137,7 @@ func _notification(what:int):
  for s in skinned:
   if s.has("cache_callback") and is_instance_valid(s.cache_source) and s.cache_source.changed.is_connected(s.cache_callback):
    s.cache_source.changed.disconnect(s.cache_callback)
+func _record_setup(row:Dictionary):
+ row.frame=Engine.get_process_frames()
+ if setup_rows.size()>=512:setup_rows.pop_front()
+ setup_rows.append(row)

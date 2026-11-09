@@ -38,6 +38,7 @@ func stats(values:Array)->Dictionary:
  return {"count":values.size(),"mean":values.reduce(func(a,b):return a+b,0.0)/values.size(),"p50":values[values.size()/2],"p95":values[int(values.size()*.95)],"p99":values[int(values.size()*.99)],"max":values[-1]}
 func measure(label:String,count:int,action:Callable):
  CombatParticles.setup_rows.clear()
+ preload("res://scripts/native_archer_skin.gd").setup_rows.clear()
  CombatParticles.seek_rows.clear();CombatParticles.seek_source_totals.clear()
  game.native_summon.profile_rows.clear()
  Particles.source_times.clear()
@@ -95,6 +96,7 @@ func measure(label:String,count:int,action:Callable):
   print("SUMMON_BEGIN_PROFILE ",JSON.stringify({"phase":label,"rows":game.native_summon.profile_rows}))
   print("COMBAT_SEEK_PROFILE ",JSON.stringify({"phase":label,"rows":CombatParticles.seek_rows,"totals":CombatParticles.seek_source_totals}))
   print("PARTICLE_SETUP_PROFILE ",JSON.stringify({"phase":label,"rows":CombatParticles.setup_rows}))
+  print("SKIN_SETUP_PROFILE ",JSON.stringify({"phase":label,"rows":preload("res://scripts/native_archer_skin.gd").setup_rows}))
   print("EFFECT_STAGE_PROFILE ",JSON.stringify({"phase":label,"combat":game.native_combat.effect_player.profile_rows,"death_effects":game.native_death.effects.profile_rows,"death":game.native_death.profile_rows}))
   print("PARTICLE_SOURCE_TIMES ",JSON.stringify({"phase":label,"sources":Particles.source_times}))
   frame_profile.sort_custom(func(a,b):return a.frame_ms>b.frame_ms)
@@ -115,7 +117,7 @@ func run():
   if arg=="--archer-skin-unchanged":preload("res://scripts/native_archer_skin.gd").skip_unchanged=true
   if arg=="--no-archer-skin-inputs":preload("res://scripts/native_archer_skin.gd").cache_inputs=false
   if arg=="--no-archer-skin-unchanged":preload("res://scripts/native_archer_skin.gd").skip_unchanged=false
-  if arg=="--profile-sources":Particles.profile_sources=true;CombatParticles.profile_setup=true;CombatParticles.profile_seek=true
+  if arg=="--profile-sources":Particles.profile_sources=true;CombatParticles.profile_setup=true;CombatParticles.profile_seek=true;preload("res://scripts/native_archer_skin.gd").profile_setup=true
   if arg=="--skip-hidden-geometry":Particles.skip_hidden_geometry=true
   if arg=="--no-cache-mesh-surfaces":CombatParticles.mesh_surface_cache_enabled=false
   if arg=="--no-prepare-effect-materials":EffectPreparer.enabled=false

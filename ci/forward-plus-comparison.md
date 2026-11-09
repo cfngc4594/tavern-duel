@@ -41,5 +41,60 @@ Some shaders explicitly contain a GL-specific color bridge. Forward+ color,
 brightness, transparency and layering still need comparison; no shader changes
 or particle quality reductions are included in this initial experiment.
 
-Status: imports and Release export pass; renderer performance/visual comparison
-is pending. `main` and published Windows CI5 remain unchanged.
+## Measured result (2026-11-09)
+
+Direct export from develop fcb6721; official Release, i9-13900HX / RTX4060 Laptop,
+1600x900, VSync off, Dummy audio, fixed 1/60 visual clock. Same EXE/PCK, with only
+the command-line rendering method/driver changed. Four timed runs in opposite
+orders; no capture readbacks, competing benchmarks, compilation or downloads.
+PCK SHA256: BC08B49D5AE607373CFD5E0CBDAF236DDDC6BC0098F9E2E99F1B4047308F9C5D.
+
+Warm (second-round) means, in milliseconds:
+
+| Phase | First pair GL / Forward+ | Reverse pair GL / Forward+ |
+|---|---:|---:|
+| Idle | 11.19 / 11.26 | 11.02 / 11.30 |
+| Senjin play | 12.16 / 11.67 | 12.14 / 11.79 |
+| Taunt attack | 16.23 / 17.38 | 16.23 / 16.77 |
+| Archer battlecry | 22.16 / 24.20 | 22.21 / 24.06 |
+
+Battlecry P95: GL 29.49 / 29.84 versus Forward+ 39.83 / 35.61 ms.
+P99: GL 48.63 / 51.82 versus Forward+ 61.95 / 60.97 ms.
+The first Forward+ run had cold play/attack maxima of 331/396 ms. These are
+observed stalls, not a proven attribution to shader compilation. They were not
+removed from the cold results or presented as normal warm performance.
+
+The four viewport render CPU counters improved under Forward+, but the whole
+frame did not. In the reverse warm battlecry, CPU means for board/spatial/RGB
+transmission/root were GL 0.55/0.71/0.46/0.84 versus Forward+ 0.45/0.17/0.11/0.18
+ms. Individual GPU means were GL 1.32/1.50/0.49/0.90 versus Forward+
+1.35/1.45/0.79/0.71 ms. These asynchronous per-viewport counters do not represent
+all CPU script work and must not be summed across percentile buckets.
+
+All four timed runs exited 0 with empty stderr. Both 17-event traces and gameplay
+outcomes matched in each pair. Draw-call counts naturally differ by backend and
+were not treated as an equality criterion. Particle simulation remains CPU
+GDScript: merely selecting Forward+ does not move the solver onto the GPU.
+
+## Visual result
+
+Separate capture runs, excluded from timing, saved five matching 1600x900 frames
+per renderer. Inspection confirms visible regressions: Forward+ looks washed out,
+card/minion color and brightness differ, and battlecry blending differs. Geometry
+and the action timeline are retained, but this is NOT a visually equivalent switch.
+
+Exact a13da4feb source inspection confirms different GL and Forward+ color/blend
+domains. Project shaders have many explicit GL-specific inverse color bridges;
+numeric masks also use `source_color` samples. A blanket `return c` change or a
+depth flip is not justified. No shader fixes or quality reductions were applied.
+
+Local evidence: `build/renderer-branch/perf-*.log`, `measurements.json`,
+`raw-verify.log`, and `captures/`. These ignored build outputs are not another
+source checkout. Older ignored benchmark copies predate the user's in-place
+instruction; they were not used for these develop measurements.
+
+Conclusion: switching alone did not materially improve performance and regressed
+the battlecry workload in both orders. Keep this on develop for further renderer
+work; do not merge it into the usable main branch as a performance fix. `main` and
+the published Windows CI5 remain unchanged. A GPU particle/compute implementation
+is a separate experiment and has not been added here.

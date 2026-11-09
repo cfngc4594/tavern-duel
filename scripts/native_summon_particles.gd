@@ -425,6 +425,8 @@ func seek(seconds: float) -> void:
 	if now + EPSILON >= simulation_time:
 		_emit_until(now, frame, local_scale)
 		simulation_time = now; last_emitter = frame; last_local_scale = local_scale
+	if preload("res://scripts/summon_compute.gd").enabled and _constant_step_valid:
+		preload("res://scripts/summon_compute.gd").apply(particles,raw,now,stop_time)
 	mesh.clear_surfaces()
 	live_count = 0
 	var vertices := PackedVector3Array(); var uvs := PackedVector2Array(); var colors := PackedColorArray(); var indices := PackedInt32Array(); var normals := PackedVector3Array()

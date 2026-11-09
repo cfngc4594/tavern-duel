@@ -6,10 +6,10 @@ class RawRuntimeExport extends EditorExportPlugin:
   if not "windows" in features:return
   var build_info={"main_scene":ProjectSettings.get_setting("application/run/main_scene"),"renderer":ProjectSettings.get_setting("rendering/renderer/rendering_method"),"debug":_debug,"platform":"Windows Desktop"}
   add_file("res://release-build.json",JSON.stringify(build_info).to_utf8_buffer(),false)
-  for root in ["res://assets","res://original_board","res://source_rope","res://references"]:scan(root)
+  for root in ["res://assets","res://original_board","res://source_rope","res://references","res://shaders"]:scan(root)
  func scan(path:String):
   for file in DirAccess.get_files_at(path):
-   if file.get_extension() in ["png","webp","json","bin","sha256","source_sha256","value_sha256","rgba8-mips","dxt-mips","wav","ogg"]:
+   if file.get_extension() in ["png","webp","json","bin","sha256","source_sha256","value_sha256","rgba8-mips","dxt-mips","wav","ogg","glsl"]:
     var full=path+"/"+file
     add_file(full,FileAccess.get_file_as_bytes(full),false)
   for folder in DirAccess.get_directories_at(path):scan(path+"/"+folder)

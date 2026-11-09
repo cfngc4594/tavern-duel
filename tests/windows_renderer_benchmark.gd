@@ -3,14 +3,19 @@ extends Node
 ## Runs the production game through a tiny fixed-clock subclass, never source copies.
 ## Capture runs write rendered frames but must not be used for timing comparisons.
 var failed := false
+const Compute=preload("res://scripts/summon_compute.gd")
 var root: Window:
  get: return get_tree().root
 func require(ok: bool, label: String = "runtime check") -> void:
  if not ok:
   failed = true
   push_error("BENCH_FAIL " + label)
+  Compute.enabled=false
+  Compute.shutdown()
   get_tree().quit(1)
 func quit() -> void:
+ Compute.enabled=false
+ Compute.shutdown()
  get_tree().quit(1 if failed else 0)
 var game
 var current_round := -1
@@ -26,6 +31,7 @@ func stats(values:Array)->Dictionary:
  if values.is_empty():return {"count":0}
  return {"count":values.size(),"mean":values.reduce(func(a,b):return a+b,0.0)/values.size(),"p50":values[values.size()/2],"p95":values[int(values.size()*.95)],"p99":values[int(values.size()*.99)],"max":values[-1]}
 func measure(label:String,count:int,action:Callable):
+ var compute_before=Compute.get_stats()
  var viewports:Array=[];collect_viewports(root,viewports)
  var samples:Dictionary={"frame_ms":[],"process_ms":[],"physics_ms":[],"draw_calls":[],"render_objects":[],"primitives":[],"video_memory_bytes":[]}
  print("PROFILE_SCENE_BEGIN ",label)
@@ -57,15 +63,21 @@ func measure(label:String,count:int,action:Callable):
    print("CAPTURE ",filename," error=",error)
  var summary:Dictionary={}
  for key in samples:summary[key]=stats(samples[key])
- print("MONITOR_PHASE ",JSON.stringify({"phase":label,"metrics":summary,"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
+ var compute_after=Compute.get_stats()
+ var compute_delta:Dictionary={}
+ for key in compute_after:
+  if compute_after[key] is int:compute_delta[key]=compute_after[key]-int(compute_before.get(key,0))
+ print("MONITOR_PHASE ",JSON.stringify({"phase":label,"metrics":summary,"compute_delta":compute_delta,"compute_total":compute_after,"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
  print("PROFILE_SCENE_END ",label)
 func card_index(key):
  for i in game.cards.size():
   if game.cards[i].key==key:return i
  return -1
 func run():
+ Compute.reset_stats()
  for arg in OS.get_cmdline_user_args():
   if arg.begins_with("--capture-dir="):capture_dir=arg.trim_prefix("--capture-dir=")
+  if arg=="--gpu-compute":Compute.enabled=true
  if not capture_dir.is_empty():DirAccess.make_dir_recursive_absolute(capture_dir)
  print("RUNNER_MODE ",JSON.stringify({"debug_build":OS.is_debug_build(),"editor":OS.has_feature("editor"),"version":Engine.get_version_info()}))
  require(not preload("res://scripts/source_board_camera_policy.gd").qa_phone_platform)
@@ -87,6 +99,7 @@ func run():
  if is_instance_valid(wp):print("WINDOWS_PARTICLES ",JSON.stringify(wp.get_audit()))
  for round_index in 2:
   await run_round(round_index)
+ if Compute.enabled:require(int(Compute.get_stats().get("dispatches",0))>0,"GPU experiment actually dispatched")
  quit()
 func run_round(round_index:int):
  current_round=round_index

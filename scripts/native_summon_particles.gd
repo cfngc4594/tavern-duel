@@ -7,6 +7,7 @@ const EPSILON := 0.00000001
 const SUPPORTED_MODULES := ["InitialModule", "ShapeModule", "EmissionModule", "SizeModule", "ColorModule", "UVModule", "VelocityModule", "ClampVelocityModule", "RotationModule", "RotationBySpeedModule"]
 var constant_plan_enabled := true
 var _constant_plan:RefCounted
+var _resident:RefCounted
 var fraction_snapshot_enabled := true
 var uv_snapshot_enabled := true
 var size_snapshot_enabled := true
@@ -414,6 +415,7 @@ func seek(seconds: float) -> void:
 	# The wrapper is not the original emitter GO. Destroying that GO must also
 	# destroy its particles, unlike an explicit StopEmitting action.
 	if not is_instance_valid(source_node) or source_node.is_queued_for_deletion():
+		if _resident!=null:_resident.close()
 		source_destroyed = true; active = false; live_count = 0; stop_time = 0.0
 		particles.clear(); pending_events.clear(); mesh.clear_surfaces()
 		if is_instance_valid(mesh_instance): mesh_instance.visible = false
@@ -425,6 +427,15 @@ func seek(seconds: float) -> void:
 	if now + EPSILON >= simulation_time:
 		_emit_until(now, frame, local_scale)
 		simulation_time = now; last_emitter = frame; last_local_scale = local_scale
+	if preload("res://scripts/summon_resident.gd").eligible(self):
+		if _resident==null:
+			_resident=preload("res://scripts/summon_resident.gd").new();_resident.setup(self)
+		if _resident.update(now,frame,local_scale):return
+	if _resident!=null and mesh_instance.mesh==_resident.fixed_mesh:
+		# Reconstruct CPU checkpoints from original birth state on fallback.
+		mesh_instance.mesh=mesh;mesh_instance.material_override=material
+		for p in particles:
+			p.sim_age=0.0;p.displacement=Vector3.ZERO;p.sim_velocity=p.velocity+_velocity_over_life(p,0.0);p.sim_rotation=p.rotation
 	if preload("res://scripts/summon_compute.gd").enabled and _constant_step_valid:
 		preload("res://scripts/summon_compute.gd").apply(particles,raw,now,stop_time)
 	mesh.clear_surfaces()
@@ -618,3 +629,6 @@ func _plan_fraction(p:Dictionary,state:Dictionary,dt:float)->Dictionary:
 	var multiplier:=1.0
 	if _constant_plan.velocity_enabled:multiplier=_constant_plan.scalar(3,p.velocity_mix.x)
 	return {"age":float(state.age)+dt,"position":state.position+velocity*multiplier*dt,"velocity":velocity,"rotation":rotation}
+
+func _exit_tree()->void:
+	if _resident!=null:_resident.close();_resident=null

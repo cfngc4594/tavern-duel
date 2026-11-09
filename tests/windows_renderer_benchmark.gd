@@ -3,6 +3,7 @@ extends Node
 ## Runs the production game through a tiny fixed-clock subclass, never source copies.
 ## Capture runs write rendered frames but must not be used for timing comparisons.
 var failed := false
+const Resident=preload("res://scripts/summon_resident.gd")
 const Compute=preload("res://scripts/summon_compute.gd")
 var root: Window:
  get: return get_tree().root
@@ -67,17 +68,20 @@ func measure(label:String,count:int,action:Callable):
  var compute_delta:Dictionary={}
  for key in compute_after:
   if compute_after[key] is int:compute_delta[key]=compute_after[key]-int(compute_before.get(key,0))
- print("MONITOR_PHASE ",JSON.stringify({"phase":label,"metrics":summary,"compute_delta":compute_delta,"compute_total":compute_after,"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
+ print("MONITOR_PHASE ",JSON.stringify({"phase":label,"metrics":summary,"compute_delta":compute_delta,"compute_total":compute_after,"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
  print("PROFILE_SCENE_END ",label)
 func card_index(key):
  for i in game.cards.size():
   if game.cards[i].key==key:return i
  return -1
 func run():
+ Resident.stats.clear()
  Compute.reset_stats()
  for arg in OS.get_cmdline_user_args():
   if arg.begins_with("--capture-dir="):capture_dir=arg.trim_prefix("--capture-dir=")
   if arg=="--gpu-compute":Compute.enabled=true
+  if arg=="--gpu-resident":Resident.enabled=true
+  if arg=="--resident-profile-gpu":Resident.profile_gpu=true
  if not capture_dir.is_empty():DirAccess.make_dir_recursive_absolute(capture_dir)
  print("RUNNER_MODE ",JSON.stringify({"debug_build":OS.is_debug_build(),"editor":OS.has_feature("editor"),"version":Engine.get_version_info()}))
  require(not preload("res://scripts/source_board_camera_policy.gd").qa_phone_platform)
@@ -99,6 +103,7 @@ func run():
  if is_instance_valid(wp):print("WINDOWS_PARTICLES ",JSON.stringify(wp.get_audit()))
  for round_index in 2:
   await run_round(round_index)
+ if Resident.enabled:require(int(Resident.stats.get("frames",0))>0,"Resident path actually ran")
  if Compute.enabled:require(int(Compute.get_stats().get("dispatches",0))>0,"GPU experiment actually dispatched")
  quit()
 func run_round(round_index:int):

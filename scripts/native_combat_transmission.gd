@@ -22,6 +22,14 @@ var frame_number := 0
 var perf_measure_enabled := false
 var perf_samples: Array=[]
 var _material_seen: Dictionary = {}
+var _uniform_values: Dictionary = {}
+var _geometry_nodes:Array=[]
+var _geometry_dirty:=true
+var _geometry_source_id:=0
+var _watched_tree:SceneTree
+
+func _mark_geometry_dirty():
+	_geometry_dirty=true
 
 func setup(view: SubViewport, scene_root: Node = null) -> void:
 	source_view=view
@@ -70,26 +78,33 @@ func sync() -> void:
 			camera.set(property,original_camera.get(property))
 		camera.global_transform=original_camera.global_transform
 	var seen: Dictionary={}
-	_sync_tree(source_root,seen)
+	if is_inside_tree() and _watched_tree==null:
+		_watched_tree=get_tree();_watched_tree.tree_changed.connect(_mark_geometry_dirty)
+	if _geometry_dirty or _geometry_source_id!=source_root.get_instance_id() or not is_inside_tree():
+		_geometry_nodes.clear();_collect_geometry(source_root)
+		_geometry_source_id=source_root.get_instance_id();_geometry_dirty=false
+	for source in _geometry_nodes:
+		if is_instance_valid(source):_sync_geometry(source,seen)
 	for key in mirrors.keys():
 		if not seen.has(key):
 			mirrors[key].queue_free()
 			mirrors.erase(key)
 	for key in material_cache.keys():
-		if not _material_seen.has(key):material_cache.erase(key)
+		if not _material_seen.has(key):
+			material_cache.erase(key);_uniform_values.erase(key)
 
 	if perf_measure_enabled:
 		perf_samples.append({"frame":Engine.get_process_frames(),"sync":frame_number,"usec":Time.get_ticks_usec()-perf_started,"geometry":mirrors.size(),"materials":material_cache.size(),"shader_records":_source_shader_records.size(),"viewport_size":transmission_view.size})
 		if perf_samples.size()>120:perf_samples.pop_front()
 
-func _sync_tree(node: Node, seen: Dictionary) -> void:
+func _collect_geometry(node: Node) -> void:
 	# Nested viewports are independent glyph/card RTTs, not geometry in this world.
 	if node is SubViewport and node!=source_root:return
 	if node is MeshInstance3D or node is MultiMeshInstance3D or node is Label3D:
-		_sync_geometry(node,seen)
+		_geometry_nodes.append(node)
 	elif node is GeometryInstance3D:
 		_warn_once("Unsupported transmission geometry: "+node.get_class()+" "+str(node.get_path()))
-	for child in node.get_children():_sync_tree(child,seen)
+	for child in node.get_children():_collect_geometry(child)
 
 func _sync_geometry(source: GeometryInstance3D, seen: Dictionary) -> void:
 	var key:=source.get_instance_id()
@@ -102,6 +117,10 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary) -> void:
 		target.name="Transmission_"+str(key)
 		geometry_root.add_child(target)
 		mirrors[key]=target
+	# Hidden geometry cannot contribute; resync all values when it becomes visible.
+	if not source.is_visible_in_tree():
+		target.visible=false
+		return
 	target.global_transform=source.global_transform
 	target.visible=source.is_visible_in_tree()
 	target.layers=source.layers
@@ -161,11 +180,17 @@ func transmission_material(source: Material) -> Material:
 	if source is ShaderMaterial:
 		if source.shader==null:return target
 		var record: Dictionary=_source_shader_record(source.shader)
-		if target.shader!=record.variant:target.shader=record.variant
+		if target.shader!=record.variant:
+			target.shader=record.variant;_uniform_values.erase(key)
+		if not _uniform_values.has(key):_uniform_values[key]={}
+		var previous:Dictionary=_uniform_values[key]
 		for parameter in record.uniforms:
 			# Null removes an override; skipping it would retain a stale animated
 			# value when the production material resets to the shader default.
-			target.set_shader_parameter(parameter,source.get_shader_parameter(parameter))
+			var value=source.get_shader_parameter(parameter)
+			if not previous.has(parameter) or previous[parameter]!=value:
+				target.set_shader_parameter(parameter,value)
+				previous[parameter]=value.duplicate(true) if value is Array or value is Dictionary else value
 	elif source is BaseMaterial3D:
 		# Preserve texture/vertex alpha, alpha scissor/hash, depth and culling.
 		for property in source.get_property_list():
@@ -194,6 +219,8 @@ func _invalidate_source_shader(id: int) -> void:
 	_source_shader_records.erase(id)
 
 func _exit_tree() -> void:
+	if is_instance_valid(_watched_tree) and _watched_tree.tree_changed.is_connected(_mark_geometry_dirty):_watched_tree.tree_changed.disconnect(_mark_geometry_dirty)
+	_watched_tree=null;_geometry_nodes.clear();_geometry_dirty=true;_geometry_source_id=0
 	for id in _label_property_records.keys():_invalidate_label_properties(id)
 	for id in _source_shader_records.keys():_invalidate_source_shader(id)
 

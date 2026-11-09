@@ -736,6 +736,18 @@ func _uv_corners(p: Dictionary, age: float, speed: float) -> Array:
 		corners.append(origin + corner / Vector2(cols, rows))
 	return corners
 
+# Diagnostic switch for same-process equivalence/performance tests only.
+var frame_draw_snapshot_enabled:bool=true
+var _quad_index_cache:=PackedInt32Array()
+func _quad_indices(count:int)->PackedInt32Array:
+	if _quad_index_cache.size()!=count*6:
+		_quad_index_cache.resize(count*6)
+		for q in count:
+			var v=q*4;var i=q*6
+			_quad_index_cache[i]=v;_quad_index_cache[i+1]=v+1;_quad_index_cache[i+2]=v+2
+			_quad_index_cache[i+3]=v;_quad_index_cache[i+4]=v+2;_quad_index_cache[i+5]=v+3
+	return _quad_index_cache
+
 func seek(seconds: float) -> void:
 	elapsed_seconds = maxf(seconds, 0.0)
 	# The wrapper is not the original emitter GO. Destroying that GO must also
@@ -774,6 +786,19 @@ func seek(seconds: float) -> void:
 	var view_normal := view_right.cross(view_up).normalized()
 	# No subclass callback can mutate these module/renderer snapshots mid-seek.
 	var frame_modules: bool = get_script().get_base_script() == null
+	# Base-only immutable snapshots: source data/transform may change between seeks.
+	var frame_draw_snapshot:bool=frame_modules and frame_draw_snapshot_enabled
+	var frame_world_space: bool=int(raw.get("moveWithTransform",0))==1
+	var frame_motion: Basis=_motion_basis(frame,local_scale) if frame_draw_snapshot and not frame_world_space else Basis.IDENTITY
+	var frame_motion_scale:=Vector3(frame_motion.x.length(),frame_motion.y.length(),frame_motion.z.length())
+	var frame_mode:int=int(source_renderer.get("m_RenderMode",0))
+	var frame_length_scale:float=float(source_renderer.get("m_LengthScale",1.0))
+	var frame_velocity_scale:float=float(source_renderer.get("m_VelocityScale",0.0))
+	var frame_rotate_stretch:bool=bool(source_renderer.get("m_RotateWithStretchDirection",true))
+	if frame_draw_snapshot and indexed_quads:
+		indices=_quad_indices(_worker_indices.size())
+		var frame_normal:Vector3=compatibility_basis.x.normalized().cross(compatibility_basis.z.normalized()).normalized() if frame_mode==2 else view_normal
+		normals.fill(frame_normal)
 	var size_module: Dictionary = raw.get("SizeModule", {})
 	var color_module: Dictionary = raw.get("ColorModule", {})
 	var size_enabled: bool = bool(size_module.get("enabled", false))
@@ -820,13 +845,13 @@ func seek(seconds: float) -> void:
 		if state.is_empty(): state = _particle_state(p, age)
 		collision_count += int(state.get("collision_hits", 0))
 		if age >= float(state.get("kill_age", INF)): live_count -= 1; continue
-		var world_space := int(raw.get("moveWithTransform", 0)) == 1
-		var motion: Basis = p.motion_basis if world_space else _motion_basis(frame, local_scale)
+		var world_space:bool=frame_world_space if frame_draw_snapshot else int(raw.get("moveWithTransform", 0)) == 1
+		var motion: Basis = p.motion_basis if world_space else (frame_motion if frame_draw_snapshot else _motion_basis(frame, local_scale))
 		var center: Vector3 = p.start + motion * state.position if world_space else frame * p.shape_point + motion * state.position
 		var velocity: Vector3 = motion * state.get("render_velocity", state.velocity)
-		var scale_x := motion.x.length(); var scale_y := motion.y.length()
+		var scale_x:float=frame_motion_scale.x if frame_draw_snapshot and not world_space else motion.x.length(); var scale_y:float=frame_motion_scale.y if frame_draw_snapshot and not world_space else motion.y.length()
 		var right := view_right; var up := view_up; var normal := view_normal
-		var mode := int(source_renderer.get("m_RenderMode", 0))
+		var mode:int=frame_mode if frame_draw_snapshot else int(source_renderer.get("m_RenderMode", 0))
 		if mode == 4:
 			var alignment := int(source_renderer.get("m_RenderAlignment", 0))
 			var local_basis: Basis = motion.orthonormalized() if alignment == 2 else compatibility_basis.orthonormalized()
@@ -836,14 +861,14 @@ func seek(seconds: float) -> void:
 			continue
 		if mode == 2:
 			right = compatibility_basis.x.normalized(); up = compatibility_basis.z.normalized()
-			normal = right.cross(up).normalized(); scale_y = motion.z.length()
+			normal = right.cross(up).normalized(); scale_y = frame_motion_scale.z if frame_draw_snapshot and not world_space else motion.z.length()
 		elif mode == 1:
 			var projected := velocity - view_normal * velocity.dot(view_normal)
 			if projected.length_squared() > EPSILON: up = projected.normalized(); right = up.cross(view_normal).normalized()
-			scale_y = scale_y * float(source_renderer.get("m_LengthScale", 1.0)) + velocity.length() * float(source_renderer.get("m_VelocityScale", 0.0)) / maxf(absf(size), EPSILON)
+			scale_y = scale_y * (frame_length_scale if frame_draw_snapshot else float(source_renderer.get("m_LengthScale", 1.0))) + velocity.length() * (frame_velocity_scale if frame_draw_snapshot else float(source_renderer.get("m_VelocityScale", 0.0))) / maxf(absf(size), EPSILON)
 		var rotation: float = state.rotation
 		# Stretched particles follow velocity when the source renderer requests it.
-		if mode != 1 or not bool(source_renderer.get("m_RotateWithStretchDirection", true)):
+		if mode != 1 or not (frame_rotate_stretch if frame_draw_snapshot else bool(source_renderer.get("m_RotateWithStretchDirection", true))):
 			right = right.rotated(normal, rotation); up = up.rotated(normal, rotation)
 		var x := right * size * scale_x * 0.5
 		var y := up * size * scale_y * 0.5
@@ -855,7 +880,8 @@ func seek(seconds: float) -> void:
 		if indexed_quads:
 			for corner in range(4):
 				vertices[start + corner] = center + corners[corner]
-				colors[start + corner] = color; normals[start + corner] = normal
+				colors[start + corner] = color
+				if not frame_draw_snapshot:normals[start + corner] = normal
 		else:
 			for offset in corners: vertices.append(center + offset); colors.append(color); normals.append(normal)
 		var particle_uvs: Array
@@ -869,8 +895,9 @@ func seek(seconds: float) -> void:
 			for uv in particle_uvs: uvs.append(uv)
 		if indexed_quads:
 			var first: int = quad_cursor * 6
-			indices[first] = start; indices[first + 1] = start + 1; indices[first + 2] = start + 2
-			indices[first + 3] = start; indices[first + 4] = start + 2; indices[first + 5] = start + 3
+			if not frame_draw_snapshot:
+				indices[first] = start; indices[first + 1] = start + 1; indices[first + 2] = start + 2
+				indices[first + 3] = start; indices[first + 4] = start + 2; indices[first + 5] = start + 3
 			quad_cursor += 1
 		else:
 			indices.append_array(PackedInt32Array([start, start + 1, start + 2, start, start + 2, start + 3]))

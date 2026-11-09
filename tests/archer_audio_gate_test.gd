@@ -58,4 +58,13 @@ func run():
  assert(victim.dead and not game.enemies.has(victim))
  assert(fx.archer_shots.is_empty() and fx.archer_audio_owners.is_empty())
  print("ARCHER_LETHAL_IMPACT_RULE_PASS")
- game.queue_free();quit()
+ # The final lethal impact leaves real audio playbacks alive. Keep owners in
+ # the tree until the existing AudioServer retirement barrier completes.
+ await manager.shutdown_audio()
+ assert(manager.shutdown_complete and manager.pending_disposals()==0)
+ assert(manager.shutdown_audit.completed)
+ game.queue_free()
+ await process_frame
+ assert(not is_instance_valid(game))
+ print("ARCHER_AUDIO_TEARDOWN_PASS")
+ quit()

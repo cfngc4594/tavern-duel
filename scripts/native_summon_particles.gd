@@ -5,6 +5,9 @@ const Curves = preload("res://scripts/native_summon_curves.gd")
 const STEP := 1.0 / 120.0
 const EPSILON := 0.00000001
 const SUPPORTED_MODULES := ["InitialModule", "ShapeModule", "EmissionModule", "SizeModule", "ColorModule", "UVModule", "VelocityModule", "ClampVelocityModule", "RotationModule", "RotationBySpeedModule"]
+var constant_step_enabled := true
+var _constant_step_valid := false
+var _constant_limit_amount := 0.0
 var raw: Dictionary = {}
 var source_renderer: Dictionary = {}
 var particles: Array = []
@@ -354,12 +357,16 @@ func _particle_state(p: Dictionary, age: float) -> Dictionary:
 	if age + EPSILON < float(p.sim_age):
 		p.sim_age = 0.0; p.displacement = Vector3.ZERO; p.sim_velocity = p.velocity + _velocity_over_life(p, 0.0); p.sim_rotation = p.rotation
 	var state: Dictionary = {"age": p.sim_age, "position": p.displacement, "velocity": p.sim_velocity, "rotation": p.sim_rotation}
-	while float(state.age) + STEP <= age + EPSILON: state = _integrate(p, state, STEP)
+	if _constant_step_valid:
+		state = _advance_constant_steps(p, state, age)
+	else:
+		while float(state.age) + STEP <= age + EPSILON: state = _integrate(p, state, STEP)
 	p.sim_age = state.age; p.displacement = state.position; p.sim_velocity = state.velocity; p.sim_rotation = state.rotation
 	if age > float(state.age) + EPSILON: state = _integrate(p, state, age - float(state.age))
 	return state
 
 func _position(p: Dictionary, time: float) -> Vector3:
+	_prepare_constant_steps()
 	var state := _particle_state(p, time)
 	if int(raw.get("moveWithTransform", 0)) == 1: return p.start + p.motion_basis * state.position
 	var frame := _emitter_transform()
@@ -395,6 +402,7 @@ func _uv_corners(p: Dictionary, age: float, speed: float) -> Array:
 	return corners
 
 func seek(seconds: float) -> void:
+	_prepare_constant_steps()
 	elapsed_seconds = maxf(seconds, 0.0)
 	# The wrapper is not the original emitter GO. Destroying that GO must also
 	# destroy its particles, unlike an explicit StopEmitting action.
@@ -461,3 +469,54 @@ func seek(seconds: float) -> void:
 
 func get_audit() -> Dictionary:
 	return {"source_key": source_key, "original_count": emitted_count, "live_count": live_count, "elapsed": elapsed_seconds, "active": active, "emission_enabled": raw.get("EmissionModule", {}).get("enabled", false), "stop_seconds": stop_time / maxf(EPSILON, float(raw.get("simulationSpeed", 1.0))) if is_finite(stop_time) else -1.0, "start_delay": start_delay, "simulation_space": raw.get("moveWithTransform", 0), "scaling_mode": raw.get("scalingMode", 0), "shape_type": raw.get("ShapeModule", {}).get("type"), "shape_mesh_key": shape_mesh_key, "source_mesh_triangles": mesh_triangles.size(), "render_mode": source_renderer.get("m_RenderMode"), "enabled_modules": enabled_modules.duplicate(), "original_modules": unsupported.is_empty(), "unsupported": unsupported.duplicate(), "dropped_at_capacity": dropped_at_capacity, "source_destroyed": source_destroyed, "solver": "Godot compatibility: fixed 1/120 velocity/limit/rotation integration; source curves and module enable flags", "birth_transform_sampling": "source emitter transforms interpolated between seek calls; not native Unity frame scheduling", "renderer_compatibility": "source billboard/horizontal/stretch modes; Godot camera, triangle rasterization, and screen-size clamp are not Unity-native", "rng": "instance-local Godot PCG; not Unity RNG; never game.rng", "native_pixel_equivalence": false}
+
+# Rebuilt each seek: no cross-frame module or curve assumptions. All unsupported
+# signatures use the original integrator. Fractional steps are unchanged too.
+func _prepare_constant_steps() -> void:
+	_constant_step_valid = false
+	if not constant_step_enabled or get_script().get_base_script() != null: return
+	var velocity: Dictionary = raw.get("VelocityModule", {})
+	var limit: Dictionary = raw.get("ClampVelocityModule", {})
+	var rotation: Dictionary = raw.get("RotationModule", {})
+	if bool(raw.get("RotationBySpeedModule", {}).get("enabled", false)): return
+	var parameters: Array = []
+	if bool(velocity.get("enabled", false)):
+		parameters.append_array([velocity.get("x", {}), velocity.get("y", {}), velocity.get("z", {}), velocity.get("speedModifier", {"scalar": 1.0})])
+	if bool(limit.get("enabled", false)):
+		if bool(limit.get("separateAxis", false)): return
+		var drag: Dictionary = limit.get("drag", {})
+		if int(drag.get("minMaxState", 0)) != 0 or Curves.number(drag.get("scalar", 0.0)) != 0.0: return
+		parameters.append(limit.get("magnitude", {}))
+	if bool(rotation.get("enabled", false)): parameters.append(rotation.get("curve", {}))
+	for curve in parameters:
+		if int(curve.get("minMaxState", 0)) not in [0, 3]: return
+		if not is_finite(Curves.number(curve.get("scalar", 0.0))) or not is_finite(Curves.number(curve.get("minScalar", curve.get("scalar", 0.0)))): return
+	_constant_limit_amount = 1.0 - pow(1.0 - clampf(float(limit.get("dampen", 0.0)), 0.0, 1.0), STEP / STEP)
+	_constant_step_valid = true
+
+func _advance_constant_steps(p: Dictionary, state: Dictionary, until: float) -> Dictionary:
+	var age: float = state.age
+	if age + STEP > until + EPSILON: return state
+	var velocity: Vector3 = state.velocity
+	var position: Vector3 = state.position
+	var rotation: float = state.rotation
+	var additive := _velocity_over_life(p, 0.0)
+	# Keep the original subtraction/addition even for constant additive velocity.
+	var additive_delta := additive - additive
+	var module: Dictionary = raw.get("VelocityModule", {})
+	var multiplier := Curves.minmax(module.get("speedModifier", {"scalar": 1.0}), 0.0, p.velocity_mix.x) if bool(module.get("enabled", false)) else 1.0
+	var limit: Dictionary = raw.get("ClampVelocityModule", {})
+	var limited := bool(limit.get("enabled", false))
+	var cap := maxf(0.0, Curves.minmax(limit.get("magnitude", {}), 0.0, p.limit_mix)) if limited else 0.0
+	var rotation_module: Dictionary = raw.get("RotationModule", {})
+	var rotates := bool(rotation_module.get("enabled", false))
+	var rotation_step := Curves.minmax(rotation_module.get("curve", {}), 0.0, p.rotation_mix) * STEP if rotates else 0.0
+	while age + STEP <= until + EPSILON:
+		velocity += additive_delta
+		if limited:
+			var speed := velocity.length()
+			if speed > cap: velocity *= lerpf(speed, cap, _constant_limit_amount) / speed
+		if rotates: rotation += rotation_step
+		position = position + velocity * multiplier * STEP
+		age = age + STEP
+	return {"age": age, "position": position, "velocity": velocity, "rotation": rotation}

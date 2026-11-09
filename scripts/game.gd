@@ -2299,12 +2299,16 @@ func _draw_drop_zone():
 	_arc_ellipse(p,Vector2(52,67),Color(0.53,0.85,1,alpha),3)
 	_arc_ellipse(p+Vector2(0,44),Vector2(48,16),Color(0.61,0.9,1,alpha*0.7),2)
 
+# Outer-alpha silhouette sampled from the actual Sunwell frame; geometry data, not repainted art.
+var _card_surface_base:=PackedVector2Array()
 func _card_surface_outline(factor=1.0) -> PackedVector2Array:
-	# Outer-alpha silhouette sampled from the actual Sunwell frame. This is
-	# geometry data, not a generated or repainted card image.
-	var points = PackedVector2Array([Vector2(-78.000,-90.840), Vector2(-77.112,-94.351), Vector2(-76.224,-96.398), Vector2(-75.040,-97.569), Vector2(-73.560,-99.032), Vector2(-72.080,-100.202), Vector2(-69.120,-101.665), Vector2(-66.159,-102.250), Vector2(-63.199,-102.250), Vector2(-60.239,-102.250), Vector2(-57.279,-102.250), Vector2(-54.319,-102.250), Vector2(-51.359,-102.250), Vector2(-48.398,-102.250), Vector2(-45.438,-102.250), Vector2(-42.478,-102.250), Vector2(-39.518,-102.250), Vector2(-36.558,-102.250), Vector2(-33.598,-102.250), Vector2(-30.638,-102.250), Vector2(-27.677,-104.883), Vector2(-24.717,-107.516), Vector2(-21.757,-109.271), Vector2(-18.797,-111.026), Vector2(-15.837,-112.489), Vector2(-12.877,-113.367), Vector2(-9.917,-114.537), Vector2(-6.956,-115.122), Vector2(-3.996,-115.415), Vector2(-1.036,-115.707), Vector2(1.924,-115.707), Vector2(4.884,-115.122), Vector2(7.844,-114.830), Vector2(10.805,-113.952), Vector2(13.765,-113.074), Vector2(16.725,-112.197), Vector2(19.685,-110.441), Vector2(22.645,-108.979), Vector2(25.605,-106.931), Vector2(28.565,-104.590), Vector2(31.526,-102.250), Vector2(34.486,-102.250), Vector2(37.446,-102.250), Vector2(40.406,-102.250), Vector2(43.366,-102.250), Vector2(46.326,-102.250), Vector2(49.287,-101.079), Vector2(52.247,-102.250), Vector2(55.207,-102.250), Vector2(58.167,-102.250), Vector2(61.127,-102.250), Vector2(64.087,-102.250), Vector2(67.047,-102.250), Vector2(70.008,-102.250), Vector2(72.968,-100.787), Vector2(74.448,-99.032), Vector2(75.928,-97.276), Vector2(77.112,-94.936), Vector2(77.704,-47.541), Vector2(77.704,-31.743), Vector2(77.112,107.516), Vector2(75.928,110.149), Vector2(74.448,112.197), Vector2(72.968,113.952), Vector2(70.008,114.830), Vector2(67.047,115.415), Vector2(64.087,115.415), Vector2(61.127,115.415), Vector2(58.167,115.415), Vector2(55.207,115.415), Vector2(52.247,115.415), Vector2(49.287,115.415), Vector2(46.326,115.415), Vector2(43.366,115.415), Vector2(40.406,115.415), Vector2(37.446,115.415), Vector2(34.486,115.415), Vector2(31.526,115.415), Vector2(28.565,115.415), Vector2(25.605,115.415), Vector2(22.645,115.415), Vector2(19.685,115.415), Vector2(16.725,115.415), Vector2(13.765,115.415), Vector2(10.805,115.415), Vector2(7.844,115.415), Vector2(4.884,115.415), Vector2(1.924,115.415), Vector2(-1.036,115.122), Vector2(-3.996,115.122), Vector2(-6.956,115.122), Vector2(-9.917,115.122), Vector2(-12.877,115.122), Vector2(-15.837,115.122), Vector2(-18.797,115.122), Vector2(-21.757,114.537), Vector2(-24.717,115.122), Vector2(-27.677,115.122), Vector2(-30.638,115.122), Vector2(-33.598,115.122), Vector2(-36.558,115.122), Vector2(-39.518,115.122), Vector2(-42.478,115.122), Vector2(-45.438,115.122), Vector2(-48.398,115.122), Vector2(-51.359,115.122), Vector2(-54.319,115.122), Vector2(-57.279,115.122), Vector2(-60.239,115.122), Vector2(-63.199,115.122), Vector2(-66.159,115.122), Vector2(-69.120,114.245), Vector2(-72.080,113.074), Vector2(-73.560,112.197), Vector2(-75.040,110.734), Vector2(-76.224,109.271), Vector2(-77.112,107.516), Vector2(-78.000,92.010)])
-	for i in range(points.size()): points[i]=(points[i]*CARD_FACE_SCALE+CARD_FACE_OFFSET)*factor
-	return points
+	# Compute the fixed frame/offset once; native packed-array scaling returns
+	# caller-owned points without caching unbounded animated lift factors.
+	if _card_surface_base.is_empty():
+		var points = PackedVector2Array([Vector2(-78.000,-90.840), Vector2(-77.112,-94.351), Vector2(-76.224,-96.398), Vector2(-75.040,-97.569), Vector2(-73.560,-99.032), Vector2(-72.080,-100.202), Vector2(-69.120,-101.665), Vector2(-66.159,-102.250), Vector2(-63.199,-102.250), Vector2(-60.239,-102.250), Vector2(-57.279,-102.250), Vector2(-54.319,-102.250), Vector2(-51.359,-102.250), Vector2(-48.398,-102.250), Vector2(-45.438,-102.250), Vector2(-42.478,-102.250), Vector2(-39.518,-102.250), Vector2(-36.558,-102.250), Vector2(-33.598,-102.250), Vector2(-30.638,-102.250), Vector2(-27.677,-104.883), Vector2(-24.717,-107.516), Vector2(-21.757,-109.271), Vector2(-18.797,-111.026), Vector2(-15.837,-112.489), Vector2(-12.877,-113.367), Vector2(-9.917,-114.537), Vector2(-6.956,-115.122), Vector2(-3.996,-115.415), Vector2(-1.036,-115.707), Vector2(1.924,-115.707), Vector2(4.884,-115.122), Vector2(7.844,-114.830), Vector2(10.805,-113.952), Vector2(13.765,-113.074), Vector2(16.725,-112.197), Vector2(19.685,-110.441), Vector2(22.645,-108.979), Vector2(25.605,-106.931), Vector2(28.565,-104.590), Vector2(31.526,-102.250), Vector2(34.486,-102.250), Vector2(37.446,-102.250), Vector2(40.406,-102.250), Vector2(43.366,-102.250), Vector2(46.326,-102.250), Vector2(49.287,-101.079), Vector2(52.247,-102.250), Vector2(55.207,-102.250), Vector2(58.167,-102.250), Vector2(61.127,-102.250), Vector2(64.087,-102.250), Vector2(67.047,-102.250), Vector2(70.008,-102.250), Vector2(72.968,-100.787), Vector2(74.448,-99.032), Vector2(75.928,-97.276), Vector2(77.112,-94.936), Vector2(77.704,-47.541), Vector2(77.704,-31.743), Vector2(77.112,107.516), Vector2(75.928,110.149), Vector2(74.448,112.197), Vector2(72.968,113.952), Vector2(70.008,114.830), Vector2(67.047,115.415), Vector2(64.087,115.415), Vector2(61.127,115.415), Vector2(58.167,115.415), Vector2(55.207,115.415), Vector2(52.247,115.415), Vector2(49.287,115.415), Vector2(46.326,115.415), Vector2(43.366,115.415), Vector2(40.406,115.415), Vector2(37.446,115.415), Vector2(34.486,115.415), Vector2(31.526,115.415), Vector2(28.565,115.415), Vector2(25.605,115.415), Vector2(22.645,115.415), Vector2(19.685,115.415), Vector2(16.725,115.415), Vector2(13.765,115.415), Vector2(10.805,115.415), Vector2(7.844,115.415), Vector2(4.884,115.415), Vector2(1.924,115.415), Vector2(-1.036,115.122), Vector2(-3.996,115.122), Vector2(-6.956,115.122), Vector2(-9.917,115.122), Vector2(-12.877,115.122), Vector2(-15.837,115.122), Vector2(-18.797,115.122), Vector2(-21.757,114.537), Vector2(-24.717,115.122), Vector2(-27.677,115.122), Vector2(-30.638,115.122), Vector2(-33.598,115.122), Vector2(-36.558,115.122), Vector2(-39.518,115.122), Vector2(-42.478,115.122), Vector2(-45.438,115.122), Vector2(-48.398,115.122), Vector2(-51.359,115.122), Vector2(-54.319,115.122), Vector2(-57.279,115.122), Vector2(-60.239,115.122), Vector2(-63.199,115.122), Vector2(-66.159,115.122), Vector2(-69.120,114.245), Vector2(-72.080,113.074), Vector2(-73.560,112.197), Vector2(-75.040,110.734), Vector2(-76.224,109.271), Vector2(-77.112,107.516), Vector2(-78.000,92.010)])
+		for i in range(points.size()):points[i]=points[i]*CARD_FACE_SCALE+CARD_FACE_OFFSET
+		_card_surface_base=points
+	return Transform2D(Vector2(factor,0),Vector2(0,factor),Vector2.ZERO)*_card_surface_base
 
 # Ground projection measured from the official 2013 Grizzly excerpt. These are
 # screen-space approximations, not the unavailable original client light/shader.
@@ -2392,6 +2396,21 @@ func _draw_staged_ground_shadows():
 	for c in staged_cards:
 		if c.phase == "card" or c.phase == "outline": _draw_projected_card_shadow(c)
 
+# Only the five resting-hand layers are cached. Animated lift keeps the exact
+# polygon path; persistent mesh references outlive the CanvasItem draw commands.
+var _static_hand_shadow_meshes:Dictionary={}
+func _static_hand_shadow_mesh(layer:int)->ArrayMesh:
+	assert(layer>=1 and layer<=5)
+	if _static_hand_shadow_meshes.has(layer):return _static_hand_shadow_meshes[layer]
+	var points=_card_surface_outline(1+layer*0.018)
+	var arrays=[];arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX]=points
+	arrays[Mesh.ARRAY_INDEX]=Geometry2D.triangulate_polygon(points)
+	var mesh=ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays,[],{},Mesh.ARRAY_FLAG_USE_2D_VERTICES)
+	_static_hand_shadow_meshes[layer]=mesh
+	return mesh
+
 func _draw_hand_underlay():
 	if source_projection!=null:return # Raw source actors own their presentation; no legacy screen-space duplicate.
 	for i in range(cards.size()):
@@ -2404,7 +2423,10 @@ func _draw_hand_underlay():
 			var lift = c.get("lift",0.0)
 			draw_target.draw_set_transform(c.pos+Vector2(7+lift*0.24,8+lift*0.32)+shake_offset,c.angle,Vector2.ONE*c.scale)
 			for j in range(5,0,-1):
-				draw_target.draw_colored_polygon(_card_surface_outline(1+j*0.018+lift*0.0005),Color(0.018,0.015,0.012,0.035))
+				if lift==0.0:
+					draw_target.draw_mesh(_static_hand_shadow_mesh(j),null,Transform2D.IDENTITY,Color(0.018,0.015,0.012,0.035))
+				else:
+					draw_target.draw_colored_polygon(_card_surface_outline(1+j*0.018+lift*0.0005),Color(0.018,0.015,0.012,0.035))
 		draw_target.draw_set_transform(c.pos+shake_offset,c.angle,Vector2.ONE*c.scale)
 		# Hand readiness/hover now uses original selection mesh and static mask.
 	draw_target.draw_set_transform(shake_offset)
@@ -2830,12 +2852,20 @@ func _tooltip(rect, title, lines):
 	_text(title, rect.position + Vector2(16, 28), 17, CREAM)
 	for i in range(lines.size()): _text(lines[i], rect.position + Vector2(16, 51 + i * 22), 13, GOLD)
 
+var _panel_styles:Dictionary={}
 func _panel(rect, color, border, radius, width):
-	var style = StyleBoxFlat.new()
-	style.bg_color = color; style.border_color = border
-	style.set_corner_radius_all(radius); style.set_border_width_all(width)
-	style.anti_aliasing = true; style.anti_aliasing_size = 1.0
-	draw_target.draw_style_box(style, rect)
+	# Internal immutable draw resources; rect/transform remain per-call inputs.
+	# Bound animated-color/style diversity instead of retaining it indefinitely.
+	var key=[color,border,int(radius),int(width)]
+	var style:StyleBoxFlat=_panel_styles.get(key)
+	if style==null:
+		if _panel_styles.size()>=64:_panel_styles.clear()
+		style=StyleBoxFlat.new()
+		style.bg_color=color;style.border_color=border
+		style.set_corner_radius_all(radius);style.set_border_width_all(width)
+		style.anti_aliasing=true;style.anti_aliasing_size=1.0
+		_panel_styles[key]=style
+	draw_target.draw_style_box(style,rect)
 
 func _text(txt, baseline, size, color, center = false, serif = false):
 	var f = (stat_font if txt.to_utf8_buffer().size()==txt.length() else title_font) if serif else font

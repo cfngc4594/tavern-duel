@@ -5,6 +5,7 @@ const Curves = preload("res://scripts/native_summon_curves.gd")
 const STEP := 1.0 / 120.0
 const EPSILON := 0.00000001
 const SUPPORTED_MODULES := ["InitialModule", "ShapeModule", "EmissionModule", "SizeModule", "ColorModule", "UVModule", "VelocityModule", "ClampVelocityModule", "RotationModule", "RotationBySpeedModule"]
+var color_snapshot_enabled := true
 var constant_step_enabled := true
 var _constant_step_valid := false
 var _constant_limit_amount := 0.0
@@ -425,6 +426,7 @@ func seek(seconds: float) -> void:
 	var view_right := camera.global_basis.x.normalized() if camera != null else compatibility_basis.x.normalized()
 	var view_up := camera.global_basis.y.normalized() if camera != null else compatibility_basis.y.normalized()
 	var view_normal := view_right.cross(view_up).normalized()
+	var color_sampler = _frame_color_sampler() if not particles.is_empty() else null
 	for p in particles:
 		var age := now - float(p.birth)
 		if age < 0.0 or age >= float(p.life) or float(p.birth) > stop_time: continue
@@ -433,7 +435,8 @@ func seek(seconds: float) -> void:
 		var size: float = p.size
 		if bool(raw.get("SizeModule", {}).get("enabled", false)): size *= Curves.minmax(raw.SizeModule.curve, normalized, p.size_mix)
 		var color: Color = p.color
-		if bool(raw.get("ColorModule", {}).get("enabled", false)): color *= sample_color(raw.ColorModule.gradient, normalized, p.color_mix)
+		if color_sampler != null: color *= color_sampler.sample(normalized, p.color_mix)
+		elif bool(raw.get("ColorModule", {}).get("enabled", false)): color *= sample_color(raw.ColorModule.gradient, normalized, p.color_mix)
 		var state := _particle_state(p, age)
 		var world_space := int(raw.get("moveWithTransform", 0)) == 1
 		var motion: Basis = p.motion_basis if world_space else _motion_basis(frame, local_scale)
@@ -520,3 +523,13 @@ func _advance_constant_steps(p: Dictionary, state: Dictionary, until: float) -> 
 		position = position + velocity * multiplier * STEP
 		age = age + STEP
 	return {"age": age, "position": position, "velocity": velocity, "rotation": rotation}
+
+# Per-seek snapshot only: runtime edits take effect on the next sample. Subclasses
+# retain the original callback path because their callbacks may mutate raw data.
+func _frame_color_sampler() -> RefCounted:
+	if not color_snapshot_enabled or get_script().get_base_script() != null: return null
+	var module: Dictionary = raw.get("ColorModule", {})
+	if not bool(module.get("enabled", false)): return null
+	var sampler = preload("res://scripts/particle_color_sampler.gd").new()
+	sampler.setup(module.gradient, Curves)
+	return sampler

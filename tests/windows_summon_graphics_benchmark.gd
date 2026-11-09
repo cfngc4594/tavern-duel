@@ -1,6 +1,7 @@
 extends SceneTree
 ## Manual graphical benchmark, excluded from CI. Run with -- --reference for
-## original integrator; omit for optimized. Fixed 1/60 main visual timestep by
+## original integrator; --color-reference disables only the color snapshot
+## (constant integrator stays enabled). Omit both for optimized. Fixed 1/60 by
 ## default; --real-delta observes normal variable-delta behavior instead.
 ## Requires development checkout source. Only user:// temporary scripts are written.
 var game
@@ -66,7 +67,8 @@ func run_round(round_index:int):
 
 
 func make_game():
- var reference="--reference" in OS.get_cmdline_user_args()
+ var color_reference="--color-reference" in OS.get_cmdline_user_args()
+ var reference=color_reference or "--reference" in OS.get_cmdline_user_args()
  var fixed=not "--real-delta" in OS.get_cmdline_user_args()
  var source=FileAccess.get_file_as_string("res://scripts/game.gd")
  assert(not source.is_empty())
@@ -75,11 +77,11 @@ func make_game():
   var player=FileAccess.get_file_as_string("res://scripts/native_summon_player.gd")
   var original="var particle=Particles.new();particle.setup"
   assert(player.contains(original),"Update reference injection if summon factory changes")
-  player=player.replace(original,"var particle=Particles.new();particle.constant_step_enabled=false;particle.setup")
+  player=player.replace(original,"var particle=Particles.new();particle."+("color_snapshot_enabled" if color_reference else "constant_step_enabled")+"=false;particle.setup")
   var out=FileAccess.open("user://summon_graphics_reference_player.gd",FileAccess.WRITE);out.store_string(player);out.close()
   source=source.replace("res://scripts/native_summon_player.gd","user://summon_graphics_reference_player.gd")
  var file=FileAccess.open("user://summon_graphics_game.gd",FileAccess.WRITE);file.store_string(source);file.close()
  var script=ResourceLoader.load("user://summon_graphics_game.gd","",ResourceLoader.CACHE_MODE_IGNORE)
  assert(script!=null)
- print("SUMMON_BENCH_MODE ",JSON.stringify({"reference":reference,"fixed_main_visual_dt":fixed,"dt":1.0/60.0 if fixed else -1,"window_frames":180,"note":"Compare second round; fixed window is 3 simulated seconds, including still-active tails. Main clock fixed, rendering remains real."}))
+ print("SUMMON_BENCH_MODE ",JSON.stringify({"reference":reference,"color_reference":color_reference,"fixed_main_visual_dt":fixed,"dt":1.0/60.0 if fixed else -1,"window_frames":180,"note":"Compare second round; fixed window is 3 simulated seconds, including still-active tails. Main clock fixed, rendering remains real."}))
  return script.new()

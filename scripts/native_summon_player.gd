@@ -393,6 +393,10 @@ func _cancel_entry(entry: Dictionary,reason: String):
 	if entry.config.route=="hand" and str(entry.unit.key)==str(entry.key):entry.unit.hidden=false;entry.unit.animating=false;entry.unit.lift=0.0;entry.unit.scale=1.0
 	entry.unit.erase("native_summon_hidden");entry.unit.erase("native_summon_position");entry.unit.erase("native_summon_rotation")
 	_emit(entry,"cancelled",entry.age);entry.cancel_reason=reason;_dispose(entry);instances.erase(entry)
+func cancel_unit(id:int):
+	for entry in instances.duplicate():
+		if int(entry.unit.id)==id:_cancel_entry(entry,"provisional_cancel")
+
 func cancel_all():
 	for entry in instances.duplicate():_cancel_entry(entry,"reset")
 	camera_offset=Vector2.ZERO

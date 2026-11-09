@@ -1294,6 +1294,8 @@ func cancel_interaction():
 	if _audio_selected_attack_id >= 0: SoundManager.stop_original_scope("aim:" + str(_audio_selected_attack_id))
 	_audio_selected_attack_id = -1
 	if not pending_battlecry.is_empty():
+		if pending_battlecry.has("unit") and is_instance_valid(native_summon):native_summon.cancel_unit(int(pending_battlecry.unit.id))
+		busy=false
 		_return_card(pending_battlecry.index);pending_battlecry.clear()
 		if not was_native_target:play_sound("return")
 		_event("battlecry_cancel")
@@ -1400,7 +1402,7 @@ func _is_aiming() -> bool:
 func _target_is_legal(t: Dictionary) -> bool:
 	if t.is_empty(): return false
 	var side=t.side if t.type=="hero" else t.unit.side
-	if t.type=="unit" and t.unit.dead: return false
+	if t.type=="unit" and (t.unit.dead or t.unit.get("provisional",false)): return false
 	if interaction_state==Interaction.BATTLECRY_AIM: return not pending_battlecry.is_empty()
 	if interaction_state==Interaction.ATTACK_AIM: return legal_attack(unit_by_id(selected_unit),t)
 	if interaction_state==Interaction.POWER_AIM: return not power_used and mana>=2
@@ -1457,7 +1459,7 @@ func play_card(index: int, target: Vector2, insertion_override: int = -1, battle
 		# No recovered source slot: fail before pending-target, mana or hand mutations.
 		if insertion<0:return false
 		if d.get("battlecry", "")=="damage1" and battlecry_target.is_empty():
-			pending_battlecry={"index":index,"pos":target,"insertion":insertion}
+			pending_battlecry={"index":index,"pos":target,"insertion":insertion,"source":c.duplicate(true)}
 			if _phone_hand_enabled():
 				var row:Dictionary=source_phone_layout.source_items.friendly_play.source_row
 				var slots=preload("res://scripts/source_phone_board_layout.gd").normal_slots(row,allies.size()+1,-1)
@@ -1468,7 +1470,7 @@ func play_card(index: int, target: Vector2, insertion_override: int = -1, battle
 				pending_battlecry.source_world_scale=preload("res://scripts/source_phone_board_layout.gd").vector(row.phone_card_target_scale)
 				pending_battlecry.pos=source_projection.source_to_screen(pose.position)
 				_publish_source_hand_pose(c,pose)
-			drag_index=-1;pressed_card=-1;_update_interaction()
+			drag_index=-1;pressed_card=-1;_start_battlecry_release();_update_interaction()
 			if not is_instance_valid(native_targeting):show_toast("精灵弓箭手：选择战吼目标 · 右键取消")
 			_event("battlecry_aim_begin");return true
 		if d.get("battlecry", "")=="damage1" and not _valid_character(battlecry_target): return false
@@ -1501,6 +1503,38 @@ func play_card(index: int, target: Vector2, insertion_override: int = -1, battle
 		_log(d.name,"施放法术",d.color)
 	tutorial_hint = false
 	return true
+
+func _start_battlecry_release():
+	# A provisional presentation actor, not a rule-state summon. The original
+	# hand Out -> play In runs now; committing a target must not replay it.
+	if not _phone_hand_enabled() or not is_instance_valid(native_summon):return
+	var pending=pending_battlecry
+	var unit=_new_unit(cards[int(pending.index)].key,0,pending.pos)
+	unit.source_world_target=pending.source_world_position
+	unit.source_world_target_scale=pending.source_world_scale
+	unit.source_world_target_rotation=Quaternion.IDENTITY;unit.source_world_target_euler=Vector3.ZERO
+	unit.source_world_position=pending.source_world_position
+	unit.source_world_scale=pending.source_world_scale;unit.source_world_rotation=Quaternion.IDENTITY
+	unit.provisional=true;pending.unit=unit;pending.releasing=true;busy=true
+	var source:Dictionary=pending.source
+	source.source_actor_state=8;source.source_actor_state_basis="legal_card_over_friendly_playfield"
+	native_summon.begin(unit,source,"hand",func():
+		if not pending_battlecry.is_empty() and pending_battlecry.get("unit",{}).get("id",-1)==unit.id:
+			pending_battlecry.releasing=false;busy=false;_update_interaction()
+	)
+
+func _commit_battlecry_release(pending:Dictionary,target:Dictionary):
+	var unit:Dictionary=pending.unit
+	unit.erase("provisional")
+	var definition:Dictionary=definitions[unit.key]
+	_spend_mana(definition.cost);cards.remove_at(int(pending.index))
+	hover_card=-1;last_hover=-1;play_sound("card_play");play_sound("mana")
+	allies.insert(int(pending.insertion),unit)
+	_log(definition.name,"召唤 · "+str(definition.atk)+"/"+str(definition.hp),definition.color)
+	var history_id=_history_begin_play(unit.key,0,target,unit)
+	busy=true
+	_resolve_battlecry(unit,target,func():_history_complete(history_id);busy=false;_check_victory();_announce_charge_ready(unit))
+	tutorial_hint=false
 
 func _summon_effect(u, source={}, battlecry_target={}):
 	var history_id=_history_begin_play(u.key,int(u.side),battlecry_target,u)
@@ -1547,6 +1581,7 @@ func target_at(pos: Vector2, side: int) -> Dictionary:
 
 func _resolve_target(pos):
 	if not pending_battlecry.is_empty():
+		if pending_battlecry.get("releasing",false):return
 		# Touch users have no right mouse button. Returning to the hand is an
 		# explicit cancel; retain card/mana and animate from its placed pose.
 		if _phone_hand_enabled() and native_phone_hand.hit_card(pos)>=0:
@@ -1556,7 +1591,10 @@ func _resolve_target(pos):
 		if t.is_empty():
 			_reject_feedback(pos,"请选择战吼目标，或右键取消",pending_battlecry.pos);return
 		var pending=pending_battlecry.duplicate();pending_battlecry.clear()
-		_clear_selection(false,false,"commit");play_card(pending.index,pending.pos,pending.insertion,t);return
+		_clear_selection(false,false,"commit")
+		if pending.has("unit"):_commit_battlecry_release(pending,t)
+		else:play_card(pending.index,pending.pos,pending.insertion,t)
+		return
 	_update_interaction()
 	var feedback=_target_feedback_at(pos)
 	var origin=_aim_origin()
@@ -2053,6 +2091,8 @@ func _presentation_units() -> Array:
 
 func _presentation_boards() -> Array:
 	var boards: Array=combat_replay.boards if combat_replay.playing else [allies,enemies]
+	if not combat_replay.playing and pending_battlecry.has("unit"):
+		boards=[allies.duplicate(),enemies];boards[0].insert(int(pending_battlecry.insertion),pending_battlecry.unit)
 	return native_damage.append_dying(boards) if is_instance_valid(native_damage) else boards
 
 func _setup_presentation_canvases():

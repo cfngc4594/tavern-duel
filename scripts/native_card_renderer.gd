@@ -755,7 +755,10 @@ func _build_world_source_character(profile_name: String, key: String, definition
 		if r.get("readyHighlight",false) or not r.enabled:continue
 		var flipped: Array=[]
 		for surface in range(r.materialKeys.size()):
-			if str(materials[r.materialKeys[surface]].sourceShaderKey).get_slice(":",1) in ["9099378368919310605","6322982158558142423"]:flipped.append(surface)
+			# The power mesh has front/portrait/back surfaces, all back-face culled.
+			# Reflecting Unity source space requires reversing their winding, otherwise
+			# Restore shows the cover and Used shows the portrait (without its cost).
+			if (profile_name=="hero_power" and str(r.nodeId)==str(prof.portraitNodeId)) or str(materials[r.materialKeys[surface]].sourceShaderKey).get_slice(":",1) in ["9099378368919310605","6322982158558142423"]:flipped.append(surface)
 		if str(r.meshKey)=="unity default resources:10210":
 			meshes[r.meshKey]=_source_builtin_power_quad()
 		if meshes[r.meshKey].positions.is_empty() or meshes[r.meshKey].uvs.is_empty():

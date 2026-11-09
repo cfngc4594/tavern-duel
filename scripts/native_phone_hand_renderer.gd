@@ -89,7 +89,7 @@ func sync():
    for surface in mesh.mesh.get_surface_count():audit.vertices+=mesh.mesh.surface_get_array_len(surface)
 func _sync_battlecry_preview():
  var pending:Dictionary=game.pending_battlecry
- if pending.is_empty():
+ if pending.is_empty() or pending.has("unit"):
   if not battlecry_preview.is_empty():battlecry_preview.root.visible=false
   return
  var key:String=game.cards[int(pending.index)].key

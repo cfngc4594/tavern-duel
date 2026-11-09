@@ -54,7 +54,7 @@ jobs:
           if ($LASTEXITCODE -ne 0 -or (Select-String "$out/smoke.log" -CaseSensitive -Pattern 'SCRIPT ERROR|ERROR:') -or !(Select-String "$out/smoke.log" -Pattern 'WINDOWS_PRODUCTION_MAIN_PASS')) { throw 'Production main smoke failed' }
           $report = Get-Content "$out/package/verification.json" -Raw | ConvertFrom-Json
           $report | Add-Member -NotePropertyName production_main_smoke_pass -NotePropertyValue $true
-          $fontDiagnostics = @(Select-String "$out/import.log" -SimpleMatch 'Unicode parsing error:' | ForEach-Object {$_.Line})
+          $fontDiagnostics = @(Select-String -Path "$out/import.log" -SimpleMatch -Pattern 'Unicode parsing error:' | ForEach-Object {$_.Line})
           $report | Add-Member -NotePropertyName import_font_diagnostics -NotePropertyValue $fontDiagnostics
           $report | ConvertTo-Json -Depth 8 | Set-Content "$out/package/verification.json" -Encoding utf8
           python ci/package_windows.py $out

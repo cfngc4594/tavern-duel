@@ -38,26 +38,42 @@ func play_archer(unit:Dictionary,target:Dictionary,audio_scope:String="",on_impa
 	return archer_serial
 
 func advance(delta:float):
+	var profile_started:int=Time.get_ticks_usec() if game!=null and bool(game.get("profile_frame_stages")) else -1
+	var stages:Dictionary={"super_advance":0,"impact_dispatch":0,"substeps":0}
 	var remaining:float=maxf(delta,0.0)
 	while remaining>0.0000001:
 		var step:float=remaining
 		for shot in archer_shots:step=minf(step,maxf(0.0,float(shot.route.impact_time)-float(shot.age)))
+		var step_started:int=Time.get_ticks_usec() if profile_started>=0 else 0
 		super.advance(step)
+		if profile_started>=0:
+			stages.super_advance+=Time.get_ticks_usec()-step_started;stages.substeps+=1
 		for shot in archer_shots:shot.age+=step
 		remaining-=step
 		for shot in archer_shots.duplicate():
 			if float(shot.age)+0.0000001>=float(shot.route.impact_time):
+				var impact_started:int=Time.get_ticks_usec() if profile_started>=0 else 0
 				spell_impact(shot);archer_shots.erase(shot)
+				if profile_started>=0:stages.impact_dispatch+=Time.get_ticks_usec()-impact_started
+	if profile_started>=0:_archer_profile_row({"route_id":"archer_outer_advance"},"archer_advance_total",profile_started,stages)
 
 func _spawn(root_key:String,anchor:Vector2,route_id:String,owner_serial:int)->Dictionary:
+	var archer_profile_started:int=Time.get_ticks_usec() if game!=null and bool(game.get("profile_frame_stages")) else -1
+	var profile_stages:Dictionary={}
+	var stage_started:int=archer_profile_started
 	var effect:Dictionary=super._spawn(root_key,anchor,route_id,owner_serial)
+	if archer_profile_started>=0:stage_started=_profile_effect_stage(profile_stages,"super_spawn",stage_started)
 	if route_id.begins_with("CS2_189/") and not game.headless:
 		effect.archer_skin=preload("res://scripts/native_archer_skin.gd").new()
 		effect.archer_skin.setup(assets,effect.state)
+		if archer_profile_started>=0:stage_started=_profile_effect_stage(profile_stages,"skin_setup",stage_started)
 		# Source Awake is independent of the projection container visibility gate.
 		for key in effect.state.particles:
 			if bool(effect.state.particles[key].system.data.get("playOnAwake",false)) and not effect.particles.has(key):
 				_particles(effect,key,0.0,false,true)
+	if archer_profile_started>=0:
+		_profile_effect_stage(profile_stages,"awake",stage_started)
+		_archer_profile_row(effect,"archer_spawn_total",archer_profile_started,profile_stages)
 	return effect
 
 func _action(effect:Dictionary,action:Dictionary,moment:float):
@@ -80,12 +96,20 @@ func _action(effect:Dictionary,action:Dictionary,moment:float):
 	super._action(effect,action,moment)
 
 func _sample(effect:Dictionary):
+	var archer_profile_started:int=Time.get_ticks_usec() if game!=null and bool(game.get("profile_frame_stages")) else -1
+	var profile_stages:Dictionary={}
+	var stage_started:int=archer_profile_started
 	for call in effect.get("archer_invocations",[]).duplicate():
 		if float(effect.age)>=float(call.at):
 			_animation_event(effect,{"key":call.key,"clip":"InvokeMethod"},{"functionName":"StartShake"},float(call.at))
 			effect.archer_invocations.erase(call)
+	if archer_profile_started>=0:stage_started=_profile_effect_stage(profile_stages,"invocations",stage_started)
 	super._sample(effect)
+	if archer_profile_started>=0:stage_started=_profile_effect_stage(profile_stages,"super_sample",stage_started)
 	if effect.has("archer_skin"):effect.archer_skin._skin()
+	if archer_profile_started>=0:
+		_profile_effect_stage(profile_stages,"skin",stage_started)
+		_archer_profile_row(effect,"archer_sample_total",archer_profile_started,profile_stages)
 
 func cancel_all():
 	for shot in archer_shots:
@@ -133,11 +157,16 @@ func retain_death_audio(owner:int,deaths:Array):
 		archer_audio_owners[owner].death_audio_consumed=false
 
 func spell_impact(entry:Dictionary):
+	var profile_started:int=Time.get_ticks_usec() if game!=null and bool(game.get("profile_frame_stages")) else -1
+	var stage_started:int=profile_started
+	var profile_stages:Dictionary={}
 	# Remove before calling: re-entry or cancellation cannot commit damage twice.
 	var commit:Callable=entry.get("on_impact",Callable())
 	entry.erase("on_impact");entry.erase("on_cancel")
 	if commit.is_valid():commit.call()
+	if profile_started>=0:stage_started=_profile_effect_stage(profile_stages,"commit_callback",stage_started)
 	super.spell_impact(entry)
+	if profile_started>=0:stage_started=_profile_effect_stage(profile_stages,"super_impact",stage_started)
 	if str(entry.get("key",""))!="CS2_189":return
 	var owner:Dictionary=archer_audio_owners.get(entry.serial,{})
 	if not owner.is_empty() and not bool(owner.get("death_audio_consumed",false)):
@@ -147,6 +176,16 @@ func spell_impact(entry:Dictionary):
 		if not deaths.is_empty():
 			game._audio_flush_deaths(deaths,{},{})
 			archer_audio_history.append({"event":"observed_death_audio_flushed","owner_serial":entry.serial,"count":deaths.size(),"visual_clock":clock_seconds})
+	if profile_started>=0:stage_started=_profile_effect_stage(profile_stages,"death_audio",stage_started)
 	var complete:Callable=entry.get("on_complete",Callable())
 	entry.erase("on_complete")
 	if complete.is_valid():complete.call()
+	if profile_started>=0:
+		_profile_effect_stage(profile_stages,"complete_callback",stage_started)
+		_archer_profile_row({"route_id":"CS2_189/impact_callbacks","serial":entry.get("serial",-1),"age":entry.get("age",0.0)},"archer_impact_total",profile_started,profile_stages)
+
+# Uses the existing default-off game profiler and its >5ms threshold.
+# Total rows contain nested samples/callbacks: do not add these totals together.
+func _archer_profile_row(effect:Dictionary,operation:String,started:int,stages:Dictionary)->void:
+	_profile_effect_row(effect,operation,started,stages)
+	while profile_rows.size()>2000:profile_rows.pop_front()

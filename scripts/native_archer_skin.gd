@@ -1,5 +1,11 @@
 extends RefCounted
+static var cache_inputs:bool=true
+static var skip_unchanged:bool=true
 ## Original weights/bind poses; explicit CPU linear blend skinning compatibility.
+class CacheInvalidator extends RefCounted:
+ var cache:Dictionary
+ func invalidate():
+  cache.dirty=true;cache.last_matrices=PackedByteArray()
 var assets
 var state:Dictionary
 var skinned:Array=[]
@@ -22,7 +28,7 @@ func _make_skin():
    bones.append(state.nodes[t.refs['.m_GameObject']]);binds.append(_matrix(d.bind_pose[i]))
   skinned.append({'node':state.nodes[key],'instance':mi,'mesh':mesh,'source':source_mesh,'data':d,'bones':bones,'binds':binds,'materials':mats})
  _skin()
-func _skin():
+func _skin_baseline():
  for s in skinned:
   var matrices:Array=[]
   for i in range(s.bones.size()):matrices.append(s.node.global_transform.affine_inverse()*s.bones[i].global_transform*s.binds[i])
@@ -37,3 +43,77 @@ func _skin():
   s.mesh.clear_surfaces()
   for i in range(s.source.get_surface_count()):
    var arrays:Array=s.source.surface_get_arrays(i);arrays[Mesh.ARRAY_VERTEX]=verts;arrays[Mesh.ARRAY_NORMAL]=norms;s.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays);s.instance.set_surface_override_material(i,s.materials[i])
+
+func _skin():
+ if not cache_inputs and not skip_unchanged:
+  # A baseline rebuild can replace geometry while an older cached pose remains.
+  for s in skinned:
+   if s.has("cache"):s.cache.last_matrices=PackedByteArray()
+  _skin_baseline();return
+ for s in skinned:
+  if not s.has("cache"):
+   var cache:Dictionary={"dirty":true,"last_matrices":PackedByteArray(),"vertices":[],"normals":[],"weights":[],"indices":[],"surfaces":[]}
+   s.cache=cache
+   var observer=CacheInvalidator.new();observer.cache=cache;s.cache_observer=observer
+   var callback:Callable=observer.invalidate
+   s.cache_callback=callback
+   s.source.changed.connect(callback)
+   s.cache_source=s.source
+  elif s.cache_source!=s.source:
+   if is_instance_valid(s.cache_source) and s.cache_source.changed.is_connected(s.cache_callback):
+    s.cache_source.changed.disconnect(s.cache_callback)
+   s.cache_source=s.source
+   s.source.changed.connect(s.cache_callback)
+   s.cache.dirty=true;s.cache.last_matrices=PackedByteArray()
+  var cache:Dictionary=s.cache
+  if cache.dirty:
+   cache.vertices.clear();cache.normals.clear();cache.weights.clear();cache.indices.clear();cache.surfaces.clear()
+   for i in range(s.data.vertices.size()):
+    cache.vertices.append(Vector3(s.data.vertices[i][0],s.data.vertices[i][1],s.data.vertices[i][2]))
+    cache.normals.append(Vector3(s.data.normals[i][0],s.data.normals[i][1],s.data.normals[i][2]))
+    var weights:Array=[];var indices:Array=[]
+    for j in range(s.data.bone_weights[i].size()):
+     weights.append(float(s.data.bone_weights[i][j]));indices.append(int(s.data.bone_indices[i][j]))
+    cache.weights.append(weights);cache.indices.append(indices)
+   for surface in range(s.source.get_surface_count()):cache.surfaces.append(s.source.surface_get_arrays(surface))
+   cache.dirty=false;cache.last_matrices=PackedByteArray()
+  var inverse:Transform3D=s.node.global_transform.affine_inverse()
+  var matrices:Array=[]
+  for i in range(s.bones.size()):matrices.append(inverse*s.bones[i].global_transform*s.binds[i])
+  var matrix_bytes:PackedByteArray=var_to_bytes(matrices) if skip_unchanged else PackedByteArray()
+  if skip_unchanged and cache.last_matrices==matrix_bytes and s.mesh.get_surface_count()==cache.surfaces.size():
+   # Visibility lives on the instance. Reapply material bindings even when
+   # identical geometry is retained, so runtime material replacement is observed.
+   for surface in range(s.mesh.get_surface_count()):s.instance.set_surface_override_material(surface,s.materials[surface])
+   continue
+  var verts:=PackedVector3Array();var norms:=PackedVector3Array()
+  for i in range(s.data.vertices.size()):
+   var v:Vector3=cache.vertices[i] if cache_inputs else Vector3(s.data.vertices[i][0],s.data.vertices[i][1],s.data.vertices[i][2])
+   var n:Vector3=cache.normals[i] if cache_inputs else Vector3(s.data.normals[i][0],s.data.normals[i][1],s.data.normals[i][2])
+   var p:=Vector3.ZERO;var normal:=Vector3.ZERO
+   for j in range(s.data.bone_weights[i].size()):
+    var w:float=cache.weights[i][j] if cache_inputs else s.data.bone_weights[i][j]
+    if w==0.0:continue
+    var index:int=cache.indices[i][j] if cache_inputs else int(s.data.bone_indices[i][j])
+    var tr:Transform3D=matrices[index];p+=(tr*v)*w;normal+=(tr.basis*n)*w
+   verts.append(p);norms.append(normal.normalized())
+  s.mesh.clear_surfaces()
+  for i in range(s.source.get_surface_count()):
+   var arrays:Array=cache.surfaces[i].duplicate(false) if cache_inputs else s.source.surface_get_arrays(i)
+   arrays[Mesh.ARRAY_VERTEX]=verts;arrays[Mesh.ARRAY_NORMAL]=norms
+   s.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
+   s.instance.set_surface_override_material(i,s.materials[i])
+  cache.last_matrices=matrix_bytes
+
+## Parsed skin data is immutable after setup unless the owner edits it and calls
+## this method. No per-frame deep hashing of vertices/weights/bind data is done.
+func invalidate_inputs():
+ for s in skinned:
+  if s.has("cache"):
+   s.cache.dirty=true;s.cache.last_matrices=PackedByteArray()
+
+func _notification(what:int):
+ if what!=NOTIFICATION_PREDELETE:return
+ for s in skinned:
+  if s.has("cache_callback") and is_instance_valid(s.cache_source) and s.cache_source.changed.is_connected(s.cache_callback):
+   s.cache_source.changed.disconnect(s.cache_callback)

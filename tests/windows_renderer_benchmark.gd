@@ -111,6 +111,10 @@ func run():
   if arg.begins_with("--capture-dir="):capture_dir=arg.trim_prefix("--capture-dir=")
   if arg=="--gpu-compute":Compute.enabled=true
   if arg=="--gpu-resident":Resident.enabled=true
+  if arg=="--archer-skin-inputs":preload("res://scripts/native_archer_skin.gd").cache_inputs=true
+  if arg=="--archer-skin-unchanged":preload("res://scripts/native_archer_skin.gd").skip_unchanged=true
+  if arg=="--no-archer-skin-inputs":preload("res://scripts/native_archer_skin.gd").cache_inputs=false
+  if arg=="--no-archer-skin-unchanged":preload("res://scripts/native_archer_skin.gd").skip_unchanged=false
   if arg=="--profile-sources":Particles.profile_sources=true;CombatParticles.profile_setup=true;CombatParticles.profile_seek=true
   if arg=="--skip-hidden-geometry":Particles.skip_hidden_geometry=true
   if arg=="--no-cache-mesh-surfaces":CombatParticles.mesh_surface_cache_enabled=false

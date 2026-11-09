@@ -424,7 +424,7 @@ func _action(effect: Dictionary,action: Dictionary,moment: float):
 				if not spec.is_empty():
 					if not effect.particles.has(key):
 						spec.autoplay=false
-						var particle=particle_script.new();particle.setup(spec,assets,effect.projection,effect.serial*391+effect.particles.size());effect.particles[key]={"node":particle,"start":moment};effect.state.materials[key]=[particle.material]
+						var particle=particle_script.new();_setup_particle(particle,spec,effect);effect.particles[key]={"node":particle,"start":moment};effect.state.materials[key]=[particle.material]
 						if effect.has("components"):effect.components.on_particle_created(key,effect.particles[key])
 					var player: Dictionary=effect.particles[key]
 					if player.node.has_method("emit_count"):player.node.emit_count(int(_value(effect,params.get("m_Count"),0)),moment-float(player.start))
@@ -493,6 +493,13 @@ func _action(effect: Dictionary,action: Dictionary,moment: float):
 		_:
 			if not effect.unsupported.has(name):effect.unsupported.append(name)
 
+# Only creation inside _sample guarantees a normal seek before returning to
+# rendering. Spawn/autoplay, independent setup and unknown adapters stay eager.
+func _setup_particle(node,spec:Dictionary,effect:Dictionary):
+	if bool(effect.get("_sampling_particle_setup",false)) and get_script().resource_path=="res://scripts/native_death_effects.gd" and node.get_script().resource_path=="res://scripts/native_death_particles.gd":
+		node.defer_initial_geometry=true
+	node.setup(spec,assets,effect.projection,effect.serial*391+effect.particles.size())
+
 func _particles(effect: Dictionary,key: String,moment: float,include_children: bool,play: bool):
 	effect.events.append({"event":"particle_play" if play else "particle_stop","source_key":key,"time":moment})
 	if game.headless:return
@@ -502,7 +509,7 @@ func _particles(effect: Dictionary,key: String,moment: float,include_children: b
 		if not effect.state.particles.has(target_key):continue
 		if play:
 			if effect.particles.has(target_key):continue
-			var node=particle_script.new();node.setup(effect.state.particles[target_key],assets,effect.projection,effect.serial*391+effect.particles.size())
+			var node=particle_script.new();_setup_particle(node,effect.state.particles[target_key],effect)
 			effect.particles[target_key]={"node":node,"start":moment}
 			effect.state.materials[target_key]=[node.material]
 			if effect.has("components"):effect.components.on_particle_created(target_key,effect.particles[target_key])
@@ -652,6 +659,8 @@ func sync_projection():
 	for effect in effects:_project(effect)
 
 func _sample(effect: Dictionary):
+	if get_script().resource_path=="res://scripts/native_death_effects.gd" and preload("res://scripts/native_combat_particles.gd").death_initial_geometry_defer_enabled:
+		effect._sampling_particle_setup=true
 	var profiling:bool=game!=null and bool(game.get("profile_frame_stages"))
 	var profile_started:int=Time.get_ticks_usec() if profiling else 0
 	var stage_started:int=profile_started
@@ -684,6 +693,7 @@ func _sample(effect: Dictionary):
 	for player in effect.particles.values():
 		player.node.seek(float(effect.age)-float(player.start))
 		if is_instance_valid(player.node.source_node):player.node.mesh_instance.visible=player.node.source_node.is_visible_in_tree()
+	effect.erase("_sampling_particle_setup")
 	if profiling:stage_started=_profile_effect_stage(stages,"particles",stage_started)
 	for node_materials in effect.state.get("materials",{}).values():
 		for mat in node_materials:

@@ -1,5 +1,13 @@
 extends Node3D
 static var profile_setup:=false
+static var profile_seek:bool=false
+var _worker_profile:Dictionary={}
+static var seek_rows:Array=[]
+static var seek_source_totals:Dictionary={}
+static var death_initial_geometry_defer_enabled:bool=true
+# Armed only inside the exact death effect's synchronous sampling window.
+var defer_initial_geometry:bool=false
+var _skip_initial_geometry:bool=false
 static var setup_rows:Array=[]
 ## Source ParticleSystem modules, with an explicit Godot compatibility solver.
 ## Unity's native RNG, integration and billboard rasterization are not recovered.
@@ -148,7 +156,10 @@ func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> vo
 	if profile_setup:stages.emission=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	_load_subemitters(spec)
 	if profile_setup:stages.subemitters=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
+	_skip_initial_geometry=defer_initial_geometry and death_initial_geometry_defer_enabled and get_script().resource_path=="res://scripts/native_death_particles.gd" and subemitter_ancestry.size()==1
 	seek(0.0)
+	_skip_initial_geometry=false
+	defer_initial_geometry=false
 	if profile_setup:
 		stages.initial_seek=Time.get_ticks_usec()-stage
 		setup_rows.append({"frame":Engine.get_process_frames(),"source_key":source_key,"depth":subemitter_ancestry.size(),"usec":Time.get_ticks_usec()-profile_start,"stages":stages})
@@ -751,6 +762,10 @@ func _uv_corners(p: Dictionary, age: float, speed: float) -> Array:
 	return corners
 
 func seek(seconds: float) -> void:
+	var seek_started:int=Time.get_ticks_usec() if profile_seek else 0
+	var seek_stage:int=seek_started
+	var seek_times:Dictionary={}
+	var state_usec:int=0
 	elapsed_seconds = maxf(seconds, 0.0)
 	# The wrapper is not the original emitter GO. Destroying that GO must also
 	# destroy its particles, unlike an explicit StopEmitting action.
@@ -767,8 +782,17 @@ func seek(seconds: float) -> void:
 		_runtime_rate_events(now)
 		_emit_until(now, frame, local_scale)
 		simulation_time = now; last_emitter = frame; last_local_scale = local_scale; last_wall_seconds = elapsed_seconds
+	if profile_seek:
+		seek_times.emission_usec=Time.get_ticks_usec()-seek_stage
+		seek_stage=Time.get_ticks_usec()
 	_update_subemitters(now)
+	if profile_seek:
+		seek_times.subemitters_usec=Time.get_ticks_usec()-seek_stage
+		seek_stage=Time.get_ticks_usec()
 	_prepare_worker_states(now)
+	if profile_seek:
+		seek_times.worker_usec=Time.get_ticks_usec()-seek_stage
+		seek_stage=Time.get_ticks_usec()
 	mesh.clear_surfaces()
 	live_count = 0
 	screen_size_clamped = 0
@@ -835,7 +859,10 @@ func seek(seconds: float) -> void:
 			if color_enabled: color *= color_sampler.sample(normalized, p.color_mix)
 		elif bool(raw.get("ColorModule", {}).get("enabled", false)): color *= sample_color(raw.ColorModule.gradient, normalized, p.color_mix)
 		var state: Dictionary = _worker_states.get(particle_index, {})
-		if state.is_empty(): state = _particle_state(p, age)
+		if state.is_empty():
+			var state_started:int=Time.get_ticks_usec() if profile_seek else 0
+			state = _particle_state(p, age)
+			if profile_seek:state_usec+=Time.get_ticks_usec()-state_started
 		collision_count += int(state.get("collision_hits", 0))
 		if age >= float(state.get("kill_age", INF)): live_count -= 1; continue
 		var world_space := int(raw.get("moveWithTransform", 0)) == 1
@@ -846,6 +873,7 @@ func seek(seconds: float) -> void:
 		var right := view_right; var up := view_up; var normal := view_normal
 		var mode := int(source_renderer.get("m_RenderMode", 0))
 		if mode == 4:
+			if _skip_initial_geometry:continue
 			var alignment := int(source_renderer.get("m_RenderAlignment", 0))
 			var local_basis: Basis = motion.orthonormalized() if alignment == 2 else compatibility_basis.orthonormalized()
 			local_basis = (local_basis * Basis(Vector3.BACK, float(state.rotation))).scaled_local(Vector3(motion.x.length(), motion.y.length(), motion.z.length()) * size)
@@ -867,6 +895,7 @@ func seek(seconds: float) -> void:
 		var y := up * size * scale_y * 0.5
 		var screen_scale := _screen_size_scale(center, x, y, camera)
 		if not is_equal_approx(screen_scale, 1.0): screen_size_clamped += 1
+		if _skip_initial_geometry:continue
 		x *= screen_scale; y *= screen_scale
 		var start: int = quad_cursor * 4 if indexed_quads else vertices.size()
 		var corners: Array = [-x + y, x + y, x - y, -x - y]
@@ -898,10 +927,38 @@ func seek(seconds: float) -> void:
 	active = live_count > 0 or can_emit
 	for template in subemitter_templates: active = active or template.solver.active
 	mesh_instance.visible = bool(source_renderer.get("m_Enabled", true)) and (not is_instance_valid(source_node) or source_node.is_visible_in_tree())
-	if vertices.is_empty(): return
+	if profile_seek:
+		# loop includes allocation/module setup/geometry and its nested state work.
+		seek_times.loop_usec=Time.get_ticks_usec()-seek_stage
+		seek_times.state_usec=state_usec
+		seek_stage=Time.get_ticks_usec()
+	if vertices.is_empty():
+		if profile_seek:_record_seek_profile(seek_started,seek_times,0)
+		return
 	var arrays: Array = []; arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = vertices; arrays[Mesh.ARRAY_TEX_UV] = uvs; arrays[Mesh.ARRAY_COLOR] = colors; arrays[Mesh.ARRAY_INDEX] = indices; arrays[Mesh.ARRAY_NORMAL] = normals
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	if profile_seek:_record_seek_profile(seek_started,seek_times,Time.get_ticks_usec()-seek_stage)
+
+func _record_seek_profile(started:int,times:Dictionary,upload_usec:int)->void:
+	var row:Dictionary=times.duplicate()
+	row.source_key=source_key;row.script=get_script().resource_path
+	row.frame=Engine.get_process_frames();row.instance=get_instance_id()
+	row.total_usec=Time.get_ticks_usec()-started;row.upload_usec=upload_usec
+	row.worker_stages=_worker_profile.duplicate()
+	row.particlecount=live_count;row.stored_particles=particles.size()
+	row.clamp_count=screen_size_clamped;row.visible=mesh_instance.is_visible_in_tree()
+	# Bounded chronological rows plus per-source aggregate and peak frame.
+	if seek_rows.size()>=2000:seek_rows.pop_front()
+	seek_rows.append(row)
+	var key:String=str(row.script)+"|"+source_key
+	if not seek_source_totals.has(key):
+		if seek_source_totals.size()>=256:return
+		seek_source_totals[key]={"calls":0,"total_usec":0,"max_usec":0,"peak":{}}
+	var aggregate:Dictionary=seek_source_totals[key]
+	aggregate.calls+=1;aggregate.total_usec+=int(row.total_usec)
+	if int(row.total_usec)>int(aggregate.max_usec):
+		aggregate.max_usec=row.total_usec;aggregate.peak=row.duplicate()
 
 func _projected_particle_fraction(center: Vector3, x: Vector3, y: Vector3, camera: Camera3D) -> float:
 	var viewport_size := camera.get_viewport().get_visible_rect().size
@@ -1313,6 +1370,10 @@ func _subemitter_audits() -> Array:
 	return result
 
 func _prepare_worker_states(now: float) -> void:
+	var worker_started:int=Time.get_ticks_usec() if profile_seek else 0
+	var build_usec:int=0
+	var enqueue_usec:int=0
+	if profile_seek:_worker_profile={"prepare_usec":0,"build_usec":0,"enqueue_usec":0,"wait_usec":0,"collect_usec":0,"jobs":0}
 	_worker_states.clear()
 	_worker_indices.clear()
 	_worker_filtered = false
@@ -1325,7 +1386,9 @@ func _prepare_worker_states(now: float) -> void:
 		if age < 0.0 or age >= minf(float(p.life), float(p.get("kill_age", INF))) or (float(p.birth) > stop_time and not bool(p.get("manual_emit", false))): continue
 		indices.append(index)
 	_worker_filtered = not collision_job
-	if indices.size() < 32: return
+	if indices.size() < 32:
+		if profile_seek:_worker_profile.prepare_usec=Time.get_ticks_usec()-worker_started
+		return
 	var collision_frame:=_emitter_transform()
 	var collision_motion:=_motion_basis(collision_frame,_emitter_scale())
 	var plane_samples:Array=[]
@@ -1335,7 +1398,9 @@ func _prepare_worker_states(now: float) -> void:
 	var jobs: Array = []
 	var tasks: Array[int] = []
 	var count: int = mini(4, maxi(2, ceili(indices.size() / 32.0)))
+	if profile_seek:_worker_profile.prepare_usec=Time.get_ticks_usec()-worker_started
 	for chunk in range(count):
+		var build_started:int=Time.get_ticks_usec() if profile_seek else 0
 		var job = WorkerJob.new()
 		job.kernel = CollisionKernel.new() if collision_job else ForceKernel.new() if bool(raw.get("ForceModule", {}).get("enabled", false)) and bool(raw.get("ForceModule", {}).get("randomizePerFrame", false)) else WorkerKernel.new()
 		job.kernel.raw = raw
@@ -1352,8 +1417,16 @@ func _prepare_worker_states(now: float) -> void:
 			job.particles.append(particles[index].duplicate())
 			job.ages.append(now - float(particles[index].birth))
 		jobs.append(job)
+		if profile_seek:build_usec+=Time.get_ticks_usec()-build_started
+		var enqueue_started:int=Time.get_ticks_usec() if profile_seek else 0
 		tasks.append(WorkerThreadPool.add_task(job.run, true, "Particle numerical state"))
+		if profile_seek:enqueue_usec+=Time.get_ticks_usec()-enqueue_started
+	var wait_started:int=Time.get_ticks_usec() if profile_seek else 0
 	for task in tasks: WorkerThreadPool.wait_for_task_completion(task)
+	var collect_started:int=Time.get_ticks_usec() if profile_seek else 0
+	if profile_seek:
+		_worker_profile.build_usec=build_usec;_worker_profile.enqueue_usec=enqueue_usec
+		_worker_profile.wait_usec=collect_started-wait_started;_worker_profile.jobs=count
 	for ordinal in range(indices.size()):
 		var job = jobs[ordinal % count]
 		var slot: int = ordinal / count
@@ -1363,6 +1436,7 @@ func _prepare_worker_states(now: float) -> void:
 		for field in ["sim_age", "displacement", "sim_velocity", "sim_rotation", "sim_render_velocity", "kill_age", "collision_loss", "collision_hits"]:
 			original[field] = computed[field]
 		_worker_states[index] = job.states[slot]
+	if profile_seek:_worker_profile.collect_usec=Time.get_ticks_usec()-collect_started
 
 func _particle_candidates(now: float) -> Array[int]:
 	if get_script().get_base_script() != null:

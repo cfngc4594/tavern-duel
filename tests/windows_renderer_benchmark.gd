@@ -38,6 +38,7 @@ func stats(values:Array)->Dictionary:
  return {"count":values.size(),"mean":values.reduce(func(a,b):return a+b,0.0)/values.size(),"p50":values[values.size()/2],"p95":values[int(values.size()*.95)],"p99":values[int(values.size()*.99)],"max":values[-1]}
 func measure(label:String,count:int,action:Callable):
  CombatParticles.setup_rows.clear()
+ CombatParticles.seek_rows.clear();CombatParticles.seek_source_totals.clear()
  game.native_summon.profile_rows.clear()
  Particles.source_times.clear()
  if Particles.profile_sources:
@@ -77,20 +78,22 @@ func measure(label:String,count:int,action:Callable):
      if not samples.has(key):samples[key]=[]
      var value=RenderingServer.viewport_get_measured_render_time_cpu(viewport.get_viewport_rid()) if metric=="cpu" else RenderingServer.viewport_get_measured_render_time_gpu(viewport.get_viewport_rid())
      samples[key].append(value)
-  if not capture_dir.is_empty() and current_round==1 and ((label=="idle" and i==60) or (label=="play_senjin" and i==90) or (label=="attack_taunt" and i==45) or (label=="archer_battlecry" and i in [60,120])):
+  if not capture_dir.is_empty() and current_round==1 and ((label=="idle" and i==60) or (label=="play_senjin" and i==90) or (label=="attack_taunt" and i in [45,99,129,130,150]) or (label=="archer_battlecry" and i in [60,120])):
    await RenderingServer.frame_post_draw
    var filename=capture_dir+"/"+RenderingServer.get_current_rendering_method()+"_"+label+"_"+str(i)+".png"
    var error=root.get_texture().get_image().save_png(filename)
    print("CAPTURE ",filename," error=",error)
+ var chronological_frame_ms:Array=samples.frame_ms.duplicate()
  var summary:Dictionary={}
  for key in samples:summary[key]=stats(samples[key])
  var compute_after=Compute.get_stats()
  var compute_delta:Dictionary={}
  for key in compute_after:
   if compute_after[key] is int:compute_delta[key]=compute_after[key]-int(compute_before.get(key,0))
- print("MONITOR_PHASE ",JSON.stringify({"phase":label,"metrics":summary,"compute_delta":compute_delta,"compute_total":compute_after,"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
+ print("MONITOR_PHASE ",JSON.stringify({"phase":label,"metrics":summary,"frame_ms_trace":chronological_frame_ms,"compute_delta":compute_delta,"compute_total":compute_after,"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
  if Particles.profile_sources:
   print("SUMMON_BEGIN_PROFILE ",JSON.stringify({"phase":label,"rows":game.native_summon.profile_rows}))
+  print("COMBAT_SEEK_PROFILE ",JSON.stringify({"phase":label,"rows":CombatParticles.seek_rows,"totals":CombatParticles.seek_source_totals}))
   print("PARTICLE_SETUP_PROFILE ",JSON.stringify({"phase":label,"rows":CombatParticles.setup_rows}))
   print("EFFECT_STAGE_PROFILE ",JSON.stringify({"phase":label,"combat":game.native_combat.effect_player.profile_rows,"death_effects":game.native_death.effects.profile_rows,"death":game.native_death.profile_rows}))
   print("PARTICLE_SOURCE_TIMES ",JSON.stringify({"phase":label,"sources":Particles.source_times}))
@@ -108,12 +111,14 @@ func run():
   if arg.begins_with("--capture-dir="):capture_dir=arg.trim_prefix("--capture-dir=")
   if arg=="--gpu-compute":Compute.enabled=true
   if arg=="--gpu-resident":Resident.enabled=true
-  if arg=="--profile-sources":Particles.profile_sources=true;CombatParticles.profile_setup=true
+  if arg=="--profile-sources":Particles.profile_sources=true;CombatParticles.profile_setup=true;CombatParticles.profile_seek=true
   if arg=="--skip-hidden-geometry":Particles.skip_hidden_geometry=true
   if arg=="--no-cache-mesh-surfaces":CombatParticles.mesh_surface_cache_enabled=false
   if arg=="--no-prepare-effect-materials":EffectPreparer.enabled=false
   if arg=="--no-retain-damage-shader":Damage.retain_glyph_shader=false
   if arg=="--no-prepare-transmission-materials":EffectPreparer.extended=false
+  if arg=="--no-defer-death-geometry":CombatParticles.death_initial_geometry_defer_enabled=false
+  if arg=="--defer-death-geometry":CombatParticles.death_initial_geometry_defer_enabled=true
   if arg=="--cache-mesh-surfaces":CombatParticles.mesh_surface_cache_enabled=true
   if arg=="--prepare-effect-materials":EffectPreparer.enabled=true
   if arg=="--no-prepare-summon-materials":EffectPreparer.summon_enabled=false;preload("res://scripts/native_summon_assets.gd").retain_shader=false

@@ -107,5 +107,6 @@ func _run():
  var again=fixture();check(ambient_playing(again.c)==4,'Repeated PHONE fixture resets unknown quality')
  again.c.close_interaction();again.p.queue_free();await process_frame
  report.ok=failures.is_empty();report.failures=failures
- var out=FileAccess.open('/tmp/tavernduel-phone-board-p6/phone_environment_particles_result.json',FileAccess.WRITE);out.store_string(JSON.stringify(report,'  '));out.close()
+ var out=FileAccess.open('user://phone_environment_particles_result.json',FileAccess.WRITE);out.store_string(JSON.stringify(report,'  '));out.close()
+ if report.ok:print('PHONE_ENVIRONMENT_PARTICLES_PASS')
  print(JSON.stringify({'ok':report.ok,'failures':failures,'max_particle_storage':max_storage}));quit(0 if failures.is_empty() else 1)

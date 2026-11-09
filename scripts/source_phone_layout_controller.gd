@@ -17,6 +17,11 @@ var mana_tray:Dictionary={}
 var last_tray_frame:=-1
 var mana_events:Array=[]
 var mana_event_serial:=0
+# Runtime layout is static between rule/layout changes; camera shake only reprojects.
+var _layout_key:Array=[]
+var _projection_key:Array=[]
+var layout_builds:=0
+var projection_builds:=0
 func setup(host):
  game=host
  viewport=SubViewport.new();viewport.name="SourcePhoneLayoutRegistration"
@@ -35,10 +40,17 @@ func refresh():
  var options={"aspect":canvas.x/canvas.y,"permanent_mana_count":game.max_mana,"temporary_mana_count":temporary,"end_turn_enabled":game.player_turn}
  if game.interaction_state==game.Interaction.PLACEMENT_PREVIEW:options.moused_over_slot=game.preview_index+1
  elif not game.pending_battlecry.is_empty():options.moused_over_slot=int(game.pending_battlecry.insertion)+1
- source_items=Layout.recovered_items(game.allies.size(),game.enemies.size(),options)
+ var counts=[game.allies.size(),game.enemies.size()]
+ # Endpoints depend on source data/aspect, not the current tween position.
+ if source_items.is_empty() or _layout_key.is_empty() or _layout_key[2].get("aspect",0.0)!=options.aspect:
+  source_items=Layout.recovered_items(counts[0],counts[1],options)
  options.mana_tray_position=_mana_tray_position(source_items.friendly_mana.tray_endpoints)
- source_items=Layout.recovered_items(game.allies.size(),game.enemies.size(),options)
- snapshot=Layout.build(source_items,camera,Vector2(viewport.size),canvas,game.presentation_offset)
+ var next_key=[counts[0],counts[1],options]
+ var changed=source_items.is_empty() or next_key!=_layout_key
+ if changed:
+  source_items=Layout.recovered_items(counts[0],counts[1],options)
+  _layout_key=next_key.duplicate(true);_projection_key.clear();layout_builds+=1
+ _refresh_snapshot()
  blockers=snapshot.blockers.duplicate()
  # An explicit development gate is insufficient by itself: layout/readiness is
  # necessary, and the complete consumer migration must be separately accepted.
@@ -53,7 +65,10 @@ func refresh():
   for kind in ["hero","power","play","deck","mana"]:
    var row:Dictionary=source_items[prefix+kind]
    anchors[kind+":"+str(side)]={"position":Layout.vector(row.center_world),"rotation":row.get("source_rotation",Quaternion.IDENTITY),"scale":row.get("source_scale",Vector3.ONE),"verified":row.verified,"source":row.source}
- context=SourceProjection.install(game,camera,Vector2(viewport.size),canvas,game.presentation_offset,anchors)
+ if context==null:context=SourceProjection.install(game,camera,Vector2(viewport.size),canvas,game.presentation_offset,anchors)
+ else:
+  context.configure(camera,Vector2(viewport.size),canvas,game.presentation_offset,anchors)
+  context.blockers.clear()
 func contains(key:String,point:Vector2)->bool:return enabled and Layout.contains(snapshot,key,point)
 func update_units(delta:float=0.0):
  if not enabled:return
@@ -95,7 +110,13 @@ func update_units(delta:float=0.0):
    unit.source_hit_polygon=Geometry2D.convex_hull(Layout.project_polygon(moved_corners,camera,Vector2(viewport.size),game.presentation_size,game.presentation_offset));unit.target=actor.center
 
 func reproject():
- if enabled:snapshot=Layout.build(source_items,camera,Vector2(viewport.size),game.presentation_size,game.presentation_offset)
+ if enabled:_refresh_snapshot()
+
+func _refresh_snapshot():
+ var key=[camera.get_camera_transform(),camera.get_camera_projection(),viewport.size,game.presentation_size,game.presentation_offset]
+ if snapshot.is_empty() or key!=_projection_key:
+  snapshot=Layout.build(source_items,camera,Vector2(viewport.size),game.presentation_size,game.presentation_offset)
+  _projection_key=key;projection_builds+=1
 
 func audit()->Dictionary:
  return {"enabled":enabled,"layout_ready":snapshot.get("ready",false),"blockers":blockers.duplicate(),"production_gate":bool(ProjectSettings.get_setting("native_mobile/source_consumers_verified",false)),"original_source":"37.0.0.255130.254477 managed phone branch and serialized phone prefabs; not verified Android binary","visual_device_verified":false,"projection":"Original perspective camera with one source-world Z reflection","movement":"ZonePlay.UpdateLayout .ctor duration 1.0, default easeOutExpo16; Card transition delay, ordinary source rotations only"}

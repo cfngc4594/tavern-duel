@@ -1229,7 +1229,16 @@ func _prepare_worker_states(now: float) -> void:
 		if age < 0.0 or age >= minf(float(p.life), float(p.get("kill_age", INF))) or (float(p.birth) > stop_time and not bool(p.get("manual_emit", false))): continue
 		indices.append(index)
 	_worker_filtered = true
-	if indices.size() < 32: return
+	# Small environmental emitters do not amortize thread dispatch, particle
+	# Dictionary copies and join/copy-back. Reuse the same eligible numerical
+	# kernel in place, preparing immutable module constants once per seek.
+	if indices.is_empty():return
+	if indices.size() <= 128:
+		var kernel=ForceKernel.new() if bool(raw.get("ForceModule", {}).get("enabled", false)) and bool(raw.get("ForceModule", {}).get("randomizePerFrame", false)) else WorkerKernel.new()
+		kernel.raw=raw;kernel.compatibility_basis=compatibility_basis;kernel.source_gravity=source_gravity;kernel.prepare()
+		for index in indices:
+			_worker_states[index]=kernel._particle_state(particles[index],now-float(particles[index].birth))
+		return
 	var jobs: Array = []
 	var tasks: Array[int] = []
 	var count: int = mini(4, maxi(2, ceili(indices.size() / 32.0)))

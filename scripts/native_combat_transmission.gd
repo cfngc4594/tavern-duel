@@ -23,6 +23,9 @@ var perf_measure_enabled := false
 var perf_samples: Array=[]
 var _material_seen: Dictionary = {}
 var _uniform_values: Dictionary = {}
+var base_storage_cache_enabled := true
+var _base_property_records: Dictionary = {}
+var _base_source_values: Dictionary = {}
 var _geometry_nodes:Array=[]
 var _geometry_dirty:=true
 var _geometry_source_id:=0
@@ -91,7 +94,7 @@ func sync() -> void:
 			mirrors.erase(key)
 	for key in material_cache.keys():
 		if not _material_seen.has(key):
-			material_cache.erase(key);_uniform_values.erase(key)
+			material_cache.erase(key);_uniform_values.erase(key);_invalidate_base_properties(key)
 
 	if perf_measure_enabled:
 		perf_samples.append({"frame":Engine.get_process_frames(),"sync":frame_number,"usec":Time.get_ticks_usec()-perf_started,"geometry":mirrors.size(),"materials":material_cache.size(),"shader_records":_source_shader_records.size(),"viewport_size":transmission_view.size})
@@ -193,12 +196,29 @@ func transmission_material(source: Material) -> Material:
 				previous[parameter]=value.duplicate(true) if value is Array or value is Dictionary else value
 	elif source is BaseMaterial3D:
 		# Preserve texture/vertex alpha, alpha scissor/hash, depth and culling.
-		for property in source.get_property_list():
-			if (int(property.usage)&PROPERTY_USAGE_STORAGE)!=0 and property.name not in ["next_pass","resource_path","resource_name","script"]:
-				target.set(property.name,source.get(property.name))
+		if base_storage_cache_enabled and source.get_script()==null and target.get_script()==null:
+			var names:=_base_storage_names(source)
+			if not _base_source_values.has(key):_base_source_values[key]={}
+			var previous: Dictionary=_base_source_values[key]
+			for property in names:
+				var value=source.get(property)
+				if not previous.has(property) or previous[property]!=value:
+					target.set(property,value)
+					# Cache the SOURCE value, before transmission-only overrides below.
+					previous[property]=value.duplicate(true) if value is Array or value is Dictionary else value
+		else:
+			# Script properties can have side effects or dynamic storage semantics.
+			_invalidate_base_properties(key)
+			for property in source.get_property_list():
+				if (int(property.usage)&PROPERTY_USAGE_STORAGE)!=0 and property.name not in ["next_pass","resource_path","resource_name","script"]:
+					target.set(property.name,source.get(property.name))
 		target.shading_mode=BaseMaterial3D.SHADING_MODE_UNSHADED
 		target.emission_enabled=false
-		if source.blend_mode!=BaseMaterial3D.BLEND_MODE_MUL:
+		if source.blend_mode==BaseMaterial3D.BLEND_MODE_MUL:
+			# MIX previously blackened the target even when the source color did
+			# not change. Restoring MUL must restore its RGB independently.
+			target.albedo_color=source.albedo_color
+		else:
 			var tint: Color=source.albedo_color
 			target.albedo_color=Color(0,0,0,tint.a)
 	else:
@@ -218,7 +238,33 @@ func _invalidate_source_shader(id: int) -> void:
 	if is_instance_valid(source_shader) and source_shader.changed.is_connected(invalidate):source_shader.changed.disconnect(invalidate)
 	_source_shader_records.erase(id)
 
+func _invalidate_base_properties(id: int) -> void:
+	var record: Dictionary=_base_property_records.get(id,{})
+	var source=record.reference.get_ref() if record.has("reference") else null
+	var callback:=_invalidate_base_properties.bind(id)
+	if is_instance_valid(source) and source.property_list_changed.is_connected(callback):
+		source.property_list_changed.disconnect(callback)
+	_base_property_records.erase(id)
+	_base_source_values.erase(id)
+
+func _base_storage_names(source: BaseMaterial3D) -> Array:
+	var id:=source.get_instance_id()
+	if _base_property_records.has(id):
+		if _base_property_records[id].reference.get_ref()==source:
+			return _base_property_records[id].names
+		_invalidate_base_properties(id)
+	var names: Array=[]
+	for property in source.get_property_list():
+		if (int(property.usage)&PROPERTY_USAGE_STORAGE)!=0 and property.name not in ["next_pass","resource_path","resource_name","script"]:
+			names.append(property.name)
+	_base_property_records[id]={"reference":weakref(source),"names":names}
+	var callback:=_invalidate_base_properties.bind(id)
+	if not source.property_list_changed.is_connected(callback):
+		source.property_list_changed.connect(callback)
+	return names
+
 func _exit_tree() -> void:
+	for id in _base_property_records.keys():_invalidate_base_properties(id)
 	if is_instance_valid(_watched_tree) and _watched_tree.tree_changed.is_connected(_mark_geometry_dirty):_watched_tree.tree_changed.disconnect(_mark_geometry_dirty)
 	_watched_tree=null;_geometry_nodes.clear();_geometry_dirty=true;_geometry_source_id=0
 	for id in _label_property_records.keys():_invalidate_label_properties(id)

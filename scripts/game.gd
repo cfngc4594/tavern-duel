@@ -2375,6 +2375,30 @@ func _draw_projected_card_shadow(c: Dictionary):
 		draw_target.draw_colored_polygon(card_shadow_outline(c,spread),Color(GROUND_SHADOW_COLOR,alpha))
 	draw_target.draw_set_transform(shake_offset)
 
+# Exactly twelve settled footprints, retained for CanvasItem command lifetimes.
+# Lift/scale animation and any other geometry stay on the original polygon path.
+var unit_shadow_mesh_enabled := true
+var _static_unit_shadow_meshes: Dictionary={}
+func _unit_shadow_mesh_eligible(u: Dictionary,pose: Dictionary)->bool:
+	return unit_shadow_mesh_enabled and float(u.get("lift",0.0))==0.0 and float(u.get("scale",1.0))==1.0 and pose.radii==Vector2(49,61) and pose.softness==2.0
+
+func _static_unit_shadow_mesh(layer:int)->ArrayMesh:
+	assert(layer>=1 and layer<=GROUND_SHADOW_LAYERS)
+	if _static_unit_shadow_meshes.has(layer):return _static_unit_shadow_meshes[layer]
+	var spread=2.0*float(layer)/GROUND_SHADOW_LAYERS
+	var radii=Vector2(49,61)+Vector2.ONE*spread
+	var points=PackedVector2Array()
+	for i in range(64):
+		var a=i*TAU/64
+		points.append(Vector2.ZERO+Vector2(cos(a)*radii.x,sin(a)*radii.y))
+	var arrays=[];arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX]=points
+	arrays[Mesh.ARRAY_INDEX]=Geometry2D.triangulate_polygon(points)
+	var mesh=ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays,[],{},Mesh.ARRAY_FLAG_USE_2D_VERTICES)
+	_static_unit_shadow_meshes[layer]=mesh
+	return mesh
+
 func _draw_projected_unit_shadow(u: Dictionary):
 	if u.get("native_summon_hidden",false):return
 	# The old fitted 2013 airborne oval is not an original 37.0 shadow.
@@ -2384,9 +2408,13 @@ func _draw_projected_unit_shadow(u: Dictionary):
 	var pose=unit_shadow_pose(u)
 	draw_target.draw_set_transform(pose.center+shake_offset,pose.angle)
 	var alpha=1.0-pow(1.0-pose.opacity,1.0/GROUND_SHADOW_LAYERS)
+	var cached=_unit_shadow_mesh_eligible(u,pose)
 	for layer in range(GROUND_SHADOW_LAYERS,0,-1):
-		var spread=pose.softness*float(layer)/GROUND_SHADOW_LAYERS
-		_ellipse(Vector2.ZERO,pose.radii+Vector2.ONE*spread,Color(GROUND_SHADOW_COLOR,alpha))
+		if cached:
+			draw_target.draw_mesh(_static_unit_shadow_mesh(layer),null,Transform2D.IDENTITY,Color(GROUND_SHADOW_COLOR,alpha))
+		else:
+			var spread=pose.softness*float(layer)/GROUND_SHADOW_LAYERS
+			_ellipse(Vector2.ZERO,pose.radii+Vector2.ONE*spread,Color(GROUND_SHADOW_COLOR,alpha))
 	draw_target.draw_set_transform(shake_offset)
 
 func _draw_staged_ground_shadows():

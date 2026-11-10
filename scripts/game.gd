@@ -687,6 +687,7 @@ func _define_cards():
 
 func start_match(mode: String = "practice", seat: int = -1, match_seed: int = -1):
 	native_history_events.reset()
+	if native_phone_hand!=null:native_phone_hand.reset()
 	if is_instance_valid(source_mana_controller):source_mana_controller.reset()
 	source_mana_proposal_id=-1
 	native_banner_pending=false;native_initial_sounds.clear()
@@ -924,6 +925,15 @@ func _update_hover(emit_hover_audio:bool=true):
 		if _phone_hand_enabled():
 			hover_card=native_phone_hand.hit_card(pointer)
 			if native_phone_hand.touched_slot>=0: hover_card=native_phone_hand.focus
+			# Desktop keeps click-to-expand and click/drag-to-pick-up, but an
+			# expanded hand also previews on mouse hover. Touch still owns its
+			# original press/slide selection and must not inherit a stale cursor.
+			elif not touch_input_active and not mouse_down:
+				if hover_card<0 and native_phone_hand.focus>=0 and native_phone_hand.focus<cards.size():
+					var focused=cards[native_phone_hand.focus]
+					if focused.has("source_phone_pose") and Geometry2D.is_point_in_polygon(pointer,native_phone_hand.card_polygon(focused.source_phone_pose,definitions[focused.key].kind)):
+						hover_card=native_phone_hand.focus
+				native_phone_hand.set_focus(hover_card if native_phone_hand.enlarged else -1)
 		else:
 			# Anchor the hover to the resting fan, so a lifted card does not lose
 			# the cursor and oscillate as its face leaves the bottom-edge hit box.
@@ -950,7 +960,7 @@ func _update_hover(emit_hover_audio:bool=true):
 		if hover_card >= 0 and emit_hover_audio: play_sound("hover")
 		last_hover = hover_card
 	for u in allies + enemies:
-		if (pointer - u.pos).length() < 70: hover_unit = u.id
+		if (Geometry2D.is_point_in_polygon(pointer,u.get("source_hit_polygon",PackedVector2Array())) if _phone_hand_enabled() else (pointer - u.pos).length() < 70): hover_unit = u.id
 	# Original colliders replace the four synthetic corner circles.
 	hover_corner=-1
 
@@ -1212,6 +1222,7 @@ func _unhandled_input(event):
 func _update_touch_hand_preview(viewport_position: Vector2):
 	if _phone_hand_enabled():
 		if not mouse_down or drag_index>=0 or native_phone_hand.touched_slot<0:return
+		if not touch_input_active:return # Mouse selection is fixed at press; motion starts drag.
 		if not native_phone_hand.enlarged and native_phone_hand.mini_hand_play_enabled and native_phone_hand.touch_age<=0.10000000149011612:return
 		var slot:int=native_phone_hand.update_touch(_touch_window_position(viewport_position))
 		hover_card=slot
@@ -1421,6 +1432,8 @@ func _return_card(index: int, rejected: bool = false):
 	_event("card_rejected_return" if rejected else "card_cancel_return")
 
 func cancel_interaction():
+	mouse_down=false
+	if _phone_hand_enabled():native_phone_hand.release_touch()
 	var was_native_target: bool=native_targeting.cancel_target_mode() if is_instance_valid(native_targeting) else false
 	if _audio_selected_attack_id >= 0: SoundManager.stop_original_scope("aim:" + str(_audio_selected_attack_id))
 	_audio_selected_attack_id = -1

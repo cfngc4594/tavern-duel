@@ -55,11 +55,11 @@ func _ready():
  build_scene()
  if not audit_path.is_empty():write_audit(audit_path)
 func build_scene():
- phone_variant=CameraPolicy.is_phone()
+ phone_variant=CameraPolicy.source_ui_enabled()
  source_store.open_for_probe(not phone_variant)
  var selected_path=PHONE_DATA_PATH if phone_variant else DATA_PATH
  data=SourceStore.json_for(self,selected_path);config=SourceStore.json_for(self,CONFIG_PATH)
- audit.board_variant={'phone':phone_variant,'data_path':selected_path,'guid':data.get('guid','9f0d73a0bf8e4c44da32b6e24707678f'),'selection':'RuntimeAssetManifest platform PHONE edge 0x40001; camera/gameplay phone gate shared','runtime_state':'Serialized source board; no new X/Y offsets'}
+ audit.board_variant={'phone':phone_variant,'data_path':selected_path,'guid':data.get('guid','9f0d73a0bf8e4c44da32b6e24707678f'),'selection':'Phone source scene shared by desktop/mobile production UI; camera/gameplay readiness gate shared','runtime_state':'Serialized source board; no new X/Y offsets'}
  if data.is_empty() or config.is_empty():audit.errors.append('Missing frozen source scene/config');return
  source_root=Node3D.new();source_root.name='OriginalMOPPhone' if phone_variant else 'OriginalMOP';add_child(source_root)
  for row in data.nodes:
@@ -139,19 +139,19 @@ func _mapped_mask(mask:int)->int:
   if mask & (1<<int(layer)):result|=int(data.layer_map[layer])
  return result
 func refresh_source_camera(canvas:Vector2):
- if is_instance_valid(camera):CameraPolicy.apply(camera,camera_root,config,canvas,CameraPolicy.is_phone())
+ if is_instance_valid(camera):CameraPolicy.apply(camera,camera_root,config,canvas,CameraPolicy.source_ui_enabled())
 func _setup_camera():
  camera_root=Node3D.new();camera_root.name='OriginalBoardCameras';camera_root.transform=raw_transform(config.unity_camera_root.data);add_child(camera_root)
  camera=Camera3D.new();camera.name='OriginalMainCamera';camera_root.add_child(camera);camera.transform=raw_transform(config.unity_camera.transform)
- CameraPolicy.apply(camera,camera_root,config,get_viewport().get_visible_rect().size,CameraPolicy.is_phone())
- var c=CameraPolicy.settings(config,CameraPolicy.is_phone())
+ CameraPolicy.apply(camera,camera_root,config,get_viewport().get_visible_rect().size,CameraPolicy.source_ui_enabled())
+ var c=CameraPolicy.settings(config,CameraPolicy.source_ui_enabled())
  camera.projection=Camera3D.PROJECTION_ORTHOGONAL if c.orthographic else Camera3D.PROJECTION_PERSPECTIVE
- camera.keep_aspect=Camera3D.KEEP_HEIGHT;camera.fov=float(c['field of view']);camera.near=float(c['near clip plane']);camera.far=float(c['far clip plane']);camera.cull_mask=_mapped_mask(int(c.m_CullingMask.m_Bits));camera.current=true
- var camera_source='phone-prefab:1e862adebb4fd4fca8b24249d32f8d86' if CameraPolicy.is_phone() else str(config.unity_camera.key)
+ camera.cull_mask=_mapped_mask(int(c.m_CullingMask.m_Bits));camera.current=true
+ var camera_source='phone-prefab:1e862adebb4fd4fca8b24249d32f8d86' if CameraPolicy.source_ui_enabled() else str(config.unity_camera.key)
  camera.set_meta('source_id',camera_source)
  var environment=Environment.new();environment.background_mode=Environment.BG_COLOR;environment.background_color=Color(0,0,0,0);environment.ambient_light_source=Environment.AMBIENT_SOURCE_DISABLED;environment.reflected_light_source=Environment.REFLECTION_SOURCE_DISABLED;environment.tonemap_mode=Environment.TONE_MAPPER_LINEAR
  camera.environment=environment
- audit.camera={'source_id':camera_source,'source_trs':CameraPolicy.phone_data().camera_transform if CameraPolicy.is_phone() else config.unity_camera.transform,'fov':camera.fov,'near':camera.near,'far':camera.far,'keep_aspect':'KEEP_HEIGHT; source vertical FOV','source_mask':c.m_CullingMask.m_Bits,'mapped_mask':camera.cull_mask,'layer_map':data.layer_map,'projection':'source perspective','source_settings':c,'runtime_status':'Phone prefab and source aspect position selected on phone; desktop compatibility otherwise. Mercenaries zoom not simulated','extra_camera_or_texture_target':false}
+ audit.camera={'source_id':camera_source,'source_trs':CameraPolicy.phone_data().camera_transform if CameraPolicy.source_ui_enabled() else config.unity_camera.transform,'fov':camera.fov,'near':camera.near,'far':camera.far,'keep_aspect':'KEEP_HEIGHT; source vertical FOV','source_mask':c.m_CullingMask.m_Bits,'mapped_mask':camera.cull_mask,'layer_map':data.layer_map,'projection':'source perspective','source_settings':c,'runtime_status':'Shared source prefab and aspect position; legacy compatibility only when explicitly disabled. Narrow-window horizontal framing is a Godot adapter. Mercenaries zoom not simulated','extra_camera_or_texture_target':false}
 func _setup_light():
  var l=data.light;var d=l.data
  source_light=DirectionalLight3D.new();source_light.name='OriginalDirectionalLight';source_nodes[l.game_object].add_child(source_light);source_light.set_meta('source_id',l.id)

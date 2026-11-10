@@ -14,6 +14,10 @@ func run():
   await process_frame
   if not game.native_initial_loading:break
  assert(not game.native_initial_loading)
+ assert(not preload("res://scripts/source_board_camera_policy.gd").qa_phone_platform)
+ assert(ProjectSettings.get_setting("native_ui/shared_source_ui")==true)
+ assert(game.source_projection!=null and game.source_projection.is_enabled())
+ assert(game._phone_hand_enabled())
  if DisplayServer.get_name()!="headless":
   for i in 120:await process_frame
   await RenderingServer.frame_post_draw

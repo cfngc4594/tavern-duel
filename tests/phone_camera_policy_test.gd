@@ -4,7 +4,7 @@ const Probe=preload("res://original_board/scripts/board_probe.gd")
 const Coin=preload("res://scripts/native_coin_presentation.gd")
 func _initialize():call_deferred("run")
 func run():
- # Candidate project may enable phone mode; desktop stays gated by platform.
+ # Source UI is shared, but cannot activate before layout registration succeeds.
  assert(not Policy.is_phone())
  var config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
  var view=SubViewport.new();view.own_world_3d=true;root.add_child(view)
@@ -20,7 +20,9 @@ func run():
   assert(ca.get_meta("native_phone_registered",false))
   assert(absf(ca.position.y-ys[i])<0.00001)
   assert(ca.global_transform.is_equal_approx(cb.global_transform))
-  assert(is_equal_approx(ca.fov,34.870445251464844))
+  assert(is_equal_approx(ca.fov,Policy.source_fov(canvas.x/canvas.y)))
+  if canvas.x/canvas.y>=1.5:assert(is_equal_approx(ca.fov,34.870445251464844))
+  else:assert(ca.fov>34.870445251464844)
   for uv in [Vector2.ZERO,Vector2(.5,.5),Vector2.ONE]:
    assert(ca.project_ray_normal(uv*canvas).is_equal_approx(cb.project_ray_normal(uv*canvas)))
   assert(ca.basis.is_equal_approx(Policy.raw_transform(Policy.phone_data().camera_transform).basis))

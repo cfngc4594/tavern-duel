@@ -39,6 +39,7 @@ var defer_highlight_arrays := false
 var board_source_bundle := false
 var portrait_source_images := false
 var portrait_source_policy := ""
+var legacy_desktop_ui := false
 var stress_repetitions := 0
 var stress_only := false
 var headless_cpu_visuals := false
@@ -158,6 +159,7 @@ func run():
  Resident.stats.clear()
  Compute.reset_stats()
  for arg in OS.get_cmdline_user_args():
+  if arg=="--legacy-desktop-ui":legacy_desktop_ui=true
   if arg=="--profile-pipelines":profile_pipelines=true
   if arg=="--native-profiler":native_profiler=true
   if arg=="--defer-highlight-arrays":defer_highlight_arrays=true
@@ -208,6 +210,11 @@ func run():
   if arg=="--retain-shaders":ShaderCache.enabled=true
   if arg=="--no-retain-shaders":ShaderCache.enabled=false
   if arg=="--resident-profile-gpu":Resident.profile_gpu=true
+ # Historical timing scenes assume legacy screen coordinates and immediate
+ # battlecry targeting. Never silently present them as shared-native-UI tests.
+ if legacy_desktop_ui:ProjectSettings.set_setting("native_ui/shared_source_ui",false)
+ require(not preload("res://scripts/source_board_camera_policy.gd").source_ui_requested(),"Historical benchmark requires explicit --legacy-desktop-ui. It is not a shared-native-UI performance measurement.")
+ if failed:return
  benchmark_environment=BenchmarkMetrics.environment()
  var privacy_guard=root.get_node_or_null("PrivacyTestGuard")
  var privacy_active:bool=privacy_guard!=null and privacy_guard.runtime_evidence().active
@@ -234,6 +241,9 @@ func run():
  benchmark_environment["native_profiler"]=native_profiler
  benchmark_environment["defer_highlight_arrays"]=defer_highlight_arrays
  benchmark_environment["board_source_bundle"]=board_source_bundle
+ benchmark_environment["source_ui_requested"]=preload("res://scripts/source_board_camera_policy.gd").source_ui_requested()
+ benchmark_environment["legacy_desktop_ui_fixture"]=legacy_desktop_ui
+ benchmark_environment["ui_comparison_limit"]="Shared source UI changes camera, board and actors. Legacy desktop results are not a same-scene performance baseline."
  benchmark_environment["portrait_source_images"]=portrait_source_images
  benchmark_environment["load_memory_instrumentation"]=1
  benchmark_environment["memory_scope_note"]="Godot tracked allocation and object/resource counters, not OS working set. Static zero-only samples are unavailable; OS static/peak APIs are probed at runtime and zero is unavailable. Counters may lag frames."

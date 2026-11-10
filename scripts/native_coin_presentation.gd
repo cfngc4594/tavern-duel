@@ -39,7 +39,7 @@ func setup(host):
 func refresh_layout():
  viewport.size=game.board_render_target_size
  sprite.position=Vector2(800,450);sprite.scale=game.presentation_size/Vector2(viewport.size)
- CameraPolicy.apply(camera,camera_root,camera_config,game.presentation_size,CameraPolicy.is_phone())
+ CameraPolicy.apply(camera,camera_root,camera_config,game.presentation_size,CameraPolicy.source_ui_enabled())
 func set_active(value:bool):
  sprite.visible=value;viewport.render_target_update_mode=SubViewport.UPDATE_ALWAYS if value else SubViewport.UPDATE_DISABLED
  background_copy.visible=value

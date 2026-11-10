@@ -66,7 +66,7 @@ var highlight_materials:Dictionary={}
 var audit:Dictionary={"build":"37.0.0.255130.254477","compatibility":["Godot source-camera/shader bridge","Godot original-font rasterization, not Unity glyph parity","source ParticleSystem modules on compatibility solver","announcer and START scheduling uses decoded duration, not original SoundManager frame-polling","START option12 enabled as local presentation setting; START actor-light fade not ported","Godot cosmetic RNG differs from Unity global RNG"]}
 
 func setup(host):
- game=host;mobile=CameraPolicy.is_phone();cosmetic.randomize()
+ game=host;mobile=CameraPolicy.source_ui_enabled();cosmetic.randomize()
  intro_audio=IntroAudio.new();add_child(intro_audio);intro_audio.setup(game);intro_audio.muted=not game.sound_enabled
  starting_taunts=preload("res://scripts/source_opening_starting_taunts.gd").new();add_child(starting_taunts);starting_taunts.setup(game);starting_taunts.muted=not game.sound_enabled
  assets=Assets.new();assets.setup(game.native_card_renderer)

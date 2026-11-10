@@ -26,6 +26,7 @@ func _initialize():call_deferred("run")
 func run():
  root.size=Vector2i(1600,900);await process_frame
  var game=load("res://tests/phone_hand_game_fixture.gd").new();root.add_child(game)
+ game.touch_input_active=true # This fixture exercises touch, not desktop mouse gestures.
  game.flow=Flow.new();game.player_turn=true;game.cards=[];game.definitions={"X":{"kind":"minion","cost":1}}
  var bridge=Bridge.new();game.add_child(bridge);game.original_board_bridge=bridge
  bridge.viewport=SubViewport.new();bridge.viewport.size=Vector2i(1600,900);bridge.add_child(bridge.viewport)

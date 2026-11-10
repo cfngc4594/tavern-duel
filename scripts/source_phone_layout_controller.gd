@@ -1,6 +1,6 @@
 extends Node
-## Atomic registration for the source phone scene. The production gate remains
-## off until every visual/input consumer is migrated and runtime verified.
+## Atomic registration for the shared source scene, recovered from the phone UI.
+## Desktop uses the same visual/input geometry with its own mouse gestures.
 const Layout=preload("res://scripts/source_phone_board_layout.gd")
 const Policy=preload("res://scripts/source_board_camera_policy.gd")
 const SourceProjection=preload("res://scripts/source_board_projection.gd")
@@ -54,7 +54,7 @@ func refresh():
  blockers=snapshot.blockers.duplicate()
  # An explicit development gate is insufficient by itself: layout/readiness is
  # necessary, and the complete consumer migration must be separately accepted.
- enabled=bool(ProjectSettings.get_setting("native_mobile/source_camera_enabled",false)) and bool(ProjectSettings.get_setting("native_mobile/source_consumers_verified",false)) and snapshot.ready and Policy.phone_platform_requested()
+ enabled=bool(ProjectSettings.get_setting("native_mobile/source_camera_enabled",false)) and bool(ProjectSettings.get_setting("native_mobile/source_consumers_verified",false)) and snapshot.ready and Policy.source_ui_requested()
  Policy.runtime_layout_verified=enabled
  if not enabled:
   if context!=null:SourceProjection.unregister(game);context=null

@@ -2,8 +2,10 @@ extends SceneTree
 const Hits=preload("res://scripts/native_phone_input_hitboxes.gd")
 const Spell=preload("res://scripts/native_phone_spell_input.gd")
 class Flow:
+ var source_draw_ticket=0
+ func next_draw_ticket():source_draw_ticket+=1;return source_draw_ticket
  func accepts_actions():return true
- func opponent_draw(_key,_burned):pass
+ func opponent_draw(_key,_burned,_deck_count=-1,_ticket=-1):pass
 class Rules:
  var needs=true
  func needs_target(_key):return needs
@@ -52,4 +54,5 @@ func run():
   game.elapsed+=1.75;logic.advance_draws();assert(not logic.draws_pending())
   game.free();view.free()
  print("PHONE_SPELL_AND_HEADLESS_QUEUE_PASS three aspect source ray registration; layer12 start/release, layer16 preserve-only, hero dynamic OBB, no-mana no aim, outside cancel")
+ await root.get_node("SoundManager").shutdown_audio()
  quit()

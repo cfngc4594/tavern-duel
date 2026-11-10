@@ -12,6 +12,8 @@ For privacy-sensitive device testing, run the Android workflow on **develop** wi
 
 ## Source and scope
 
+Desktop and mobile now use the same source-native board UI by default, including hand, heroes/powers, mana, decks, opening and targeting. Mouse input retains hover previews, a desktop drag threshold, right-click and Escape cancellation; touch keeps its existing gestures. The shared camera adapts to window aspect and preserves horizontal framing below the original 3:2 source anchor. See [UI synchronization and verification](ci/desktop-ui-sync-checkpoint.md) for tested sizes, reproducible checks and limits. This change is not a performance improvement claim.
+
 The original snapshot came from `godot-child/TavernDuel`; subsequent commits fix packaging, mobile interaction and presentation bugs. Focused headless regressions run in CI, but do not replace Android device testing.
 
 Git LFS is not required for this initial snapshot: largest file is below GitHub's 100 MiB per-file limit (about 27.9 MB), and the total source is about 580 MB. APKs, build output and imported Godot cache are excluded. Using regular Git avoids additional LFS bandwidth/storage quotas for Actions; reconsider LFS if large binary histories grow.

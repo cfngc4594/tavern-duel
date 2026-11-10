@@ -1,6 +1,6 @@
 # Windows release packaging
 
-The Windows workflow is independent of Android. It uses Godot **4.7.1 stable**, the Windows x86_64 release template, production `main.tscn`, and GL Compatibility. The Android preset/configuration scripts are unchanged.
+The Windows workflow is independent of Android. It uses Godot **4.7.1 stable**, the Windows x86_64 release template, production `main.tscn`, and Forward+. Android uses the same renderer policy. Automatic OpenGL fallback is disabled, so unsupported devices fail to start rather than silently using Compatibility.
 
 ## Build locally (after installing Python 3 and Godot 4.7.1)
 

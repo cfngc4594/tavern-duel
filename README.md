@@ -4,9 +4,11 @@ Godot card-battle prototype based on the `godot-child` particle optimization can
 
 ## Build APK
 
-Run **Actions → Android candidate APK → Run workflow**. The artifact contains the APK, SHA256 and validation report. Godot 4.7.1, ARM64, Android 7+.
+Run **Actions → Android candidate APK → Run workflow**. The artifact contains the APK, SHA256 and validation report. Godot 4.7.1, ARM64, Forward+, and a compatible Vulkan 1.1+ Android device. Android version alone does not establish GPU/driver compatibility. Desktop and mobile both select Forward+; automatic OpenGL fallback is disabled. Headless CI verifies logic and packaging, not actual GPU rendering or device performance.
 
 The CI build uses a fresh disposable debug signing key on every run. New test builds use a run-specific package ID (`org.dot.tavernduel.childcandidate.ciN`) and label so they install alongside earlier tests rather than overwriting their data. Existing CI1-CI4 builds shared a package ID and cannot update one another because their signatures differ. Do not uninstall an existing app with data you need. No persistent signing key is stored in this repository.
+
+For privacy-sensitive device testing, run the Android workflow on **develop** with `privacy_test=true`. This produces a distinct `.privacy` package with a black screen and muted game audio. Do not install or launch the ordinary candidate as a privacy test. See [privacy-test precautions](ci/privacy-test.md). Physical screen-off behavior still requires separate validation and is not proved by the build.
 
 ## Source and scope
 

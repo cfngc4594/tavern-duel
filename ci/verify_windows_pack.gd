@@ -26,7 +26,7 @@ func _initialize():
   if rel.begins_with("tests/") or rel.begins_with("build/") or rel.begins_with("ci/") or rel.begins_with("addons/") or rel.begins_with("bench") or rel.begins_with("qa/") or rel.begins_with(".git/") or rel.ends_with(".gd") or rel.get_file().begins_with(".env") or rel.get_extension() in ["pem","key","keystore","jks"]:forbidden.append(rel)
  var main_exists=ResourceLoader.exists("res://main.tscn")
  var exported=JSON.parse_string(FileAccess.get_file_as_string("res://release-build.json"))
- assert(exported is Dictionary and exported.main_scene=="res://main.tscn" and exported.renderer=="gl_compatibility" and exported.debug==false)
+ assert(exported is Dictionary and exported.main_scene=="res://main.tscn" and exported.renderer=="forward_plus" and exported.mobile_renderer=="forward_plus" and exported.fallback_to_opengl3==false and manifest.renderer==exported.renderer and exported.debug==false)
  var report={"source_commit":manifest.source_commit,"source_dirty":manifest.source_dirty,"export_settings":exported,"godot_version":Engine.get_version_info().string,"main_scene":manifest.main_scene,"renderer":manifest.renderer,"baseline_runtime_raw_count":manifest.baseline_runtime_raw_count,"expected_raw_count":manifest.expected_raw_count,"checked_raw_count":manifest.raw_assets.size(),"missing_assets":missing,"different_assets":different,"forbidden_entries":forbidden,"compiled_scripts":compiled,"main_scene_exists":main_exists,"packed_entries":packed_files.size(),"source_fallback":false}
  var file=FileAccess.open(args[2],FileAccess.WRITE);assert(file!=null);file.store_string(JSON.stringify(report,"  "));file.close()
  var passed=missing.is_empty() and different.is_empty() and forbidden.is_empty() and compiled>0 and main_exists

@@ -6,8 +6,11 @@ config/name="Codex Tavern Acceptance 20261106"
 run/main_scene="res://main.tscn"
 run/main_scene.renderer_benchmark="res://tests/windows_renderer_benchmark.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/bg_color.privacy_test=Color(0, 0, 0, 1)
+boot_splash/show_image.privacy_test=false
 
 [autoload]
+PrivacyTestGuard="*res://scripts/privacy_test_guard.gd"
 SoundManager="*res://scripts/sound_manager.gd"
 
 [editor_plugins]
@@ -25,11 +28,13 @@ window/handheld/orientation=0
 [rendering]
 textures/vram_compression/import_etc2_astc=true
 renderer/rendering_method="forward_plus"
-renderer/rendering_method.mobile="gl_compatibility"
+renderer/rendering_method.mobile="forward_plus"
+rendering_device/fallback_to_opengl3=false
 textures/default_filters/use_nearest_mipmap_filter=false
 textures/canvas_textures/default_texture_filter=2
 
 environment/defaults/default_clear_color=Color(0.055, 0.035, 0.026, 1)
+environment/defaults/default_clear_color.privacy_test=Color(0, 0, 0, 1)
 
 [audio]
 default_bus_layout="res://default_bus_layout.tres"

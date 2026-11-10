@@ -551,8 +551,12 @@ func _load_portraits():
 	# Consumers only bind/draw these textures; no later texture updates occur.
 	# Keep every indexed slot while sharing identical source-ID results.
 	var by_id:Dictionary={}
+	var source_images=preload("res://scripts/portrait_source_images.gd")
+	var timing_enabled:bool=native_startup_timing.enabled
+	var timing_by_id:Dictionary={}
 	for id in ids:
 		if by_id.has(id):
+			if timing_enabled:timing_by_id[id].slot_count+=1;timing_by_id[id].dedup_cache_hits+=1
 			var cached:Dictionary=by_id[id]
 			if cached.missing:
 				missing_portrait_indices.append(raw_portraits.size())
@@ -562,21 +566,93 @@ func _load_portraits():
 			continue
 		var missing:=false
 		var path = "res://assets/original_classic_v13/art/" + id + ".png"
+		var row:Dictionary=timing_by_id # No per-ID metadata allocation while disabled.
+		var stage_start_us:int=Time.get_ticks_usec() if timing_enabled else 0
 		if not ResourceLoader.exists(path): path="res://assets/original_classic_v13/art/"+id+".webp"
+		var source_exists:bool=ResourceLoader.exists(path)
+		if timing_enabled:
+			var exists_us:int=Time.get_ticks_usec()-stage_start_us
+			row={"id":id,"path":path,"slot_count":1,"dedup_cache_hits":0,
+				"missing":not source_exists,"exists_queries":2,"exists_us":exists_us,
+				"resource_cache_hit":ResourceLoader.has_cached(path),"load_us":0,"get_image_us":0,
+				"missing_image_us":0,"source_image_us":0,"source_image_hit":false}
 		var cell: Image
-		if ResourceLoader.exists(path): cell=(load(path) as Texture2D).get_image()
+		if source_exists:
+			if source_images.enabled:
+				if timing_enabled:stage_start_us=Time.get_ticks_usec()
+				cell=source_images.try_load(path)
+				if timing_enabled:
+					row.source_image_us=Time.get_ticks_usec()-stage_start_us
+					row.source_image_hit=cell!=null
+			if cell==null:
+				if timing_enabled:
+					stage_start_us=Time.get_ticks_usec()
+					var texture:Texture2D=load(path) as Texture2D
+					var load_us:int=Time.get_ticks_usec()-stage_start_us
+					stage_start_us=Time.get_ticks_usec()
+					cell=texture.get_image()
+					var get_image_us:int=Time.get_ticks_usec()-stage_start_us
+					# Match the original expression's temporary-resource lifetime.
+					texture=null
+					row.load_us=load_us;row.get_image_us=get_image_us
+				else:cell=(load(path) as Texture2D).get_image()
 		else:
 			missing=true
 			missing_portrait_indices.append(raw_portraits.size())
+			if timing_enabled:stage_start_us=Time.get_ticks_usec()
 			cell=Image.create(256,256,false,Image.FORMAT_RGBA8)
 			cell.fill(Color("302739"))
+			if timing_enabled:row.missing_image_us=Time.get_ticks_usec()-stage_start_us
 			push_warning("Missing original portrait: "+id)
 
-		cell.convert(Image.FORMAT_RGBA8)
-		raw_portraits.append(ImageTexture.create_from_image(cell.duplicate()))
-		preload("res://scripts/portrait_circle_mask.gd").apply(cell)
-		portraits.append(ImageTexture.create_from_image(cell))
+		if timing_enabled:
+			# Metadata and logging are outside measured operation spans. These are
+			# CPU/observed-wall spans, not disk-decode or completed GPU timings.
+			row.width=cell.get_width();row.height=cell.get_height()
+			row.source_format=cell.get_format();row.source_has_mipmaps=cell.has_mipmaps()
+			row.source_mipmap_count=cell.get_mipmap_count()
+			stage_start_us=Time.get_ticks_usec()
+			cell.convert(Image.FORMAT_RGBA8)
+			var convert_us:int=Time.get_ticks_usec()-stage_start_us
+			stage_start_us=Time.get_ticks_usec()
+			var raw_image:Image=cell.duplicate()
+			var duplicate_us:int=Time.get_ticks_usec()-stage_start_us
+			stage_start_us=Time.get_ticks_usec()
+			var raw_texture:ImageTexture=ImageTexture.create_from_image(raw_image)
+			var raw_texture_us:int=Time.get_ticks_usec()-stage_start_us
+			raw_portraits.append(raw_texture);raw_image=null
+			stage_start_us=Time.get_ticks_usec()
+			preload("res://scripts/portrait_circle_mask.gd").apply(cell)
+			var circle_mask_us:int=Time.get_ticks_usec()-stage_start_us
+			stage_start_us=Time.get_ticks_usec()
+			var cropped_texture:ImageTexture=ImageTexture.create_from_image(cell)
+			var cropped_texture_us:int=Time.get_ticks_usec()-stage_start_us
+			portraits.append(cropped_texture)
+			row.convert_rgba8_us=convert_us;row.duplicate_us=duplicate_us
+			row.raw_texture_create_us=raw_texture_us;row.circle_mask_us=circle_mask_us
+			row.cropped_texture_create_us=cropped_texture_us
+			row.output_format=cell.get_format();row.output_has_mipmaps=cell.has_mipmaps()
+			row.output_mipmap_count=cell.get_mipmap_count()
+			timing_by_id[id]=row
+		else:
+			cell.convert(Image.FORMAT_RGBA8)
+			raw_portraits.append(ImageTexture.create_from_image(cell.duplicate()))
+			preload("res://scripts/portrait_circle_mask.gd").apply(cell)
+			portraits.append(ImageTexture.create_from_image(cell))
 		by_id[id]={"raw":raw_portraits.back(),"cropped":portraits.back(),"missing":missing}
+	if timing_enabled:
+		# Emit only after all unique IDs and duplicate slots have been processed.
+		var missing_ids:int=0
+		var resource_cache_hits:int=0
+		for row in timing_by_id.values():
+			if row.missing:missing_ids+=1
+			if row.resource_cache_hit:resource_cache_hits+=1
+			native_startup_timing.mark("portrait_source_cpu",row)
+		native_startup_timing.mark("portraits_source_summary",{"slots":ids.size(),"unique_ids":by_id.size(),
+			"dedup_cache_hits":ids.size()-by_id.size(),"missing_ids":missing_ids,
+			"missing_slots":missing_portrait_indices.size(),"resource_cache_hits":resource_cache_hits,
+			"note":"Per-operation microseconds exclude diagnostic logging; CPU/observed wall only, no GPU synchronization"})
+
 
 func _define_cards():
 	# IDs and values are from HearthSim's archived client CardDefs, build 1.0.0.5834.

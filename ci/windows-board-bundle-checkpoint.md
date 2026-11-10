@@ -99,7 +99,10 @@ allocation tracking is unavailable, so zero values are explicitly unavailable.
 - All runs share maximum sampled nodes 13,771 and final recovery 13,357. Repeated
   survivor/lethal setups settle to the same 13,419/13,358 nodes in either arm.
 - Resources grow in both arms: 390→420/421 reference and 390→421/422 candidate,
-  largely leveling near 419–422. GPU memory reaches the same ~712.4 MiB plateau.
+  largely leveling near 419–422. The final recovery GPU-memory monitor snapshot
+  reaches the same ~712.4 MiB plateau. Within-phase raw samples peak at
+  1,479.455–1,479.458 MiB; endpoint/plateau values are not peaks, and this Godot
+  allocation monitor is not a guarantee of physical VRAM residency.
 - Private memory grows/fluctuates in both arms, with late elevated periods in B2
   and A2. This is not evidence of a candidate-specific leak or memory-free caching.
   Final process samples are teardown, not gameplay. OS/engine time alignment is

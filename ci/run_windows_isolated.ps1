@@ -3,6 +3,18 @@
 # Keep the same feature-gated PrivacyTestGuard used by the tested build.
 param([string]$Base,[string]$Exe,[string]$Arguments,[string]$Log,[int]$TimeoutSeconds=240,[string]$MetricsPath="")
 $ErrorActionPreference='Stop'
+# Export templates resolve relative log paths against their resource directory,
+# not necessarily CreateProcess's working directory. A missing nested directory
+# can crash before a useful engine log exists. Resolve/create only output paths.
+$Base=(Resolve-Path -LiteralPath $Base).Path
+if(-not [IO.Path]::IsPathRooted($Log)){$Log=Join-Path $Base $Log}
+$Log=[IO.Path]::GetFullPath($Log)
+[void][IO.Directory]::CreateDirectory([IO.Path]::GetDirectoryName($Log))
+if($MetricsPath){
+ if(-not [IO.Path]::IsPathRooted($MetricsPath)){$MetricsPath=Join-Path $Base $MetricsPath}
+ $MetricsPath=[IO.Path]::GetFullPath($MetricsPath)
+ [void][IO.Directory]::CreateDirectory([IO.Path]::GetDirectoryName($MetricsPath))
+}
 Add-Type -TypeDefinition @"
 using System;
 using System.Text;

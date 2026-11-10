@@ -75,6 +75,11 @@ def load(path, candidate, candidate_field="defer_highlight_arrays"):
     if candidate_field == "board_source_bundle":
         check(env.get("defer_highlight_arrays") is False, "board bundle comparison must keep highlight candidate off")
         check(env.get("load_memory_instrumentation") == 1, "board bundle comparison requires complete boot/memory instrumentation")
+    if candidate_field == "portrait_source_images":
+        check(env.get("board_source_bundle") is False and env.get("defer_highlight_arrays") is False, "portrait comparison must keep other candidates off")
+        check(env.get("load_memory_instrumentation") == 1, "portrait comparison requires complete boot/memory instrumentation")
+        check("--startup-timing" not in env.get("user_args", []), "formal portrait comparison must disable startup diagnostics")
+        check(not any(arg.startswith("--portrait-source-policy=") for arg in env.get("user_args", [])), "formal portrait comparison must use its exported policy")
     check(env.get("os") == "Windows" and env.get("hardware_gpu_candidate") is True and env.get("headless") is False, f"{path}: expected rendered Windows hardware run")
     check(env.get("debug_build") is False and env.get("editor") is False, f"{path}: expected standalone Release build")
     check(len(records.get("WINDOWS_SETUP", [])) == 1, f"{path}: missing or duplicate WINDOWS_SETUP")
@@ -212,7 +217,7 @@ def analyze(paths, candidate_field="defer_highlight_arrays"):
         reports[-1]["phases"] = [{"key": phase_key(p), "phase": p["phase"], "round": p["round"], "context": p["context"],
                                   "state": {k: p[k] for k in STATES}, "frame_ms": summarize(p["raw_samples"]["frame_ms"]),
                                   "game_process_ms": summarize(p["raw_samples"]["game_process_ms"]), "action_usec": p["action_usec"],
-                                  "memory": {k: p.get(k) for k in ("memory_before", "memory_after", "board_source_store")},
+                                  "memory": {k: p.get(k) for k in ("memory_before", "memory_after", "board_source_store", "portrait_source_images")},
                                   "memory_raw_samples": {k: p["raw_samples"][k] for k in ("static_memory_bytes", "node_count", "resource_count", "video_memory_bytes") if k in p["raw_samples"]}} for p in run["phases"]]
         reports[-1]["all_phases"] = all_phases([run])["all_phases"]
         reports[-1]["load_burden"] = load_burden([run])
@@ -233,7 +238,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("logs", nargs=4, type=Path, metavar="LOG")
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--candidate-field", choices=("defer_highlight_arrays", "board_source_bundle"), default="defer_highlight_arrays")
+    parser.add_argument("--candidate-field", choices=("defer_highlight_arrays", "board_source_bundle", "portrait_source_images"), default="defer_highlight_arrays")
     args = parser.parse_args()
     check(args.output.resolve() not in [path.resolve() for path in args.logs], "output must not overwrite an input log")
     report = analyze(args.logs, args.candidate_field)

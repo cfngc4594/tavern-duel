@@ -12,6 +12,7 @@ const Particles=preload("res://scripts/native_summon_particles.gd")
 const Resident=preload("res://scripts/summon_resident.gd")
 const Compute=preload("res://scripts/summon_compute.gd")
 const BoardSourceStore=preload("res://original_board/scripts/board_source_store.gd")
+const PortraitSourceImages=preload("res://scripts/portrait_source_images.gd")
 var root: Window:
  get: return get_tree().root
 func require(ok: bool, label: String = "runtime check") -> void:
@@ -36,6 +37,8 @@ var benchmark_rounds := 2
 var native_profiler := false
 var defer_highlight_arrays := false
 var board_source_bundle := false
+var portrait_source_images := false
+var portrait_source_policy := ""
 var stress_repetitions := 0
 var stress_only := false
 var headless_cpu_visuals := false
@@ -135,7 +138,7 @@ func measure(label:String,count:int,action:Callable):
  var compute_delta:Dictionary={}
  for key in compute_after:
   if compute_after[key] is int:compute_delta[key]=compute_after[key]-int(compute_before.get(key,0))
- print("MONITOR_PHASE ",JSON.stringify({"phase":label,"round":current_round,"measurement_complete":true,"start_usec":frame_start_usec_trace[0],"ready_usec":frame_end_usec_trace[-1],"metrics":summary,"raw_samples":samples,"action_usec":action_usec,"measurement_scope":benchmark_environment.measurement_scope,"context":phase_context,"memory_before":memory_before,"memory_after":memory_after,"board_source_store":BoardSourceStore.get_audit(),"pipeline_compilations":{"status":benchmark_metrics.pipeline_status,"before":pipeline_before,"after":pipeline_after,"delta":BenchmarkMetrics.counter_delta(pipeline_before,pipeline_after),"frame_totals":pipeline_trace},"cpu_visual_evidence":visual_evidence,"frame_ms_trace":chronological_frame_ms,"frame_start_usec_trace":frame_start_usec_trace,"frame_end_usec_trace":frame_end_usec_trace,"compute_delta":compute_delta,"compute_total":compute_after,"prepared_pool":game.native_combat.effect_player.prepared_pool.audit() if game.native_combat.effect_player.prepared_pool!=null else {"enabled":false},"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
+ print("MONITOR_PHASE ",JSON.stringify({"phase":label,"round":current_round,"measurement_complete":true,"start_usec":frame_start_usec_trace[0],"ready_usec":frame_end_usec_trace[-1],"metrics":summary,"raw_samples":samples,"action_usec":action_usec,"measurement_scope":benchmark_environment.measurement_scope,"context":phase_context,"memory_before":memory_before,"memory_after":memory_after,"board_source_store":BoardSourceStore.get_audit(),"portrait_source_images":PortraitSourceImages.get_audit(),"pipeline_compilations":{"status":benchmark_metrics.pipeline_status,"before":pipeline_before,"after":pipeline_after,"delta":BenchmarkMetrics.counter_delta(pipeline_before,pipeline_after),"frame_totals":pipeline_trace},"cpu_visual_evidence":visual_evidence,"frame_ms_trace":chronological_frame_ms,"frame_start_usec_trace":frame_start_usec_trace,"frame_end_usec_trace":frame_end_usec_trace,"compute_delta":compute_delta,"compute_total":compute_after,"prepared_pool":game.native_combat.effect_player.prepared_pool.audit() if game.native_combat.effect_player.prepared_pool!=null else {"enabled":false},"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
  if Particles.profile_sources:
   print("SUMMON_BEGIN_PROFILE ",JSON.stringify({"phase":label,"rows":game.native_summon.profile_rows}))
   print("COMBAT_SEEK_PROFILE ",JSON.stringify({"phase":label,"rows":CombatParticles.seek_rows,"totals":CombatParticles.seek_source_totals}))
@@ -161,6 +164,9 @@ func run():
   if arg=="--no-defer-highlight-arrays":defer_highlight_arrays=false
   if arg=="--board-source-bundle":board_source_bundle=true
   if arg=="--no-board-source-bundle":board_source_bundle=false
+  if arg=="--portrait-source-images":portrait_source_images=true
+  if arg=="--no-portrait-source-images":portrait_source_images=false
+  if arg.begins_with("--portrait-source-policy="):portrait_source_policy=arg.trim_prefix("--portrait-source-policy=")
   if arg=="--stress-board":stress_board=true
   if arg.begins_with("--benchmark-rounds="):
    var value=arg.trim_prefix("--benchmark-rounds=")
@@ -210,6 +216,7 @@ func run():
   benchmark_environment.measurement_scope+="_privacy_mask"
   benchmark_environment["privacy_timing_limit"]="The opaque mask adds GPU work and can affect culling/overdraw. These are privacy-mode measurements, not unobstructed visible-game FPS."
  require(not native_profiler or EngineDebugger.is_active(),"native-profiler requires an attached remote debugger")
+ require(portrait_source_policy.is_empty() or OS.has_feature("editor"),"external portrait policy is source-diagnostic-only; standalone runs use their exported policy")
  require(not stress_only or stress_repetitions>0,"stress-only requires --battlecry-stress=N")
  require(not headless_cpu_visuals or benchmark_environment.headless,"CPU visual fixture requires --headless")
  require(capture_dir.is_empty() or benchmark_environment.rendering_active,"capture requires a real rendering backend")
@@ -227,9 +234,11 @@ func run():
  benchmark_environment["native_profiler"]=native_profiler
  benchmark_environment["defer_highlight_arrays"]=defer_highlight_arrays
  benchmark_environment["board_source_bundle"]=board_source_bundle
+ benchmark_environment["portrait_source_images"]=portrait_source_images
  benchmark_environment["load_memory_instrumentation"]=1
  benchmark_environment["memory_scope_note"]="Godot tracked allocation and object/resource counters, not OS working set. Static zero-only samples are unavailable; OS static/peak APIs are probed at runtime and zero is unavailable. Counters may lag frames."
  BoardSourceStore.enabled=board_source_bundle
+ PortraitSourceImages.enabled=portrait_source_images
  benchmark_environment["timestamp_query_capacity"]=ProjectSettings.get_setting_with_override("debug/settings/profiler/max_timestamp_query_elements")
  benchmark_environment["user_args"]=OS.get_cmdline_user_args()
  benchmark_environment["engine_args"]=OS.get_cmdline_args()
@@ -251,6 +260,13 @@ func run():
  var boot_starts:Array=[]
  var boot_ends:Array=[]
  var loading_started:int=Time.get_ticks_usec()
+ # Source diagnostics may supply a policy prepared by a separate process.
+ # Never validate/import the source images in this timed process before boot.
+ if portrait_source_images and not portrait_source_policy.is_empty():
+  var policy=JSON.parse_string(FileAccess.get_file_as_string(portrait_source_policy))
+  require(policy is Dictionary and PortraitSourceImages.set_verified_manifest(policy),"portrait source policy accepted")
+  if failed:return
+ var game_construction_started:int=Time.get_ticks_usec()
  game=make_game()
  var game_created:int=Time.get_ticks_usec()
  game.profile_frame_stages=Particles.profile_sources
@@ -288,14 +304,18 @@ func run():
  require(not game.native_initial_loading)
  if failed:return
  var boot_memory_after=memory_snapshot()
+ if portrait_source_images:
+  var portrait_audit=PortraitSourceImages.get_audit()
+  require(portrait_audit.policy_loaded and portrait_audit.policy_loads==1 and portrait_audit.hits==portrait_audit.policy_entries and portrait_audit.hits>0 and portrait_audit.fallbacks==0 and portrait_audit.errors==0,"portrait candidate used verified sources without fallback")
+  if failed:return
  var boot_metrics:Dictionary={}
  for key in boot_samples:boot_metrics[key]=BenchmarkMetrics.stats(boot_samples[key],"static_tracking_unavailable_when_zero" if key=="static_memory_bytes" else "")
- print("BOOT_LOAD ",JSON.stringify({"schema_version":1,"measurement_scope":benchmark_environment.measurement_scope,"start_usec":loading_started,"ready_usec":loading_ready,"wall_usec":loading_ready-loading_started,"game_new_usec":game_created-loading_started,"add_child_usec":child_added-add_child_started,"synchronous_preparation_usec":synchronous_ready-loading_started,"native_initial_loading_complete":not game.native_initial_loading,"raw_samples":boot_samples,"metrics":boot_metrics,"frame_start_usec_trace":boot_starts,"frame_end_usec_trace":boot_ends,"memory_before":boot_memory_before,"memory_after":boot_memory_after,"board_source_store":BoardSourceStore.get_audit(),"scope_note":"Starts before game construction, not process launch or script/resource preloads. First interval includes synchronous constructor and add_child work; intervals end at process_frame, not presentation."}))
+ print("BOOT_LOAD ",JSON.stringify({"schema_version":1,"measurement_scope":benchmark_environment.measurement_scope,"start_usec":loading_started,"ready_usec":loading_ready,"wall_usec":loading_ready-loading_started,"game_new_usec":game_created-game_construction_started,"add_child_usec":child_added-add_child_started,"synchronous_preparation_usec":synchronous_ready-loading_started,"native_initial_loading_complete":not game.native_initial_loading,"raw_samples":boot_samples,"metrics":boot_metrics,"frame_start_usec_trace":boot_starts,"frame_end_usec_trace":boot_ends,"memory_before":boot_memory_before,"memory_after":boot_memory_after,"board_source_store":BoardSourceStore.get_audit(),"portrait_source_images":PortraitSourceImages.get_audit(),"scope_note":"Starts before game construction, not process launch or script/resource preloads. First interval includes synchronous constructor and add_child work; intervals end at process_frame, not presentation."}))
  if is_instance_valid(game.native_highlight) and is_instance_valid(game.native_highlight.renderer):
   game.native_highlight.renderer.defer_unchanged_surface_arrays=defer_highlight_arrays
   require(game.native_highlight.renderer.defer_unchanged_surface_arrays==defer_highlight_arrays,"highlight candidate mode applied")
  else:require(not defer_highlight_arrays,"highlight candidate requires real spatial presentation")
- print("STARTUP_PREPARATION ",JSON.stringify({"wall_usec":loading_ready-loading_started,"game_new_usec":game_created-loading_started,"add_child_usec":child_added-add_child_started,"synchronous_preparation_usec":synchronous_ready-loading_started,"ready_usec":loading_ready,"preparer":game.effect_material_preparer.audit() if game.effect_material_preparer!=null else {}}))
+ print("STARTUP_PREPARATION ",JSON.stringify({"wall_usec":loading_ready-loading_started,"game_new_usec":game_created-game_construction_started,"add_child_usec":child_added-add_child_started,"synchronous_preparation_usec":synchronous_ready-loading_started,"ready_usec":loading_ready,"preparer":game.effect_material_preparer.audit() if game.effect_material_preparer!=null else {}}))
  # No assets override.
  await measure("startup_settle",180,func():
   game.start_match("practice");game.flow.test_clock_delta=0;game.mana=10;game.max_mana=10;game.tutorial_hint=false)

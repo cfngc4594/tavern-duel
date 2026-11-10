@@ -34,6 +34,20 @@ def validate(path):
     check(len(environments) == 1, "exactly one environment record required")
     env = environments[0]
     phases = rows("MONITOR_PHASE")
+    if "portrait_source_images" in env:
+        enabled = env["portrait_source_images"]
+        check(type(enabled) is bool, "invalid portrait source flag")
+        audits = [row.get("portrait_source_images", {}) for row in rows("BOOT_LOAD") + phases]
+        check(audits, "portrait source audit missing")
+        for audit in audits:
+            check(audit.get("enabled") is enabled, "portrait source enabled state changed")
+            for key in ("policy_entries", "policy_loads", "hits", "fallbacks", "bytes", "errors"):
+                check(type(audit.get(key)) is int and audit[key] >= 0, "invalid portrait source counter: " + key)
+            if enabled:
+                check(audit.get("policy_loaded") is True and audit["policy_loads"] == 1 and audit["hits"] == audit["policy_entries"] > 0 and audit["bytes"] > 0 and audit["fallbacks"] == 0 and audit["errors"] == 0, "portrait candidate did not serve every verified source without fallback")
+            else:
+                check(audit.get("policy_loaded") is False and all(audit[key] == 0 for key in ("policy_entries", "policy_loads", "hits", "fallbacks", "bytes", "errors")), "reference arm used portrait source candidate")
+        check(all(audit == audits[0] for audit in audits), "portrait source work moved after initial boot")
     if "board_source_bundle" in env:
         check(type(env["board_source_bundle"]) is bool, "invalid board bundle flag")
         generation = None
@@ -103,6 +117,7 @@ def validate(path):
     check(len(core) == (0 if env["stress_only"] else 4 * rounds), "normal-round core phases changed")
     check(len(rows("WINDOWS_ACTIONS_PASS")) == (0 if env["stress_only"] else rounds), "normal-round validation missing")
     check(len(rows("WINDOWS_STRESS_PASS")) == int(stress_board), "legacy stress-board validation missing or unexpected")
+    previous_phase_end = boot["ready_usec"] if env.get("load_memory_instrumentation") else None
     for phase in phases:
         raw = phase["raw_samples"]
         frames = raw["frame_ms"]
@@ -112,6 +127,16 @@ def validate(path):
             check(all(key in phase for key in ("memory_before", "memory_after", "board_source_store")), "phase memory/cache endpoints missing")
         check(frames == phase["frame_ms_trace"], "frame order mutated by summary")
         check(len(frames) == len(phase["frame_start_usec_trace"]) == len(phase["frame_end_usec_trace"]), "timestamp trace length differs")
+        if env.get("load_memory_instrumentation"):
+            starts, ends = phase["frame_start_usec_trace"], phase["frame_end_usec_trace"]
+            check(all(type(v) in (int, float) and math.isfinite(v) and v >= 0 for v in starts + ends), "phase timestamps must be finite and nonnegative")
+            check(starts and starts[1:] == ends[:-1], "phase timestamps are not contiguous")
+            check(starts[0] >= previous_phase_end, "phase starts before previous measured section completed")
+            for start, end, frame in zip(starts, ends, frames):
+                check(end >= start and math.isclose((end-start)/1000, frame, abs_tol=1e-9), "phase timestamp duration differs from raw frame")
+            if "start_usec" in phase or "ready_usec" in phase:
+                check(phase.get("start_usec") == starts[0] and phase.get("ready_usec") == ends[-1], "phase boundary timestamps differ from trace")
+            previous_phase_end = ends[-1]
         for name, summary in phase["metrics"].items():
             values = raw[name]
             if not summary["available"]:

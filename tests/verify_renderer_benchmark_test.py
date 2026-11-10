@@ -105,6 +105,28 @@ class VerifyLogs(unittest.TestCase):
     def test_valid(self):
         self.assertEqual(self.run_fixture(fixture())[2], 13)
 
+    def test_complete_load_phase_timestamps(self):
+        for mutation in ("duration", "gap", "before_boot", "nonfinite", "phase_overlap", "boundary"):
+            with self.subTest(mutation=mutation):
+                rows = add_load_instrumentation(fixture())
+                phases = [row for prefix, row in rows if prefix == "MONITOR_PHASE"]
+                phase = phases[0]
+                if mutation == "duration":
+                    phase["frame_end_usec_trace"][-1] += 1
+                elif mutation == "gap":
+                    phase["frame_start_usec_trace"][1] += 1
+                elif mutation == "before_boot":
+                    phase["frame_start_usec_trace"][0] = 0
+                elif mutation == "nonfinite":
+                    phase["frame_end_usec_trace"][-1] = float("nan")
+                elif mutation == "phase_overlap":
+                    phases[1]["frame_start_usec_trace"][0] = phase["frame_end_usec_trace"][-1] - 1
+                else:
+                    phase["start_usec"] = 0
+                    phase["ready_usec"] = phase["frame_end_usec_trace"][-1]
+                with self.assertRaises(ValueError):
+                    self.run_fixture(rows)
+
     def test_load_memory_instrumentation(self):
         base = add_load_instrumentation(fixture())
         self.assertEqual(self.run_fixture(base)[2], 13)

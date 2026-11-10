@@ -106,6 +106,46 @@ class AnalyzeWindowsABBA(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     abba.equivalent(runs)
 
+    def test_portrait_source_boot_audit_and_isolation(self):
+        for index, candidate in enumerate((False, True, True, False)):
+            self.rows[index] = add_load_instrumentation(records(False))
+            env = self.rows[index][0][1]
+            env.update(board_source_bundle=False, portrait_source_images=candidate,
+                       user_args=["--portrait-source-images" if candidate else "--no-portrait-source-images"])
+            audit = {"enabled": candidate, "policy_loaded": candidate, "policy_entries": 54 if candidate else 0,
+                     "policy_loads": int(candidate), "hits": 54 if candidate else 0, "fallbacks": 0,
+                     "bytes": 1000 if candidate else 0, "errors": 0}
+            for prefix, row in self.rows[index]:
+                if prefix in ("BOOT_LOAD", "MONITOR_PHASE"):
+                    row["portrait_source_images"] = dict(audit)
+                    row["board_source_store"] = {"enabled": False, "loads": 0, "json_hits": 0, "image_hits": 0, "misses": 0, "generation": "", "error": ""}
+        self.write_logs()
+        report = abba.analyze(self.paths, "portrait_source_images")
+        self.assertEqual(report["candidate_field"], "portrait_source_images")
+        for field, value in (("hits", 53), ("fallbacks", 1), ("policy_loads", 2), ("errors", 1)):
+            row = next(row for prefix, row in self.rows[1] if prefix == "BOOT_LOAD")
+            original = row["portrait_source_images"][field]
+            row["portrait_source_images"][field] = value
+            self.write_logs()
+            with self.assertRaisesRegex(ValueError, "every verified source"):
+                abba.analyze(self.paths, "portrait_source_images")
+            row["portrait_source_images"][field] = original
+        row = next(row for prefix, row in self.rows[1] if prefix == "MONITOR_PHASE")
+        row["portrait_source_images"]["bytes"] += 1
+        self.write_logs()
+        with self.assertRaisesRegex(ValueError, "moved after initial boot"):
+            abba.analyze(self.paths, "portrait_source_images")
+        row["portrait_source_images"]["bytes"] -= 1
+        self.rows[1][0][1]["user_args"].append("--startup-timing")
+        self.write_logs()
+        with self.assertRaisesRegex(ValueError, "disable startup diagnostics"):
+            abba.analyze(self.paths, "portrait_source_images")
+        self.rows[1][0][1]["user_args"].pop()
+        self.rows[1][0][1]["user_args"].append("--portrait-source-policy=external.json")
+        self.write_logs()
+        with self.assertRaisesRegex(ValueError, "use its exported policy"):
+            abba.analyze(self.paths, "portrait_source_images")
+
     def test_load_rejects_instrumentation_privacy_and_wrong_arm(self):
         for field in ("source_profiling", "pipeline_profiling", "native_profiler", "capture_run",
                       "privacy_mask_active", "defer_highlight_arrays"):

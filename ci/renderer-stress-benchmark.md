@@ -1,14 +1,36 @@
 # Renderer and full-board battlecry diagnostics
 
+For real Windows native function/Visual Profiler capture, the isolated privacy
+Release preset, a same-pack ABBA analyzer and the measured default-off highlighter
+candidate, see `windows-native-checkpoint.md`. `--native-profiler` requires a
+connected loopback debugger and must not be used for formal timing. The
+highlighter comparison uses `--defer-highlight-arrays` versus
+`--no-defer-highlight-arrays`; normal gameplay and the benchmark default remain
+off because aggregate benefit did not establish consistent hitch-tail benefit.
+
 The default `tests/windows_renderer_benchmark.tscn` scenario is unchanged: two
 rounds of idle, Senjin, attack and Archer (eight historical comparison phases),
 plus startup, reset and two recovery phases (12 total). Existing phase names,
 frame counts, gameplay actions and capture points stay intact.
 
+`--benchmark-rounds=N` optionally selects 2 through 20 normal rounds (default 2).
+Each round has five measured phases, including Archer recovery; every round after
+the first has a 180-frame reset. Including startup, normal-only runs therefore
+have `6*N` phases and require `N` `WINDOWS_ACTIONS_PASS` records.
+
+The legacy `--stress-board` switch adds the full-hand/full-board scene after the
+normal rounds and before the battlecry stress suite. Its phases are
+`stress_setup_settle` (180 frames), `stress_full_board_idle` (120),
+`stress_archer_battlecry` (180), and `stress_recovery_idle` (180), all labeled with
+round `N`. This scene requires one `WINDOWS_STRESS_PASS` record and is separate
+from the survivor/lethal suite below. It still runs when `--battlecry-stress-only`
+is supplied, so omit `--stress-board` when the suite must contain the process's
+first Archer action.
+
 ## Optional stress runs
 
 Append `-- --battlecry-stress=5` to run five repetitions **per case** after the
-normal scenario. Add `--battlecry-stress-only` to skip the normal two rounds and
+normal scenario. Add `--battlecry-stress-only` to skip all normal rounds and
 make the first stress Archer the first Archer action in that process. Supported
 repetition counts are 2–100. Three or more cover first, warm and repeated actions.
 
@@ -36,6 +58,9 @@ not replace reporting the separate per-action and setup/recovery tails.
 
 `BENCHMARK_ENVIRONMENT` records engine/build, OS/processor, display server,
 renderer/driver/adapter, command-line switches and measurement scope. Each
+environment also records `benchmark_rounds`, `stress_board`, and `native_profiler`.
+For older logs without these fields, the verifier assumes two rounds, no legacy
+stress-board scene, and no native profiler. Each
 `MONITOR_PHASE` retains the original fields and adds chronological `raw_samples`,
 synchronous `action_usec`, scope, context, and optional pipeline counters. The
 `game_process_ms` samples time the actual fixed-clock production `_process` call,
@@ -76,6 +101,9 @@ complete phases/PASS records, rejects engine errors, recomputes summaries from
 raw samples, checks headless unavailable labeling, and optionally compares two
 logs' deterministic action outcomes/event order. It does not certify graphics,
 pixel equivalence, GPU speed, or process exit status; check exit status separately.
+The survivor/lethal action phases are identified by their `battlecry_stress`
+context suite and case, so the legacy `stress_archer_battlecry` phase is never
+included in the newer suite's action counts or pooled statistics.
 
 ## Pipeline and CPU attribution
 
@@ -100,4 +128,10 @@ Focused reporting unit test:
 
 ```sh
 godot --headless --path . --script res://tests/renderer_benchmark_metrics_test.gd
+```
+
+Offline verifier fixture tests (no Godot process or performance measurements):
+
+```sh
+python3 tests/verify_renderer_benchmark_test.py
 ```

@@ -35,22 +35,30 @@ def validate(path):
     env = environments[0]
     phases = rows("MONITOR_PHASE")
     repetitions = env["stress_repetitions"]
+    rounds = env.get("benchmark_rounds", 2)
+    stress_board = env.get("stress_board", False)
+    check(type(rounds) is int and 2 <= rounds <= 20, "invalid benchmark round count")
+    check(type(stress_board) is bool, "invalid stress-board flag")
+    check(type(env.get("native_profiler", False)) is bool, "invalid native-profiler flag")
     check(isinstance(repetitions, int) and (repetitions == 0 or 2 <= repetitions <= 100), "invalid repetition count")
     check(not env["stress_only"] or repetitions > 0, "stress-only has no stress actions")
     expected = [("startup_settle", -1, 180)]
     if not env["stress_only"]:
-        for index in range(2):
+        for index in range(rounds):
             if index:
                 expected.append(("round_reset_settle", index, 180))
             expected.extend((name, index, count) for name, count in [("idle", 120), ("play_senjin", 180), ("attack_taunt", 180), ("archer_battlecry", 180), ("archer_recovery_idle", 180)])
+    if stress_board:
+        expected.extend((name, rounds, count) for name, count in [("stress_setup_settle", 180), ("stress_full_board_idle", 120), ("stress_archer_battlecry", 180), ("stress_recovery_idle", 180)])
     cases = ("full_board_survivor", "full_board_lethal")
     for index in range(repetitions):
         for case in cases:
             expected.extend((f"stress_{case}_{part}", index, count) for part, count in [("setup", 180), ("battlecry", 240), ("recovery", 180)])
     check([(p["phase"], p["round"], len(p["raw_samples"]["frame_ms"])) for p in phases] == expected, "phase order, identity or frame count differs")
     core = [p for p in phases if p["phase"] in ("idle", "play_senjin", "attack_taunt", "archer_battlecry")]
-    check(len(core) == (0 if env["stress_only"] else 8), "historical eight core phases changed")
-    check(len(rows("WINDOWS_ACTIONS_PASS")) == (0 if env["stress_only"] else 2), "normal-round validation missing")
+    check(len(core) == (0 if env["stress_only"] else 4 * rounds), "normal-round core phases changed")
+    check(len(rows("WINDOWS_ACTIONS_PASS")) == (0 if env["stress_only"] else rounds), "normal-round validation missing")
+    check(len(rows("WINDOWS_STRESS_PASS")) == int(stress_board), "legacy stress-board validation missing or unexpected")
     for phase in phases:
         raw = phase["raw_samples"]
         frames = raw["frame_ms"]
@@ -72,7 +80,8 @@ def validate(path):
     check(len(actions) == 2 * env["stress_repetitions"], "stress actions incomplete")
     check(len(rows("BATTLECRY_STRESS_PASS")) == (1 if env["stress_repetitions"] else 0), "stress completion missing")
     outcomes = []
-    stress_phases = [p for p in phases if p["phase"].startswith("stress_") and p["phase"].endswith("_battlecry")]
+    stress_phases = [p for p in phases if p["context"].get("suite") == "battlecry_stress" and p["context"].get("case") in cases and p["phase"] == f"stress_{p['context']['case']}_battlecry"]
+    check(len(stress_phases) == len(actions), "stress action phase context missing or invalid")
     for action, phase in zip(actions, stress_phases):
         check(action["context"] == phase["context"], "stress action context differs from measured phase")
         outcome = dict(action["outcome"])

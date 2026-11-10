@@ -32,6 +32,8 @@ var benchmark_environment: Dictionary = {}
 var profile_pipelines := false
 var stress_board := false
 var benchmark_rounds := 2
+var native_profiler := false
+var defer_highlight_arrays := false
 var stress_repetitions := 0
 var stress_only := false
 var headless_cpu_visuals := false
@@ -46,6 +48,7 @@ func collect_viewports(node:Node,output:Array):
 func stats(values:Array)->Dictionary:
  return BenchmarkMetrics.stats(values)
 func measure(label:String,count:int,action:Callable):
+ if native_profiler:EngineDebugger.send_message("benchmark:phase",[label,current_round,Time.get_ticks_usec()])
  CombatParticles.setup_rows.clear()
  preload("res://scripts/native_archer_skin.gd").setup_rows.clear()
  CombatParticles.seek_rows.clear();CombatParticles.seek_source_totals.clear()
@@ -136,6 +139,9 @@ func run():
  Compute.reset_stats()
  for arg in OS.get_cmdline_user_args():
   if arg=="--profile-pipelines":profile_pipelines=true
+  if arg=="--native-profiler":native_profiler=true
+  if arg=="--defer-highlight-arrays":defer_highlight_arrays=true
+  if arg=="--no-defer-highlight-arrays":defer_highlight_arrays=false
   if arg=="--stress-board":stress_board=true
   if arg.begins_with("--benchmark-rounds="):
    var value=arg.trim_prefix("--benchmark-rounds=")
@@ -178,6 +184,13 @@ func run():
   if arg=="--no-retain-shaders":ShaderCache.enabled=false
   if arg=="--resident-profile-gpu":Resident.profile_gpu=true
  benchmark_environment=BenchmarkMetrics.environment()
+ var privacy_guard=root.get_node_or_null("PrivacyTestGuard")
+ var privacy_active:bool=privacy_guard!=null and privacy_guard.runtime_evidence().active
+ benchmark_environment["privacy_mask_active"]=privacy_active
+ if privacy_active and benchmark_environment.rendering_active:
+  benchmark_environment.measurement_scope+="_privacy_mask"
+  benchmark_environment["privacy_timing_limit"]="The opaque mask adds GPU work and can affect culling/overdraw. These are privacy-mode measurements, not unobstructed visible-game FPS."
+ require(not native_profiler or EngineDebugger.is_active(),"native-profiler requires an attached remote debugger")
  require(not stress_only or stress_repetitions>0,"stress-only requires --battlecry-stress=N")
  require(not headless_cpu_visuals or benchmark_environment.headless,"CPU visual fixture requires --headless")
  require(capture_dir.is_empty() or benchmark_environment.rendering_active,"capture requires a real rendering backend")
@@ -190,15 +203,26 @@ func run():
  benchmark_environment["capture_run"]=not capture_dir.is_empty()
  benchmark_environment["stress_repetitions"]=stress_repetitions
  benchmark_environment["stress_only"]=stress_only
+ benchmark_environment["benchmark_rounds"]=benchmark_rounds
+ benchmark_environment["stress_board"]=stress_board
+ benchmark_environment["native_profiler"]=native_profiler
+ benchmark_environment["defer_highlight_arrays"]=defer_highlight_arrays
+ benchmark_environment["timestamp_query_capacity"]=ProjectSettings.get_setting_with_override("debug/settings/profiler/max_timestamp_query_elements")
  benchmark_environment["user_args"]=OS.get_cmdline_user_args()
  benchmark_environment["engine_args"]=OS.get_cmdline_args()
  benchmark_metrics.configure_pipelines(profile_pipelines,benchmark_environment)
- print("BENCHMARK_ENVIRONMENT ",JSON.stringify(benchmark_environment))
  if not capture_dir.is_empty():DirAccess.make_dir_recursive_absolute(capture_dir)
  print("RUNNER_MODE ",JSON.stringify({"debug_build":OS.is_debug_build(),"editor":OS.has_feature("editor"),"version":Engine.get_version_info()}))
  require(not preload("res://scripts/source_board_camera_policy.gd").qa_phone_platform)
  if benchmark_environment.rendering_active:DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
  Engine.max_fps=0
+ # Export templates can consume recognized engine arguments before this API.
+ # Record the effective settings as well as whatever command-line args remain.
+ benchmark_environment["effective_max_fps"]=Engine.max_fps
+ benchmark_environment["effective_time_scale"]=Engine.time_scale
+ benchmark_environment["effective_physics_ticks_per_second"]=Engine.physics_ticks_per_second
+ benchmark_environment["effective_vsync"]=DisplayServer.window_get_vsync_mode() if benchmark_environment.rendering_active else null
+ print("BENCHMARK_ENVIRONMENT ",JSON.stringify(benchmark_environment))
  var loading_started:int=Time.get_ticks_usec()
  game=make_game()
  game.profile_frame_stages=Particles.profile_sources
@@ -225,6 +249,10 @@ func run():
   await get_tree().process_frame
   if not game.native_initial_loading:break
  require(not game.native_initial_loading)
+ if is_instance_valid(game.native_highlight) and is_instance_valid(game.native_highlight.renderer):
+  game.native_highlight.renderer.defer_unchanged_surface_arrays=defer_highlight_arrays
+  require(game.native_highlight.renderer.defer_unchanged_surface_arrays==defer_highlight_arrays,"highlight candidate mode applied")
+ else:require(not defer_highlight_arrays,"highlight candidate requires real spatial presentation")
  print("STARTUP_PREPARATION ",JSON.stringify({"wall_usec":Time.get_ticks_usec()-loading_started,"preparer":game.effect_material_preparer.audit() if game.effect_material_preparer!=null else {}}))
  # No assets override.
  await measure("startup_settle",180,func():
@@ -240,6 +268,9 @@ func run():
  if stress_repetitions>0:await run_battlecry_stress()
  if Resident.enabled:require(int(Resident.stats.get("frames",0))>0,"Resident path actually ran")
  if Compute.enabled:require(int(Compute.get_stats().get("dispatches",0))>0,"GPU experiment actually dispatched")
+ if native_profiler:
+  EngineDebugger.send_message("benchmark:done",[Time.get_ticks_usec()])
+  await get_tree().create_timer(2.0).timeout
  quit()
 func run_round(round_index:int):
  current_round=round_index

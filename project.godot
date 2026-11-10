@@ -16,6 +16,11 @@ SoundManager="*res://scripts/sound_manager.gd"
 [editor_plugins]
 enabled=PackedStringArray("res://addons/raw_runtime_export/plugin.cfg")
 
+[debug]
+; Native Visual Profiler needs all nested viewport markers. Export templates
+; do not have the editor feature, so shipping builds keep the engine default.
+settings/profiler/max_timestamp_query_elements.editor=4096
+
 [display]
 window/size/viewport_width=1600
 window/size/viewport_height=900

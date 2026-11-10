@@ -34,6 +34,50 @@ def validate(path):
     check(len(environments) == 1, "exactly one environment record required")
     env = environments[0]
     phases = rows("MONITOR_PHASE")
+    if "board_source_bundle" in env:
+        check(type(env["board_source_bundle"]) is bool, "invalid board bundle flag")
+        generation = None
+        previous = None
+        for phase in phases:
+            audit = phase.get("board_source_store", {})
+            check(audit.get("enabled") is env["board_source_bundle"], "board bundle enabled state changed")
+            if env["board_source_bundle"]:
+                check(audit.get("loads") == 1 and audit.get("json_hits", 0) > 0 and audit.get("image_hits", 0) > 0 and audit.get("misses") == 0 and audit.get("error") == "", "candidate bundle was not successfully used without fallback")
+                check(isinstance(audit.get("generation"), str) and audit["generation"], "candidate bundle generation missing")
+                if generation is None:
+                    generation = audit["generation"]
+                check(audit["generation"] == generation, "candidate bundle generation changed")
+                for key in ("loads", "json_hits", "image_hits", "raw_json_reads", "raw_image_reads", "misses"):
+                    value = audit.get(key)
+                    check(type(value) is int and value >= 0, "invalid bundle counter: " + key)
+                    check(previous is None or value >= previous[key], "bundle counter decreased: " + key)
+                previous = audit
+            else:
+                check(all(audit.get(key) == 0 for key in ("loads", "json_hits", "image_hits", "misses")) and audit.get("generation") == "" and audit.get("error") == "", "reference arm used cached bundle or reported errors")
+    if env.get("load_memory_instrumentation"):
+        boot_rows = rows("BOOT_LOAD")
+        check(len(boot_rows) == 1, "exactly one boot load record required")
+        boot = boot_rows[0]
+        check(boot["native_initial_loading_complete"] is True, "initial loading incomplete")
+        check(boot["measurement_scope"] == env["measurement_scope"], "boot measurement scope differs")
+        check(boot["ready_usec"] - boot["start_usec"] == boot["wall_usec"], "boot elapsed time differs")
+        check(0 <= boot["game_new_usec"] + boot["add_child_usec"] <= boot["synchronous_preparation_usec"] <= boot["wall_usec"], "invalid boot synchronous durations")
+        starts, ends = boot["frame_start_usec_trace"], boot["frame_end_usec_trace"]
+        check(starts and len(starts) == len(ends) == len(boot["raw_samples"]["frame_ms"]), "boot timestamp count differs")
+        check(starts[0] == boot["start_usec"] and starts[1:] == ends[:-1] and ends[-1] <= boot["ready_usec"], "boot trace is not contiguous")
+        for start, end, frame in zip(starts, ends, boot["raw_samples"]["frame_ms"]):
+            check(end >= start and math.isclose((end-start)/1000, frame, abs_tol=1e-9), "boot frame duration differs")
+        for key, values in boot["raw_samples"].items():
+            if key == "video_memory_bytes" and env["headless"]:
+                check(not values and not boot["metrics"][key]["available"], "headless boot GPU memory fabricated")
+            elif key == "static_memory_bytes" and not boot["metrics"][key]["available"]:
+                check(len(values) == len(starts) and all(value == 0 for value in values) and not any(k in boot["metrics"][key] for k in ("mean", "p95", "max")), "invalid unavailable static memory")
+            else:
+                check(len(values) == len(starts), "boot memory/frame samples missing")
+                verify_stats(values, boot["metrics"][key], "boot/" + key)
+        check(all(key in boot["raw_samples"] for key in ("static_memory_bytes", "node_count", "resource_count")), "boot memory samples missing")
+        preparations = rows("STARTUP_PREPARATION")
+        check(len(preparations) == 1 and preparations[0]["wall_usec"] == boot["wall_usec"], "startup preparation time differs from boot")
     repetitions = env["stress_repetitions"]
     rounds = env.get("benchmark_rounds", 2)
     stress_board = env.get("stress_board", False)
@@ -63,6 +107,9 @@ def validate(path):
         raw = phase["raw_samples"]
         frames = raw["frame_ms"]
         check(len(raw["game_process_ms"]) == len(frames), "game CPU samples missing")
+        if env.get("load_memory_instrumentation"):
+            check(all(len(raw[key]) == len(frames) for key in ("static_memory_bytes", "node_count", "resource_count")), "phase memory samples missing")
+            check(all(key in phase for key in ("memory_before", "memory_after", "board_source_store")), "phase memory/cache endpoints missing")
         check(frames == phase["frame_ms_trace"], "frame order mutated by summary")
         check(len(frames) == len(phase["frame_start_usec_trace"]) == len(phase["frame_end_usec_trace"]), "timestamp trace length differs")
         for name, summary in phase["metrics"].items():

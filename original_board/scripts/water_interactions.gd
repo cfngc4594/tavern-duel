@@ -1,4 +1,5 @@
 extends Node
+const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 ## Source FSM subset; original scalar curves and action order, explicit delegated effects.
 const BASE='res://original_board/assets/water/'
 var probe
@@ -18,7 +19,7 @@ func setup(p,options:Dictionary={}):
  source_cab=str(options.get('source_cab',source_cab))
  var source_base=str(options.get('source_base',BASE))
  for kind in options.get('kinds',['mill_wheel','silo']):
-  var source=JSON.parse_string(FileAccess.get_file_as_string(source_base+kind+'.json'))
+  var source=SourceStore.json_for(probe,source_base+kind+'.json')
   var sys={'source':source,'states':{},'state':'','time':0.0,'variables':{},'gates':{},'collider':{},'waits':[],'animation':{},'rotation_speed':-10.0,'rotation_node':'','curves':[],'ease':[],'material_values':{}}
   for st in source.states:sys.states[st.name]=st
   for obj in source.objects.values():

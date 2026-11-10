@@ -11,6 +11,7 @@ const ShaderCache=preload("res://scripts/immutable_shader_cache.gd")
 const Particles=preload("res://scripts/native_summon_particles.gd")
 const Resident=preload("res://scripts/summon_resident.gd")
 const Compute=preload("res://scripts/summon_compute.gd")
+const BoardSourceStore=preload("res://original_board/scripts/board_source_store.gd")
 var root: Window:
  get: return get_tree().root
 func require(ok: bool, label: String = "runtime check") -> void:
@@ -34,6 +35,7 @@ var stress_board := false
 var benchmark_rounds := 2
 var native_profiler := false
 var defer_highlight_arrays := false
+var board_source_bundle := false
 var stress_repetitions := 0
 var stress_only := false
 var headless_cpu_visuals := false
@@ -47,6 +49,17 @@ func collect_viewports(node:Node,output:Array):
  for child in node.get_children():collect_viewports(child,output)
 func stats(values:Array)->Dictionary:
  return BenchmarkMetrics.stats(values)
+func memory_snapshot()->Dictionary:
+ var result:Dictionary={"static_memory_bytes":Performance.get_monitor(Performance.MEMORY_STATIC),"node_count":Performance.get_monitor(Performance.OBJECT_NODE_COUNT),"resource_count":Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)}
+ for method in ["get_static_memory_usage","get_static_memory_peak_usage"]:
+  var value=OS.call(method) if OS.has_method(method) else 0
+  result[method]={"available":value>0,"bytes":value if value>0 else null,"reason":"" if value>0 else "unsupported_or_static_tracking_disabled"}
+ result["video_memory_bytes"]={"available":benchmark_environment.get("rendering_active",false),"bytes":Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED) if benchmark_environment.get("rendering_active",false) else null}
+ return result
+func append_memory_samples(samples:Dictionary)->void:
+ samples.static_memory_bytes.append(Performance.get_monitor(Performance.MEMORY_STATIC))
+ samples.node_count.append(Performance.get_monitor(Performance.OBJECT_NODE_COUNT))
+ samples.resource_count.append(Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT))
 func measure(label:String,count:int,action:Callable):
  if native_profiler:EngineDebugger.send_message("benchmark:phase",[label,current_round,Time.get_ticks_usec()])
  CombatParticles.setup_rows.clear()
@@ -63,7 +76,8 @@ func measure(label:String,count:int,action:Callable):
  var pipeline_trace:Array=[]
  var visual_evidence:Dictionary={"particle_systems_peak":0,"particle_mesh_vertices_peak":0,"archer_skin_vertices_peak":0}
  var viewports:Array=[];collect_viewports(root,viewports)
- var samples:Dictionary={"frame_ms":[],"game_process_ms":[],"process_ms":[],"physics_ms":[],"draw_calls":[],"render_objects":[],"primitives":[],"video_memory_bytes":[]}
+ var samples:Dictionary={"frame_ms":[],"game_process_ms":[],"process_ms":[],"physics_ms":[],"draw_calls":[],"render_objects":[],"primitives":[],"video_memory_bytes":[],"static_memory_bytes":[],"node_count":[],"resource_count":[]}
+ var memory_before=memory_snapshot()
  print("PROFILE_SCENE_BEGIN ",label)
  var frame_profile:Array=[]
  var frame_start_usec_trace:Array=[]
@@ -83,6 +97,7 @@ func measure(label:String,count:int,action:Callable):
   samples.game_process_ms.append(game.last_process_usec/1000.0)
   samples.process_ms.append(Performance.get_monitor(Performance.TIME_PROCESS)*1000.0)
   samples.physics_ms.append(Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)*1000.0)
+  append_memory_samples(samples)
   if profile_pipelines and benchmark_metrics.pipeline_status.available:pipeline_trace.append(benchmark_metrics.pipeline_snapshot())
   if headless_cpu_visuals:observe_cpu_visuals(visual_evidence)
   if benchmark_environment.rendering_active:
@@ -111,14 +126,16 @@ func measure(label:String,count:int,action:Callable):
  var summary:Dictionary={}
  for key in samples:
   summary[key]=BenchmarkMetrics.stats(samples[key],"zero_only_viewport_timing_unavailable" if str(key).ends_with("_ms") and str(key).contains("/") else "")
+  if key=="static_memory_bytes":summary[key]=BenchmarkMetrics.stats(samples[key],"static_tracking_unavailable_when_zero")
   if not benchmark_environment.rendering_active and key in ["draw_calls","render_objects","primitives","video_memory_bytes"]:
    summary[key]={"count":0,"available":false,"reason":benchmark_environment.unavailable_reason}
  var pipeline_after=benchmark_metrics.pipeline_snapshot()
  var compute_after=Compute.get_stats()
+ var memory_after=memory_snapshot()
  var compute_delta:Dictionary={}
  for key in compute_after:
   if compute_after[key] is int:compute_delta[key]=compute_after[key]-int(compute_before.get(key,0))
- print("MONITOR_PHASE ",JSON.stringify({"phase":label,"round":current_round,"metrics":summary,"raw_samples":samples,"action_usec":action_usec,"measurement_scope":benchmark_environment.measurement_scope,"context":phase_context,"pipeline_compilations":{"status":benchmark_metrics.pipeline_status,"before":pipeline_before,"after":pipeline_after,"delta":BenchmarkMetrics.counter_delta(pipeline_before,pipeline_after),"frame_totals":pipeline_trace},"cpu_visual_evidence":visual_evidence,"frame_ms_trace":chronological_frame_ms,"frame_start_usec_trace":frame_start_usec_trace,"frame_end_usec_trace":frame_end_usec_trace,"compute_delta":compute_delta,"compute_total":compute_after,"prepared_pool":game.native_combat.effect_player.prepared_pool.audit() if game.native_combat.effect_player.prepared_pool!=null else {"enabled":false},"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
+ print("MONITOR_PHASE ",JSON.stringify({"phase":label,"round":current_round,"measurement_complete":true,"start_usec":frame_start_usec_trace[0],"ready_usec":frame_end_usec_trace[-1],"metrics":summary,"raw_samples":samples,"action_usec":action_usec,"measurement_scope":benchmark_environment.measurement_scope,"context":phase_context,"memory_before":memory_before,"memory_after":memory_after,"board_source_store":BoardSourceStore.get_audit(),"pipeline_compilations":{"status":benchmark_metrics.pipeline_status,"before":pipeline_before,"after":pipeline_after,"delta":BenchmarkMetrics.counter_delta(pipeline_before,pipeline_after),"frame_totals":pipeline_trace},"cpu_visual_evidence":visual_evidence,"frame_ms_trace":chronological_frame_ms,"frame_start_usec_trace":frame_start_usec_trace,"frame_end_usec_trace":frame_end_usec_trace,"compute_delta":compute_delta,"compute_total":compute_after,"prepared_pool":game.native_combat.effect_player.prepared_pool.audit() if game.native_combat.effect_player.prepared_pool!=null else {"enabled":false},"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
  if Particles.profile_sources:
   print("SUMMON_BEGIN_PROFILE ",JSON.stringify({"phase":label,"rows":game.native_summon.profile_rows}))
   print("COMBAT_SEEK_PROFILE ",JSON.stringify({"phase":label,"rows":CombatParticles.seek_rows,"totals":CombatParticles.seek_source_totals}))
@@ -142,6 +159,8 @@ func run():
   if arg=="--native-profiler":native_profiler=true
   if arg=="--defer-highlight-arrays":defer_highlight_arrays=true
   if arg=="--no-defer-highlight-arrays":defer_highlight_arrays=false
+  if arg=="--board-source-bundle":board_source_bundle=true
+  if arg=="--no-board-source-bundle":board_source_bundle=false
   if arg=="--stress-board":stress_board=true
   if arg.begins_with("--benchmark-rounds="):
    var value=arg.trim_prefix("--benchmark-rounds=")
@@ -207,6 +226,10 @@ func run():
  benchmark_environment["stress_board"]=stress_board
  benchmark_environment["native_profiler"]=native_profiler
  benchmark_environment["defer_highlight_arrays"]=defer_highlight_arrays
+ benchmark_environment["board_source_bundle"]=board_source_bundle
+ benchmark_environment["load_memory_instrumentation"]=1
+ benchmark_environment["memory_scope_note"]="Godot tracked allocation and object/resource counters, not OS working set. Static zero-only samples are unavailable; OS static/peak APIs are probed at runtime and zero is unavailable. Counters may lag frames."
+ BoardSourceStore.enabled=board_source_bundle
  benchmark_environment["timestamp_query_capacity"]=ProjectSettings.get_setting_with_override("debug/settings/profiler/max_timestamp_query_elements")
  benchmark_environment["user_args"]=OS.get_cmdline_user_args()
  benchmark_environment["engine_args"]=OS.get_cmdline_args()
@@ -223,13 +246,20 @@ func run():
  benchmark_environment["effective_physics_ticks_per_second"]=Engine.physics_ticks_per_second
  benchmark_environment["effective_vsync"]=DisplayServer.window_get_vsync_mode() if benchmark_environment.rendering_active else null
  print("BENCHMARK_ENVIRONMENT ",JSON.stringify(benchmark_environment))
+ var boot_memory_before=memory_snapshot()
+ var boot_samples:Dictionary={"frame_ms":[],"static_memory_bytes":[],"node_count":[],"resource_count":[],"video_memory_bytes":[]}
+ var boot_starts:Array=[]
+ var boot_ends:Array=[]
  var loading_started:int=Time.get_ticks_usec()
  game=make_game()
+ var game_created:int=Time.get_ticks_usec()
  game.profile_frame_stages=Particles.profile_sources
  preload("res://scripts/native_summon_player.gd").profile_begin=Particles.profile_sources
  if "--smoke" in OS.get_cmdline_user_args():
   game.free();print("SUMMON_BENCH_SMOKE_PASS");quit();return
+ var add_child_started:int=Time.get_ticks_usec()
  root.add_child(game)
+ var child_added:int=Time.get_ticks_usec()
  if headless_cpu_visuals:
   game.headless=false
   game._setup_spatial_presentation()
@@ -245,18 +275,34 @@ func run():
   game.native_initial_loading=false
   game.world_canvas.visible=true
   require(is_instance_valid(game.spatial_scene),"CPU visual fixture created the actual spatial scene")
+ var synchronous_ready:int=Time.get_ticks_usec()
+ var boot_previous:int=loading_started
  for i in 1500:
   await get_tree().process_frame
+  var boot_now:int=Time.get_ticks_usec()
+  boot_starts.append(boot_previous);boot_ends.append(boot_now);boot_samples.frame_ms.append((boot_now-boot_previous)/1000.0);boot_previous=boot_now
+  append_memory_samples(boot_samples)
+  if benchmark_environment.rendering_active:boot_samples.video_memory_bytes.append(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED))
   if not game.native_initial_loading:break
+ var loading_ready:int=Time.get_ticks_usec()
  require(not game.native_initial_loading)
+ if failed:return
+ var boot_memory_after=memory_snapshot()
+ var boot_metrics:Dictionary={}
+ for key in boot_samples:boot_metrics[key]=BenchmarkMetrics.stats(boot_samples[key],"static_tracking_unavailable_when_zero" if key=="static_memory_bytes" else "")
+ print("BOOT_LOAD ",JSON.stringify({"schema_version":1,"measurement_scope":benchmark_environment.measurement_scope,"start_usec":loading_started,"ready_usec":loading_ready,"wall_usec":loading_ready-loading_started,"game_new_usec":game_created-loading_started,"add_child_usec":child_added-add_child_started,"synchronous_preparation_usec":synchronous_ready-loading_started,"native_initial_loading_complete":not game.native_initial_loading,"raw_samples":boot_samples,"metrics":boot_metrics,"frame_start_usec_trace":boot_starts,"frame_end_usec_trace":boot_ends,"memory_before":boot_memory_before,"memory_after":boot_memory_after,"board_source_store":BoardSourceStore.get_audit(),"scope_note":"Starts before game construction, not process launch or script/resource preloads. First interval includes synchronous constructor and add_child work; intervals end at process_frame, not presentation."}))
  if is_instance_valid(game.native_highlight) and is_instance_valid(game.native_highlight.renderer):
   game.native_highlight.renderer.defer_unchanged_surface_arrays=defer_highlight_arrays
   require(game.native_highlight.renderer.defer_unchanged_surface_arrays==defer_highlight_arrays,"highlight candidate mode applied")
  else:require(not defer_highlight_arrays,"highlight candidate requires real spatial presentation")
- print("STARTUP_PREPARATION ",JSON.stringify({"wall_usec":Time.get_ticks_usec()-loading_started,"preparer":game.effect_material_preparer.audit() if game.effect_material_preparer!=null else {}}))
+ print("STARTUP_PREPARATION ",JSON.stringify({"wall_usec":loading_ready-loading_started,"game_new_usec":game_created-loading_started,"add_child_usec":child_added-add_child_started,"synchronous_preparation_usec":synchronous_ready-loading_started,"ready_usec":loading_ready,"preparer":game.effect_material_preparer.audit() if game.effect_material_preparer!=null else {}}))
  # No assets override.
  await measure("startup_settle",180,func():
   game.start_match("practice");game.flow.test_clock_delta=0;game.mana=10;game.max_mana=10;game.tutorial_hint=false)
+ if board_source_bundle:
+  var store_audit=BoardSourceStore.get_audit()
+  require(store_audit.loads>0 and store_audit.json_hits>0 and store_audit.image_hits>0 and store_audit.error.is_empty() and store_audit.misses==0,"board source bundle actually loaded and served complete source data")
+  if failed:return
  require(not game._phone_hand_enabled())
  print("WINDOWS_SETUP ",JSON.stringify({"gpu":RenderingServer.get_video_adapter_name(),"method":RenderingServer.get_current_rendering_method(),"size":str(root.size),"phone":game._phone_hand_enabled(),"board_variant":game.original_board_bridge.probe.get("board_variant"),"vsync":DisplayServer.window_get_vsync_mode()}))
  var wp=game.original_board_bridge.probe.water_particles

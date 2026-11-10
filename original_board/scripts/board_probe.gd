@@ -1,4 +1,5 @@
 extends Node3D
+const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 ## Auditable source scene and explicitly ported controllers, not the official runtime or pixel equivalence.
 const CameraPolicy=preload("res://scripts/source_board_camera_policy.gd")
 const DATA_PATH='res://original_board/assets/scene.json'
@@ -8,6 +9,7 @@ const CONFIG_PATH='res://original_board/references/minimum_scene_config.json'
 const REFLECTION=Basis(Vector3(1,0,0),Vector3(0,1,0),Vector3(0,0,-1))
 var host_driven=false
 var phone_variant=false
+var source_store=SourceStore.new()
 var data:Dictionary={}
 var config:Dictionary={}
 var source_root:Node3D
@@ -54,8 +56,9 @@ func _ready():
  if not audit_path.is_empty():write_audit(audit_path)
 func build_scene():
  phone_variant=CameraPolicy.is_phone()
+ source_store.open_for_probe(not phone_variant)
  var selected_path=PHONE_DATA_PATH if phone_variant else DATA_PATH
- data=JSON.parse_string(FileAccess.get_file_as_string(selected_path));config=JSON.parse_string(FileAccess.get_file_as_string(CONFIG_PATH))
+ data=SourceStore.json_for(self,selected_path);config=SourceStore.json_for(self,CONFIG_PATH)
  audit.board_variant={'phone':phone_variant,'data_path':selected_path,'guid':data.get('guid','9f0d73a0bf8e4c44da32b6e24707678f'),'selection':'RuntimeAssetManifest platform PHONE edge 0x40001; camera/gameplay phone gate shared','runtime_state':'Serialized source board; no new X/Y offsets'}
  if data.is_empty() or config.is_empty():audit.errors.append('Missing frozen source scene/config');return
  source_root=Node3D.new();source_root.name='OriginalMOPPhone' if phone_variant else 'OriginalMOP';add_child(source_root)
@@ -118,7 +121,7 @@ func register_source_lighting_material(mat:ShaderMaterial):
 func get_source_lighting()->Dictionary:
  return material_factory.get_source_lighting() if material_factory!=null else {}
 func _setup_phone_interactions():
- var profile=JSON.parse_string(FileAccess.get_file_as_string(PHONE_INTERACTIONS_PATH))
+ var profile=SourceStore.json_for(self,PHONE_INTERACTIONS_PATH)
  if not profile is Dictionary:
   audit.errors.append('Missing verified PHONE interaction profile');return
  for field in ['door_interaction','arch_interactions','water_particles','bush_interactions','water_interactions']:
@@ -155,7 +158,7 @@ func _setup_light():
  source_light.light_color=Color(d.m_Color.r,d.m_Color.g,d.m_Color.b);source_light.light_energy=float(config.lighting.directional_intensity_normal_play_target);source_light.light_cull_mask=_mapped_mask(int(d.m_CullingMask.m_Bits));source_light.shadow_enabled=false
  audit.light={'source_id':l.id,'source_settings':d,'source_transform':config.unity_light_transform,'normal_play_energy':source_light.light_energy,'serialized_energy':d.m_Intensity,'source_ambient':config.lighting.ambient_target_raw_rgba,'shadow_status':'Original shadow settings preserved; shadowmap/URP variant not implemented in unshadowed source-formula routes','shader_global_status':'MainLight direction/color translated; ambient SH projection and UnityLightData/keyword selection explicitly compatible, not recovered exact globals'}
 func _build_mesh(key):
- var descriptor=data.meshes[key];var d=JSON.parse_string(FileAccess.get_file_as_string(descriptor.file));var mesh=ArrayMesh.new()
+ var descriptor=data.meshes[key];var d=SourceStore.json_for(self,descriptor.file);var mesh=ArrayMesh.new()
  var vertices=PackedVector3Array();var normals=PackedVector3Array();var uv=PackedVector2Array();var uv2=PackedVector2Array();var colors=PackedColorArray();var tangents=PackedFloat32Array()
  for v in d.vertices:vertices.append(Vector3(v[0],v[1],-v[2]))
  for v in d.get('normals',[]) if d.get('normals') is Array else []:normals.append(Vector3(v[0],v[1],-v[2]))
@@ -254,3 +257,7 @@ func close_probe():
  if is_instance_valid(source_root):source_root.queue_free()
  if is_instance_valid(camera_root):camera_root.queue_free()
  renderer_nodes.clear();source_nodes.clear();materials.clear();meshes.clear();textures.clear();material_factory=null
+ source_store=null
+
+func read_source_json(path:String):return source_store.read_json(path)
+func read_source_image(path:String)->Image:return source_store.read_image(path)

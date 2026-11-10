@@ -1,4 +1,5 @@
 extends Node
+const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 ## Enabled original farm FSMs; also used by the flower controller below.
 ## Source actions are interpreted in order. Unsupported effects remain explicit audit entries.
 const BASE='res://original_board/assets/farm/'
@@ -29,7 +30,7 @@ func setup(p,options:Dictionary={}):
   local_rotations[id]=n.quaternion
  for id in probe.renderer_nodes:renderer_eligible[id]=probe.renderer_nodes[id].visible
  for kind in source_kinds():
-  var source=JSON.parse_string(FileAccess.get_file_as_string(source_base+kind+'.json'))
+  var source=SourceStore.json_for(probe,source_base+kind+'.json')
   var sys={'source':source,'states':{},'state':'','time':0.0,'generation':0,'variables':{},'gates':{},'collider':{},'waits':[],'updates':[],'pending':{},'visibility':{},'mesh_changes':{}}
   for st in source.states:sys.states[st.name]=st
   for obj in source.objects.values():

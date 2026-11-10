@@ -1,4 +1,5 @@
 extends Node
+const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 ## Original mesh, weights, bind poses and 13 source bone transforms; no hand-authored sway.
 var probe
 var source:Dictionary
@@ -14,8 +15,8 @@ static func matrix(d)->Transform3D:
  var b=Basis(Vector3(d.e00,d.e10,-d.e20),Vector3(d.e01,d.e11,-d.e21),Vector3(-d.e02,-d.e12,d.e22))
  return Transform3D(b,Vector3(d.e03,d.e13,-d.e23))
 func setup(p):
- probe=p;source=JSON.parse_string(FileAccess.get_file_as_string('res://original_board/assets/kite/kite.json'))
- var d=JSON.parse_string(FileAccess.get_file_as_string(source.mesh_file))
+ probe=p;source=SourceStore.json_for(probe,'res://original_board/assets/kite/kite.json')
+ var d=SourceStore.json_for(probe,source.mesh_file)
  skin_root=probe.source_nodes[source.game_object]
  skeleton=Skeleton3D.new();skeleton.name='OriginalKiteBones';skin_root.add_child(skeleton)
  bind=Skin.new()

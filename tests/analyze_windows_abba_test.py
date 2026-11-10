@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from verify_renderer_benchmark_test import fixture
+from verify_renderer_benchmark_test import fixture, add_load_instrumentation
 
 SPEC = importlib.util.spec_from_file_location(
     "analyze_windows_abba", Path(__file__).resolve().parents[1] / "ci" / "analyze_windows_abba.py")
@@ -63,6 +63,30 @@ class AnalyzeWindowsABBA(unittest.TestCase):
         self.assertEqual(len(report["runs"][0]["phases"]), 24)
         self.assertEqual(report["pooled_arms"]["reference"]["all_phases"]["all_phases"]["count"],
                          2 * report["runs"][0]["all_phases"]["count"])
+
+    def test_board_bundle_boot_memory_and_candidate_isolation(self):
+        for index, candidate in enumerate((False, True, True, False)):
+            self.rows[index] = add_load_instrumentation(records(False))
+            env = self.rows[index][0][1]
+            env.update(board_source_bundle=candidate, user_args=["--board-source-bundle" if candidate else "--no-board-source-bundle"])
+            for prefix, phase in self.rows[index]:
+                if prefix == "MONITOR_PHASE":
+                    phase["board_source_store"] = {"enabled": candidate, "loads": int(candidate), "json_hits": 2 if candidate else 0, "image_hits": 2 if candidate else 0, "misses": 0, "error": "", "generation": "fixture" if candidate else "", "raw_json_reads": 0, "raw_image_reads": 0}
+        self.write_logs()
+        report = abba.analyze(self.paths, "board_source_bundle")
+        self.assertEqual(report["candidate_field"], "board_source_bundle")
+        self.assertEqual(report["runs"][0]["load_burden"]["boot_wall_ms"]["mean"], 3.1)
+        self.assertIn("memory_raw_samples", report["runs"][0]["phases"][0])
+        self.assertEqual(report["pooled_arms"]["candidate"]["load_burden"]["boot_frame_intervals"]["count"], 4)
+        self.rows[1][0][1]["defer_highlight_arrays"] = True
+        self.write_logs()
+        with self.assertRaisesRegex(ValueError, "highlight candidate off"):
+            abba.analyze(self.paths, "board_source_bundle")
+        self.rows[1][0][1]["defer_highlight_arrays"] = False
+        next(row for prefix, row in self.rows[1] if prefix == "MONITOR_PHASE")["board_source_store"]["loads"] = 0
+        self.write_logs()
+        with self.assertRaisesRegex(ValueError, "candidate bundle was not successfully used"):
+            abba.analyze(self.paths, "board_source_bundle")
 
     def test_rejects_equivalence_corruption(self):
         original = self.load_runs()

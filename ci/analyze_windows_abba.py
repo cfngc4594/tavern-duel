@@ -61,17 +61,20 @@ def normal_trace(trace):
             "relative_offsets": offsets, "raw": trace}
 
 
-def load(path, candidate):
+def load(path, candidate, candidate_field="defer_highlight_arrays"):
     env, outcomes, _ = validate(path)
     records = {}
     for line in Path(path).read_text(encoding="utf-8", errors="replace").splitlines():
         prefix, _, payload = line.partition(" ")
-        if prefix in ("WINDOWS_SETUP", "RUNNER_MODE", "MONITOR_PHASE", "WINDOWS_ACTIONS_PASS", "WINDOWS_STRESS_PASS", "BATTLECRY_STRESS_ACTION_PASS"):
+        if prefix in ("WINDOWS_SETUP", "RUNNER_MODE", "MONITOR_PHASE", "WINDOWS_ACTIONS_PASS", "WINDOWS_STRESS_PASS", "BATTLECRY_STRESS_ACTION_PASS", "BOOT_LOAD", "STARTUP_PREPARATION"):
             records.setdefault(prefix, []).append(json.loads(payload))
     for field in ("source_profiling", "pipeline_profiling", "native_profiler", "capture_run"):
         check(env.get(field) is False, f"{path}: {field} must be explicitly false")
     check(env.get("privacy_mask_active") is True, f"{path}: privacy mask must be active")
-    check(env.get("defer_highlight_arrays") is candidate, f"{path}: wrong ABBA arm")
+    check(env.get(candidate_field) is candidate, f"{path}: wrong ABBA arm")
+    if candidate_field == "board_source_bundle":
+        check(env.get("defer_highlight_arrays") is False, "board bundle comparison must keep highlight candidate off")
+        check(env.get("load_memory_instrumentation") == 1, "board bundle comparison requires complete boot/memory instrumentation")
     check(env.get("os") == "Windows" and env.get("hardware_gpu_candidate") is True and env.get("headless") is False, f"{path}: expected rendered Windows hardware run")
     check(env.get("debug_build") is False and env.get("editor") is False, f"{path}: expected standalone Release build")
     check(len(records.get("WINDOWS_SETUP", [])) == 1, f"{path}: missing or duplicate WINDOWS_SETUP")
@@ -91,6 +94,8 @@ def load(path, candidate):
     return {"path": str(path), "arm": "candidate" if candidate else "reference", "environment": env,
             "setup": setup, "runner": records["RUNNER_MODE"][0], "phases": phases,
             "outcomes": outcomes, "traces": traces,
+            "candidate_field": candidate_field, "boot_load": records.get("BOOT_LOAD", []),
+            "startup_preparation": records.get("STARTUP_PREPARATION", []),
             "stress_actions": records.get("BATTLECRY_STRESS_ACTION_PASS", [])}
 
 
@@ -118,7 +123,8 @@ def normalized_engine_args(args):
 def equivalent(runs):
     baseline = runs[0]
     differences = []
-    ignored = {"engine_args", "user_args", "defer_highlight_arrays"}
+    candidate_field = baseline.get("candidate_field", "defer_highlight_arrays")
+    ignored = {"engine_args", "user_args", candidate_field}
     comparable = lambda run: {k: v for k, v in run["environment"].items() if k not in ignored}
     for index, run in enumerate(runs[1:], 1):
         check(comparable(run) == comparable(baseline), f"run {index}: environment/build/device/workload differs")
@@ -126,7 +132,8 @@ def equivalent(runs):
               f"run {index}: engine arguments differ beyond log destination")
         check(run["setup"] == baseline["setup"] and run["runner"] == baseline["runner"], f"run {index}: setup or runner differs")
         # Explicit flags may differ only for the candidate toggle.
-        flags = lambda r: [v for v in r["environment"]["user_args"] if v not in ("--defer-highlight-arrays", "--no-defer-highlight-arrays")]
+        toggle = candidate_field.replace("_", "-")
+        flags = lambda r: [v for v in r["environment"]["user_args"] if v not in ("--" + toggle, "--no-" + toggle)]
         check(flags(run) == flags(baseline), f"run {index}: other user arguments differ")
         check(run["outcomes"] == baseline["outcomes"], f"run {index}: deterministic stress outcomes differ")
         check([phase_key(p) for p in run["phases"]] == [phase_key(p) for p in baseline["phases"]], "phase identities differ")
@@ -174,29 +181,46 @@ def all_phases(runs):
     return {"all_phases": summarize([value for run in runs for phase in run["phases"] for value in phase["raw_samples"]["frame_ms"]])}
 
 
-def analyze(paths):
-    runs = [load(path, candidate) for path, candidate in zip(paths, (False, True, True, False))]
+def load_burden(runs):
+    if not all(run["boot_load"] for run in runs):
+        return {}
+    return {
+        "boot_frame_intervals": summarize([v for run in runs for v in run["boot_load"][0]["raw_samples"]["frame_ms"]]),
+        "boot_wall_ms": summarize([run["boot_load"][0]["wall_usec"] / 1000 for run in runs]),
+        "first_load_plus_startup_wall_ms": summarize([(run["phases"][0]["frame_end_usec_trace"][-1] - run["boot_load"][0]["start_usec"]) / 1000 for run in runs]),
+        "boot_plus_all_phase_intervals": summarize([v for run in runs for v in run["boot_load"][0]["raw_samples"]["frame_ms"] + [f for phase in run["phases"] for f in phase["raw_samples"]["frame_ms"]]]),
+    }
+
+
+def analyze(paths, candidate_field="defer_highlight_arrays"):
+    runs = [load(path, candidate, candidate_field) for path, candidate in zip(paths, (False, True, True, False))]
     evidence = equivalent(runs)
     arms = {arm: {"per_phase": pools([r for r in runs if r["arm"] == arm]),
                   "grouped": pools([r for r in runs if r["arm"] == arm], True),
-                  "all_phases": all_phases([r for r in runs if r["arm"] == arm])} for arm in ("reference", "candidate")}
+                  "all_phases": all_phases([r for r in runs if r["arm"] == arm]),
+                  "load_burden": load_burden([r for r in runs if r["arm"] == arm])} for arm in ("reference", "candidate")}
     paired = []
     for reference, candidate, order in ((0, 1, "reference_then_candidate"), (3, 2, "candidate_then_reference")):
         paired.append({"order": order, "reference_run": reference, "candidate_run": candidate,
                        "per_phase": compare(pools([runs[reference]]), pools([runs[candidate]])),
                        "grouped": compare(pools([runs[reference]], True), pools([runs[candidate]], True)),
-                       "all_phases": compare(all_phases([runs[reference]]), all_phases([runs[candidate]]))})
+                       "all_phases": compare(all_phases([runs[reference]]), all_phases([runs[candidate]])),
+                       "load_burden": compare(load_burden([runs[reference]]), load_burden([runs[candidate]]))})
     reports = []
     for run in runs:
-        reports.append({k: run[k] for k in ("path", "arm", "environment", "setup", "runner", "traces", "stress_actions")})
+        reports.append({k: run[k] for k in ("path", "arm", "environment", "setup", "runner", "traces", "stress_actions", "boot_load", "startup_preparation")})
         reports[-1]["phases"] = [{"key": phase_key(p), "phase": p["phase"], "round": p["round"], "context": p["context"],
                                   "state": {k: p[k] for k in STATES}, "frame_ms": summarize(p["raw_samples"]["frame_ms"]),
-                                  "game_process_ms": summarize(p["raw_samples"]["game_process_ms"]), "action_usec": p["action_usec"]} for p in run["phases"]]
+                                  "game_process_ms": summarize(p["raw_samples"]["game_process_ms"]), "action_usec": p["action_usec"],
+                                  "memory": {k: p.get(k) for k in ("memory_before", "memory_after", "board_source_store")},
+                                  "memory_raw_samples": {k: p["raw_samples"][k] for k in ("static_memory_bytes", "node_count", "resource_count", "video_memory_bytes") if k in p["raw_samples"]}} for p in run["phases"]]
         reports[-1]["all_phases"] = all_phases([run])["all_phases"]
-    return {"schema_version": 1, "order": "R,C,C,R", "equivalence": evidence, "runs": reports,
-            "pooled_arms": arms, "pooled_comparison": {key: compare(arms["reference"][key], arms["candidate"][key]) for key in ("per_phase", "grouped", "all_phases")},
+        reports[-1]["load_burden"] = load_burden([run])
+    return {"schema_version": 2, "candidate_field": candidate_field, "order": "R,C,C,R", "equivalence": evidence, "runs": reports,
+            "pooled_arms": arms, "pooled_comparison": {key: compare(arms["reference"][key], arms["candidate"][key]) for key in ("per_phase", "grouped", "all_phases", "load_burden")},
             "paired_comparisons": paired,
             "limitations": ["Privacy-mask measurements only; not unobstructed visible-game FPS.",
+                            "Boot tracing starts before game construction, not process launch or preloads. First interval includes synchronous setup. Full process lifetime and working set need external observation. Boot-plus-phase samples exclude gaps between measured sections; first-load-plus-startup wall time includes them.",
                             "No stutter-free claim; all measured regressions and threshold exceedances are retained.",
                             "Percentiles use sorted[floor(n*p)]; arm pools concatenate samples, never average percentiles.",
                             "First use means first action in a process, not a cleared shader cache.",
@@ -209,9 +233,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("logs", nargs=4, type=Path, metavar="LOG")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--candidate-field", choices=("defer_highlight_arrays", "board_source_bundle"), default="defer_highlight_arrays")
     args = parser.parse_args()
     check(args.output.resolve() not in [path.resolve() for path in args.logs], "output must not overwrite an input log")
-    report = analyze(args.logs)
+    report = analyze(args.logs, args.candidate_field)
     args.output.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     print(f"WINDOWS_ABBA_ANALYSIS_PASS {args.output}")
 

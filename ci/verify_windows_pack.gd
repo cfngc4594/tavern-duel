@@ -27,7 +27,13 @@ func _initialize():
  var main_exists=ResourceLoader.exists("res://main.tscn")
  var exported=JSON.parse_string(FileAccess.get_file_as_string("res://release-build.json"))
  assert(exported is Dictionary and exported.main_scene=="res://main.tscn" and exported.renderer=="forward_plus" and exported.mobile_renderer=="forward_plus" and exported.fallback_to_opengl3==false and manifest.renderer==exported.renderer and exported.debug==false)
- var report={"source_commit":manifest.source_commit,"source_dirty":manifest.source_dirty,"export_settings":exported,"godot_version":Engine.get_version_info().string,"main_scene":manifest.main_scene,"renderer":manifest.renderer,"baseline_runtime_raw_count":manifest.baseline_runtime_raw_count,"expected_raw_count":manifest.expected_raw_count,"checked_raw_count":manifest.raw_assets.size(),"missing_assets":missing,"different_assets":different,"forbidden_entries":forbidden,"compiled_scripts":compiled,"main_scene_exists":main_exists,"packed_entries":packed_files.size(),"source_fallback":false}
+ # The board experiment is benchmark-only until whole-scene tails are accepted.
+ var bundle=exported.get("board_source_bundle")
+ assert(bundle==null,"Normal production pack unexpectedly includes experimental board data")
+ assert(not FileAccess.file_exists("res://original_board/generated/desktop_source.bin"),"Experimental board blob leaked into normal release")
+ assert(not load("res://original_board/scripts/board_source_store.gd").enabled,"Unaccepted board candidate enabled in production")
+ var bundle_validation={"present":false,"candidate_default_enabled":false,"reason":"Experimental source bundle is benchmark-only"}
+ var report={"source_commit":manifest.source_commit,"source_dirty":manifest.source_dirty,"export_settings":exported,"godot_version":Engine.get_version_info().string,"main_scene":manifest.main_scene,"renderer":manifest.renderer,"baseline_runtime_raw_count":manifest.baseline_runtime_raw_count,"expected_raw_count":manifest.expected_raw_count,"checked_raw_count":manifest.raw_assets.size(),"missing_assets":missing,"different_assets":different,"forbidden_entries":forbidden,"compiled_scripts":compiled,"main_scene_exists":main_exists,"packed_entries":packed_files.size(),"source_fallback":false,"board_source_bundle_validation":bundle_validation}
  var file=FileAccess.open(args[2],FileAccess.WRITE);assert(file!=null);file.store_string(JSON.stringify(report,"  "));file.close()
  var passed=missing.is_empty() and different.is_empty() and forbidden.is_empty() and compiled>0 and main_exists
  print("WINDOWS_PACK_VERIFY_", "PASS" if passed else "FAIL", " ",JSON.stringify(report))

@@ -1,4 +1,5 @@
 extends Node
+const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 ## Source-driven subset of the two enabled PlayMaker FSMs. Not a general PlayMaker runtime.
 const Curves=preload('res://original_board/scripts/source_legacy_curves.gd')
 const BASE='res://original_board/assets/arch/'
@@ -17,7 +18,7 @@ func setup(p,options:Dictionary={}):
  var source_base=str(options.get('source_base',BASE))
  for kind in options.get('kinds',['gong','lantern']):
   var file='lamp' if kind=='lantern' else kind
-  var source=JSON.parse_string(FileAccess.get_file_as_string(source_base+file+'.json'))
+  var source=SourceStore.json_for(probe,source_base+file+'.json')
   var sys={'source':source,'states':{},'state':'','time':0.0,'gates':{},'speeds':{},'animation':{},'collider':{},'waits':[]}
   for st in source.states:sys.states[st.name]=st
   for obj in source.objects.values():

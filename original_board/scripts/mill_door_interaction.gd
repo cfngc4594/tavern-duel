@@ -1,4 +1,5 @@
 extends Node
+const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 const Curves=preload('res://original_board/scripts/source_legacy_curves.gd')
 const SOURCE='res://original_board/assets/door/door.json'
 var probe
@@ -15,16 +16,16 @@ var audio_enabled=true
 var listener:AudioListener3D
 var closed=false
 func setup(p,options:Dictionary={}):
- probe=p;source=JSON.parse_string(FileAccess.get_file_as_string(str(options.get('source_file',SOURCE))));rng.randomize()
+ probe=p;source=SourceStore.json_for(probe,str(options.get('source_file',SOURCE)));rng.randomize()
  for name in source.clips:
-  clips[name]=JSON.parse_string(FileAccess.get_file_as_string('res://original_board/assets/door/'+source.clips[name].raw_file))
+  clips[name]=SourceStore.json_for(probe,'res://original_board/assets/door/'+source.clips[name].raw_file)
  for path in source.nodes.animated_targets:
   targets[path]=probe.source_nodes[source.nodes.animated_targets[path]]
  listener=AudioListener3D.new();listener.name='OriginalBoardAudioListener';probe.camera_root.add_child(listener)
  if source.has('listener_transform'):
   listener.transform=probe.raw_transform(source.listener_transform)
  else:
-  var cameras=JSON.parse_string(FileAccess.get_file_as_string('res://original_board/references/board_cameras_source.json'))
+  var cameras=SourceStore.json_for(probe,'res://original_board/references/board_cameras_source.json')
   listener.transform=probe.raw_transform(cameras.objects['cab-82d08c8cc01bd15ce55e7d57190fd3af:-7043871136962440904'].data)
  listener.make_current()
  events.append({'event':'ready','state':state})

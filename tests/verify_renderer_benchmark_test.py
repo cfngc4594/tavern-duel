@@ -66,6 +66,35 @@ def fixture(*, stress_only=True, rounds=None, stress_board=None, repetitions=2):
     return records
 
 
+def add_load_instrumentation(records):
+    records[0][1]["load_memory_instrumentation"] = 1
+    memory = {"static_memory_bytes": 1000, "node_count": 10, "resource_count": 20}
+    raw = {"frame_ms": [1., 2.], **{key: [value, value] for key, value in memory.items()}, "video_memory_bytes": []}
+    if not records[0][1]["headless"]:
+        raw["video_memory_bytes"] = [100, 100]
+    boot = {"native_initial_loading_complete": True, "measurement_scope": records[0][1]["measurement_scope"],
+            "start_usec": 100, "ready_usec": 3200, "wall_usec": 3100,
+            "game_new_usec": 100, "add_child_usec": 100, "synchronous_preparation_usec": 300,
+            "frame_start_usec_trace": [100, 1100], "frame_end_usec_trace": [1100, 3100], "raw_samples": raw,
+            "metrics": {key: stats(values) if values else {"available": False, "count": 0} for key, values in raw.items()},
+            "memory_before": memory, "memory_after": memory}
+    records.extend([("BOOT_LOAD", boot), ("STARTUP_PREPARATION", {"wall_usec": 3100})])
+    clock = 4000
+    for prefix, phase in records:
+        if prefix != "MONITOR_PHASE":
+            continue
+        for key, value in memory.items():
+            phase["raw_samples"][key] = [value] * len(phase["raw_samples"]["frame_ms"])
+            phase["metrics"][key] = stats(phase["raw_samples"][key])
+        phase.update(memory_before=memory, memory_after=memory, board_source_store={"enabled": False})
+        phase["frame_start_usec_trace"], phase["frame_end_usec_trace"] = [], []
+        for value in phase["raw_samples"]["frame_ms"]:
+            phase["frame_start_usec_trace"].append(clock)
+            clock += int(value * 1000)
+            phase["frame_end_usec_trace"].append(clock)
+    return records
+
+
 class VerifyLogs(unittest.TestCase):
     def run_fixture(self, records):
         with tempfile.TemporaryDirectory() as directory:
@@ -75,6 +104,64 @@ class VerifyLogs(unittest.TestCase):
 
     def test_valid(self):
         self.assertEqual(self.run_fixture(fixture())[2], 13)
+
+    def test_load_memory_instrumentation(self):
+        base = add_load_instrumentation(fixture())
+        self.assertEqual(self.run_fixture(base)[2], 13)
+        for mutation in ("missing_boot", "missing_memory", "bad_wall", "bad_trace", "not_ready", "shifted_work"):
+            with self.subTest(mutation=mutation):
+                rows = copy.deepcopy(base)
+                boot = next(row for prefix, row in rows if prefix == "BOOT_LOAD")
+                if mutation == "missing_boot":
+                    rows = [(p, r) for p, r in rows if p != "BOOT_LOAD"]
+                elif mutation == "missing_memory":
+                    rows[1][1]["raw_samples"]["static_memory_bytes"].pop()
+                elif mutation == "bad_wall":
+                    boot["wall_usec"] += 1
+                elif mutation == "bad_trace":
+                    boot["frame_start_usec_trace"][0] += 1
+                elif mutation == "not_ready":
+                    boot["native_initial_loading_complete"] = False
+                else:
+                    boot["game_new_usec"] = 5000
+                with self.assertRaises(ValueError):
+                    self.run_fixture(rows)
+
+    def test_zero_static_tracking_is_unavailable(self):
+        rows = add_load_instrumentation(fixture())
+        boot = next(row for prefix, row in rows if prefix == "BOOT_LOAD")
+        boot["raw_samples"]["static_memory_bytes"] = [0, 0]
+        boot["metrics"]["static_memory_bytes"] = {"available": False, "observed_count": 2}
+        self.run_fixture(rows)
+        boot["metrics"]["static_memory_bytes"]["mean"] = 0
+        with self.assertRaises(ValueError):
+            self.run_fixture(rows)
+
+    def test_bundle_audit_stays_valid_in_every_phase(self):
+        for candidate in (False, True):
+            base = fixture()
+            base[0][1]["board_source_bundle"] = candidate
+            for index, (prefix, phase) in enumerate(base):
+                if prefix == "MONITOR_PHASE":
+                    phase["board_source_store"] = {"enabled": candidate, "loads": int(candidate),
+                        "json_hits": index if candidate else 0, "image_hits": index if candidate else 0,
+                        "raw_json_reads": index, "raw_image_reads": index, "misses": 0,
+                        "generation": "fixture-generation" if candidate else "", "error": ""}
+            self.run_fixture(base)
+            changes = [("enabled", not candidate), ("loads", 2), ("json_hits", -1),
+                       ("image_hits", -1), ("misses", 1), ("generation", "changed"), ("error", "fallback")]
+            if candidate:
+                changes += [("generation", ""), ("json_hits", 1), ("image_hits", 1),
+                            ("raw_json_reads", 0), ("raw_image_reads", 0)]
+            else:
+                changes += [("json_hits", 1), ("image_hits", 1)]
+            for key, value in changes:
+                with self.subTest(candidate=candidate, key=key, value=value):
+                    rows = copy.deepcopy(base)
+                    last = [phase for prefix, phase in rows if prefix == "MONITOR_PHASE"][-1]
+                    last["board_source_store"][key] = value
+                    with self.assertRaises(ValueError):
+                        self.run_fixture(rows)
 
     def test_legacy_defaults(self):
         self.assertEqual(self.run_fixture(fixture(stress_only=False, repetitions=0))[2], 12)

@@ -1,4 +1,5 @@
 extends Node
+const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 ## The two enabled source FSMs share their original Animation components and skin.
 ## Native Unity Legacy mixing/audio parity is explicitly not claimed.
 const Curves=preload('res://original_board/scripts/source_legacy_curves.gd')
@@ -23,7 +24,7 @@ func setup(p):
  skin=SkinRig.new();skin.name='SourceKiteSkin';add_child(skin);skin.setup(p)
  for kind in ['kite','pole']:
   var file='kite_fsm.json' if kind=='kite' else 'pole_fsm.json'
-  var source=JSON.parse_string(FileAccess.get_file_as_string(BASE+file))
+  var source=SourceStore.json_for(probe,BASE+file)
   var sys={'source':source,'states':{},'state':'','time':0.0,'gates':{},'pending':{},'waits':[],'tween':{},'collider':{}}
   for st in source.states:sys.states[st.name]=st
   var collider_target=''

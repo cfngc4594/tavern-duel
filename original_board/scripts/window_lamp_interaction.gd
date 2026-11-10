@@ -1,4 +1,5 @@
 extends Node
+const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 ## Enabled original Window_Clickable FSM, not its disabled collider-attached duplicate.
 const SOURCE='res://original_board/assets/window_lamp/window.json'
 var probe
@@ -16,7 +17,7 @@ var original_material:Material
 var shifted_material:ShaderMaterial
 var listener:AudioListener3D
 func setup(p):
- probe=p;source=JSON.parse_string(FileAccess.get_file_as_string(SOURCE));rng.randomize()
+ probe=p;source=SourceStore.json_for(probe,SOURCE);rng.randomize()
  if not source.source_enabled or not source.source_active:
   errors.append('Source enabled controller expected');closed=true;return
  listener=probe.door_interaction.listener

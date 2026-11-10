@@ -10,12 +10,15 @@ func run() -> void:
 	var guard = root.get_node_or_null("PrivacyTestGuard")
 	assert(guard != null and guard.runtime_evidence().active, "Pass -- --privacy-guard-test to a debug Godot binary")
 	assert(DisplayServer.get_name() != "headless", "A real graphical display is required")
-	var game = load("res://main.tscn").instantiate()
-	root.add_child(game)
-	for frame in range(5):
-		await process_frame
+	# Preflight contains no game scene, artwork, or gameplay. Keep the test
+	# unfocusable, but request desktop permission before opening its window.
+	root.unfocusable = true
+	var harmless := ColorRect.new()
+	harmless.color = Color.RED
+	harmless.size = Vector2(1600, 900)
+	root.add_child(harmless)
+	await process_frame
 	await RenderingServer.frame_post_draw
-	assert(game.visible and game.is_processing() and not paused)
 	var first_draws: int = Engine.get_frames_drawn()
 	_check_pixels()
 	var popup := Window.new()
@@ -35,7 +38,16 @@ func run() -> void:
 	_check_pixels()
 	assert(Engine.get_frames_drawn() > first_draws)
 	assert(RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_OBJECTS_IN_FRAME) > 0)
-	print("PRIVACY_TEST_GUARD_PIXELS_PASS ", JSON.stringify(guard.runtime_evidence()))
+	print("PRIVACY_TEST_PREFLIGHT_PASS ", JSON.stringify(guard.runtime_evidence()))
+	if not OS.get_cmdline_user_args().has("--privacy-preflight-only"):
+		var game = load("res://main.tscn").instantiate()
+		root.add_child(game)
+		for frame in range(5):
+			await process_frame
+		await RenderingServer.frame_post_draw
+		assert(game.visible and game.is_processing() and not paused)
+		_check_pixels()
+		print("PRIVACY_TEST_GUARD_PIXELS_PASS ", JSON.stringify(guard.runtime_evidence()))
 	var manager = root.get_node_or_null("SoundManager")
 	if manager != null and manager.has_method("shutdown_audio"):
 		await manager.shutdown_audio()

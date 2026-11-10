@@ -64,3 +64,12 @@ deletes the guard, draws at its reserved layer or changes OS callbacks can defea
 it; this is a test-build safeguard, not a hostile-code security boundary.
 Screen-off execution is not guaranteed: Android may suspend/throttle rendering.
 Validate that separately only after black-screen protection is confirmed.
+
+Before any graphical production-scene test, use the same pixel test with
+`-- --privacy-guard-test --privacy-preflight-only`. This loads only solid-color
+rectangles, not `main.tscn` or game imagery, and requires opaque-black pixels
+after popup and resize. It requests an unfocusable window after startup; this
+is not a guarantee that the OS never shows or focuses the initial window.
+Obtain desktop testing permission and do not run it on the phone as the first
+privacy check. Without the preflight-only flag, the test loads the real scene
+only after the harmless preflight passes.

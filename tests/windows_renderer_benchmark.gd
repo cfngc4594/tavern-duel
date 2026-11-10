@@ -26,6 +26,21 @@ func quit() -> void:
 var game
 var current_round := -1
 var capture_dir := ""
+var profile_pipelines := false
+var stress_board := false
+var benchmark_rounds := 2
+const PIPELINE_MONITORS = {
+ "canvas":Performance.PIPELINE_COMPILATIONS_CANVAS,
+ "mesh":Performance.PIPELINE_COMPILATIONS_MESH,
+ "surface":Performance.PIPELINE_COMPILATIONS_SURFACE,
+ "draw":Performance.PIPELINE_COMPILATIONS_DRAW,
+ "specialization":Performance.PIPELINE_COMPILATIONS_SPECIALIZATION,
+}
+func pipeline_snapshot()->Dictionary:
+ var result:Dictionary={}
+ if profile_pipelines:
+  for key in PIPELINE_MONITORS:result[key]=int(Performance.get_monitor(PIPELINE_MONITORS[key]))
+ return result
 func _ready():call_deferred("run")
 func collect_viewports(node:Node,output:Array):
  if node is Viewport and (node==root or str(node.name) in ["OriginalBoardViewport","ClassicBoardSpatialObjects","RGBTransmissionTarget"]):
@@ -47,6 +62,9 @@ func measure(label:String,count:int,action:Callable):
   game.native_death.effects.profile_rows.clear()
   game.native_death.profile_rows.clear()
  var compute_before=Compute.get_stats()
+ var pipeline_before=pipeline_snapshot()
+ var pipeline_previous=pipeline_before.duplicate()
+ var pipeline_changes:Array=[]
  var viewports:Array=[];collect_viewports(root,viewports)
  var samples:Dictionary={"frame_ms":[],"process_ms":[],"physics_ms":[],"draw_calls":[],"render_objects":[],"primitives":[],"video_memory_bytes":[]}
  print("PROFILE_SCENE_BEGIN ",label)
@@ -71,7 +89,14 @@ func measure(label:String,count:int,action:Callable):
   samples.render_objects.append(Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
   samples.primitives.append(Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME))
   samples.video_memory_bytes.append(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED))
+  if profile_pipelines:
+   var pipeline_now=pipeline_snapshot()
+   if pipeline_now!=pipeline_previous:
+    pipeline_changes.append({"frame":i,"counters":pipeline_now})
+    pipeline_previous=pipeline_now
   if i>=4:
+   if not samples.has("frame_setup_cpu_ms"):samples["frame_setup_cpu_ms"]=[]
+   samples.frame_setup_cpu_ms.append(RenderingServer.get_frame_setup_time_cpu())
    for viewport in viewports:
     if not is_instance_valid(viewport):continue
     if viewport is SubViewport and viewport.render_target_update_mode==SubViewport.UPDATE_DISABLED:continue
@@ -90,6 +115,11 @@ func measure(label:String,count:int,action:Callable):
  var summary:Dictionary={}
  for key in samples:summary[key]=stats(samples[key])
  var compute_after=Compute.get_stats()
+ if profile_pipelines:
+  var pipeline_after=pipeline_snapshot()
+  var pipeline_delta:Dictionary={}
+  for key in pipeline_after:pipeline_delta[key]=pipeline_after[key]-pipeline_before[key]
+  print("PIPELINE_PHASE ",JSON.stringify({"phase":label,"round":current_round,"before":pipeline_before,"after":pipeline_after,"delta":pipeline_delta,"changes":pipeline_changes}))
  var compute_delta:Dictionary={}
  for key in compute_after:
   if compute_after[key] is int:compute_delta[key]=compute_after[key]-int(compute_before.get(key,0))
@@ -112,6 +142,9 @@ func run():
  Resident.stats.clear()
  Compute.reset_stats()
  for arg in OS.get_cmdline_user_args():
+  if arg=="--profile-pipelines":profile_pipelines=true
+  if arg=="--stress-board":stress_board=true
+  if arg.begins_with("--benchmark-rounds="):benchmark_rounds=clampi(int(arg.trim_prefix("--benchmark-rounds=")),2,20)
   if arg.begins_with("--capture-dir="):capture_dir=arg.trim_prefix("--capture-dir=")
   if arg=="--gpu-compute":Compute.enabled=true
   if arg=="--gpu-resident":Resident.enabled=true
@@ -161,8 +194,9 @@ func run():
  print("WINDOWS_SETUP ",JSON.stringify({"gpu":RenderingServer.get_video_adapter_name(),"method":RenderingServer.get_current_rendering_method(),"size":str(root.size),"phone":game._phone_hand_enabled(),"board_variant":game.original_board_bridge.probe.get("board_variant"),"vsync":DisplayServer.window_get_vsync_mode()}))
  var wp=game.original_board_bridge.probe.water_particles
  if is_instance_valid(wp):print("WINDOWS_PARTICLES ",JSON.stringify(wp.get_audit()))
- for round_index in 2:
+ for round_index in benchmark_rounds:
   await run_round(round_index)
+ if stress_board:await run_board_stress()
  if Resident.enabled:require(int(Resident.stats.get("frames",0))>0,"Resident path actually ran")
  if Compute.enabled:require(int(Compute.get_stats().get("dispatches",0))>0,"GPU experiment actually dispatched")
  quit()
@@ -190,3 +224,27 @@ func run_round(round_index:int):
 
 func make_game():
  return preload("res://tests/windows_renderer_benchmark_game.gd").new()
+
+func run_board_stress():
+ # Synthetic occupancy fixture; the measured action still uses production play,
+ # target resolution, summon, battlecry, rendering, cleanup and pool refill.
+ current_round=benchmark_rounds
+ await measure("stress_setup_settle",180,func():
+  game.start_match("practice");game.flow.test_clock_delta=0
+  game.mana=10;game.max_mana=10;game.tutorial_hint=false
+  while game.allies.size()<6:
+   var unit=game._new_unit("CS2_120",0,Vector2(800,game.FRIEND_Y))
+   unit.ready=true;unit.summoning_sick=false;game.allies.append(unit)
+  while game.enemies.size()<7:
+   game.enemies.append(game._new_unit("CS2_120",1,Vector2(800,game.ENEMY_Y)))
+  while game.cards.size()<10:game._add_card("CS2_120",false))
+ require(game.allies.size()==6 and game.enemies.size()==7 and game.cards.size()==10,"stress occupancy")
+ await measure("stress_full_board_idle",120,func():pass)
+ var hp=game.health[1]
+ await measure("stress_archer_battlecry",180,func():
+  require(game.play_card(card_index("CS2_189"),Vector2(800,500),3))
+  require(not game.pending_battlecry.is_empty())
+  game._resolve_target(game.ENEMY_HERO))
+ require(game.health[1]==hp-1 and not game.busy and game.allies.size()==7 and game.enemies.size()==7 and game.cards.size()==9,"stress action outcome")
+ await measure("stress_recovery_idle",180,func():pass)
+ print("WINDOWS_STRESS_PASS ",JSON.stringify(game.event_trace))

@@ -3,7 +3,9 @@ func _initialize():call_deferred("run")
 func run():
  var args=OS.get_cmdline_user_args()
  assert(ProjectSettings.get_setting("application/run/main_scene")=="res://main.tscn")
- assert(ProjectSettings.get_setting("rendering/renderer/rendering_method")=="gl_compatibility")
+ assert(ProjectSettings.get_setting("rendering/renderer/rendering_method")=="forward_plus")
+ assert(ProjectSettings.get_setting("rendering/renderer/rendering_method.mobile")=="forward_plus")
+ assert(ProjectSettings.get_setting("rendering/rendering_device/fallback_to_opengl3")==false)
  assert(change_scene_to_file("res://main.tscn")==OK)
  await scene_changed
  var game=current_scene

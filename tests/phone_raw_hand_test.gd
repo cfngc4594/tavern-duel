@@ -64,7 +64,7 @@ func run():
  var view=SubViewport.new();view.size=Vector2i(1600,900);root.add_child(view)
  var rig=Node3D.new();view.add_child(rig);var camera=Camera3D.new();rig.add_child(camera)
  var config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
- load("res://scripts/source_board_camera_policy.gd").apply(camera,rig,config,Vector2(1600,900),true)
+ load("res://scripts/source_board_camera_policy.gd").apply(camera,rig,Vector2(1600,900))
  host.source_projection=load("res://scripts/source_board_projection.gd").install(host,camera,Vector2(1600,900),Vector2(1600,900),Vector2.ZERO,{})
  for i in 10:
   var point=host.source_projection.source_to_screen(opposing.source_pose(i,10).position)

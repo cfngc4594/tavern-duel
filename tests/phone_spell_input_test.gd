@@ -27,7 +27,7 @@ func run():
   var view=SubViewport.new();view.size=Vector2i(size);root.add_child(view)
   var rig=Node3D.new();view.add_child(rig);var camera=Camera3D.new();rig.add_child(camera)
   var config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
-  load("res://scripts/source_board_camera_policy.gd").apply(camera,rig,config,size,true)
+  load("res://scripts/source_board_camera_policy.gd").apply(camera,rig,size)
   var game=load("res://tests/phone_spell_fixture.gd").new();root.add_child(game)
   game.source_projection=load("res://scripts/source_board_projection.gd").install(game,camera,size,size,Vector2.ZERO,{})
   game.native_phone_hand=load("res://scripts/native_phone_hand.gd").new();game.native_phone_hand.setup(game)

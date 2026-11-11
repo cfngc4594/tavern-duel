@@ -8,7 +8,7 @@ func run():
  var source:=Node3D.new();source.basis=Policy.REFLECTION;view.add_child(source)
  var camera_root:=Node3D.new();view.add_child(camera_root);var camera:=Camera3D.new();camera_root.add_child(camera);camera.current=true
  var config:Dictionary=JSON.parse_string(FileAccess.get_file_as_string('res://original_board/references/minimum_scene_config.json'))
- Policy.apply(camera,camera_root,config,Vector2(1600,900),true)
+ Policy.apply(camera,camera_root,Vector2(1600,900))
  var rope=Rope.new();source.add_child(rope);rope.setup();rope.begin(20.0)
  var frames:Array=[]
  for at in [0.0,0.2,0.5,0.75,0.88]:

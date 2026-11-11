@@ -1,9 +1,11 @@
 extends Node
 const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
-## Enabled original farm FSMs; also used by the flower controller below.
+## Shared source-action interpreter for the phone flower controller.
+## Historical filename retained for the inherited controller's resource identity.
 ## Source actions are interpreted in order. Unsupported effects remain explicit audit entries.
 const BASE='res://original_board/assets/farm/'
-const CAB='cab-995e7cbc44ff3e7f4314fc93360989d0:'
+const SOURCE_BASE='res://original_board/assets/phone/farm/'
+const CAB='cab-9132baeb567a19ab7fb9aa2f603d1eec:'
 const REFLECTION=Basis(Vector3(1,0,0),Vector3(0,1,0),Vector3(0,0,-1))
 var probe
 var source_cab=CAB
@@ -20,11 +22,11 @@ var press_active=false
 var entry_depth=0
 var next_tween_id=0
 var rng=RandomNumberGenerator.new()
-func source_kinds()->Array:return ['pumpkin1','pumpkin2','pumpkin3']
+func source_kinds()->Array:return [] # Concrete phone controller supplies its source systems.
 func setup(p,options:Dictionary={}):
  probe=p;rng.randomize()
  source_cab=str(options.get('source_cab',CAB))
- var source_base=str(options.get('source_base',BASE))
+ var source_base=str(options.get('source_base',SOURCE_BASE))
  for id in probe.source_nodes:
   var n=probe.source_nodes[id]
   local_rotations[id]=n.quaternion
@@ -51,7 +53,7 @@ func _go_id(sys,p)->String:
  return source_cab+str(p.m_PathID)
 func _node(sys,p):return probe.source_nodes.get(_go_id(sys,p))
 func _collider_node(kind):return probe.source_nodes.get(systems[kind].collider.refs['.m_GameObject'])
-func target_screen(kind='pumpkin1')->Vector2:
+func target_screen(kind='BushFlower01')->Vector2:
  var sys=systems[kind];var node=_collider_node(kind)
  return probe.camera.unproject_position(node.global_transform*probe.source_vector(sys.collider.data.m_Center))
 func hit_test(kind:String,screen:Vector2)->bool:

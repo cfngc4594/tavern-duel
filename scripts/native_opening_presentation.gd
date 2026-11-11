@@ -14,14 +14,13 @@ const Curves=preload("res://scripts/native_summon_curves.gd")
 const Rotation=preload("res://scripts/source_itween_rotation.gd")
 const SourceProjection=preload("res://scripts/source_board_projection.gd")
 const CameraPolicy=preload("res://scripts/source_board_camera_policy.gd")
-const BoardProbe=preload("res://original_board/scripts/board_probe.gd")
 const PREFIX="cab-69c88b234dfa427e02d1fcee9337ae34:"
 var disposed:=false
 var game
 var assets
 var layout:Dictionary={}
 var roots:Dictionary={}
-var mobile:=true
+const mobile=true
 var viewport:SubViewport
 var camera_root:Node3D
 var camera:Camera3D
@@ -66,7 +65,7 @@ var highlight_materials:Dictionary={}
 var audit:Dictionary={"build":"37.0.0.255130.254477","compatibility":["Godot source-camera/shader bridge","Godot original-font rasterization, not Unity glyph parity","source ParticleSystem modules on compatibility solver","announcer and START scheduling uses decoded duration, not original SoundManager frame-polling","START option12 enabled as local presentation setting; START actor-light fade not ported","Godot cosmetic RNG differs from Unity global RNG"]}
 
 func setup(host):
- game=host;mobile=CameraPolicy.source_ui_enabled();cosmetic.randomize()
+ game=host;cosmetic.randomize()
  intro_audio=IntroAudio.new();add_child(intro_audio);intro_audio.setup(game);intro_audio.muted=not game.sound_enabled
  starting_taunts=preload("res://scripts/source_opening_starting_taunts.gd").new();add_child(starting_taunts);starting_taunts.setup(game);starting_taunts.muted=not game.sound_enabled
  assets=Assets.new();assets.setup(game.native_card_renderer)
@@ -77,10 +76,9 @@ func setup(host):
  for profile in source.profiles:highlight_source[profile.label]=profile
  highlight_materials=JSON.parse_string(FileAccess.get_file_as_string("res://assets/native_cards/opening_highlight_materials.json"))
  viewport=SubViewport.new();viewport.name="OriginalOpeningViewport";viewport.own_world_3d=true;viewport.transparent_bg=true;viewport.msaa_3d=Viewport.MSAA_2X;add_child(viewport)
- var config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
- camera_root=Node3D.new();camera_root.transform=BoardProbe.raw_transform(config.unity_camera_root.data);viewport.add_child(camera_root)
- camera=Camera3D.new();camera_root.add_child(camera);camera.transform=BoardProbe.raw_transform(config.unity_camera.transform)
- var c=config.unity_camera.data;camera.fov=float(c["field of view"]);camera.near=float(c["near clip plane"]);camera.far=float(c["far clip plane"]);camera.current=true;camera.keep_aspect=Camera3D.KEEP_HEIGHT
+ camera_root=Node3D.new();viewport.add_child(camera_root)
+ camera=Camera3D.new();camera_root.add_child(camera);camera.current=true
+ CameraPolicy.apply(camera,camera_root,game.presentation_size)
  camera.set_meta("source_base_fov",camera.fov)
  var env=Environment.new();env.background_mode=Environment.BG_COLOR;env.background_color=Color(0,0,0,0);env.tonemap_mode=Environment.TONE_MAPPER_LINEAR;camera.environment=env
  world=Node3D.new();world.basis=SourceProjection.REFLECTION;viewport.add_child(world)
@@ -133,16 +131,15 @@ func _sync_tooltip_camera():
  tooltip_camera.global_transform=camera.global_transform
 
 static func array_vector(value:Array)->Vector3:return Vector3(value[0],value[1],value[2])
-func anchor(key:String)->Vector3:return array_vector(layout[key]["phone" if mobile else "desktop"].position)
+func anchor(key:String)->Vector3:return array_vector(layout[key].phone.position)
 func row_position(index:int,initial:bool=false)->Vector3:
- return Motion.row_position(index,game.flow.first_hand_count,anchor("StartingHandZone"),float(layout.StartingHandZone["phone" if mobile else "desktop"].bounds_size[0]),anchor("Zone_Friendly_Hand").y,mobile,initial)
+ return Motion.row_position(index,game.flow.first_hand_count,anchor("StartingHandZone"),float(layout.StartingHandZone.phone.bounds_size[0]),anchor("Zone_Friendly_Hand").y,initial)
 static func intro_duration()->float:return 1.57+IntroAudio.intro_extension()
 static func deal_delay(index:int)->float:return Timeline.bonus_card_launch() if index==3 else Timeline.base_card_launch(index)
 static func deal_duration(first_side:int)->float:return Timeline.deal_duration(first_side==0)
 func refresh_layout():
  viewport.size=game.board_render_target_size;sprite.position=Vector2(800,450);sprite.scale=game.presentation_size/Vector2(viewport.size)
- var config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
- CameraPolicy.apply(camera,camera_root,config,game.presentation_size,mobile)
+ CameraPolicy.apply(camera,camera_root,game.presentation_size)
  _sync_tooltip_camera()
 func _process(_delta:float):
  if disposed or not is_instance_valid(sprite) or not sprite.visible:return
@@ -237,7 +234,7 @@ func _apply_pose(card:Dictionary,pose:Dictionary):
  card.root.visible=bool(pose.get("visible",true))
 func _deck_top()->Vector3:
  if is_instance_valid(game.spatial_scene.phone_deck_renderer):return game.spatial_scene.phone_deck_renderer.top_of_deck(0)
- # Desktop candidate may not have the phone deck actor. The source full bone
+ # A standalone fixture may not have the phone deck actor. The source full bone
  # is read from the same verified original hierarchy, never from screen pixels.
  var d=JSON.parse_string(FileAccess.get_file_as_string("res://assets/native_cards/phone_deck_runtime.json"))
  return array_vector(d.rows["Zone_Friendly_Deck:m_TicknessFullTopOfDeck"].phone_world_position)
@@ -354,9 +351,9 @@ func _selection(index:int,card:Dictionary):
  var selected=phase=="mulligan" and game.flow.selected.has(index)
  var row:Dictionary=ui[id];row.x.root.visible=selected;row.text.root.visible=selected
  if not selected:return
- row.x.root.position=card.pose.position;row.x.root.basis=Rotation.source_basis(card.pose.rotation).scaled(Vector3.ONE*(1.700000047683716 if mobile else 1.91))
- row.text.root.position=card.pose.position+Vector3(0,.1,-1.1 if mobile else -float(layout.StartingHandZone.desktop.bounds_size[2])/2.6)
- if mobile:row.text.root.scale=Vector3.ONE*.9
+ row.x.root.position=card.pose.position;row.x.root.basis=Rotation.source_basis(card.pose.rotation).scaled(Vector3.ONE*(1.700000047683716))
+ row.text.root.position=card.pose.position+Vector3(0,.1,-1.1)
+ row.text.root.scale=Vector3.ONE*.9
 
 func _choices_position(index:int,age:float)->Vector3:
  var target:Vector3=row_position(index)
@@ -368,13 +365,13 @@ func _card_pose(index:int,t:float)->Dictionary:
  # resolves replacement IDs synchronously; no visual timer chooses any card.
  var count:int=game.flow.first_hand_count
  var target:Vector3=row_position(index)
- var pose={"position":target,"rotation":Vector3.ZERO,"scale":Motion.card_scale(mobile),"visible":phase!="intro","key":game.flow.opening_hand[index]}
+ var pose={"position":target,"rotation":Vector3.ZERO,"scale":Motion.card_scale(),"visible":phase!="intro","key":game.flow.opening_hand[index]}
  if phase=="deal":
   var local:float=t-deal_delay(index)
   var initial:Vector3=row_position(index,count==3)
   pose.position=Motion.deal_position(_deck_top(),initial,local)
   pose.rotation=Motion.deal_rotation(Motion.DECK_EULER,local)
-  pose.scale=Motion.deal_scale(Motion.DECK_SCALE,local,mobile)
+  pose.scale=Motion.deal_scale(Motion.DECK_SCALE,local)
   pose.visible=local>=0
   if count==3 and t>=Timeline.spread_start():pose.position=Motion.spread_position(initial,target,t-Timeline.spread_start())
   return pose
@@ -400,7 +397,7 @@ func _card_pose(index:int,t:float)->Dictionary:
   pose.scale=pose.scale.lerp(rest.scale,Rotation.ease_out_expo_progress(age,.25))
  return pose
 func _replacement_clip(pose:Dictionary,age:float,reverse:bool):
- var name="MulliganCardFlipDownToDeck_iPhone" if mobile else "MulliganCardFlipDownToDeck"
+ var name="MulliganCardFlipDownToDeck_iPhone"
  var data:Dictionary=assets.clips[name].data
  var duration:float=float(data.m_MuscleClip.m_StopTime)
  var t=clampf(duration-age if reverse else age,0,duration)
@@ -464,7 +461,7 @@ func _sample_heroes():
   # EndMulligan0x6005c50 shows health/attack immediately before hand layout.
   for gem in hero_saved[side].gems:gem.node.visible=gem.visible and phase in ["coin","gather"]
   if match_time<2.6333334+intro_extension:
-   var clip=("hisheroAnimatesToPosition" if side==0 else "myheroAnimatesToPosition")+("_iPhone" if mobile else "")
+   var clip=("hisheroAnimatesToPosition" if side==0 else "myheroAnimatesToPosition")+"_iPhone"
    assets.sample_clip(actor,str(assets.objects[roots[clip]].name),maxf(0,match_time-1.1-intro_extension))
   else:actor.root.transform=hero_saved[side].transform
 func _restore_heroes():

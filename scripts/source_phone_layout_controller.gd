@@ -1,6 +1,6 @@
 extends Node
-## Atomic registration for the shared source scene, recovered from the phone UI.
-## Desktop uses the same visual/input geometry with its own mouse gestures.
+## Atomic registration for the sole phone source scene.
+## Editor preview uses the same geometry with mouse input for development.
 const Layout=preload("res://scripts/source_phone_board_layout.gd")
 const Policy=preload("res://scripts/source_board_camera_policy.gd")
 const SourceProjection=preload("res://scripts/source_board_projection.gd")
@@ -34,7 +34,7 @@ func refresh():
  if game==null:return
  var canvas:Vector2=game.presentation_size
  viewport.size=game.board_render_target_size
- Policy.apply(camera,camera_root,{},canvas,true)
+ Policy.apply(camera,camera_root,canvas)
  var flow=game.get("flow")
  var temporary=int(flow.temporary_mana[0]) if flow!=null else 0
  var options={"aspect":canvas.x/canvas.y,"permanent_mana_count":game.max_mana,"temporary_mana_count":temporary,"end_turn_enabled":game.player_turn}

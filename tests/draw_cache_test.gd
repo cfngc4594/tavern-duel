@@ -18,22 +18,6 @@ class DrawProbe extends Node2D:
    for corner in [CORNER_TOP_LEFT,CORNER_TOP_RIGHT,CORNER_BOTTOM_LEFT,CORNER_BOTTOM_RIGHT]:assert(style.get_corner_radius(corner)==radius)
    game._panel(Rect2(i,20,20,40),fill,edge,radius,width)
    assert(game._panel_styles[key]==style)
-  game.cards=[{"pos":Vector2(50,50),"angle":.17,"scale":.8,"lift":.000000001}]
-  game._draw_hand_underlay()
-  assert(game._static_hand_shadow_meshes.is_empty()) # Exact zero only, not approximate zero.
-  game.cards[0].lift=0.0
-  game._draw_hand_underlay()
-  assert(game._static_hand_shadow_meshes.size()==5)
-  for layer in range(1,6):
-   var mesh=game._static_hand_shadow_mesh(layer)
-   assert(mesh==game._static_hand_shadow_mesh(layer))
-   var arrays=mesh.surface_get_arrays(0)
-   var points=game._card_surface_outline(1+layer*.018)
-   assert(arrays[Mesh.ARRAY_VERTEX]==points)
-   assert(arrays[Mesh.ARRAY_INDEX]==Geometry2D.triangulate_polygon(points))
-  for lift in [-3.0,.001,1.0,50.0]:
-   game.cards[0].lift=lift;game._draw_hand_underlay()
-   assert(game._static_hand_shadow_meshes.size()==5)
   done=true
 func _initialize():call_deferred("run")
 func run():
@@ -52,5 +36,5 @@ func run():
  var probe=DrawProbe.new();probe.game=game;root.add_child(probe)
  for i in 5:await process_frame
  assert(probe.done)
- print("DESKTOP_DRAW_CACHE_PASS 1011 exact outline factors, caller isolation, 130 dynamic styles, bounded cache and rect-independent reuse, static hand mesh geometry and exact-zero dynamic fallback")
+ print("DRAW_CACHE_PASS 1011 exact outline factors, caller isolation, 130 dynamic styles, bounded cache and rect-independent reuse")
  probe.queue_free();await process_frame;game.free();quit()

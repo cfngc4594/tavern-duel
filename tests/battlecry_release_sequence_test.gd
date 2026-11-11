@@ -8,7 +8,7 @@ func run():
  game.player_turn=true;game.mana=10;game.busy=false;game.game_over=false;game.flow.phase="playing"
  var camera=Camera3D.new();var rig=Node3D.new();game.add_child(rig);rig.add_child(camera)
  var size=Vector2(1600,900)
- load("res://scripts/source_board_camera_policy.gd").apply(camera,rig,{},size,true)
+ load("res://scripts/source_board_camera_policy.gd").apply(camera,rig,size)
  game.source_projection=load("res://scripts/source_board_projection.gd").install(game,camera,size,size,Vector2.ZERO,{})
  game.native_phone_hand=load("res://scripts/native_phone_hand.gd").new();game.native_phone_hand.setup(game)
  var row=Layout.recovered_items(0,0,{"aspect":size.x/size.y}).friendly_play.source_row

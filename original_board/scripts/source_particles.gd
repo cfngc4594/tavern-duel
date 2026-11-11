@@ -20,7 +20,7 @@ func setup(probe,options:Dictionary={}):
  owner_probe=probe
  render_quality_level=clampi(int(options.get("render_quality_level",-1)),-1,2)
  render_quality_source=str(options.get("render_quality_source","Explicit caller quality" if render_quality_level>=0 else "Unspecified source quality"))
- data=SourceStore.json_for(owner_probe,str(options.get('source_file','res://original_board/assets/water_particles/source.json')))
+ data=SourceStore.json_for(owner_probe,str(options.get('source_file','res://original_board/assets/phone/water_particles/source.json')))
  for row in data.emitters:
   var key=str(row.node_id)
   if not probe.source_nodes.has(key):errors.append('Missing source emitter '+key);continue

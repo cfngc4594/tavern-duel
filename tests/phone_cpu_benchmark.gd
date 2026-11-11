@@ -19,7 +19,7 @@ func run():
  measure("hand_update",func():game._update_hand(1.0/60))
  measure("board_advance",func():game.original_board_bridge.advance(1.0/60))
  var probe=game.original_board_bridge.probe
- for key in ["door_interaction","window_lamp_interaction","arch_interactions","kite_interactions","pumpkin_interaction","bush_interactions","water_interactions","water_particles"]:
+ for key in ["door_interaction","arch_interactions","bush_interactions","water_interactions","water_particles"]:
   var item=probe.get(key)
   if is_instance_valid(item):measure(key,func():item.advance(1.0/60))
  measure("materials",func():probe.material_factory.advance(10))

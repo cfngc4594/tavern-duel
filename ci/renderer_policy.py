@@ -81,7 +81,7 @@ def read_packed_renderer_settings(data):
 def validate_packed_renderer(data):
     settings = read_packed_renderer_settings(data)
     # Godot 4.7.1 omits properties equal to their engine defaults when saving
-    # project.binary. Desktop Forward+ is such a default; mobile Forward+ and
+    # project.binary. Base Forward+ is such a default; mobile Forward+ and
     # disabled OpenGL fallback are NOT defaults and must remain explicit.
     effective = dict(settings)
     effective.setdefault("rendering/renderer/rendering_method", "forward_plus")

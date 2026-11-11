@@ -26,15 +26,12 @@ func run():
  assert(controller.contains("friendly_hero",controller.snapshot.items.friendly_hero.center))
  var mobile=OS.has_feature("android") or OS.has_feature("ios")
  assert(Policy.phone_platform_requested()==mobile) # Never impersonate touch hardware.
- ProjectSettings.set_setting("native_ui/shared_source_ui",false)
- controller.refresh();assert(controller.enabled==mobile)
- ProjectSettings.set_setting("native_ui/shared_source_ui",true)
- controller.refresh();assert(controller.enabled)
+ assert(controller.enabled) # One phone layout on device and editor.
  ProjectSettings.set_setting("native_mobile/source_consumers_verified",false)
  controller.refresh();assert(not controller.enabled and controller.context==null)
  assert(not Policy.source_ui_enabled())
  ProjectSettings.set_setting("native_mobile/source_consumers_verified",true)
  controller.refresh();assert(controller.enabled and controller.context!=null)
  assert(FileAccess.get_file_as_string("res://scripts/game.gd").contains('if OS.has_feature("android") or OS.has_feature("ios"): return'))
- print("SHARED_UI_POLICY_PASS production default, explicit compatibility opt-out, atomic readiness, and unchanged real platform identity")
+ print("MOBILE_UI_POLICY_PASS phone-only production and editor default, atomic readiness, and unchanged real platform identity")
  host.queue_free();await process_frame;quit()

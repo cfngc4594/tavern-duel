@@ -34,7 +34,7 @@ func run():
  var rig=Node3D.new();bridge.probe.add_child(rig);bridge.probe.camera=Camera3D.new();rig.add_child(bridge.probe.camera)
  var policy=load("res://scripts/source_board_camera_policy.gd")
  var config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
- policy.apply(bridge.probe.camera,rig,config,Vector2(1600,900),true)
+ policy.apply(bridge.probe.camera,rig,Vector2(1600,900))
  game.source_projection=load("res://scripts/source_board_projection.gd").install(game,bridge.probe.camera,Vector2(1600,900),Vector2(1600,900),Vector2.ZERO,{})
  game.native_phone_hand=load("res://scripts/native_phone_hand.gd").new();game.native_phone_hand.setup(game);game.native_phone_hand.mini_hand_play_enabled=true
  game.cards=[{"key":"X","pos":Vector2.ZERO,"scale":.75,"angle":0,"spring":Vector2.ZERO}]

@@ -1,7 +1,7 @@
 extends Node
 const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 const Curves=preload('res://original_board/scripts/source_legacy_curves.gd')
-const SOURCE='res://original_board/assets/door/door.json'
+const SOURCE='res://original_board/assets/phone/door/door.json'
 var probe
 var source:Dictionary
 var clips:Dictionary={}
@@ -25,8 +25,7 @@ func setup(p,options:Dictionary={}):
  if source.has('listener_transform'):
   listener.transform=probe.raw_transform(source.listener_transform)
  else:
-  var cameras=SourceStore.json_for(probe,'res://original_board/references/board_cameras_source.json')
-  listener.transform=probe.raw_transform(cameras.objects['cab-82d08c8cc01bd15ce55e7d57190fd3af:-7043871136962440904'].data)
+  push_error('Missing verified phone audio listener transform');return
  listener.make_current()
  events.append({'event':'ready','state':state})
 func hit_test(screen:Vector2)->bool:

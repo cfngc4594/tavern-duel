@@ -32,7 +32,7 @@ func run():
  var vp=SubViewport.new();vp.size=Vector2i(2000,900);owner.add_child(vp)
  var cr=Node3D.new();vp.add_child(cr);var camera=Camera3D.new();cr.add_child(camera)
  var config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
- Policy.apply(camera,cr,config,Vector2(vp.size),true)
+ Policy.apply(camera,cr,Vector2(vp.size))
  var point=Vector3(-7.8,.3,-5.6)
  var anchors={}
  for key in ["hero:0","hero:1","power:0","power:1","play:0","play:1"]:

@@ -9,7 +9,7 @@ func run():
  var camera_root=Node3D.new();vp.add_child(camera_root)
  var camera=Camera3D.new();camera_root.add_child(camera)
  for canvas in [Vector2(1600,900),Vector2(2000,900),Vector2(1600,1200)]:
-  vp.size=Vector2i(canvas);Policy.apply(camera,camera_root,config,canvas,true)
+  vp.size=Vector2i(canvas);Policy.apply(camera,camera_root,canvas)
   var p=Vector3(-7.8,-0.04758995771408081,-5.6)
   var anchors={"play:0":{"position":p,"rotation":Quaternion.IDENTITY,"scale":Vector3.ONE,"verified":true,"source":"synthetic plane test, not source scale evidence"}}
   var context=SourceProjection.install(owner,camera,Vector2(vp.size),canvas,(canvas-Vector2(1600,900))*.5,anchors)
@@ -29,7 +29,7 @@ func run():
   assert(other.fov==camera.fov and other.projection==camera.projection)
   other.queue_free()
   SourceProjection.unregister(owner);assert(SourceProjection.from_game(owner)==null)
- Policy.apply(camera,camera_root,config,Vector2(1600,900),false)
+ camera.set_meta("native_phone_registered",false)
  assert(SourceProjection.install(owner,camera,Vector2(vp.size),Vector2(vp.size),Vector2.ZERO,{})==null)
- print("SOURCE_BOARD_PROJECTION_PASS round trip three aspects, explicit plane, missing anchors rejected, phone camera copied, desktop rejected")
+ print("SOURCE_BOARD_PROJECTION_PASS round trip three aspects, explicit plane, missing anchors rejected, phone camera copied, unregistered camera rejected")
  owner.queue_free();quit()

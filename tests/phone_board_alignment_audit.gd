@@ -10,9 +10,9 @@ func run():
    tr[n.id]=(Transform3D.IDENTITY if n.parent=="" else tr[n.parent])*local;pending.erase(n)
  var config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
  var vp=SubViewport.new();vp.size=Vector2i(1600,900);root.add_child(vp);var cr=Node3D.new();vp.add_child(cr);var cam=Camera3D.new();cr.add_child(cam)
- for phone in [false,true]:
-  Policy.apply(cam,cr,config,Vector2(1600,900),phone)
+ for size in [Vector2(1600,900),Vector2(1600,1200)]:
+  vp.size=Vector2i(size);Policy.apply(cam,cr,size)
   for n in d.nodes:
    if n.name.begins_with("HeroBackPlate"):
-    print("PHONE=",phone," ",n.name," center=",cam.unproject_position(tr[n.id].origin))
+    print("PHONE_SIZE=",size," ",n.name," center=",cam.unproject_position(tr[n.id].origin))
  quit()

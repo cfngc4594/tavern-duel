@@ -61,8 +61,11 @@ func run():
  var view=SubViewport.new();view.size=Vector2i(2560,1440);view.own_world_3d=true;root.add_child(view)
  var camera=Camera3D.new();view.add_child(camera);camera.projection=Camera3D.PROJECTION_ORTHOGONAL;camera.keep_aspect=Camera3D.KEEP_HEIGHT;camera.size=9.0;camera.position=Vector3(0,0,30);camera.current=true
  piece.root.reparent(view);second.root.reparent(view)
- var spatial=load("res://scripts/classic_spatial.gd").new()
- var face_mesh=spatial._rectangle_face(1.64,2.42,0.034)
+ var face_mesh=ArrayMesh.new()
+ var arrays=[];arrays.resize(Mesh.ARRAY_MAX)
+ arrays[Mesh.ARRAY_VERTEX]=PackedVector3Array([Vector3(-.82,1.21,.034),Vector3(.82,1.21,.034),Vector3(.82,-1.21,.034),Vector3(-.82,-1.21,.034)])
+ arrays[Mesh.ARRAY_INDEX]=PackedInt32Array([0,1,2,0,2,3])
+ face_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
  var face_vertices=face_mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
  var max_error=0.0
  for pair in [[piece,"minion_in_hand"],[second,"spell_in_hand"]]:
@@ -86,4 +89,4 @@ func run():
  assert(shader_source.contains("ALBEDO=source_backend_inverse(result.rgb)"))
  assert(shader_source.contains("uniform sampler2D _MainTex : source_color"))
  assert(shader_source.contains("uniform sampler2D _FlareTex : source_color"))
- spatial.free();renderer.free();view.queue_free();host.queue_free();quit()
+ renderer.free();view.queue_free();host.queue_free();quit()

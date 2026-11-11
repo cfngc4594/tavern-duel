@@ -52,7 +52,6 @@ func run():
  game=load("res://main.tscn").instantiate();root.add_child(game);await process_frame;game.set_process(false)
  game.headless=false;game._setup_spatial_presentation()
  # Keep prepared-scene inventory work outside this focused comparison.
- preload("res://scripts/archer_prepared_scene_pool.gd").enabled=false
  if "--serial-source-benchmark" in OS.get_cmdline_user_args():
   benchmark_serial_sources();game.free();quit(1 if failed else 0);return
  if "--benchmark" in OS.get_cmdline_user_args():

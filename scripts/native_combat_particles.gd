@@ -28,6 +28,7 @@ const SUPPORTED_MODULES := ["InitialModule", "ShapeModule", "EmissionModule", "S
 const CapacityBatch = preload("res://scripts/particle_capacity_batch.gd")
 const ColorSampler = preload("res://scripts/particle_color_sampler.gd")
 const SizeSampler = preload("res://scripts/particle_size_sampler.gd")
+const STATUS_PARTICLES := "res://scripts/native_status_particles.gd"
 const BASIC_UVS = [
 	[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)],
 	[Vector2(1, 0), Vector2(0, 0), Vector2(0, 1), Vector2(1, 1)],
@@ -50,6 +51,7 @@ var _candidate_time: float = -INF
 var _worker_states: Dictionary = {}
 var _worker_indices: Array[int] = []
 var _worker_filtered: bool = false
+var _is_status_solver := false
 var _quad_index_cache := PackedInt32Array()
 var raw: Dictionary = {}
 # Scoped to one _particle_state call; never reused across source/module changes.
@@ -128,6 +130,7 @@ func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> vo
 	var stages:Dictionary={}
 	emission_playing = bool(spec.get("autoplay", true))
 	raw = spec.system.data.duplicate(true)
+	_is_status_solver = get_script().resource_path == STATUS_PARTICLES
 	playback_speed = float(raw.get("simulationSpeed", 1.0))
 	speed_segments = [{"at": 0.0, "sim": 0.0, "speed": playback_speed}]
 	source_renderer = spec.renderer.get("data", {})
@@ -767,7 +770,7 @@ func _particle_state(p: Dictionary, age: float) -> Dictionary:
 	if _seek_constant_step if _seek_context_active else (_can_constant_step() or _can_random_force_step()):
 		state = _constant_step_state(p, state, age)
 	else:
-		var reuse_state: bool = get_script().get_base_script() == null and collision_planes.is_empty()
+		var reuse_state: bool = (_is_status_solver or get_script().get_base_script() == null) and collision_planes.is_empty()
 		while float(state.age) + STEP <= age + EPSILON:
 			state = _integrate_step(p, state, STEP, true) if reuse_state else _integrate(p, state, STEP)
 	p.sim_age = state.age; p.displacement = state.position; p.sim_velocity = state.velocity; p.sim_rotation = state.rotation; p.sim_render_velocity = state.get("render_velocity", state.velocity); p.kill_age = state.kill_age; p.collision_loss = state.collision_loss; p.collision_hits = state.collision_hits
@@ -867,11 +870,20 @@ func seek(seconds: float) -> void:
 	screen_size_clamped = 0
 	collision_count = 0
 	var vertices := PackedVector3Array(); var uvs := PackedVector2Array(); var colors := PackedColorArray(); var indices := PackedInt32Array(); var normals := PackedVector3Array()
-	# Exact live count is known for eligible collisionless billboard solvers.
-	var indexed_quads: bool = _worker_filtered and int(source_renderer.get("m_RenderMode", 0)) in [0, 1, 2]
+	# Status extends birth and lifecycle behavior only. Its draw loop can reuse
+	# the base snapshots and discard expired candidates while keeping rewind data.
+	var status_solver := _is_status_solver and not particles.is_empty()
+	var draw_indices: Array
+	if _worker_filtered:
+		draw_indices = _worker_indices
+	elif status_solver:
+		draw_indices = _particle_candidates(now)
+	else:
+		draw_indices = range(particles.size())
+	var indexed_quads := (_worker_filtered or status_solver) and int(source_renderer.get("m_RenderMode", 0)) in [0, 1, 2]
 	var quad_cursor: int = 0
 	if indexed_quads:
-		var count: int = _worker_indices.size()
+		var count: int = draw_indices.size()
 		vertices.resize(count * 4); uvs.resize(count * 4); colors.resize(count * 4); normals.resize(count * 4)
 	var camera: Camera3D = get_viewport().get_camera_3d() if is_inside_tree() else null
 	var view_right := camera.global_basis.x.normalized() if camera != null else compatibility_basis.x.normalized()
@@ -880,7 +892,7 @@ func seek(seconds: float) -> void:
 	if capture_camera_up.length_squared()>0.0:view_up=capture_camera_up.normalized()
 	var view_normal := view_right.cross(view_up).normalized()
 	# No subclass callback can mutate these module/renderer snapshots mid-seek.
-	var frame_modules: bool = get_script().get_base_script() == null
+	var frame_modules: bool = not draw_indices.is_empty() and (status_solver or get_script().get_base_script() == null)
 	var size_module: Dictionary = raw.get("SizeModule", {})
 	var color_module: Dictionary = raw.get("ColorModule", {})
 	var size_enabled: bool = bool(size_module.get("enabled", false))
@@ -905,7 +917,7 @@ func seek(seconds: float) -> void:
 	if shared_local_motion:
 		local_motion=_motion_basis(frame,local_scale)
 		local_scale_x=local_motion.x.length();local_scale_y=local_motion.y.length();local_scale_z=local_motion.z.length()
-	for particle_index in (_worker_indices if _worker_filtered else range(particles.size())):
+	for particle_index in draw_indices:
 		var p: Dictionary = particles[particle_index]
 		var age := now - float(p.birth)
 		if age < 0.0 or age >= minf(float(p.life), float(p.get("kill_age", INF))) or (float(p.birth) > stop_time and not bool(p.get("manual_emit", false))): continue
@@ -1513,7 +1525,7 @@ func _prepare_worker_states(now: float) -> void:
 	if profile_seek:_worker_profile.collect_usec=Time.get_ticks_usec()-collect_started
 
 func _particle_candidates(now: float) -> Array[int]:
-	if get_script().get_base_script() != null:
+	if not _is_status_solver and get_script().get_base_script() != null:
 		var unfiltered: Array[int] = []
 		for index in range(particles.size()): unfiltered.append(index)
 		return unfiltered

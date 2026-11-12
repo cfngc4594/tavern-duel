@@ -42,7 +42,8 @@ func setup(spec: Dictionary,assets,parent_root: Node3D,seed_value: int) -> void:
 func clear_particles(seconds: float=-1.0) -> void:
  var at: float=elapsed_seconds if seconds<0.0 else maxf(seconds,0.0)
  seek(at)
- particles.clear();live_count=0;mesh.clear_surfaces();clear_count+=1
+ particles.clear();_candidate_indices.clear();_candidate_seen=0
+ live_count=0;mesh.clear_surfaces();clear_count+=1
  # Clear is not Stop/Destroy: retain emission timing, pending future births,
  # speed segments, renderer/source identity, and the local random stream.
 func source_play(seconds: float=-1.0) -> void:

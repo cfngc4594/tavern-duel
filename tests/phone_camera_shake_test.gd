@@ -8,7 +8,7 @@ func run():
  var view=SubViewport.new();view.size=Vector2i(2400,1080);root.add_child(view)
  var cr=Node3D.new();view.add_child(cr);var camera=Camera3D.new();cr.add_child(camera)
  var follower=Camera3D.new();view.add_child(follower)
- var canvas=Vector2(2000,900);Policy.apply(camera,cr,config,canvas,true)
+ var canvas=Vector2(2000,900);Policy.apply(camera,cr,canvas)
  var context=SourceProjection.new();context.configure(camera,Vector2(view.size),canvas,Vector2(200,0),{})
  var base=camera.global_transform
  var shake=Shake.new();shake.request(Vector3(.1,.2,.3),1.0);shake.advance(.016)
@@ -28,13 +28,13 @@ func run():
  var da=context.source_to_screen(a)-before_a;var db=context.source_to_screen(b)-before_b
  assert(not da.is_equal_approx(db))
  # Resize re-registers an unshaken base, then reapplies the same sample once.
- Policy.apply(camera,cr,config,Vector2(1600,900),true)
+ Policy.apply(camera,cr,Vector2(1600,900))
  var resized=camera.global_transform;shake.present_source_camera(context)
  assert(camera.global_position.is_equal_approx(resized.origin+Vector3(offset.x,offset.y,-offset.z)))
  shake.stop();assert(shake.present_source_camera(context));assert(camera.global_transform.is_equal_approx(resized))
- # Desktop path keeps the legacy screen displacement and does not mutate camera.
- Policy.apply(camera,cr,config,canvas,false);var desktop=camera.global_transform
+ # A detached or unregistered camera must not be mutated.
+ camera.set_meta("native_phone_registered",false);var detached=camera.global_transform
  shake.request(Vector3(.1,.2,.3),1.0);shake.advance(.016);var screen=shake.screen_offset
  assert(not shake.present_source_camera(context));assert(shake.screen_offset==screen)
- assert(camera.global_transform.is_equal_approx(desktop))
- view.queue_free();print("PHONE_CAMERA_SHAKE_PASS: source WORLD xyz, once-only, follower copy, depth parallax, resize/recovery, desktop unchanged");quit()
+ assert(camera.global_transform.is_equal_approx(detached))
+ view.queue_free();print("PHONE_CAMERA_SHAKE_PASS: source WORLD xyz, once-only, follower copy, depth parallax, resize/recovery, unregistered camera rejected");quit()

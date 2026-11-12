@@ -2,6 +2,8 @@
 
 Godot card-battle prototype based on the `godot-child` particle optimization candidate from 2026-11-06. It is not a claim of improved whole-game FPS or Android stability.
 
+The supported build is Android. The Godot editor previews the phone layout with mouse input.
+
 ## Build APK
 
 Run **Actions → Android candidate APK → Run workflow**. The artifact contains the APK, SHA256 and validation report. Godot 4.7.1, ARM64, Android 7+.

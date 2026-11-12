@@ -39,4 +39,8 @@ func run():
  assert(not second.dead and game.enemies.has(second) and not game.busy)
  assert(fx.archer_audio_owners.is_empty())
  print("ARCHER_OBSERVED_DEATH_CANCEL_BEFORE_IMPACT_PASS")
- game.native_death=native;game.queue_free();quit()
+ game.native_death=native
+ await manager.shutdown_audio()
+ game.queue_free()
+ await process_frame
+ quit()

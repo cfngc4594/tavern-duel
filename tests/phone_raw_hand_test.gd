@@ -63,8 +63,7 @@ func run():
  assert(opposing.source_pose(0,3).rotation.y==0)
  var view=SubViewport.new();view.size=Vector2i(1600,900);root.add_child(view)
  var rig=Node3D.new();view.add_child(rig);var camera=Camera3D.new();rig.add_child(camera)
- var config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
- load("res://scripts/source_board_camera_policy.gd").apply(camera,rig,config,Vector2(1600,900),true)
+ load("res://scripts/source_board_camera_policy.gd").apply(camera,rig,Vector2(1600,900))
  host.source_projection=load("res://scripts/source_board_projection.gd").install(host,camera,Vector2(1600,900),Vector2(1600,900),Vector2.ZERO,{})
  for i in 10:
   var point=host.source_projection.source_to_screen(opposing.source_pose(i,10).position)
@@ -83,4 +82,8 @@ func run():
  print("PHONE_OPPOSING_DRAW_QUEUE_PASS hidden queued card, original source bones, serialized flights, hand endpoint")
  print("PHONE_OPPOSING_HAND_PASS original Card_Hidden460 vertices, defaultback shader/texture, shadow, enemy span40, scale .682/.125/.682")
  print("PHONE_RAW_HAND_PASS ten original geometry/glyph clones; source TRS/Z reflection, raw highlight, cache reuse, missing-pose refusal. CPU clone_us=",clone_usec," sync_us=",sync_usec," inventory=",pass3d.audit)
+ await root.get_node("SoundManager").shutdown_audio()
+ load("res://scripts/source_board_projection.gd").unregister(host)
+ host.free();view.free()
+ await process_frame
  quit()

@@ -18,9 +18,9 @@ var report={}
 func check(value,label):
  if not value:failures.append(label)
 func _initialize():call_deferred('_run')
-func fixture(phone=true,quality=-1):
+func fixture(quality=-1):
  var p=Probe.new();root.add_child(p);p.source_root=Node3D.new();p.add_child(p.source_root)
- var path='res://original_board/assets/phone/scene_phone.json' if phone else 'res://original_board/assets/scene.json'
+ var path='res://original_board/assets/phone/scene_phone.json'
  var scene=JSON.parse_string(FileAccess.get_file_as_string(path))
  var reflect=Controller.REFLECTION
  for row in scene.nodes:
@@ -30,7 +30,7 @@ func fixture(phone=true,quality=-1):
   var q=row.rotation;var s=row.scale;var pos=row.position
   n.transform=Transform3D((reflect*Basis(Quaternion(q.x,q.y,q.z,q.w))*reflect).scaled_local(Vector3(s.x,s.y,s.z)),reflect*Vector3(pos.x,pos.y,pos.z));n.visible=bool(row.active)
  var c=Controller.new();p.add_child(c)
- c.setup(p,{'source_file':'res://original_board/assets/phone/water_particles/source.json','render_quality_level':quality} if phone else {})
+ c.setup(p,{'source_file':'res://original_board/assets/phone/water_particles/source.json','render_quality_level':quality})
  return {'p':p,'c':c}
 func ambient(c):return c.entries.values().filter(func(e):return e.row.get('source_category','')=='environment')
 func ambient_playing(c):return ambient(c).filter(func(e):return e.playing).size()
@@ -101,9 +101,6 @@ func _run():
  for mat in f.p.material_factory.materials:check(mat.get_shader_parameter('_UnitySHW')==Vector3(0.2,0.3,0.4),'Board current lighting applied')
  report={'source_emitters':20,'environment_emitters':emissions,'unknown_auto':4,'medium_auto':8,'ripple_count_at60_including_source_prewarm':356,'spray_count_at60_including_source_prewarm':450,'ripple_new_particles_after_warmup':329,'spray_new_particles_after_warmup':400,'max_particle_storage':max_storage,'source_texture_materials_registered':f.p.material_factory.materials.size(),'source_gates':'unknown/low/medium/high + ancestor disable/reactivate','stop_tail_count':tail,'scope':'CPU fixed-step source-data, activation, emission, sorting and lifetime fixture. No device/emulator or pixel-equivalence claim.'}
  c.close_interaction();c.close_interaction();f.p.queue_free();await process_frame
- var desktop=fixture(false);check(desktop.c.entries.size()==16,'Desktop original16 unaffected')
- for e in desktop.c.entries.values():check(not e.row.has('solver_options'),'Desktop solver options unchanged')
- desktop.c.close_interaction();desktop.p.queue_free();await process_frame
  var again=fixture();check(ambient_playing(again.c)==4,'Repeated PHONE fixture resets unknown quality')
  again.c.close_interaction();again.p.queue_free();await process_frame
  report.ok=failures.is_empty();report.failures=failures

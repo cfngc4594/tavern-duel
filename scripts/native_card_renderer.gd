@@ -704,7 +704,7 @@ func _update_health_stat_tint(state: Dictionary, health: int, max_health: int, b
 	if not is_instance_valid(node) or not node is MeshInstance3D:return
 	var material=node.mesh.surface_get_material(0)
 	if material is ShaderMaterial:
-		material.set_shader_parameter("text_tint",health_stat_color(health,max_health,base_health,OS.has_feature("android") or OS.has_feature("ios")))
+		material.set_shader_parameter("text_tint",health_stat_color(health,max_health,base_health,true))
 
 func clone_world_hand(key: String) -> Dictionary:
 	# Duplicate real source geometry/glyphs, not a new card-face quad.

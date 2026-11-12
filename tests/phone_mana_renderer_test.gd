@@ -8,7 +8,7 @@ func run():
  renderer.number_bundle=renderer._load_glyph_bundle("res://assets/unity_number_sample/")
  var mana=load("res://scripts/native_phone_mana_renderer.gd").new();root.add_child(mana);mana.setup(renderer)
  print("MANA_SETUP ",mana.get_audit());assert(mana.geometry_ready)
- var vp=SubViewport.new();vp.size=Vector2i(1600,900);root.add_child(vp);var cr=Node3D.new();vp.add_child(cr);var cam=Camera3D.new();cr.add_child(cam);Policy.apply(cam,cr,{},Vector2(1600,900),true)
+ var vp=SubViewport.new();vp.size=Vector2i(1600,900);root.add_child(vp);var cr=Node3D.new();vp.add_child(cr);var cam=Camera3D.new();cr.add_child(cam);Policy.apply(cam,cr,Vector2(1600,900))
  var snapshot=Layout.build(Layout.recovered_items(0,0,{"permanent_mana_count":2,"temporary_mana_count":1}),cam,Vector2(vp.size),Vector2(1600,900),Vector2.ZERO)
  var values={"available":2,"permanent":2,"friendly_counter":"2/2","opposing_counter":"4/4","crystal_samples":[{"state":"used"},{"state":"ready"},{"state":"ready"}]}
  mana.sync(snapshot,values);print("MANA_SYNC ",mana.get_audit());assert(mana.rendering_ready)

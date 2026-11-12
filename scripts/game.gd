@@ -70,9 +70,6 @@ var classic_ui: Dictionary = {}
 var reference_fixture = false
 var reference_secret = false
 var reference_hand_costs: Dictionary = {}
-var sculpted_frame: Texture2D
-var sculpted_shield: Texture2D
-var sculpted_glows: Array[Texture2D] = []
 var cards: Array = []
 var allies: Array = []
 var enemies: Array = []
@@ -194,7 +191,6 @@ var native_loading_error_layer:CanvasLayer
 var native_initial_loading=false
 var native_banner_pending=false
 var native_initial_sounds:Array=[]
-var effect_material_preparer:RefCounted
 var native_load_frames=0
 var native_last_load_frame=-1
 var original_board_bridge
@@ -290,9 +286,6 @@ func _ready():
 		var path="res://assets/original_classic_v13/ui/"+key+".png"
 		if ResourceLoader.exists(path): classic_ui[key]=load(path)
 	classic_ui["cardback"] = load("res://assets/original_classic_v13/cardback_classic.png")
-	sculpted_frame=load("res://assets/sculpted_oval_v10.png")
-	sculpted_shield=load("res://assets/sculpted_shield_v10.png")
-	sculpted_glows.assign([load("res://assets/sculpted_normal_glow_v10.png"),load("res://assets/sculpted_taunt_glow_v10.png")])
 	native_startup_timing.begin("definitions_cpu")
 	_define_cards()
 	native_startup_timing.end("definitions_cpu")
@@ -347,7 +340,6 @@ func shutdown_presentation_audio():
 	if is_instance_valid(native_rope_host):await native_rope_host.shutdown()
 
 func _exit_tree():
-	if effect_material_preparer!=null:effect_material_preparer.dispose()
 	if face_render_mode: return
 	native_startup_timing.stop_watching()
 	if is_instance_valid(original_board_bridge):original_board_bridge.close()
@@ -426,6 +418,9 @@ func _show_native_turn_banner():
 	if is_instance_valid(native_turn_banner):native_turn_banner.show_original()
 
 func _native_loading_problem()->String:
+	if not is_instance_valid(source_phone_layout):return "手机界面布局未能创建。"
+	if not source_phone_layout.enabled or source_projection==null or not source_projection.is_enabled():return "手机界面布局未就绪，无法开始对局。"
+	if not source_phone_layout.blockers.is_empty():return "手机界面布局校验失败："+str(source_phone_layout.blockers)
 	if definitions.is_empty():return "卡牌集合为空，无法开始对局。"
 	if not is_instance_valid(native_card_renderer):return "卡面渲染器未能创建。"
 	var cache=native_card_renderer.texture_cache_controller
@@ -436,7 +431,6 @@ func _native_loading_problem()->String:
 	return ""
 
 func _fail_native_loading(message:String):
-	if effect_material_preparer!=null:effect_material_preparer.dispose()
 	if not native_loading_error.is_empty():return
 	native_startup_timing.mark("loading_failed",{"message":message})
 	native_loading_error=message
@@ -455,7 +449,7 @@ func _fail_native_loading(message:String):
 
 func _advance_initial_loading(dt:float):
 	if not native_loading_error.is_empty():return
-	var progress=JSON.stringify([native_card_loader.built.size(),native_card_loader.active,native_card_loader.pending.size(),original_board_bridge.generation if is_instance_valid(original_board_bridge) else -1,effect_material_preparer.progress() if effect_material_preparer!=null else -1])
+	var progress=JSON.stringify([native_card_loader.built.size(),native_card_loader.active,native_card_loader.pending.size(),original_board_bridge.generation if is_instance_valid(original_board_bridge) else -1])
 	var error=native_load_guard.check(Time.get_ticks_msec(),progress,_native_loading_problem())
 	if not error.is_empty():_fail_native_loading(error);return
 	native_load_frames+=1
@@ -468,20 +462,9 @@ func _advance_initial_loading(dt:float):
 		original_board_bridge.advance(dt)
 		if is_instance_valid(original_board_bridge.probe):native_startup_timing.once("board_probe_ready_observed",str(original_board_bridge.generation),{"created_this_advance":not had_probe,"advance_cpu_ms":(Time.get_ticks_usec()-board_advance_start)/1000.0 if native_startup_timing.enabled else 0.0})
 	if native_card_loader.has_pending() or not is_instance_valid(original_board_bridge) or not is_instance_valid(original_board_bridge.probe):return
-	if preload("res://scripts/effect_material_preparer.gd").enabled and OS.get_name()=="Windows" and RenderingServer.get_current_rendering_method()=="forward_plus":
-		var was_done:bool=effect_material_preparer!=null and effect_material_preparer.done
-		if effect_material_preparer==null:
-			native_startup_timing.begin("effect_material_prepare_wall")
-			effect_material_preparer=preload("res://scripts/effect_material_preparer.gd").new()
-			effect_material_preparer.setup(self)
-		if not effect_material_preparer.done:effect_material_preparer.advance()
-		if not effect_material_preparer.done:return
-		if not was_done:
-			native_startup_timing.mark("effect_material_prepare_complete",effect_material_preparer.audit())
-			native_startup_timing.end("effect_material_prepare_wall")
 	native_startup_timing.begin("reveal_sync_cpu")
 	native_initial_loading=false
-	if is_instance_valid(spatial_scene):spatial_scene.sync_from_game();spatial_scene.refresh_card_face_textures()
+	if is_instance_valid(spatial_scene):spatial_scene.sync_from_game()
 	if is_instance_valid(native_transmission):native_transmission.sync()
 	world_canvas.visible=true;world_canvas.queue_redraw()
 	if native_banner_pending:
@@ -497,7 +480,6 @@ func _on_card_texture_ready(key: String,texture: Texture2D,owner_renderer: Node)
 	if owner_renderer!=native_card_renderer:return
 	native_startup_timing.once("card_texture_ready_signal",key)
 	card_face_textures[key]=texture
-	if is_instance_valid(spatial_scene):spatial_scene.refresh_card_face_textures()
 	if is_instance_valid(native_transmission):native_transmission.sync()
 	# Cache completion is asynchronous, including while game processing is paused.
 	# Invalidate the actual display canvases, not only the now-empty game root.
@@ -848,6 +830,15 @@ func _update_hover(emit_hover_audio:bool=true):
 		if _phone_hand_enabled():
 			hover_card=native_phone_hand.hit_card(pointer)
 			if native_phone_hand.touched_slot>=0: hover_card=native_phone_hand.focus
+			# Desktop keeps click-to-expand and click/drag-to-pick-up, but an
+			# expanded hand also previews on mouse hover. Touch still owns its
+			# original press/slide selection and must not inherit a stale cursor.
+			elif not touch_input_active and not mouse_down:
+				if hover_card<0 and native_phone_hand.focus>=0 and native_phone_hand.focus<cards.size():
+					var focused=cards[native_phone_hand.focus]
+					if focused.has("source_phone_pose") and Geometry2D.is_point_in_polygon(pointer,native_phone_hand.card_polygon(focused.source_phone_pose,definitions[focused.key].kind)):
+						hover_card=native_phone_hand.focus
+				native_phone_hand.set_focus(hover_card if native_phone_hand.enlarged else -1)
 		else:
 			# Anchor the hover to the resting fan, so a lifted card does not lose
 			# the cursor and oscillate as its face leaves the bottom-edge hit box.
@@ -1136,6 +1127,7 @@ func _unhandled_input(event):
 func _update_touch_hand_preview(viewport_position: Vector2):
 	if _phone_hand_enabled():
 		if not mouse_down or drag_index>=0 or native_phone_hand.touched_slot<0:return
+		if not touch_input_active:return # Mouse selection is fixed at press; motion starts drag.
 		if not native_phone_hand.enlarged and native_phone_hand.mini_hand_play_enabled and native_phone_hand.touch_age<=0.10000000149011612:return
 		var slot:int=native_phone_hand.update_touch(_touch_window_position(viewport_position))
 		hover_card=slot
@@ -1345,6 +1337,8 @@ func _return_card(index: int, rejected: bool = false):
 	_event("card_rejected_return" if rejected else "card_cancel_return")
 
 func cancel_interaction():
+	mouse_down=false
+	if _phone_hand_enabled():native_phone_hand.release_touch()
 	var was_native_target: bool=native_targeting.cancel_target_mode() if is_instance_valid(native_targeting) else false
 	if _audio_selected_attack_id >= 0: SoundManager.stop_original_scope("aim:" + str(_audio_selected_attack_id))
 	_audio_selected_attack_id = -1
@@ -2177,29 +2171,15 @@ func _draw_world():
 	draw_target=world_canvas
 	draw_target.draw_set_transform(shake_offset)
 	_draw_board()
-	_draw_opponent_hand()
-	_draw_hero(1)
-	_draw_hero(0)
-	_draw_mana()
-	_draw_decks()
 	_draw_turn_button()
 	_draw_history()
-	_draw_drop_zone()
-	_draw_staged_ground_shadows()
-	for u in _presentation_units():
-		if not u.animating: _draw_unit(u)
-	for u in _presentation_units():
-		if u.animating: _draw_unit(u)
-	if is_instance_valid(spatial_view):
-		_draw_hand_underlay()
-	else:_draw_post_spatial()
+	if not is_instance_valid(spatial_view):_draw_post_spatial()
 
 func _draw_post_spatial():
 	draw_target=spatial_post if is_instance_valid(spatial_post) else world_canvas
 	if is_instance_valid(spatial_view):
 		draw_target.draw_set_transform(Vector2.ZERO)
 		draw_target.draw_texture_rect(spatial_view.get_texture(), (Rect2(-presentation_offset,presentation_size) if source_projection!=null else Rect2(0,0,W,H)), false, Color(1,1,1,2))
-		for u in _presentation_units(): _draw_unit_status(u)
 	_draw_effects(false)
 	_draw_staged_cards()
 	if not pending_battlecry.is_empty() and not is_instance_valid(spatial_scene):
@@ -2254,87 +2234,6 @@ func _draw_top_labels():
 		draw_target.draw_colored_polygon(poly,Color(0.05,0.045,0.035,0.8))
 		_text(label,Vector2(7,y+5),16,Color("e7e3d7"),false,reference_fixture)
 
-func _draw_opponent_hand():
-	if _phone_hand_enabled():return # Original Card_Hidden raw3D pass owns opposing hand.
-	var n = mini(enemy_hand.size(), 10 if flow.mode=="normal" else 9)
-	for i in range(n):
-		var off = i - (n - 1) * 0.5
-		draw_target.draw_set_transform(Vector2(800 + off * 50, 8 + off * off * 4), off * -0.09, Vector2(0.57, 0.57))
-		_card_back(Rect2(-78, -110, 156, 222))
-	draw_target.draw_set_transform(shake_offset)
-
-func _draw_hero(side):
-	if source_projection!=null:return # Original source 3D actors share the registered camera.
-	var p = PLAYER_HERO if side == 0 else ENEMY_HERO
-	var is_target = _is_aiming() and _target_is_legal({"type":"hero","side":side,"pos":p})
-	if not is_instance_valid(native_endgame) or native_endgame.hero_body_visible[side]:
-		draw_target.draw_set_transform(p + shake_offset)
-		var outline = _arch_shape(Vector2(64, 77))
-		var uv = PackedVector2Array()
-		for point in outline: uv.append((point + Vector2(70, 84)) / Vector2(140, 168))
-		draw_target.draw_polygon(outline, PackedColorArray([Color("dad4bd")]), uv, raw_portraits[(17 if side==0 else 18) if reference_fixture else ((0 if side==0 else 56) if flow.mode=="normal" else side)])
-		draw_target.draw_texture_rect(classic_ui["hero_frame"],Rect2(-76,-79,152,165),false)
-		if is_target and not is_instance_valid(native_highlight): draw_target.draw_polyline(outline + PackedVector2Array([outline[0]]), Color(1,0.74,0.26,0.85), 6, true)
-		# Damage is the original Actor spell7; do not layer a handwritten red flash.
-		if not is_instance_valid(native_endgame) or native_endgame.hero_details_visible[side]:
-			_health_badge(Vector2(60,66),22,"")
-			_stat_text(str(maxi(0,int(combat_replay.health[side] if combat_replay.playing else health[side]))),Vector2(59,73),29,Color.WHITE)
-	draw_target.draw_set_transform(shake_offset)
-	if is_instance_valid(native_endgame) and not native_endgame.hero_details_visible[side]:return
-	var power_center = Vector2(948, 690) if side == 0 else Vector2(948, 196)
-	draw_target.draw_set_transform(power_center+shake_offset)
-	var ready = side == 0 and player_turn and mana >= 2 and not power_used and not busy
-	if ready:
-		for i in range(7,0,-1): _arc_ellipse(Vector2(0,0),Vector2(54+i,54+i),Color(0.28,1.0,0.08,0.035),3.0)
-	var exhausted=(reference_fixture and side==1) or (side==0 and power_used) or (side==1 and flow.mode=="normal" and flow.enemy_power_used)
-	if not exhausted:
-		var art=19 if reference_fixture and side==0 else (20 if reference_fixture else (21 if side==0 else (57 if flow.mode=="normal" else 22)))
-		_portrait(art,Rect2(-43,-42,88,88),Color.WHITE)
-	draw_target.draw_texture_rect(classic_ui["hero_power_exhausted" if exhausted else "hero_power"],Rect2(-72,-84,144,144),false)
-	if not exhausted: _stat_text("2",Vector2(0,-49),25,Color.WHITE)
-	draw_target.draw_set_transform(shake_offset)
-	if reference_fixture and side==1 and reference_secret:
-		draw_target.draw_texture_rect(classic_ui["secret_hunter"],Rect2(ENEMY_HERO-Vector2(85,91),Vector2(170,170)),false)
-		_stat_text("?",ENEMY_HERO+Vector2(-3,-62),24,Color.WHITE)
-	if side == 0 and pointer.distance_to(power_center)<52 and drag_index<0 and not reference_fixture:
-		_tooltip(Rect2(1030,685,207,93),"火焰冲击",["英雄技能 · 2 费","造成 1 点伤害。"])
-
-func _draw_mana():
-	if source_projection!=null:return # Original mana meshes and font geometry in source scene.
-	var shown_max=mini(10,maxi(max_mana,mana))
-	var shown_enemy_max=mini(10,maxi(enemy_max_mana,enemy_mana))
-	_panel(Rect2(1014,813,81,33),Color("d8d9c8"),Color("6f7c7a"),16,2)
-	_panel(Rect2(1019,817,71,25),Color("3682aa"),Color("a8e1ee"),12,2)
-	_text(str(mana)+"/"+str(max_mana),Vector2(1055,838),20,Color("eff9ff"),true,true)
-	for i in range(shown_max):
-		var color=Color("4799c6") if i<mana else Color("183d57")
-		var gem=flow.visuals.mana_crystal_sample(i)
-		draw_target.draw_set_transform(gem.pos,gem.angle)
-		draw_target.draw_texture_rect(classic_ui["mana_crystal"],Rect2(-12,-16,24,32),false,Color((Color("a1efff") if i<mana else Color("38536c")),gem.alpha))
-		draw_target.draw_set_transform(Vector2.ZERO)
-		if i<mana:
-			_glow(gem.pos,17,Color("71dfff"),0.36*gem.alpha)
-	_panel(Rect2(980,38,76,31),Color("d1d8ca"),Color("627b7d"),14,2)
-	_panel(Rect2(985,42,66,23),Color("3b92bd"),Color("b0e3ed"),11,1)
-	_text(str(enemy_mana)+"/"+str(enemy_max_mana),Vector2(1018,61),18,Color("eff9ff"),true,true)
-
-func _draw_decks():
-	if source_projection!=null:return # Original ZoneDeck thickness actors, not guessed 2D stacks.
-	for side in range(2):
-		var p=Vector2(1344,286 if side==1 else 539)
-		var count=(deck.size() if side==0 else enemy_deck.size())
-		var height=clampi(ceili(count/3.0),0,11) if flow.mode=="normal" else 11
-		if height==0:
-			_panel(Rect2(p-Vector2(20,65),Vector2(40,130)),Color(0.12,0.07,0.03,0.4),Color("806641"),5,1)
-			continue
-		for i in range(height,-1,-1):
-			var x=p.x+float(i)*2.4
-			_panel(Rect2(x-18,p.y-65-i*0.9,38,129),Color("c5a744"),Color("e3d36d"),5,1)
-		draw_target.draw_set_transform(p+shake_offset,0.0,Vector2(0.23,0.55))
-		_card_back(Rect2(-78,-116,156,232))
-		draw_target.draw_set_transform(shake_offset)
-		if flow.mode=="normal" and pointer.distance_to(p)<80: _tooltip(Rect2(p+Vector2(-185,-35),Vector2(165,75)),"牌库",["剩余 %d 张" % count])
-
 func _draw_turn_button():
 	flow.visuals.draw_button()
 	flow.draw_rope()
@@ -2343,16 +2242,6 @@ func _draw_history():
 	# HistoryManager assets now render in the shared source phone scene.
 	# Do not reintroduce screenshot fragments, guessed panels or label-based art.
 	return
-
-func _draw_drop_zone():
-	if source_projection!=null:return # Legacy guessed rings are not a source phone effect.
-	if interaction_state!=Interaction.PLACEMENT_PREVIEW or allies.is_empty(): return
-	var p=preview_position
-	var alpha=0.62+sin(elapsed*5)*0.10
-	_ellipse(p+Vector2(0,44),Vector2(53,18),Color(0.1,0.24,0.17,0.18))
-	_ellipse(p,Vector2(49,64),Color(0.38,0.72,0.9,0.08))
-	_arc_ellipse(p,Vector2(52,67),Color(0.53,0.85,1,alpha),3)
-	_arc_ellipse(p+Vector2(0,44),Vector2(48,16),Color(0.61,0.9,1,alpha*0.7),2)
 
 # Outer-alpha silhouette sampled from the actual Sunwell frame; geometry data, not repainted art.
 var _card_surface_base:=PackedVector2Array()
@@ -2364,155 +2253,6 @@ func _card_surface_outline(factor=1.0) -> PackedVector2Array:
 		for i in range(points.size()):points[i]=points[i]*CARD_FACE_SCALE+CARD_FACE_OFFSET
 		_card_surface_base=points
 	return Transform2D(Vector2(factor,0),Vector2(0,factor),Vector2.ZERO)*_card_surface_base
-
-# Ground projection measured from the official 2013 Grizzly excerpt. These are
-# screen-space approximations, not the unavailable original client light/shader.
-# A flat core and a narrow penumbra keep the readable silhouette seen in footage.
-const GROUND_SHADOW_COLOR = Color(0.13,0.115,0.065)
-const GROUND_SHADOW_LAYERS = 12
-
-func card_shadow_pose(c: Dictionary) -> Dictionary:
-	var height=maxf(0.0,float(c.get("lift",0.0)))
-	var board_weight=1.0 if c.has("phase") else smoothstep(760.0,600.0,float(c.pos.y))
-	var raised=clampf(height/55.0,0.0,1.0)
-	var staged_raise=smoothstep(55.0,70.0,height)
-	var hand_offset=Vector2(7+height*0.24,8+height*0.32)
-	# The held source shadow leans; the raised full face becomes straighter and
-	# shorter in table projection. A translated upright card made its crown
-	# 11px (held) / 24px (staged) too high at the 960x540 comparison scale.
-	var board_offset=Vector2(-2.05*height,14.0+height*0.98)
-	board_offset+=Vector2(lerpf(6.7,9.2,staged_raise),lerpf(11.0,18.3,staged_raise))*raised
-	var projection_weight=board_weight*raised
-	var velocity: Vector2=c.get("spring",Vector2.ZERO)
-	var motion_shear=clampf(velocity.y*0.0038,-0.18,0.18)
-	return {"center":c.pos+hand_offset.lerp(board_offset,board_weight),
-		"scale":Vector2(1.0,lerpf(1.0,lerpf(0.91,0.84,staged_raise),projection_weight))*float(c.scale),
-		"angle":float(c.angle)*lerpf(1.0,0.3,projection_weight),"shear":motion_shear*projection_weight,
-		"softness":lerpf(3.0,6.0,clampf(height/70.0,0.0,1.0)),
-		"opacity":lerpf(0.17,0.24,board_weight),"height":height}
-
-func card_shadow_outline(c: Dictionary, spread: float = 0.0) -> PackedVector2Array:
-	var pose=card_shadow_pose(c)
-	var path=_card_surface_outline()
-	# Apply the live card's in-plane tilt BEFORE the oblique table projection.
-	# This preserves the frame silhouette while pitching/shearing the shadow;
-	# it is neither an oval nor an enlarged upright rectangular sprite.
-	for i in range(path.size()):
-		var point=(path[i].rotated(pose.angle))*pose.scale
-		point.x+=point.y*pose.shear
-		if not is_zero_approx(spread):
-			point*=Vector2(1.0+spread/(78.0*maxf(0.1,pose.scale.x)),1.0+spread/(116.0*maxf(0.1,pose.scale.y)))
-		path[i]=point
-	return path
-
-func unit_shadow_pose(u: Dictionary) -> Dictionary:
-	var height=maxf(0.0,float(u.get("lift",0.0)))
-	var raised=clampf(height/54.0,0.0,1.0)
-	# During the final descent the source oval briefly turns/narrows in projection.
-	# Apply this only to a summon; ordinary attack recoil keeps a stable footprint.
-	var descent=sin(PI*raised) if u.get("summon_shadow",false) else 0.0
-	# The shadow stays out to the left while the physical body starts falling,
-	# then runs into the contact point in the last frames (source +3.20–3.40s).
-	var projected_height=54.0*pow(raised,0.25) if u.get("summon_shadow",false) else height
-	var size=float(u.get("scale",1.0))
-	return {"center":u.pos+Vector2(-5.0-projected_height*2.95,10.0+projected_height*0.96),
-		"radii":Vector2(49.0-24.0*descent,61.0)*size,
-		"angle":float(u.get("rotation",0.0))-0.95*descent,
-		"softness":lerpf(2.0,5.5,raised),
-		"opacity":lerpf(0.32,0.245,raised),"height":height}
-
-func _draw_projected_card_shadow(c: Dictionary):
-	var pose=card_shadow_pose(c)
-	draw_target.draw_set_transform(pose.center+shake_offset)
-	var alpha=1.0-pow(1.0-pose.opacity,1.0/GROUND_SHADOW_LAYERS)
-	for layer in range(GROUND_SHADOW_LAYERS,0,-1):
-		var spread=pose.softness*(2.0*float(layer-1)/float(GROUND_SHADOW_LAYERS-1)-1.0)
-		draw_target.draw_colored_polygon(card_shadow_outline(c,spread),Color(GROUND_SHADOW_COLOR,alpha))
-	draw_target.draw_set_transform(shake_offset)
-
-# Exactly twelve settled footprints, retained for CanvasItem command lifetimes.
-# Lift/scale animation and any other geometry stay on the original polygon path.
-var unit_shadow_mesh_enabled := true
-var _static_unit_shadow_meshes: Dictionary={}
-func _unit_shadow_mesh_eligible(u: Dictionary,pose: Dictionary)->bool:
-	return unit_shadow_mesh_enabled and float(u.get("lift",0.0))==0.0 and float(u.get("scale",1.0))==1.0 and pose.radii==Vector2(49,61) and pose.softness==2.0
-
-func _static_unit_shadow_mesh(layer:int)->ArrayMesh:
-	assert(layer>=1 and layer<=GROUND_SHADOW_LAYERS)
-	if _static_unit_shadow_meshes.has(layer):return _static_unit_shadow_meshes[layer]
-	var spread=2.0*float(layer)/GROUND_SHADOW_LAYERS
-	var radii=Vector2(49,61)+Vector2.ONE*spread
-	var points=PackedVector2Array()
-	for i in range(64):
-		var a=i*TAU/64
-		points.append(Vector2.ZERO+Vector2(cos(a)*radii.x,sin(a)*radii.y))
-	var arrays=[];arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX]=points
-	arrays[Mesh.ARRAY_INDEX]=Geometry2D.triangulate_polygon(points)
-	var mesh=ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays,[],{},Mesh.ARRAY_FLAG_USE_2D_VERTICES)
-	_static_unit_shadow_meshes[layer]=mesh
-	return mesh
-
-func _draw_projected_unit_shadow(u: Dictionary):
-	if u.get("native_summon_hidden",false):return
-	# The old fitted 2013 airborne oval is not an original 37.0 shadow.
-	# Do not overlay it onto a migrated Actor transform. Source scene shadows
-	# remain an explicit rendering gap; settled contact treatment is unchanged.
-	if u.has("native_summon_position") or u.get("hidden",false): return
-	var pose=unit_shadow_pose(u)
-	draw_target.draw_set_transform(pose.center+shake_offset,pose.angle)
-	var alpha=1.0-pow(1.0-pose.opacity,1.0/GROUND_SHADOW_LAYERS)
-	var cached=_unit_shadow_mesh_eligible(u,pose)
-	for layer in range(GROUND_SHADOW_LAYERS,0,-1):
-		if cached:
-			draw_target.draw_mesh(_static_unit_shadow_mesh(layer),null,Transform2D.IDENTITY,Color(GROUND_SHADOW_COLOR,alpha))
-		else:
-			var spread=pose.softness*float(layer)/GROUND_SHADOW_LAYERS
-			_ellipse(Vector2.ZERO,pose.radii+Vector2.ONE*spread,Color(GROUND_SHADOW_COLOR,alpha))
-	draw_target.draw_set_transform(shake_offset)
-
-func _draw_staged_ground_shadows():
-	if source_projection!=null:return # Raw source actors own their presentation; no legacy screen-space duplicate.
-	# When the oval is revealed it owns the sole ground shadow immediately.
-	# The dissolving cyan card shell must not leave a second rectangular shadow.
-	for c in staged_cards:
-		if c.phase == "card" or c.phase == "outline": _draw_projected_card_shadow(c)
-
-# Only the five resting-hand layers are cached. Animated lift keeps the exact
-# polygon path; persistent mesh references outlive the CanvasItem draw commands.
-var _static_hand_shadow_meshes:Dictionary={}
-func _static_hand_shadow_mesh(layer:int)->ArrayMesh:
-	assert(layer>=1 and layer<=5)
-	if _static_hand_shadow_meshes.has(layer):return _static_hand_shadow_meshes[layer]
-	var points=_card_surface_outline(1+layer*0.018)
-	var arrays=[];arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX]=points
-	arrays[Mesh.ARRAY_INDEX]=Geometry2D.triangulate_polygon(points)
-	var mesh=ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays,[],{},Mesh.ARRAY_FLAG_USE_2D_VERTICES)
-	_static_hand_shadow_meshes[layer]=mesh
-	return mesh
-
-func _draw_hand_underlay():
-	if source_projection!=null:return # Raw source actors own their presentation; no legacy screen-space duplicate.
-	for i in range(cards.size()):
-		var c = cards[i]
-		if not pending_battlecry.is_empty() and i == pending_battlecry.index: continue
-		if i == drag_index or c.get("returning",false):
-			_draw_projected_card_shadow(c)
-		else:
-			# Keep the established hand/hover treatment; board shadows belong to held cards.
-			var lift = c.get("lift",0.0)
-			draw_target.draw_set_transform(c.pos+Vector2(7+lift*0.24,8+lift*0.32)+shake_offset,c.angle,Vector2.ONE*c.scale)
-			for j in range(5,0,-1):
-				if lift==0.0:
-					draw_target.draw_mesh(_static_hand_shadow_mesh(j),null,Transform2D.IDENTITY,Color(0.018,0.015,0.012,0.035))
-				else:
-					draw_target.draw_colored_polygon(_card_surface_outline(1+j*0.018+lift*0.0005),Color(0.018,0.015,0.012,0.035))
-		draw_target.draw_set_transform(c.pos+shake_offset,c.angle,Vector2.ONE*c.scale)
-		# Hand readiness/hover now uses original selection mesh and static mask.
-	draw_target.draw_set_transform(shake_offset)
 
 # Selection is a separate state from affordable-hand green and attack-ready green.
 # The official held Grizzly has a narrow cyan upper/sides rim; its lower stat
@@ -2638,70 +2378,6 @@ func _card_title(label: String, baseline: Vector2, card_transform: Transform2D, 
 		x+=advance
 	draw_target.draw_set_transform_matrix(card_transform)
 
-func _draw_unit(u):
-	if source_projection!=null:return # Raw source actors own their presentation; no legacy screen-space duplicate.
-	if u.get("hidden",false): return
-	var d=definitions[u.key]
-	var p=u.pos
-	var ready=has_attack_ready_glow(u)
-	var targetable=_is_aiming() and _target_is_legal({"type":"unit","unit":u,"pos":u.pos})
-	var s=u.scale*0.9
-	var lift=u.get("lift",0.0)
-	_draw_projected_unit_shadow(u)
-	draw_target.draw_set_transform(p+Vector2(0,-lift)+shake_offset,u.rotation,Vector2.ONE*s)
-	if ready and not is_instance_valid(native_highlight): _draw_attack_ready_glow(u,d)
-	if selected_unit==u.id and not is_instance_valid(native_highlight): _arc_ellipse(Vector2(0,0),Vector2(65,80),Color(1,0.78,0.36,0.9),3)
-	if targetable and not is_instance_valid(native_highlight):
-		var radii=Vector2(80,103) if d.keyword=="嘲讽" else Vector2(68,85)
-		_arc_ellipse(Vector2(0,0),radii+Vector2(2,2),Color(1,0.55,0.1,0.22),8)
-		_arc_ellipse(Vector2(0,0),radii,Color(1,0.76,0.29,0.95 if hover_unit==u.id else 0.76),3)
-	if is_instance_valid(spatial_scene):
-		draw_target.draw_set_transform(shake_offset)
-		return
-	if d.keyword=="嘲讽": _draw_classic_taunt_shield()
-	# A sculpted, round-edged collar seats the portrait inside the domed shield.
-	_ellipse(Vector2(0,-1),Vector2(52,67),Color("181d20"))
-	_portrait(d.art,Rect2(-50.5,-67,101,132),d.color)
-	draw_target.draw_texture_rect(sculpted_frame,Rect2(-100,-108,200,224),false)
-	if u.flash>0: _ellipse(Vector2.ZERO,Vector2(49,63),Color(1,0.94,0.72,u.flash*0.7))
-	if u.frozen and not is_instance_valid(native_status):
-		_ellipse(Vector2.ZERO,Vector2(54,69),Color(0.2,0.7,1,0.3))
-		for a in range(6):
-			var v=Vector2(cos(a*PI/3),sin(a*PI/3)); draw_target.draw_line(-v*43,v*43,Color(0.7,0.95,1,0.7),2,true)
-	if _unit_label_is_visible(u.pos+Vector2(-36,40)): _attack_badge(Vector2(-40,44),14,str(u.atk))
-	if _unit_label_is_visible(u.pos+Vector2(36,40)): _health_badge(Vector2(40,44),14,str(maxi(0,u.hp)),Color("ffb5a0") if u.hp<u.max_hp else Color.WHITE)
-	if d.get("deathrattle", "")!="" and not is_instance_valid(native_status): _text("☠",Vector2(0,79),20,CREAM,true)
-	# CS2_063e has no persistent play/lifetime/death visual binding.
-	# Its rule flag persists; original finite skull impact is the combat route.
-	if has_summoning_sleep(u) and not is_instance_valid(native_status): _draw_summoning_sleep(u)
-	draw_target.draw_set_transform(shake_offset)
-
-func _draw_unit_status(u):
-	if source_projection!=null:return # Raw source actors own their presentation; no legacy screen-space duplicate.
-	if u.get("native_summon_hidden",false):return
-	if u.get("hidden",false): return
-	var d = definitions[u.key]
-	draw_target.draw_set_transform(u.pos+Vector2(0,-u.get("lift",0.0))+shake_offset,u.rotation,Vector2.ONE*u.scale*0.9)
-	if u.frozen and not is_instance_valid(native_status):
-		_ellipse(Vector2.ZERO,Vector2(51,67),Color(0.2,0.7,1,0.22))
-		for a in range(6):
-			var v=Vector2(cos(a*PI/3),sin(a*PI/3))
-			draw_target.draw_line(-v*43,v*43,Color(0.7,0.95,1,0.72),2,true)
-	if (not is_instance_valid(spatial_scene) or not spatial_scene.pieces.get(u.id,{}).get("native_actor",false)) and _unit_label_is_visible(u.pos+Vector2(-36,40)): _stat_text(str(u.atk),Vector2(-34,49),27,Color.WHITE)
-	if (not is_instance_valid(spatial_scene) or not spatial_scene.pieces.get(u.id,{}).get("native_actor",false)) and _unit_label_is_visible(u.pos+Vector2(36,40)): _stat_text(str(maxi(0,u.hp)),Vector2(34,49),27,Color("ffb5a0") if u.hp<u.max_hp else Color.WHITE)
-	if d.get("deathrattle", "")!="" and not is_instance_valid(native_status): _text("☠",Vector2(0,79),20,CREAM,true)
-	# CS2_063e has no persistent play/lifetime/death visual binding.
-	# Its rule flag persists; original finite skull impact is the combat route.
-	if has_summoning_sleep(u) and not is_instance_valid(native_status): _draw_summoning_sleep(u)
-	draw_target.draw_set_transform(shake_offset)
-
-func _unit_label_is_visible(point: Vector2) -> bool:
-	for i in range(cards.size()):
-		if i != hover_card and i != drag_index and not cards[i].get("drawing",false): continue
-		var c=cards[i]
-		if Rect2(c.pos-CARD_SIZE*c.scale*0.5,CARD_SIZE*c.scale).has_point(point): return false
-	return true
-
 func has_summoning_sleep(u: Dictionary) -> bool:
 	# Fresh-summon waiting only. An exhausted attack is not sleep, and Frozen
 	# has its own ice cue. This is visual bookkeeping, not the Dormant keyword.
@@ -2727,16 +2403,6 @@ func sleep_z_samples(u: Dictionary, at_time: float = -1.0) -> Array:
 			"scale":0.62+age*0.58,"alpha":alpha,"tilt":-0.11+sin(age*PI+phase)*0.09})
 	return samples
 
-func _draw_summoning_sleep(u: Dictionary):
-	var scale_amt=u.scale*0.9
-	var origin=u.pos+Vector2(0,-u.get("lift",0.0))+shake_offset
-	for z in sleep_z_samples(u):
-		if z.alpha<0.005: continue
-		draw_target.draw_set_transform(origin+z.pos.rotated(u.rotation)*scale_amt,u.rotation+z.tilt,Vector2.ONE*scale_amt*z.scale)
-		var baseline=Vector2(-title_font.get_string_size("Z",HORIZONTAL_ALIGNMENT_LEFT,-1,23).x*0.5,0)
-		draw_target.draw_string_outline(title_font,baseline,"Z",HORIZONTAL_ALIGNMENT_LEFT,-1,23,3,Color(0.08,0.18,0.035,z.alpha*0.8))
-		draw_target.draw_string(title_font,baseline,"Z",HORIZONTAL_ALIGNMENT_LEFT,-1,23,Color(0.60,0.91,0.24,z.alpha))
-
 func _classic_shield_outline() -> PackedVector2Array:
 	# Traced proportions from official 2013 footage: shallow top, broad shoulders,
 	# near-vertical upper sides and an unlit lower point. No crown/spikes.
@@ -2752,11 +2418,6 @@ func _classic_shield_outline() -> PackedVector2Array:
 		for i in range(12):points.append(span[0].bezier_interpolate(span[1],span[2],span[3],float(i)/12.0))
 	points.append(points[0])
 	return points
-
-func _draw_classic_taunt_shield():
-	# Original 2.5D relief asset: domed steel, rolled perimeter, recessed gutter,
-	# rounded portrait collar and rear extrusion. See tools/build_sculpted_frames.py.
-	draw_target.draw_texture_rect(sculpted_shield,Rect2(-100,-108,200,224),false)
 
 func ready_glow_sample(_u: Dictionary, at_time: float = -1.0) -> Dictionary:
 	# Native temporal samples do not justify v8's expanding ellipse, contour wobble
@@ -2792,14 +2453,6 @@ func ready_glow_outline(u: Dictionary, _sample: Dictionary, inset: float = 0.0) 
 func ready_glow_opacity(p: Vector2) -> float:
 	# Official edge disappears into the stat badges, well before the lower tip.
 	return 1.0-smoothstep(24.0,53.0,p.y)
-
-func _draw_attack_ready_glow(_u: Dictionary,d: Dictionary):
-	# Signed-distance color ramp follows the actual sculpted surface silhouette:
-	# pale yellow/lime inner crest -> rich green body -> dark diffuse outer falloff.
-	# Local anchored highlights vary by position; the frame masks the inside half.
-	var index=1 if d.keyword=="嘲讽" else 0
-	var contour_scale = 0.90 if index == 1 else 0.86
-	draw_target.draw_texture_rect(sculpted_glows[index],Rect2(Vector2(-100,-108)*contour_scale,Vector2(200,224)*contour_scale),false)
 
 func _draw_targeting():
 	# v34 uses only recovered original targeting meshes and CIL motion.

@@ -4,14 +4,10 @@ config_version=5
 [application]
 config/name="Codex Tavern Acceptance 20261106"
 run/main_scene="res://main.tscn"
-run/main_scene.renderer_benchmark="res://tests/windows_renderer_benchmark.tscn"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [autoload]
 SoundManager="*res://scripts/sound_manager.gd"
-
-[editor_plugins]
-enabled=PackedStringArray("res://addons/raw_runtime_export/plugin.cfg")
 
 [display]
 window/size/viewport_width=1600
@@ -24,7 +20,7 @@ window/handheld/orientation=0
 
 [rendering]
 textures/vram_compression/import_etc2_astc=true
-renderer/rendering_method="forward_plus"
+renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/default_filters/use_nearest_mipmap_filter=false
 textures/canvas_textures/default_texture_filter=2

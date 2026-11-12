@@ -3,9 +3,7 @@ extends Node
 ## Candidate adapter. Not attached to match flow until source camera routing is verified.
 const CameraPolicy=preload("res://scripts/source_board_camera_policy.gd")
 const Player=preload("res://scripts/native_coin_player.gd")
-const BoardProbe=preload("res://original_board/scripts/board_probe.gd")
 var game
-var camera_config:Dictionary={}
 var viewport:SubViewport
 var camera_root:Node3D
 var camera:Camera3D
@@ -16,14 +14,10 @@ var background_copy:BackBufferCopy
 var source_reflection=Transform3D(Basis(Vector3.RIGHT,Vector3.UP,-Vector3.BACK),Vector3.ZERO)
 func setup(host):
  game=host
- camera_config=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/references/minimum_scene_config.json"))
- var config=camera_config
  viewport=SubViewport.new();viewport.name="SourceCoinViewport";viewport.own_world_3d=true;viewport.transparent_bg=true;viewport.msaa_3d=Viewport.MSAA_2X;viewport.render_target_update_mode=SubViewport.UPDATE_DISABLED;add_child(viewport)
- camera_root=Node3D.new();camera_root.transform=BoardProbe.raw_transform(config.unity_camera_root.data);viewport.add_child(camera_root)
- camera=Camera3D.new();camera_root.add_child(camera);camera.transform=BoardProbe.raw_transform(config.unity_camera.transform)
- var c=config.unity_camera.data
- camera.projection=Camera3D.PROJECTION_ORTHOGONAL if c.orthographic else Camera3D.PROJECTION_PERSPECTIVE
- camera.keep_aspect=Camera3D.KEEP_HEIGHT;camera.fov=float(c['field of view']);camera.near=float(c['near clip plane']);camera.far=float(c['far clip plane']);camera.current=true
+ camera_root=Node3D.new();viewport.add_child(camera_root)
+ camera=Camera3D.new();camera_root.add_child(camera);camera.current=true
+ CameraPolicy.apply(camera,camera_root,game.presentation_size)
  camera.set_meta("source_base_fov",camera.fov)
  var env=Environment.new();env.background_mode=Environment.BG_COLOR;env.background_color=Color(0,0,0,0);env.tonemap_mode=Environment.TONE_MAPPER_LINEAR;camera.environment=env
  player=Player.new();player.transform=source_reflection;viewport.add_child(player);player.setup()
@@ -39,7 +33,7 @@ func setup(host):
 func refresh_layout():
  viewport.size=game.board_render_target_size
  sprite.position=Vector2(800,450);sprite.scale=game.presentation_size/Vector2(viewport.size)
- CameraPolicy.apply(camera,camera_root,camera_config,game.presentation_size,CameraPolicy.is_phone())
+ CameraPolicy.apply(camera,camera_root,game.presentation_size)
 func set_active(value:bool):
  sprite.visible=value;viewport.render_target_update_mode=SubViewport.UPDATE_ALWAYS if value else SubViewport.UPDATE_DISABLED
  background_copy.visible=value

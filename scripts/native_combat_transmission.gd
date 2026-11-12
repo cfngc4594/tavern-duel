@@ -90,8 +90,9 @@ func sync() -> void:
 	if _geometry_dirty or _geometry_source_id!=source_root.get_instance_id() or not is_inside_tree():
 		_geometry_nodes.clear();_collect_geometry(source_root)
 		_geometry_source_id=source_root.get_instance_id();_geometry_dirty=false
+	var visible_layers := camera.cull_mask
 	for source in _geometry_nodes:
-		if is_instance_valid(source):_sync_geometry(source,seen)
+		if is_instance_valid(source):_sync_geometry(source,seen,visible_layers)
 	for key in mirrors.keys():
 		if not seen.has(key):
 			mirrors[key].queue_free()
@@ -113,7 +114,7 @@ func _collect_geometry(node: Node) -> void:
 		_warn_once("Unsupported transmission geometry: "+node.get_class()+" "+str(node.get_path()))
 	for child in node.get_children():_collect_geometry(child)
 
-func _sync_geometry(source: GeometryInstance3D, seen: Dictionary) -> void:
+func _sync_geometry(source: GeometryInstance3D, seen: Dictionary, visible_layers: int) -> void:
 	var key:=source.get_instance_id()
 	seen[key]=true
 	var target: GeometryInstance3D=mirrors.get(key)
@@ -125,8 +126,9 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary) -> void:
 		target.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		geometry_root.add_child(target)
 		mirrors[key]=target
-	# Hidden geometry cannot contribute; resync all values when it becomes visible.
-	if not source.is_visible_in_tree():
+	# Capture-only geometry can be visible in the scene tree while excluded
+	# from this camera. Resync its mirror when it can contribute again.
+	if not source.is_visible_in_tree() or (source.layers & visible_layers) == 0:
 		if target.visible:target.visible=false
 		return
 	var source_transform := source.global_transform

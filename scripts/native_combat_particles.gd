@@ -27,6 +27,13 @@ const EPSILON := 0.00000001
 const SUPPORTED_MODULES := ["InitialModule", "ShapeModule", "EmissionModule", "SizeModule", "ColorModule", "UVModule", "VelocityModule", "ClampVelocityModule", "RotationModule", "RotationBySpeedModule", "ForceModule", "InheritVelocityModule", "CollisionModule", "SubModule"]
 const CapacityBatch = preload("res://scripts/particle_capacity_batch.gd")
 const ColorSampler = preload("res://scripts/particle_color_sampler.gd")
+const SizeSampler = preload("res://scripts/particle_size_sampler.gd")
+const BASIC_UVS = [
+	[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)],
+	[Vector2(1, 0), Vector2(0, 0), Vector2(0, 1), Vector2(1, 1)],
+	[Vector2(0, 1), Vector2(1, 1), Vector2(1, 0), Vector2(0, 0)],
+	[Vector2(1, 1), Vector2(0, 1), Vector2(0, 0), Vector2(1, 0)],
+]
 const WorkerJob = preload("res://scripts/particle_worker_job.gd")
 const WorkerKernel = preload("res://scripts/particle_kernel_combat.gd")
 const CollisionKernel = preload("res://scripts/particle_kernel_collision.gd")
@@ -43,6 +50,7 @@ var _candidate_time: float = -INF
 var _worker_states: Dictionary = {}
 var _worker_indices: Array[int] = []
 var _worker_filtered: bool = false
+var _quad_index_cache := PackedInt32Array()
 var raw: Dictionary = {}
 # Scoped to one _particle_state call; never reused across source/module changes.
 var _constant_zero_linear: bool = false
@@ -802,6 +810,20 @@ func _uv_corners(p: Dictionary, age: float, speed: float) -> Array:
 		corners.append(origin + corner / Vector2(cols, rows))
 	return corners
 
+func _quad_indices(count: int) -> PackedInt32Array:
+	if _quad_index_cache.size() != count * 6:
+		_quad_index_cache.resize(count * 6)
+		for quad in count:
+			var vertex := quad * 4
+			var index := quad * 6
+			_quad_index_cache[index] = vertex
+			_quad_index_cache[index + 1] = vertex + 1
+			_quad_index_cache[index + 2] = vertex + 2
+			_quad_index_cache[index + 3] = vertex
+			_quad_index_cache[index + 4] = vertex + 2
+			_quad_index_cache[index + 5] = vertex + 3
+	return _quad_index_cache
+
 func seek(seconds: float) -> void:
 	_seek_context_active = false
 	var seek_started:int=Time.get_ticks_usec() if profile_seek else 0
@@ -850,7 +872,7 @@ func seek(seconds: float) -> void:
 	var quad_cursor: int = 0
 	if indexed_quads:
 		var count: int = _worker_indices.size()
-		vertices.resize(count * 4); uvs.resize(count * 4); colors.resize(count * 4); normals.resize(count * 4); indices.resize(count * 6)
+		vertices.resize(count * 4); uvs.resize(count * 4); colors.resize(count * 4); normals.resize(count * 4)
 	var camera: Camera3D = get_viewport().get_camera_3d() if is_inside_tree() else null
 	var view_right := camera.global_basis.x.normalized() if camera != null else compatibility_basis.x.normalized()
 	var view_up := camera.global_basis.y.normalized() if camera != null else compatibility_basis.y.normalized()
@@ -864,21 +886,13 @@ func seek(seconds: float) -> void:
 	var size_enabled: bool = bool(size_module.get("enabled", false))
 	var size_sampler: RefCounted
 	if frame_modules and size_enabled:
-		size_sampler=preload("res://scripts/particle_size_sampler.gd").new();size_sampler.setup(size_module.curve,Curves)
+		size_sampler = SizeSampler.new(); size_sampler.setup(size_module.curve, Curves)
 	var color_enabled: bool = bool(color_module.get("enabled", false))
 	var color_sampler: RefCounted
 	if frame_modules and color_enabled:
 		color_sampler = ColorSampler.new(); color_sampler.setup(color_module.gradient, Curves)
 	var uv_module: Dictionary = raw.get("UVModule", {})
-	var basic_uvs: Array = []
-	if frame_modules and (not bool(uv_module.get("enabled", false)) or int(uv_module.get("mode", 0)) != 0):
-		for variant in range(4):
-			var corners: Array = []
-			for corner in [Vector2(0,0),Vector2(1,0),Vector2(1,1),Vector2(0,1)]:
-				if variant & 1: corner.x = 1.0 - corner.x
-				if variant & 2: corner.y = 1.0 - corner.y
-				corners.append(Vector2.ZERO + corner / Vector2.ONE)
-			basic_uvs.append(corners)
+	var use_basic_uvs := frame_modules and (not bool(uv_module.get("enabled", false)) or int(uv_module.get("mode", 0)) != 0)
 	var flip_u: float = float(uv_module.get("flipU", 0.0))
 	var flip_v: float = float(uv_module.get("flipV", 0.0))
 	# Base-only local motion is a pure function of these frame snapshots.
@@ -945,31 +959,40 @@ func seek(seconds: float) -> void:
 		if _skip_initial_geometry:continue
 		x *= screen_scale; y *= screen_scale
 		var start: int = quad_cursor * 4 if indexed_quads else vertices.size()
-		var corners: Array = [-x + y, x + y, x - y, -x - y]
+		var corner_top_left := center + (-x + y)
+		var corner_top_right := center + (x + y)
+		var corner_bottom_right := center + (x - y)
+		var corner_bottom_left := center + (-x - y)
 		if indexed_quads:
+			vertices[start] = corner_top_left
+			vertices[start + 1] = corner_top_right
+			vertices[start + 2] = corner_bottom_right
+			vertices[start + 3] = corner_bottom_left
 			for corner in range(4):
-				vertices[start + corner] = center + corners[corner]
 				colors[start + corner] = color; normals[start + corner] = normal
 		else:
-			for offset in corners: vertices.append(center + offset); colors.append(color); normals.append(normal)
+			vertices.append(corner_top_left); vertices.append(corner_top_right)
+			vertices.append(corner_bottom_right); vertices.append(corner_bottom_left)
+			for corner in range(4):
+				colors.append(color); normals.append(normal)
 		var particle_uvs: Array
-		if not basic_uvs.is_empty():
+		if use_basic_uvs:
 			var variant: int = (1 if float(p.flip_u) < flip_u else 0) + (2 if float(p.flip_v) < flip_v else 0)
-			particle_uvs = basic_uvs[variant]
+			particle_uvs = BASIC_UVS[variant]
 		else: particle_uvs = _uv_corners(p, age, state.get("render_velocity", state.velocity).length())
 		if indexed_quads:
 			for corner in range(4): uvs[start + corner] = particle_uvs[corner]
 		else:
 			for uv in particle_uvs: uvs.append(uv)
 		if indexed_quads:
-			var first: int = quad_cursor * 6
-			indices[first] = start; indices[first + 1] = start + 1; indices[first + 2] = start + 2
-			indices[first + 3] = start; indices[first + 4] = start + 2; indices[first + 5] = start + 3
 			quad_cursor += 1
 		else:
-			indices.append_array(PackedInt32Array([start, start + 1, start + 2, start, start + 2, start + 3]))
-	if indexed_quads and quad_cursor * 4 != vertices.size():
-		vertices.resize(quad_cursor * 4); uvs.resize(quad_cursor * 4); colors.resize(quad_cursor * 4); normals.resize(quad_cursor * 4); indices.resize(quad_cursor * 6)
+			indices.append(start); indices.append(start + 1); indices.append(start + 2)
+			indices.append(start); indices.append(start + 2); indices.append(start + 3)
+	if indexed_quads:
+		if quad_cursor * 4 != vertices.size():
+			vertices.resize(quad_cursor * 4); uvs.resize(quad_cursor * 4); colors.resize(quad_cursor * 4); normals.resize(quad_cursor * 4)
+		indices = _quad_indices(quad_cursor)
 	_seek_context_active = false
 	var can_emit := emission_playing and bool(raw.get("EmissionModule", {}).get("enabled", false)) and (not period_events.is_empty() or runtime_emission_rate>0.0) and now < stop_time and (bool(raw.get("looping", false)) or now <= start_delay + duration)
 	active = live_count > 0 or can_emit
@@ -1429,15 +1452,15 @@ func _prepare_worker_states(now: float) -> void:
 	_worker_states.clear()
 	_worker_indices.clear()
 	_worker_filtered = false
-	var collision_job: bool = get_script().get_base_script() == null and not (_can_constant_step() or _can_random_force_step())
-	if not (collision_job or _can_constant_step() or _can_random_force_step()): return
+	if get_script().get_base_script() != null: return
+	var collision_job := not (_can_constant_step() or _can_random_force_step())
 	var indices: Array[int] = _worker_indices
 	for index in _particle_candidates(now):
 		var p: Dictionary = particles[index]
 		var age: float = now - float(p.birth)
 		if age < 0.0 or age >= minf(float(p.life), float(p.get("kill_age", INF))) or (float(p.birth) > stop_time and not bool(p.get("manual_emit", false))): continue
 		indices.append(index)
-	_worker_filtered = not collision_job
+	_worker_filtered = true
 	if indices.size() < 32:
 		if profile_seek:_worker_profile.prepare_usec=Time.get_ticks_usec()-worker_started
 		return
@@ -1450,9 +1473,8 @@ func _prepare_worker_states(now: float) -> void:
 	var jobs: Array = []
 	var tasks: Array[int] = []
 	var count: int = mini(4, maxi(2, ceili(indices.size() / 32.0)))
-	# These source trails create a distinct Dictionary per particle. Each index
-	# belongs to one worker, and all workers join before simulation uses results.
-	var worker_owns_particles: bool = not collision_job and ENDGAME_TRAIL_SOURCES.has(source_key)
+	# _spawn_particle creates a distinct Dictionary for each particle. Each
+	# index goes to one worker, and all workers join before the caller reads it.
 	if profile_seek:_worker_profile.prepare_usec=Time.get_ticks_usec()-worker_started
 	for chunk in range(count):
 		var build_started:int=Time.get_ticks_usec() if profile_seek else 0
@@ -1470,7 +1492,7 @@ func _prepare_worker_states(now: float) -> void:
 			var index: int = indices[slot]
 			var particle: Dictionary = particles[index]
 			job.indices.append(index)
-			job.particles.append(particle if worker_owns_particles else particle.duplicate())
+			job.particles.append(particle)
 			job.ages.append(now - float(particle.birth))
 		jobs.append(job)
 		if profile_seek:build_usec+=Time.get_ticks_usec()-build_started
@@ -1487,11 +1509,6 @@ func _prepare_worker_states(now: float) -> void:
 		var job = jobs[ordinal % count]
 		var slot: int = ordinal / count
 		var index: int = indices[ordinal]
-		if not worker_owns_particles:
-			var original: Dictionary = particles[index]
-			var computed: Dictionary = job.particles[slot]
-			for field in ["sim_age", "displacement", "sim_velocity", "sim_rotation", "sim_render_velocity", "kill_age", "collision_loss", "collision_hits"]:
-				original[field] = computed[field]
 		_worker_states[index] = job.states[slot]
 	if profile_seek:_worker_profile.collect_usec=Time.get_ticks_usec()-collect_started
 

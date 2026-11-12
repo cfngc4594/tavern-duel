@@ -126,11 +126,11 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary) -> void:
 		mirrors[key]=target
 	# Hidden geometry cannot contribute; resync all values when it becomes visible.
 	if not source.is_visible_in_tree():
-		target.visible=false
+		if target.visible:target.visible=false
 		return
 	var source_transform := source.global_transform
 	if target.global_transform != source_transform:target.global_transform=source_transform
-	target.visible=true
+	if not target.visible:target.visible=true
 	# These setters forward render-instance updates even for identical values.
 	if target.layers!=source.layers:target.layers=source.layers
 	if target.sorting_offset!=source.sorting_offset:target.sorting_offset=source.sorting_offset
@@ -145,9 +145,10 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary) -> void:
 	if target.visibility_range_fade_mode!=source.visibility_range_fade_mode:target.visibility_range_fade_mode=source.visibility_range_fade_mode
 	if target.ignore_occlusion_culling!=source.ignore_occlusion_culling:target.ignore_occlusion_culling=source.ignore_occlusion_culling
 	if source is MeshInstance3D:
-		target.mesh=source.mesh
-		if source.mesh!=null:
-			for surface in range(source.mesh.get_surface_count()):
+		var source_mesh: Mesh = source.mesh
+		if target.mesh != source_mesh: target.mesh = source_mesh
+		if source_mesh != null:
+			for surface in range(source_mesh.get_surface_count()):
 				var material := transmission_material(source.get_active_material(surface))
 				if target.get_surface_override_material(surface) != material:
 					target.set_surface_override_material(surface,material)
@@ -156,7 +157,8 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary) -> void:
 				if target.get_blend_shape_value(blend) != weight:target.set_blend_shape_value(blend,weight)
 		if source.skin!=null:_warn_once("Skinned meshes require a mirrored Skeleton3D: "+str(source.get_path()))
 	elif source is MultiMeshInstance3D:
-		target.multimesh=source.multimesh
+		var source_multimesh: MultiMesh = source.multimesh
+		if target.multimesh != source_multimesh: target.multimesh = source_multimesh
 		var material := transmission_material(source.material_override)
 		if target.material_override!=material:target.material_override=material
 		if source.material_override==null and source.multimesh!=null and source.multimesh.mesh!=null:
@@ -164,12 +166,15 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary) -> void:
 	else:
 		# Compatibility Label3D fallback. Native migrated glyphs are MeshInstance3D.
 		for pname in _label_property_names(source):
-			target.set(pname,source.get(pname))
+			var value = source.get(pname)
+			if target.get(pname) != value: target.set(pname, value)
 		var tint: Color=source.modulate
 		var outline: Color=source.outline_modulate
-		target.modulate=Color(0,0,0,tint.a)
-		target.outline_modulate=Color(0,0,0,outline.a)
-		target.shaded=false
+		var black := Color(0, 0, 0, tint.a)
+		var black_outline := Color(0, 0, 0, outline.a)
+		if target.modulate != black: target.modulate = black
+		if target.outline_modulate != black_outline: target.outline_modulate = black_outline
+		if target.shaded: target.shaded = false
 	var overlay := transmission_material(source.material_overlay) if source.material_overlay!=null else null
 	if target.material_overlay!=overlay:target.material_overlay=overlay
 
@@ -235,8 +240,9 @@ func transmission_material(source: Material) -> Material:
 	else:
 		_warn_once("Unsupported transmission material: "+source.get_class())
 	for meta_name in source.get_meta_list():target.set_meta(meta_name,source.get_meta(meta_name))
-	target.render_priority=source.render_priority
-	target.next_pass=transmission_material(source.next_pass) if source.next_pass!=null else null
+	if target.render_priority != source.render_priority: target.render_priority = source.render_priority
+	var next_pass := transmission_material(source.next_pass) if source.next_pass != null else null
+	if target.next_pass != next_pass: target.next_pass = next_pass
 	return target
 
 # Cache only derived source-shader metadata. Animated uniforms are still copied

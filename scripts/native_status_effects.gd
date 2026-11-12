@@ -69,6 +69,7 @@ func _action(effect: Dictionary,action: Dictionary,moment: float):
   "CurveFloat":
    effect.animations.append({"kind":"status_curve_float","name":str(params.floatVariable.name),"curve":params.animCurve.curve,"params":params,"initial":float(_value(effect,params.floatVariable,0.0)),"start":moment+float(_value(effect,params.get("delay"),0.0))})
   "AudioPlaythroughAction","AudioPlayClipAction":
+   if controller==null:return # Isolated loading preview has no audio owner.
    var result: Dictionary=controller.audio.trigger_action(effect,action,moment)
    effect.events.append({"event":"source_status_audio","action":action.class_name,"time":moment,"dispatch":result})
   _:super._action(effect,action,moment)
@@ -205,6 +206,9 @@ func release_instance(effect: Dictionary):
  _dispose(effect)
 
 func _dispose(effect: Dictionary):
+ if controller==null:
+  super._dispose(effect)
+  return
  if not controller.clearing and not effect.get("force_release",false) and effect.has("identity"):
   # Original Actor.m_ownedSpells retains Spell at None; no new prefab/FSM on
   # reapplication. Keep the clock and particle solver alive behind render gate.

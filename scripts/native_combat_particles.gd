@@ -10,6 +10,8 @@ static var native_batch_particles: int = 0
 static var native_constant_batches: int = 0
 static var fast_particle_projection_enabled: bool = OS.has_feature("macos")
 static var fast_particle_projection_skips: int = 0
+static var native_trail_geometry_enabled: bool = OS.has_feature("macos")
+static var native_trail_geometry_batches: int = 0
 static var _native_kernel: RefCounted
 # Default-off experiment: whole-effect benefit is not established.
 # Only cache module decisions within the callback-free base seek loop.
@@ -899,9 +901,6 @@ func seek(seconds: float) -> void:
 		draw_indices = range(particles.size())
 	var indexed_quads := (_worker_filtered or status_solver) and int(source_renderer.get("m_RenderMode", 0)) in [0, 1, 2]
 	var quad_cursor: int = 0
-	if indexed_quads:
-		var count: int = draw_indices.size()
-		vertices.resize(count * 4); uvs.resize(count * 4); colors.resize(count * 4); normals.resize(count * 4)
 	var camera: Camera3D = get_viewport().get_camera_3d() if is_inside_tree() else null
 	var view_right := camera.global_basis.x.normalized() if camera != null else compatibility_basis.x.normalized()
 	var view_up := camera.global_basis.y.normalized() if camera != null else compatibility_basis.y.normalized()
@@ -947,6 +946,23 @@ func seek(seconds: float) -> void:
 	if shared_local_motion:
 		local_motion=_motion_basis(frame,local_scale)
 		local_scale_x=local_motion.x.length();local_scale_y=local_motion.y.length();local_scale_z=local_motion.z.length()
+	if native_trail_geometry_enabled and ENDGAME_TRAIL_SOURCES.has(source_key) and shared_local_motion \
+			and clamp_bound_enabled and indexed_quads and int(source_renderer.get("m_RenderMode", 0)) == 0 \
+			and use_basic_uvs and flip_u == 0.0 and flip_v == 0.0 and not _skip_initial_geometry \
+			and _worker_states.size() == draw_indices.size() and not draw_indices.is_empty() \
+			and _native_kernel != null and _native_kernel.has_method("trail_geometry"):
+		var packed: Array = _native_kernel.trail_geometry(raw, particles, draw_indices, _worker_states, now, frame,
+				local_motion, Basis(view_right, view_up, view_normal), camera_transform, focal_max, clamp_max)
+		if packed.size() == 4:
+			vertices = packed[0]; normals = packed[1]; colors = packed[2]; uvs = packed[3]
+			quad_cursor = draw_indices.size()
+			live_count = quad_cursor
+			skipped_projections = quad_cursor
+			draw_indices = []
+			native_trail_geometry_batches += 1
+	if indexed_quads and not draw_indices.is_empty():
+		var count: int = draw_indices.size()
+		vertices.resize(count * 4); uvs.resize(count * 4); colors.resize(count * 4); normals.resize(count * 4)
 	for particle_index in draw_indices:
 		var p: Dictionary = particles[particle_index]
 		var age := now - float(p.birth)

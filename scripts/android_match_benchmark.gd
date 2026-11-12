@@ -77,6 +77,7 @@ func setup(host):
 	CombatParticles.native_batch_calls = 0
 	CombatParticles.native_batch_particles = 0
 	CombatParticles.native_constant_batches = 0
+	CombatParticles.native_trail_geometry_batches = 0
 	CombatParticles.fast_particle_projection_skips = 0
 
 func _configure_scenario(args: PackedStringArray) -> void:
@@ -501,6 +502,7 @@ func _finish():
 	finish_payload["native_particles"] = {
 		"batches": CombatParticles.native_batch_calls, "particles": CombatParticles.native_batch_particles,
 		"constant_batches": CombatParticles.native_constant_batches,
+		"trail_geometry_batches": CombatParticles.native_trail_geometry_batches,
 		"projection_skips": CombatParticles.fast_particle_projection_skips,
 	}
 	if not scenario.is_empty():

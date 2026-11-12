@@ -8,6 +8,9 @@
 #include <vector>
 
 #include <godot_cpp/variant/string.hpp>
+#include <godot_cpp/variant/packed_color_array.hpp>
+#include <godot_cpp/variant/packed_vector2_array.hpp>
+#include <godot_cpp/variant/packed_vector3_array.hpp>
 
 namespace {
 using namespace godot;
@@ -543,6 +546,41 @@ struct Sample {
     double lifetime;
 };
 
+struct GradientTrack {
+    std::array<double, 8> times{};
+    std::array<Color, 8> colors{};
+    int count = 0;
+
+    bool load(const Dictionary &gradient, bool alpha) {
+        count = gradient.get(alpha ? "m_NumAlphaKeys" : "m_NumColorKeys", 0);
+        if (count < 0 || count > int(colors.size())) {
+            return false;
+        }
+        for (int index = 0; index < count; ++index) {
+            const String suffix = String::num_int64(index);
+            const Dictionary color = gradient.get("key" + suffix, Dictionary());
+            colors[index] = Color(number(color.get("r", 1.0)), number(color.get("g", 1.0)),
+                    number(color.get("b", 1.0)), number(color.get("a", 1.0)));
+            times[index] = number(gradient.get(String(alpha ? "atime" : "ctime") + suffix, 0)) / 65535.0;
+        }
+        return true;
+    }
+
+    Color sample(double time, bool hold) const {
+        if (count == 0) {
+            return Color(1, 1, 1, 1);
+        }
+        int index = 0;
+        while (index + 1 < count && time >= times[index + 1]) {
+            ++index;
+        }
+        const int next = std::min(index + 1, count - 1);
+        const double span = times[next] - times[index];
+        const double weight = !hold && span > 0.0 ? std::clamp((time - times[index]) / span, 0.0, 1.0) : 0.0;
+        return colors[index].lerp(colors[next], weight);
+    }
+};
+
 Dictionary advance_one(const Plan &plan, const ParticleKeys &key, Sample &sample, bool constant_steps) {
     Dictionary &data = sample.particle;
     const double age = sample.age;
@@ -628,4 +666,87 @@ godot::Array TavernParticleKernel::advance(const Dictionary &raw, const Array &p
         states[i] = advance_one(plan, key, batch[i], constant_steps);
     }
     return states;
+}
+
+godot::Array TavernParticleKernel::trail_geometry(const Dictionary &raw, const Array &particles,
+        const Array &indices, const Dictionary &states, double now, const Transform3D &frame,
+        const Basis &motion, const Basis &axes, const Transform3D &camera, double focal_max, double clamp_max) {
+    const Dictionary size_module = raw.get("SizeModule", Dictionary());
+    const Dictionary color_module = raw.get("ColorModule", Dictionary());
+    const Dictionary size_curve = size_module.get("curve", Dictionary());
+    const Dictionary gradient = color_module.get("gradient", Dictionary());
+    const Dictionary keys = gradient.get("maxGradient", Dictionary());
+    Curve size;
+    GradientTrack rgb;
+    GradientTrack alpha;
+    if (!enabled(size_module) || !enabled(color_module) || int(gradient.get("minMaxState", -1)) != 1
+            || !size.load(size_curve) || !rgb.load(keys, false) || !alpha.load(keys, true)) {
+        return {};
+    }
+    const bool hold = int(keys.get("m_Mode", 0)) == 1;
+    const Vector3 right = axes.get_column(0);
+    const Vector3 up = axes.get_column(1);
+    const Vector3 normal = axes.get_column(2);
+    const double scale_x = motion.get_column(0).length();
+    const double scale_y = motion.get_column(1).length();
+    const int64_t vertex_count = indices.size() * 4;
+    PackedVector3Array vertices;
+    PackedVector3Array normals;
+    PackedColorArray colors;
+    PackedVector2Array uvs;
+    vertices.resize(vertex_count);
+    normals.resize(vertex_count);
+    colors.resize(vertex_count);
+    uvs.resize(vertex_count);
+    Vector3 *vertex_data = vertices.ptrw();
+    Vector3 *normal_data = normals.ptrw();
+    Color *color_data = colors.ptrw();
+    Vector2 *uv_data = uvs.ptrw();
+    constexpr std::array<Vector2, 4> corners = {Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)};
+    const ParticleKeys fields;
+    const StringName shape_point("shape_point");
+    const StringName source_color("color");
+    const StringName size_mix("size_mix");
+    for (int64_t slot = 0; slot < indices.size(); ++slot) {
+        const int64_t index = indices[slot];
+        if (index < 0 || index >= particles.size()) {
+            return {};
+        }
+        const Dictionary p = particles[index];
+        const Dictionary state = states.get(index, Dictionary());
+        const double age = now - double(p[fields.birth]);
+        const double life = p[fields.life];
+        if (state.is_empty() || age < 0.0 || age >= life || age >= double(state[fields.kill_age])
+                || int(state[fields.collision_hits]) != 0) {
+            return {};
+        }
+        const double normalized = age / life;
+        const double width = double(p[fields.size]) * size.sample(normalized, p[size_mix]);
+        const Vector3 center = frame.xform(Vector3(p[shape_point])) + motion.xform(Vector3(state[fields.position]));
+        const double rotation = state[fields.rotation];
+        const Vector3 x = right.rotated(normal, rotation) * width * scale_x * 0.5;
+        const Vector3 y = up.rotated(normal, rotation) * width * scale_y * 0.5;
+        // Use the same conservative bound as the script. Leave the entire
+        // batch to the script if a particle needs an exact screen projection.
+        const double radius = double(x.length()) + double(y.length());
+        const Vector3 local_center = camera.xform_inv(center);
+        const double depth = -local_center.z;
+        const double off_axis = std::max(std::abs(local_center.x), std::abs(local_center.y));
+        if (depth <= radius || !(focal_max * radius * (1.0 + off_axis / depth) / (depth - radius) < clamp_max * 0.98)) {
+            return {};
+        }
+        const Color tint = rgb.sample(normalized, hold);
+        const Color color = Color(p[source_color]) * Color(tint.r, tint.g, tint.b, alpha.sample(normalized, hold).a);
+        const int64_t start = slot * 4;
+        vertex_data[start] = center + (-x + y);
+        vertex_data[start + 1] = center + (x + y);
+        vertex_data[start + 2] = center + (x - y);
+        vertex_data[start + 3] = center + (-x - y);
+        for (int64_t corner = 0; corner < 4; ++corner) {
+            normal_data[start + corner] = normal;
+            color_data[start + corner] = color;
+            uv_data[start + corner] = corners[corner];
+        }
+    }
+    return Array::make(vertices, normals, colors, uvs);
 }

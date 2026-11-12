@@ -20,6 +20,7 @@ var active_camera_shake: Dictionary={} # Retained API only; game owns the sole m
 var shake_update_id:=0
 var shake_update_delta:=0.0
 var minion_shake=preload("res://scripts/native_combat_minion_shake.gd").new()
+var suppress_game_shake := false
 
 var profile_rows:Array=[]
 
@@ -466,6 +467,7 @@ func _action(effect: Dictionary,action: Dictionary,moment: float):
 			_apply_continuous(effect,record)
 			if bool(params.get("m_EveryFrame",false)):effect.continuous.append(record)
 		"ShakeMinionsAction":
+			if suppress_game_shake:return
 			var options: Dictionary=params.duplicate();options.radius_value=float(_value(effect,params.get("radius"),0.0));options.custom=float(_value(effect,params.get("customShakeIntensity"),0.1))
 			var shake_context:Dictionary=effect.get("context",{}).duplicate()
 			if SourceProjection.from_game(game)!=null:
@@ -473,6 +475,7 @@ func _action(effect: Dictionary,action: Dictionary,moment: float):
 				if not origin.is_empty():shake_context.source_world_position=origin.position
 			minion_shake.trigger(options,shake_context,effect.anchor)
 		"MainCameraShakerAction":
+			if suppress_game_shake:return
 			var value=_value(effect,params.get("m_Amount"),{})
 			if value is Dictionary and value.has("x"):
 				effect.shakes.append(game.camera_shake.new_action(Curves.vec(value),float(_value(effect,params.get("m_Time"),0.0)),float(_value(effect,params.get("m_Delay"),0.0)),shake_update_id,str(effect.route_id)+":MainCameraShakerAction"))
@@ -541,7 +544,7 @@ func _animation_event(effect: Dictionary,player: Dictionary,event: Dictionary,mo
 		for object in assets.objects.values():
 			if object.type=="MonoBehaviour" and str(object.refs.get(".m_GameObject",""))==str(player.key) and object.refs.has(field):
 				_particles(effect,str(object.refs[field]),moment,true,true)
-	elif name=="StartShake":
+	elif name=="StartShake" and not suppress_game_shake:
 		for object in assets.objects.values():
 			if object.type=="MonoBehaviour" and object.data.has("m_IntensityCurve") and str(object.refs.get(".m_GameObject",""))==str(player.key):
 				game.camera_shake.request_curve(Curves.vec(object.data.m_Amount),object.data.m_IntensityCurve,float(object.data.get("m_HoldAtSec",0.0)) if bool(object.data.get("m_Hold",false)) else null,bool(object.data.get("m_IsOverride",false)),str(effect.route_id)+":CameraShaker.StartShake")

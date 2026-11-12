@@ -12,6 +12,7 @@ var renderer: Node
 var heroes: Dictionary={}
 var state_audit: Dictionary={}
 var blockers: Array=[]
+var _enemy_hero_hover_waiting_for_use := false
 
 func setup(owner_game: Node):
  game=owner_game
@@ -43,14 +44,16 @@ func _retire(id):
  if renderer.gpu_pipelines.has(id):
   renderer.gpu_pipelines[id].root.queue_free();renderer.gpu_pipelines.erase(id)
 
-func _show(id,actor: Dictionary,kind: String,state: int,attachments: Array):
+func _show(id,actor: Dictionary,kind: String,state: int,attachments: Array,record_audit: bool=true) -> bool:
  if renderer.entries.has(id) and renderer.entries[id].actor.get("root")!=actor.get("root"):_retire(id)
  var ok: bool=renderer.set_actor_state(id,actor,kind,state,attachments)
  if ok and renderer.entries.has(id) and renderer.entries[id].material is ShaderMaterial:
   var material: ShaderMaterial=renderer.entries[id].material
   if not material.has_meta("status_cull_compensated"):
    game.native_damage._compensate_reflected_culling(material);material.set_meta("status_cull_compensated",true)
- state_audit[id]={"state":state,"kind":kind,"source_state_bound":ok,"attachments":attachments.size(),"actor_binding":"displayed original minion" if kind=="minion" else "Original hero mesh registered to existing 2D hero position"}
+ if record_audit:
+  state_audit[id]={"state":state,"kind":kind,"source_state_bound":ok,"attachments":attachments.size(),"actor_binding":"displayed original minion" if kind=="minion" else "Original hero mesh registered to existing 2D hero position"}
+ return ok
 
 func _hero(side: int) -> Dictionary:
  if heroes.has(side):return heroes[side].actor
@@ -87,6 +90,32 @@ func _hero_node(key: String,parent: Node3D,actor: Dictionary,is_root: bool=false
    var child: Dictionary=hero_assets.objects[tr.refs[field]]
    _hero_node(str(child.refs[".m_GameObject"]),node,actor)
 
+func _show_hero(side: int,pos: Vector2,state: int,record_audit: bool=true) -> bool:
+ var id: String="hero:%d"%side
+ var actor: Dictionary=_hero(side)
+ var source_projection=SourceProjection.from_game(game)
+ if source_projection!=null:
+  var anchor=source_projection.resolve_anchor(id)
+  if anchor.is_empty() or not anchor.has("rotation") or not anchor.has("scale"):
+   renderer.hide(id);source_projection.block("Hero highlight requires full verified source pose");return false
+  heroes[side].holder.position=SourceProjection.source_to_render(anchor.position)
+  heroes[side].projection.basis=SourceProjection.REFLECTION*Basis(anchor.rotation)*Basis.from_scale(anchor.scale)
+ else:heroes[side].holder.position=game.spatial_scene.screen_to_world(pos+game.shake_offset)
+ return _show(id,actor,"hero",state,_attachments(id,actor),record_audit)
+
+func stage_enemy_hero_hover_warmup() -> bool:
+ if not game.native_initial_loading or not is_instance_valid(game.world_canvas) or game.world_canvas.visible or not is_instance_valid(renderer):return false
+ if renderer.entries.has("hero:1"):return false
+ # Render the production hover silhouette behind the loading canvas and keep
+ # its cached mask for the first actual pointer interaction.
+ var history_size: int=renderer.history.size()
+ _enemy_hero_hover_waiting_for_use=_show_hero(1,game.ENEMY_HERO,2,false)
+ renderer.history.resize(history_size)
+ return _enemy_hero_hover_waiting_for_use
+
+func hide_enemy_hero_hover_warmup() -> void:
+ if _enemy_hero_hover_waiting_for_use and is_instance_valid(renderer):renderer.hide("hero:1")
+
 func sync_from_game(delta: float=0.0):
  if not is_instance_valid(renderer):return
  renderer.advance(delta)
@@ -119,17 +148,8 @@ func sync_from_game(delta: float=0.0):
   var state: int=27 if hovered else 26
   if not aiming or not game._target_is_legal({"type":"hero","side":side,"pos":pos}):state=2 if hovered else 1
   if game.headless:state_audit[id]={"state":state,"kind":"hero","gpu":false};continue
-  if state==1 and not heroes.has(side):continue
-  var actor: Dictionary=_hero(side)
-  var source_projection=SourceProjection.from_game(game)
-  if source_projection!=null:
-   var anchor=source_projection.resolve_anchor("hero:"+str(side))
-   if anchor.is_empty() or not anchor.has("rotation") or not anchor.has("scale"):
-    renderer.hide(id);source_projection.block("Hero highlight requires full verified source pose");continue
-   heroes[side].holder.position=SourceProjection.source_to_render(anchor.position)
-   heroes[side].projection.basis=SourceProjection.REFLECTION*Basis(anchor.rotation)*Basis.from_scale(anchor.scale)
-  else:heroes[side].holder.position=game.spatial_scene.screen_to_world(pos+game.shake_offset)
-  _show(id,actor,"hero",state,_attachments(id,actor))
+  if state==1 and (not heroes.has(side) or (side==1 and _enemy_hero_hover_waiting_for_use)):continue
+  if _show_hero(side,pos,state) and side==1:_enemy_hero_hover_waiting_for_use=false
  for id in renderer.entries.keys():
   if not live.has(id):_retire(id)
  while renderer.history.size()>256:renderer.history.pop_front()

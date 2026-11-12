@@ -510,6 +510,9 @@ func _finish():
 	var hero_warmup = game.native_endgame_hero_warmup
 	if hero_warmup != null:
 		finish_payload["hero_warmup"] = {"wall_usec": hero_warmup.wall_usec, "batches": hero_warmup.completed_batches}
+	var spell_warmup = game.native_mac_spell_warmup
+	if spell_warmup != null:
+		finish_payload["spell_warmup"] = {"wall_usec": spell_warmup.wall_usec, "batches": spell_warmup.completed_batches}
 	# Drain diagnostics outside the measured interval. Hundreds of messages in
 	# a single frame can exceed Android's logging quota even at safe line sizes.
 	for index in diagnostics.size():

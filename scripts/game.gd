@@ -193,6 +193,8 @@ var native_scene_warmup_pending := false
 var native_scene_warmup_complete := false
 const EndgameHeroWarmup = preload("res://scripts/native_endgame_hero_warmup.gd")
 var native_endgame_hero_warmup: EndgameHeroWarmup
+const MacSpellWarmup = preload("res://scripts/native_mac_spell_warmup.gd")
+var native_mac_spell_warmup: MacSpellWarmup
 var native_banner_pending=false
 var native_initial_sounds:Array=[]
 var native_load_frames=0
@@ -357,6 +359,7 @@ func shutdown_presentation_audio():
 	if is_instance_valid(native_rope_host):await native_rope_host.shutdown()
 
 func _exit_tree():
+	if native_mac_spell_warmup != null:native_mac_spell_warmup.cancel()
 	if face_render_mode: return
 	native_startup_timing.stop_watching()
 	if is_instance_valid(original_board_bridge):original_board_bridge.close()
@@ -454,6 +457,7 @@ func _fail_native_loading(message:String):
 	if not native_loading_error.is_empty():return
 	native_startup_timing.mark("loading_failed",{"message":message})
 	native_loading_error=message
+	if native_mac_spell_warmup != null:native_mac_spell_warmup.cancel()
 	native_banner_pending=false;native_initial_sounds.clear()
 	if is_instance_valid(native_turn_banner):native_turn_banner.cancel_original()
 	if is_instance_valid(world_canvas):world_canvas.visible=false
@@ -503,6 +507,9 @@ func _advance_initial_loading(dt:float):
 	if native_endgame_hero_warmup==null and EndgameHeroWarmup.enabled():
 		native_endgame_hero_warmup=EndgameHeroWarmup.new()
 	if native_endgame_hero_warmup!=null and not native_endgame_hero_warmup.advance(self):return
+	if native_mac_spell_warmup == null and MacSpellWarmup.enabled():
+		native_mac_spell_warmup = MacSpellWarmup.new()
+	if native_mac_spell_warmup != null and not native_mac_spell_warmup.advance(self):return
 	native_startup_timing.begin("reveal_sync_cpu")
 	native_initial_loading=false
 	world_canvas.visible=true;world_canvas.queue_redraw()

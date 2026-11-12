@@ -4,6 +4,7 @@ extends RefCounted
 
 const SourceProjection = preload("res://scripts/source_board_projection.gd")
 const ENABLED_SETTING := "render_quality/android_hero_shader_warmup"
+const MACOS_ENABLED_SETTING := "render_quality/macos_hero_shader_warmup"
 const DEBRIS := "cab-69c88b234dfa427e02d1fcee9337ae34:-3138239647439378684"
 const CRATER := "cab-69c88b234dfa427e02d1fcee9337ae34:-8518041788018317564"
 const MESHES := [DEBRIS, CRATER]
@@ -17,7 +18,11 @@ var _staged: Node3D
 var _shaders: Array[Shader] = []
 
 static func enabled() -> bool:
-	return OS.has_feature("android") and RenderingServer.get_current_rendering_method() == "gl_compatibility" and (bool(ProjectSettings.get_setting(ENABLED_SETTING, false)) or OS.get_cmdline_user_args().has("--android-hero-shader-warmup"))
+	if DisplayServer.get_name() == "headless" or RenderingServer.get_current_rendering_method() != "gl_compatibility":
+		return false
+	if OS.has_feature("macos"):
+		return bool(ProjectSettings.get_setting(MACOS_ENABLED_SETTING, false))
+	return OS.has_feature("android") and (bool(ProjectSettings.get_setting(ENABLED_SETTING, false)) or OS.get_cmdline_user_args().has("--android-hero-shader-warmup"))
 
 func advance(game: Node) -> bool:
 	if _finished:return true

@@ -17,6 +17,7 @@ var coin_texture = load("res://assets/original_flow_v20/coin_token.webp")
 var game
 var source_opening:Node
 var source_coin:Node
+var prepared_source_coin:Node
 var prepared_coin_assets:Dictionary={}
 var source_birth_sent=false
 var source_card_started=false
@@ -34,6 +35,8 @@ var last_turn_side = -1
 func reset():
 	_clear_source_opening()
 	_clear_source_coin()
+	if is_instance_valid(prepared_source_coin):prepared_source_coin.queue_free()
+	prepared_source_coin=null
 	coin_effects.clear();button_previous="disabled";button_current="disabled"
 	button_transition=1;button_hover=0;button_pressed=false;button_press_depth=0
 	timeout_age=-1;visual_time=0;last_turn_side=-1
@@ -319,6 +322,16 @@ func _clear_source_coin():
 func prepare_source_coin_assets():
 	if prepared_coin_assets.is_empty():
 		prepared_coin_assets=load("res://scripts/native_coin_player.gd").prepare_assets()
+	if OS.has_feature("macos") and is_instance_valid(game) and game.get("native_initial_loading") == true and not is_instance_valid(prepared_source_coin):
+		# Construct the hidden views before opening. begin_source_drop still owns
+		# visibility, event time, audio, and the first particle RNG use.
+		prepared_source_coin = _create_source_coin()
+
+func _create_source_coin() -> Node:
+	var presentation = load("res://scripts/native_coin_presentation.gd").new()
+	game.add_child(presentation)
+	presentation.setup(game, prepared_coin_assets)
+	return presentation
 
 func _advance_source_coin_piece(delta:float):
 	if delta<=0 or not is_instance_valid(source_coin):return
@@ -334,7 +347,8 @@ func _tick_source_coin(delta:float):
 		return
 	if not is_instance_valid(source_coin):
 		if phase=="deal" and t+delta<0.37:return
-		source_coin=load("res://scripts/native_coin_presentation.gd").new();game.add_child(source_coin);source_coin.setup(game,prepared_coin_assets)
+		source_coin=prepared_source_coin if is_instance_valid(prepared_source_coin) else _create_source_coin()
+		prepared_source_coin=null
 		source_coin.player.audio_enabled=game.sound_enabled
 		source_coin.begin_source_drop(game.flow.first_side==0)
 		if phase=="deal":delta=maxf(0,t+delta-maxf(t,0.37))

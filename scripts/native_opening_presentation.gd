@@ -64,10 +64,11 @@ var highlight_source:Dictionary={}
 var highlight_materials:Dictionary={}
 var audit:Dictionary={"build":"37.0.0.255130.254477","compatibility":["Godot source-camera/shader bridge","Godot original-font rasterization, not Unity glyph parity","source ParticleSystem modules on compatibility solver","announcer and START scheduling uses decoded duration, not original SoundManager frame-polling","START option12 enabled as local presentation setting; START actor-light fade not ported","Godot cosmetic RNG differs from Unity global RNG"]}
 
-func setup(host):
+func setup(host,deal_preview:bool=false):
  game=host;cosmetic.randomize()
- intro_audio=IntroAudio.new();add_child(intro_audio);intro_audio.setup(game);intro_audio.muted=not game.sound_enabled
- starting_taunts=preload("res://scripts/source_opening_starting_taunts.gd").new();add_child(starting_taunts);starting_taunts.setup(game);starting_taunts.muted=not game.sound_enabled
+ if not deal_preview:
+  intro_audio=IntroAudio.new();add_child(intro_audio);intro_audio.setup(game);intro_audio.muted=not game.sound_enabled
+  starting_taunts=preload("res://scripts/source_opening_starting_taunts.gd").new();add_child(starting_taunts);starting_taunts.setup(game);starting_taunts.muted=not game.sound_enabled
  assets=Assets.new();assets.setup(game.native_card_renderer)
  roots=assets.manifest.root_labels
  layout=JSON.parse_string(FileAccess.get_file_as_string("res://assets/original_opening/layout.json"))
@@ -86,14 +87,17 @@ func setup(host):
  background_copy=BackBufferCopy.new();background_copy.copy_mode=BackBufferCopy.COPY_MODE_VIEWPORT;background_copy.z_index=4;game.world_canvas.add_child(background_copy)
  sprite=Sprite2D.new();sprite.name="OriginalOpeningPresentation";sprite.texture=viewport.get_texture();sprite.z_index=4;sprite.material=transmission.make_composite_material();sprite.modulate=Color(1,1,1,2);game.world_canvas.add_child(sprite)
  _setup_tooltip_pass()
- weld=preload("res://scripts/source_opening_weld.gd").new();add_child(weld);weld.setup(game,assets,world);weld.play_source_audio=game.sound_enabled
- hero_labels=preload("res://scripts/source_opening_hero_labels.gd").new();add_child(hero_labels);hero_labels.setup(game,assets,world);hero_labels.fade_out_start=.6+intro_extension
- ui.vs=assets.instantiate_opening(roots.versus,world,mobile);ui.vs.root.position=anchor("VS_Position")
+ if not deal_preview:
+  weld=preload("res://scripts/source_opening_weld.gd").new();add_child(weld);weld.setup(game,assets,world);weld.play_source_audio=game.sound_enabled
+  hero_labels=preload("res://scripts/source_opening_hero_labels.gd").new();add_child(hero_labels);hero_labels.setup(game,assets,world);hero_labels.fade_out_start=.6+intro_extension
+  ui.vs=assets.instantiate_opening(roots.versus,world,mobile);ui.vs.root.position=anchor("VS_Position")
  ui.banner=assets.instantiate_opening(roots.mulliganChooseBannerPrefab,world,mobile);ui.banner.root.position=anchor("ChoiceBanner")
- ui.confirm=assets.instantiate_opening(roots.confirm,world,mobile)
- button_original_position=ui.confirm.nodes[PREFIX+"-8031207015573253587"].position
+ if not deal_preview:
+  ui.confirm=assets.instantiate_opening(roots.confirm,world,mobile)
+  button_original_position=ui.confirm.nodes[PREFIX+"-8031207015573253587"].position
  for state in ui.values():state.root.visible=false
  refresh_layout();process_priority=101
+ if deal_preview:set_process(false)
 
 func _setup_tooltip_pass():
  # Original HS_ForwardPerspectiveRenderer (globalgamemanagers.assets:7801)

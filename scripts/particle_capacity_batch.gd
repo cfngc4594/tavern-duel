@@ -1,6 +1,6 @@
 extends RefCounted
-# Private context belongs to one synchronous base-solver parent event loop.
-# Existing child particles cannot change until that event loop completes.
+# The caller can reuse a cursor while existing birth and expiry times stay fixed.
+# A rewind or an append outside the batch rebuilds the ordered endpoints.
 static func count(context:Dictionary,particles:Array,at:float)->int:
 	if not context.has("at") or at<float(context.at) or int(context.get("seen",-1))!=particles.size() or not is_same(context.get("source",[]),particles):
 		var births:Array[float]=[];var ends:Array[float]=[]

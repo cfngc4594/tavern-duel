@@ -12,6 +12,7 @@ static var fast_particle_projection_enabled: bool = OS.has_feature("macos")
 static var fast_particle_projection_skips: int = 0
 static var native_trail_geometry_enabled: bool = OS.has_feature("macos")
 static var native_trail_geometry_batches: int = 0
+static var persistent_victory_capacity_enabled: bool = OS.has_feature("macos")
 static var _native_kernel: RefCounted
 # Default-off experiment: whole-effect benefit is not established.
 # Only cache module decisions within the callback-free base seek loop.
@@ -136,6 +137,7 @@ var death_rng := RandomNumberGenerator.new()
 var death_events := 0
 var screen_size_clamped := 0
 var victory_trail_density := 1.0
+var _victory_capacity: Dictionary = {}
 
 func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> void:
 	var profile_start:int=Time.get_ticks_usec() if profile_setup else 0
@@ -203,6 +205,12 @@ func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> vo
 	_build_emission_period()
 	if profile_setup:stages.emission=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	_load_subemitters(spec)
+	# Event-only victory trails never change existing birth or expiry times.
+	# Other emitters still rebuild capacity after each child seek.
+	if persistent_victory_capacity_enabled and ENDGAME_TRAIL_SOURCES.has(source_key) \
+			and not emission_playing and not bool(raw.get("CollisionModule", {}).get("enabled", false)) \
+			and subemitter_templates.is_empty() and get_script().get_base_script() == null:
+		_victory_capacity = {"enabled": true}
 	if profile_setup:stages.subemitters=Time.get_ticks_usec()-stage;stage=Time.get_ticks_usec()
 	_skip_initial_geometry=defer_initial_geometry and death_initial_geometry_defer_enabled and get_script().resource_path=="res://scripts/native_death_particles.gd" and subemitter_ancestry.size()==1
 	seek(0.0)
@@ -343,6 +351,7 @@ func stop_emitting(seconds: float = -1.0) -> void:
 	stop_time = minf(stop_time, _to_sim_time(requested))
 	# Also handle a caller delivering a source stop event after a coarse seek.
 	particles = particles.filter(func(p): return bool(p.get("manual_emit", false)) or float(p.birth) <= stop_time)
+	if not _victory_capacity.is_empty(): _victory_capacity = {"enabled": true}
 	pending_events = pending_events.filter(func(event): return float(event.at) < stop_time)
 	seek(elapsed_seconds)
 
@@ -355,6 +364,7 @@ func source_destroy() -> void:
 	live_count = 0
 	stop_time = 0.0
 	particles.clear()
+	_victory_capacity.clear()
 	pending_events.clear()
 	mesh.clear_surfaces()
 	for template in subemitter_templates:
@@ -1400,7 +1410,7 @@ func _update_subemitters(now: float) -> void:
 				events.append({"at": float(parent.birth) + age, "age": age, "parent": parent, "template": template})
 				parent.sub_cursors[index] += 1
 	events.sort_custom(func(a, b): return float(a.at) < float(b.at))
-	# Scoped to this synchronous event loop. Child seek/state updates happen only afterwards.
+	# Only collisionless victory leaves retain their capacity cursor after seek.
 	var capacity_contexts:Dictionary={}
 	var base_events:bool=get_script().get_base_script()==null
 	for event in events:
@@ -1413,7 +1423,9 @@ func _update_subemitters(now: float) -> void:
 			var child=event.template.solver
 			if base_events and child.get_script().get_base_script()==null:
 				var child_id:int=child.get_instance_id()
-				if not capacity_contexts.has(child_id):capacity_contexts[child_id]={"enabled":true}
+				if not capacity_contexts.has(child_id):
+					var victory_capacity: Dictionary = child._victory_capacity
+					capacity_contexts[child_id] = victory_capacity if not victory_capacity.is_empty() else {"enabled": true}
 				subemitter_emitted+=int(child._emit_from_parent_batch(position,wall,1,capacity_contexts[child_id]))
 			else:subemitter_emitted += int(child.emit_from_parent(position, wall))
 	for template in subemitter_templates: template.solver.seek(elapsed_seconds)
@@ -1461,9 +1473,8 @@ func emit_from_parent(position: Vector3, wall_seconds: float, count: int = 1) ->
 		emitted += 1
 	return emitted
 
-# Private batch contract: only the base parent event loop may reuse capacity.
-# It cannot seek or mutate existing child particles between these calls.
-# Never retain this context across a seek, callback, or event-loop return.
+# Base parent events can reuse capacity while the child's birth/expiry times
+# are immutable. The cursor rebuilds for a rewind or an external array change.
 func _emit_from_parent_batch(position: Vector3, wall_seconds: float, count:int, capacity:Dictionary) -> int:
 	if source_destroyed or not is_instance_valid(source_node): return 0
 	var at := _to_sim_time(wall_seconds)

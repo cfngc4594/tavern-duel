@@ -6,10 +6,13 @@ const CombatParticles = preload("res://scripts/native_combat_particles.gd")
 const BATCH_SIZE := 10
 const DIAGNOSTIC_BATCH_SIZE := 8
 const NATIVE_AB_RUN_PATH := "user://native-particle-ab-run.txt"
+const SCENARIOS := ["idle", "opening-draw", "heavy-spell", "terminal"]
+const SCENARIO_SUITE_PATH := "user://android-scenario-suite.txt"
+const SCENARIO_TIMEOUT_USEC := 180_000_000
 const MAX_RUN_USEC := 900_000_000
 const MAX_SPIKES_PER_PHASE := 6
 const MAX_EFFECT_SAMPLES_PER_PHASE := 12
-const FX_EFFECT_PHASES := ["fireball_cold", "fireball_repeat", "coin_cold", "coin_repeat"]
+const FX_EFFECT_PHASES := ["fireball_cold", "fireball_first", "fireball_repeat", "coin_cold", "coin_repeat", "fireblast_first", "fireblast_repeat"]
 const ACTION_PAUSE := 0.45
 const RESULT_HOLD_SECONDS := 2.5
 
@@ -38,6 +41,11 @@ var quit_when_done := false
 var fx_benchmark: RefCounted
 var native_particle_mode := "default"
 var native_ab_run := -1
+var scenario := ""
+var scenario_run := -1
+var scenario_error := ""
+var scenario_driver: RefCounted
+var scenario_particle_profile := false
 
 func setup(host):
 	game = host
@@ -57,7 +65,8 @@ func setup(host):
 			var value: String = arg.trim_prefix("--android-match-seed=")
 			if value.is_valid_int() and int(value) >= 0:
 				seed_value = int(value)
-	if "--android-fx-benchmark" in args:
+	_configure_scenario(args)
+	if scenario.is_empty() and scenario_error.is_empty() and "--android-fx-benchmark" in args:
 		fx_benchmark = load("res://scripts/android_fx_benchmark.gd").new()
 		fx_benchmark.setup(game, args)
 		first_side = 0
@@ -68,6 +77,50 @@ func setup(host):
 	CombatParticles.native_batch_calls = 0
 	CombatParticles.native_batch_particles = 0
 
+func _configure_scenario(args: PackedStringArray) -> void:
+	for arg in args:
+		if arg.begins_with("--android-scenario="):
+			scenario = arg.trim_prefix("--android-scenario=")
+			if not SCENARIOS.has(scenario):
+				scenario_error = "invalid_scenario"
+				return
+	if "--android-scenario-suite" in args:
+		if not scenario.is_empty():
+			scenario_error = "conflicting_scenario_options"
+			return
+		scenario_run = 0
+		if FileAccess.file_exists(SCENARIO_SUITE_PATH):
+			var counter := FileAccess.get_file_as_string(SCENARIO_SUITE_PATH).strip_edges()
+			if not counter.is_valid_int() or int(counter) < 0:
+				scenario_error = "invalid_scenario_suite_counter"
+				return
+			scenario_run = int(counter)
+		scenario = SCENARIOS[scenario_run % SCENARIOS.size()]
+	if scenario.is_empty():
+		return
+	if "--android-fx-benchmark" in args or native_ab_run >= 0:
+		scenario_error = "conflicting_benchmark_modes"
+		return
+	first_side = 0
+	profiling = true
+	match scenario:
+		"idle":
+			scenario_driver = load("res://scripts/android_scenario_idle.gd").new()
+		"opening-draw":
+			scenario_driver = load("res://scripts/android_scenario_opening.gd").new()
+		"heavy-spell", "terminal":
+			fx_benchmark = load("res://scripts/android_fx_benchmark.gd").new()
+			fx_benchmark.setup_scenario(game, scenario)
+	if scenario_driver != null:
+		scenario_driver.setup(game)
+	if scenario == "heavy-spell":
+		profile_fx_effects = true
+		scenario_particle_profile = "--android-scenario-particle-profile" in args
+		if scenario_particle_profile:
+			CombatParticles.seek_rows.clear()
+			CombatParticles.seek_source_totals.clear()
+			CombatParticles.profile_seek = true
+
 func _ready():
 	started_usec = Time.get_ticks_usec()
 	get_tree().process_frame.connect(_sample_previous_frame)
@@ -76,7 +129,8 @@ func _ready():
 		RenderingServer.frame_post_draw.connect(_end_render_draw)
 	emit_record("MATCH_BENCH_BEGIN " + JSON.stringify({
 		"schema": 1, "ticks_usec": started_usec, "seed": seed_value, "first_side": first_side,
-		"benchmark": "fx" if fx_benchmark != null else "match",
+		"benchmark": "scenario" if not scenario.is_empty() else ("fx" if fx_benchmark != null else "match"),
+		"scenario": scenario, "scenario_run": scenario_run, "particle_profile": scenario_particle_profile,
 		"arm": fx_benchmark.arm if fx_benchmark != null else "",
 		"run_index": fx_benchmark.run_index if fx_benchmark != null else 0,
 		"profile_stages": profiling, "profile_fx_effects": profile_fx_effects,
@@ -156,8 +210,12 @@ func _collect_stages(interval: int):
 		stage_sums[phase] = {}
 		phase_spikes[phase] = []
 	var stages: Dictionary = stage_sums[phase]
-	for label in game.last_frame_stages:
-		var value: int = game.last_frame_stages[label]
+	var frame_stages: Dictionary = game.last_frame_stages
+	if scenario_particle_profile:
+		frame_stages = frame_stages.duplicate()
+		_add_scenario_particle_stages(frame_stages)
+	for label in frame_stages:
+		var value: int = frame_stages[label]
 		if not stages.has(label):
 			stages[label] = [0, 0, 0]
 		var totals: Array = stages[label]
@@ -169,10 +227,27 @@ func _collect_stages(interval: int):
 	var spikes: Array = phase_spikes[phase]
 	if spikes.size() == MAX_SPIKES_PER_PHASE and interval <= int(spikes.back().frame_usec):
 		return
-	spikes.append({"frame": frame, "frame_usec": interval, "game_usec": game_usec, "stages": game.last_frame_stages.duplicate()})
+	spikes.append({"frame": frame, "frame_usec": interval, "game_usec": game_usec, "stages": frame_stages.duplicate()})
 	spikes.sort_custom(func(a, b): return a.frame_usec > b.frame_usec)
 	if spikes.size() > MAX_SPIKES_PER_PHASE:
 		spikes.pop_back()
+
+func _add_scenario_particle_stages(stages: Dictionary) -> void:
+	var seek_rows := CombatParticles.seek_rows
+	if phase in FX_EFFECT_PHASES and not seek_rows.is_empty():
+		var state_usec := 0
+		var geometry_usec := 0
+		var upload_usec := 0
+		for row in seek_rows:
+			var loop_state_usec := int(row.get("state_usec", 0))
+			state_usec += int(row.get("worker_usec", 0)) + loop_state_usec
+			geometry_usec += maxi(0, int(row.get("loop_usec", 0)) - loop_state_usec)
+			upload_usec += int(row.upload_usec)
+		# Nested breakdown of the combat stage, excluding inclusive subemitter time.
+		stages["particle_state"] = state_usec
+		stages["particle_geometry_loop"] = geometry_usec
+		stages["particle_mesh_upload"] = upload_usec
+	seek_rows.clear()
 
 func _flush_rows():
 	if rows.is_empty():
@@ -186,13 +261,20 @@ func _flush_rows():
 	rows.clear()
 
 func _process(delta: float):
-	if Time.get_ticks_usec() - started_usec > MAX_RUN_USEC:
+	if not scenario_error.is_empty():
+		result = scenario_error
+		return
+	var timeout_usec := MAX_RUN_USEC if scenario.is_empty() else SCENARIO_TIMEOUT_USEC
+	if Time.get_ticks_usec() - started_usec > timeout_usec:
 		result = "timeout"
 		return
 	if game.native_initial_loading:
 		phase = "loading"
 		if not game.native_loading_error.is_empty():
 			result = "loading_failed"
+		return
+	if scenario_driver != null:
+		scenario_driver.advance(self)
 		return
 	if fx_benchmark != null:
 		fx_benchmark.advance(self)
@@ -362,12 +444,26 @@ func _finish():
 		RenderingServer.frame_pre_draw.disconnect(_begin_render_draw)
 		RenderingServer.frame_post_draw.disconnect(_end_render_draw)
 	set_process(false)
+	if scenario_driver != null and scenario_driver.has_method("finish"):
+		scenario_driver.finish()
 	game.profile_frame_stages = false
+	if scenario_particle_profile:
+		CombatParticles.profile_seek = false
+		CombatParticles.seek_rows.clear()
+		CombatParticles.seek_source_totals.clear()
 	_flush_rows()
 	var diagnostics := PackedStringArray()
 	if fx_benchmark != null:
 		for audit in fx_benchmark.terminal_audits:
 			diagnostics.append("MATCH_BENCH_FX_CASE " + JSON.stringify(audit))
+	if not scenario.is_empty():
+		var cases: Array = []
+		if scenario_driver != null:
+			cases = scenario_driver.case_results
+		elif fx_benchmark != null:
+			cases = fx_benchmark.case_results
+		for entry in cases:
+			diagnostics.append("MATCH_BENCH_SCENARIO_CASE " + JSON.stringify(entry))
 	for label in fx_effect_samples:
 		for row in fx_effect_samples[label]:
 			diagnostics.append("MATCH_BENCH_FX_EFFECT " + JSON.stringify({"phase": label, "sample": row}))
@@ -401,7 +497,9 @@ func _finish():
 		"victory_trail_density": ProjectSettings.get_setting_with_override("render_quality/victory_trail_density")
 	}
 	finish_payload["native_particles"] = {"batches": CombatParticles.native_batch_calls, "particles": CombatParticles.native_batch_particles}
-	if fx_benchmark != null:
+	if not scenario.is_empty():
+		finish_payload.merge({"benchmark": "scenario", "scenario": scenario, "scenario_run": scenario_run})
+	elif fx_benchmark != null:
 		finish_payload.merge({"benchmark": "fx", "arm": fx_benchmark.arm, "run_index": fx_benchmark.run_index, "case_results": fx_benchmark.case_results})
 	var hero_warmup = game.native_endgame_hero_warmup
 	if hero_warmup != null:
@@ -425,6 +523,10 @@ func _finish():
 		else:
 			next_arm.store_string(str(native_ab_run + 1))
 			next_arm.close()
+	if scenario_run >= 0 and result == "completed" and not _advance_scenario_suite():
+		result = "scenario_suite_counter_write_failed"
+		finish_payload.status = result
+		finish_payload.completed = false
 	emit_record("MATCH_BENCH_END " + JSON.stringify(finish_payload))
 	if not output_path.is_empty():
 		var output := FileAccess.open(output_path, FileAccess.WRITE)
@@ -436,6 +538,14 @@ func _finish():
 		output_lines.clear()
 	if quit_when_done:
 		get_tree().quit(0 if result == "completed" else 1)
+
+func _advance_scenario_suite() -> bool:
+	var counter := FileAccess.open(SCENARIO_SUITE_PATH, FileAccess.WRITE)
+	if counter == null:
+		return false
+	counter.store_string(str(scenario_run + 1))
+	counter.flush()
+	return counter.get_error() == OK
 
 func _diagnostic_chunks(values: Dictionary) -> Array[Dictionary]:
 	var chunks: Array[Dictionary] = []

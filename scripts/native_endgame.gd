@@ -29,6 +29,8 @@ var blockers: Array=[]
 var seen_hero_deaths: Dictionary={}
 var pending_hero_voice: Dictionary={}
 var death_voice_history: Array=[]
+var profile_screen_construction:=false
+var screen_show_usec:=0
 
 func setup(owner_game: Node):
  game=owner_game
@@ -171,7 +173,10 @@ func _show_result():
  # EndGameScreen.Show. It does not destroy the hero spell or its particle tails.
  source_time_scale=saved_time_scale
  if is_instance_valid(screen):
-  state="result";screen.show(result)
+  state="result"
+  var show_started:=Time.get_ticks_usec() if profile_screen_construction else 0
+  screen.show(result)
+  if profile_screen_construction:screen_show_usec=Time.get_ticks_usec()-show_started
  else:state="waiting_screen"
  history.append({"event":"all_hero_spells_finished","wall_time":clock_seconds,"scaled_time":scaled_seconds,"restored_scale":source_time_scale})
 
@@ -200,6 +205,7 @@ func clear(restore_bgm: bool=true):
  match_generation+=1;frame_id=0;clock_seconds=0.0;scaled_seconds=0.0
  state="idle";result.clear();request_count=0;activation_count=0;source_roots.clear();history.clear()
  source_time_scale=1.0;saved_time_scale=1.0;camera_offset=Vector2.ZERO
+ screen_show_usec=0
  hero_body_visible=[true,true];hero_details_visible=[true,true];finished_heroes.clear();pending_screen=false
  seen_hero_deaths.clear();pending_hero_voice={};death_voice_history.clear()
 

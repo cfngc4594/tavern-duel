@@ -35,6 +35,9 @@ var bush_interactions
 var audit_path=''
 var quit_after_frames=0
 var process_count=0
+var benchmark_profile_water_particles:=false
+var benchmark_freeze_water_particles:=false
+var benchmark_water_particles_usec:=0
 static func v3(d):return Vector3(d.x,d.y,d.z)
 static func source_vector(d):return REFLECTION*v3(d)
 static func color4(d):return Vector4(d.r,d.g,d.b,d.a)
@@ -216,7 +219,11 @@ func advance_host(dt):
  if is_instance_valid(arch_interactions):arch_interactions.advance(dt)
  if is_instance_valid(bush_interactions):bush_interactions.advance(dt)
  if is_instance_valid(water_interactions):water_interactions.advance(dt)
- if is_instance_valid(water_particles):water_particles.advance(dt)
+ if benchmark_profile_water_particles:benchmark_water_particles_usec=0
+ if is_instance_valid(water_particles) and not benchmark_freeze_water_particles:
+  var water_started:=Time.get_ticks_usec() if benchmark_profile_water_particles else 0
+  water_particles.advance(dt)
+  if benchmark_profile_water_particles:benchmark_water_particles_usec=Time.get_ticks_usec()-water_started
  if quit_after_frames>0 and process_count>=quit_after_frames:
   if not audit_path.is_empty():write_audit(audit_path)
   close_probe();await get_tree().process_frame;get_tree().quit()

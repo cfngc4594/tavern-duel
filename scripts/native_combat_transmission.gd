@@ -20,6 +20,7 @@ var shader_uniform_cache: Dictionary = {}
 var warnings: Array[String] = []
 var frame_number := 0
 var perf_measure_enabled := false
+var benchmark_freeze_sync := false
 var perf_samples: Array=[]
 var _material_seen: Dictionary = {}
 var _uniform_values: Dictionary = {}
@@ -69,7 +70,7 @@ func make_composite_material() -> ShaderMaterial:
 	return material
 
 func sync() -> void:
-	if not is_instance_valid(source_view) or not is_instance_valid(source_root):return
+	if benchmark_freeze_sync or not is_instance_valid(source_view) or not is_instance_valid(source_root):return
 	var perf_started: int=Time.get_ticks_usec() if perf_measure_enabled else 0
 	frame_number+=1
 	_material_seen.clear()

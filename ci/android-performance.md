@@ -95,3 +95,16 @@
 ## 复跑
 
 在独立的 Android 导出预设中设置 `command_line/extra_args="-- --android-match-benchmark --android-match-profile --startup-timing"`，导出、签名并安装。使用 `adb logcat` 保留每局从 `MATCH_BENCH_BEGIN` 到 `MATCH_BENCH_END` 的记录。运行 `python3 ci/analyze_android_match.py baseline.log candidate.log` 生成逐阶段分布、峰值帧和动作序列，分析器会拒绝帧号不连续的记录。日常试玩包可省略全部基准参数。
+
+## 独立场景基准
+
+用正式主场景运行 `--android-match-benchmark --android-match-quit --android-scenario=<名称>`，并用 `--android-match-output=<可写路径>` 保存完整记录。Android 诊断包可将这些参数放在导出预设的 `--` 后。`--android-scenario-suite` 可替代单场景参数。每个进程运行一个场景，成功后在应用内部记录下一项，按下表顺序循环。完整对局继续使用原来的整局参数。
+
+| 名称 | 测试内容 |
+| --- | --- |
+| `idle` | 正常静止棋盘、冻结水粒子、冻结透射镜像同步、恢复正常。各采集 180 帧，并检查棋盘、空间和透射视口的尺寸与更新模式。冻结组用于估算开销，使用各自的静止快照。 |
+| `opening-draw` | 固定种子的真实开场与第一回合抽牌。用同种子重开，分别记录重开、发牌和抽牌，核对手牌、牌库及触发次数。 |
+| `heavy-spell` | 通过正式规则触发火球术和火焰冲击，各记录首次和重复触发，校验生命与法力。可加 `--android-scenario-particle-profile` 采集粒子状态推进、几何循环及网格上传的分项诊断耗时。 |
+| `terminal` | 通过正式胜负入口触发两次胜利，分别采集英雄死亡、结算及 `screen.show()` 首次构建。 |
+
+首次触发指本进程完成正式加载后的第一次触发，Android 驱动缓存可能来自之前的进程。无头运行仅用于验证行为和日志格式。用 `python3 ci/analyze_android_match.py <日志>` 查看逐阶段帧间隔、脚本分项和场景校验结果。真机保持物理面板黑屏时，这些帧时间属于应用循环。

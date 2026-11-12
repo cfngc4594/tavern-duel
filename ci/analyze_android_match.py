@@ -10,7 +10,7 @@ from pathlib import Path
 from statistics import fmean
 
 
-MARKER = re.compile(r"\b(MATCH_BENCH_(?:BEGIN|FRAME|EVENT|STAGES|SPIKES|COUNTS|FX_CASE|FX_EFFECT|END)|FX_CAPTURE_BENCH|FX_VIEWPORT_PEAK) ")
+MARKER = re.compile(r"\b(MATCH_BENCH_(?:BEGIN|FRAME|EVENT|STAGES|SPIKES|COUNTS|SCENARIO_CASE|FX_CASE|FX_EFFECT|END)|FX_CAPTURE_BENCH|FX_VIEWPORT_PEAK) ")
 SURFACE_LAYER = re.compile(r"^\s*layerName\s*=\s*(.+)$", re.MULTILINE)
 PRESENT_HISTOGRAM = re.compile(r"^\s*present2present histogram is as below:\s*\n([^\n]+)", re.MULTILINE)
 FRAME_COLUMNS = (
@@ -38,7 +38,7 @@ def read_capture(path):
                 run = {
                     "begin": payload, "frames": [], "events": [], "event_counts": {},
                     "profile_stages": {}, "profile_spikes": {}, "fx_captures": [],
-                    "fx_cases": [], "fx_viewports": [], "fx_effects": [],
+                    "fx_cases": [], "fx_viewports": [], "fx_effects": [], "scenario_cases": [],
                 }
             elif run is None:
                 raise ValueError(f"line {line_number}: capture starts after MATCH_BENCH_BEGIN")
@@ -59,6 +59,8 @@ def read_capture(path):
                 run["fx_viewports"].append(payload)
             elif kind == "FX_CASE":
                 run["fx_cases"].append(payload)
+            elif kind == "SCENARIO_CASE":
+                run["scenario_cases"].append(payload)
             elif kind == "FX_EFFECT":
                 run["fx_effects"].append(payload)
             elif kind == "COUNTS":
@@ -126,10 +128,17 @@ def summarize(run):
     terminal_phases = {}
     for case in run["fx_cases"]:
         name = case["case"]
-        first_result = case["result_frame"]
+        if name in ("terminal_first", "terminal_repeat"):
+            take = name.removeprefix("terminal_")
+            hero_rows = phases[f"hero_death_{take}"]
+            result_rows = phases[f"settlement_{take}"]
+        else:
+            first_result = case["result_frame"]
+            hero_rows = [row for row in phases[name] if row["frame"] < first_result]
+            result_rows = [row for row in phases[name] if row["frame"] >= first_result]
         terminal_phases[name] = {
-            "hero_animation": phase_summary([row for row in phases[name] if row["frame"] < first_result]),
-            "result_screen": phase_summary([row for row in phases[name] if row["frame"] >= first_result]),
+            "hero_animation": phase_summary(hero_rows),
+            "result_screen": phase_summary(result_rows),
         }
     spell_windows = []
     for index, event in enumerate(run["events"]):
@@ -158,6 +167,7 @@ def summarize(run):
         "events": run["events"],
         "fx_captures": run["fx_captures"],
         "fx_cases": run["fx_cases"],
+        "scenario_cases": run.get("scenario_cases", []),
         "fx_terminal_phases": terminal_phases,
         "fx_viewport_peaks": run["fx_viewports"],
         "fx_effect_samples": run["fx_effects"],

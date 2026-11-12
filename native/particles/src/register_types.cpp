@@ -1,3 +1,4 @@
+#include "coin_noise_kernel.hpp"
 #include "particle_kernel.hpp"
 
 #include <godot_cpp/core/class_db.hpp>
@@ -8,6 +9,7 @@ namespace {
 void initialize(godot::ModuleInitializationLevel level) {
     if (level == godot::MODULE_INITIALIZATION_LEVEL_SCENE) {
         GDREGISTER_CLASS(TavernParticleKernel);
+        GDREGISTER_CLASS(TavernCoinNoiseKernel);
     }
 }
 

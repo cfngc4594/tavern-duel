@@ -3,6 +3,8 @@ extends RefCounted
 ## Source kernel0x18141b850 returns dx/dy, not noise value.
 ## Independent numeric vectors come from bounded original-instruction arithmetic.
 ## This does NOT establish emitter seed/coordinate/application equivalence.
+static var native_curl_enabled := OS.has_feature("macos")
+static var _native_curl: RefCounted
 var permutation:Array=[]
 var gradients:Array=[]
 var source:Dictionary={}
@@ -10,6 +12,10 @@ func _init():
 	source=JSON.parse_string(FileAccess.get_file_as_string("res://assets/native_coin/noise_kernel_tables.json"))
 	permutation=source.permutation
 	for g in source.gradients:gradients.append(Vector3(g[0],g[1],g[2]))
+	if native_curl_enabled and _native_curl == null and ClassDB.class_exists(&"TavernCoinNoiseKernel"):
+		var implementation: RefCounted = ClassDB.instantiate(&"TavernCoinNoiseKernel")
+		if implementation.configure(PackedInt32Array(permutation), PackedVector3Array(gradients)):
+			_native_curl = implementation
 func derivative(p:Vector3,frequency:float) -> Vector2:
 	# Vector3 multiplication supplies the source float32 coordinate product.
 	var q=p*frequency
@@ -51,6 +57,10 @@ func octave_derivative(p:Vector3,frequency:float,count:int,multiplier:float,scal
 func curl_at_source_position(source_position:Vector3,source_offset:Vector3,scroll:float,frequency:float,count:int,multiplier:float,scale:float) -> Vector3:
 	# Exact argument permutations and subtraction order in0x181428bb8..0x181428d1a.
 	# This returns the field only. Strength/damping/time/application are external.
+	if native_curl_enabled and _native_curl != null and count == 2 and multiplier == 1.0 and scale == 1.0:
+		var result: Variant = _native_curl.curl(source_position, source_offset, scroll, frequency)
+		if result is Vector3:
+			return result
 	var p=source_position+source_offset
 	var f=maxf(frequency,0.000001)
 	var a=octave_derivative(Vector3(p.z,p.y,p.x+scroll),f,count,multiplier,scale)

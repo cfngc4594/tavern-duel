@@ -79,14 +79,16 @@ func sync():
    if piece.is_empty():blockers.append("Source hand clone unavailable: "+str(card.key));continue
    if i<pieces.size():pieces[i]=piece
    else:pieces.append(piece)
-  piece.root.visible=false
+  var card_root:Node3D=piece.root
   var pose:Dictionary=card.get("source_phone_pose",{})
   if not pose.has("position") or not pose.has("rotation") or not pose.has("scale"):
+   if card_root.visible:card_root.visible=false
    blockers.append("Source pose missing for hand slot %d"%i);continue
   var b=Hand.source_basis(pose.rotation)
-  piece.root.transform=Transform3D(Basis(b.x*pose.scale.x,b.y*pose.scale.y,b.z*pose.scale.z),pose.position)
+  card_root.transform=Transform3D(Basis(b.x*pose.scale.x,b.y*pose.scale.y,b.z*pose.scale.z),pose.position)
   var pending=not game.pending_battlecry.is_empty() and int(game.pending_battlecry.index)==i
-  piece.root.visible=not card.get("source_phone_hidden",false) and not pending
+  var show_card:bool=not card.get("source_phone_hidden",false) and not pending
+  if card_root.visible!=show_card:card_root.visible=show_card
   sync_highlight(piece,selector.state_for(card,i),highlight_uniforms)
   audit.cards+=1
   audit.meshes+=piece.mesh_count
@@ -112,15 +114,19 @@ func _sync_battlecry_preview():
  battlecry_preview.root.visible=true
 func sync_highlight(piece:Dictionary,state:int,shared_uniforms:Variant=null):
  if not is_instance_valid(piece.highlight):return
- var glow:MeshInstance3D=piece.highlight;glow.visible=false
- if state==1:return
+ var glow:MeshInstance3D=piece.highlight
+ if state==1:
+  if glow.visible:glow.visible=false
+  return
  var renderer=game.native_card_renderer
  var record=selector.evidence[piece.kind].highlight_state_component
  var key=""
  for i in record.data.m_HighlightStates.size():
   if int(record.data.m_HighlightStates[i].m_StateType)==state:key=record.refs.get("/m_HighlightStates/%d/m_Material"%i,"");break
  var mask=record.refs.get("/m_StaticSilouetteTexture","")
- if not selector.source_materials.has(key) or not renderer.textures.has(mask):return
+ if not selector.source_materials.has(key) or not renderer.textures.has(mask):
+  if glow.visible:glow.visible=false
+  return
  var material:ShaderMaterial=glow.material_override
  var uniforms:Dictionary={} if shared_uniforms==null else shared_uniforms
  if uniforms.is_empty():
@@ -133,4 +139,5 @@ func sync_highlight(piece:Dictionary,state:int,shared_uniforms:Variant=null):
  for t in source.textures:
   if uniforms.has(t.name) and renderer.textures.has(t.key):material.set_shader_parameter(t.name,renderer.textures[t.key])
  material.set_shader_parameter("_MainTex",renderer.textures[mask]);material.set_shader_parameter("_Seed",piece.seed)
- material.set_shader_parameter("_ShaderTime",fmod(float(game.elapsed)/20.0,65535.0));glow.visible=true
+ material.set_shader_parameter("_ShaderTime",fmod(float(game.elapsed)/20.0,65535.0))
+ if not glow.visible:glow.visible=true

@@ -57,7 +57,25 @@ func run():
  for i in 100:pass3d.sync()
  var sync_usec=(Time.get_ticks_usec()-start)/100.0
  assert(roots==pass3d.pieces.map(func(p):return p.root.get_instance_id()))
- host.cards[0].erase("source_phone_pose");pass3d.sync();assert(not pass3d.pieces[0].root.visible and pass3d.blockers.size()==1)
+ var first_piece:Dictionary=pass3d.pieces[0]
+ var first_root:Node3D=first_piece.root
+ var first_glow:MeshInstance3D=first_piece.highlight
+ var card_visibility:Array[bool]=[]
+ var glow_visibility:Array[bool]=[]
+ first_root.visibility_changed.connect(func():card_visibility.append(first_root.visible))
+ first_glow.visibility_changed.connect(func():glow_visibility.append(first_glow.visible))
+ host.elapsed+=0.5;pass3d.sync();pass3d.sync()
+ assert(card_visibility.is_empty() and glow_visibility.is_empty(),"Stable hand sync must not toggle the card or highlight")
+ assert(is_equal_approx(first_glow.material_override.get_shader_parameter("_ShaderTime"),host.elapsed/20.0))
+ pass3d.sync_highlight(first_piece,1);pass3d.sync_highlight(first_piece,1)
+ assert(glow_visibility==[false])
+ pass3d.sync();assert(glow_visibility==[false,true])
+ host.cards[0].source_phone_hidden=true;pass3d.sync();pass3d.sync()
+ assert(card_visibility==[false] and not first_root.visible)
+ host.cards[0].source_phone_hidden=false;pass3d.sync();pass3d.sync()
+ assert(card_visibility==[false,true] and first_root.visible)
+ host.cards[0].erase("source_phone_pose");pass3d.sync();assert(not first_root.visible and pass3d.blockers.size()==1)
+ assert(card_visibility==[false,true,false])
  assert(pass3d.audit.cards==9 and pass3d.audit.meshes==mesh_count-pass3d.pieces[0].mesh_count and pass3d.audit.vertices==vertex_count-pass3d.pieces[0].vertex_count)
  var opposing=load("res://scripts/native_phone_opposing_hand.gd").new();host.add_child(opposing);opposing.setup(host);opposing.sync()
  assert(opposing.pieces.size()==10 and opposing.blockers.is_empty())

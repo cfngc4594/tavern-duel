@@ -80,6 +80,19 @@ func run():
   solver.raw.UVModule.enabled=true;solver.raw.UVModule.tilesX=2;solver.raw.UVModule.tilesY=2
   solver.seek(7.08)
  check_equal(pair.current,pair.old,"dynamic atlas")
+ # The perspective bound can omit a clamp only when the original projection
+ # would leave the quad unchanged. Exercise both branches on actual meshes.
+ for upper in [.5,.002]:
+  for solver in [pair.current,pair.old]:
+   solver.source_renderer.m_MinParticleSize=0.0
+   solver.source_renderer.m_MaxParticleSize=upper
+   solver.seek(7.09)
+  check_equal(pair.current,pair.old,"perspective maximum clamp "+str(upper))
+ assert(pair.current.screen_size_clamped>0,"The test must exercise the original size clamp")
+ probe.camera.set_orthogonal(12.0,.01,100.0)
+ pair.current.seek(7.10);pair.old.seek(7.10)
+ check_equal(pair.current,pair.old,"orthogonal camera clamp")
+
  print("DRAW_BENCH_TOTAL old_us=",totals.x/240.0," new_us=",totals.y/240.0," warmup_frames=120 measured_frames=240 dt=1/60 alternating_order=true")
  print("PHONE_PARTICLE_DRAW_SNAPSHOT_PASS original seeds, counts, numerical states, exact mesh arrays, rewind and stop tails")
  game.queue_free();quit()

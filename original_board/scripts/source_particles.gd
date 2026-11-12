@@ -73,7 +73,11 @@ func set_playing(key:String,playing:bool):
   return
  generation+=1
  var solver=Solver.new();solver.name='SourceParticleGeneration_'+str(generation)
- var spec={'system':e.row.system,'renderer':e.row.renderer,'node':e.proxy,'autoplay':true,'compatibility_basis':REFLECTION,'source_scope_root':owner_probe.source_root,'fixed_draw_curves':true}
+ var spec={
+  'system':e.row.system,'renderer':e.row.renderer,'node':e.proxy,'autoplay':true,
+  'compatibility_basis':REFLECTION,'source_scope_root':owner_probe.source_root,
+  'fixed_draw_curves':true,'fixed_simulation_modules':true
+ }
  for option in e.row.get('solver_options',{}):spec[option]=e.row.solver_options[option]
  if e.row.get('source_category','')=='environment':spec.emission_density=ambient_particle_density
  solver.setup(spec,self,self,97003+generation)

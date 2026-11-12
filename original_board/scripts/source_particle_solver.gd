@@ -18,6 +18,8 @@ const BASIC_UVS := [
 ]
 var _fixed_size_sampler: RefCounted
 var _fixed_color_sampler: RefCounted
+var _fixed_simulation_modules := false
+var _serial_worker_kernel: RefCounted
 var _candidate_indices: Array[int] = []
 var _candidate_source: Array = []
 var _candidate_seen: int = 0
@@ -150,6 +152,8 @@ func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> vo
 	_load_subemitters(spec)
 	# Board-owned records hold these serialized modules fixed for this generation.
 	# Other callers can edit raw modules and continue to sample the current data.
+	_fixed_simulation_modules = bool(spec.get("fixed_simulation_modules", false)) and get_script().get_base_script() == null
+	_serial_worker_kernel = null
 	_fixed_size_sampler = null
 	_fixed_color_sampler = null
 	if bool(spec.get("fixed_draw_curves", false)) and get_script().get_base_script() == null:
@@ -778,6 +782,17 @@ func _uv_corners(p: Dictionary, age: float, speed: float) -> Array:
 # Diagnostic switch for same-process equivalence/performance tests only.
 var frame_draw_snapshot_enabled:bool=true
 var _quad_index_cache:=PackedInt32Array()
+var _quad_uv_cache:=PackedVector2Array()
+func _quad_uvs(count: int) -> PackedVector2Array:
+	if _quad_uv_cache.size() != count * 4:
+		_quad_uv_cache.resize(count * 4)
+		for quad in count:
+			var vertex := quad * 4
+			_quad_uv_cache[vertex] = Vector2(0, 0)
+			_quad_uv_cache[vertex + 1] = Vector2(1, 0)
+			_quad_uv_cache[vertex + 2] = Vector2(1, 1)
+			_quad_uv_cache[vertex + 3] = Vector2(0, 1)
+	return _quad_uv_cache
 func _quad_indices(count:int)->PackedInt32Array:
 	if _quad_index_cache.size()!=count*6:
 		_quad_index_cache.resize(count*6)
@@ -816,7 +831,7 @@ func seek(seconds: float) -> void:
 	var quad_cursor: int = 0
 	if indexed_quads:
 		var count: int = _worker_indices.size()
-		vertices.resize(count * 4); uvs.resize(count * 4); colors.resize(count * 4); normals.resize(count * 4); indices.resize(count * 6)
+		vertices.resize(count * 4); colors.resize(count * 4); normals.resize(count * 4); indices.resize(count * 6)
 	var camera: Camera3D = get_viewport().get_camera_3d() if is_inside_tree() else null
 	var view_right := camera.global_basis.x.normalized() if camera != null else compatibility_basis.x.normalized()
 	var view_up := camera.global_basis.y.normalized() if camera != null else compatibility_basis.y.normalized()
@@ -852,6 +867,21 @@ func seek(seconds: float) -> void:
 	var use_basic_uvs := frame_modules and (not bool(uv_module.get("enabled", false)) or int(uv_module.get("mode", 0)) != 0)
 	var flip_u: float = float(uv_module.get("flipU", 0.0))
 	var flip_v: float = float(uv_module.get("flipV", 0.0))
+	var shared_uvs := frame_draw_snapshot and indexed_quads and use_basic_uvs and flip_u <= 0.0 and flip_v <= 0.0
+	if indexed_quads and not shared_uvs: uvs.resize(_worker_indices.size() * 4)
+	var clamp_max := float(source_renderer.get("m_MaxParticleSize", INF))
+	var clamp_bound_enabled := (
+		frame_draw_snapshot and camera != null and camera.projection == Camera3D.PROJECTION_PERSPECTIVE
+		and is_finite(clamp_max) and clamp_max > 0.0
+		and float(source_renderer.get("m_MinParticleSize", 0.0)) <= 0.0
+	)
+	var camera_transform := Transform3D.IDENTITY
+	var focal_max := 0.0
+	if clamp_bound_enabled:
+		camera_transform = camera.get_camera_transform()
+		var projection := camera.get_camera_projection()
+		focal_max = maxf(absf(projection.x.x), absf(projection.y.y))
+		clamp_bound_enabled = is_finite(focal_max) and focal_max > 0.0
 	# Renderer order must reverse actual live indices, not their particle data
 	# alone: worker states are keyed by the original particle index.
 	var oldest_in_front:bool=source_sort_mode and int(source_renderer.get("m_SortMode",0))==2
@@ -903,27 +933,39 @@ func seek(seconds: float) -> void:
 			right = right.rotated(normal, rotation); up = up.rotated(normal, rotation)
 		var x := right * size * scale_x * 0.5
 		var y := up * size * scale_y * 0.5
-		var screen_scale := _screen_size_scale(center, x, y, camera)
+		var screen_scale := 1.0
+		if not clamp_bound_enabled or not _fits_particle_size_bound(center, x, y, camera_transform, focal_max, clamp_max):
+			screen_scale = _screen_size_scale(center, x, y, camera)
 		if not is_equal_approx(screen_scale, 1.0): screen_size_clamped += 1
 		x *= screen_scale; y *= screen_scale
 		var start: int = quad_cursor * 4 if indexed_quads else vertices.size()
-		var corners: Array = [-x + y, x + y, x - y, -x - y]
+		var top_left := center + (-x + y)
+		var top_right := center + (x + y)
+		var bottom_right := center + (x - y)
+		var bottom_left := center + (-x - y)
 		if indexed_quads:
+			vertices[start] = top_left
+			vertices[start + 1] = top_right
+			vertices[start + 2] = bottom_right
+			vertices[start + 3] = bottom_left
 			for corner in range(4):
-				vertices[start + corner] = center + corners[corner]
 				colors[start + corner] = color
-				if not frame_draw_snapshot:normals[start + corner] = normal
+				if not frame_draw_snapshot: normals[start + corner] = normal
 		else:
-			for offset in corners: vertices.append(center + offset); colors.append(color); normals.append(normal)
-		var particle_uvs: Array
-		if use_basic_uvs:
-			var variant: int = (1 if float(p.flip_u) < flip_u else 0) + (2 if float(p.flip_v) < flip_v else 0)
-			particle_uvs = BASIC_UVS[variant]
-		else: particle_uvs = _uv_corners(p, age, state.get("render_velocity", state.velocity).length())
-		if indexed_quads:
-			for corner in range(4): uvs[start + corner] = particle_uvs[corner]
-		else:
-			for uv in particle_uvs: uvs.append(uv)
+			vertices.append(top_left); vertices.append(top_right)
+			vertices.append(bottom_right); vertices.append(bottom_left)
+			for corner in range(4):
+				colors.append(color); normals.append(normal)
+		if not shared_uvs:
+			var particle_uvs: Array
+			if use_basic_uvs:
+				var variant: int = (1 if float(p.flip_u) < flip_u else 0) + (2 if float(p.flip_v) < flip_v else 0)
+				particle_uvs = BASIC_UVS[variant]
+			else: particle_uvs = _uv_corners(p, age, state.get("render_velocity", state.velocity).length())
+			if indexed_quads:
+				for corner in range(4): uvs[start + corner] = particle_uvs[corner]
+			else:
+				for uv in particle_uvs: uvs.append(uv)
 		if indexed_quads:
 			var first: int = quad_cursor * 6
 			if not frame_draw_snapshot:
@@ -934,6 +976,7 @@ func seek(seconds: float) -> void:
 			indices.append_array(PackedInt32Array([start, start + 1, start + 2, start, start + 2, start + 3]))
 	if indexed_quads and quad_cursor * 4 != vertices.size():
 		vertices.resize(quad_cursor * 4); uvs.resize(quad_cursor * 4); colors.resize(quad_cursor * 4); normals.resize(quad_cursor * 4); indices.resize(quad_cursor * 6)
+	if shared_uvs: uvs = _quad_uvs(quad_cursor)
 	var can_emit := emission_playing and bool(raw.get("EmissionModule", {}).get("enabled", false)) and (not period_events.is_empty() or runtime_emission_rate>0.0 or constant_source_rate>0.0) and now < stop_time and (bool(raw.get("looping", false)) or now <= start_delay + duration)
 	active = live_count > 0 or can_emit
 	for template in subemitter_templates: active = active or template.solver.active
@@ -942,6 +985,18 @@ func seek(seconds: float) -> void:
 	var arrays: Array = []; arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = vertices; arrays[Mesh.ARRAY_TEX_UV] = uvs; arrays[Mesh.ARRAY_COLOR] = colors; arrays[Mesh.ARRAY_INDEX] = indices; arrays[Mesh.ARRAY_NORMAL] = normals
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+
+func _fits_particle_size_bound(center: Vector3, x: Vector3, y: Vector3, camera_transform: Transform3D, focal_max: float, clamp_max: float) -> bool:
+	# Every corner lies within radius of the center. Bound the change in
+	# X/depth and Y/depth from that center, using the nearest possible depth.
+	var radius := x.length() + y.length()
+	var local_center := center * camera_transform
+	var depth := -local_center.z
+	if depth <= radius: return false
+	var off_axis := maxf(absf(local_center.x), absf(local_center.y))
+	var fraction_bound := focal_max * radius * (1.0 + off_axis / depth) / (depth - radius)
+	# Keep a margin for floating-point projection and viewport rounding.
+	return fraction_bound < clamp_max * 0.98
 
 func _projected_particle_fraction(center: Vector3, x: Vector3, y: Vector3, camera: Camera3D) -> float:
 	var viewport_size := camera.get_viewport().get_visible_rect().size
@@ -1292,8 +1347,15 @@ func _prepare_worker_states(now: float) -> void:
 	# kernel in place, preparing immutable module constants once per seek.
 	if indices.is_empty():return
 	if indices.size() <= 128:
-		var kernel=ForceKernel.new() if bool(raw.get("ForceModule", {}).get("enabled", false)) and bool(raw.get("ForceModule", {}).get("randomizePerFrame", false)) else WorkerKernel.new()
-		kernel.raw=raw;kernel.compatibility_basis=compatibility_basis;kernel.source_gravity=source_gravity;kernel.prepare()
+		var kernel := _serial_worker_kernel
+		if kernel == null:
+			kernel = ForceKernel.new() if bool(raw.get("ForceModule", {}).get("enabled", false)) and bool(raw.get("ForceModule", {}).get("randomizePerFrame", false)) else WorkerKernel.new()
+			kernel.raw = raw
+			kernel.prepare()
+			# The board owns these source module records for the emitter lifetime.
+			if _fixed_simulation_modules: _serial_worker_kernel = kernel
+		kernel.compatibility_basis = compatibility_basis
+		kernel.source_gravity = source_gravity
 		for index in indices:
 			_worker_states[index]=kernel._particle_state(particles[index],now-float(particles[index].birth))
 		return

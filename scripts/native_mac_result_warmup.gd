@@ -34,8 +34,7 @@ func advance(game: Node) -> bool:
 		return true
 	if _draw_callback.is_valid():
 		return false
-	if not game.native_initial_loading or game.world_canvas.visible or not game.native_endgame.source_ready \
-		or not is_instance_valid(game.native_endgame.screen):
+	if not game.native_initial_loading or game.world_canvas.visible or not game.native_endgame.source_ready:
 		_finished = true
 		return true
 
@@ -81,16 +80,11 @@ func _stage_canvas(lite: bool) -> void:
 		var material := ShaderMaterial.new()
 		material.shader = load(paths[index])
 		_shaders.append(material.shader)
+		for parameter in material.shader.get_shader_uniform_list():
+			if parameter.hint == PROPERTY_HINT_RESOURCE_TYPE and parameter.hint_string == "Texture2D":
+				material.set_shader_parameter(parameter.name, texture)
 		if index == 0:
 			material.set_shader_parameter("_HasResult", true)
-			material.set_shader_parameter("_ResultColor", texture)
-			material.set_shader_parameter("_ResultTransmission", texture)
-			material.set_shader_parameter("_VignetteMask" if lite else "_FilteredBackground", texture)
-		else:
-			material.set_shader_parameter("_BlitTexture", texture)
-			material.set_shader_parameter("_DestinationTexture", texture)
-			if paths[index] == Passes.PATH + "vignette.gdshader":
-				material.set_shader_parameter("_MaskTex", texture)
 		var rect := ColorRect.new()
 		rect.position = Vector2(12 * index, 0)
 		rect.size = Vector2(12, 12)

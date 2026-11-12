@@ -5,10 +5,15 @@ extends RefCounted
 const Effects = preload("res://scripts/native_combat_effects.gd")
 const DamageSplat = preload("res://scripts/native_damage_splat.gd")
 const RenderTexture = preload("res://scripts/native_combat_rendertexture.gd")
+const PhoneBoardLayout = preload("res://scripts/source_phone_board_layout.gd")
 const ENABLED_SETTING := "render_quality/macos_spell_shader_warmup"
 const COIN_SETTING := "render_quality/macos_played_coin_warmup"
+const HELLFIRE_SETTING := "render_quality/macos_opponent_hellfire_warmup"
+const CORRUPTION_SETTING := "render_quality/macos_opponent_corruption_warmup"
 const FIREBALL := "CS2_029"
 const COIN := "GAME_005"
+const HELLFIRE := "CS2_062"
+const CORRUPTION := "CS2_063"
 const FIREBALL_SAMPLES := [
 	["birth", 0.04],
 	["charging", 0.2],
@@ -28,6 +33,22 @@ const COIN_SAMPLES := [
 	["played_coin_rise", 0.155],
 	["played_coin_fade", 0.54],
 ]
+const HELLFIRE_SAMPLES := [
+	["opponent_hellfire_launch", 0.0],
+	["opponent_hellfire_first_sample", 0.025],
+	["opponent_hellfire_particles", 0.125],
+	["opponent_hellfire_impact", 0.215],
+	["opponent_hellfire_tail", 0.65],
+]
+const CORRUPTION_SAMPLES := [
+	["opponent_corruption_birth", 0.0],
+	["opponent_corruption_first_sample", 0.027],
+	["opponent_corruption_charge", 0.17],
+	["opponent_corruption_launch", 0.027],
+	["opponent_corruption_flight", 0.22],
+	["opponent_corruption_impact", 0.025],
+	["opponent_corruption_impact_particles", 0.245],
+]
 
 var wall_usec := 0
 var completed_batches := 0
@@ -43,18 +64,25 @@ var _shaders: Dictionary = {}
 var _samples: Array = []
 var _cards: Array[String] = []
 var _offscreen_sequence_before_coin := -1
+var _corruption_position: Vector3
 
 static func enabled() -> bool:
 	if not OS.has_feature("macos") or DisplayServer.get_name() == "headless":return false
 	if RenderingServer.get_current_rendering_method() != "gl_compatibility":return false
 	var args := OS.get_cmdline_user_args()
-	return not args.has("--mac-skip-spell-warmup") and (_fireball_enabled(args) or _coin_enabled(args))
+	return not args.has("--mac-skip-spell-warmup") and (_fireball_enabled(args) or _coin_enabled(args) or _hellfire_enabled(args) or _corruption_enabled(args))
 
 static func _fireball_enabled(args: PackedStringArray) -> bool:
 	return args.has("--mac-spell-warmup") or bool(ProjectSettings.get_setting(ENABLED_SETTING, false))
 
 static func _coin_enabled(args: PackedStringArray) -> bool:
 	return not args.has("--mac-skip-played-coin-warmup") and (args.has("--mac-played-coin-warmup") or bool(ProjectSettings.get_setting(COIN_SETTING, false)))
+
+static func _hellfire_enabled(args: PackedStringArray) -> bool:
+	return not args.has("--mac-skip-opponent-hellfire-warmup") and (args.has("--mac-opponent-hellfire-warmup") or bool(ProjectSettings.get_setting(HELLFIRE_SETTING, false)))
+
+static func _corruption_enabled(args: PackedStringArray) -> bool:
+	return not args.has("--mac-skip-opponent-corruption-warmup") and (args.has("--mac-opponent-corruption-warmup") or bool(ProjectSettings.get_setting(CORRUPTION_SETTING, false)))
 
 func advance(game: Node) -> bool:
 	if _finished:return true
@@ -68,6 +96,16 @@ func advance(game: Node) -> bool:
 		if _coin_enabled(args):
 			_samples.append_array(COIN_SAMPLES)
 			_cards.append(COIN)
+		if _hellfire_enabled(args):
+			_samples.append_array(HELLFIRE_SAMPLES)
+			_cards.append(HELLFIRE)
+		if _corruption_enabled(args) and is_instance_valid(game.source_projection) and is_instance_valid(game.source_phone_layout):
+			var row: Dictionary = game.source_phone_layout.source_items.get("friendly_play", {}).get("source_row", {})
+			var slots := PhoneBoardLayout.normal_slots(row, 1) if not row.is_empty() else []
+			if not slots.is_empty():
+				_corruption_position = slots[0]
+				_samples.append_array(CORRUPTION_SAMPLES)
+				_cards.append(CORRUPTION)
 		_started_usec = Time.get_ticks_usec()
 		game.native_startup_timing.mark("spell_shader_warmup_begin", {"cards":_cards})
 		_setup_player(game)
@@ -112,15 +150,16 @@ func _setup_player(game: Node) -> void:
 
 func _stage_sample(game: Node, stage: String, age: float) -> void:
 	match stage:
-		"birth":
+		"birth", "opponent_corruption_birth":
+			if stage == "opponent_corruption_birth":_prepare_corruption(game)
 			_spell.start_effect = _player.prepare_spell_start(_spell)
-			_spell.route = _player.spell_route(FIREBALL, _spell.target, _spell.side)
-		"launch":
-			var ready: float = _player.start_ready_time(FIREBALL)
+			_spell.route = _player.spell_route(_spell.key, _spell.target, _spell.side)
+		"launch", "opponent_corruption_launch":
+			var ready: float = _player.start_ready_time(_spell.key)
 			_player.advance(maxf(0.0, ready - float(_spell.start_effect.get("age", 0.0))))
 			_spell.start_action_time = ready
 			_player.spell_launch(_spell)
-		"impact":
+		"impact", "opponent_corruption_impact":
 			var missile: Dictionary = _spell.get("missile_effect", {})
 			_player.advance(maxf(0.0, float(_spell.route.impact_time) - float(missile.get("age", 0.0))))
 			_player.spell_impact(_spell)
@@ -137,7 +176,25 @@ func _stage_sample(game: Node, stage: String, age: float) -> void:
 			_spell.route = _player.spell_route(COIN, _spell.target, _spell.side)
 			_player.spell_launch(_spell)
 			return
+		"opponent_hellfire_launch":
+			_player.cancel_all()
+			_restore_coin_offscreen_sequence()
+			_spell = {"serial":1,"key":HELLFIRE,"source":game.ENEMY_HERO,"side":1,"target":{}}
+			_spell.route = _player.spell_route(HELLFIRE, _spell.target, _spell.side)
+			# The AI launches before the frame's normal transmission sync.
+			# Draw the real initial pose before advancing the effect clock.
+			_player.spell_launch(_spell)
+			return
 	_player.advance(age)
+
+func _prepare_corruption(game: Node) -> void:
+	_player.cancel_all()
+	_restore_coin_offscreen_sequence()
+	# A one-minion friendly row gives the same target pose as the first real
+	# Corruption. Only the position is used by this effect; no actor is added.
+	var screen_position: Vector2 = game.source_projection.source_to_screen(_corruption_position)
+	var target := {"type":"unit","pos":screen_position,"unit":{"side":0,"source_world_position":_corruption_position}}
+	_spell = {"serial":1,"key":CORRUPTION,"source":game.ENEMY_HERO,"side":1,"target":target}
 
 func _stage_hero_damage(game: Node) -> void:
 	if not is_instance_valid(game.native_damage):return
@@ -224,9 +281,7 @@ func _retain_material(material: Material) -> void:
 func _release_staging() -> void:
 	_spell.clear()
 	_release_damage_preview()
-	if _offscreen_sequence_before_coin >= 0:
-		RenderTexture.offscreen_sequence = _offscreen_sequence_before_coin
-		_offscreen_sequence_before_coin = -1
+	_restore_coin_offscreen_sequence()
 	if not is_instance_valid(_player):return
 	var game: Node = _player.game
 	if _hero_hover_staged and is_instance_valid(game) and is_instance_valid(game.native_highlight):
@@ -237,6 +292,11 @@ func _release_staging() -> void:
 	_player = null
 	if is_instance_valid(game) and game.is_inside_tree() and is_instance_valid(game.native_transmission):
 		game.native_transmission.sync()
+
+func _restore_coin_offscreen_sequence() -> void:
+	if _offscreen_sequence_before_coin < 0:return
+	RenderTexture.offscreen_sequence = _offscreen_sequence_before_coin
+	_offscreen_sequence_before_coin = -1
 
 func _release_damage_preview() -> void:
 	if not is_instance_valid(_damage_preview):return

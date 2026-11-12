@@ -3,6 +3,7 @@ extends Node
 ## Runs the production game through a tiny fixed-clock subclass, never source copies.
 ## Capture runs write rendered frames but must not be used for timing comparisons.
 var failed := false
+const BenchmarkMetrics=preload("res://tests/renderer_benchmark_metrics.gd")
 const CombatParticles=preload("res://scripts/native_combat_particles.gd")
 const Damage=preload("res://scripts/native_damage_splat.gd")
 const EffectPreparer=preload("res://scripts/effect_material_preparer.gd")
@@ -26,16 +27,22 @@ func quit() -> void:
 var game
 var current_round := -1
 var capture_dir := ""
+var benchmark_metrics=BenchmarkMetrics.new()
+var benchmark_environment: Dictionary = {}
+var profile_pipelines := false
+var stress_repetitions := 0
+var stress_only := false
+var headless_cpu_visuals := false
+var battlecry_action_index := 0
+var phase_context: Dictionary = {}
 func _ready():call_deferred("run")
 func collect_viewports(node:Node,output:Array):
  if node is Viewport and (node==root or str(node.name) in ["OriginalBoardViewport","ClassicBoardSpatialObjects","RGBTransmissionTarget"]):
-  RenderingServer.viewport_set_measure_render_time(node.get_viewport_rid(),true)
+  if benchmark_environment.get("rendering_active",false):RenderingServer.viewport_set_measure_render_time(node.get_viewport_rid(),true)
   output.append(node)
  for child in node.get_children():collect_viewports(child,output)
 func stats(values:Array)->Dictionary:
- values.sort()
- if values.is_empty():return {"count":0}
- return {"count":values.size(),"mean":values.reduce(func(a,b):return a+b,0.0)/values.size(),"p50":values[values.size()/2],"p95":values[int(values.size()*.95)],"p99":values[int(values.size()*.99)],"max":values[-1]}
+ return BenchmarkMetrics.stats(values)
 func measure(label:String,count:int,action:Callable):
  CombatParticles.setup_rows.clear()
  preload("res://scripts/native_archer_skin.gd").setup_rows.clear()
@@ -47,8 +54,11 @@ func measure(label:String,count:int,action:Callable):
   game.native_death.effects.profile_rows.clear()
   game.native_death.profile_rows.clear()
  var compute_before=Compute.get_stats()
+ var pipeline_before=benchmark_metrics.pipeline_snapshot()
+ var pipeline_trace:Array=[]
+ var visual_evidence:Dictionary={"particle_systems_peak":0,"particle_mesh_vertices_peak":0,"archer_skin_vertices_peak":0}
  var viewports:Array=[];collect_viewports(root,viewports)
- var samples:Dictionary={"frame_ms":[],"process_ms":[],"physics_ms":[],"draw_calls":[],"render_objects":[],"primitives":[],"video_memory_bytes":[]}
+ var samples:Dictionary={"frame_ms":[],"game_process_ms":[],"process_ms":[],"physics_ms":[],"draw_calls":[],"render_objects":[],"primitives":[],"video_memory_bytes":[]}
  print("PROFILE_SCENE_BEGIN ",label)
  var frame_profile:Array=[]
  var frame_start_usec_trace:Array=[]
@@ -65,13 +75,17 @@ func measure(label:String,count:int,action:Callable):
    for row in Particles.source_times.values():particle_now+=int(row.usec)
    frame_profile.append({"frame":i,"frame_ms":samples.frame_ms[-1],"game_usec":game.last_process_usec,"particle_usec":particle_now-particle_previous,"stages":game.last_frame_stages.duplicate()})
    particle_previous=particle_now
+  samples.game_process_ms.append(game.last_process_usec/1000.0)
   samples.process_ms.append(Performance.get_monitor(Performance.TIME_PROCESS)*1000.0)
   samples.physics_ms.append(Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)*1000.0)
-  samples.draw_calls.append(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
-  samples.render_objects.append(Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
-  samples.primitives.append(Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME))
-  samples.video_memory_bytes.append(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED))
-  if i>=4:
+  if profile_pipelines and benchmark_metrics.pipeline_status.available:pipeline_trace.append(benchmark_metrics.pipeline_snapshot())
+  if headless_cpu_visuals:observe_cpu_visuals(visual_evidence)
+  if benchmark_environment.rendering_active:
+   samples.draw_calls.append(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
+   samples.render_objects.append(Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
+   samples.primitives.append(Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME))
+   samples.video_memory_bytes.append(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED))
+  if i>=4 and benchmark_environment.rendering_active:
    for viewport in viewports:
     if not is_instance_valid(viewport):continue
     if viewport is SubViewport and viewport.render_target_update_mode==SubViewport.UPDATE_DISABLED:continue
@@ -88,12 +102,16 @@ func measure(label:String,count:int,action:Callable):
    print("CAPTURE ",filename," error=",error)
  var chronological_frame_ms:Array=samples.frame_ms.duplicate()
  var summary:Dictionary={}
- for key in samples:summary[key]=stats(samples[key])
+ for key in samples:
+  summary[key]=BenchmarkMetrics.stats(samples[key],"zero_only_viewport_timing_unavailable" if str(key).ends_with("_ms") and str(key).contains("/") else "")
+  if not benchmark_environment.rendering_active and key in ["draw_calls","render_objects","primitives","video_memory_bytes"]:
+   summary[key]={"count":0,"available":false,"reason":benchmark_environment.unavailable_reason}
+ var pipeline_after=benchmark_metrics.pipeline_snapshot()
  var compute_after=Compute.get_stats()
  var compute_delta:Dictionary={}
  for key in compute_after:
   if compute_after[key] is int:compute_delta[key]=compute_after[key]-int(compute_before.get(key,0))
- print("MONITOR_PHASE ",JSON.stringify({"phase":label,"round":current_round,"metrics":summary,"frame_ms_trace":chronological_frame_ms,"frame_start_usec_trace":frame_start_usec_trace,"frame_end_usec_trace":frame_end_usec_trace,"compute_delta":compute_delta,"compute_total":compute_after,"prepared_pool":game.native_combat.effect_player.prepared_pool.audit() if game.native_combat.effect_player.prepared_pool!=null else {"enabled":false},"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
+ print("MONITOR_PHASE ",JSON.stringify({"phase":label,"round":current_round,"metrics":summary,"raw_samples":samples,"action_usec":action_usec,"measurement_scope":benchmark_environment.measurement_scope,"context":phase_context,"pipeline_compilations":{"status":benchmark_metrics.pipeline_status,"before":pipeline_before,"after":pipeline_after,"delta":BenchmarkMetrics.counter_delta(pipeline_before,pipeline_after),"frame_totals":pipeline_trace},"cpu_visual_evidence":visual_evidence,"frame_ms_trace":chronological_frame_ms,"frame_start_usec_trace":frame_start_usec_trace,"frame_end_usec_trace":frame_end_usec_trace,"compute_delta":compute_delta,"compute_total":compute_after,"prepared_pool":game.native_combat.effect_player.prepared_pool.audit() if game.native_combat.effect_player.prepared_pool!=null else {"enabled":false},"resident_total":Resident.stats.duplicate(),"resident_gpu":Resident.get_gpu_stats(),"shader_cache":ShaderCache.audit(),"health":game.health,"hand":game.cards.size(),"units":game.allies.size()+game.enemies.size(),"busy":game.busy}))
  if Particles.profile_sources:
   print("SUMMON_BEGIN_PROFILE ",JSON.stringify({"phase":label,"rows":game.native_summon.profile_rows}))
   print("COMBAT_SEEK_PROFILE ",JSON.stringify({"phase":label,"rows":CombatParticles.seek_rows,"totals":CombatParticles.seek_source_totals}))
@@ -104,6 +122,7 @@ func measure(label:String,count:int,action:Callable):
   frame_profile.sort_custom(func(a,b):return a.frame_ms>b.frame_ms)
   print("LONG_FRAME_PROFILE ",JSON.stringify({"phase":label,"action_usec":action_usec,"frames":frame_profile.slice(0,10)}))
  print("PROFILE_SCENE_END ",label)
+ return {"metrics":summary,"raw_samples":samples,"action_usec":action_usec,"cpu_visual_evidence":visual_evidence}
 func card_index(key):
  for i in game.cards.size():
   if game.cards[i].key==key:return i
@@ -112,6 +131,16 @@ func run():
  Resident.stats.clear()
  Compute.reset_stats()
  for arg in OS.get_cmdline_user_args():
+  if arg=="--profile-pipelines":profile_pipelines=true
+  if arg=="--battlecry-stress-only":stress_only=true
+  if arg=="--headless-cpu-visuals":headless_cpu_visuals=true
+  if arg.begins_with("--battlecry-stress="):
+   var value=arg.trim_prefix("--battlecry-stress=")
+   require(value.is_valid_int() and int(value)>=2 and int(value)<=100,"battlecry-stress must be an integer from 2 to 100")
+   if failed:return
+   stress_repetitions=int(value)
+  if arg=="--combat-seek-context":CombatParticles.seek_context_enabled=true
+  if arg=="--no-combat-seek-context":CombatParticles.seek_context_enabled=false
   if arg.begins_with("--capture-dir="):capture_dir=arg.trim_prefix("--capture-dir=")
   if arg=="--gpu-compute":Compute.enabled=true
   if arg=="--gpu-resident":Resident.enabled=true
@@ -138,10 +167,28 @@ func run():
   if arg=="--retain-shaders":ShaderCache.enabled=true
   if arg=="--no-retain-shaders":ShaderCache.enabled=false
   if arg=="--resident-profile-gpu":Resident.profile_gpu=true
+ benchmark_environment=BenchmarkMetrics.environment()
+ require(not stress_only or stress_repetitions>0,"stress-only requires --battlecry-stress=N")
+ require(not headless_cpu_visuals or benchmark_environment.headless,"CPU visual fixture requires --headless")
+ require(capture_dir.is_empty() or benchmark_environment.rendering_active,"capture requires a real rendering backend")
+ if failed:return
+ if headless_cpu_visuals:
+  benchmark_environment.measurement_scope="headless_partial_cpu_visuals"
+  benchmark_environment.limitations="Dummy renderer. Spatial/effect CPU construction enabled explicitly; normal turn UI, completed card texture baking/startup and GPU/raster work are absent. Not full-game FPS."
+ benchmark_environment["source_profiling"]=Particles.profile_sources
+ benchmark_environment["pipeline_profiling"]=profile_pipelines
+ benchmark_environment["capture_run"]=not capture_dir.is_empty()
+ benchmark_environment["stress_repetitions"]=stress_repetitions
+ benchmark_environment["stress_only"]=stress_only
+ benchmark_environment["user_args"]=OS.get_cmdline_user_args()
+ benchmark_environment["engine_args"]=OS.get_cmdline_args()
+ benchmark_metrics.configure_pipelines(profile_pipelines,benchmark_environment)
+ print("BENCHMARK_ENVIRONMENT ",JSON.stringify(benchmark_environment))
  if not capture_dir.is_empty():DirAccess.make_dir_recursive_absolute(capture_dir)
  print("RUNNER_MODE ",JSON.stringify({"debug_build":OS.is_debug_build(),"editor":OS.has_feature("editor"),"version":Engine.get_version_info()}))
  require(not preload("res://scripts/source_board_camera_policy.gd").qa_phone_platform)
- DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED);Engine.max_fps=0
+ if benchmark_environment.rendering_active:DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+ Engine.max_fps=0
  var loading_started:int=Time.get_ticks_usec()
  game=make_game()
  game.profile_frame_stages=Particles.profile_sources
@@ -149,6 +196,21 @@ func run():
  if "--smoke" in OS.get_cmdline_user_args():
   game.free();print("SUMMON_BENCH_SMOKE_PASS");quit();return
  root.add_child(game)
+ if headless_cpu_visuals:
+  game.headless=false
+  game._setup_spatial_presentation()
+  # Build the actual source card geometry required by clone_world_hand. The
+  # normal serialized queue waits for a raster bake between cards, which a
+  # dummy renderer cannot finish. This explicit CPU fixture builds every card
+  # synchronously, then skips only that impossible bake-completion wait.
+  for key in game.definitions:
+   if not game.native_card_renderer.cards.has(key):game._build_one_native_card(key)
+   require(game.native_card_renderer.cards.has(key),"CPU visual fixture built source card "+str(key))
+  if failed:return
+  game.native_card_loader.reset()
+  game.native_initial_loading=false
+  game.world_canvas.visible=true
+  require(is_instance_valid(game.spatial_scene),"CPU visual fixture created the actual spatial scene")
  for i in 1500:
   await get_tree().process_frame
   if not game.native_initial_loading:break
@@ -161,8 +223,10 @@ func run():
  print("WINDOWS_SETUP ",JSON.stringify({"gpu":RenderingServer.get_video_adapter_name(),"method":RenderingServer.get_current_rendering_method(),"size":str(root.size),"phone":game._phone_hand_enabled(),"board_variant":game.original_board_bridge.probe.get("board_variant"),"vsync":DisplayServer.window_get_vsync_mode()}))
  var wp=game.original_board_bridge.probe.water_particles
  if is_instance_valid(wp):print("WINDOWS_PARTICLES ",JSON.stringify(wp.get_audit()))
- for round_index in 2:
-  await run_round(round_index)
+ if not stress_only:
+  for round_index in 2:
+   await run_round(round_index)
+ if stress_repetitions>0:await run_battlecry_stress()
  if Resident.enabled:require(int(Resident.stats.get("frames",0))>0,"Resident path actually ran")
  if Compute.enabled:require(int(Compute.get_stats().get("dispatches",0))>0,"GPU experiment actually dispatched")
  quit()
@@ -179,14 +243,129 @@ func run_round(round_index:int):
  await measure("attack_taunt",180,func():require(game.attack(attacker,{"type":"unit","unit":target,"pos":target.pos})))
  require(target.hp<target_hp and not game.busy)
  var hp=game.health[1]
- await measure("archer_battlecry",180,func():
+ var archer_result:Dictionary=await measure("archer_battlecry",180,func():
   require(game.play_card(card_index("CS2_189"),Vector2(800,500),1))
   require(not game.pending_battlecry.is_empty())
   game._resolve_target(game.ENEMY_HERO))
  require(game.health[1]==hp-1 and not game.busy)
+ if headless_cpu_visuals:
+  var evidence:Dictionary=archer_result.cpu_visual_evidence
+  require(evidence.particle_systems_peak>0 and evidence.particle_mesh_vertices_peak>0 and evidence.archer_skin_vertices_peak>0,"partial CPU visual fixture executed source particles and skinned meshes")
+ battlecry_action_index+=1
  await measure("archer_recovery_idle",180,func():pass)
  print("WINDOWS_ACTIONS_PASS ",JSON.stringify(game.event_trace))
 
 
 func make_game():
  return preload("res://tests/windows_renderer_benchmark_game.gd").new()
+
+func mesh_vertices(mesh: Mesh) -> int:
+ if mesh==null:return 0
+ var total:=0
+ for surface in mesh.get_surface_count():total+=mesh.surface_get_array_len(surface)
+ return total
+
+func observe_cpu_visuals(evidence: Dictionary) -> void:
+ # Only this explicit diagnostic fixture pays for geometry inspection.
+ var systems:=0
+ var particle_vertices:=0
+ var skin_vertices:=0
+ for entry in game.native_summon.instances:
+  for player in entry.particle_players.values():
+   if is_instance_valid(player.node):
+    systems+=1;particle_vertices+=mesh_vertices(player.node.mesh)
+ for effects in [game.native_combat.effect_player.effects,game.native_death.effects.effects]:
+  for effect in effects:
+   for player in effect.particles.values():
+    if is_instance_valid(player.node):
+     systems+=1;particle_vertices+=mesh_vertices(player.node.mesh)
+   if effect.has("archer_skin"):
+    for skin in effect.archer_skin.skinned:skin_vertices+=mesh_vertices(skin.mesh)
+ evidence.particle_systems_peak=maxi(evidence.particle_systems_peak,systems)
+ evidence.particle_mesh_vertices_peak=maxi(evidence.particle_mesh_vertices_peak,particle_vertices)
+ evidence.archer_skin_vertices_peak=maxi(evidence.archer_skin_vertices_peak,skin_vertices)
+
+func prepare_stress_board(lethal: bool) -> void:
+ # Set up the board only. The measured summon, aiming, projectile, damage and
+ # death all use production play_card/_resolve_target and normal frame updates.
+ game.unit_uid=1
+ game.rng.seed=8372
+ game.start_match("practice")
+ game.flow.test_clock_delta=0
+ game.flow.random.seed=8372
+ game.mana=10;game.max_mana=10;game.tutorial_hint=false
+ game.allies.clear();game.enemies.clear()
+ for side in 2:
+  var board: Array = game.allies if side==0 else game.enemies
+  var count:=6 if side==0 else 7
+  for index in count:
+   var key: String = "CS2_189" if lethal and side==1 and index==3 else "CS2_179"
+   var unit=game._new_unit(key,side,Vector2(800+(index-(count-1)*0.5)*118,game.FRIEND_Y if side==0 else game.ENEMY_Y))
+   unit.ready=side==0;unit.summoning_sick=false
+   board.append(unit)
+
+func stress_outcome(event_start: int, start_frame: int) -> Dictionary:
+ var result:Dictionary={"health":game.health.duplicate(),"mana":game.mana,"hand":[],"allies":[],"enemies":[],"events":[],"event_frame_offsets":[],"busy":game.busy,"pending":not game.pending_battlecry.is_empty(),"game_over":game.game_over}
+ for card in game.cards:result.hand.append(card.key)
+ for side in ["allies","enemies"]:
+  for unit in game.get(side):result[side].append({"key":unit.key,"hp":unit.hp,"dead":unit.dead})
+ for event in game.event_trace.slice(event_start):
+  result.events.append(event.event)
+  result.event_frame_offsets.append(int(event.frame)-start_frame)
+ return result
+
+func run_battlecry_stress():
+ var expected:Dictionary={}
+ var pooled:Dictionary={}
+ var pooled_cpu:Dictionary={}
+ var action_times:Dictionary={}
+ var action_rows:Array=[]
+ for repetition in stress_repetitions:
+  current_round=repetition
+  for lethal in [false,true]:
+   var case_name: String = "full_board_lethal" if lethal else "full_board_survivor"
+   phase_context={"suite":"battlecry_stress","case":case_name,"repetition":repetition,"temperature":"first_case_use" if repetition==0 else ("warm" if repetition==1 else "repeated"),"battlecry_action_index":battlecry_action_index,"process_first_archer_use":battlecry_action_index==0,"fixture_seed":8372,"units_before":13,"units_after_summon":14}
+   await measure("stress_"+case_name+"_setup",180,func():prepare_stress_board(lethal))
+   require(game.allies.size()==6 and game.enemies.size()==7 and not game.busy,"stress board has six allies, seven enemies and accepts a real play")
+   if failed:return
+   var target:Dictionary=game.enemies[3]
+   var hp_before:int=target.hp
+   var hand_before:int=game.cards.size()
+   var event_start:int=game.event_trace.size()
+   var start_frame:int=Engine.get_process_frames()
+   var result:Dictionary=await measure("stress_"+case_name+"_battlecry",240,func():
+    var index:int=card_index("CS2_189")
+    require(index>=0 and game.play_card(index,Vector2(800,500),3),"stress real Archer play accepted")
+    require(not game.pending_battlecry.is_empty(),"stress Archer enters target selection")
+    if failed:return
+    game._resolve_target(target.pos)
+    require(game.pending_battlecry.is_empty() and game.allies.size()==7 and game.mana==9,"stress target commits real full-board summon"))
+   require(target.hp==hp_before-1,"stress projectile damages intended target exactly once")
+   require(game.health==[30,30] and game.cards.size()==hand_before-1,"stress leaves heroes unchanged and consumes one card")
+   require(game.allies.size()==7 and game.enemies.size()==(6 if lethal else 7),"stress board count and lethal removal")
+   require(not game.busy and game.pending_battlecry.is_empty() and not game.game_over,"stress action completed")
+   if headless_cpu_visuals:
+    var evidence:Dictionary=result.cpu_visual_evidence
+    require(evidence.particle_systems_peak>0 and evidence.particle_mesh_vertices_peak>0 and evidence.archer_skin_vertices_peak>0,"partial CPU visual fixture executed source particles and skinned meshes")
+   if failed:return
+   var outcome:=stress_outcome(event_start,start_frame)
+   require(outcome.events.count("battlecry_damage1")==1 and outcome.events.count("battlecry_aim_begin")==1,"stress exactly one aim and damage event")
+   var deterministic:=outcome.duplicate(true)
+   deterministic.erase("event_frame_offsets")
+   if expected.has(case_name):require(deterministic==expected[case_name],"stress repeated action outcome and event order match")
+   else:expected[case_name]=deterministic
+   if failed:return
+   print("BATTLECRY_STRESS_ACTION_PASS ",JSON.stringify({"context":phase_context,"outcome":outcome,"cpu_visual_evidence":result.cpu_visual_evidence}))
+   if not pooled.has(case_name):pooled[case_name]=[];pooled_cpu[case_name]=[];action_times[case_name]=[]
+   pooled[case_name].append_array(result.raw_samples.frame_ms)
+   pooled_cpu[case_name].append_array(result.raw_samples.game_process_ms)
+   action_times[case_name].append(result.action_usec)
+   action_rows.append({"case":case_name,"repetition":repetition,"frame_ms":result.metrics.frame_ms,"game_process_ms":result.metrics.game_process_ms,"action_usec":result.action_usec})
+   battlecry_action_index+=1
+   await measure("stress_"+case_name+"_recovery",180,func():pass)
+   require(not game.busy and game.native_summon.instances.is_empty() and game.native_combat.effect_player.archer_shots.is_empty() and game.native_combat.effect_player.effects.is_empty() and game.native_death.effects.effects.is_empty(),"stress effects finish before reset")
+   if failed:return
+ var totals:Dictionary={}
+ for case_name in pooled:totals[case_name]={"all_action_frames_ms":stats(pooled[case_name]),"all_action_game_process_ms":stats(pooled_cpu[case_name]),"synchronous_action_usec":stats(action_times[case_name]),"frame_ms_trace":pooled[case_name],"game_process_ms_trace":pooled_cpu[case_name],"action_usec_trace":action_times[case_name]}
+ print("BATTLECRY_STRESS_PASS ",JSON.stringify({"measurement_scope":benchmark_environment.measurement_scope,"repetitions_per_case":stress_repetitions,"actions":action_rows,"pooled":totals,"note":"Per-action first/warm/repeated tails are in actions; pooled tails are frame-weighted, include first-use, and exclude setup/recovery. Setup and recovery remain measured in MONITOR_PHASE."}))
+ phase_context={}

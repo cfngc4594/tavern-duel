@@ -710,6 +710,8 @@ func _sample(effect: Dictionary):
 	if profiling:stage_started=_profile_effect_stage(stages,"continuous",stage_started)
 	if effect.has("components"):effect.components.late_update(float(effect.age))
 	if profiling:stage_started=_profile_effect_stage(stages,"components_late",stage_started)
+	var rendertexture: Node = effect.get("rendertexture")
+	if is_instance_valid(rendertexture):rendertexture.prepare_particle_capture_axes()
 	for player in effect.particles.values():
 		player.node.seek(float(effect.age)-float(player.start))
 		if is_instance_valid(player.node.source_node):player.node.mesh_instance.visible=player.node.source_node.is_visible_in_tree()
@@ -723,7 +725,7 @@ func _sample(effect: Dictionary):
 	if profiling:stage_started=_profile_effect_stage(stages,"trails",stage_started)
 	_bind_scene_inputs(effect)
 	if profiling:stage_started=_profile_effect_stage(stages,"scene_inputs",stage_started)
-	if effect.has("rendertexture") and is_instance_valid(effect.rendertexture):effect.rendertexture.sync(effect.age,effect.source_event)
+	if is_instance_valid(rendertexture):rendertexture.sync(effect.age,effect.source_event)
 	if profiling:stage_started=_profile_effect_stage(stages,"rendertexture",stage_started)
 	for shake_action in effect.shakes:game.camera_shake.update_action(shake_action,shake_update_delta,shake_update_id)
 	if effect.has("hit_unit") and str(effect.hit_unit.key)==str(effect.hit_unit_key) and float(effect.age)<assets.clip_length(effect.actor_clip):

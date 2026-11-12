@@ -35,6 +35,7 @@ const SKIP_DIRECT_SOLVER_SETTING := "render_quality/android_fx_skip_captured_par
 const SOURCE_TO_CAPTURE := Basis(Vector3.RIGHT, Vector3.BACK, Vector3.UP)
 const EPSILON := 0.00001
 static var offscreen_sequence := 0
+static var prebind_particle_capture_axes_enabled := OS.has_feature("macos") and not OS.get_cmdline_user_args().has("--mac-legacy-capture-axes")
 static var _shared_capture_shaders:Dictionary={}
 static var _shared_shader_created:=0
 static var _shared_shader_reused:=0
@@ -511,6 +512,26 @@ func prepare_direct_particle_solver(player: Node, source: Node3D, source_key: St
 			player.capture_solver_suppressed = true
 			return
 
+func prepare_particle_capture_axes() -> void:
+	# Only a single already-created capture can determine each emitter's axes
+	# before the normal seek. Multi-owner and deferred captures keep late seeks.
+	if not prebind_particle_capture_axes_enabled or _route_id != "CS2_029/missile":return
+	if disposed or entries.size() != 1 or not pending_offscreen.is_empty():return
+	var entry: Dictionary = entries[0]
+	if entry.offscreen or entry.capture_mode != "reference" or not is_instance_valid(entry.owner) or not is_instance_valid(entry.source):return
+	var basis: Basis = entry.owner.global_basis.orthonormalized()
+	for record in state.get("particle_players", {}).values():
+		var player = record.get("node") if record is Dictionary else record
+		if not is_instance_valid(player) or player.get_script() != PARTICLE_SOLVER or not is_instance_valid(player.source_node):continue
+		if player.source_node == entry.source or entry.source.is_ancestor_of(player.source_node):
+			_set_capture_axes(player, basis)
+
+func _set_capture_axes(player: Node, basis: Basis) -> bool:
+	if player.capture_camera_right.is_equal_approx(basis.x) and player.capture_camera_up.is_equal_approx(basis.z):return false
+	player.capture_camera_right = basis.x
+	player.capture_camera_up = basis.z
+	return true
+
 func _sync_direct(entry: Dictionary, enabled: bool) -> void:
 	# Source actions still own the emitter wrappers and their creation order.
 	# The direct plane replaces the isolated geometry.
@@ -572,9 +593,7 @@ func _collect_geometry(entry: Dictionary) -> Array:
 				var capture_pose:Transform3D=_source_transform(entry.owner)*entry.offscreen_camera_local
 				var camera_rotation:Basis=(projection.global_basis*capture_pose.basis).orthonormalized()
 				basis=Basis(camera_rotation.x,camera_rotation.z,camera_rotation.y)
-			if not player.capture_camera_right.is_equal_approx(basis.x) or not player.capture_camera_up.is_equal_approx(basis.z):
-				player.capture_camera_right=basis.x; player.capture_camera_up=basis.z
-				player.seek(player.elapsed_seconds)
+			if _set_capture_axes(player, basis):player.seek(player.elapsed_seconds)
 	return result.filter(func(mesh):return mesh!=entry.plane and mesh!=entry.bloom_plane)
 
 func _collect_tree(node: Node, result: Array) -> void:

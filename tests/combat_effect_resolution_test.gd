@@ -30,7 +30,7 @@ class ParticleSpeedRecorder extends RefCounted:
 func _initialize():
 	call_deferred("run")
 
-func _capture(assets,scale: float) -> Dictionary:
+func _capture(assets,scale: float,route_id := "") -> Dictionary:
 	var projection:=Node3D.new()
 	root.add_child(projection)
 	# CS2_029/missile from the runtime route table.
@@ -39,10 +39,10 @@ func _capture(assets,scale: float) -> Dictionary:
 	var capture:=RenderTexture.new()
 	projection.add_child(capture)
 	capture.target_scale=scale
-	capture.setup(scope,assets,projection,1)
+	capture.setup(scope,assets,projection,1,route_id)
 	for entry in capture.entries:
 		if str(entry.key).ends_with(":-5626360573135933840"):
-			return {"projection":projection,"capture":capture,"missile":entry}
+			return {"projection":projection,"scope":scope,"capture":capture,"missile":entry}
 	assert(false,"Fireball missile capture missing")
 	return {}
 
@@ -62,6 +62,56 @@ func _check_capture():
 	assert(a.main_capture.color.camera.size==b.main_capture.color.camera.size)
 	assert(a.bloom_steps[0].material.get_shader_parameter("_OffsetA")==b.bloom_steps[0].material.get_shader_parameter("_OffsetA"))
 	for fixture in [full,half]:
+		fixture.capture.dispose()
+		fixture.projection.queue_free()
+
+func _check_particle_capture_axes():
+	var assets := CombatAssets.new()
+	assets.setup(null)
+	var previous_arm: Variant = ProjectSettings.get_setting(CAPTURE_ARM, null)
+	ProjectSettings.set_setting(CAPTURE_ARM, "reference")
+	var fixtures := [_capture(assets, 1.0, "CS2_029/missile"), _capture(assets, 1.0, "CS2_029/missile")]
+	ProjectSettings.set_setting(CAPTURE_ARM, previous_arm)
+	var previous_prebind := RenderTexture.prebind_particle_capture_axes_enabled
+	RenderTexture.prebind_particle_capture_axes_enabled = true
+	var changes := [0, 0]
+	for index in fixtures.size():
+		var fixture: Dictionary = fixtures[index]
+		var players := {}
+		for key in fixture.scope.particles:
+			var spec: Dictionary = fixture.scope.particles[key]
+			if spec.node != fixture.missile.source and not fixture.missile.source.is_ancestor_of(spec.node):continue
+			var player := CombatParticles.new()
+			player.setup(spec, assets, fixture.projection, 140 + players.size())
+			player.mesh.changed.connect(func(): changes[index] += 1)
+			players[key] = player
+		assert(not players.is_empty())
+		fixture.scope.particle_players = players
+	var reference: Dictionary = fixtures[0].scope.particle_players
+	var candidate: Dictionary = fixtures[1].scope.particle_players
+	var live_frames := 0
+	for age in [0.0, 0.06, 0.12, 0.19, 0.27, 0.35, 0.42, 0.55]:
+		for index in fixtures.size():
+			var fixture: Dictionary = fixtures[index]
+			fixture.projection.rotation.y = age * 0.83
+			fixture.projection.position.x = age * 0.41
+			if index == 1:fixture.capture.prepare_particle_capture_axes()
+			for player in fixture.scope.particle_players.values():player.seek(age)
+			fixture.capture.sync(age)
+		for key in reference:
+			var a: CombatParticles = reference[key]
+			var b: CombatParticles = candidate[key]
+			assert(a.capture_camera_right == b.capture_camera_right and a.capture_camera_up == b.capture_camera_up)
+			assert(var_to_bytes(a.particles) == var_to_bytes(b.particles) and a.rng.state == b.rng.state and a.death_rng.state == b.death_rng.state)
+			assert(a.emitted_count == b.emitted_count and a.simulation_time == b.simulation_time and a.screen_size_clamped == b.screen_size_clamped)
+			assert(a.live_count == b.live_count and a.mesh.get_surface_count() == b.mesh.get_surface_count())
+			for surface in a.mesh.get_surface_count():
+				assert(var_to_bytes(a.mesh.surface_get_arrays(surface)) == var_to_bytes(b.mesh.surface_get_arrays(surface)))
+				live_frames += 1
+	assert(live_frames > 0 and changes[0] > changes[1])
+	print("COMBAT_CAPTURE_AXES_EXACT mesh_samples=", live_frames, " mesh_changes=", changes)
+	RenderTexture.prebind_particle_capture_axes_enabled = previous_prebind
+	for fixture in fixtures:
 		fixture.capture.dispose()
 		fixture.projection.queue_free()
 
@@ -267,6 +317,7 @@ func _check_screen_effect():
 
 func run():
 	_check_capture()
+	_check_particle_capture_axes()
 	_check_android_spell_capture()
 	_check_direct_particle_solver()
 	_check_continuous_playback_speed()

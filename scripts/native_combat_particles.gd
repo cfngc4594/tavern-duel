@@ -1,6 +1,10 @@
 extends Node3D
 static var profile_setup:=false
 static var profile_seek:bool=false
+static var native_batch_enabled: bool = true
+static var native_batch_calls: int = 0
+static var native_batch_particles: int = 0
+static var _native_kernel: RefCounted
 # Default-off experiment: whole-effect benefit is not established.
 # Only cache module decisions within the callback-free base seek loop.
 static var seek_context_enabled:bool=false
@@ -865,6 +869,10 @@ func seek(seconds: float) -> void:
 	mesh.clear_surfaces()
 	# Both subemitters and mesh changed-signal callbacks have finished.
 	# The remaining base numerical/geometry loop cannot edit raw.
+	if _worker_filtered and not _worker_indices.is_empty() and _worker_indices.size() < 32:
+		if _native_kernel_available() and not (_can_constant_step() or _can_random_force_step()):
+			var collision_frame := _emitter_transform()
+			_try_native_states(now, collision_frame, _motion_basis(collision_frame, _emitter_scale()), _collision_samples())
 	if seek_context_enabled and _worker_states.is_empty() and _worker_indices.size() > 1: _prepare_seek_context()
 	live_count = 0
 	screen_size_clamped = 0
@@ -1456,6 +1464,31 @@ func _subemitter_audits() -> Array:
 	for template in subemitter_templates: result.append(template.solver.get_audit())
 	return result
 
+func _native_kernel_available() -> bool:
+	return native_batch_enabled and (_native_kernel != null or ClassDB.class_exists(&"TavernParticleKernel"))
+
+func _collision_samples() -> Array:
+	var samples: Array = []
+	for plane_node in collision_planes:
+		if is_instance_valid(plane_node):
+			samples.append({"normal": plane_node.global_basis.y.normalized(), "position": plane_node.global_position})
+	return samples
+
+func _try_native_states(now: float, frame: Transform3D, motion: Basis, planes: Array) -> bool:
+	if planes.size() != collision_planes.size():
+		return false
+	if _native_kernel == null:
+		_native_kernel = ClassDB.instantiate(&"TavernParticleKernel")
+	var states: Array = _native_kernel.advance(raw, particles, _worker_indices, now, compatibility_basis,
+		source_gravity, frame, motion, planes)
+	if states.size() != _worker_indices.size():
+		return false
+	for slot in _worker_indices.size():
+		_worker_states[_worker_indices[slot]] = states[slot]
+	native_batch_calls += 1
+	native_batch_particles += _worker_indices.size()
+	return true
+
 func _prepare_worker_states(now: float) -> void:
 	var worker_started:int=Time.get_ticks_usec() if profile_seek else 0
 	var build_usec:int=0
@@ -1478,10 +1511,12 @@ func _prepare_worker_states(now: float) -> void:
 		return
 	var collision_frame:=_emitter_transform()
 	var collision_motion:=_motion_basis(collision_frame,_emitter_scale())
-	var plane_samples:Array=[]
-	if collision_job:
-		for plane_node in collision_planes:
-			if is_instance_valid(plane_node):plane_samples.append({"normal":plane_node.global_basis.y.normalized(),"position":plane_node.global_position})
+	var plane_samples: Array = _collision_samples() if collision_job else []
+	# Use the generic integrator's existing eligibility boundary. The native
+	# batch writes only the whole-step cache and returns the fractional draw state.
+	if collision_job and _native_kernel_available() and _try_native_states(now, collision_frame, collision_motion, plane_samples):
+		if profile_seek:_worker_profile.prepare_usec=Time.get_ticks_usec()-worker_started
+		return
 	var jobs: Array = []
 	var tasks: Array[int] = []
 	var count: int = mini(4, maxi(2, ceili(indices.size() / 32.0)))

@@ -1,9 +1,11 @@
 extends Node
 ## Opt-in recorder for one seeded normal match using the production scene and clocks.
 const SpellInput = preload("res://scripts/native_phone_spell_input.gd")
+const CombatParticles = preload("res://scripts/native_combat_particles.gd")
 ## Android's Godot logger truncates individual messages at roughly 1000 bytes.
 const BATCH_SIZE := 10
 const DIAGNOSTIC_BATCH_SIZE := 8
+const NATIVE_AB_RUN_PATH := "user://native-particle-ab-run.txt"
 const MAX_RUN_USEC := 900_000_000
 const MAX_SPIKES_PER_PHASE := 6
 const MAX_EFFECT_SAMPLES_PER_PHASE := 12
@@ -34,6 +36,8 @@ var output_path := ""
 var output_lines := PackedStringArray()
 var quit_when_done := false
 var fx_benchmark: RefCounted
+var native_particle_mode := "default"
+var native_ab_run := -1
 
 func setup(host):
 	game = host
@@ -45,6 +49,10 @@ func setup(host):
 			quit_when_done = true
 		elif arg.begins_with("--android-match-output="):
 			output_path = arg.trim_prefix("--android-match-output=")
+		elif arg == "--android-native-particles-ab":
+			native_ab_run = int(FileAccess.get_file_as_string(NATIVE_AB_RUN_PATH)) if FileAccess.file_exists(NATIVE_AB_RUN_PATH) else 0
+			CombatParticles.native_batch_enabled = native_ab_run % 2 == 1
+			native_particle_mode = "native" if CombatParticles.native_batch_enabled else "reference"
 		elif arg.begins_with("--android-match-seed="):
 			var value: String = arg.trim_prefix("--android-match-seed=")
 			if value.is_valid_int() and int(value) >= 0:
@@ -57,6 +65,8 @@ func setup(host):
 		profiling = profiling or profile_fx_effects
 	game.profile_frame_stages = profiling
 	game.scripted_pointer = true
+	CombatParticles.native_batch_calls = 0
+	CombatParticles.native_batch_particles = 0
 
 func _ready():
 	started_usec = Time.get_ticks_usec()
@@ -70,6 +80,9 @@ func _ready():
 		"arm": fx_benchmark.arm if fx_benchmark != null else "",
 		"run_index": fx_benchmark.run_index if fx_benchmark != null else 0,
 		"profile_stages": profiling, "profile_fx_effects": profile_fx_effects,
+		"native_particle_mode": native_particle_mode,
+		"native_ab_run": native_ab_run,
+		"native_particle_available": ClassDB.class_exists(&"TavernParticleKernel"),
 		"renderer": RenderingServer.get_current_rendering_method(),
 		"display": DisplayServer.get_name(), "gpu": RenderingServer.get_video_adapter_name(),
 		"resolution": str(get_window().size), "refresh_hz": DisplayServer.screen_get_refresh_rate(),
@@ -387,6 +400,7 @@ func _finish():
 		"ambient_density": ambient_density,
 		"victory_trail_density": ProjectSettings.get_setting_with_override("render_quality/victory_trail_density")
 	}
+	finish_payload["native_particles"] = {"batches": CombatParticles.native_batch_calls, "particles": CombatParticles.native_batch_particles}
 	if fx_benchmark != null:
 		finish_payload.merge({"benchmark": "fx", "arm": fx_benchmark.arm, "run_index": fx_benchmark.run_index, "case_results": fx_benchmark.case_results})
 	var hero_warmup = game.native_endgame_hero_warmup
@@ -402,6 +416,15 @@ func _finish():
 		result = "fx_arm_counter_write_failed"
 		finish_payload.status = result
 		finish_payload.completed = false
+	if native_ab_run >= 0 and result == "completed":
+		var next_arm := FileAccess.open(NATIVE_AB_RUN_PATH, FileAccess.WRITE)
+		if next_arm == null:
+			result = "native_ab_counter_write_failed"
+			finish_payload.status = result
+			finish_payload.completed = false
+		else:
+			next_arm.store_string(str(native_ab_run + 1))
+			next_arm.close()
 	emit_record("MATCH_BENCH_END " + JSON.stringify(finish_payload))
 	if not output_path.is_empty():
 		var output := FileAccess.open(output_path, FileAccess.WRITE)

@@ -7,6 +7,7 @@ const BATCH_SIZE := 10
 const DIAGNOSTIC_BATCH_SIZE := 8
 const NATIVE_AB_RUN_PATH := "user://native-particle-ab-run.txt"
 const SCENARIOS := ["idle", "opening-draw", "heavy-spell", "terminal"]
+const MINION_COMBAT_SCENARIO := "minion-combat"
 const SCENARIO_SUITE_PATH := "user://android-scenario-suite.txt"
 const SCENARIO_TIMEOUT_USEC := 180_000_000
 const MAX_RUN_USEC := 900_000_000
@@ -84,7 +85,7 @@ func _configure_scenario(args: PackedStringArray) -> void:
 	for arg in args:
 		if arg.begins_with("--android-scenario="):
 			scenario = arg.trim_prefix("--android-scenario=")
-			if not SCENARIOS.has(scenario):
+			if not SCENARIOS.has(scenario) and scenario != MINION_COMBAT_SCENARIO:
 				scenario_error = "invalid_scenario"
 				return
 	if "--android-scenario-suite" in args:
@@ -111,6 +112,8 @@ func _configure_scenario(args: PackedStringArray) -> void:
 			scenario_driver = load("res://scripts/android_scenario_idle.gd").new()
 		"opening-draw":
 			scenario_driver = load("res://scripts/android_scenario_opening.gd").new()
+		MINION_COMBAT_SCENARIO:
+			scenario_driver = load("res://scripts/android_scenario_minion_combat.gd").new()
 		"heavy-spell", "terminal":
 			fx_benchmark = load("res://scripts/android_fx_benchmark.gd").new()
 			fx_benchmark.setup_scenario(game, scenario)

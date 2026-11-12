@@ -347,10 +347,15 @@ func _tick_source_coin(delta:float):
 		return
 	if not is_instance_valid(source_coin):
 		if phase=="deal" and t+delta<0.37:return
-		source_coin=prepared_source_coin if is_instance_valid(prepared_source_coin) else _create_source_coin()
+		var timing = game.get("native_startup_timing")
+		var activation_started := Time.get_ticks_usec() if timing != null and timing.enabled else 0
+		var uses_prepared := is_instance_valid(prepared_source_coin)
+		source_coin=prepared_source_coin if uses_prepared else _create_source_coin()
 		prepared_source_coin=null
 		source_coin.player.audio_enabled=game.sound_enabled
 		source_coin.begin_source_drop(game.flow.first_side==0)
+		if activation_started > 0:
+			timing.mark("opening_coin_activated", {"phase":phase,"phase_age":t+delta,"uses_prepared":uses_prepared,"cpu_usec":Time.get_ticks_usec()-activation_started})
 		if phase=="deal":delta=maxf(0,t+delta-maxf(t,0.37))
 	if phase=="coin":
 		if game.flow.first_side==0:

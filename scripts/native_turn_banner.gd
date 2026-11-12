@@ -6,6 +6,8 @@ const STAGE_SIZE=Vector2i(3200,1800)
 const IDLE_STAGE_SIZE=Vector2i(2,2)
 const SOURCE_PIXELS_PER_UNIT=900.0/.72
 const WARMUP_ARG="--mac-turn-banner-warmup"
+const SKIP_WARMUP_ARG="--mac-skip-turn-banner-warmup"
+const WARMUP_SETTING="render_quality/macos_turn_banner_warmup"
 const RETAIN_TARGETS_ARG="--mac-turn-banner-retain-targets"
 var viewport:SubViewport
 var frames=0
@@ -38,7 +40,7 @@ func setup(_game):
  if OS.has_feature("macos") and DisplayServer.get_name()!="headless" and RenderingServer.get_current_rendering_method()=="gl_compatibility":
   var args:=OS.get_cmdline_user_args()
   _keep_idle_targets=args.has(RETAIN_TARGETS_ARG)
-  _warmup_enabled=args.has(WARMUP_ARG) or _keep_idle_targets
+  _warmup_enabled=not args.has(SKIP_WARMUP_ARG) and (args.has(WARMUP_ARG) or _keep_idle_targets or bool(ProjectSettings.get_setting(WARMUP_SETTING,false)))
  viewport=_new_stage_rt(true)
  var root=Node3D.new();root.scale.z=-1;viewport.add_child(root)
  var data=JSON.parse_string(FileAccess.get_file_as_string(BASE+'-8390915935271638251.mesh.json'))

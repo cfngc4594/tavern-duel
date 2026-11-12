@@ -199,6 +199,8 @@ const MacCoinWarmup = preload("res://scripts/native_mac_coin_warmup.gd")
 var native_mac_coin_warmup: MacCoinWarmup
 const MacDealWarmup = preload("res://scripts/native_mac_deal_warmup.gd")
 var native_mac_deal_warmup: MacDealWarmup
+const MacHistoryWarmup = preload("res://scripts/native_mac_history_warmup.gd")
+var native_mac_history_warmup: MacHistoryWarmup
 var native_banner_pending=false
 var native_initial_sounds:Array=[]
 var native_load_frames=0
@@ -366,6 +368,7 @@ func _exit_tree():
 	if native_mac_spell_warmup != null:native_mac_spell_warmup.cancel()
 	if native_mac_coin_warmup != null:native_mac_coin_warmup.cancel()
 	if native_mac_deal_warmup != null:native_mac_deal_warmup.cancel()
+	if native_mac_history_warmup != null:native_mac_history_warmup.cancel()
 	if face_render_mode: return
 	native_startup_timing.stop_watching()
 	if is_instance_valid(original_board_bridge):original_board_bridge.close()
@@ -466,6 +469,7 @@ func _fail_native_loading(message:String):
 	if native_mac_spell_warmup != null:native_mac_spell_warmup.cancel()
 	if native_mac_coin_warmup != null:native_mac_coin_warmup.cancel()
 	if native_mac_deal_warmup != null:native_mac_deal_warmup.cancel()
+	if native_mac_history_warmup != null:native_mac_history_warmup.cancel()
 	if is_instance_valid(native_turn_banner):native_turn_banner.cancel_shader_warmup()
 	native_banner_pending=false;native_initial_sounds.clear()
 	if is_instance_valid(native_turn_banner):native_turn_banner.cancel_original()
@@ -526,6 +530,9 @@ func _advance_initial_loading(dt:float):
 	if native_mac_deal_warmup == null and MacDealWarmup.enabled():
 		native_mac_deal_warmup = MacDealWarmup.new()
 	if native_mac_deal_warmup != null and not native_mac_deal_warmup.advance(self):return
+	if native_mac_history_warmup == null and MacHistoryWarmup.enabled():
+		native_mac_history_warmup = MacHistoryWarmup.new()
+	if native_mac_history_warmup != null and not native_mac_history_warmup.advance(self):return
 	native_startup_timing.begin("reveal_sync_cpu")
 	native_initial_loading=false
 	world_canvas.visible=true;world_canvas.queue_redraw()

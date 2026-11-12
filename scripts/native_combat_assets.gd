@@ -4,12 +4,14 @@ extends RefCounted
 const BASE := "res://assets/original_combat_v32/"
 const Curves = preload("res://scripts/native_summon_curves.gd")
 const SourceManifest = preload("res://scripts/native_source_manifest.gd")
+const TRANSFORM_CURVE_KINDS := ["m_PositionCurves", "m_RotationCurves", "m_ScaleCurves", "m_EulerCurves"]
 var base_path: String=BASE
 var manifest: Dictionary = {}
 var objects: Dictionary = {}
 var mesh_cache: Dictionary = {}
 var texture_cache: Dictionary = {}
 var clips: Dictionary = {}
+var _prepared_transform_tracks: Dictionary = {}
 var missing: Array = []
 var material_audit: Array = []
 var renderer: Node
@@ -20,6 +22,7 @@ var source_sorting_orders: Array=[]
 var samplers=preload("res://scripts/native_combat_samplers.gd").new()
 
 func setup(card_renderer: Node = null, source_base: String = BASE) -> void:
+	_prepared_transform_tracks.clear()
 	base_path=source_base
 	renderer=card_renderer
 	mesh_color_channels=JSON.parse_string(FileAccess.get_file_as_string("res://references/combat_v32/mesh_color_channels.json")).get("meshes",{})
@@ -262,24 +265,48 @@ func _build_node(key: String,parent: Node3D,path: String,state: Dictionary,allow
 			var child_path: String=str(objects[child_key].name) if path=="" else path+"/"+str(objects[child_key].name)
 			_build_node(child_key,node,child_path,state,allowed)
 
+func _clip_transform_tracks(clip_name: String, data: Dictionary) -> Array:
+	var cached: Dictionary = _prepared_transform_tracks.get(clip_name, {})
+	# Recovered clip data is immutable. Some asset loaders can replace a clip
+	# record, so verify the source data identity even when the name matches.
+	if not cached.is_empty() and is_same(cached.data, data):
+		return cached.tracks
+	var tracks: Array[Dictionary] = []
+	for kind in TRANSFORM_CURVE_KINDS:
+		for track in data.get(kind, []):
+			var keys: Array = track.curve.get("m_Curve", [])
+			var prepared := {"kind": kind, "path": str(track.path),
+				"x": Curves.component_keys(keys, "x"), "y": Curves.component_keys(keys, "y"),
+				"z": Curves.component_keys(keys, "z")}
+			if kind == "m_RotationCurves":
+				prepared.w = Curves.component_keys(keys, "w")
+			tracks.append(prepared)
+	_prepared_transform_tracks[clip_name] = {"data": data, "tracks": tracks}
+	return tracks
+
 func sample_clip(state: Dictionary, clip_name: String, time: float, target_path: String = "") -> void:
 	if state.is_empty() or not clips.has(clip_name):return
 	var root: Node3D=state.paths.get(target_path)
 	if not is_instance_valid(root):return
 	var d: Dictionary=clips[clip_name].data
-	for kind in ["m_PositionCurves","m_RotationCurves","m_ScaleCurves","m_EulerCurves"]:
-		for track in d.get(kind,[]):
-			var path: String=target_path+("/" if target_path!="" and str(track.path)!="" else "")+str(track.path)
-			var target: Node3D=state.paths.get(path)
-			if not is_instance_valid(target):continue
-			match kind:
-				"m_PositionCurves":target.position=Curves.vector_curve(track.curve,time)
-				"m_RotationCurves":
-					var q:=Curves.quaternion_curve(track.curve,time);target.quaternion=q;state.get("source_rotations",{})[target.get_meta("source_key","")]=q
-				"m_ScaleCurves":target.scale=Curves.vector_curve(track.curve,time,Vector3.ONE)
-				"m_EulerCurves":
-					var radians:=Curves.vector_curve(track.curve,time)*PI/180.0
-					var q:=Basis.from_euler(radians).get_rotation_quaternion();target.quaternion=q;state.get("source_rotations",{})[target.get_meta("source_key","")]=q
+	for track in _clip_transform_tracks(clip_name, d):
+		var path: String = target_path + ("/" if target_path != "" and track.path != "" else "") + track.path
+		var target: Node3D = state.paths.get(path)
+		if not is_instance_valid(target):continue
+		match track.kind:
+			"m_PositionCurves":
+				target.position = Curves.sample_vector_keys(track.x, track.y, track.z, time)
+			"m_RotationCurves":
+				var q := Curves.sample_quaternion_keys(track.x, track.y, track.z, track.w, time)
+				target.quaternion = q
+				state.get("source_rotations", {})[target.get_meta("source_key", "")] = q
+			"m_ScaleCurves":
+				target.scale = Curves.sample_vector_keys(track.x, track.y, track.z, time, Vector3.ONE)
+			"m_EulerCurves":
+				var radians := Curves.sample_vector_keys(track.x, track.y, track.z, time) * PI / 180.0
+				var q := Basis.from_euler(radians).get_rotation_quaternion()
+				target.quaternion = q
+				state.get("source_rotations", {})[target.get_meta("source_key", "")] = q
 	for track in d.get("m_FloatCurves",[]):
 		var path: String=target_path+("/" if target_path!="" and str(track.path)!="" else "")+str(track.path)
 		var target: Node3D=state.paths.get(path)

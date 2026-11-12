@@ -2,8 +2,14 @@ extends Node3D
 static var profile_setup:=false
 static var profile_seek:bool=false
 static var native_batch_enabled: bool = true
+# Dense desktop opening and victory emitters benefit from these paths.
+# Keep the previously measured Android settings for the normal whole match.
+static var native_constant_enabled: bool = OS.has_feature("macos")
 static var native_batch_calls: int = 0
 static var native_batch_particles: int = 0
+static var native_constant_batches: int = 0
+static var fast_particle_projection_enabled: bool = OS.has_feature("macos")
+static var fast_particle_projection_skips: int = 0
 static var _native_kernel: RefCounted
 # Default-off experiment: whole-effect benefit is not established.
 # Only cache module decisions within the callback-free base seek loop.
@@ -40,6 +46,7 @@ const BASIC_UVS = [
 	[Vector2(1, 1), Vector2(0, 1), Vector2(0, 0), Vector2(1, 0)],
 ]
 const WorkerJob = preload("res://scripts/particle_worker_job.gd")
+const ScreenSizeBound = preload("res://scripts/particle_screen_size_bound.gd")
 const WorkerKernel = preload("res://scripts/particle_kernel_combat.gd")
 const CollisionKernel = preload("res://scripts/particle_kernel_collision.gd")
 const ForceKernel = preload("res://scripts/particle_kernel_combat_force.gd")
@@ -870,9 +877,11 @@ func seek(seconds: float) -> void:
 	# Both subemitters and mesh changed-signal callbacks have finished.
 	# The remaining base numerical/geometry loop cannot edit raw.
 	if _worker_filtered and not _worker_indices.is_empty() and _worker_indices.size() < 32:
-		if _native_kernel_available() and not (_can_constant_step() or _can_random_force_step()):
-			var collision_frame := _emitter_transform()
-			_try_native_states(now, collision_frame, _motion_basis(collision_frame, _emitter_scale()), _collision_samples())
+		if _native_kernel_available():
+			var constant_steps := _can_constant_step() or _can_random_force_step()
+			if not constant_steps or native_constant_enabled:
+				var collision_frame := _emitter_transform()
+				_try_native_states(now, collision_frame, _motion_basis(collision_frame, _emitter_scale()), _collision_samples(), constant_steps)
 	if seek_context_enabled and _worker_states.is_empty() and _worker_indices.size() > 1: _prepare_seek_context()
 	live_count = 0
 	screen_size_clamped = 0
@@ -915,6 +924,19 @@ func seek(seconds: float) -> void:
 	var use_basic_uvs := frame_modules and (not bool(uv_module.get("enabled", false)) or int(uv_module.get("mode", 0)) != 0)
 	var flip_u: float = float(uv_module.get("flipU", 0.0))
 	var flip_v: float = float(uv_module.get("flipV", 0.0))
+	var clamp_max := float(source_renderer.get("m_MaxParticleSize", INF))
+	var clamp_bound_enabled := native_batch_enabled and fast_particle_projection_enabled and frame_modules \
+		and camera != null and camera.projection == Camera3D.PROJECTION_PERSPECTIVE \
+		and is_finite(clamp_max) and clamp_max > 0.0 \
+		and float(source_renderer.get("m_MinParticleSize", 0.0)) <= 0.0
+	var camera_transform := Transform3D.IDENTITY
+	var focal_max := 0.0
+	if clamp_bound_enabled:
+		camera_transform = camera.get_camera_transform()
+		var projection := camera.get_camera_projection()
+		focal_max = maxf(absf(projection.x.x), absf(projection.y.y))
+		clamp_bound_enabled = is_finite(focal_max) and focal_max > 0.0
+	var skipped_projections := 0
 	# Base-only local motion is a pure function of these frame snapshots.
 	# Degenerate/nonfinite transforms and every subclass retain the old path.
 	var frame_det:float=frame.basis.determinant()
@@ -974,7 +996,11 @@ func seek(seconds: float) -> void:
 			right = right.rotated(normal, rotation); up = up.rotated(normal, rotation)
 		var x := right * size * scale_x * 0.5
 		var y := up * size * scale_y * 0.5
-		var screen_scale := _screen_size_scale(center, x, y, camera)
+		var screen_scale := 1.0
+		if clamp_bound_enabled and ScreenSizeBound.fits_perspective(center, x, y, camera_transform, focal_max, clamp_max):
+			skipped_projections += 1
+		else:
+			screen_scale = _screen_size_scale(center, x, y, camera)
 		if not is_equal_approx(screen_scale, 1.0): screen_size_clamped += 1
 		if _skip_initial_geometry:continue
 		x *= screen_scale; y *= screen_scale
@@ -1013,6 +1039,8 @@ func seek(seconds: float) -> void:
 		if quad_cursor * 4 != vertices.size():
 			vertices.resize(quad_cursor * 4); uvs.resize(quad_cursor * 4); colors.resize(quad_cursor * 4); normals.resize(quad_cursor * 4)
 		indices = _quad_indices(quad_cursor)
+	if skipped_projections > 0:
+		fast_particle_projection_skips += skipped_projections
 	_seek_context_active = false
 	var can_emit := emission_playing and bool(raw.get("EmissionModule", {}).get("enabled", false)) and (not period_events.is_empty() or runtime_emission_rate>0.0) and now < stop_time and (bool(raw.get("looping", false)) or now <= start_delay + duration)
 	active = live_count > 0 or can_emit
@@ -1474,19 +1502,21 @@ func _collision_samples() -> Array:
 			samples.append({"normal": plane_node.global_basis.y.normalized(), "position": plane_node.global_position})
 	return samples
 
-func _try_native_states(now: float, frame: Transform3D, motion: Basis, planes: Array) -> bool:
+func _try_native_states(now: float, frame: Transform3D, motion: Basis, planes: Array, constant_steps: bool) -> bool:
 	if planes.size() != collision_planes.size():
 		return false
 	if _native_kernel == null:
 		_native_kernel = ClassDB.instantiate(&"TavernParticleKernel")
 	var states: Array = _native_kernel.advance(raw, particles, _worker_indices, now, compatibility_basis,
-		source_gravity, frame, motion, planes)
+		source_gravity, frame, motion, planes, constant_steps)
 	if states.size() != _worker_indices.size():
 		return false
 	for slot in _worker_indices.size():
 		_worker_states[_worker_indices[slot]] = states[slot]
 	native_batch_calls += 1
 	native_batch_particles += _worker_indices.size()
+	if constant_steps:
+		native_constant_batches += 1
 	return true
 
 func _prepare_worker_states(now: float) -> void:
@@ -1512,9 +1542,8 @@ func _prepare_worker_states(now: float) -> void:
 	var collision_frame:=_emitter_transform()
 	var collision_motion:=_motion_basis(collision_frame,_emitter_scale())
 	var plane_samples: Array = _collision_samples() if collision_job else []
-	# Use the generic integrator's existing eligibility boundary. The native
-	# batch writes only the whole-step cache and returns the fractional draw state.
-	if collision_job and _native_kernel_available() and _try_native_states(now, collision_frame, collision_motion, plane_samples):
+	# Match the script's step selection before replacing its numerical workers.
+	if (collision_job or native_constant_enabled) and _native_kernel_available() and _try_native_states(now, collision_frame, collision_motion, plane_samples, not collision_job):
 		if profile_seek:_worker_profile.prepare_usec=Time.get_ticks_usec()-worker_started
 		return
 	var jobs: Array = []

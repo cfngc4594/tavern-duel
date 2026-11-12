@@ -56,12 +56,18 @@ static func component_keys(keys: Array, component: String) -> Array:
 
 static func vector_curve(curve: Dictionary,time: float,default: Vector3=Vector3.ZERO) -> Vector3:
 	var keys: Array=curve.get("m_Curve",[])
-	return Vector3(scalar_keys(component_keys(keys,"x"),time,default.x),scalar_keys(component_keys(keys,"y"),time,default.y),scalar_keys(component_keys(keys,"z"),time,default.z))
+	return sample_vector_keys(component_keys(keys, "x"), component_keys(keys, "y"), component_keys(keys, "z"), time, default)
 
 static func quaternion_curve(curve: Dictionary,time: float) -> Quaternion:
 	var keys: Array=curve.get("m_Curve",[])
-	var q := Quaternion(scalar_keys(component_keys(keys,"x"),time),scalar_keys(component_keys(keys,"y"),time),scalar_keys(component_keys(keys,"z"),time),scalar_keys(component_keys(keys,"w"),time,1.0))
-	return q.normalized() if q.length_squared()>0.000001 else Quaternion.IDENTITY
+	return sample_quaternion_keys(component_keys(keys, "x"), component_keys(keys, "y"), component_keys(keys, "z"), component_keys(keys, "w"), time)
+
+static func sample_vector_keys(x: Array, y: Array, z: Array, time: float, fallback: Vector3 = Vector3.ZERO) -> Vector3:
+	return Vector3(scalar_keys(x, time, fallback.x), scalar_keys(y, time, fallback.y), scalar_keys(z, time, fallback.z))
+
+static func sample_quaternion_keys(x: Array, y: Array, z: Array, w: Array, time: float) -> Quaternion:
+	var q := Quaternion(scalar_keys(x, time), scalar_keys(y, time), scalar_keys(z, time), scalar_keys(w, time, 1.0))
+	return q.normalized() if q.length_squared() > 0.000001 else Quaternion.IDENTITY
 
 static func minmax(curve: Dictionary,time: float,mix_value: float=0.5) -> float:
 	var mode := int(curve.get("minMaxState",0))

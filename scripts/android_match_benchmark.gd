@@ -76,6 +76,8 @@ func setup(host):
 	game.scripted_pointer = true
 	CombatParticles.native_batch_calls = 0
 	CombatParticles.native_batch_particles = 0
+	CombatParticles.native_constant_batches = 0
+	CombatParticles.fast_particle_projection_skips = 0
 
 func _configure_scenario(args: PackedStringArray) -> void:
 	for arg in args:
@@ -496,7 +498,11 @@ func _finish():
 		"ambient_density": ambient_density,
 		"victory_trail_density": ProjectSettings.get_setting_with_override("render_quality/victory_trail_density")
 	}
-	finish_payload["native_particles"] = {"batches": CombatParticles.native_batch_calls, "particles": CombatParticles.native_batch_particles}
+	finish_payload["native_particles"] = {
+		"batches": CombatParticles.native_batch_calls, "particles": CombatParticles.native_batch_particles,
+		"constant_batches": CombatParticles.native_constant_batches,
+		"projection_skips": CombatParticles.fast_particle_projection_skips,
+	}
 	if not scenario.is_empty():
 		finish_payload.merge({"benchmark": "scenario", "scenario": scenario, "scenario_run": scenario_run})
 	elif fx_benchmark != null:

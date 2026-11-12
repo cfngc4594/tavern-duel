@@ -139,6 +139,10 @@ struct Curve {
     }
 
     bool constant_zero() const { return mode == 0 && high == 0.0; }
+
+    bool finite_constant() const {
+        return std::isfinite(high) && (mode == 0 || (mode == 3 && std::isfinite(low)));
+    }
 };
 
 using Curves = std::array<Curve, 3>;
@@ -159,6 +163,10 @@ Vector3 sample_components(const Curves &curves, double time, const Vector3 &mix)
 
 bool constant_zero(const Curves &curves) {
     return std::all_of(curves.begin(), curves.end(), [](const Curve &curve) { return curve.constant_zero(); });
+}
+
+bool finite_constants(const Curves &curves) {
+    return std::all_of(curves.begin(), curves.end(), [](const Curve &curve) { return curve.finite_constant(); });
 }
 
 struct Plane {
@@ -182,6 +190,14 @@ struct Plan {
     Transform3D frame;
     Basis emitter_motion;
     std::vector<Plane> planes;
+
+    bool supports_constant_steps() const {
+        return planes.empty() && !inherit_on && !speed_rotation_on
+                && (!velocity_on || (finite_constants(linear) && speed_modifier.finite_constant() && zero_spatial))
+                && (!limit_on || (!separate_axes && magnitude_limit.finite_constant() && drag.constant_zero()))
+                && (!force_on || finite_constants(force)) && gravity.finite_constant()
+                && (!rotation_on || rotation.finite_constant());
+    }
 
     bool load(const Dictionary &raw) {
         world = int64_t(raw.get("moveWithTransform", 0)) == 1;
@@ -264,6 +280,20 @@ struct State {
     int64_t collision_hits = 0;
 };
 
+// Reuse the String variants across the batch. Literal lookups otherwise
+// allocate and convert the same keys for each particle and draw state.
+struct ParticleKeys {
+    const Variant birth = "birth", life = "life", size = "size", rotation = "rotation";
+    const Variant limit_mix = "limit_mix", rotation_mix = "rotation_mix", gravity_mix = "gravity_mix";
+    const Variant inherit_mix = "inherit_mix", size_mix = "size_mix", velocity_mix = "velocity_mix", force_mix = "force_mix";
+    const Variant velocity = "velocity", inherited_velocity = "inherited_velocity", shape_point = "shape_point";
+    const Variant start = "start", motion_basis = "motion_basis";
+    const Variant sim_age = "sim_age", displacement = "displacement", sim_velocity = "sim_velocity";
+    const Variant sim_rotation = "sim_rotation", sim_render_velocity = "sim_render_velocity";
+    const Variant kill_age = "kill_age", collision_loss = "collision_loss", collision_hits = "collision_hits";
+    const Variant age = "age", position = "position", render_velocity = "render_velocity";
+};
+
 struct Particle {
     double life;
     double size;
@@ -281,12 +311,24 @@ struct Particle {
     Vector3 start;
     Basis motion;
 
-    explicit Particle(const Dictionary &p) :
-            life(p["life"]), size(p["size"]), rotation(p["rotation"]), limit_mix(p["limit_mix"]),
-            rotation_mix(p["rotation_mix"]), gravity_mix(p["gravity_mix"]), inherit_mix(p["inherit_mix"]),
-            size_mix(p["size_mix"]), velocity(p["velocity"]), velocity_mix(p["velocity_mix"]),
-            force_mix(p["force_mix"]), inherited_velocity(p["inherited_velocity"]),
-            shape_point(p["shape_point"]), start(p["start"]), motion(p["motion_basis"]) {}
+    Particle(const Dictionary &p, const ParticleKeys &key, const Plan &plan, double lifetime, bool rewind) :
+            life(lifetime), size(plan.limit_on || !plan.planes.empty() ? double(p[key.size]) : 0.0),
+            rotation(rewind ? double(p[key.rotation]) : 0.0),
+            limit_mix(plan.limit_on || !plan.planes.empty() ? double(p[key.limit_mix]) : 0.0),
+            rotation_mix(plan.rotation_on || plan.speed_rotation_on ? double(p[key.rotation_mix]) : 0.0),
+            gravity_mix(plan.gravity.mode != 0 ? double(p[key.gravity_mix]) : 0.0),
+            inherit_mix(plan.inherit_on ? double(p[key.inherit_mix]) : 0.0),
+            size_mix(plan.size_on ? double(p[key.size_mix]) : 0.0),
+            velocity(rewind ? Vector3(p[key.velocity]) : Vector3()),
+            velocity_mix(plan.velocity_on ? Vector3(p[key.velocity_mix]) : Vector3()),
+            force_mix(plan.force_on ? Vector3(p[key.force_mix]) : Vector3()),
+            inherited_velocity(plan.inherit_on ? Vector3(p[key.inherited_velocity]) : Vector3()),
+            shape_point(!plan.zero_spatial || !plan.planes.empty() ? Vector3(p[key.shape_point]) : Vector3()),
+            start(plan.world && !plan.planes.empty() ? Vector3(p[key.start]) : Vector3()),
+            motion(plan.velocity_world || plan.force_world || plan.inherit_on || !plan.gravity.constant_zero()
+                            || (plan.world && !plan.planes.empty())
+                    ? Basis(p[key.motion_basis])
+                    : Basis()) {}
 };
 
 Vector3 linear_velocity(const Plan &plan, const Particle &p, double time) {
@@ -441,52 +483,109 @@ void integrate(const Plan &plan, const Particle &p, State &state, double dt) {
     resolve_collisions(plan, p, previous, state, time);
 }
 
-Dictionary display_state(const State &state) {
+void advance_constant_steps(const Plan &plan, const Particle &p, State &state, double until) {
+    if (state.age + step > until + epsilon) {
+        return;
+    }
+
+    const bool random_force = plan.force_on && plan.force_random;
+    const Vector3 acceleration_step = random_force ? Vector3() : acceleration(plan, p, 0.0, 0) * real_t(step);
+    const Vector3 additive = linear_velocity(plan, p, 0.0);
+    const Vector3 additive_delta = additive - additive;
+    const double multiplier = plan.speed_modifier.sample(0.0, p.velocity_mix.x);
+    const double cap = std::max(0.0, plan.magnitude_limit.sample(0.0, p.limit_mix));
+    const double amount = 1.0 - std::pow(1.0 - plan.dampen, 1.0);
+    const double rotation_step = plan.rotation.sample(0.0, p.rotation_mix) * step;
+
+    while (state.age + step <= until + epsilon) {
+        if (plan.velocity_on) {
+            state.velocity += additive_delta;
+            state.velocity += Vector3();
+        }
+        if (random_force) {
+            const double time = std::clamp((state.age + step) / p.life, 0.0, 1.0);
+            const int64_t step_index = int64_t(std::floor((state.age + epsilon) / step));
+            state.velocity += acceleration(plan, p, time, step_index) * real_t(step);
+        } else {
+            state.velocity += acceleration_step;
+        }
+        if (plan.limit_on) {
+            const double speed = state.velocity.length();
+            if (speed > cap) {
+                state.velocity *= real_t(lerp(speed, cap, amount) / speed);
+            }
+        }
+        if (plan.rotation_on) {
+            state.rotation += rotation_step;
+        }
+        state.render_velocity = plan.velocity_on ? (state.velocity + Vector3()) * real_t(multiplier) : state.velocity;
+        state.position += state.render_velocity * real_t(step);
+        state.age += step;
+    }
+}
+
+Dictionary display_state(const State &state, const ParticleKeys &key) {
     Dictionary result;
-    result["age"] = state.age;
-    result["position"] = state.position;
-    result["velocity"] = state.velocity;
-    result["rotation"] = state.rotation;
-    result["render_velocity"] = state.render_velocity;
-    result["kill_age"] = state.kill_age;
-    result["collision_loss"] = state.collision_loss;
-    result["collision_hits"] = state.collision_hits;
+    result[key.age] = state.age;
+    result[key.position] = state.position;
+    result[key.velocity] = state.velocity;
+    result[key.rotation] = state.rotation;
+    result[key.render_velocity] = state.render_velocity;
+    result[key.kill_age] = state.kill_age;
+    result[key.collision_loss] = state.collision_loss;
+    result[key.collision_hits] = state.collision_hits;
     return result;
 }
 
-Dictionary advance_one(const Plan &plan, Dictionary &data, double age) {
-    const Particle particle(data);
-    State state{data["sim_age"], data["displacement"], data["sim_velocity"], data["sim_rotation"],
-            data["sim_render_velocity"], data["kill_age"], data["collision_loss"], data["collision_hits"]};
-    if (age + epsilon < state.age) {
+struct Sample {
+    Dictionary particle;
+    double age;
+    double lifetime;
+};
+
+Dictionary advance_one(const Plan &plan, const ParticleKeys &key, Sample &sample, bool constant_steps) {
+    Dictionary &data = sample.particle;
+    const double age = sample.age;
+    const double previous_age = data[key.sim_age];
+    const bool rewind = age + epsilon < previous_age;
+    const Particle particle(data, key, plan, sample.lifetime, rewind);
+    State state;
+    if (rewind) {
         const Vector3 velocity = particle.velocity + linear_velocity(plan, particle, 0.0)
                 + inherited_velocity(plan, particle, 0.0);
         state = {0.0, {}, velocity, particle.rotation, velocity + spatial_velocity(plan, particle, {}, 0.0)};
+    } else {
+        state = {previous_age, data[key.displacement], data[key.sim_velocity], data[key.sim_rotation],
+                data[key.sim_render_velocity], data[key.kill_age], data[key.collision_loss], data[key.collision_hits]};
     }
-    while (state.age + step <= age + epsilon) {
-        integrate(plan, particle, state, step);
+    if (constant_steps) {
+        advance_constant_steps(plan, particle, state, age);
+    } else {
+        while (state.age + step <= age + epsilon) {
+            integrate(plan, particle, state, step);
+        }
     }
 
     // Seek commits whole steps only. Fractional motion is for this draw.
-    data["sim_age"] = state.age;
-    data["displacement"] = state.position;
-    data["sim_velocity"] = state.velocity;
-    data["sim_rotation"] = state.rotation;
-    data["sim_render_velocity"] = state.render_velocity;
-    data["kill_age"] = state.kill_age;
-    data["collision_loss"] = state.collision_loss;
-    data["collision_hits"] = state.collision_hits;
+    data[key.sim_age] = state.age;
+    data[key.displacement] = state.position;
+    data[key.sim_velocity] = state.velocity;
+    data[key.sim_rotation] = state.rotation;
+    data[key.sim_render_velocity] = state.render_velocity;
+    data[key.kill_age] = state.kill_age;
+    data[key.collision_loss] = state.collision_loss;
+    data[key.collision_hits] = state.collision_hits;
     if (age > state.age + epsilon) {
         integrate(plan, particle, state, age - state.age);
     }
-    return display_state(state);
+    return display_state(state, key);
 }
 
 } // namespace
 
 godot::Array TavernParticleKernel::advance(const Dictionary &raw, const Array &particles, const Array &indices,
         double now, const Basis &compatibility_basis, const Vector3 &gravity,
-        const Transform3D &emitter_frame, const Basis &emitter_motion, const Array &plane_samples) {
+        const Transform3D &emitter_frame, const Basis &emitter_motion, const Array &plane_samples, bool constant_steps) {
     Plan plan;
     plan.compatibility = compatibility_basis;
     plan.gravity_vector = gravity;
@@ -496,30 +595,37 @@ godot::Array TavernParticleKernel::advance(const Dictionary &raw, const Array &p
         const Dictionary plane = plane_samples[i];
         plan.planes.push_back({plane["normal"], plane["position"]});
     }
-    if (!std::isfinite(now) || !plan.load(raw)) {
+    if (!std::isfinite(now) || !plan.load(raw) || (constant_steps && !plan.supports_constant_steps())) {
         return {};
     }
 
+    const ParticleKeys key;
+    std::vector<Sample> batch;
+    batch.reserve(indices.size());
     // Check the entire batch before mutating a single particle.
     for (int64_t i = 0; i < indices.size(); ++i) {
         const int64_t index = indices[i];
-        if (index < 0 || index >= particles.size() || particles[index].get_type() != Variant::DICTIONARY) {
+        if (index < 0 || index >= particles.size()) {
             return {};
         }
-        const Dictionary particle = particles[index];
-        const double age = now - double(particle["birth"]);
-        const double previous_age = particle["sim_age"];
+        const Variant &value = particles[index];
+        if (value.get_type() != Variant::DICTIONARY) {
+            return {};
+        }
+        const Dictionary particle = value;
+        const double age = now - double(particle[key.birth]);
+        const double previous_age = particle[key.sim_age];
+        const double lifetime = particle[key.life];
         if (!std::isfinite(age) || age < 0.0 || !std::isfinite(previous_age)
-                || !(double(particle["life"]) > 0.0) || age > double(particle["life"])) {
+                || !(lifetime > 0.0) || age > lifetime) {
             return {};
         }
+        batch.push_back({particle, age, lifetime});
     }
     Array states;
     states.resize(indices.size());
-    for (int64_t i = 0; i < indices.size(); ++i) {
-        Dictionary particle = particles[int64_t(indices[i])];
-        const double age = now - double(particle["birth"]);
-        states[i] = advance_one(plan, particle, age);
+    for (size_t i = 0; i < batch.size(); ++i) {
+        states[i] = advance_one(plan, key, batch[i], constant_steps);
     }
     return states;
 }

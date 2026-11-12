@@ -16,5 +16,5 @@ public:
     godot::Array advance(const godot::Dictionary &raw, const godot::Array &particles,
             const godot::Array &indices, double now, const godot::Basis &compatibility_basis,
             const godot::Vector3 &gravity, const godot::Transform3D &emitter_frame,
-            const godot::Basis &emitter_motion, const godot::Array &plane_samples);
+            const godot::Basis &emitter_motion, const godot::Array &plane_samples, bool constant_steps);
 };

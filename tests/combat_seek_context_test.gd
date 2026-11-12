@@ -49,6 +49,8 @@ func sample(fx,effect:Dictionary,at:float,enabled:bool):
 func _initialize():call_deferred("run")
 func run():
  check(not Solver.seek_context_enabled,"experiment is disabled by default")
+ # The assertions below require both legacy GDScript execution paths.
+ Solver.native_batch_enabled=false
  game=load("res://main.tscn").instantiate();root.add_child(game);await process_frame;game.set_process(false)
  game.headless=false;game._setup_spatial_presentation()
  # Keep prepared-scene inventory work outside this focused comparison.

@@ -114,10 +114,13 @@ func run() -> void:
 	var particle_start: int = Solver.native_batch_particles
 	for key in SPELLS:
 		var before: int = Solver.native_batch_calls
+		var before_constants: int = Solver.native_constant_batches
 		for clock in CLOCKS:
 			run_spell(game, players, key, clock, CLOCKS[clock])
-		if key == "CS2_024" or key == "CS2_034":
+		if key in ["CS2_024", "CS2_025", "CS2_034"]:
 			check(Solver.native_batch_calls > before, key + " reached native batches")
+		if key == "CS2_025":
+			check(Solver.native_constant_batches > before_constants, key + " reached constant native batches")
 	run_collision_and_rewind(game, players[0].effect_player)
 	for player in players:
 		player.cancel_all()
@@ -131,7 +134,7 @@ func run() -> void:
 	check(batches > 0 and particles > 0, "native extension did not run")
 	if failures == 0:
 		print("NATIVE_PARTICLE_KERNEL_PASS checks=", solver_checks, " meshes=", mesh_checks,
-			" native_batches=", batches, " native_particles=", particles)
+			" native_batches=", batches, " native_particles=", particles, " constant_batches=", Solver.native_constant_batches)
 	else:
 		print("NATIVE_PARTICLE_KERNEL_FAIL failures=", failures)
 	quit(1 if failures else 0)
@@ -257,6 +260,29 @@ func run_collision_and_rewind(game, effects: Node) -> void:
 	for age in [0.051, 0.129, 0.232]:
 		seek_both(solvers, age, "weighted clamp")
 	check(Solver.native_batch_calls == calls, "weighted clamp curves fall back to GDScript")
+
+	var constant_range := {"minMaxState": 3, "scalar": 1.25, "minScalar": -0.75}
+	for solver in solvers:
+		solver.raw.InitialModule.gravityModifier = constant_range
+		solver.raw.ForceModule = {
+			"enabled": true, "randomizePerFrame": true, "inWorldSpace": true,
+			"x": constant_range, "y": {"scalar": -0.25}, "z": constant_range,
+		}
+		solver.raw.VelocityModule = {
+			"enabled": true, "inWorldSpace": true, "x": constant_range,
+			"speedModifier": {"minMaxState": 3, "scalar": 0.95, "minScalar": 0.65},
+		}
+		solver.raw.ClampVelocityModule = {"enabled": true, "magnitude": {"scalar": 0.4}, "dampen": 0.7}
+		solver.raw.RotationModule = {"enabled": true, "curve": constant_range}
+		solver.raw.RotationBySpeedModule = {"enabled": false}
+		solver.bind_scene_gravity(Vector3(0.1, -9.8, 0.2))
+		for particle in solver.particles:
+			particle.motion_basis = Basis(Vector3.UP, 0.25).scaled(Vector3(0.8, 1.2, 0.9))
+		check(solver._can_random_force_step(), "randomized constant force is eligible")
+	calls = Solver.native_constant_batches
+	for age in [0.011, 0.033, 0.137, 0.251, 0.051, 0.191]:
+		seek_both(solvers, age, "randomized force worker and rewind")
+	check(Solver.native_constant_batches > calls, "randomized constant force reached native batches")
 	for solver in solvers:
 		solver.free()
 	world.free()

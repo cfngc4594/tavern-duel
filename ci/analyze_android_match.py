@@ -99,11 +99,16 @@ def distribution(samples, divisor=1):
 
 def phase_summary(frames):
     intervals = [row["frame_usec"] for row in frames if row["frame_usec"] > 0]
+    over_budget = {
+        str(fps): sum(interval * fps > 1_000_000 for interval in intervals)
+        for fps in (60, 120)
+    }
     return {
         "frames": len(frames),
         "wall_sec": round(sum(intervals) / 1_000_000, 3),
         "effective_fps": round(1_000_000 / fmean(intervals), 2) if intervals else None,
         "frame_interval_ms": distribution(intervals, 1000),
+        "frames_over_budget_by_fps": over_budget,
         "hitch_counts_at_or_above_ms": {
             str(ms): sum(interval >= ms * 1000 for interval in intervals)
             for ms in HITCH_THRESHOLDS_MS

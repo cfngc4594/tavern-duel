@@ -458,6 +458,7 @@ func _fail_native_loading(message:String):
 	native_startup_timing.mark("loading_failed",{"message":message})
 	native_loading_error=message
 	if native_mac_spell_warmup != null:native_mac_spell_warmup.cancel()
+	if is_instance_valid(native_turn_banner):native_turn_banner.cancel_shader_warmup()
 	native_banner_pending=false;native_initial_sounds.clear()
 	if is_instance_valid(native_turn_banner):native_turn_banner.cancel_original()
 	if is_instance_valid(world_canvas):world_canvas.visible=false
@@ -510,6 +511,7 @@ func _advance_initial_loading(dt:float):
 	if native_mac_spell_warmup == null and MacSpellWarmup.enabled():
 		native_mac_spell_warmup = MacSpellWarmup.new()
 	if native_mac_spell_warmup != null and not native_mac_spell_warmup.advance(self):return
+	if is_instance_valid(native_turn_banner) and not native_turn_banner.advance_shader_warmup(self):return
 	native_startup_timing.begin("reveal_sync_cpu")
 	native_initial_loading=false
 	world_canvas.visible=true;world_canvas.queue_redraw()

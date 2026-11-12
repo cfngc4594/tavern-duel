@@ -5,6 +5,8 @@ const STAGE_SIZE=Vector2i(3200,1800)
 # Godot SubViewport requires at least 2 pixels per axis. Logical stage layout never shrinks.
 const IDLE_STAGE_SIZE=Vector2i(2,2)
 const SOURCE_PIXELS_PER_UNIT=900.0/.72
+const WARMUP_ARG="--mac-turn-banner-warmup"
+const RETAIN_TARGETS_ARG="--mac-turn-banner-retain-targets"
 var viewport:SubViewport
 var frames=0
 var audit={}
@@ -24,7 +26,19 @@ var burst
 var screen_sprite:Sprite2D
 var font
 var native_glyph_bundle={}
+var _warmup_enabled:=false
+var _keep_idle_targets:=false
+var _warmup_complete:=false
+var _warmup_started_usec:=0
+var _warmup_callback:=Callable()
+var _warmup_canvas:SubViewport
+var _warmup_sprite_transform:=Transform2D.IDENTITY
+var _warmup_burst_snapshot:Dictionary={}
 func setup(_game):
+ if OS.has_feature("macos") and DisplayServer.get_name()!="headless" and RenderingServer.get_current_rendering_method()=="gl_compatibility":
+  var args:=OS.get_cmdline_user_args()
+  _keep_idle_targets=args.has(RETAIN_TARGETS_ARG)
+  _warmup_enabled=args.has(WARMUP_ARG) or _keep_idle_targets
  viewport=_new_stage_rt(true)
  var root=Node3D.new();root.scale.z=-1;viewport.add_child(root)
  var data=JSON.parse_string(FileAccess.get_file_as_string(BASE+'-8390915935271638251.mesh.json'))
@@ -73,7 +87,12 @@ func _process(_delta):
  for target in text_targets:
   if frames==target.freeze_frame:target.viewport.render_target_update_mode=SubViewport.UPDATE_ONCE
  # Text caches warm independently; animated full-stage passes exist at full size only while displayed.
-func get_texture():return banner_blend_targets.merged.get_texture() if not banner_blend_targets.is_empty() else null
+func get_texture():
+ if not is_instance_valid(viewport):return null
+ if banner_blend_targets.is_empty():
+  _setup_banner_capture()
+  _set_banner_redraw(display_active)
+ return banner_blend_targets.merged.get_texture()
 func get_audit():
  var result=audit.duplicate(true)
  result.rays=rays.get_audit() if is_instance_valid(rays) else {}
@@ -83,7 +102,7 @@ func get_audit():
  for target in _stage_targets():
   result.stage_targets.append({"id":target.get_instance_id(),"size":target.size,"update_mode":target.render_target_update_mode})
   result.stage_pixels+=target.size.x*target.size.y
- result.stage_lifecycle="Same ViewportTexture references; restore 3200x1800 before visible; hidden/disabled 2x2 while idle; GPU first-frame verification required"
+ result.stage_lifecycle="Same ViewportTexture references; 3200x1800 while displayed; disabled at full size while idle" if _keep_idle_targets else "Same ViewportTexture references; restore 3200x1800 before visible; hidden/disabled 2x2 while idle; GPU first-frame verification required"
  result.timeline=timeline.get_audit();result.fade_semantics="recursive material _Color.a target, not final opacity"
  return result
 
@@ -140,6 +159,59 @@ func cancel_original():
  if is_instance_valid(burst):burst.cancel()
  _apply_original_timeline(timeline.get_audit())
 
+func advance_shader_warmup(game:Node)->bool:
+ if not _warmup_enabled or _warmup_complete:return true
+ if _warmup_callback.is_valid():return false
+ if not game.native_initial_loading or game.world_canvas.visible or display_active or timeline.running:return true
+ _warmup_started_usec=Time.get_ticks_usec()
+ _warmup_sprite_transform=screen_sprite.transform
+ if is_instance_valid(burst):
+  if not burst.particles.is_empty():return true
+  _warmup_burst_snapshot={"elapsed":burst.elapsed_seconds,"seed":burst.seed_value,"audit":burst.audit.duplicate()}
+  burst.restart(0)
+ # Draw one real animation sample while the gameplay canvas is hidden.
+ _apply_original_timeline(timeline.sample(.15))
+ _warmup_canvas=SubViewport.new()
+ _warmup_canvas.name="TurnBannerWarmupComposite"
+ _warmup_canvas.disable_3d=true
+ _warmup_canvas.size=Vector2i(game.get_viewport().get_visible_rect().size)
+ _warmup_canvas.render_target_update_mode=SubViewport.UPDATE_ONCE
+ add_child(_warmup_canvas)
+ _warmup_canvas.add_child(screen_sprite.duplicate())
+ game.native_startup_timing.mark("turn_banner_shader_warmup_begin",{"targets":_stage_targets().size(),"retain_targets":_keep_idle_targets})
+ _warmup_callback=_shader_warmup_drawn.bind(game)
+ RenderingServer.frame_post_draw.connect(_warmup_callback,Object.CONNECT_ONE_SHOT|Object.CONNECT_DEFERRED)
+ return false
+
+func _shader_warmup_drawn(game:Node):
+ if not _warmup_callback.is_valid():return
+ var draw_calls:=0
+ var targets:=_stage_targets()
+ targets.append(_warmup_canvas)
+ for target:SubViewport in targets:
+  draw_calls+=target.get_render_info(Viewport.RENDER_INFO_TYPE_VISIBLE,Viewport.RENDER_INFO_DRAW_CALLS_IN_FRAME)
+  draw_calls+=target.get_render_info(Viewport.RENDER_INFO_TYPE_CANVAS,Viewport.RENDER_INFO_DRAW_CALLS_IN_FRAME)
+ cancel_shader_warmup()
+ if is_instance_valid(game):
+  game.native_startup_timing.mark("turn_banner_shader_warmup_drawn",{"wall_usec":Time.get_ticks_usec()-_warmup_started_usec,"targets":targets.size(),"draw_calls":draw_calls,"retain_targets":_keep_idle_targets,"timeline_serial":timeline.serial})
+
+func cancel_shader_warmup():
+ if not _warmup_callback.is_valid():return
+ if RenderingServer.frame_post_draw.is_connected(_warmup_callback):RenderingServer.frame_post_draw.disconnect(_warmup_callback)
+ _warmup_callback=Callable()
+ _warmup_complete=true
+ if is_instance_valid(_warmup_canvas):_warmup_canvas.queue_free()
+ _warmup_canvas=null
+ if is_instance_valid(screen_sprite):
+  _apply_original_timeline(timeline.get_audit())
+  screen_sprite.transform=_warmup_sprite_transform
+ if is_instance_valid(burst) and not _warmup_burst_snapshot.is_empty():
+  burst.cancel()
+  burst.set_elapsed(_warmup_burst_snapshot.elapsed)
+  burst.seed_value=_warmup_burst_snapshot.seed
+  burst.audit=_warmup_burst_snapshot.audit
+ _warmup_burst_snapshot.clear()
+
 func _apply_original_timeline(state):
  # Original _Color alpha is overwritten, not multiplied by serialized initial alpha.
  for material in fade_materials:material.set_shader_parameter("source_color_alpha",state.alpha)
@@ -168,6 +240,7 @@ func set_display(active:bool,opacity:float):
  if is_instance_valid(screen_sprite):
   screen_sprite.visible=active;screen_sprite.material.set_shader_parameter('opacity',clampf(opacity,0,1))
 func _exit_tree():
+ cancel_shader_warmup()
  if RenderingServer.frame_pre_draw.is_connected(_sync_mask_materials):RenderingServer.frame_pre_draw.disconnect(_sync_mask_materials)
  if is_instance_valid(screen_sprite):screen_sprite.queue_free()
 
@@ -192,12 +265,15 @@ func _draw_native_glyphs(target,material,rt_size,char_size,width):
   var quad=Polygon2D.new();quad.polygon=vertices;quad.uv=uv;quad.texture=native_glyph_bundle.atlas;quad.material=material;quad.texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR;target.add_child(quad);pen+=g.advance
 func layer_height_for_native():return .05000000074505806
 
-func _setup_banner_blend():
+func _setup_banner_capture():
+ # Only the standalone framebuffer-alpha capture needs this mask and merge.
  var mask=_new_stage_rt(true)
  for source_child in viewport.get_children():
   var copy=source_child.duplicate();mask.add_child(copy);_mask_tree(copy)
  var merged=_new_stage_rt(false);var rect=ColorRect.new();rect.size=STAGE_SIZE;var material=ShaderMaterial.new();material.shader=load('res://assets/native_cards/source_alpha_merge.gdshader');material.set_shader_parameter('rgb_rt',viewport.get_texture());material.set_shader_parameter('mask_rt',mask.get_texture());rect.material=material;merged.add_child(rect)
- banner_blend_targets={'rgb':viewport,'mask':mask,'merged':merged}
+ banner_blend_targets={'mask':mask,'merged':merged}
+
+func _setup_banner_blend():
  var coverage=_new_stage_rt(true)
  for source_child in viewport.get_children():
   var copy=source_child.duplicate();coverage.add_child(copy);_mask_tree(copy,true)
@@ -264,6 +340,7 @@ func _add_shadow(canvas,merged,spec,position,size,scale_px):
 func _stage_targets() -> Array:
  var targets:Array=[]
  if is_instance_valid(shadow_background):targets.append(shadow_background)
+ if is_instance_valid(viewport):targets.append(viewport)
  for target in banner_blend_targets.values():
   if is_instance_valid(target):targets.append(target)
  for target in presentation_targets.values():
@@ -275,7 +352,9 @@ func _set_banner_redraw(active:bool):
  # Resize every dependency before enabling any pass. No object or material is recreated.
  if not active:
   for target in targets:target.render_target_update_mode=SubViewport.UPDATE_DISABLED
- for target in targets:target.size=STAGE_SIZE if active else IDLE_STAGE_SIZE
+ for target in targets:
+  if active:target.size=STAGE_SIZE
+  elif not _keep_idle_targets:target.size=IDLE_STAGE_SIZE
  if active:
   for target in targets:target.render_target_update_mode=SubViewport.UPDATE_ALWAYS
 

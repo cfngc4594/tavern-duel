@@ -36,6 +36,7 @@ const SOURCE_TO_CAPTURE := Basis(Vector3.RIGHT, Vector3.BACK, Vector3.UP)
 const EPSILON := 0.00001
 static var offscreen_sequence := 0
 static var prebind_particle_capture_axes_enabled := OS.has_feature("macos") and not OS.get_cmdline_user_args().has("--mac-legacy-capture-axes")
+const PREBIND_CAPTURE_ROUTES := ["CS2_029/missile", "CS2_034/missile"]
 static var _shared_capture_shaders:Dictionary={}
 static var _shared_shader_created:=0
 static var _shared_shader_reused:=0
@@ -57,6 +58,7 @@ var capture_materials
 var _last_audit: Dictionary = {}
 var _capture_shader_cache: Dictionary = {}
 var _capture_uniform_cache: Dictionary = {}
+const CAPTURE_POSE_UNIFORMS := ["_SourceViewProjection", "_GodotToSourceWorld", "_SourceCameraObject", "_GodotToSourceObject"]
 var _route_id := ""
 var _capture_mode := "reference"
 var _benchmark_arm := ""
@@ -369,7 +371,7 @@ static func shared_shader_audit()->Dictionary:
 		if reference.get_ref()!=null:live+=1
 	return {"created":_shared_shader_created,"reused":_shared_shader_reused,"live_unique_codes":live,"ownership":"weak immutable shader sharing; no material or texture retention"}
 
-func _bind_capture_material(base: Material, pair: Dictionary, kind: String, surface: int, mirror: MeshInstance3D, camera: Camera3D) -> Material:
+func _bind_capture_material(base: Material, pair: Dictionary, kind: String, surface: int, mirror: MeshInstance3D, capture_view: Dictionary) -> Material:
 	if not base is ShaderMaterial:return base
 	var key:=kind+str(surface)
 	if not pair.has("materials"):pair.materials={}
@@ -384,22 +386,23 @@ func _bind_capture_material(base: Material, pair: Dictionary, kind: String, surf
 		# frame. Parse declared names so first-frame captures keep all overrides.
 		var names: Array=[]
 		var regex:=RegEx.new();regex.compile("uniform\\s+\\w+\\s+([A-Za-z_][A-Za-z_0-9]*)")
-		for match_value in regex.search_all(base.shader.code):names.append({"name":match_value.get_string(1)})
+		for match_value in regex.search_all(base.shader.code):
+			var name := match_value.get_string(1)
+			if not CAPTURE_POSE_UNIFORMS.has(name):names.append(name)
 		_capture_uniform_cache[shader_id]=names
-	for uniform in _capture_uniform_cache[shader_id]:
-		var value=base.get_shader_parameter(uniform.name)
-		material.set_shader_parameter(uniform.name,value)
-	material.render_priority=base.render_priority
+	for name in _capture_uniform_cache[shader_id]:
+		material.set_shader_parameter(name, base.get_shader_parameter(name))
+	if material.render_priority != base.render_priority:material.render_priority = base.render_priority
 	# Camera-dependent formulas must see this local source capture, not the
 	# final board camera copied from the production material.
-	material.set_shader_parameter("_SourceViewProjection",camera.get_camera_projection()*Projection(camera.global_transform.affine_inverse()))
+	material.set_shader_parameter("_SourceViewProjection", capture_view.view_projection)
 	# URP lighting uniforms remain expressed in the actual board world. Map
 	# the isolated capture geometry back there, without reprojecting vertices.
 	var source_world:=Transform3D.IDENTITY
 	if base.shader.resource_path.contains("urp_simple_lit") and absf(mirror.global_basis.determinant())>EPSILON:
 		source_world=pair.source.global_transform*mirror.global_transform.affine_inverse()
 	material.set_shader_parameter("_GodotToSourceWorld",source_world)
-	material.set_shader_parameter("_SourceCameraObject",mirror.to_local(camera.global_position) if absf(mirror.global_basis.determinant())>EPSILON else Vector3.ZERO)
+	material.set_shader_parameter("_SourceCameraObject",mirror.to_local(capture_view.camera.global_position) if absf(mirror.global_basis.determinant())>EPSILON else Vector3.ZERO)
 	material.set_shader_parameter("_GodotToSourceObject",Transform3D.IDENTITY)
 	return material
 
@@ -515,7 +518,7 @@ func prepare_direct_particle_solver(player: Node, source: Node3D, source_key: St
 func prepare_particle_capture_axes() -> void:
 	# Only a single already-created capture can determine each emitter's axes
 	# before the normal seek. Multi-owner and deferred captures keep late seeks.
-	if not prebind_particle_capture_axes_enabled or _route_id != "CS2_029/missile":return
+	if not prebind_particle_capture_axes_enabled or not PREBIND_CAPTURE_ROUTES.has(_route_id):return
 	if disposed or entries.size() != 1 or not pending_offscreen.is_empty():return
 	var entry: Dictionary = entries[0]
 	if entry.offscreen or entry.capture_mode != "reference" or not is_instance_valid(entry.owner) or not is_instance_valid(entry.source):return
@@ -574,10 +577,16 @@ func _sync_camera(entry: Dictionary, capture: Dictionary) -> void:
 		camera_height=entry.offscreen_height
 		near_source=-float(d.get("AboveClip",1));far_source=float(d.get("BelowClip",1))
 	for kind in ["color","alpha"]:
-		var camera: Camera3D=capture[kind].camera
-		camera.size=maxf(EPSILON,camera_height); camera.near=0.01
-		camera.far=maxf(0.02,far_source-near_source+0.01)
-		camera.position=Vector3(0,0,-near_source+0.01)
+		var view: Dictionary = capture[kind]
+		var camera: Camera3D = view.camera
+		var size := maxf(EPSILON, camera_height)
+		var far_clip := maxf(0.02, far_source - near_source + 0.01)
+		var position := Vector3(0, 0, -near_source + 0.01)
+		if camera.size != size:camera.size = size
+		if camera.near != 0.01:camera.near = 0.01
+		if camera.far != far_clip:camera.far = far_clip
+		if camera.position != position:camera.position = position
+		view.view_projection = camera.get_camera_projection() * Projection(camera.global_transform.affine_inverse())
 
 func _collect_geometry(entry: Dictionary) -> Array:
 	var result: Array=[]
@@ -629,11 +638,11 @@ func _sync_captures(entry: Dictionary, refresh: bool) -> void:
 			var pair: Dictionary = capture.mirrors[id]
 			for kind in ["color","alpha"]:
 				var mirror: MeshInstance3D = pair[kind]
-				mirror.transform = source_pose
-				mirror.mesh = mesh
-				mirror.visible = visible
-				mirror.sorting_offset = sorting_offset
-				mirror.extra_cull_margin = cull_margin
+				if mirror.transform != source_pose:mirror.transform = source_pose
+				if mirror.mesh != mesh:mirror.mesh = mesh
+				if mirror.visible != visible:mirror.visible = visible
+				if mirror.sorting_offset != sorting_offset:mirror.sorting_offset = sorting_offset
+				if mirror.extra_cull_margin != cull_margin:mirror.extra_cull_margin = cull_margin
 		for surface in range(mesh.get_surface_count()):
 			var material: Material = source.get_active_material(surface)
 			for kind in ["color", "alpha"]:
@@ -649,7 +658,8 @@ func _sync_captures(entry: Dictionary, refresh: bool) -> void:
 					var pair: Dictionary = capture.mirrors[id]
 					var mirror: MeshInstance3D = pair[kind]
 					var capture_material := base if base != null else _invisible_material()
-					mirror.set_surface_override_material(surface, _bind_capture_material(capture_material, pair, kind, surface, mirror, capture[kind].camera))
+					var bound := _bind_capture_material(capture_material, pair, kind, surface, mirror, capture[kind])
+					if mirror.get_surface_override_material(surface) != bound:mirror.set_surface_override_material(surface, bound)
 		if hide_source:
 			if not hidden.has(id):hidden[id]={"node":source,"layers":source.layers}
 			source.layers=0 # Preserve source/parent visibility for the animator and capture.

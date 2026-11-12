@@ -12,6 +12,7 @@ const SPELL_FIXTURES := [
 	["CS2_029/impact", "cab-69c88b234dfa427e02d1fcee9337ae34:839035113494640369", "cab-69c88b234dfa427e02d1fcee9337ae34:7286635149810824945"],
 	["GAME_005/friendly_area", "cab-8e3755b5c7f289df2f238a71420d2eae:-8631301880503599993", "cab-8e3755b5c7f289df2f238a71420d2eae:-1100169735795114873"],
 ]
+const FIREBLAST_FIXTURE := ["CS2_034/missile", "cab-69c88b234dfa427e02d1fcee9337ae34:8364655279848562821", "cab-69c88b234dfa427e02d1fcee9337ae34:-7915262011419123579"]
 
 class ScreenHost extends Node:
 	var world_canvas:=Node2D.new()
@@ -30,20 +31,19 @@ class ParticleSpeedRecorder extends RefCounted:
 func _initialize():
 	call_deferred("run")
 
-func _capture(assets,scale: float,route_id := "") -> Dictionary:
+func _capture(assets,scale: float,route_id := "", fixture := SPELL_FIXTURES[1]) -> Dictionary:
 	var projection:=Node3D.new()
 	root.add_child(projection)
-	# CS2_029/missile from the runtime route table.
-	var source_key: String="cab-69c88b234dfa427e02d1fcee9337ae34:7740699746381147760"
+	var source_key: String=fixture[1]
 	var scope: Dictionary=assets.instantiate(source_key,projection)
 	var capture:=RenderTexture.new()
 	projection.add_child(capture)
 	capture.target_scale=scale
 	capture.setup(scope,assets,projection,1,route_id)
 	for entry in capture.entries:
-		if str(entry.key).ends_with(":-5626360573135933840"):
+		if entry.key == fixture[2]:
 			return {"projection":projection,"scope":scope,"capture":capture,"missile":entry}
-	assert(false,"Fireball missile capture missing")
+	assert(false,fixture[0]+" capture missing")
 	return {}
 
 func _check_capture():
@@ -65,12 +65,13 @@ func _check_capture():
 		fixture.capture.dispose()
 		fixture.projection.queue_free()
 
-func _check_particle_capture_axes():
+func _check_particle_capture_axes(spell_fixture: Array):
 	var assets := CombatAssets.new()
 	assets.setup(null)
 	var previous_arm: Variant = ProjectSettings.get_setting(CAPTURE_ARM, null)
 	ProjectSettings.set_setting(CAPTURE_ARM, "reference")
-	var fixtures := [_capture(assets, 1.0, "CS2_029/missile"), _capture(assets, 1.0, "CS2_029/missile")]
+	var route_id: String = spell_fixture[0]
+	var fixtures := [_capture(assets, 1.0, route_id, spell_fixture), _capture(assets, 1.0, route_id, spell_fixture)]
 	ProjectSettings.set_setting(CAPTURE_ARM, previous_arm)
 	var previous_prebind := RenderTexture.prebind_particle_capture_axes_enabled
 	RenderTexture.prebind_particle_capture_axes_enabled = true
@@ -109,7 +110,7 @@ func _check_particle_capture_axes():
 				assert(var_to_bytes(a.mesh.surface_get_arrays(surface)) == var_to_bytes(b.mesh.surface_get_arrays(surface)))
 				live_frames += 1
 	assert(live_frames > 0 and changes[0] > changes[1])
-	print("COMBAT_CAPTURE_AXES_EXACT mesh_samples=", live_frames, " mesh_changes=", changes)
+	print("COMBAT_CAPTURE_AXES_EXACT route=", route_id, " mesh_samples=", live_frames, " mesh_changes=", changes)
 	RenderTexture.prebind_particle_capture_axes_enabled = previous_prebind
 	for fixture in fixtures:
 		fixture.capture.dispose()
@@ -317,7 +318,8 @@ func _check_screen_effect():
 
 func run():
 	_check_capture()
-	_check_particle_capture_axes()
+	_check_particle_capture_axes(SPELL_FIXTURES[1])
+	_check_particle_capture_axes(FIREBLAST_FIXTURE)
 	_check_android_spell_capture()
 	_check_direct_particle_solver()
 	_check_continuous_playback_speed()

@@ -11,4 +11,8 @@ void TavernParticleKernel::_bind_methods() {
             godot::D_METHOD("trail_geometry", "raw", "particles", "indices", "states", "now", "frame", "motion",
                     "axes", "camera", "focal_max", "clamp_max"),
             &TavernParticleKernel::trail_geometry);
+    godot::ClassDB::bind_method(
+            godot::D_METHOD("projected_quad_scale", "center", "x", "y", "camera_transform", "projection",
+                    "viewport_size", "minimum", "maximum", "refine"),
+            &TavernParticleKernel::projected_quad_scale);
 }

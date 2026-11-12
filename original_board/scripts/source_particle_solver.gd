@@ -23,6 +23,9 @@ const NATIVE_BOARD_SOURCES := {
 static var native_board_state_enabled := OS.has_feature("macos") \
 	and not OS.get_cmdline_user_args().has("--mac-skip-native-board-particles") \
 	and (OS.get_cmdline_user_args().has("--mac-native-board-particles") or bool(ProjectSettings.get_setting("render_quality/macos_native_board_particles", false)))
+static var native_board_projection_enabled := OS.has_feature("macos") \
+	and not OS.get_cmdline_user_args().has("--mac-skip-board-projection-snapshot") \
+	and bool(ProjectSettings.get_setting("render_quality/macos_board_projection_snapshot", false))
 static var _native_board_kernel: RefCounted
 const BASIC_UVS := [
 	[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)],
@@ -890,13 +893,34 @@ func seek(seconds: float) -> void:
 		and is_finite(clamp_max) and clamp_max > 0.0
 		and float(source_renderer.get("m_MinParticleSize", 0.0)) <= 0.0
 	)
+	# The horizontal dust quads can each require 18 passes over four projected
+	# corners. Reuse this seek's camera state for every corner and iteration.
+	var use_projection_snapshot := native_board_projection_enabled and native_board_state_enabled and frame_draw_snapshot \
+		and _fixed_simulation_modules and NATIVE_BOARD_SOURCES.has(source_key) and frame_mode == 2 \
+		and camera != null and _native_board_kernel != null and _native_board_kernel.has_method(&"projected_quad_scale") \
+		and (source_renderer.has("m_MinParticleSize") or source_renderer.has("m_MaxParticleSize"))
 	var camera_transform := Transform3D.IDENTITY
+	var camera_projection := Projection()
 	var focal_max := 0.0
-	if clamp_bound_enabled:
+	if clamp_bound_enabled or use_projection_snapshot:
 		camera_transform = camera.get_camera_transform()
-		var projection := camera.get_camera_projection()
-		focal_max = maxf(absf(projection.x.x), absf(projection.y.y))
+		camera_projection = camera.get_camera_projection()
+	if clamp_bound_enabled:
+		focal_max = maxf(absf(camera_projection.x.x), absf(camera_projection.y.y))
 		clamp_bound_enabled = is_finite(focal_max) and focal_max > 0.0
+	var camera_global := Transform3D.IDENTITY
+	var camera_forward := Vector3.ZERO
+	var viewport_size := Vector2.ZERO
+	var camera_near := 0.0
+	var clamp_minimum := 0.0
+	var clamp_maximum := INF
+	if use_projection_snapshot:
+		camera_global = camera.global_transform
+		camera_forward = -camera_global.basis.z.normalized()
+		viewport_size = camera.get_viewport().get_visible_rect().size
+		camera_near = camera.near
+		clamp_minimum = maxf(0.0, float(source_renderer.get("m_MinParticleSize", 0.0)))
+		clamp_maximum = maxf(clamp_minimum, clamp_max)
 	# Renderer order must reverse actual live indices, not their particle data
 	# alone: worker states are keyed by the original particle index.
 	var oldest_in_front:bool=source_sort_mode and int(source_renderer.get("m_SortMode",0))==2
@@ -950,7 +974,14 @@ func seek(seconds: float) -> void:
 		var y := up * size * scale_y * 0.5
 		var screen_scale := 1.0
 		if not clamp_bound_enabled or not _fits_particle_size_bound(center, x, y, camera_transform, focal_max, clamp_max):
-			screen_scale = _screen_size_scale(center, x, y, camera)
+			if use_projection_snapshot:
+				if not (camera_forward.dot(center - camera_global.origin) < camera_near):
+					var camera_z := camera_global.basis.z
+					var refine := absf(camera_z.dot(x)) + absf(camera_z.dot(y)) > EPSILON
+					screen_scale = _native_board_kernel.projected_quad_scale(center, x, y, camera_transform, camera_projection, viewport_size, clamp_minimum, clamp_maximum, refine)
+					if screen_scale < 0.0:screen_scale = _screen_size_scale(center, x, y, camera)
+			else:
+				screen_scale = _screen_size_scale(center, x, y, camera)
 		if not is_equal_approx(screen_scale, 1.0): screen_size_clamped += 1
 		x *= screen_scale; y *= screen_scale
 		var start: int = quad_cursor * 4 if indexed_quads else vertices.size()

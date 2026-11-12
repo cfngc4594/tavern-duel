@@ -7,6 +7,8 @@
 #include <limits>
 #include <vector>
 
+#include <godot_cpp/core/math.hpp>
+#include <godot_cpp/variant/plane.hpp>
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/packed_color_array.hpp>
 #include <godot_cpp/variant/packed_vector2_array.hpp>
@@ -18,6 +20,30 @@ using namespace godot;
 constexpr double step = 1.0 / 120.0;
 constexpr double epsilon = 0.00000001;
 constexpr double infinity = std::numeric_limits<double>::infinity();
+
+double projected_quad_fraction(const Vector3 &center, const Vector3 &x, const Vector3 &y,
+        const Transform3D &camera_transform, const Projection &projection, const Vector2 &viewport_size) {
+    Vector2 low(infinity, infinity);
+    Vector2 high(-infinity, -infinity);
+    const std::array<Vector3, 4> offsets = {-x + y, x + y, x - y, -x - y};
+    for (const Vector3 &offset : offsets) {
+        // Camera3D::unproject_position with the same camera snapshot for every corner.
+        Plane clip = projection.xform4(Plane(camera_transform.xform_inv(center + offset), 1.0));
+        if (clip.d == 0.0 || !std::isfinite(clip.d)) {
+            return -1.0;
+        }
+        clip.normal /= clip.d;
+        const Vector2 point((clip.normal.x * 0.5 + 0.5) * viewport_size.x,
+                (-clip.normal.y * 0.5 + 0.5) * viewport_size.y);
+        if (!point.is_finite()) {
+            return -1.0;
+        }
+        low = low.min(point);
+        high = high.max(point);
+    }
+    const Vector2 extent = (high - low) / viewport_size;
+    return extent.is_finite() ? std::max(extent.x, extent.y) : -1.0;
+}
 
 double lerp(double from, double to, double weight) {
     return from + (to - from) * weight;
@@ -749,4 +775,43 @@ godot::Array TavernParticleKernel::trail_geometry(const Dictionary &raw, const A
         }
     }
     return Array::make(vertices, normals, colors, uvs);
+}
+
+double TavernParticleKernel::projected_quad_scale(const Vector3 &center, const Vector3 &x, const Vector3 &y,
+        const Transform3D &camera_transform, const Projection &projection, const Vector2 &viewport_size,
+        double minimum, double maximum, bool refine) {
+    if (viewport_size.x <= 0.0 || viewport_size.y <= 0.0) {
+        return 1.0;
+    }
+    const double fraction = projected_quad_fraction(center, x, y, camera_transform, projection, viewport_size);
+    if (fraction < 0.0) {
+        return -1.0;
+    }
+    if (fraction <= epsilon) {
+        return 1.0;
+    }
+    const double target = std::clamp(fraction, minimum, maximum);
+    if (Math::is_equal_approx(target, fraction)) {
+        return 1.0;
+    }
+    const double scale = target / fraction;
+    if (!refine) {
+        return scale;
+    }
+    double low = 0.0;
+    double high = std::max(1.0, scale * 2.0);
+    for (int iteration = 0; iteration < 18; ++iteration) {
+        const double middle = (low + high) * 0.5;
+        const double projected = projected_quad_fraction(center, x * middle, y * middle,
+                camera_transform, projection, viewport_size);
+        if (projected < 0.0) {
+            return -1.0;
+        }
+        if (projected > target) {
+            high = middle;
+        } else {
+            low = middle;
+        }
+    }
+    return (low + high) * 0.5;
 }

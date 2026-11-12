@@ -4,6 +4,7 @@
 #include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/basis.hpp>
 #include <godot_cpp/variant/dictionary.hpp>
+#include <godot_cpp/variant/projection.hpp>
 #include <godot_cpp/variant/transform3d.hpp>
 
 class TavernParticleKernel : public godot::RefCounted {
@@ -22,4 +23,8 @@ public:
             const godot::Array &indices, const godot::Dictionary &states, double now,
             const godot::Transform3D &frame, const godot::Basis &motion, const godot::Basis &axes,
             const godot::Transform3D &camera, double focal_max, double clamp_max);
+
+    double projected_quad_scale(const godot::Vector3 &center, const godot::Vector3 &x, const godot::Vector3 &y,
+            const godot::Transform3D &camera_transform, const godot::Projection &projection,
+            const godot::Vector2 &viewport_size, double minimum, double maximum, bool refine);
 };

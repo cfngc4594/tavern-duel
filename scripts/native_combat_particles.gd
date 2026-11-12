@@ -427,6 +427,9 @@ func _emit_until(now: float, current: Transform3D, local_scale: Vector3) -> void
 			if float(item.at) < stop_time: pending_events.append(item)
 		next_cycle += 1
 	var remaining: Array = []
+	var base_solver: bool = get_script().get_base_script() == null
+	var capacity: Dictionary = {}
+	var scheduled_births := 0
 	for event in pending_events:
 		var at: float = event.at
 		if at > now + EPSILON:
@@ -441,13 +444,24 @@ func _emit_until(now: float, current: Transform3D, local_scale: Vector3) -> void
 		var frame := _birth_frame(at, now, current)
 		var weight := 1.0 if now <= simulation_time + EPSILON else clampf((at - simulation_time) / (now - simulation_time), 0.0, 1.0)
 		var birth_scale := last_local_scale.lerp(local_scale, weight)
+		# Avoid building the capacity heap for isolated births and small emitters.
+		# Base-solver births cannot change an existing particle before this loop ends.
+		scheduled_births += 1
+		var first_new := particles.size()
+		var batch_capacity := base_solver and scheduled_births >= 3 and first_new >= 32 and is_finite(at)
 		var living_at_birth := 0
-		for candidate_index in _particle_candidates(at):
-			var p: Dictionary = particles[candidate_index]
-			if float(p.birth) <= at and float(p.birth) + minf(float(p.life), float(p.get("kill_age", INF))) > at: living_at_birth += 1
+		if batch_capacity:
+			living_at_birth = CapacityBatch.count(capacity, particles, at)
+		else:
+			for candidate_index in _particle_candidates(at):
+				var particle: Dictionary = particles[candidate_index]
+				if float(particle.birth) <= at and float(particle.birth) + minf(float(particle.life), float(particle.get("kill_age", INF))) > at:
+					living_at_birth += 1
 		var available := maxi(0, int(raw.get("InitialModule", {}).get("maxNumParticles", 1000)) - living_at_birth)
 		dropped_at_capacity += maxi(0, count - available)
 		for _index in range(mini(count, available)): _spawn_particle(at, frame, birth_scale)
+		if batch_capacity:
+			CapacityBatch.record_births(capacity, particles, at, first_new, living_at_birth)
 	pending_events = remaining
 
 func _sample_shape() -> Dictionary:

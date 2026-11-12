@@ -1,6 +1,6 @@
 extends RefCounted
-# Private context belongs to one synchronous base-solver parent event loop.
-# Existing child particles cannot change until that event loop completes.
+# A capacity context belongs to one synchronous base-solver emission loop.
+# Existing particles cannot change until that loop completes.
 static func count(context:Dictionary,particles:Array,at:float)->int:
 	if not context.has("at") or at<float(context.at) or int(context.get("seen",-1))!=particles.size() or not is_same(context.get("source",[]),particles):
 		var births:Array[float]=[];var ends:Array[float]=[]
@@ -21,6 +21,19 @@ static func count(context:Dictionary,particles:Array,at:float)->int:
 		_pop(heap);living-=1
 	context.bi=bi;context.ei=ei;context.living=living
 	return living
+static func record_births(context: Dictionary, particles: Array, at: float, first_new: int, living: int) -> void:
+	for index in range(first_new, particles.size()):
+		var particle: Dictionary = particles[index]
+		var birth := float(particle.birth)
+		var end := birth + minf(float(particle.life), float(particle.get("kill_age", INF)))
+		if birth <= at and end > at:
+			add_expiry(context, end)
+			living += 1
+	context.at = at
+	context.source = particles
+	context.seen = particles.size()
+	context.living = living
+
 static func add_expiry(context:Dictionary,end:float)->void:
 	var heap:Array=context.heap
 	var index:int=heap.size();heap.append(end)

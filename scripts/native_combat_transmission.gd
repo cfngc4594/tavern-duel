@@ -6,7 +6,27 @@ extends Node
 ## Call sync() after ALL production scene animation/particle updates each frame.
 
 const COMPOSITE = preload("res://shaders/native_combat_transmission_composite.gdshader")
+const PRUNE_ADDITIVE_SETTING := "render_quality/macos_transmission_prune_additive"
+# These exact shaders use premultiplied blending, always write alpha zero,
+# and never write depth. Their transmission variants add zero radiance.
+const IDENTITY_SHADER_FILES := {
+	"native_combat_additive": "5f2d1e00c629ff05e9dee790a9b78228a394cc52ac59cbb56a4a184201f90635",
+	"native_combat_additive_vertex": "f592243871cd5f0103291f8da946a2e9acc181ede2716ada6161c15d86b84c02",
+	"native_combat_alpha2layer": "c9620ab27df4ac6b88f1de1998c3833991ba08a631335562c40c4c40669735dd",
+	"native_combat_area_render_glow": "bf120e4a414f9d078bbf42f90f937e2e9ea3fc7f516bccd17931acda6e9207d8",
+	"native_combat_endgame_additive_power": "c19a316827dc9516822b2c4d777a6c084a1852fe99d58be27b03b5a54f03575d",
+	"native_combat_mobile_additive": "a94cbb8780265f1bcaf8193a06128fee9f4a50933022893255b7b6a8a0c89d64",
+	"native_combat_particle_additive": "8bfd7007ba3179ef974452fb4d6ffe0e4de6bd9957e7b514b26a5d00100c30c2",
+	"native_combat_particle_additive_plus": "a1e8c1faa2232e776f1bfdcd760933aa43babd700bddebbac629f6596e4df278",
+	"native_combat_r2t_additive": "413e18d8defdbcfdc2db0e6b88f17776e52fe38d7266b1d7dfe2919be4e55479",
+	"native_coin_additive": "d4ea8e321d8c7b212ff99c8161999dfff250c2d4f526e3146eeb7bff62de8f9c",
+	"native_coin_fresnel": "28d5f48a9c971621cdb82e76d0105283297177ae4071deb2d3304d9de523e9ff",
+	"native_summon_hidden_glow": "142746a6a8c7ae5f09680103fff358a44ea2797cfacf57a8c89982c9fa46ec05",
+	"native_summon_scroll": "d192cd6478e8828b8b99fbaf099f0ee88db55b7de2f323fb9663d3e62e5a91e9",
+}
 static var _shared_shader_cache: Dictionary = {}
+static var _identity_shader_codes: Dictionary = {}
+static var _identity_shader_codes_loaded := false
 var _implicit_black_material: StandardMaterial3D
 var source_view: SubViewport
 var source_root: Node
@@ -21,6 +41,9 @@ var warnings: Array[String] = []
 var frame_number := 0
 var perf_measure_enabled := false
 var benchmark_freeze_sync := false
+var prune_identity_additive := _prune_identity_additive_enabled()
+var identity_additive_skipped := 0
+var identity_additive_skipped_total := 0
 var perf_samples: Array=[]
 var _material_seen: Dictionary = {}
 var _uniform_values: Dictionary = {}
@@ -31,6 +54,11 @@ var _geometry_nodes:Array=[]
 var _geometry_dirty:=true
 var _geometry_source_id:=0
 var _watched_tree:SceneTree
+
+static func _prune_identity_additive_enabled() -> bool:
+	if not OS.has_feature("macos") or RenderingServer.get_current_rendering_method() != "gl_compatibility":return false
+	var args := OS.get_cmdline_user_args()
+	return not args.has("--mac-no-transmission-prune-additive") and (args.has("--mac-transmission-prune-additive") or bool(ProjectSettings.get_setting(PRUNE_ADDITIVE_SETTING, false)))
 
 func _mark_geometry_dirty():
 	_geometry_dirty=true
@@ -74,6 +102,7 @@ func sync() -> void:
 	var perf_started: int=Time.get_ticks_usec() if perf_measure_enabled else 0
 	frame_number+=1
 	_material_seen.clear()
+	identity_additive_skipped = 0
 	for property in ["size","msaa_3d","screen_space_aa","use_debanding","scaling_3d_mode","scaling_3d_scale"]:
 		var value = source_view.get(property)
 		if transmission_view.get(property)!=value:transmission_view.set(property,value)
@@ -93,6 +122,7 @@ func sync() -> void:
 	var visible_layers := camera.cull_mask
 	for source in _geometry_nodes:
 		if is_instance_valid(source):_sync_geometry(source,seen,visible_layers)
+	identity_additive_skipped_total += identity_additive_skipped
 	for key in mirrors.keys():
 		if not seen.has(key):
 			mirrors[key].queue_free()
@@ -102,7 +132,7 @@ func sync() -> void:
 			material_cache.erase(key);_uniform_values.erase(key);_invalidate_base_properties(key)
 
 	if perf_measure_enabled:
-		perf_samples.append({"frame":Engine.get_process_frames(),"sync":frame_number,"usec":Time.get_ticks_usec()-perf_started,"geometry":mirrors.size(),"materials":material_cache.size(),"shader_records":_source_shader_records.size(),"viewport_size":transmission_view.size})
+		perf_samples.append({"frame":Engine.get_process_frames(),"sync":frame_number,"usec":Time.get_ticks_usec()-perf_started,"geometry":mirrors.size(),"materials":material_cache.size(),"shader_records":_source_shader_records.size(),"viewport_size":transmission_view.size,"identity_additive_skipped":identity_additive_skipped})
 		if perf_samples.size()>120:perf_samples.pop_front()
 
 func _collect_geometry(node: Node) -> void:
@@ -118,6 +148,11 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary, visible_layers
 	var key:=source.get_instance_id()
 	seen[key]=true
 	var target: GeometryInstance3D=mirrors.get(key)
+	var visible := source.is_visible_in_tree() and (source.layers & visible_layers) != 0
+	if prune_identity_additive and visible and source is MeshInstance3D and _has_identity_override(source):
+		if target != null and target.visible:target.visible = false
+		identity_additive_skipped += 1
+		return
 	if target==null:
 		if source is MeshInstance3D:target=MeshInstance3D.new()
 		elif source is MultiMeshInstance3D:target=MultiMeshInstance3D.new()
@@ -128,7 +163,7 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary, visible_layers
 		mirrors[key]=target
 	# Capture-only geometry can be visible in the scene tree while excluded
 	# from this camera. Resync its mirror when it can contribute again.
-	if not source.is_visible_in_tree() or (source.layers & visible_layers) == 0:
+	if not visible:
 		if target.visible:target.visible=false
 		return
 	var source_transform := source.global_transform
@@ -180,6 +215,28 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary, visible_layers
 		if target.shaded: target.shaded = false
 	var overlay := transmission_material(source.material_overlay) if source.material_overlay!=null else null
 	if target.material_overlay!=overlay:target.material_overlay=overlay
+
+func _has_identity_override(source: MeshInstance3D) -> bool:
+	# The override applies to the entire mesh. Surface materials keep the
+	# regular path without adding per-surface lookups to every ordinary actor.
+	var material := source.material_override as ShaderMaterial
+	if material == null or material.shader == null or material.next_pass != null:return false
+	if not _is_identity_shader(material.shader):return false
+	return source.material_overlay == null and source.skin == null and source.mesh != null and source.mesh.get_surface_count() > 0
+
+func _is_identity_shader(shader: Shader) -> bool:
+	var record := _get_source_shader_record(shader)
+	if not record.has("identity_additive"):
+		record.identity_additive = _matches_identity_shader(shader)
+	return record.identity_additive
+
+static func _matches_identity_shader(shader: Shader) -> bool:
+	if not _identity_shader_codes_loaded:
+		_identity_shader_codes_loaded = true
+		for filename in IDENTITY_SHADER_FILES:
+			var code := FileAccess.get_file_as_string("res://shaders/" + filename + ".gdshader")
+			if code.sha256_text() == IDENTITY_SHADER_FILES[filename]:_identity_shader_codes[code] = true
+	return _identity_shader_codes.has(shader.code)
 
 func transmission_material(source: Material) -> Material:
 	if source==null:
@@ -290,11 +347,24 @@ func _exit_tree() -> void:
 	for id in _label_property_records.keys():_invalidate_label_properties(id)
 	for id in _source_shader_records.keys():_invalidate_source_shader(id)
 
-func _source_shader_record(source_shader: Shader) -> Dictionary:
+func _get_source_shader_record(source_shader: Shader) -> Dictionary:
 	var id: int=source_shader.get_instance_id()
 	if _source_shader_records.has(id):
 		if _source_shader_records[id].reference.get_ref()==source_shader:return _source_shader_records[id]
 		_invalidate_source_shader(id)
+	# Bound the lookup without retaining source Shader resources beyond their
+	# materials. Code changes invalidate both the variant and classification.
+	if _source_shader_records.size()>=256:
+		for old_id in _source_shader_records.keys():_invalidate_source_shader(old_id)
+	var record: Dictionary={"reference":weakref(source_shader)}
+	_source_shader_records[id]=record
+	var invalidate: Callable=_invalidate_source_shader.bind(id)
+	if not source_shader.changed.is_connected(invalidate):source_shader.changed.connect(invalidate)
+	return record
+
+func _source_shader_record(source_shader: Shader) -> Dictionary:
+	var record := _get_source_shader_record(source_shader)
+	if record.has("variant"):return record
 	var code: String=source_shader.code
 	if not shader_cache.has(code):
 		var transformed_code: String=_transmission_shader(code)
@@ -304,13 +374,8 @@ func _source_shader_record(source_shader: Shader) -> Dictionary:
 			_shared_shader_cache[code]=variant
 		shader_cache[code]=_shared_shader_cache[code]
 		shader_uniform_cache[code]=_source_uniform_names(source_shader)
-	var record: Dictionary={"variant":shader_cache[code],"uniforms":shader_uniform_cache[code],"reference":weakref(source_shader)}
-	# Bounded lookup cache, independent of original code-keyed asset cache.
-	if _source_shader_records.size()>=256:
-		for old_id in _source_shader_records.keys():_invalidate_source_shader(old_id)
-	_source_shader_records[id]=record
-	var invalidate: Callable=_invalidate_source_shader.bind(id)
-	if not source_shader.changed.is_connected(invalidate):source_shader.changed.connect(invalidate)
+	record.variant=shader_cache[code]
+	record.uniforms=shader_uniform_cache[code]
 	return record
 
 # Cache only the enumerated names, not any label value. Property-list changes
@@ -391,5 +456,5 @@ func _warn_once(message: String) -> void:
 		push_warning(message)
 
 func audit() -> Dictionary:
-	return {"geometry_count":mirrors.size(),"material_count":material_cache.size(),"shader_count":shader_cache.size(),"warnings":warnings.duplicate(),"frame":frame_number,"equation":"C + RGB_T * background","copies_game_logic":false}
+	return {"geometry_count":mirrors.size(),"material_count":material_cache.size(),"shader_count":shader_cache.size(),"warnings":warnings.duplicate(),"frame":frame_number,"equation":"C + RGB_T * background","copies_game_logic":false,"prune_identity_additive":prune_identity_additive,"identity_additive_skipped":identity_additive_skipped,"identity_additive_skipped_total":identity_additive_skipped_total}
 

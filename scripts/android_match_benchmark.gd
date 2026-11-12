@@ -509,6 +509,11 @@ func _finish():
 		"trail_geometry_batches": CombatParticles.native_trail_geometry_batches,
 		"projection_skips": CombatParticles.fast_particle_projection_skips,
 	}
+	if is_instance_valid(game.native_transmission):
+		finish_payload["transmission"] = {
+			"pruned": game.native_transmission.prune_identity_additive,
+			"skipped_mesh_updates": game.native_transmission.identity_additive_skipped_total,
+		}
 	if not scenario.is_empty():
 		finish_payload.merge({"benchmark": "scenario", "scenario": scenario, "scenario_run": scenario_run})
 	elif fx_benchmark != null:

@@ -493,7 +493,7 @@ func sync(seconds: float, source_event := "") -> void:
 		var refresh: bool=enabled and (bool(entry.data.get("m_RealtimeRender",false)) or bool(entry.dirty) or entry.updates==0)
 		for capture in entry.captures:
 			_sync_camera(entry,capture)
-			_sync_capture(entry,capture,refresh)
+		_sync_captures(entry, refresh)
 		for pass_state in entry.passes:pass_state.view.render_target_update_mode=SubViewport.UPDATE_ALWAYS if refresh else SubViewport.UPDATE_DISABLED
 		_update_parameters(entry)
 		if is_instance_valid(entry.plane) and entry.generated:entry.plane.visible=enabled
@@ -582,42 +582,64 @@ func _collect_tree(node: Node, result: Array) -> void:
 	if node is MeshInstance3D and not result.has(node):result.append(node)
 	for child in node.get_children():_collect_tree(child,result)
 
-func _sync_capture(entry: Dictionary, capture: Dictionary, refresh: bool) -> void:
-	var seen: Dictionary={}
+func _sync_captures(entry: Dictionary, refresh: bool) -> void:
+	# Main and BloomSource share the same live geometry and source-space pose.
+	# Collect once so particle camera axes and any reseek are applied before mirroring.
+	var seen: Dictionary = {}
+	var captures: Array = entry.captures
+	var hide_source := bool(entry.data.get("m_HideRenderObject", false))
 	for source in _collect_geometry(entry):
-		if source.mesh==null:continue
-		var id: int=source.get_instance_id(); seen[id]=true
-		if not capture.mirrors.has(id):
-			var pair: Dictionary={"source":source}
+		var mesh: Mesh = source.mesh
+		if mesh == null: continue
+		var id: int = source.get_instance_id()
+		seen[id] = true
+		var source_pose := _capture_transform(entry, source)
+		var visible: bool = source.is_visible_in_tree()
+		var sorting_offset: float = source.sorting_offset
+		var cull_margin: float = source.extra_cull_margin
+		for capture in captures:
+			if not capture.mirrors.has(id):
+				var pair: Dictionary = {"source": source}
+				for kind in ["color", "alpha"]:
+					var mirror := MeshInstance3D.new()
+					mirror.name = "Capture_%s_%d" % [kind, id]
+					capture[kind].geometry.add_child(mirror)
+					mirror.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+					pair[kind] = mirror
+				capture.mirrors[id] = pair
+			var pair: Dictionary = capture.mirrors[id]
 			for kind in ["color","alpha"]:
-				var mirror:=MeshInstance3D.new(); mirror.name="Capture_%s_%d"%[kind,id]
-				capture[kind].geometry.add_child(mirror); mirror.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-				pair[kind]=mirror
-			capture.mirrors[id]=pair
-		var visible: bool=source.is_visible_in_tree()
-		var pair: Dictionary=capture.mirrors[id]
-		for kind in ["color","alpha"]:
-			var mirror: MeshInstance3D=pair[kind]
-			mirror.transform=_capture_transform(entry,source); mirror.mesh=source.mesh; mirror.visible=visible
-			mirror.sorting_offset=source.sorting_offset; mirror.extra_cull_margin=source.extra_cull_margin
-			for surface in range(source.mesh.get_surface_count()):
-				var material: Material=source.get_active_material(surface)
-				var capture_material: Material=null
-				if capture_materials!=null:
-					capture_material=capture_materials.color_material(material) if kind=="color" else capture_materials.alpha_material(material)
-				elif kind=="color":capture_material=material
-				else:_warn("Independent source-alpha factory unavailable; alpha capture disabled")
-				if capture_material==null:
-					capture_material=_invisible_material()
-				mirror.set_surface_override_material(surface,_bind_capture_material(capture_material,pair,kind,surface,mirror,capture[kind].camera))
-		if bool(entry.data.get("m_HideRenderObject",false)):
+				var mirror: MeshInstance3D = pair[kind]
+				mirror.transform = source_pose
+				mirror.mesh = mesh
+				mirror.visible = visible
+				mirror.sorting_offset = sorting_offset
+				mirror.extra_cull_margin = cull_margin
+		for surface in range(mesh.get_surface_count()):
+			var material: Material = source.get_active_material(surface)
+			for kind in ["color", "alpha"]:
+				var base: Material
+				if capture_materials != null:
+					base = capture_materials.color_material(material) if kind == "color" else capture_materials.alpha_material(material)
+				elif kind == "color":
+					base = material
+				else:
+					_warn("Independent source-alpha factory unavailable; alpha capture disabled")
+				# Binding copies the base into a material specific to each mirror/camera.
+				for capture in captures:
+					var pair: Dictionary = capture.mirrors[id]
+					var mirror: MeshInstance3D = pair[kind]
+					var capture_material := base if base != null else _invisible_material()
+					mirror.set_surface_override_material(surface, _bind_capture_material(capture_material, pair, kind, surface, mirror, capture[kind].camera))
+		if hide_source:
 			if not hidden.has(id):hidden[id]={"node":source,"layers":source.layers}
 			source.layers=0 # Preserve source/parent visibility for the animator and capture.
-	for id in capture.mirrors.keys():
-		if not seen.has(id):
-			for kind in ["color","alpha"]:capture.mirrors[id][kind].queue_free()
-			capture.mirrors.erase(id)
-	for kind in ["color","alpha"]:capture[kind].view.render_target_update_mode=SubViewport.UPDATE_ALWAYS if refresh else SubViewport.UPDATE_DISABLED
+	for capture in captures:
+		for id in capture.mirrors.keys():
+			if not seen.has(id):
+				for kind in ["color","alpha"]:capture.mirrors[id][kind].queue_free()
+				capture.mirrors.erase(id)
+		for kind in ["color","alpha"]:capture[kind].view.render_target_update_mode=SubViewport.UPDATE_ALWAYS if refresh else SubViewport.UPDATE_DISABLED
 
 func _invisible_material() -> StandardMaterial3D:
 	var material:=StandardMaterial3D.new(); material.shading_mode=BaseMaterial3D.SHADING_MODE_UNSHADED

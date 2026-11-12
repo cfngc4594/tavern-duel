@@ -1,13 +1,16 @@
 extends RefCounted
-## Prime only the two hero-death mesh families in the real C/T viewports.
+## Prime hero-death mesh and particle shaders in the real C/T viewports.
 ## The loading gate hides their composition and does not advance match clocks.
 
 const SourceProjection = preload("res://scripts/source_board_projection.gd")
+const MacResultWarmup = preload("res://scripts/native_mac_result_warmup.gd")
 const ENABLED_SETTING := "render_quality/android_hero_shader_warmup"
 const MACOS_ENABLED_SETTING := "render_quality/macos_hero_shader_warmup"
 const DEBRIS := "cab-69c88b234dfa427e02d1fcee9337ae34:-3138239647439378684"
 const CRATER := "cab-69c88b234dfa427e02d1fcee9337ae34:-8518041788018317564"
 const MESHES := [DEBRIS, CRATER]
+const CRACK := "cab-69c88b234dfa427e02d1fcee9337ae34:6957090474196412164"
+const FLARE := "cab-69c88b234dfa427e02d1fcee9337ae34:193837936947963652"
 
 var wall_usec := 0
 var completed_batches := 0
@@ -16,6 +19,7 @@ var _next_batch := 0
 var _finished := false
 var _staged: Node3D
 var _shaders: Array[Shader] = []
+var _batches: Array[String] = []
 
 static func enabled() -> bool:
 	if DisplayServer.get_name() == "headless" or RenderingServer.get_current_rendering_method() != "gl_compatibility":
@@ -29,9 +33,12 @@ func advance(game: Node) -> bool:
 	if is_instance_valid(_staged):return false
 	if _started_usec < 0:
 		_started_usec = Time.get_ticks_usec()
+		_batches.append_array(MESHES)
+		if MacResultWarmup.enabled():
+			_batches.append_array([CRACK, FLARE])
 		game.native_startup_timing.mark("hero_shader_warmup_begin")
-	while _next_batch < MESHES.size():
-		var source_key: String = MESHES[_next_batch]
+	while _next_batch < _batches.size():
+		var source_key: String = _batches[_next_batch]
 		_next_batch += 1
 		var started := Time.get_ticks_usec()
 		if _stage_batch(game, source_key):
@@ -52,12 +59,27 @@ func _stage_batch(game: Node, source_key: String) -> bool:
 	var staging := Node3D.new()
 	staging.name = "HeroDeathShaderWarmup"
 	game.spatial_scene.add_child(staging)
-	var state: Dictionary = assets.instantiate(source_key, staging)
-	var renderer: MeshInstance3D = state.renderers.get(source_key)
+	var renderer: MeshInstance3D
+	var materials: Array
+	if source_key == FLARE:
+		# Use the exact Fireworks flare material without starting its particle simulation.
+		var source: Dictionary = assets.component(source_key, "ParticleSystemRenderer")
+		var material: Material = assets.material(source.get("refs", {}).get(".m_Materials[0]", ""))
+		if material != null:
+			renderer = MeshInstance3D.new()
+			renderer.mesh = QuadMesh.new()
+			renderer.material_override = material
+			renderer.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			staging.add_child(renderer)
+			materials = [material]
+	else:
+		var state: Dictionary = assets.instantiate(source_key, staging)
+		renderer = state.renderers.get(source_key)
+		materials = state.materials.get(source_key, [])
+		state.root.visible = true
 	if not is_instance_valid(renderer) or (renderer.layers & camera.cull_mask) == 0:
 		staging.queue_free()
 		return false
-	var materials: Array = state.materials[source_key]
 	for material in materials:
 		game.native_damage._compensate_reflected_culling(material)
 	if source_key == DEBRIS:
@@ -76,7 +98,6 @@ func _stage_batch(game: Node, source_key: String) -> bool:
 	var distance := lerpf(camera.near, camera.far, 0.15)
 	var center := camera.project_position(camera.get_viewport().get_visible_rect().size * 0.5, distance)
 	staging.global_position += center - (renderer.global_transform * renderer.get_aabb().get_center())
-	state.root.visible = true
 	renderer.visible = true
 	_staged = staging
 	game.native_transmission.sync()

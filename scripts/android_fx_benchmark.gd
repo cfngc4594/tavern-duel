@@ -6,6 +6,8 @@ const ARM_ID_ARG := "--android-fx-ab-id="
 const CASES := ["fireball_cold", "fireball_repeat", "coin_cold", "coin_repeat", "endgame_cold", "endgame_repeat"]
 const HEAVY_SPELL_CASES := ["fireball_first", "fireball_repeat", "fireblast_first", "fireblast_repeat"]
 const TERMINAL_CASES := ["terminal_first", "terminal_repeat"]
+const PLAYED_COIN_SCENARIO := "played-coin"
+const PLAYED_COIN_CASES := ["coin_cold", "coin_repeat"]
 const FIREBALL := "CS2_029"
 const FIREBLAST := "CS2_034"
 const COIN := "GAME_005"
@@ -26,6 +28,7 @@ var _opened := false
 var _prepared_at := -1
 var _triggered_at := -1
 var _result_frame := -1
+var _coin_hand_before := -1
 var _game: Node
 
 func setup(game: Node, args: PackedStringArray) -> void:
@@ -63,6 +66,7 @@ func setup_scenario(game: Node, scenario: String) -> void:
 	match scenario:
 		"heavy-spell": _cases = HEAVY_SPELL_CASES
 		"terminal": _cases = TERMINAL_CASES
+		PLAYED_COIN_SCENARIO: _cases = PLAYED_COIN_CASES
 		_: error = "invalid_fx_scenario"
 
 func finish() -> bool:
@@ -92,6 +96,7 @@ func advance(benchmark: Node) -> void:
 		if _is_terminal():
 			_observe_terminal(benchmark, case_name)
 		elif not _game.busy and now - _triggered_at >= EFFECT_HOLD_USEC:
+			if _scenario == PLAYED_COIN_SCENARIO and _coin_visual_active():return
 			_observe_spell(benchmark, case_name)
 		return
 	benchmark.phase = "fixture_settle"
@@ -135,6 +140,7 @@ func _prepare_case() -> void:
 			_game.power_used = false
 		else:
 			_game._add_card(key, false)
+			if _scenario == PLAYED_COIN_SCENARIO:_coin_hand_before = _game.cards.size()
 
 func _is_terminal() -> bool:
 	return _scenario == "terminal" or (_scenario.is_empty() and _case_index >= 4)
@@ -143,6 +149,8 @@ func _terminal_pass() -> String:
 	return "first" if _case_index == 0 else "repeat"
 
 func _card_key() -> String:
+	if _scenario == PLAYED_COIN_SCENARIO:
+		return COIN
 	if _case_index < 2:
 		return FIREBALL
 	return FIREBLAST if _scenario == "heavy-spell" else COIN
@@ -152,6 +160,10 @@ func _target_point(key: String) -> Vector2:
 		var zone := "friendly_play" if key == COIN else "opposing_hero"
 		return _game.source_phone_layout.snapshot.items[zone].center
 	return _game.PLAY_RECT.get_center() if key == COIN else _game.ENEMY_HERO
+
+func _coin_visual_active() -> bool:
+	return not _game.flow.visuals.coin_effects.is_empty() or _game.native_combat.effect_player.effects.any(
+		func(effect): return effect.route_id == "GAME_005/friendly_area")
 
 func _observe_spell(benchmark: Node, case_name: String) -> void:
 	var key := _card_key()
@@ -163,7 +175,15 @@ func _observe_spell(benchmark: Node, case_name: String) -> void:
 	if _game.health[1] != expected_health or _game.mana != expected_mana:
 		benchmark.result = "fx_wrong_spell_result_" + case_name
 		return
-	case_results.append({"case": case_name, "health": _game.health.duplicate(), "mana": _game.mana})
+	var result := {"case": case_name, "health": _game.health.duplicate(), "mana": _game.mana}
+	if _scenario == PLAYED_COIN_SCENARIO:
+		if _game.flow.temporary_mana[0] != 1 or _game.cards.size() != _coin_hand_before - 1:
+			benchmark.result = "fx_wrong_coin_card_or_temporary_mana_" + case_name
+			return
+		result["temporary_mana"] = int(_game.flow.temporary_mana[0])
+		result["hand_before"] = _coin_hand_before
+		result["hand_after"] = _game.cards.size()
+	case_results.append(result)
 	_next_case(benchmark)
 
 func _observe_terminal(benchmark: Node, case_name: String) -> void:

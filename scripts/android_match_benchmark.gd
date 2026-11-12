@@ -2,6 +2,7 @@ extends Node
 ## Opt-in recorder for one seeded normal match using the production scene and clocks.
 const SpellInput = preload("res://scripts/native_phone_spell_input.gd")
 const CombatParticles = preload("res://scripts/native_combat_particles.gd")
+const FxBenchmark = preload("res://scripts/android_fx_benchmark.gd")
 ## Android's Godot logger truncates individual messages at roughly 1000 bytes.
 const BATCH_SIZE := 10
 const DIAGNOSTIC_BATCH_SIZE := 8
@@ -68,7 +69,7 @@ func setup(host):
 				seed_value = int(value)
 	_configure_scenario(args)
 	if scenario.is_empty() and scenario_error.is_empty() and "--android-fx-benchmark" in args:
-		fx_benchmark = load("res://scripts/android_fx_benchmark.gd").new()
+		fx_benchmark = FxBenchmark.new()
 		fx_benchmark.setup(game, args)
 		first_side = 0
 		profile_fx_effects = "--android-fx-profile-effects" in args
@@ -85,7 +86,7 @@ func _configure_scenario(args: PackedStringArray) -> void:
 	for arg in args:
 		if arg.begins_with("--android-scenario="):
 			scenario = arg.trim_prefix("--android-scenario=")
-			if not SCENARIOS.has(scenario) and scenario != MINION_COMBAT_SCENARIO:
+			if not SCENARIOS.has(scenario) and scenario not in [MINION_COMBAT_SCENARIO, FxBenchmark.PLAYED_COIN_SCENARIO]:
 				scenario_error = "invalid_scenario"
 				return
 	if "--android-scenario-suite" in args:
@@ -114,14 +115,14 @@ func _configure_scenario(args: PackedStringArray) -> void:
 			scenario_driver = load("res://scripts/android_scenario_opening.gd").new()
 		MINION_COMBAT_SCENARIO:
 			scenario_driver = load("res://scripts/android_scenario_minion_combat.gd").new()
-		"heavy-spell", "terminal":
-			fx_benchmark = load("res://scripts/android_fx_benchmark.gd").new()
+		"heavy-spell", "terminal", FxBenchmark.PLAYED_COIN_SCENARIO:
+			fx_benchmark = FxBenchmark.new()
 			fx_benchmark.setup_scenario(game, scenario)
 	if scenario_driver != null:
 		scenario_driver.setup(game)
-	if scenario == "heavy-spell":
-		profile_fx_effects = true
+	if scenario in ["heavy-spell", FxBenchmark.PLAYED_COIN_SCENARIO]:
 		scenario_particle_profile = "--android-scenario-particle-profile" in args
+		profile_fx_effects = scenario == "heavy-spell" or scenario_particle_profile or "--android-fx-profile-effects" in args
 		if scenario_particle_profile:
 			CombatParticles.seek_rows.clear()
 			CombatParticles.seek_source_totals.clear()

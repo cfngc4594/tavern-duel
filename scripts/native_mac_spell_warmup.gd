@@ -1,12 +1,15 @@
 extends RefCounted
-## Draw Fireball's production shaders while the loading canvas covers the board.
+## Draw production spell shaders while the loading canvas covers the board.
 ## Only the isolated effect player advances. No match or combat-player callbacks run.
 
 const Effects = preload("res://scripts/native_combat_effects.gd")
 const DamageSplat = preload("res://scripts/native_damage_splat.gd")
+const RenderTexture = preload("res://scripts/native_combat_rendertexture.gd")
 const ENABLED_SETTING := "render_quality/macos_spell_shader_warmup"
+const COIN_SETTING := "render_quality/macos_played_coin_warmup"
 const FIREBALL := "CS2_029"
-const SAMPLES := [
+const COIN := "GAME_005"
+const FIREBALL_SAMPLES := [
 	["birth", 0.04],
 	["charging", 0.2],
 	["launch", 0.03],
@@ -18,6 +21,12 @@ const SAMPLES := [
 	["late_impact_tail", 0.43],
 	["hero_damage", 0.0],
 	["hero_hover", 0.0],
+]
+const COIN_SAMPLES := [
+	["played_coin_launch", 0.0],
+	["played_coin_particles", 0.025],
+	["played_coin_rise", 0.155],
+	["played_coin_fade", 0.54],
 ]
 
 var wall_usec := 0
@@ -31,32 +40,50 @@ var _damage_preview: Node
 var _hero_hover_staged := false
 var _spell: Dictionary = {}
 var _shaders: Dictionary = {}
+var _samples: Array = []
+var _cards: Array[String] = []
+var _offscreen_sequence_before_coin := -1
 
 static func enabled() -> bool:
 	if not OS.has_feature("macos") or DisplayServer.get_name() == "headless":return false
 	if RenderingServer.get_current_rendering_method() != "gl_compatibility":return false
 	var args := OS.get_cmdline_user_args()
-	return not args.has("--mac-skip-spell-warmup") and (args.has("--mac-spell-warmup") or bool(ProjectSettings.get_setting(ENABLED_SETTING, false)))
+	return not args.has("--mac-skip-spell-warmup") and (_fireball_enabled(args) or _coin_enabled(args))
+
+static func _fireball_enabled(args: PackedStringArray) -> bool:
+	return args.has("--mac-spell-warmup") or bool(ProjectSettings.get_setting(ENABLED_SETTING, false))
+
+static func _coin_enabled(args: PackedStringArray) -> bool:
+	return not args.has("--mac-skip-played-coin-warmup") and (args.has("--mac-played-coin-warmup") or bool(ProjectSettings.get_setting(COIN_SETTING, false)))
 
 func advance(game: Node) -> bool:
 	if _finished:return true
 	if _draw_callback.is_valid():return false
 	if _started_usec < 0:
 		if not _can_stage(game):return true
+		var args := OS.get_cmdline_user_args()
+		if _fireball_enabled(args):
+			_samples.append_array(FIREBALL_SAMPLES)
+			_cards.append(FIREBALL)
+		if _coin_enabled(args):
+			_samples.append_array(COIN_SAMPLES)
+			_cards.append(COIN)
 		_started_usec = Time.get_ticks_usec()
-		game.native_startup_timing.mark("spell_shader_warmup_begin", {"card":FIREBALL})
+		game.native_startup_timing.mark("spell_shader_warmup_begin", {"cards":_cards})
 		_setup_player(game)
-	if _next_sample == SAMPLES.size() or not _can_stage(game):
+	if _next_sample == _samples.size() or not _can_stage(game):
 		_release_staging()
 		_finished = true
 		wall_usec = Time.get_ticks_usec() - _started_usec
-		game.native_startup_timing.mark("spell_shader_warmup_end", {"card":FIREBALL,"wall_usec":wall_usec,"batches":completed_batches,"shader_count":_shaders.size()})
+		game.native_startup_timing.mark("spell_shader_warmup_end", {"cards":_cards,"wall_usec":wall_usec,"batches":completed_batches,"shader_count":_shaders.size()})
 		return true
-	var sample: Array = SAMPLES[_next_sample]
+	var sample: Array = _samples[_next_sample]
 	_next_sample += 1
 	var started := Time.get_ticks_usec()
 	_stage_sample(game, sample[0], sample[1])
-	game.native_transmission.sync()
+	# Launch can draw before the next transmission sync. Stage that color
+	# frame separately, then advance particles and synchronize both views.
+	if sample[0] != "played_coin_launch":game.native_transmission.sync()
 	_draw_callback = _sample_drawn.bind(game, sample[0], started)
 	RenderingServer.frame_post_draw.connect(_draw_callback, Object.CONNECT_ONE_SHOT | Object.CONNECT_DEFERRED)
 	return false
@@ -76,7 +103,7 @@ func _can_stage(game: Node) -> bool:
 
 func _setup_player(game: Node) -> void:
 	_player = Effects.new()
-	_player.name = "FireballShaderWarmup"
+	_player.name = "SpellShaderWarmup"
 	_player.suppress_game_shake = true
 	game.add_child(_player)
 	_player.setup(game, game.native_combat.assets)
@@ -103,6 +130,12 @@ func _stage_sample(game: Node, stage: String, age: float) -> void:
 		"hero_hover":
 			if is_instance_valid(game.native_highlight):
 				_hero_hover_staged = game.native_highlight.stage_enemy_hero_hover_warmup()
+			return
+		"played_coin_launch":
+			_offscreen_sequence_before_coin = RenderTexture.offscreen_sequence
+			_spell = {"serial":1,"key":COIN,"source":game.PLAYER_HERO,"side":0,"target":{}}
+			_spell.route = _player.spell_route(COIN, _spell.target, _spell.side)
+			_player.spell_launch(_spell)
 			return
 	_player.advance(age)
 
@@ -191,6 +224,9 @@ func _retain_material(material: Material) -> void:
 func _release_staging() -> void:
 	_spell.clear()
 	_release_damage_preview()
+	if _offscreen_sequence_before_coin >= 0:
+		RenderTexture.offscreen_sequence = _offscreen_sequence_before_coin
+		_offscreen_sequence_before_coin = -1
 	if not is_instance_valid(_player):return
 	var game: Node = _player.game
 	if _hero_hover_staged and is_instance_valid(game) and is_instance_valid(game.native_highlight):

@@ -10,6 +10,20 @@ const SizeSampler = preload("res://scripts/particle_size_sampler.gd")
 const WorkerJob = preload("res://scripts/particle_worker_job.gd")
 const WorkerKernel = preload("res://scripts/particle_kernel_board.gd")
 const ForceKernel = preload("res://scripts/particle_kernel_board_force.gd")
+const NATIVE_BOARD_SOURCES := {
+	"cab-9132baeb567a19ab7fb9aa2f603d1eec:-7818134125034048405": true, # FX_WaterMist1
+	"cab-9132baeb567a19ab7fb9aa2f603d1eec:-1059832082042948501": true, # FX_Dust1[1]
+	"cab-9132baeb567a19ab7fb9aa2f603d1eec:-547526720770968469": true, # FX_Dust2
+	"cab-9132baeb567a19ab7fb9aa2f603d1eec:-8983261955169160085": true, # FX_WaterSpray1
+	"cab-9132baeb567a19ab7fb9aa2f603d1eec:-5286226026466085781": true, # FX_WaterMist2
+	"cab-9132baeb567a19ab7fb9aa2f603d1eec:-693442651921484693": true, # FX_WaterRipples1
+	"cab-9132baeb567a19ab7fb9aa2f603d1eec:2824230069591700587": true, # FX_Dust3
+	"cab-9132baeb567a19ab7fb9aa2f603d1eec:6065348758466688107": true, # FX_Dust1[0]
+}
+static var native_board_state_enabled := OS.has_feature("macos") \
+	and not OS.get_cmdline_user_args().has("--mac-skip-native-board-particles") \
+	and (OS.get_cmdline_user_args().has("--mac-native-board-particles") or bool(ProjectSettings.get_setting("render_quality/macos_native_board_particles", false)))
+static var _native_board_kernel: RefCounted
 const BASIC_UVS := [
 	[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)],
 	[Vector2(1, 0), Vector2(0, 0), Vector2(0, 1), Vector2(1, 1)],
@@ -27,6 +41,7 @@ var _candidate_time: float = -INF
 var _worker_states: Dictionary = {}
 var _worker_indices: Array[int] = []
 var _worker_filtered: bool = false
+var native_board_state_batches := 0
 var raw: Dictionary = {}
 # Scoped to one _particle_state call; never reused across source/module changes.
 var _constant_zero_linear: bool = false
@@ -820,7 +835,7 @@ func seek(seconds: float) -> void:
 		_emit_until(now, frame, local_scale)
 		simulation_time = now; last_emitter = frame; last_local_scale = local_scale; last_wall_seconds = elapsed_seconds
 	_update_subemitters(now)
-	_prepare_worker_states(now)
+	_prepare_worker_states(now, frame, local_scale)
 	mesh.clear_surfaces()
 	live_count = 0
 	screen_size_clamped = 0
@@ -1330,7 +1345,7 @@ func _subemitter_audits() -> Array:
 	for template in subemitter_templates: result.append(template.solver.get_audit())
 	return result
 
-func _prepare_worker_states(now: float) -> void:
+func _prepare_worker_states(now: float, frame: Transform3D, local_scale: Vector3) -> void:
 	_worker_states.clear()
 	_worker_indices.clear()
 	_worker_filtered = false
@@ -1346,6 +1361,9 @@ func _prepare_worker_states(now: float) -> void:
 	# Dictionary copies and join/copy-back. Reuse the same eligible numerical
 	# kernel in place, preparing immutable module constants once per seek.
 	if indices.is_empty():return
+	if native_board_state_enabled and _fixed_simulation_modules and NATIVE_BOARD_SOURCES.has(source_key) \
+			and _try_native_board_states(now, frame, local_scale):
+		return
 	if indices.size() <= 128:
 		var kernel := _serial_worker_kernel
 		if kernel == null:
@@ -1386,6 +1404,18 @@ func _prepare_worker_states(now: float) -> void:
 		for field in ["sim_age", "displacement", "sim_velocity", "sim_rotation", "sim_render_velocity", "kill_age", "collision_loss", "collision_hits"]:
 			original[field] = computed[field]
 		_worker_states[index] = job.states[slot]
+
+func _try_native_board_states(now: float, frame: Transform3D, local_scale: Vector3) -> bool:
+	if _native_board_kernel == null:
+		if not ClassDB.class_exists(&"TavernParticleKernel"): return false
+		_native_board_kernel = ClassDB.instantiate(&"TavernParticleKernel")
+	var states: Array = _native_board_kernel.advance(raw, particles, _worker_indices, now, compatibility_basis,
+			source_gravity, frame, _motion_basis(frame, local_scale), [], true)
+	if states.size() != _worker_indices.size(): return false
+	for slot in _worker_indices.size():
+		_worker_states[_worker_indices[slot]] = states[slot]
+	native_board_state_batches += 1
+	return true
 
 func _particle_candidates(now: float) -> Array[int]:
 	if get_script().get_base_script() != null:

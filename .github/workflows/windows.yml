@@ -1,0 +1,76 @@
+name: Windows release ZIP
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: windows-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Godot and release template
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Invoke-WebRequest https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_win64.exe.zip -OutFile "$env:RUNNER_TEMP/godot.zip"
+          Expand-Archive "$env:RUNNER_TEMP/godot.zip" "$env:RUNNER_TEMP/godot"
+          Invoke-WebRequest https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_export_templates.tpz -OutFile "$env:RUNNER_TEMP/templates.zip"
+          Expand-Archive "$env:RUNNER_TEMP/templates.zip" "$env:RUNNER_TEMP/templates"
+          $templates = "$env:APPDATA/Godot/export_templates/4.7.1.stable"
+          New-Item -ItemType Directory -Force $templates | Out-Null
+          Copy-Item "$env:RUNNER_TEMP/templates/templates/windows_release_x86_64.exe" $templates
+          "GODOT=$env:RUNNER_TEMP/godot/Godot_v4.7.1-stable_win64_console.exe" >> $env:GITHUB_ENV
+      - name: Prepare production-only staging
+        shell: pwsh
+        run: |
+          python ci/prepare_windows_export.py . build/windows-release
+          if ($LASTEXITCODE -ne 0) { throw 'Staging failed' }
+      - name: Import and export production main scene
+        shell: pwsh
+        run: |
+          $stage = (Resolve-Path build/windows-release/project).Path
+          & $env:GODOT --headless --editor --import --path $stage *> build/windows-release/import.log
+          if ($LASTEXITCODE -ne 0 -or (Select-String build/windows-release/import.log -CaseSensitive -Pattern 'SCRIPT ERROR|ERROR:')) { throw 'Import failed' }
+          & $env:GODOT --headless --path $stage --export-release 'Windows Release' *> build/windows-release/export.log
+          if ($LASTEXITCODE -ne 0 -or (Select-String build/windows-release/export.log -CaseSensitive -Pattern 'SCRIPT ERROR|ERROR:')) { throw 'Export failed' }
+      - name: Verify pack without source fallback
+        shell: pwsh
+        run: |
+          $out = (Resolve-Path build/windows-release).Path
+          $verify = (Resolve-Path ci/verify_windows_pack.gd).Path
+          & $env:GODOT --headless --path "$out/verify-empty" --script $verify -- "$out/package/TavernDuel.pck" "$out/manifest.json" "$out/package/verification.json" *> "$out/verify.log"
+          if ($LASTEXITCODE -ne 0 -or (Select-String "$out/verify.log" -CaseSensitive -Pattern 'SCRIPT ERROR|ERROR:') -or !(Select-String "$out/verify.log" -Pattern 'WINDOWS_PACK_VERIFY_PASS')) { throw 'Pack verification failed' }
+          $smoke = (Resolve-Path ci/smoke_windows_main.gd).Path
+          & $env:GODOT --headless --path "$out/verify-empty" --main-pack "$out/package/TavernDuel.pck" --script $smoke *> "$out/smoke.log"
+          if ($LASTEXITCODE -ne 0 -or (Select-String "$out/smoke.log" -CaseSensitive -Pattern 'SCRIPT ERROR|ERROR:') -or !(Select-String "$out/smoke.log" -Pattern 'WINDOWS_PRODUCTION_MAIN_PASS')) { throw 'Production main smoke failed' }
+          $report = Get-Content "$out/package/verification.json" -Raw | ConvertFrom-Json
+          $report | Add-Member -NotePropertyName production_main_smoke_pass -NotePropertyValue $true
+          $fontDiagnostics = @(Select-String -Path "$out/import.log" -SimpleMatch -Pattern 'Unicode parsing error:' | ForEach-Object {$_.Line})
+          $report | Add-Member -NotePropertyName import_font_diagnostics -NotePropertyValue $fontDiagnostics
+          $report | ConvertTo-Json -Depth 8 | Set-Content "$out/package/verification.json" -Encoding utf8
+          python ci/package_windows.py $out
+          if ($LASTEXITCODE -ne 0) { throw 'Packaging failed' }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TavernDuel-Windows-x86_64
+          path: |
+            build/windows-release/TavernDuel-Windows-x86_64.zip
+            build/windows-release/SHA256SUMS
+            build/windows-release/package/verification.json
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: windows-build-logs
+          path: build/windows-release/*.log
+          retention-days: 3

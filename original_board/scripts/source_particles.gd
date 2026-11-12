@@ -1,5 +1,4 @@
 extends Node3D
-const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 ## Original modules/textures; Godot compatibility simulation, NOT Unity runtime.
 const Solver=preload('res://original_board/scripts/source_particle_solver.gd')
 const REFLECTION=Basis(Vector3(1,0,0),Vector3(0,1,0),Vector3(0,0,-1))
@@ -20,7 +19,7 @@ func setup(probe,options:Dictionary={}):
  owner_probe=probe
  render_quality_level=clampi(int(options.get("render_quality_level",-1)),-1,2)
  render_quality_source=str(options.get("render_quality_source","Explicit caller quality" if render_quality_level>=0 else "Unspecified source quality"))
- data=SourceStore.json_for(owner_probe,str(options.get('source_file','res://original_board/assets/phone/water_particles/source.json')))
+ data=JSON.parse_string(FileAccess.get_file_as_string(str(options.get('source_file','res://original_board/assets/water_particles/source.json'))))
  for row in data.emitters:
   var key=str(row.node_id)
   if not probe.source_nodes.has(key):errors.append('Missing source emitter '+key);continue
@@ -41,7 +40,7 @@ func material(key:String):
  for pair in saved.m_Floats:mat.set_shader_parameter(pair[0],float(pair[1]))
  for pair in saved.m_Colors:
   var c=pair[1];mat.set_shader_parameter(pair[0],Vector4(c.r,c.g,c.b,c.a))
- var image=SourceStore.image_for(owner_probe,str(row.texture))
+ var image=_load_source_png(str(row.texture))
  if image==null or image.is_empty():
   errors.append('Missing original particle texture '+str(row.texture));return null
  mat.set_shader_parameter('_MainTex',ImageTexture.create_from_image(image))

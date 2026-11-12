@@ -29,7 +29,7 @@ func run():
  for size in [Vector2(1600,900),Vector2(2000,900),Vector2(1600,1200)]:
   host.presentation_size=size;host.presentation_offset=(size-Vector2(1600,900))*.5
   bridge.viewport.size=Vector2i(size)
-  policy.apply(probe.camera,camera_root,size)
+  policy.apply(probe.camera,camera_root,config,size,true)
   await process_frame
   var projection=load("res://scripts/source_board_projection.gd").install(host,probe.camera,size,size,host.presentation_offset,{})
   host.source_projection=projection
@@ -71,7 +71,7 @@ func run():
    for k in range(6):
     var vertex=vertices[k];var projected=Vector2(vertex.x*100+800,450-vertex.y*100)
     assert(projected.distance_to(polygon[[0,1,2,0,2,3][k]])<0.001)
- probe.camera.set_meta("native_phone_registered",false)
+ policy.apply(probe.camera,camera_root,config,Vector2(1600,900),false)
  assert(hand.camera_context().is_empty())
  hand.set_enlarged(false)
  hand.sample(0,4,0)
@@ -83,5 +83,5 @@ func run():
  assert(preview.position.is_equal_approx(hand.source_pose(0,4,true).position))
  hand.release_touch();hand.sample(0,4,.5)
  assert(hand.focus==-1 and hand.touched_slot==-1)
- print("PHONE_HAND_PROJECTION_PASS original phone aspect camera, explicit world projection, original stand-in OBB, unregistered camera rejected, source expand/focus/release timings; no game integration")
+ print("PHONE_HAND_PROJECTION_PASS original phone aspect camera, explicit world projection, original stand-in OBB, desktop rejected, source expand/focus/release timings; no game integration")
  host.queue_free();quit()

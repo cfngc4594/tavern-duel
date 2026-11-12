@@ -36,7 +36,7 @@ func run():
   bridge.probe=Probe.new();bridge.viewport.add_child(bridge.probe)
   var rig=Node3D.new();bridge.probe.add_child(rig);bridge.probe.camera=Camera3D.new();rig.add_child(bridge.probe.camera)
   var camera=bridge.probe.camera
-  load("res://scripts/source_board_camera_policy.gd").apply(camera,rig,size)
+  load("res://scripts/source_board_camera_policy.gd").apply(camera,rig,{},size,true)
   var context=load("res://scripts/source_board_projection.gd").install(game,camera,size,size,Vector2.ZERO,{})
   game.source_projection=context
   var rows=Rows.new();rows.context=context;rows.source_items=Layout.recovered_items(0,0,{"aspect":size.x/size.y})

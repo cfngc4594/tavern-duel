@@ -86,7 +86,7 @@ func set_audio(enabled:bool):
  audio_enabled=enabled
  if not is_instance_valid(probe):return
  probe.interaction_audio_enabled=enabled
- for controller in [probe.door_interaction,probe.arch_interactions,probe.bush_interactions,probe.water_interactions]:
+ for controller in [probe.door_interaction,probe.window_lamp_interaction,probe.arch_interactions,probe.kite_interactions,probe.pumpkin_interaction,probe.bush_interactions,probe.water_interactions]:
   if is_instance_valid(controller):controller.audio_enabled=enabled
  # Existing and new players are routed through host SFX bus. Host owns mute/gain.
 func reset_for_match():

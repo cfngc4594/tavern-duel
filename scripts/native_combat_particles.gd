@@ -1,14 +1,6 @@
 extends Node3D
 static var profile_setup:=false
 static var profile_seek:bool=false
-# Default-off experiment: whole-effect benefit is not established.
-# Only cache module decisions within the callback-free base seek loop.
-static var seek_context_enabled:bool=false
-var _seek_context_active:bool=false
-var _seek_constant_step:bool=false
-var _seek_zero_linear:bool=false
-var _seek_zero_spatial:bool=false
-var _seek_world_velocity:bool=false
 var _worker_profile:Dictionary={}
 static var seek_rows:Array=[]
 static var seek_source_totals:Dictionary={}
@@ -709,29 +701,12 @@ func _zero_constant_components(module: Dictionary, fields: Array) -> bool:
 		if int(curve.get("minMaxState", 0)) != 0 or Curves.number(curve.get("scalar", 0.0)) != 0.0: return false
 	return true
 
-func _prepare_seek_context() -> void:
-	_seek_context_active = false
-	if not seek_context_enabled or get_script().get_base_script() != null: return
-	_seek_constant_step = _can_constant_step() or _can_random_force_step()
-	_seek_zero_linear = false; _seek_zero_spatial = false; _seek_world_velocity = false
-	var module: Dictionary = raw.get("VelocityModule", {})
-	if bool(module.get("enabled", false)):
-		_seek_zero_linear = _zero_constant_components(module, ["x", "y", "z"])
-		_seek_zero_spatial = _zero_constant_components(module, ["orbitalX", "orbitalY", "orbitalZ", "radial"])
-		_seek_world_velocity = bool(module.get("inWorldSpace", false))
-	_seek_context_active = true
-
 func _particle_state(p: Dictionary, age: float) -> Dictionary:
 	var previous_linear: bool = _constant_zero_linear
 	var previous_spatial: bool = _constant_zero_spatial
 	_constant_zero_linear = false; _constant_zero_spatial = false
 	# No subclass callback can change a module during this base-only evaluation.
-	if _seek_context_active:
-		_constant_zero_linear = _seek_zero_linear
-		_constant_zero_spatial = _seek_zero_spatial
-		# The module is shared, but singularity is still particle-specific.
-		if _seek_world_velocity and (not is_finite(p.motion_basis.determinant()) or absf(p.motion_basis.determinant()) <= EPSILON): _constant_zero_linear = false
-	elif get_script().get_base_script() == null:
+	if get_script().get_base_script() == null:
 		var velocity_module: Dictionary = raw.get("VelocityModule", {})
 		if bool(velocity_module.get("enabled", false)):
 			_constant_zero_linear = _zero_constant_components(velocity_module, ["x", "y", "z"])
@@ -740,7 +715,7 @@ func _particle_state(p: Dictionary, age: float) -> Dictionary:
 	if age + EPSILON < float(p.sim_age):
 		p.sim_age = 0.0; p.displacement = Vector3.ZERO; p.sim_velocity = p.velocity + _velocity_over_life(p, 0.0) + _inherit_velocity(p, 0.0); p.sim_rotation = p.rotation; p.sim_render_velocity = p.sim_velocity + _spatial_velocity(p, Vector3.ZERO, 0.0); p.kill_age = INF; p.collision_loss = 0.0; p.collision_hits = 0
 	var state: Dictionary = {"age": p.sim_age, "position": p.displacement, "velocity": p.sim_velocity, "rotation": p.sim_rotation, "render_velocity": p.sim_render_velocity, "kill_age": p.kill_age, "collision_loss": p.collision_loss, "collision_hits": p.collision_hits}
-	if _seek_constant_step if _seek_context_active else (_can_constant_step() or _can_random_force_step()):
+	if _can_constant_step() or _can_random_force_step():
 		state = _constant_step_state(p, state, age)
 	else:
 		var reuse_state: bool = get_script().get_base_script() == null and collision_planes.is_empty()
@@ -787,7 +762,6 @@ func _uv_corners(p: Dictionary, age: float, speed: float) -> Array:
 	return corners
 
 func seek(seconds: float) -> void:
-	_seek_context_active = false
 	var seek_started:int=Time.get_ticks_usec() if profile_seek else 0
 	var seek_stage:int=seek_started
 	var seek_times:Dictionary={}
@@ -820,9 +794,6 @@ func seek(seconds: float) -> void:
 		seek_times.worker_usec=Time.get_ticks_usec()-seek_stage
 		seek_stage=Time.get_ticks_usec()
 	mesh.clear_surfaces()
-	# Both subemitters and mesh changed-signal callbacks have finished.
-	# The remaining base numerical/geometry loop cannot edit raw.
-	if seek_context_enabled and _worker_states.is_empty() and _worker_indices.size() > 1: _prepare_seek_context()
 	live_count = 0
 	screen_size_clamped = 0
 	collision_count = 0
@@ -952,7 +923,6 @@ func seek(seconds: float) -> void:
 			indices.append_array(PackedInt32Array([start, start + 1, start + 2, start, start + 2, start + 3]))
 	if indexed_quads and quad_cursor * 4 != vertices.size():
 		vertices.resize(quad_cursor * 4); uvs.resize(quad_cursor * 4); colors.resize(quad_cursor * 4); normals.resize(quad_cursor * 4); indices.resize(quad_cursor * 6)
-	_seek_context_active = false
 	var can_emit := emission_playing and bool(raw.get("EmissionModule", {}).get("enabled", false)) and (not period_events.is_empty() or runtime_emission_rate>0.0) and now < stop_time and (bool(raw.get("looping", false)) or now <= start_delay + duration)
 	active = live_count > 0 or can_emit
 	for template in subemitter_templates: active = active or template.solver.active

@@ -1,5 +1,4 @@
 extends RefCounted
-const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 ## Original formulas, explicit backend/lighting boundary. No arbitrary PBR fallback.
 var owner_probe
 var routes:Dictionary={}
@@ -109,7 +108,7 @@ func _texture(key):
  if owner_probe.textures.has(key):return owner_probe.textures[key]
  if not owner_probe.data.textures.has(key):return null
  var d=owner_probe.data.textures[key]
- var image=SourceStore.image_for(owner_probe,str(d.file))
+ var image=_load_source_png(str(d.file))
  if image==null or image.is_empty():return null
  var tex=ImageTexture.create_from_image(image);owner_probe.textures[key]=tex;return tex
 func advance(seconds):

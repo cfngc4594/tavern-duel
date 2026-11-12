@@ -1,13 +1,8 @@
 name: Android candidate APK
 on:
   workflow_dispatch:
-    inputs:
-      privacy_test:
-        description: 'Build a separate black-screen, muted device-test app'
-        type: boolean
-        default: false
   push:
-    branches: [main, develop]
+    branches: [main]
 permissions:
   contents: read
 concurrency:
@@ -17,16 +12,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      PRIVACY_TEST: ${{ inputs.privacy_test && '1' || '0' }}
     steps:
       - uses: actions/checkout@v4
-      - name: Check Android-only configuration
-        run: |
-          python ci/renderer_policy.py project.godot
-          python ci/test_renderer_policy.py
-          python ci/test_configure_export.py
-          python ci/test_mobile_only.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -54,8 +41,7 @@ jobs:
         run: |
           mkdir -p build
           Godot_v4.7.1-stable_linux.x86_64 --headless --editor --import --path . > build/import.log 2>&1
-          python3 ci/run_regression_tests.py Godot_v4.7.1-stable_linux.x86_64 mobile_ui_policy_test.gd mobile_loading_guard_test.gd phone_camera_policy_test.gd source_phone_controller_test.gd touch_input_test.gd phone_spell_input_test.gd combat_seek_context_test.gd privacy_test_guard_test.gd phone_hand_math_test.gd phone_hand_game_test.gd character_stat_visibility_test.gd phone_board_actors_test.gd coin_allocation_test.gd coin_flow_test.gd archer_source_test.gd archer_audio_gate_test.gd archer_death_audio_gate_test.gd phone_battlecry_placement_test.gd phone_battlecry_preview_test.gd battlecry_release_sequence_test.gd phone_layout_cache_test.gd phone_particle_batch_test.gd phone_environment_particles_test.gd transmission_sync_cache_test.gd phone_particle_draw_snapshot_test.gd source_phone_board_layout_test.gd phone_mana_controller_test.gd phone_mana_controller_live_test.gd phone_mana_live_test.gd phone_mana_overflow_test.gd phone_mana_renderer_test.gd source_mana_spend_test.gd draw_cache_test.gd summon_constant_step_test.gd summon_color_snapshot_test.gd summon_size_snapshot_test.gd summon_fraction_step_test.gd summon_uv_snapshot_test.gd summon_constant_plan_test.gd transmission_base_storage_test.gd
-          python3 ci/run_privacy_guard_test.py Godot_v4.7.1-stable_linux.x86_64
+          python3 ci/run_regression_tests.py Godot_v4.7.1-stable_linux.x86_64 phone_hand_math_test.gd phone_hand_game_test.gd character_stat_visibility_test.gd phone_board_actors_test.gd coin_allocation_test.gd coin_flow_test.gd archer_source_test.gd archer_audio_gate_test.gd archer_death_audio_gate_test.gd phone_battlecry_placement_test.gd phone_battlecry_preview_test.gd battlecry_release_sequence_test.gd phone_layout_cache_test.gd phone_particle_batch_test.gd phone_environment_particles_test.gd transmission_sync_cache_test.gd phone_particle_draw_snapshot_test.gd source_phone_board_layout_test.gd phone_mana_controller_test.gd phone_mana_controller_live_test.gd phone_mana_live_test.gd phone_mana_overflow_test.gd phone_mana_renderer_test.gd source_mana_spend_test.gd desktop_draw_cache_test.gd summon_constant_step_test.gd summon_color_snapshot_test.gd summon_size_snapshot_test.gd summon_fraction_step_test.gd summon_uv_snapshot_test.gd summon_constant_plan_test.gd transmission_base_storage_test.gd desktop_unit_shadow_pixel_test.gd
           Godot_v4.7.1-stable_linux.x86_64 --headless --path . --export-debug "Android Playtest" "$PWD/build/unsigned.apk" > build/export.log 2>&1
       - name: Preserve raw runtime assets and sign
         shell: bash
@@ -71,7 +57,7 @@ jobs:
           sha256sum build/TavernDuel-latest-candidate.apk > build/SHA256SUMS
       - uses: actions/upload-artifact@v4
         with:
-          name: TavernDuel-latest-candidate${{ inputs.privacy_test && '-privacy' || '' }}
+          name: TavernDuel-latest-candidate
           path: |
             build/TavernDuel-latest-candidate.apk
             build/SHA256SUMS

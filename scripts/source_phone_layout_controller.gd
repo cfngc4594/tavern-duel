@@ -1,6 +1,6 @@
 extends Node
-## Atomic registration for the sole phone source scene.
-## Editor preview uses the same geometry with mouse input for development.
+## Atomic registration for the source phone scene. The production gate remains
+## off until every visual/input consumer is migrated and runtime verified.
 const Layout=preload("res://scripts/source_phone_board_layout.gd")
 const Policy=preload("res://scripts/source_board_camera_policy.gd")
 const SourceProjection=preload("res://scripts/source_board_projection.gd")
@@ -34,7 +34,7 @@ func refresh():
  if game==null:return
  var canvas:Vector2=game.presentation_size
  viewport.size=game.board_render_target_size
- Policy.apply(camera,camera_root,canvas)
+ Policy.apply(camera,camera_root,{},canvas,true)
  var flow=game.get("flow")
  var temporary=int(flow.temporary_mana[0]) if flow!=null else 0
  var options={"aspect":canvas.x/canvas.y,"permanent_mana_count":game.max_mana,"temporary_mana_count":temporary,"end_turn_enabled":game.player_turn}
@@ -54,7 +54,7 @@ func refresh():
  blockers=snapshot.blockers.duplicate()
  # An explicit development gate is insufficient by itself: layout/readiness is
  # necessary, and the complete consumer migration must be separately accepted.
- enabled=bool(ProjectSettings.get_setting("native_mobile/source_camera_enabled",false)) and bool(ProjectSettings.get_setting("native_mobile/source_consumers_verified",false)) and snapshot.ready and Policy.source_ui_requested()
+ enabled=bool(ProjectSettings.get_setting("native_mobile/source_camera_enabled",false)) and bool(ProjectSettings.get_setting("native_mobile/source_consumers_verified",false)) and snapshot.ready and Policy.phone_platform_requested()
  Policy.runtime_layout_verified=enabled
  if not enabled:
   if context!=null:SourceProjection.unregister(game);context=null

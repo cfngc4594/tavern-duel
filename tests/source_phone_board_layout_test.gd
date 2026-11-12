@@ -15,7 +15,7 @@ func run():
  var vp=SubViewport.new();vp.size=Vector2i(2400,1080);root.add_child(vp)
  var cr=Node3D.new();vp.add_child(cr);var camera=Camera3D.new();cr.add_child(camera)
  var canvas=Vector2(2000,900);var offset=Vector2(200,0)
- CameraPolicy.apply(camera,cr,canvas)
+ CameraPolicy.apply(camera,cr,config,canvas,true)
  var recovered=Layout.recovered_items(3,7,{"aspect":canvas.x/canvas.y,"permanent_mana_count":4,"temporary_mana_count":2,"end_turn_enabled":true})
  var real_snapshot=Layout.build(recovered,camera,Vector2(vp.size),canvas,offset)
  assert(real_snapshot.ready)
@@ -45,14 +45,14 @@ func run():
  assert(real_snapshot.items.friendly_hero.visual_polygon.size()>=4)
  assert(real_snapshot.items.friendly_play.actors[0].visual_polygon.size()>=4)
  for aspect in [1.5,16.0/9.0,2.04,21.0/9.0]:
-  var size=Vector2(900.0*aspect,900.0);vp.size=Vector2i(size);CameraPolicy.apply(camera,cr,size)
+  var size=Vector2(900.0*aspect,900.0);vp.size=Vector2i(size);CameraPolicy.apply(camera,cr,config,size,true)
   for count in range(1,8):
    var options={"aspect":aspect,"permanent_mana_count":10,"temporary_mana_count":2}
    var snap=Layout.build(Layout.recovered_items(count,count,options),camera,Vector2(vp.size),size,(size-Vector2(1600,900))*0.5)
    assert(snap.ready and snap.items.friendly_play.actors.size()==count)
    assert(snap.items.friendly_mana.crystals.size()==10)
    assert(not Layout.contains(snap,"end_turn",snap.items.end_turn.center))
- vp.size=Vector2i(2400,1080);CameraPolicy.apply(camera,cr,canvas)
+ vp.size=Vector2i(2400,1080);CameraPolicy.apply(camera,cr,config,canvas,true)
  var empty=Layout.build({},camera,Vector2(vp.size),canvas,offset)
  assert(not empty.ready and empty.blockers.size()==Layout.REQUIRED.size())
  # Synthetic contract geometry tests only, not claimed original anchor data.
@@ -66,6 +66,6 @@ func run():
  rows.friendly_hero.blockers=["Custom-frame offset unresolved"]
  var blocked=Layout.build(rows,camera,Vector2(vp.size),canvas,offset)
  assert(not blocked.ready and not Layout.contains(blocked,"friendly_hero",snapshot.items.friendly_hero.center))
- camera.set_meta("native_phone_registered",false)
+ CameraPolicy.apply(camera,cr,config,canvas,false)
  assert(not Layout.build(rows,camera,Vector2(vp.size),canvas,offset).ready)
  vp.queue_free();print("SOURCE_PHONE_BOARD_LAYOUT_PASS: real source poses/colliders/visual bounds; counts1..7, aspects1.5/16:9/2.04/21:9, mana ordering/cap, endturn state, unsupported variants fail closed");quit()

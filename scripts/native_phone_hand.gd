@@ -23,10 +23,6 @@ var transitions:Dictionary={}
 var generation:=0
 var layout_duration:=0.5
 var enlarging_remaining:=0.0
-func reset():
- targeting_mode=false;restore_enlarged_after_target=false
- enlarged=false;focus=-1;touched_slot=-1;touch_age=0.0
- transitions.clear();generation+=1;layout_duration=0.5;enlarging_remaining=0.0
 func setup(host):
  game=host;bounds=JSON.parse_string(FileAccess.get_file_as_string(BOUNDS_PATH))
  fields=JSON.parse_string(FileAccess.get_file_as_string(FIELDS_PATH))[0].data

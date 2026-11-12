@@ -8,9 +8,6 @@ var gpu_shader_directory: String="res://shaders/"
 var gpu_shaders: Dictionary={}
 var gpu_serial: int=0
 var gpu_frame_pending: bool=false
-# Whole-scene A/B improves average load but not all hitch tails; keep disabled.
-# No geometry cache: changed signatures still read the current mesh arrays.
-var defer_unchanged_surface_arrays: bool=false
 
 func setup(game: Node, source_assets, source_base: String = "res://assets/original_targeting_v34/") -> void:
  super.setup(game,source_assets,source_base)
@@ -47,23 +44,13 @@ func refresh(id) -> bool:
    if not bool(route.surfaces[i].get("verified",false)):
     _block("Unverified silhouette material "+str(route.surfaces[i]));return false
    if not bool(route.surfaces[i].eligible):continue
-   var source: Dictionary={"source_key":key,"surface_index":i,"transform":local}
-   if defer_unchanged_surface_arrays and _can_defer_surface_arrays(mi.mesh,i):
-    source.deferred_mesh=mi.mesh
-   else:
-    var arrays: Array=mi.mesh.surface_get_arrays(i)
-    if arrays.is_empty():continue
-    source.vertices=arrays[Mesh.ARRAY_VERTEX];source.indices=arrays[Mesh.ARRAY_INDEX]
-   selected.append(source)
+   var arrays: Array=mi.mesh.surface_get_arrays(i)
+   if arrays.is_empty():continue
+   selected.append({"source_key":key,"surface_index":i,"vertices":arrays[Mesh.ARRAY_VERTEX],"indices":arrays[Mesh.ARRAY_INDEX],"transform":local})
    signature_parts.append([key,i,mi.mesh.get_rid().get_id(),str(local)])
  if selected.is_empty():_block("No visible original Highlight-tag surfaces for "+str(id));return false
  var signature: String=str(signature_parts).sha256_text()
  if signature==e.mask_key:return true
- for source in selected:
-  if source.has("deferred_mesh"):
-   var arrays: Array=_read_deferred_surface(source.deferred_mesh,source.surface_index)
-   source.vertices=arrays[Mesh.ARRAY_VERTEX];source.indices=arrays[Mesh.ARRAY_INDEX]
-   source.erase("deferred_mesh")
  var model: Dictionary=bindings.models[e.kind]
  var hr: Dictionary={}
  for c in model.components:
@@ -79,16 +66,6 @@ func refresh(id) -> bool:
  if e.material is ShaderMaterial:e.material.set_shader_parameter("_MainTex",e.mask)
  history.append({"event":"gpu_mask_scheduled","id":id,"key":signature,"surface_count":selected.size()})
  return true
-
-func _can_defer_surface_arrays(mesh: Mesh,surface: int) -> bool:
- # Native ArrayMesh with a valid nonempty surface returns ARRAY_MAX slots.
- # Do not infer this for PrimitiveMesh, custom Mesh, or scripted resources.
- # Surface count/visibility/routes/transforms are checked anew every refresh.
- # Same-RID geometry edits retain the existing mask-key behavior, unchanged.
- return mesh.get_class()=="ArrayMesh" and mesh.get_script()==null and mesh.surface_get_array_len(surface)>0
-
-func _read_deferred_surface(mesh: Mesh,surface: int) -> Array:
- return mesh.surface_get_arrays(surface)
 
 func _project_source(selected: Array,plane: Transform3D,plane_mesh: Mesh,render_size: float,clip_size: float) -> Dictionary:
  var bounds: AABB=plane*plane_mesh.get_aabb()

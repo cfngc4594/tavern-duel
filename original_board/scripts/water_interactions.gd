@@ -1,10 +1,8 @@
 extends Node
-const SourceStore=preload('res://original_board/scripts/board_source_store.gd')
 ## Source FSM subset; original scalar curves and action order, explicit delegated effects.
 const BASE='res://original_board/assets/water/'
-const SOURCE_BASE='res://original_board/assets/phone/water/'
 var probe
-var source_cab='cab-9132baeb567a19ab7fb9aa2f603d1eec:'
+var source_cab='cab-995e7cbc44ff3e7f4314fc93360989d0:'
 var systems={}
 var events=[]
 var audio_players=[]
@@ -18,9 +16,9 @@ var material_bindings={}
 func setup(p,options:Dictionary={}):
  probe=p;rng.randomize()
  source_cab=str(options.get('source_cab',source_cab))
- var source_base=str(options.get('source_base',SOURCE_BASE))
- for kind in options.get('kinds',['mill_wheel']):
-  var source=SourceStore.json_for(probe,source_base+kind+'.json')
+ var source_base=str(options.get('source_base',BASE))
+ for kind in options.get('kinds',['mill_wheel','silo']):
+  var source=JSON.parse_string(FileAccess.get_file_as_string(source_base+kind+'.json'))
   var sys={'source':source,'states':{},'state':'','time':0.0,'variables':{},'gates':{},'collider':{},'waits':[],'animation':{},'rotation_speed':-10.0,'rotation_node':'','curves':[],'ease':[],'material_values':{}}
   for st in source.states:sys.states[st.name]=st
   for obj in source.objects.values():
@@ -112,6 +110,7 @@ func _enter(kind,state):
    'ParticlePlayAction','ParticleStopAction':_particle(kind,p,a['class']=='ParticlePlayAction')
    'AnimationPlaythroughAction':_play(kind,p.m_AnimName)
    'AudioPlayRandomClipAction','AudioPlayClipAction':_sound(kind,a)
+   'SendEvent':_send_event(kind,p)
    _:events.append({'event':'unsupported_action','kind':kind,'class':a['class']});unfinished=true
  if not unfinished:_event(kind,'FINISHED')
 func _property(kind,p):
@@ -122,6 +121,10 @@ func _particle(kind,p,playing):
  var id=_go_id(p.m_GameObject);var delegate=probe.get('water_particles');var delegated=is_instance_valid(delegate) and delegate.has_method('set_playing')
  if delegated:delegate.set_playing(id,playing)
  events.append({'event':'particle_command','kind':kind,'node_id':id,'playing':playing,'include_children':p.m_IncludeChildren,'delegated':delegated,'time':elapsed})
+func _send_event(kind,p):
+ var id=_go_id(p.eventTarget.gameObject);var delegate=probe.get('pumpkin_interaction');var available=is_instance_valid(delegate) and delegate.has_method('receive_source_event');var delegated=false
+ if available:delegated=delegate.receive_source_event(id,p.sendEvent)==true
+ events.append({'event':'source_send_event','kind':kind,'target_node':id,'source_event':p.sendEvent,'delegate_available':available,'delegated':delegated,'time':elapsed})
 func _play(kind,name):
  systems[kind].animation={'name':name,'time':0.0}
  events.append({'event':'animation_play','kind':kind,'clip':name,'time':elapsed})

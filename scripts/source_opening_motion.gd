@@ -58,14 +58,14 @@ static func path_motion(path:PackedVector3Array,age:float,duration:float,ease_id
 	# ApplyMoveToPathTargets0x0600004d does NOT snap endpoint at percentage1.
 	return sample_path(path,clampf(source_ease(progress(age,duration),ease_id),0.0,1.0))
 
-static func card_scale()->Vector3:
-	return Vector3(0.9,0.28,0.9)
+static func card_scale(phone:bool=true)->Vector3:
+	return Vector3(0.9,0.28,0.9) if phone else Vector3(1.1,0.28,1.1)
 
-static func row_position(index:int,count:int,zone_position:Vector3,collider_width:float,hand_y:float,initial_first_player:bool=false)->Vector3:
+static func row_position(index:int,count:int,zone_position:Vector3,collider_width:float,hand_y:float,phone:bool=true,initial_first_player:bool=false)->Vector3:
 	assert(count>0 and index>=0 and index<count)
-	var width:float=collider_width*0.55
+	var width:float=collider_width*(0.55 if phone else 1.0)
 	var spacing:float=width/float(count+1 if initial_first_player else count)
-	return Vector3(zone_position.x-width/2.0+spacing*(float(index)+0.5),hand_y+7.0,zone_position.z-0.2)
+	return Vector3(zone_position.x-width/2.0+spacing*(float(index)+0.5),hand_y+(7.0 if phone else 0.0),zone_position.z-(0.2 if phone else 0.3))
 
 static func base_launch_time(index:int)->float:
 	assert(index>=0)
@@ -80,10 +80,10 @@ static func deal_position(start:Vector3,target:Vector3,age:float)->Vector3:
 static func deal_rotation(start_euler:Vector3,age:float)->Vector3:
 	return Rotation.interpolate(start_euler,Vector3.ZERO,Rotation.ease_out_expo_progress(age,DEAL_SECONDS,DEAL_SECONDS/16.0))
 
-static func deal_scale(start_scale:Vector3,age:float)->Vector3:
+static func deal_scale(start_scale:Vector3,age:float,phone:bool=true)->Vector3:
 	# ApplyScaleToTargets0x06000050 explicitly snaps endpoint, unlike path motion.
 	var t:float=progress(age,DEAL_SECONDS)
-	return start_scale.lerp(card_scale(),1.0 if t>=1.0 else source_ease(t,16))
+	return start_scale.lerp(card_scale(phone),1.0 if t>=1.0 else source_ease(t,16))
 
 static func spread_position(start:Vector3,target:Vector3,age:float)->Vector3:
 	return start.lerp(target,source_ease(progress(age,SPREAD_SECONDS),5))

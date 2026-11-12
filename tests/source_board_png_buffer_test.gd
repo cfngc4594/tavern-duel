@@ -9,7 +9,7 @@ func run():
  var directory=DirAccess.open("res://original_board/assets/textures")
  for file in directory.get_files():
   if file.ends_with(".png"):paths.append("res://original_board/assets/textures/"+file)
- var particle_data=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/assets/phone/water_particles/source.json"))
+ var particle_data=JSON.parse_string(FileAccess.get_file_as_string("res://original_board/assets/water_particles/source.json"))
  for row in particle_data.materials.values():
   if not paths.has(str(row.texture)):paths.append(str(row.texture))
  assert(paths.size()>0)

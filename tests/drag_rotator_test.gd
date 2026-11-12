@@ -20,5 +20,10 @@ func run():
  assert(absf(step.x)<0.00001 and absf(step.y)<0.00001)
  rotator.reset(Vector3(1,2,3))
  assert(rotator.pitch_velocity==0 and rotator.roll_velocity==0 and rotator.pitch==0 and rotator.roll==0)
- print("DRAG_ROTATOR_PASS serialized params; world delta/sign; min/max; tiny-motion gate; SmoothDamp=",first,"; no-motion decay; reset")
+ var scene=load("res://scripts/classic_spatial.gd").new()
+ var projection=scene._drag_source_basis()*scene.DRAG_SOURCE_PROJECTION_SCALE
+ var source=Vector3(1,2,3)
+ assert((projection.inverse()*(projection*source)).is_equal_approx(source))
+ scene.free()
+ print("DRAG_ROTATOR_PASS serialized params; world delta/sign; min/max; tiny-motion gate; SmoothDamp=",first,"; no-motion decay; reset; compatibility basis inversion")
  quit()

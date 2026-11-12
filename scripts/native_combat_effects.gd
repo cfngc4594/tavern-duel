@@ -281,7 +281,7 @@ func _spawn(root_key: String,anchor: Vector2,route_id: String,owner_serial: int)
 		var spec: Dictionary=effect.state.particles[particle_key]
 		if bool(spec.system.data.get("playOnAwake",false)) and spec.node.is_visible_in_tree():_particles(effect,particle_key,0.0,false,true)
 	if not game.headless and ResourceLoader.exists("res://scripts/native_combat_rendertexture.gd"):
-		var rt=load("res://scripts/native_combat_rendertexture.gd").new();add_child(rt);rt.setup(effect.state,assets,effect.projection,owner_serial);effect.rendertexture=rt
+		var rt=load("res://scripts/native_combat_rendertexture.gd").new();add_child(rt);rt.setup(effect.state,assets,effect.projection,owner_serial,route_id);effect.rendertexture=rt
 	if profile_started>=0:_profile_effect_row(effect,"spawn",profile_started,{})
 	return effect
 
@@ -482,7 +482,12 @@ func _action(effect: Dictionary,action: Dictionary,moment: float):
 			if target_id=="0":effect.events.append({"event":"source_null_property_target","time":moment})
 			else:
 				var record: Dictionary={"kind":"property","target_id":target_id,"params":property,"start":moment}
-				if bool(params.get("everyFrame",false)):effect.continuous.append(record)
+				if bool(params.get("everyFrame",false)):
+					if str(property.get("PropertyName",""))=="playbackSpeed":
+						# The manifest stays fixed after setup. Resolve the original
+						# first path-ID match once for this state action.
+						record.resolved_target=_property_target(target_id)
+					effect.continuous.append(record)
 				_apply_continuous(effect,record)
 		"SpellStateAction","SpellFinishAction","Wait","AudioPlayAction","AudioPlaythroughAction","AudioPlayClipAction","AudioStopAction","AudioVolumeFadeAction","AudioSetVolumeAction","AudioPlayRandomClipAction","SpellCardIdAudioPlayAction","SpellCardIdAudioPlayClipAction","RandomWaitAction":pass
 		"SetLightIntensity":
@@ -508,6 +513,8 @@ func _action(effect: Dictionary,action: Dictionary,moment: float):
 func _setup_particle(node,spec:Dictionary,effect:Dictionary):
 	if bool(effect.get("_sampling_particle_setup",false)) and get_script().resource_path=="res://scripts/native_death_effects.gd" and node.get_script().resource_path=="res://scripts/native_death_particles.gd":
 		node.defer_initial_geometry=true
+	if effect.has("rendertexture") and is_instance_valid(effect.rendertexture):
+		effect.rendertexture.prepare_direct_particle_solver(node,spec.node,spec.system.key)
 	node.setup(spec,assets,effect.projection,effect.serial*391+effect.particles.size())
 
 func _particles(effect: Dictionary,key: String,moment: float,include_children: bool,play: bool):
@@ -713,7 +720,7 @@ func _sample(effect: Dictionary):
 	if profiling:stage_started=_profile_effect_stage(stages,"trails",stage_started)
 	_bind_scene_inputs(effect)
 	if profiling:stage_started=_profile_effect_stage(stages,"scene_inputs",stage_started)
-	if effect.has("rendertexture") and is_instance_valid(effect.rendertexture):effect.rendertexture.sync(effect.age)
+	if effect.has("rendertexture") and is_instance_valid(effect.rendertexture):effect.rendertexture.sync(effect.age,effect.source_event)
 	if profiling:stage_started=_profile_effect_stage(stages,"rendertexture",stage_started)
 	for shake_action in effect.shakes:game.camera_shake.update_action(shake_action,shake_update_delta,shake_update_id)
 	if effect.has("hit_unit") and str(effect.hit_unit.key)==str(effect.hit_unit_key) and float(effect.age)<assets.clip_length(effect.actor_clip):
@@ -806,6 +813,11 @@ func _alpha(mat: Material) -> float:
 		return color.a if color is Color else 1.0
 	return mat.albedo_color.a if mat is StandardMaterial3D else 1.0
 
+func _property_target(target_id: String) -> Dictionary:
+	for key in assets.objects:
+		if str(key).get_slice(":",1)==target_id:return assets.objects[key]
+	return {}
+
 func _apply_continuous(effect: Dictionary,action: Dictionary):
 	var params: Dictionary=action.params
 	if action.kind=="light":
@@ -834,9 +846,7 @@ func _apply_continuous(effect: Dictionary,action: Dictionary):
 			elif action.kind=="SetMaterialFloat":assets.set_material_float(mat,str(_value(effect,params.get("namedFloat"),"_Intensity")),float(_value(effect,params.get("floatValue"),0.0)))
 			else:assets.set_material_float(mat,"_Color.a",float(_value(effect,params.m_Alpha,1.0)))
 	elif action.kind=="property":
-		var target: Dictionary={}
-		for key in assets.objects:
-			if str(key).get_slice(":",1)==str(action.target_id):target=assets.objects[key];break
+		var target: Dictionary=action.resolved_target if action.has("resolved_target") else _property_target(str(action.target_id))
 		if target.get("class_name","")=="RenderToTexture" and effect.has("rendertexture"):
 			var value=_value(effect,params.get("ColorParameter"),{}) if str(params.PropertyName)=="m_TintColor" else _value(effect,params.get("FloatParameter"),0.0)
 			effect.rendertexture.set_source_property(str(target.key),str(params.PropertyName),value)

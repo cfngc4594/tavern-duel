@@ -74,12 +74,15 @@ func sync() -> void:
 	frame_number+=1
 	_material_seen.clear()
 	for property in ["size","msaa_3d","screen_space_aa","use_debanding","scaling_3d_mode","scaling_3d_scale"]:
-		transmission_view.set(property,source_view.get(property))
+		var value = source_view.get(property)
+		if transmission_view.get(property)!=value:transmission_view.set(property,value)
 	var original_camera:=source_view.get_camera_3d()
 	if original_camera!=null:
 		for property in ["projection","keep_aspect","fov","size","frustum_offset","near","far","h_offset","v_offset","cull_mask"]:
-			camera.set(property,original_camera.get(property))
-		camera.global_transform=original_camera.global_transform
+			var value = original_camera.get(property)
+			if camera.get(property)!=value:camera.set(property,value)
+		var camera_pose := original_camera.global_transform
+		if camera.global_transform!=camera_pose:camera.global_transform=camera_pose
 	var seen: Dictionary={}
 	if is_inside_tree() and _watched_tree==null:
 		_watched_tree=get_tree();_watched_tree.tree_changed.connect(_mark_geometry_dirty)
@@ -118,37 +121,44 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary) -> void:
 		elif source is MultiMeshInstance3D:target=MultiMeshInstance3D.new()
 		else:target=Label3D.new()
 		target.name="Transmission_"+str(key)
+		target.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		geometry_root.add_child(target)
 		mirrors[key]=target
 	# Hidden geometry cannot contribute; resync all values when it becomes visible.
 	if not source.is_visible_in_tree():
 		target.visible=false
 		return
-	target.global_transform=source.global_transform
-	target.visible=source.is_visible_in_tree()
-	target.layers=source.layers
-	target.sorting_offset=source.sorting_offset
-	target.sorting_use_aabb_center=source.sorting_use_aabb_center
-	target.custom_aabb=source.custom_aabb
-	target.extra_cull_margin=source.extra_cull_margin
-	target.transparency=source.transparency
-	target.visibility_range_begin=source.visibility_range_begin
-	target.visibility_range_end=source.visibility_range_end
-	target.visibility_range_begin_margin=source.visibility_range_begin_margin
-	target.visibility_range_end_margin=source.visibility_range_end_margin
-	target.visibility_range_fade_mode=source.visibility_range_fade_mode
-	target.ignore_occlusion_culling=source.ignore_occlusion_culling
-	target.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var source_transform := source.global_transform
+	if target.global_transform != source_transform:target.global_transform=source_transform
+	target.visible=true
+	# These setters forward render-instance updates even for identical values.
+	if target.layers!=source.layers:target.layers=source.layers
+	if target.sorting_offset!=source.sorting_offset:target.sorting_offset=source.sorting_offset
+	if target.sorting_use_aabb_center!=source.sorting_use_aabb_center:target.sorting_use_aabb_center=source.sorting_use_aabb_center
+	if target.custom_aabb!=source.custom_aabb:target.custom_aabb=source.custom_aabb
+	if target.extra_cull_margin!=source.extra_cull_margin:target.extra_cull_margin=source.extra_cull_margin
+	if target.transparency!=source.transparency:target.transparency=source.transparency
+	if target.visibility_range_begin!=source.visibility_range_begin:target.visibility_range_begin=source.visibility_range_begin
+	if target.visibility_range_end!=source.visibility_range_end:target.visibility_range_end=source.visibility_range_end
+	if target.visibility_range_begin_margin!=source.visibility_range_begin_margin:target.visibility_range_begin_margin=source.visibility_range_begin_margin
+	if target.visibility_range_end_margin!=source.visibility_range_end_margin:target.visibility_range_end_margin=source.visibility_range_end_margin
+	if target.visibility_range_fade_mode!=source.visibility_range_fade_mode:target.visibility_range_fade_mode=source.visibility_range_fade_mode
+	if target.ignore_occlusion_culling!=source.ignore_occlusion_culling:target.ignore_occlusion_culling=source.ignore_occlusion_culling
 	if source is MeshInstance3D:
 		target.mesh=source.mesh
 		if source.mesh!=null:
 			for surface in range(source.mesh.get_surface_count()):
-				target.set_surface_override_material(surface,transmission_material(source.get_active_material(surface)))
-			for blend in range(source.get_blend_shape_count()):target.set_blend_shape_value(blend,source.get_blend_shape_value(blend))
+				var material := transmission_material(source.get_active_material(surface))
+				if target.get_surface_override_material(surface) != material:
+					target.set_surface_override_material(surface,material)
+			for blend in range(source.get_blend_shape_count()):
+				var weight: float=source.get_blend_shape_value(blend)
+				if target.get_blend_shape_value(blend) != weight:target.set_blend_shape_value(blend,weight)
 		if source.skin!=null:_warn_once("Skinned meshes require a mirrored Skeleton3D: "+str(source.get_path()))
 	elif source is MultiMeshInstance3D:
 		target.multimesh=source.multimesh
-		target.material_override=transmission_material(source.material_override)
+		var material := transmission_material(source.material_override)
+		if target.material_override!=material:target.material_override=material
 		if source.material_override==null and source.multimesh!=null and source.multimesh.mesh!=null:
 			_warn_once("MultiMesh without material_override requires per-surface variants: "+str(source.get_path()))
 	else:
@@ -160,7 +170,8 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary) -> void:
 		target.modulate=Color(0,0,0,tint.a)
 		target.outline_modulate=Color(0,0,0,outline.a)
 		target.shaded=false
-	target.material_overlay=transmission_material(source.material_overlay) if source.material_overlay!=null else null
+	var overlay := transmission_material(source.material_overlay) if source.material_overlay!=null else null
+	if target.material_overlay!=overlay:target.material_overlay=overlay
 
 func transmission_material(source: Material) -> Material:
 	if source==null:

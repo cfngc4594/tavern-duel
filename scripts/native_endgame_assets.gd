@@ -32,3 +32,14 @@ func material(key: String,texture_override: Texture2D=null) -> Material:
  if translated==null:translated=super.material(key,texture_override)
  if texture_override!=null:endgame_textures.bind_source_sampler(translated,"_MainTex",texture_override,self)
  return translated
+
+func bind_hero_portrait(materials: Array,texture: Texture2D) -> int:
+ var count:=0
+ for material in materials:
+  var material_key: String=material.get_meta("source_key","")
+  var record: Dictionary=objects.get(material_key,{})
+  if not str(record.get("name","")).contains("portrait"):continue
+  material.set_shader_parameter("_MainTex",texture)
+  endgame_textures.bind_source_sampler(material,"_MainTex",texture,self)
+  count+=1
+ return count

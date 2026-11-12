@@ -40,18 +40,25 @@ func run():
  var start=Time.get_ticks_usec();pass3d.sync();var clone_usec=Time.get_ticks_usec()-start
  assert(pass3d.pieces.size()==10 and pass3d.audit.cards==10)
  assert(pass3d.blockers.is_empty())
+ var mesh_count:=0
+ var vertex_count:=0
  for i in 10:
   var piece=pass3d.pieces[i];var pose=host.cards[i].source_phone_pose
   assert(piece.root.position.is_equal_approx(pose.position))
   assert(piece.root.global_position.is_equal_approx(Vector3(pose.position.x,pose.position.y,-pose.position.z)))
   assert(piece.actor.renderers.size()>1 and is_instance_valid(piece.highlight) and piece.highlight.visible)
   assert(piece.highlight.mesh.surface_get_array_len(0)>4)
+  for node in piece.actor.renderers.values():
+   mesh_count+=1
+   for surface in node.mesh.get_surface_count():vertex_count+=node.mesh.surface_get_array_len(surface)
+ assert(pass3d.audit.meshes==mesh_count and pass3d.audit.vertices==vertex_count)
  var roots=pass3d.pieces.map(func(p):return p.root.get_instance_id())
  start=Time.get_ticks_usec()
  for i in 100:pass3d.sync()
  var sync_usec=(Time.get_ticks_usec()-start)/100.0
  assert(roots==pass3d.pieces.map(func(p):return p.root.get_instance_id()))
  host.cards[0].erase("source_phone_pose");pass3d.sync();assert(not pass3d.pieces[0].root.visible and pass3d.blockers.size()==1)
+ assert(pass3d.audit.cards==9 and pass3d.audit.meshes==mesh_count-pass3d.pieces[0].mesh_count and pass3d.audit.vertices==vertex_count-pass3d.pieces[0].vertex_count)
  var opposing=load("res://scripts/native_phone_opposing_hand.gd").new();host.add_child(opposing);opposing.setup(host);opposing.sync()
  assert(opposing.pieces.size()==10 and opposing.blockers.is_empty())
  for i in 10:

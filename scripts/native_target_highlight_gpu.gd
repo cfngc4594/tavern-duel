@@ -8,9 +8,15 @@ var gpu_shader_directory: String="res://shaders/"
 var gpu_shaders: Dictionary={}
 var gpu_serial: int=0
 var gpu_frame_pending: bool=false
+var defer_unchanged_surface_arrays: bool=false
+var _mesh_revisions: Dictionary={}
 
 func setup(game: Node, source_assets, source_base: String = "res://assets/original_targeting_v34/") -> void:
  super.setup(game,source_assets,source_base)
+ var args:=OS.get_cmdline_user_args()
+ defer_unchanged_surface_arrays=bool(ProjectSettings.get_setting_with_override("render_quality/defer_highlight_surface_reads"))
+ if args.has("--defer-highlight-surface-reads"):defer_unchanged_surface_arrays=true
+ if args.has("--eager-highlight-surface-reads"):defer_unchanged_surface_arrays=false
  if not FileAccess.file_exists(gpu_shader_directory+"native_target_highlight_constant.gdshader"):
   gpu_shader_directory=get_script().resource_path.get_base_dir()+"/shaders/"
  for kind in ["constant","multisample","multisample_blend","mask_blend"]:
@@ -24,6 +30,9 @@ func refresh(id) -> bool:
  var plane_local: Transform3D=relative_transform(plane,root)
  var selected: Array=[]
  var signature_parts: Array=[e.kind,str(plane_local)]
+ if defer_unchanged_surface_arrays:
+  var plane_revision:=_mesh_revision(e.mesh.mesh)
+  if plane_revision>0:signature_parts[1]=[signature_parts[1],plane_revision]
  var candidates: Array=[]
  for key in actor.get("renderers",{}):candidates.append({"key":str(key),"mesh":actor.renderers[key],"routes":surfaces[e.kind]})
  for instance in e.get("attachments",[]):
@@ -37,20 +46,45 @@ func refresh(id) -> bool:
   var key: String=candidate.key
   var mi=candidate.mesh
   if not mi is MeshInstance3D or mi.mesh==null or not mi.is_visible_in_tree():continue
+  var mesh: Mesh=mi.mesh
   var route: Dictionary=candidate.routes.get(key,{})
   if route.is_empty():continue
   var local: Transform3D=_surface_relative(candidate,root)
-  for i in range(mini(mi.mesh.get_surface_count(),route.surfaces.size())):
+  for i in range(mini(mesh.get_surface_count(),route.surfaces.size())):
    if not bool(route.surfaces[i].get("verified",false)):
     _block("Unverified silhouette material "+str(route.surfaces[i]));return false
    if not bool(route.surfaces[i].eligible):continue
-   var arrays: Array=mi.mesh.surface_get_arrays(i)
-   if arrays.is_empty():continue
-   selected.append({"source_key":key,"surface_index":i,"vertices":arrays[Mesh.ARRAY_VERTEX],"indices":arrays[Mesh.ARRAY_INDEX],"transform":local})
-   signature_parts.append([key,i,mi.mesh.get_rid().get_id(),str(local)])
+   var source: Dictionary={"source_key":key,"surface_index":i,"transform":local}
+   var part: Array=[key,i,mesh.get_rid().get_id(),str(local)]
+   if defer_unchanged_surface_arrays and _can_defer_surface_arrays(mesh,i):
+    source.deferred_mesh=mesh
+    var revision:=_mesh_revision(mesh)
+    if revision>0:part.append(revision)
+   else:
+    var arrays:=_read_surface_arrays(mesh,i)
+    if arrays.is_empty():continue
+    source.vertices=arrays[Mesh.ARRAY_VERTEX];source.indices=arrays[Mesh.ARRAY_INDEX]
+   selected.append(source)
+   signature_parts.append(part)
  if selected.is_empty():_block("No visible original Highlight-tag surfaces for "+str(id));return false
  var signature: String=str(signature_parts).sha256_text()
  if signature==e.mask_key:return true
+ # Compatibility reads ArrayMesh surfaces back from GL. Resolve deferred arrays
+ # only when a new mask actually needs them, with the same eager fallback.
+ var selected_count:=selected.size()
+ for index in range(selected_count-1,-1,-1):
+  var source: Dictionary=selected[index]
+  if not source.has("deferred_mesh"):continue
+  var arrays:=_read_surface_arrays(source.deferred_mesh,source.surface_index)
+  if arrays.is_empty():
+   selected.remove_at(index);signature_parts.remove_at(index+2)
+  else:
+   source.vertices=arrays[Mesh.ARRAY_VERTEX];source.indices=arrays[Mesh.ARRAY_INDEX]
+   source.erase("deferred_mesh")
+ if selected.is_empty():_block("No visible original Highlight-tag surfaces for "+str(id));return false
+ if selected.size()!=selected_count:
+  signature=str(signature_parts).sha256_text()
+  if signature==e.mask_key:return true
  var model: Dictionary=bindings.models[e.kind]
  var hr: Dictionary={}
  for c in model.components:
@@ -66,6 +100,29 @@ func refresh(id) -> bool:
  if e.material is ShaderMaterial:e.material.set_shader_parameter("_MainTex",e.mask)
  history.append({"event":"gpu_mask_scheduled","id":id,"key":signature,"surface_count":selected.size()})
  return true
+
+func _can_defer_surface_arrays(mesh: Mesh,surface: int) -> bool:
+ return mesh.get_class()=="ArrayMesh" and mesh.get_script()==null and mesh.surface_get_array_len(surface)>0
+
+func _read_surface_arrays(mesh: Mesh,surface: int) -> Array:
+ return mesh.surface_get_arrays(surface)
+
+func _mesh_revision(mesh: Mesh) -> int:
+ if mesh==null:return 0
+ var id:=mesh.get_instance_id()
+ if not _mesh_revisions.has(id):
+  if _mesh_revisions.size()>=64:
+   for previous_id in _mesh_revisions.keys():
+    if _mesh_revisions[previous_id].source.get_ref()==null:_mesh_revisions.erase(previous_id)
+  var record: Dictionary={"source":weakref(mesh),"revision":0}
+  mesh.changed.connect(_increment_mesh_revision.bind(record))
+  _mesh_revisions[id]=record
+ return _mesh_revisions[id].revision
+
+func _increment_mesh_revision(record: Dictionary) -> void:
+ # ArrayMesh vertex region updates and surface additions/removals emit changed.
+ # RenderingServer writes directly to the RID bypass Resource notifications.
+ record.revision+=1
 
 func _project_source(selected: Array,plane: Transform3D,plane_mesh: Mesh,render_size: float,clip_size: float) -> Dictionary:
  var bounds: AABB=plane*plane_mesh.get_aabb()

@@ -12,11 +12,14 @@ var generation=0
 var closed=false
 var elapsed=0.0
 var retired_emitted=0
+var ambient_particle_density:=1.0
 # -1 explicitly means the source GraphicsManager quality is not known.
 var render_quality_level=-1
 var render_quality_source="Unspecified source quality"
 func setup(probe,options:Dictionary={}):
  owner_probe=probe
+ var default_density:=float(ProjectSettings.get_setting("render_quality/board_ambient_particle_density",0.4)) if OS.has_feature("android") else 1.0
+ ambient_particle_density=clampf(float(options.get("ambient_particle_density",default_density)),0.1,1.0)
  render_quality_level=clampi(int(options.get("render_quality_level",-1)),-1,2)
  render_quality_source=str(options.get("render_quality_source","Explicit caller quality" if render_quality_level>=0 else "Unspecified source quality"))
  data=JSON.parse_string(FileAccess.get_file_as_string(str(options.get('source_file','res://original_board/assets/water_particles/source.json'))))
@@ -70,39 +73,60 @@ func set_playing(key:String,playing:bool):
   return
  generation+=1
  var solver=Solver.new();solver.name='SourceParticleGeneration_'+str(generation)
- var spec={'system':e.row.system,'renderer':e.row.renderer,'node':e.proxy,'autoplay':true,'compatibility_basis':REFLECTION,'source_scope_root':owner_probe.source_root}
+ var spec={'system':e.row.system,'renderer':e.row.renderer,'node':e.proxy,'autoplay':true,'compatibility_basis':REFLECTION,'source_scope_root':owner_probe.source_root,'fixed_draw_curves':true}
  for option in e.row.get('solver_options',{}):spec[option]=e.row.solver_options[option]
+ if e.row.get('source_category','')=='environment':spec.emission_density=ambient_particle_density
  solver.setup(spec,self,self,97003+generation)
  solver.compatibility_notes.append('Board adapter reflects raw Unity emitter basis once; native random stream and restart clock unavailable.')
  solver.compatibility_notes.append('Renderer sortingFudge retained in source metadata, not reproduced by Godot depth sort.')
  e.current=solver;e.instances.append({'solver':solver,'age':0.0})
 func advance(dt:float):
  if closed:return
- elapsed+=maxf(0.0,dt)
+ var step:=maxf(0.0,dt)
+ elapsed+=step
  for key in entries:
   var e=entries[key]
   if e.row.has('source_activation'):_refresh_environment_activation(key)
-  e.proxy.global_transform=owner_probe.source_nodes[key].global_transform*Transform3D(REFLECTION,Vector3.ZERO)
-  var survivors:Array=[]
-  for item in e.instances:
-   item.age+=maxf(0.0,dt);var solver=item.solver;solver.seek(item.age)
+  var pose:Transform3D=owner_probe.source_nodes[key].global_transform*Transform3D(REFLECTION,Vector3.ZERO)
+  if e.proxy.global_transform!=pose:e.proxy.global_transform=pose
+  var instances:Array=e.instances
+  var live_generations:=0
+  for index in instances.size():
+   var item:Dictionary=instances[index]
+   item.age+=step;var solver=item.solver;solver.seek(item.age)
    # Monotonic playback only: discard expired storage, not living stop tails.
-   var now=solver.simulation_time
-   solver.particles=solver.particles.filter(func(p):return now-float(p.birth)<float(p.life))
+   _prune_expired(solver)
    # Non-loop source systems naturally return to stopped once their tails end.
    if solver==e.current and not bool(solver.raw.get('looping',false)) and item.age>=solver.start_delay+solver.duration and solver.live_count==0:
     e.current=null;e.playing=false
    if solver!=e.current and solver.live_count==0:
     retired_emitted+=solver.emitted_count;solver.source_destroy();solver.queue_free()
-   else:survivors.append(item)
-  e.instances=survivors
+   else:
+    if index!=live_generations:instances[live_generations]=item
+    live_generations+=1
+  if live_generations!=instances.size():instances.resize(live_generations)
+
+func _prune_expired(solver):
+ var particles:Array=solver.particles
+ var now:float=solver.simulation_time
+ # Retaining the same Array when no entries expire also retains the solver's
+ # candidate-index cache. Replacing it after compaction invalidates shifted indices.
+ for index in particles.size():
+  var particle:Dictionary=particles[index]
+  if now-float(particle.birth)<float(particle.life):continue
+  var survivors:=particles.slice(0,index)
+  for remaining_index in range(index+1,particles.size()):
+   var remaining:Dictionary=particles[remaining_index]
+   if now-float(remaining.birth)<float(remaining.life):survivors.append(remaining)
+  solver.particles=survivors
+  return
 func get_audit():
  var rows:Array=[]
  for key in entries:
   var e=entries[key];var solvers:Array=[]
   for item in e.instances:solvers.append(item.solver.get_audit())
   rows.append({'node_id':key,'name':e.row.name,'playing':e.playing,'play_calls':e.play_calls,'stop_calls':e.stop_calls,'source_active':e.source_active,'quality_gated':bool(e.row.get('source_activation',{}).get('disable_low_quality',false)),'instances':solvers})
- return {'errors':errors.duplicate(),'elapsed':elapsed,'emitters':rows,'generations':generation,'retired_emitted':retired_emitted,'render_quality_level':render_quality_level,'render_quality_source':render_quality_source,'quality_status':'unresolved; low-quality-gated dust is deferred' if render_quality_level<0 else ['Low','Medium','High'][render_quality_level],'boundaries':['Source ParticleSystem serialized modules and original textures; compatible fixed-step solver, not recovered Unity native solver.','Stop(false) is StopEmitting: alive particles survive to their source lifetime. Repeated Play while running does not restart.','Play after stop starts a new emission clock while previous live generation survives; native resume clock and RNG equivalence unverified.','Native billboard sort bias, soft-depth keyword variants, exact native light probes/color pipeline not reproduced.','No particle SubViewport, no invented sprite or water mesh. Original scene particles use one source emitter frame reflection.']}
+ return {'errors':errors.duplicate(),'elapsed':elapsed,'emitters':rows,'generations':generation,'retired_emitted':retired_emitted,'render_quality_level':render_quality_level,'render_quality_source':render_quality_source,'ambient_particle_density':ambient_particle_density,'quality_status':'unresolved; low-quality-gated dust is deferred' if render_quality_level<0 else ['Low','Medium','High'][render_quality_level],'boundaries':['Source ParticleSystem serialized modules and original textures; compatible fixed-step solver, not recovered Unity native solver.','Stop(false) is StopEmitting: alive particles survive to their source lifetime. Repeated Play while running does not restart.','Play after stop starts a new emission clock while previous live generation survives; native resume clock and RNG equivalence unverified.','Native billboard sort bias, soft-depth keyword variants, exact native light probes/color pipeline not reproduced.','No particle SubViewport, no invented sprite or water mesh. Original scene particles use one source emitter frame reflection.']}
 func close_interaction():
  if closed:return
  closed=true

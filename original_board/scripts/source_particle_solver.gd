@@ -6,9 +6,18 @@ const STEP := 1.0 / 120.0
 const EPSILON := 0.00000001
 const SUPPORTED_MODULES := ["InitialModule", "ShapeModule", "EmissionModule", "SizeModule", "ColorModule", "UVModule", "VelocityModule", "ClampVelocityModule", "RotationModule", "RotationBySpeedModule", "ForceModule", "InheritVelocityModule", "CollisionModule", "SubModule"]
 const ColorSampler = preload("res://scripts/particle_color_sampler.gd")
+const SizeSampler = preload("res://scripts/particle_size_sampler.gd")
 const WorkerJob = preload("res://scripts/particle_worker_job.gd")
 const WorkerKernel = preload("res://scripts/particle_kernel_board.gd")
 const ForceKernel = preload("res://scripts/particle_kernel_board_force.gd")
+const BASIC_UVS := [
+	[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)],
+	[Vector2(1, 0), Vector2(0, 0), Vector2(0, 1), Vector2(1, 1)],
+	[Vector2(0, 1), Vector2(1, 1), Vector2(1, 0), Vector2(0, 0)],
+	[Vector2(1, 1), Vector2(0, 1), Vector2(0, 0), Vector2(1, 0)],
+]
+var _fixed_size_sampler: RefCounted
+var _fixed_color_sampler: RefCounted
 var _candidate_indices: Array[int] = []
 var _candidate_source: Array = []
 var _candidate_seen: int = 0
@@ -28,6 +37,8 @@ var active := false
 var emission_playing := true
 var runtime_emission_rate := -1.0
 var runtime_emission_fraction := 0.0
+var emission_density := 1.0
+var _burst_emission_fraction := 0.0
 # Opt-in for new environmental rows; legacy controller behavior stays unchanged.
 var constant_rate_carry := false
 var constant_source_rate := -1.0
@@ -88,6 +99,8 @@ var screen_size_clamped := 0
 
 func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> void:
 	emission_playing = bool(spec.get("autoplay", true))
+	emission_density = clampf(float(spec.get("emission_density", 1.0)), 0.1, 1.0)
+	_burst_emission_fraction = 0.0
 	constant_rate_carry = bool(spec.get("constant_rate_carry", false))
 	source_sort_mode = bool(spec.get("source_sort_mode", false))
 	raw = spec.system.data.duplicate(true)
@@ -135,7 +148,26 @@ func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> vo
 	_load_renderer_mesh(spec, assets)
 	_build_emission_period()
 	_load_subemitters(spec)
+	# Board-owned records hold these serialized modules fixed for this generation.
+	# Other callers can edit raw modules and continue to sample the current data.
+	_fixed_size_sampler = null
+	_fixed_color_sampler = null
+	if bool(spec.get("fixed_draw_curves", false)) and get_script().get_base_script() == null:
+		if bool(raw.get("SizeModule", {}).get("enabled", false)):
+			_fixed_size_sampler = _make_size_sampler(raw.SizeModule.curve)
+		if bool(raw.get("ColorModule", {}).get("enabled", false)):
+			_fixed_color_sampler = _make_color_sampler(raw.ColorModule.gradient)
 	seek(0.0)
+
+func _make_size_sampler(curve: Dictionary) -> RefCounted:
+	var sampler := SizeSampler.new()
+	sampler.setup(curve, Curves)
+	return sampler
+
+func _make_color_sampler(gradient: Dictionary) -> RefCounted:
+	var sampler := ColorSampler.new()
+	sampler.setup(gradient, Curves)
+	return sampler
 
 func _unsupported(field: String) -> void:
 	if not unsupported.has(field): unsupported.append(field)
@@ -238,7 +270,7 @@ func _build_emission_period() -> void:
 			period_events.append({"at": at, "burst": burst})
 	var rate_curve: Dictionary = emission.get("rateOverTime", {})
 	if int(rate_curve.get("minMaxState", 0)) == 0:
-		var rate := maxf(0.0, Curves.minmax(rate_curve, 0.0))
+		var rate := maxf(0.0, Curves.minmax(rate_curve, 0.0)) * emission_density
 		if constant_rate_carry:
 			constant_source_rate = rate
 		elif rate > 0.0:
@@ -255,7 +287,7 @@ func _build_emission_period() -> void:
 			var end := minf(duration, at + STEP)
 			var r0 := maxf(0.0, Curves.minmax(rate_curve, at / duration, rate_mix))
 			var r1 := maxf(0.0, Curves.minmax(rate_curve, end / duration, rate_mix))
-			var area := (r0 + r1) * 0.5 * (end - at)
+			var area := (r0 + r1) * 0.5 * (end - at) * emission_density
 			while threshold <= accumulator + area + EPSILON:
 				var weight := clampf((threshold - accumulator) / maxf(EPSILON, area), 0.0, 1.0)
 				period_events.append({"at": lerpf(at, end, weight), "count": 1})
@@ -310,7 +342,7 @@ func set_emission_rate(value: float, at_seconds: float = -1.0) -> void:
 	runtime_emission_rate=maxf(0.0,value)
 
 func _runtime_rate_events(now: float) -> void:
-	var effective_rate:float=runtime_emission_rate if runtime_emission_rate>=0.0 else constant_source_rate
+	var effective_rate:float=runtime_emission_rate * emission_density if runtime_emission_rate>=0.0 else constant_source_rate
 	if effective_rate<0.0 or not emission_playing or not bool(raw.get("EmissionModule",{}).get("enabled",false)):return
 	var begin:=maxf(simulation_time,start_delay)
 	var end:=minf(now,stop_time)
@@ -380,6 +412,13 @@ func _emit_until(now: float, current: Transform3D, local_scale: Vector3) -> void
 		if event.has("burst"):
 			if rng.randf() > float(event.burst.get("probability", 1.0)): continue
 			count = maxi(0, int(Curves.minmax(event.burst.countCurve, fposmod(at - start_delay, duration) / duration, rng.randf())))
+			if emission_density < 1.0:
+				# Carry fractional births across bursts. Budget at emission so the
+				# omitted particles never allocate, simulate, or build geometry.
+				var scaled_count := float(count) * emission_density + _burst_emission_fraction
+				count = int(floor(scaled_count + EPSILON))
+				_burst_emission_fraction = maxf(0.0, scaled_count - float(count))
+				if count == 0: continue
 		var frame := _birth_frame(at, now, current)
 		var weight := 1.0 if now <= simulation_time + EPSILON else clampf((at - simulation_time) / (now - simulation_time), 0.0, 1.0)
 		var birth_scale := last_local_scale.lerp(local_scale, weight)
@@ -802,23 +841,15 @@ func seek(seconds: float) -> void:
 	var size_module: Dictionary = raw.get("SizeModule", {})
 	var color_module: Dictionary = raw.get("ColorModule", {})
 	var size_enabled: bool = bool(size_module.get("enabled", false))
-	var size_sampler: RefCounted
-	if frame_modules and size_enabled:
-		size_sampler=preload("res://scripts/particle_size_sampler.gd").new();size_sampler.setup(size_module.curve,Curves)
+	var size_sampler: RefCounted = _fixed_size_sampler
+	if frame_modules and size_enabled and size_sampler == null:
+		size_sampler = _make_size_sampler(size_module.curve)
 	var color_enabled: bool = bool(color_module.get("enabled", false))
-	var color_sampler: RefCounted
-	if frame_modules and color_enabled:
-		color_sampler = ColorSampler.new(); color_sampler.setup(color_module.gradient, Curves)
+	var color_sampler: RefCounted = _fixed_color_sampler
+	if frame_modules and color_enabled and color_sampler == null:
+		color_sampler = _make_color_sampler(color_module.gradient)
 	var uv_module: Dictionary = raw.get("UVModule", {})
-	var basic_uvs: Array = []
-	if frame_modules and (not bool(uv_module.get("enabled", false)) or int(uv_module.get("mode", 0)) != 0):
-		for variant in range(4):
-			var corners: Array = []
-			for corner in [Vector2(0,0),Vector2(1,0),Vector2(1,1),Vector2(0,1)]:
-				if variant & 1: corner.x = 1.0 - corner.x
-				if variant & 2: corner.y = 1.0 - corner.y
-				corners.append(Vector2.ZERO + corner / Vector2.ONE)
-			basic_uvs.append(corners)
+	var use_basic_uvs := frame_modules and (not bool(uv_module.get("enabled", false)) or int(uv_module.get("mode", 0)) != 0)
 	var flip_u: float = float(uv_module.get("flipU", 0.0))
 	var flip_v: float = float(uv_module.get("flipV", 0.0))
 	# Renderer order must reverse actual live indices, not their particle data
@@ -885,9 +916,9 @@ func seek(seconds: float) -> void:
 		else:
 			for offset in corners: vertices.append(center + offset); colors.append(color); normals.append(normal)
 		var particle_uvs: Array
-		if not basic_uvs.is_empty():
+		if use_basic_uvs:
 			var variant: int = (1 if float(p.flip_u) < flip_u else 0) + (2 if float(p.flip_v) < flip_v else 0)
-			particle_uvs = basic_uvs[variant]
+			particle_uvs = BASIC_UVS[variant]
 		else: particle_uvs = _uv_corners(p, age, state.get("render_velocity", state.velocity).length())
 		if indexed_quads:
 			for corner in range(4): uvs[start + corner] = particle_uvs[corner]

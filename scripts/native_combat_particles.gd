@@ -16,6 +16,8 @@ static var death_initial_geometry_defer_enabled:bool=true
 # Armed only inside the exact death effect's synchronous sampling window.
 var defer_initial_geometry:bool=false
 var _skip_initial_geometry:bool=false
+# Armed only for emitters whose capture output has been replaced.
+var capture_solver_suppressed := false
 static var setup_rows:Array=[]
 ## Source ParticleSystem modules, with an explicit Godot compatibility solver.
 ## Unity's native RNG, integration and billboard rasterization are not recovered.
@@ -29,6 +31,11 @@ const WorkerJob = preload("res://scripts/particle_worker_job.gd")
 const WorkerKernel = preload("res://scripts/particle_kernel_combat.gd")
 const CollisionKernel = preload("res://scripts/particle_kernel_collision.gd")
 const ForceKernel = preload("res://scripts/particle_kernel_combat_force.gd")
+# Victory firework trails with solver-owned particles and collisionless workers.
+const ENDGAME_TRAIL_SOURCES := {
+	"cab-69c88b234dfa427e02d1fcee9337ae34:3386225755921590020": true, # FX_ExplodeTrailsA
+	"cab-69c88b234dfa427e02d1fcee9337ae34:2778132981796972292": true, # FX_ExplodeTrailsC
+}
 var _candidate_indices: Array[int] = []
 var _candidate_source: Array = []
 var _candidate_seen: int = 0
@@ -105,6 +112,7 @@ var subemitter_ancestry: Array = []
 var death_rng := RandomNumberGenerator.new()
 var death_events := 0
 var screen_size_clamped := 0
+var victory_trail_density := 1.0
 
 func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> void:
 	var profile_start:int=Time.get_ticks_usec() if profile_setup else 0
@@ -116,6 +124,14 @@ func setup(spec: Dictionary, assets, parent_root: Node3D, seed_value: int) -> vo
 	speed_segments = [{"at": 0.0, "sim": 0.0, "speed": playback_speed}]
 	source_renderer = spec.renderer.get("data", {})
 	source_key = spec.system.key
+	if ENDGAME_TRAIL_SOURCES.has(source_key):
+		victory_trail_density = clampf(float(ProjectSettings.get_setting_with_override("render_quality/victory_trail_density")), 0.05, 1.0)
+		if victory_trail_density < 1.0:
+			# These two decorative emitters use constant, burst-free source rates.
+			# Keep the parent fireworks, event clock and all other particles intact.
+			var initial: Dictionary = raw.InitialModule
+			initial.maxNumParticles = maxi(1, floori(int(initial.maxNumParticles) * victory_trail_density))
+			raw.EmissionModule.rateOverTime.scalar *= victory_trail_density
 	source_node = spec.node
 	parent_root.add_child(self)
 	# Remain owned by the effect container for cancellation, but do not inherit
@@ -798,6 +814,8 @@ func seek(seconds: float) -> void:
 	if source_destroyed or not is_instance_valid(source_node) or source_node.is_queued_for_deletion():
 		source_destroy()
 		return
+	if capture_solver_suppressed:
+		return
 	var now := _to_sim_time(elapsed_seconds)
 	var frame := _emitter_transform()
 	var local_scale := _emitter_scale()
@@ -1027,8 +1045,11 @@ func _screen_size_scale(center: Vector3, x: Vector3, y: Vector3, camera: Camera3
 	return scale
 
 func get_audit() -> Dictionary:
-	return {"source_key": source_key, "original_count": emitted_count, "live_count": live_count, "elapsed": elapsed_seconds, "active": active, "runtime_emission_rate":runtime_emission_rate,"emission_enabled": raw.get("EmissionModule", {}).get("enabled", false), "stop_seconds": _from_sim_time(stop_time) if is_finite(stop_time) else -1.0, "start_delay": start_delay, "simulation_space": raw.get("moveWithTransform", 0), "scaling_mode": raw.get("scalingMode", 0), "shape_type": raw.get("ShapeModule", {}).get("type"), "shape_mesh_key": shape_mesh_key, "source_mesh_triangles": mesh_triangles.size(), "source_mesh_vertices": shape_mesh_vertices.size(), "renderer_mesh_key": renderer_mesh_key, "renderer_mesh_surfaces": source_render_mesh.get_surface_count() if source_render_mesh != null else 0, "render_mode": source_renderer.get("m_RenderMode"), "enabled_modules": enabled_modules.duplicate(), "source_fields_supported": unsupported.is_empty(), "original_modules": false, "compatibility_notes": compatibility_notes.duplicate(), "collision_planes": collision_planes.size(), "collision_count": collision_count, "null_collision_planes": null_collision_planes, "null_subemitters": null_subemitters, "playback_speed": playback_speed, "warmup_seconds": warmup_seconds, "subemitter_templates": subemitter_templates.size(), "subemitter_emitted": subemitter_emitted, "death_events": death_events, "screen_size_clamped": screen_size_clamped, "screen_size_metric": "max(projected quad width / viewport width, projected quad height / viewport height); Godot compatibility, not recovered Unity raster metric", "subemitter_audits": _subemitter_audits(), "scene_gravity_verified": source_gravity_verified, "unsupported": unsupported.duplicate(), "dropped_at_capacity": dropped_at_capacity, "source_destroyed": source_destroyed, "solver": "Godot compatibility: fixed 1/120 force/gravity/velocity/limit/rotation/plane-collision integration; source curves and module enable flags", "birth_transform_sampling": "source emitter transforms interpolated between seek calls; not native Unity frame scheduling", "renderer_compatibility": "source billboard/horizontal/stretch modes; Godot camera, triangle rasterization, and screen-size clamp are not Unity-native", "rng": "instance-local Godot PCG; not Unity RNG; never game.rng", "native_pixel_equivalence": false}
+	var audit := {"source_key": source_key, "original_count": emitted_count, "live_count": live_count, "elapsed": elapsed_seconds, "active": active, "runtime_emission_rate":runtime_emission_rate,"emission_enabled": raw.get("EmissionModule", {}).get("enabled", false), "stop_seconds": _from_sim_time(stop_time) if is_finite(stop_time) else -1.0, "start_delay": start_delay, "simulation_space": raw.get("moveWithTransform", 0), "scaling_mode": raw.get("scalingMode", 0), "shape_type": raw.get("ShapeModule", {}).get("type"), "shape_mesh_key": shape_mesh_key, "source_mesh_triangles": mesh_triangles.size(), "source_mesh_vertices": shape_mesh_vertices.size(), "renderer_mesh_key": renderer_mesh_key, "renderer_mesh_surfaces": source_render_mesh.get_surface_count() if source_render_mesh != null else 0, "render_mode": source_renderer.get("m_RenderMode"), "enabled_modules": enabled_modules.duplicate(), "source_fields_supported": unsupported.is_empty(), "original_modules": false, "compatibility_notes": compatibility_notes.duplicate(), "collision_planes": collision_planes.size(), "collision_count": collision_count, "null_collision_planes": null_collision_planes, "null_subemitters": null_subemitters, "playback_speed": playback_speed, "warmup_seconds": warmup_seconds, "subemitter_templates": subemitter_templates.size(), "subemitter_emitted": subemitter_emitted, "death_events": death_events, "screen_size_clamped": screen_size_clamped, "screen_size_metric": "max(projected quad width / viewport width, projected quad height / viewport height); Godot compatibility, not recovered Unity raster metric", "subemitter_audits": _subemitter_audits(), "scene_gravity_verified": source_gravity_verified, "unsupported": unsupported.duplicate(), "dropped_at_capacity": dropped_at_capacity, "source_destroyed": source_destroyed, "solver": "Godot compatibility: fixed 1/120 force/gravity/velocity/limit/rotation/plane-collision integration; source curves and module enable flags", "birth_transform_sampling": "source emitter transforms interpolated between seek calls; not native Unity frame scheduling", "renderer_compatibility": "source billboard/horizontal/stretch modes; Godot camera, triangle rasterization, and screen-size clamp are not Unity-native", "rng": "instance-local Godot PCG; not Unity RNG; never game.rng", "native_pixel_equivalence": false}
 
+	if capture_solver_suppressed:
+		audit.capture_solver_suppressed = true
+	return audit
 
 func _inherit_velocity(p: Dictionary, normalized: float) -> Vector3:
 	var inherit: Dictionary = raw.get("InheritVelocityModule", {})
@@ -1122,7 +1143,7 @@ func _resolve_collisions(p: Dictionary, previous: Dictionary, next: Dictionary, 
 
 
 func emit_count(count: int, at_seconds: float = -1.0) -> int:
-	if source_destroyed or not is_instance_valid(source_node): return 0
+	if capture_solver_suppressed or source_destroyed or not is_instance_valid(source_node): return 0
 	var at := elapsed_seconds if at_seconds < 0.0 else maxf(0.0, at_seconds)
 	seek(at)
 	var birth := _to_sim_time(at)
@@ -1253,6 +1274,7 @@ func _load_subemitters(spec: Dictionary) -> void:
 		var sub_spec: Dictionary = {"system": system, "renderer": source_assets.component(go, "ParticleSystemRenderer"), "node": node, "autoplay": false, "compatibility_basis": compatibility_basis, "source_scope_root": source_scope_root, "subemitter_ancestry": subemitter_ancestry}
 		solver.setup(sub_spec, source_assets, self, instance_seed + 104729 * (index + 1))
 		var rate := maxf(0.0, Curves.minmax(emission.get("rateOverTime", {}), 0.0)) if bool(emission.get("enabled", false)) else 0.0
+		if event_type == 0:rate *= solver.victory_trail_density
 		subemitter_templates.append({"solver": solver, "source_key": key, "rate": rate, "probability": float(item.get("emitProbability", 1.0)), "type": event_type})
 		if event_type == 0:
 			compatibility_notes.append("Birth subemitter " + key + " follows parent particle lifetime at original constant rate; exact native frame/RNG schedule is not recovered")
@@ -1428,6 +1450,9 @@ func _prepare_worker_states(now: float) -> void:
 	var jobs: Array = []
 	var tasks: Array[int] = []
 	var count: int = mini(4, maxi(2, ceili(indices.size() / 32.0)))
+	# These source trails create a distinct Dictionary per particle. Each index
+	# belongs to one worker, and all workers join before simulation uses results.
+	var worker_owns_particles: bool = not collision_job and ENDGAME_TRAIL_SOURCES.has(source_key)
 	if profile_seek:_worker_profile.prepare_usec=Time.get_ticks_usec()-worker_started
 	for chunk in range(count):
 		var build_started:int=Time.get_ticks_usec() if profile_seek else 0
@@ -1443,9 +1468,10 @@ func _prepare_worker_states(now: float) -> void:
 			job.kernel.plane_samples=plane_samples
 		for slot in range(chunk, indices.size(), count):
 			var index: int = indices[slot]
+			var particle: Dictionary = particles[index]
 			job.indices.append(index)
-			job.particles.append(particles[index].duplicate())
-			job.ages.append(now - float(particles[index].birth))
+			job.particles.append(particle if worker_owns_particles else particle.duplicate())
+			job.ages.append(now - float(particle.birth))
 		jobs.append(job)
 		if profile_seek:build_usec+=Time.get_ticks_usec()-build_started
 		var enqueue_started:int=Time.get_ticks_usec() if profile_seek else 0
@@ -1461,10 +1487,11 @@ func _prepare_worker_states(now: float) -> void:
 		var job = jobs[ordinal % count]
 		var slot: int = ordinal / count
 		var index: int = indices[ordinal]
-		var original: Dictionary = particles[index]
-		var computed: Dictionary = job.particles[slot]
-		for field in ["sim_age", "displacement", "sim_velocity", "sim_rotation", "sim_render_velocity", "kill_age", "collision_loss", "collision_hits"]:
-			original[field] = computed[field]
+		if not worker_owns_particles:
+			var original: Dictionary = particles[index]
+			var computed: Dictionary = job.particles[slot]
+			for field in ["sim_age", "displacement", "sim_velocity", "sim_rotation", "sim_render_velocity", "kill_age", "collision_loss", "collision_hits"]:
+				original[field] = computed[field]
 		_worker_states[index] = job.states[slot]
 	if profile_seek:_worker_profile.collect_usec=Time.get_ticks_usec()-collect_started
 

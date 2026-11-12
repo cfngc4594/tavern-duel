@@ -68,6 +68,18 @@ func run():
    probe.camera.rotation.y+=.001
    pair.current.seek(7.06);pair.old.seek(7.06)
    check_equal(pair.current,pair.old,"dynamic world/renderer/camera "+str(world)+"/"+str(mode))
+ # The fixed UV corner table still reads runtime flip thresholds and defers
+ # enabled atlas animation to the existing particle-specific sampling path.
+ for flip_u in [0.0,1.0]:
+  for flip_v in [0.0,1.0]:
+   for solver in [pair.current,pair.old]:
+    solver.raw.UVModule.flipU=flip_u;solver.raw.UVModule.flipV=flip_v
+    solver.seek(7.07)
+   check_equal(pair.current,pair.old,"UV orientation "+str(Vector2(flip_u,flip_v)))
+ for solver in [pair.current,pair.old]:
+  solver.raw.UVModule.enabled=true;solver.raw.UVModule.tilesX=2;solver.raw.UVModule.tilesY=2
+  solver.seek(7.08)
+ check_equal(pair.current,pair.old,"dynamic atlas")
  print("DRAW_BENCH_TOTAL old_us=",totals.x/240.0," new_us=",totals.y/240.0," warmup_frames=120 measured_frames=240 dt=1/60 alternating_order=true")
  print("PHONE_PARTICLE_DRAW_SNAPSHOT_PASS original seeds, counts, numerical states, exact mesh arrays, rewind and stop tails")
  game.queue_free();quit()

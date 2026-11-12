@@ -53,7 +53,7 @@ func _setup_world() -> void:
 	if viewport is SubViewport:
 		viewport.own_world_3d = true
 		viewport.transparent_bg = true
-		viewport.msaa_3d = Viewport.MSAA_4X
+		viewport.msaa_3d = int(ProjectSettings.get_setting_with_override("render_quality/spatial_msaa_3d")) as Viewport.MSAA
 	# No floor, sky or projected board image: only the actual pieces are rendered.
 	var world_environment := WorldEnvironment.new()
 	var environment := Environment.new()
@@ -110,7 +110,7 @@ func sync_from_game() -> void:
 	# Do not construct a second geometry path while mobile assets are unavailable.
 	if not phone_projection_active or not is_instance_valid(game.get("native_card_renderer")):
 		for piece in pieces.values():piece.root.visible=false
-		sync_cards_from_game()
+		_sync_card_renderers()
 		return
 	if source_projection()!=null:
 		if not is_instance_valid(phone_burn_renderer) and not game.flow.burn_cards.is_empty():
@@ -169,7 +169,7 @@ func sync_from_game() -> void:
 	for id in pieces.keys():
 		if not live.has(id):
 			_dispose_piece(id)
-	sync_cards_from_game()
+	_sync_card_renderers()
 
 func _sync_phone_unit(piece:Dictionary,unit:Dictionary):
 	var root:Node3D=piece.root
@@ -201,6 +201,9 @@ func sync_cards_from_game() -> void:
 	if not is_instance_valid(game):
 		return
 	_sync_projection_camera()
+	_sync_card_renderers()
+
+func _sync_card_renderers() -> void:
 	if not phone_projection_active or not is_instance_valid(game.get("native_card_renderer")):
 		if is_instance_valid(phone_hand_renderer):phone_hand_renderer.visible=false
 		if is_instance_valid(phone_opposing_hand):phone_opposing_hand.visible=false

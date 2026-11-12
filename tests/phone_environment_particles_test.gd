@@ -18,7 +18,7 @@ var report={}
 func check(value,label):
  if not value:failures.append(label)
 func _initialize():call_deferred('_run')
-func fixture(quality=-1):
+func fixture(quality=-1,density=1.0):
  var p=Probe.new();root.add_child(p);p.source_root=Node3D.new();p.add_child(p.source_root)
  var path='res://original_board/assets/phone/scene_phone.json'
  var scene=JSON.parse_string(FileAccess.get_file_as_string(path))
@@ -30,12 +30,12 @@ func fixture(quality=-1):
   var q=row.rotation;var s=row.scale;var pos=row.position
   n.transform=Transform3D((reflect*Basis(Quaternion(q.x,q.y,q.z,q.w))*reflect).scaled_local(Vector3(s.x,s.y,s.z)),reflect*Vector3(pos.x,pos.y,pos.z));n.visible=bool(row.active)
  var c=Controller.new();p.add_child(c)
- c.setup(p,{'source_file':'res://original_board/assets/phone/water_particles/source.json','render_quality_level':quality})
+ c.setup(p,{'source_file':'res://original_board/assets/phone/water_particles/source.json','render_quality_level':quality,'ambient_particle_density':density})
  return {'p':p,'c':c}
 func ambient(c):return c.entries.values().filter(func(e):return e.row.get('source_category','')=='environment')
 func ambient_playing(c):return ambient(c).filter(func(e):return e.playing).size()
 func get_entry(c,name):
- for e in ambient(c):
+ for e in c.entries.values():
   if e.row.name==name:return e
  return {}
 func _run():
@@ -103,6 +103,19 @@ func _run():
  c.close_interaction();c.close_interaction();f.p.queue_free();await process_frame
  var again=fixture();check(ambient_playing(again.c)==4,'Repeated PHONE fixture resets unknown quality')
  again.c.close_interaction();again.p.queue_free();await process_frame
+ var budget=fixture(1,0.4);var reduced=budget.c
+ check(ambient_playing(reduced)==8,'Budget keeps all eight medium-quality emitters active')
+ check(reduced.get_audit().ambient_particle_density==0.4,'Budget is reported')
+ for step in range(600):reduced.advance(0.1)
+ check(get_entry(reduced,'FX_WaterRipples1').current.emitted_count==142,'Budget scales continuous prewarm and loop emission')
+ check(get_entry(reduced,'FX_WaterSpray1').current.emitted_count==180,'Budget scales burst prewarm and loop emission')
+ var interactive=get_entry(reduced,'mill_wheel')
+ reduced.set_playing(interactive.row.node_id,true)
+ check(interactive.current.emission_density==1.0,'Interaction emitters retain their full emission density')
+ var budget_mist=get_entry(reduced,'FX_WaterMist1');var budget_tail=budget_mist.current.live_count
+ reduced.set_playing(budget_mist.row.node_id,false)
+ check(budget_tail>0 and budget_mist.instances[0].solver.live_count==budget_tail,'Budget retains StopEmitting tails')
+ reduced.close_interaction();budget.p.queue_free();await process_frame
  report.ok=failures.is_empty();report.failures=failures
  var out=FileAccess.open('user://phone_environment_particles_result.json',FileAccess.WRITE);out.store_string(JSON.stringify(report,'  '));out.close()
  if report.ok:print('PHONE_ENVIRONMENT_PARTICLES_PASS')

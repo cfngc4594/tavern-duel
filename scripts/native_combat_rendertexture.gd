@@ -8,6 +8,30 @@ const Curves = preload("res://scripts/native_summon_curves.gd")
 const BLOOM = preload("res://shaders/native_combat_r2t_bloom.gdshader")
 const BLUR = preload("res://shaders/native_combat_r2t_blur.gdshader")
 const COMBINE = preload("res://shaders/native_combat_r2t_combine.gdshader")
+const DIRECT_CUE = preload("res://shaders/native_combat_direct_cue.gdshader")
+const DIRECT_ROUTES := {
+	"CS2_029/start": ["cab-69c88b234dfa427e02d1fcee9337ae34:2359521193231992204", 0],
+	"CS2_029/missile": ["cab-69c88b234dfa427e02d1fcee9337ae34:-5626360573135933840", 1],
+	"CS2_029/impact": ["cab-69c88b234dfa427e02d1fcee9337ae34:7286635149810824945", 2],
+	"GAME_005/friendly_area": ["cab-8e3755b5c7f289df2f238a71420d2eae:-1100169735795114873", 3],
+}
+const PARTICLE_SOLVER = preload("res://scripts/native_combat_particles.gd")
+const DIRECT_PARTICLE_SOURCES := {
+	"CS2_029/start": ["cab-69c88b234dfa427e02d1fcee9337ae34:6971844129387922828"],
+	"CS2_029/missile": [
+		"cab-69c88b234dfa427e02d1fcee9337ae34:9147768355671060080",
+		"cab-69c88b234dfa427e02d1fcee9337ae34:306423155709783664",
+		"cab-69c88b234dfa427e02d1fcee9337ae34:-7290195494662033808",
+		"cab-69c88b234dfa427e02d1fcee9337ae34:-4701474281540407696",
+	],
+	"CS2_029/impact": ["cab-69c88b234dfa427e02d1fcee9337ae34:-8505728408051878159"],
+	"GAME_005/friendly_area": [
+		"cab-8e3755b5c7f289df2f238a71420d2eae:2503306628673371271",
+		"cab-8e3755b5c7f289df2f238a71420d2eae:8930116518487522439",
+		"cab-8e3755b5c7f289df2f238a71420d2eae:3383246836757494919",
+	],
+}
+const SKIP_DIRECT_SOLVER_SETTING := "render_quality/android_fx_skip_captured_particle_solver"
 const SOURCE_TO_CAPTURE := Basis(Vector3.RIGHT, Vector3.BACK, Vector3.UP)
 const EPSILON := 0.00001
 static var offscreen_sequence := 0
@@ -27,13 +51,27 @@ var disposed := false
 var sync_count := 0
 var age := 0.0
 var quality := 1 # Explicit compatibility input. Original scene quality not recovered.
+var target_scale := 0.5 if OS.has_feature("android") else 1.0
 var capture_materials
 var _last_audit: Dictionary = {}
 var _capture_shader_cache: Dictionary = {}
 var _capture_uniform_cache: Dictionary = {}
+var _route_id := ""
+var _capture_mode := "reference"
+var _benchmark_arm := ""
+var _direct_particle_sources: Array = []
+var _source_event := ""
+var _source_event_started := 0.0
 
-func setup(effect_state: Dictionary, source_assets, source_projection: Node3D, serial: int) -> void:
+func setup(effect_state: Dictionary, source_assets, source_projection: Node3D, serial: int, source_route := "") -> void:
 	state = effect_state; assets = source_assets; projection = source_projection; owner_serial = serial
+	_route_id = source_route
+	_benchmark_arm = str(ProjectSettings.get_setting("render_quality/android_fx_benchmark_arm", ""))
+	_capture_mode = _select_capture_mode(source_route, _benchmark_arm)
+	var skip_solver := _benchmark_arm == "candidate_spell_lite"
+	if _benchmark_arm.is_empty() and OS.has_feature("android"):
+		skip_solver = bool(ProjectSettings.get_setting(SKIP_DIRECT_SOLVER_SETTING, false))
+	_direct_particle_sources = DIRECT_PARTICLE_SOURCES.get(source_route, []) if skip_solver and _capture_mode == "direct" else []
 	disposed = false
 	if ResourceLoader.exists("res://scripts/native_combat_capture_materials.gd"):
 		capture_materials = load("res://scripts/native_combat_capture_materials.gd").new()
@@ -52,6 +90,16 @@ func setup(effect_state: Dictionary, source_assets, source_projection: Node3D, s
 		else:_build_entry(record, owner_key, source_key)
 	sync(0.0)
 
+static func _select_capture_mode(route: String, benchmark_arm: String) -> String:
+	if not DIRECT_ROUTES.has(route):return "reference"
+	if benchmark_arm in ["candidate", "candidate_hero_lite", "candidate_spell_lite", "spell"]:return "direct"
+	if benchmark_arm == "no_bloom":return "no_bloom" if route.begins_with("CS2_029/") else "reference"
+	if benchmark_arm in ["reference", "endgame"]:return "reference"
+	if not OS.has_feature("android"):return "reference"
+	var setting := "render_quality/android_fx_fireball_capture" if route.begins_with("CS2_029/") else "render_quality/android_fx_coin_capture"
+	var mode := str(ProjectSettings.get_setting(setting, "reference"))
+	return mode if mode in ["direct", "no_bloom"] else "reference"
+
 static func texture_size(data: Dictionary, source_scale := Vector3.ONE, render_quality := 1) -> Vector2i:
 	var width := absf(float(data.get("m_Width", 1.0)) * source_scale.x)
 	var height := absf(float(data.get("m_Height", 1.0)) * source_scale.y)
@@ -59,6 +107,9 @@ static func texture_size(data: Dictionary, source_scale := Vector3.ONE, render_q
 	var factor: float = [0.75, 1.0, 1.5][clampi(render_quality, 0, 2)]
 	if maxf(width, height) <= EPSILON: return Vector2i.ONE
 	return Vector2i(maxi(1, int(resolution * width / maxf(width, height) * factor)), maxi(1, int(resolution * height / maxf(width, height) * factor)))
+
+static func scaled_target_size(size: Vector2i, scale: float) -> Vector2i:
+	return Vector2i(maxi(1, roundi(size.x * scale)), maxi(1, roundi(size.y * scale)))
 
 static func plane_mesh(width: float, height: float) -> ArrayMesh:
 	var arrays: Array = []; arrays.resize(Mesh.ARRAY_MAX)
@@ -96,12 +147,20 @@ func _build_entry(record: Dictionary, owner_key: String, source_key: String) -> 
 	var owner: Node3D = state.nodes[owner_key]; var source: Node3D = state.nodes[source_key]
 	var entry: Dictionary = {"key":record.key,"owner_key":owner_key,"source_key":source_key,"data":d,"record":record,"owner":owner,"source":source,"captures":[],"passes":[],"plane":null,"bloom_plane":null,"mirrors":{},"updates":0,"dirty":true,"original_materials":[],"original_textures":[],"generated":false}
 	entry.offscreen=offscreen
+	var spec: Array = DIRECT_ROUTES.get(_route_id, [])
+	var capture_mode := _capture_mode if not spec.is_empty() and record.key == spec[0] else "reference"
+	entry.capture_mode = capture_mode
+	if capture_mode == "direct" and _build_direct_plane(entry, int(spec[1])):
+		entries.append(entry)
+		_record_benchmark_capture(entry)
+		return
+	if capture_mode == "direct":entry.capture_mode = "reference"
 	entry.world_scale = _source_scale(owner, bool(d.get("m_UniformWorldScale", false)))
-	entry.size = texture_size(d, entry.world_scale, quality)
+	entry.source_size = texture_size(d, entry.world_scale, quality)
 	if offscreen:
 		var output:MeshInstance3D=state.renderers.get(owner_key)
 		if output==null or output.mesh==null:_warn("OffScreenRenderFX output mesh missing: "+str(record.key));return
-		entry.size=Vector2i(maxi(1,int(d.get("RenderResolutionX",256))),maxi(1,int(d.get("RenderResolutionY",256))))
+		entry.source_size=Vector2i(maxi(1,int(d.get("RenderResolutionX",256))),maxi(1,int(d.get("RenderResolutionY",256))))
 		entry.original_plane_visible=output.visible
 		entry.offscreen_height=2.0*float(d.get("ForceSize",0)) if float(d.get("ForceSize",0))!=0 else owner.scale.x*(output.mesh.get_aabb().size.x if bool(d.get("UseBounds",true)) else 1.0)
 		var offset:=Vector3(250,250+10*offscreen_sequence,0);offscreen_sequence+=1
@@ -112,6 +171,7 @@ func _build_entry(record: Dictionary, owner_key: String, source_key: String) -> 
 		entry.offscreen_camera_local=_source_transform(owner).affine_inverse()*initial_camera
 		var rect:Dictionary=d.get("CameraRect",{})
 		if float(rect.get("x",0))!=0 or float(rect.get("y",0))!=0 or float(rect.get("width",1))!=1 or float(rect.get("height",1))!=1:_warn("Unsupported non-full OffScreenRenderFX camera rect: "+str(record.key))
+	entry.size = scaled_target_size(entry.source_size, target_scale)
 	entry.initial_owner_rotation = _source_transform(owner).basis.orthonormalized()
 	entry.initial_source_world_offset = _source_transform(source).origin - _source_transform(owner).origin
 	entry.initial_source_relative_rotation = entry.initial_owner_rotation.inverse() * _source_transform(source).basis.orthonormalized()
@@ -124,12 +184,14 @@ func _build_entry(record: Dictionary, owner_key: String, source_key: String) -> 
 	else: entry.blur = {}
 	_build_plane(entry)
 	var mode := int(d.get("m_RenderMaterial", 0))
-	if mode in [3,5] and float(d.get("m_BloomIntensity",0.0)) != 0.0:
+	if capture_mode != "no_bloom" and mode in [3,5] and float(d.get("m_BloomIntensity",0.0)) != 0.0:
 		var ratio := clampf(float(d.get("m_BloomResolutionRatio",0.75)),0.0,1.0)
-		var bloom_size := Vector2i(int(entry.size.x*ratio),int(entry.size.y*ratio))
-		if bloom_size.x < 1 or bloom_size.y < 1:
+		var source_bloom_size := Vector2i(int(entry.source_size.x*ratio),int(entry.source_size.y*ratio))
+		if source_bloom_size.x < 1 or source_bloom_size.y < 1:
 			_warn("Original bloom requested zero-size target: " + str(record.key))
 		else:
+			var bloom_size := scaled_target_size(source_bloom_size, target_scale)
+			entry.source_bloom_size = source_bloom_size
 			entry.bloom_size = bloom_size
 			var input: Texture2D = entry.output
 			if mode == 5:
@@ -156,6 +218,44 @@ func _build_entry(record: Dictionary, owner_key: String, source_key: String) -> 
 	_bind_output(entry)
 	if offscreen and is_instance_valid(entry.plane):entry.plane.visible=true # Original Start enables only after SetupMaterial.
 	entries.append(entry)
+	_record_benchmark_capture(entry)
+
+func _build_direct_plane(entry: Dictionary, cue_kind: int) -> bool:
+	var material := ShaderMaterial.new()
+	material.shader = DIRECT_CUE
+	material.set_shader_parameter("cue_kind", cue_kind)
+	material.set_meta("source_colors", {"_Color":Color.WHITE})
+	entry.cue_kind = cue_kind
+	entry.size = Vector2i.ZERO
+	entry.blur = {}
+	if entry.offscreen:
+		var plane: MeshInstance3D = state.renderers.get(entry.owner_key)
+		if not is_instance_valid(plane) or plane.mesh == null:return false
+		entry.original_plane_visible = plane.visible
+		entry.original_material_override = plane.material_override
+		entry.original_state_materials = state.materials.get(entry.owner_key, [])
+		var source_material := plane.get_active_material(0)
+		if source_material is ShaderMaterial:
+			for parameter in ["_Color", "_Color2", "_SecondColor", "_Alpha", "_Intensity"]:
+				var value = source_material.get_shader_parameter(parameter)
+				if value != null:material.set_shader_parameter(parameter, value)
+			material.set_meta("source_colors", source_material.get_meta("source_colors", {}).duplicate())
+			material.render_priority = source_material.render_priority
+		plane.material_override = material
+		plane.visible = true
+		state.materials[entry.owner_key] = [material]
+		entry.plane = plane
+	else:
+		_build_plane(entry, material)
+		if not is_instance_valid(entry.plane):return false
+		material.render_priority = clampi(int((int(entry.data.get("m_RenderQueueOffset",3000))+int(entry.data.get("m_RenderQueue",0))-3000)/2),-128,126)
+	entry.cue_material = material
+	return true
+
+func _record_benchmark_capture(entry: Dictionary) -> void:
+	if _benchmark_arm.is_empty() or not DIRECT_ROUTES.has(_route_id):return
+	if entry.key != DIRECT_ROUTES[_route_id][0]:return
+	print("FX_CAPTURE_BENCH ", JSON.stringify({"arm":_benchmark_arm,"route":_route_id,"serial":owner_serial,"mode":entry.capture_mode,"viewports":entry.captures.size()*2+entry.passes.size(),"width":entry.size.x,"height":entry.size.y}))
 
 func _capture(entry: Dictionary, size: Vector2i, clear: Color, label: String) -> Dictionary:
 	var result: Dictionary = {"label":label,"mirrors":{},"size":size}
@@ -194,7 +294,7 @@ func _pass(entry: Dictionary, size: Vector2i, shader: Shader, input: Texture2D, 
 	entry.passes.append(pass_state)
 	return pass_state
 
-func _build_plane(entry: Dictionary) -> void:
+func _build_plane(entry: Dictionary, preferred_material: Material = null) -> void:
 	var d: Dictionary=entry.data; var target_key: String=entry.record.refs.get(".m_RenderToObject","")
 	if target_key!="":
 		var target: MeshInstance3D=state.renderers.get(target_key)
@@ -217,7 +317,7 @@ func _build_plane(entry: Dictionary) -> void:
 	plane.mesh=plane_mesh(float(d.get("m_Width",1)),float(d.get("m_Height",1)))
 	entry.owner.add_child(plane); plane.position=_vec(d.get("m_PositionOffset",{}))
 	plane.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	plane.material_override=_plane_material(entry,false)
+	plane.material_override=preferred_material if preferred_material!=null else _plane_material(entry,false)
 	entry.plane=plane; entry.generated=true
 	# GetRenderMaterial/Renderer material actions resolve the generated original plane.
 	state.renderers[entry.owner_key]=plane
@@ -362,8 +462,11 @@ func _capture_transform(entry: Dictionary, geometry: Node3D) -> Transform3D:
 		result.origin-=_vec(entry.data.get("m_CameraOffset",{}))
 	return Transform3D(SOURCE_TO_CAPTURE,Vector3.ZERO)*result
 
-func sync(seconds: float) -> void:
+func sync(seconds: float, source_event := "") -> void:
 	if disposed or not is_instance_valid(root) or not is_instance_valid(projection):return
+	if _source_event != source_event:
+		_source_event = source_event
+		_source_event_started = seconds
 	age=seconds; sync_count+=1
 	# Unity Start is delayed until the first active/enabled frame, then never
 	# repeated after a disable/re-enable. Allocate and enable only at that point.
@@ -384,6 +487,9 @@ func sync(seconds: float) -> void:
 			if is_instance_valid(entry.bloom_plane):entry.bloom_plane.visible=false
 			continue
 		var enabled: bool=bool(entry.data.get("m_Enabled",true)) and entry.owner.is_visible_in_tree()
+		if entry.capture_mode == "direct":
+			_sync_direct(entry, enabled)
+			continue
 		var refresh: bool=enabled and (bool(entry.data.get("m_RealtimeRender",false)) or bool(entry.dirty) or entry.updates==0)
 		for capture in entry.captures:
 			_sync_camera(entry,capture)
@@ -394,6 +500,45 @@ func sync(seconds: float) -> void:
 		if is_instance_valid(entry.bloom_plane):entry.bloom_plane.visible=enabled and float(entry.data.get("m_BloomIntensity",0))!=0.0
 		if refresh:entry.updates+=1
 		entry.dirty=false
+
+func prepare_direct_particle_solver(player: Node, source: Node3D, source_key: String) -> void:
+	if not _direct_particle_sources.has(source_key) or player.get_script() != PARTICLE_SOLVER:
+		return
+	for entry in entries:
+		if entry.capture_mode != "direct" or not is_instance_valid(entry.plane) or not is_instance_valid(entry.owner) or not is_instance_valid(entry.source):
+			continue
+		if is_instance_valid(source) and (source == entry.source or entry.source.is_ancestor_of(source)):
+			player.capture_solver_suppressed = true
+			return
+
+func _sync_direct(entry: Dictionary, enabled: bool) -> void:
+	# Source actions still own the emitter wrappers and their creation order.
+	# The direct plane replaces the isolated geometry.
+	var geometry: Array = []
+	_collect_tree(entry.source, geometry)
+	for record in state.get("particle_players", {}).values():
+		var player = record.get("node") if record is Dictionary else record
+		if not is_instance_valid(player) or not is_instance_valid(player.source_node):continue
+		if player.source_node == entry.source or entry.source.is_ancestor_of(player.source_node):
+			_collect_tree(player, geometry)
+			# Coin builds its plane on the first active frame, after Play.
+			# Existing wrappers can stop seeking only once that plane exists.
+			if not _direct_particle_sources.is_empty() and is_instance_valid(entry.plane) and player.get_script() == PARTICLE_SOLVER and not player.capture_solver_suppressed and _direct_particle_sources.has(player.source_key):
+				player.capture_solver_suppressed = true
+	for mesh in geometry:
+		if mesh == entry.plane or mesh.layers == 0:continue
+		var id: int = mesh.get_instance_id()
+		if not hidden.has(id):hidden[id] = {"node":mesh,"layers":mesh.layers}
+		mesh.layers = 0
+	if not is_instance_valid(entry.plane):return
+	if entry.generated:entry.plane.visible = enabled
+	if not enabled:return
+	var fade := 1.0
+	if int(entry.cue_kind) < 2 and _source_event in ["Death", "Cancel"]:
+		fade = 1.0 - smoothstep(0.0, 0.35, age - _source_event_started)
+	entry.cue_material.set_shader_parameter("cue_age", age)
+	entry.cue_material.set_shader_parameter("cue_fade", fade)
+	entry.updates += 1
 
 func _sync_camera(entry: Dictionary, capture: Dictionary) -> void:
 	var d: Dictionary=entry.data
@@ -484,7 +629,8 @@ func _update_parameters(entry: Dictionary) -> void:
 	var d: Dictionary=entry.data
 	if not entry.blur.is_empty():
 		entry.blur.material.set_shader_parameter("_BlurOffsets",Vector4.ONE*float(d.get("m_BlurAmount",0)))
-		entry.blur.material.set_shader_parameter("_MainTex_TexelSize",Vector4(1.0/entry.size.x,1.0/entry.size.y,0,0))
+		# Keep the authored UV radius as the raster targets get smaller.
+		entry.blur.material.set_shader_parameter("_MainTex_TexelSize",Vector4(1.0/entry.source_size.x,1.0/entry.source_size.y,0,0))
 		entry.blur.material.set_shader_parameter("_AlphaOnly",bool(d.get("m_BlurAlphaOnly",false)))
 	var plane: MeshInstance3D=entry.plane
 	if is_instance_valid(plane):
@@ -493,7 +639,7 @@ func _update_parameters(entry: Dictionary) -> void:
 	if is_instance_valid(entry.bloom_plane):_update_plane_parameters(entry.bloom_plane.material_override,entry,true)
 	for i in range(entry.get("bloom_steps",[]).size()):
 		var material: ShaderMaterial=entry.bloom_steps[i].material
-		var offsets:=bloom_offsets(entry.bloom_size,float(d.get("m_BloomBlur",0)),i+1)
+		var offsets:=bloom_offsets(entry.source_bloom_size,float(d.get("m_BloomBlur",0)),i+1)
 		material.set_shader_parameter("_OffsetA",offsets[0]); material.set_shader_parameter("_OffsetB",offsets[1])
 		material.set_shader_parameter("_Pass",1 if i==0 else 2)
 		material.set_shader_parameter("_BloomMode",1 if int(d.get("m_BloomRenderType",0))==1 else (2 if int(d.get("m_RenderMaterial",0))==5 else 0))
@@ -526,7 +672,7 @@ func set_source_property(component_key: String, property: String, value) -> bool
 		if str(entry.key)!=component_key and str(entry.key).get_slice(":",1)!=component_key:continue
 		if not entry.data.has(property):return false
 		entry.data[property]=value; entry.dirty=true
-		if property=="m_BlurAmount" and entry.blur.is_empty() and float(value)>0:
+		if entry.capture_mode!="direct" and property=="m_BlurAmount" and entry.blur.is_empty() and float(value)>0:
 			entry.blur=_pass(entry,entry.size,BLUR,entry.main_capture.combined,"SourceBlurDynamic")
 			entry.output=entry.blur.view.get_texture(); _bind_output(entry)
 		return true
@@ -546,6 +692,9 @@ func dispose() -> void:
 			entry.plane.visible=false; entry.plane.queue_free()
 			if state.renderers.get(entry.owner_key)==entry.plane:state.renderers.erase(entry.owner_key)
 		elif is_instance_valid(entry.plane):
+			if entry.capture_mode == "direct":
+				entry.plane.material_override = entry.original_material_override
+				state.materials[entry.owner_key] = entry.original_state_materials
 			for snapshot in entry.original_textures:_bind_texture(snapshot.material,snapshot.property,snapshot.texture)
 			for i in range(entry.original_materials.size()):entry.plane.set_surface_override_material(i,entry.original_materials[i])
 	for item in hidden.values():
@@ -565,6 +714,7 @@ static func _vec(value) -> Vector3:
 
 func _output_texture_is_bound(entry: Dictionary) -> bool:
 	if not is_instance_valid(entry.plane):return false
+	if entry.capture_mode == "direct":return false
 	var property:=str(entry.data.get("m_ShaderTextureName",""))
 	if property.is_empty():property="_MainTex"
 	for surface in range(entry.plane.mesh.get_surface_count()):
@@ -595,5 +745,5 @@ func get_audit() -> Dictionary:
 		var geometries:=0
 		for capture in entry.captures:geometries+=capture.mirrors.size(); viewport_count+=2
 		viewport_count+=entry.passes.size()
-		components.append({"key":entry.key,"component_class":entry.record.get("class_name","RenderToTexture"),"source_key":entry.source_key,"owner_key":entry.owner_key,"size":[entry.size.x,entry.size.y],"bloom_size":[entry.get("bloom_size",Vector2i.ZERO).x,entry.get("bloom_size",Vector2i.ZERO).y],"material_mode":entry.data.get("m_RenderMaterial"),"source_geometry_count":geometries,"updates":entry.updates,"blur":entry.data.get("m_BlurAmount"),"tint":str(entry.data.get("m_TintColor")),"realtime_translation":bool(entry.data.get("m_RealtimeTranslation",false)),"generated_plane":entry.generated,"output_texture_bound":_output_texture_is_bound(entry),"output_material":_output_material_audit(entry)})
-	return {"owner_serial":owner_serial,"disposed":disposed,"shared_capture_shader_cache":shared_shader_audit(),"component_count":entries.size(),"pending_offscreen_start":pending_offscreen.size(),"components":components,"hidden_originals":hidden.size(),"live_viewports":viewport_count,"sync_count":sync_count,"age":age,"warnings":warnings.duplicate(),"capture_material_unsupported":capture_materials.unsupported.values() if capture_materials!=null else [],"capture_material_unsupported_keys":capture_materials.unsupported.duplicate() if capture_materials!=null else {},"quality_input":quality,"rgba":"opaque RGB capture + independent source framebuffer alpha, combine raw RGBA","source_formula":"same-build CIL and DXBC","source_projection":"local XZ capture; board projection removed once, final plane inherits once","native_pixel_equivalence":false,"compatibility":["Godot rasterization and depth; not original Unity runtime","Original scene quality and lighting globals not recovered","Source format 0/7 mapped to Godot RGBA8; native texture filter/wrap/gamma defaults not independently recovered","Godot render_priority compresses original queues into available range"]}
+		components.append({"key":entry.key,"component_class":entry.record.get("class_name","RenderToTexture"),"source_key":entry.source_key,"owner_key":entry.owner_key,"size":[entry.size.x,entry.size.y],"bloom_size":[entry.get("bloom_size",Vector2i.ZERO).x,entry.get("bloom_size",Vector2i.ZERO).y],"material_mode":entry.data.get("m_RenderMaterial"),"capture_mode":entry.capture_mode,"source_geometry_count":geometries,"updates":entry.updates,"blur":entry.data.get("m_BlurAmount"),"tint":str(entry.data.get("m_TintColor")),"realtime_translation":bool(entry.data.get("m_RealtimeTranslation",false)),"generated_plane":entry.generated,"output_texture_bound":_output_texture_is_bound(entry),"output_material":_output_material_audit(entry)})
+	return {"owner_serial":owner_serial,"disposed":disposed,"shared_capture_shader_cache":shared_shader_audit(),"component_count":entries.size(),"pending_offscreen_start":pending_offscreen.size(),"components":components,"hidden_originals":hidden.size(),"live_viewports":viewport_count,"sync_count":sync_count,"age":age,"warnings":warnings.duplicate(),"capture_material_unsupported":capture_materials.unsupported.values() if capture_materials!=null else [],"capture_material_unsupported_keys":capture_materials.unsupported.duplicate() if capture_materials!=null else {},"quality_input":quality,"target_scale":target_scale,"rgba":"opaque RGB capture + independent source framebuffer alpha, combine raw RGBA","source_formula":"same-build CIL and DXBC","source_projection":"local XZ capture; board projection removed once, final plane inherits once","native_pixel_equivalence":false,"compatibility":["Godot rasterization and depth; not original Unity runtime","Original scene quality and lighting globals not recovered","Source format 0/7 mapped to Godot RGBA8; native texture filter/wrap/gamma defaults not independently recovered","Godot render_priority compresses original queues into available range"]}

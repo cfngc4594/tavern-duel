@@ -12,7 +12,7 @@ var sprite:Sprite2D
 var transmission:Node
 var background_copy:BackBufferCopy
 var source_reflection=Transform3D(Basis(Vector3.RIGHT,Vector3.UP,-Vector3.BACK),Vector3.ZERO)
-func setup(host):
+func setup(host,prepared:Dictionary={}):
  game=host
  viewport=SubViewport.new();viewport.name="SourceCoinViewport";viewport.own_world_3d=true;viewport.transparent_bg=true;viewport.msaa_3d=Viewport.MSAA_2X;viewport.render_target_update_mode=SubViewport.UPDATE_DISABLED;add_child(viewport)
  camera_root=Node3D.new();viewport.add_child(camera_root)
@@ -20,7 +20,7 @@ func setup(host):
  CameraPolicy.apply(camera,camera_root,game.presentation_size)
  camera.set_meta("source_base_fov",camera.fov)
  var env=Environment.new();env.background_mode=Environment.BG_COLOR;env.background_color=Color(0,0,0,0);env.tonemap_mode=Environment.TONE_MAPPER_LINEAR;camera.environment=env
- player=Player.new();player.transform=source_reflection;viewport.add_child(player);player.setup()
+ player=Player.new();player.transform=source_reflection;viewport.add_child(player);player.setup(prepared)
  # Same proven spatial C + RGB_T * background path as the main board.
  # A plain Sprite alpha blend would discard the source additive RGB at alpha0.
  transmission=preload("res://scripts/native_combat_transmission.gd").new();add_child(transmission);transmission.setup(viewport,player)

@@ -150,12 +150,7 @@ func assign_actor_portrait(effect: Dictionary,root_key: String,moment: float):
   for key in effects._descendants(root_key):
    var node: Node3D=effect.state.nodes.get(key)
    if not is_instance_valid(node) or not node.is_visible_in_tree():continue
-   for material in effect.state.materials.get(key,[]):
-    var material_key: String=material.get_meta("source_key","")
-    var record: Dictionary=assets.objects.get(material_key,{})
-    if str(record.get("name","")).contains("portrait"):
-     material.set_shader_parameter("_MainTex",texture)
-     assets.endgame_textures.bind_source_sampler(material,"_MainTex",texture,assets);count+=1
+   count+=assets.bind_hero_portrait(effect.state.materials.get(key,[]),texture)
  history.append({"event":"source_assign_portrait","side":side,"texture":texture_key,"materials":count,"source_scaled_age":moment})
 
 func on_source_audio_action(effect: Dictionary,action: Dictionary,moment: float):

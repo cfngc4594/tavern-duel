@@ -3,6 +3,7 @@ extends RefCounted
 ## Legacy missing bindings stay inert. Native scheduling/raster parity not claimed.
 const PATH="res://assets/native_coin/drop_source_policy.json"
 var source:Dictionary={}
+var particle_source:Dictionary={}
 var state:Dictionary={}
 var effective:Dictionary={}
 var requests:Array=[]
@@ -21,8 +22,9 @@ func inject_source_seeds(seeds:Array) -> void:
 	injected_seeds=seeds.duplicate();injected_seed_index=0
 func _start_runtime(emitter:Dictionary,clip_name:String,time:float) -> bool:
 	if not runtime_enabled or runtime_owner==null:return false
-	var data=JSON.parse_string(FileAccess.get_file_as_string("res://assets/native_coin/drop_particles.json"))
-	for original in data.emitters:
+	if particle_source.is_empty():
+		particle_source=JSON.parse_string(FileAccess.get_file_as_string("res://assets/native_coin/drop_particles.json"))
+	for original in particle_source.emitters:
 		if original.system.key!=emitter.id:continue
 		var spec=original.duplicate(true)
 		spec.node=runtime_owner.nodes[original.node_id];spec.autoplay=true
@@ -51,8 +53,9 @@ func runtime_audits() -> Array:
 	for item in runtime_emitters.values():result.append(item.solver.get_audit())
 	return result
 
-func setup() -> void:
-	source=JSON.parse_string(FileAccess.get_file_as_string(PATH))
+func setup(prepared_policy:Dictionary={},prepared_particles:Dictionary={}) -> void:
+	source=JSON.parse_string(FileAccess.get_file_as_string(PATH)) if prepared_policy.is_empty() else prepared_policy
+	particle_source=prepared_particles
 	for node in source.nodes:state[node.id]=node.active
 	# Initial activation is applied by the actual DoAnim call, not loading data.
 	for emitter in source.emitters:effective[emitter.node_id]=false

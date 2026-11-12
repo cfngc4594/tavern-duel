@@ -12,28 +12,49 @@ const SHADERS={
 }
 var records:Dictionary={}
 var textures:Dictionary={}
+var shaders:Dictionary={}
 var missing:Array=[]
 func setup():records=JSON.parse_string(FileAccess.get_file_as_string(DIR+"materials.json"))
+func prepare_assets(names:Dictionary) -> void:
+	setup()
+	for name in names:
+		var record:Dictionary=records.get(name,{})
+		if record.is_empty() or not SHADERS.has(record.shader_id):continue
+		_shader(record.shader_id)
+		for parameter in record.textures:_texture(record.textures[parameter],parameter)
+
+func _shader(id:String) -> Shader:
+	if not shaders.has(id):shaders[id]=load("res://shaders/"+SHADERS[id]+".gdshader")
+	return shaders[id]
+
+func _texture(binding:Dictionary,parameter:String) -> Texture2D:
+	if binding.file!="":
+		if not textures.has(binding.file):
+			var image:=preload("res://scripts/packed_png.gd").load_png(DIR+binding.file)
+			if image==null or image.is_empty():return null
+			textures[binding.file]=ImageTexture.create_from_image(image)
+		return textures[binding.file]
+	if parameter=="_EdgeDetailTex" and binding.path_id=="0":
+		# ShaderLab's source default is white.
+		if not textures.has("source_default_white"):
+			var white=Image.create(1,1,false,Image.FORMAT_RGBA8);white.fill(Color.WHITE)
+			textures.source_default_white=ImageTexture.create_from_image(white)
+		return textures.source_default_white
+	return null
+
 func build(material_name:String) -> ShaderMaterial:
 	if records.is_empty():setup()
 	if not records.has(material_name):missing.append(material_name);return null
 	var record:Dictionary=records[material_name]
 	if not SHADERS.has(record.shader_id):missing.append(record.shader_id);return null
-	var material=ShaderMaterial.new();material.shader=load("res://shaders/"+SHADERS[record.shader_id]+".gdshader")
+	var material=ShaderMaterial.new();material.shader=_shader(record.shader_id)
 	for name in record.floats:material.set_shader_parameter(name,record.floats[name])
 	for name in record.colors:
 		var c:Dictionary=record.colors[name];material.set_shader_parameter(name,Color(c.r,c.g,c.b,c.a))
 	for name in record.textures:
-		var binding:Dictionary=record.textures[name];var texture:Texture2D
-		if binding.file!="":
-			if not textures.has(binding.file):textures[binding.file]=ImageTexture.create_from_image(preload("res://scripts/packed_png.gd").load_png(DIR+binding.file))
-			texture=textures[binding.file]
-		elif name=="_EdgeDetailTex" and binding.path_id=="0":
-			# Original ShaderLab property defaults to white, explicit source default.
-			if not textures.has("source_default_white"):
-				var white=Image.create(1,1,false,Image.FORMAT_RGBA8);white.fill(Color.WHITE);textures.source_default_white=ImageTexture.create_from_image(white)
-			texture=textures.source_default_white
-		else:missing.append(material_name+":"+name);return null
+		var binding:Dictionary=record.textures[name]
+		var texture:=_texture(binding,name)
+		if texture==null:missing.append(material_name+":"+name);return null
 		material.set_shader_parameter(name,texture)
 		var s:Dictionary=binding.scale;var o:Dictionary=binding.offset
 		# Both decoded PNG UVs and original source ST are conjugated by Y flip.

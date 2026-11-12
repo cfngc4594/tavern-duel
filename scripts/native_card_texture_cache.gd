@@ -6,12 +6,14 @@ var startup_timing=preload("res://scripts/native_startup_timing.gd").new()
 var renderer: Node
 var enabled:=true
 var auto_bake:=true
+var pixel_digest_audit:=false
 var draw_pending:=false
 var history: Array=[]
 var errors: Array=[]
 
 func setup(owner_renderer: Node):
 	startup_timing.configure()
+	pixel_digest_audit=bool(ProjectSettings.get_setting("diagnostics/card_texture_audit",false)) or OS.get_cmdline_user_args().has("--card-texture-audit")
 	renderer=owner_renderer
 	set_process(false)
 
@@ -64,6 +66,12 @@ func _digest(image: Image) -> String:
 	var digest:=HashingContext.new();digest.start(HashingContext.HASH_SHA256)
 	digest.update(image.get_data());return digest.finish().hex_encode()
 
+func _record_pixel_audit(record: Dictionary,image: Image,texture: Texture2D,stage: String,key: String):
+	if not pixel_digest_audit:return
+	record.source_sha256=_digest(image)
+	var uploaded:=_timed_get_image(texture,stage,key)
+	if uploaded!=null and not uploaded.is_empty():record.cached_sha256=_digest(uploaded)
+
 func _snapshot(image: Image,previous: Texture2D=null) -> ImageTexture:
 	if previous is ImageTexture and previous.get_width()==image.get_width() and previous.get_height()==image.get_height() and previous.get_format()==image.get_format():
 		previous.update(image);return previous
@@ -102,13 +110,15 @@ func bake_card(key: String) -> bool:
 		var title: ImageTexture=_snapshot(title_image)
 		for consumer in consumers:consumer.set_shader_parameter("title_rt",title)
 		state.cached_title=title
-		title_record={"width":title_image.get_width(),"height":title_image.get_height(),"format":title_image.get_format(),"source_sha256":_digest(title_image),"cached_sha256":_digest(_timed_get_image(title,"title_cached_audit_readback",key)),"bindings":title_binds}
+		title_record={"width":title_image.get_width(),"height":title_image.get_height(),"format":title_image.get_format(),"bindings":title_binds}
+		_record_pixel_audit(title_record,title_image,title,"title_cached_audit_readback",key)
 		state.rt_cache_title_record=title_record
 	var output: ImageTexture=_snapshot(image,state.get("cached_output"))
 	state.cached_output=output
 	state.rt_cache_generation=int(state.get("rt_cache_generation",0))+1
 	state.rt_cache_dirty=false;state.rt_cache_baked=true
-	var record: Dictionary={"card":key,"generation":state.rt_cache_generation,"cost":state.cost,"draw_frame":Engine.get_frames_drawn(),"width":image.get_width(),"height":image.get_height(),"format":image.get_format(),"mipmaps":image.has_mipmaps(),"source_sha256":_digest(image),"cached_sha256":_digest(_timed_get_image(output,"card_cached_audit_readback",key)),"title":title_record.duplicate(true),"geometry_preserved":true,"dormant_viewport_size":[2,2]}
+	var record: Dictionary={"card":key,"generation":state.rt_cache_generation,"cost":state.cost,"draw_frame":Engine.get_frames_drawn(),"width":image.get_width(),"height":image.get_height(),"format":image.get_format(),"mipmaps":image.has_mipmaps(),"title":title_record.duplicate(true),"geometry_preserved":true,"dormant_viewport_size":[2,2]}
+	_record_pixel_audit(record,image,output,"card_cached_audit_readback",key)
 	state.rt_cache_record=record
 	# Rebind game/spatial consumers before discarding any viewport attachment.
 	# World-hand clones share the original title materials changed above; the
@@ -144,9 +154,8 @@ func get_audit() -> Dictionary:
 		var state: Dictionary=renderer.cards[key]
 		for view in _views(state,"card")+_views(state,"title"):pixels+=view.size.x*view.size.y
 		rows.append({"card":key,"baked":state.get("rt_cache_baked",false),"dirty":state.get("rt_cache_dirty",true),"generation":state.get("rt_cache_generation",0),"last":state.get("rt_cache_record",{})})
-	return {"enabled":enabled,"auto_bake":auto_bake,"cards":rows,"current_viewport_pixels":pixels,"history":history.duplicate(true),"errors":errors.duplicate(),"policy":"Actual completed source draw copied at identical dimensions and format; original source geometry retained; final sampled GPU parity requires QA"}
+	return {"enabled":enabled,"auto_bake":auto_bake,"pixel_digest_audit":pixel_digest_audit,"cards":rows,"current_viewport_pixels":pixels,"history":history.duplicate(true),"errors":errors.duplicate(),"policy":"Actual completed source draw copied at identical dimensions and format; original source geometry retained; final sampled GPU parity requires QA"}
 
-## Preserve all four original readbacks, including post-upload pixel audits.
 ## Wall time includes a possible GPU synchronization; it is not GPU timer data.
 func _timed_get_image(texture:Texture2D,stage:String,key:String)->Image:
 	startup_timing.begin(stage,key)

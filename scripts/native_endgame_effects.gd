@@ -1,6 +1,12 @@
 extends "res://scripts/native_combat_effects.gd"
 ## Only end-game-specific actions are added here. Source meshes/curves/particles,
 ## render-to-texture, material sampling and retirement keep the common renderer.
+const SKIP_FIREWORKS_SETTING: String="render_quality/android_skip_hero_death_fireworks"
+const VICTORY_FIREWORKS: Dictionary={
+ "cab-69c88b234dfa427e02d1fcee9337ae34:8498343580373100292":true,
+ "cab-69c88b234dfa427e02d1fcee9337ae34:-4725938504432212220":true,
+ "cab-69c88b234dfa427e02d1fcee9337ae34:9188079644423563012":true,
+}
 var controller: Node
 func setup_endgame(owner_game: Node,source_assets,owner_controller: Node,source_routes: Dictionary):
  controller=owner_controller
@@ -10,6 +16,14 @@ func setup_endgame(owner_game: Node,source_assets,owner_controller: Node,source_
 func _action(effect: Dictionary,action: Dictionary,moment: float):
  var params: Dictionary=action.params
  match str(action.class_name):
+  "ParticlePlayAction":
+   var key:=_target_key(effect,action)
+   if effect.route_id=="endgame_win/root" and effect.current_state=="State 3" and VICTORY_FIREWORKS.has(key) and _skip_victory_fireworks():
+    effect.events.append({"event":"decorative_firework_omitted","source_key":key,"time":moment})
+    if effect.state.get("particles",{}).has(key) and not effect.particles.has(key):
+     # Keep subsequent emitters on the same source seed as the full effect.
+     effect.omitted_fireworks=int(effect.get("omitted_fireworks",0))+1
+   else:super._action(effect,action,moment)
   "AudioPlaythroughAction","AudioPlayAction","AudioPlayClipAction","AudioStopAction","AudioVolumeFadeAction":
    controller.on_source_audio_action(effect,action,moment)
   "SetProperty":
@@ -51,6 +65,16 @@ func _action(effect: Dictionary,action: Dictionary,moment: float):
    # basic heroes/no-pet context by the normalized source schedule.
    effect.events.append({"event":"source_resolved_branch","action":action.class_name,"time":moment})
   _ :super._action(effect,action,moment)
+
+func _skip_victory_fireworks() -> bool:
+ var arm: String=ProjectSettings.get_setting("render_quality/android_fx_benchmark_arm", "")
+ if not arm.is_empty():return arm=="candidate_hero_lite"
+ return OS.has_feature("android") and bool(ProjectSettings.get_setting(SKIP_FIREWORKS_SETTING,false))
+
+func _setup_particle(node,spec: Dictionary,effect: Dictionary):
+ var omitted:=int(effect.get("omitted_fireworks",0))
+ if omitted==0:super._setup_particle(node,spec,effect)
+ else:node.setup(spec,assets,effect.projection,effect.serial*391+effect.particles.size()+omitted)
 
 func _apply_continuous(effect: Dictionary,action: Dictionary):
  if action.kind=="endgame_time_scale":

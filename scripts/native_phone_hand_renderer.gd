@@ -35,7 +35,12 @@ func make_piece(key:String,kind:String)->Dictionary:
  actor.root.transform=Transform3D.IDENTITY
  var root_object=actor.root.get_node_or_null("RootObject")
  if root_object!=null:root_object.transform=Transform3D.IDENTITY
- var piece={"root":card_root,"actor":actor,"key":key,"kind":kind,"highlight":null,"seed":selector.seed_rng.randf()}
+ # The cloned hand geometry is fixed for the lifetime of this piece.
+ var vertices:=0
+ for renderer_node in actor.renderers.values():
+  var mesh:Mesh=renderer_node.mesh
+  for surface in mesh.get_surface_count():vertices+=mesh.surface_get_array_len(surface)
+ var piece={"root":card_root,"actor":actor,"key":key,"kind":kind,"highlight":null,"seed":selector.seed_rng.randf(),"mesh_count":actor.renderers.size(),"vertex_count":vertices}
  var profile:Dictionary=renderer.profiles[kind]
  for spec in profile.renderers:
   if not spec.get("readyHighlight",false):continue
@@ -84,9 +89,8 @@ func sync():
   piece.root.visible=not card.get("source_phone_hidden",false) and not pending
   sync_highlight(piece,selector.state_for(card,i),highlight_uniforms)
   audit.cards+=1
-  for mesh in piece.actor.renderers.values():
-   audit.meshes+=1
-   for surface in mesh.mesh.get_surface_count():audit.vertices+=mesh.mesh.surface_get_array_len(surface)
+  audit.meshes+=piece.mesh_count
+  audit.vertices+=piece.vertex_count
 func _sync_battlecry_preview():
  var pending:Dictionary=game.pending_battlecry
  if pending.is_empty() or pending.has("unit"):

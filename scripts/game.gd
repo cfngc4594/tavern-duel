@@ -61,8 +61,8 @@ var native_highlight: Node = null
 var retired_native_renderers: Array = []
 var native_cost_cache: Dictionary = {}
 var native_definition_cache: Dictionary = {}
-var portraits: Array[Texture2D] = []
 var raw_portraits: Array[Texture2D] = []
+var masked_portraits: Dictionary = {}
 var missing_portrait_indices: Array[int] = []
 var unit_frames: Array[Texture2D] = []
 var card_surface: Texture2D
@@ -189,6 +189,10 @@ var native_load_guard=preload("res://scripts/native_load_guard.gd").new()
 var native_loading_error=""
 var native_loading_error_layer:CanvasLayer
 var native_initial_loading=false
+var native_scene_warmup_pending := false
+var native_scene_warmup_complete := false
+const EndgameHeroWarmup = preload("res://scripts/native_endgame_hero_warmup.gd")
+var native_endgame_hero_warmup: EndgameHeroWarmup
 var native_banner_pending=false
 var native_initial_sounds:Array=[]
 var native_load_frames=0
@@ -198,6 +202,7 @@ var source_projection
 var source_visual_delta:=0.0
 var profile_frame_stages: bool=false
 var last_frame_stages: Dictionary={}
+var android_match_benchmark: Node
 var source_mana_controller
 var source_mana_proposal_id=-1
 var source_phone_layout
@@ -214,7 +219,8 @@ func _refresh_render_resolution():
 	var output:Vector2i=get_window().size
 	var canvas:Vector2=get_viewport_rect().size
 	if canvas.x<1600.0 or canvas.y<900.0:canvas=RenderResolution.canvas_size(output)
-	var target:Vector2i=RenderResolution.target_size(output,float(ProjectSettings.get_setting("render_quality/offscreen_max_scale",1.6)))
+	var max_scale := float(ProjectSettings.get_setting_with_override("render_quality/offscreen_max_scale"))
+	var target:Vector2i=RenderResolution.target_size(output,max_scale)
 	var board_target:Vector2i=RenderResolution.scenery_size(canvas,target)
 	if target==render_target_size and canvas.is_equal_approx(presentation_size) and board_target==board_render_target_size:return
 	render_target_size=target;presentation_size=canvas;presentation_offset=(canvas-Vector2(1600,900))*0.5
@@ -297,6 +303,14 @@ func _ready():
 		if arg == "--practice": startup_mode="practice"
 		if arg == "--normal": startup_mode="normal"
 		if arg.begins_with("--state="): state_out = arg.substr(8)
+	if OS.get_cmdline_user_args().has("--android-match-benchmark"):
+		android_match_benchmark=load("res://scripts/android_match_benchmark.gd").new()
+		android_match_benchmark.setup(self)
+		add_child(android_match_benchmark)
+		if OS.get_cmdline_user_args().has("--android-fx-viewport-profile"):
+			var viewport_profile=load("res://scripts/android_fx_viewport_profile.gd").new()
+			viewport_profile.game=self
+			add_child(viewport_profile)
 	if headless: sound_enabled = false
 	else: Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	SoundManager.set_sfx_enabled(sound_enabled)
@@ -306,7 +320,10 @@ func _ready():
 		native_turn_ui=load("res://scripts/native_turn_ui.gd").new();add_child(native_turn_ui);native_turn_ui.setup(self)
 	native_startup_timing.end("turn_ui_cpu")
 	native_startup_timing.begin("start_match_cpu")
-	start_match(startup_mode)
+	if android_match_benchmark!=null:
+		start_match("normal",android_match_benchmark.first_side,android_match_benchmark.seed_value)
+	else:
+		start_match(startup_mode)
 	native_startup_timing.end("start_match_cpu")
 	native_startup_timing.begin("spatial_setup_cpu")
 	if not headless: _setup_spatial_presentation()
@@ -373,7 +390,10 @@ func _ensure_card_face_textures():
 		if not card_face_textures.has(key):missing.append(key)
 	native_card_loader.enqueue(missing)
 	if native_card_loader.has_pending():
-		if not native_initial_loading:native_load_guard.reset()
+		if not native_initial_loading:
+			native_load_guard.reset()
+			native_scene_warmup_pending=false
+			native_scene_warmup_complete=false
 		native_initial_loading=true
 		if is_instance_valid(world_canvas):world_canvas.visible=false
 		if is_instance_valid(native_turn_banner) and native_turn_banner.timeline.running:
@@ -456,16 +476,35 @@ func _advance_initial_loading(dt:float):
 	# Loading is not player turn time; do not charge wall-clock catch-up on release.
 	if flow!=null:flow.clock_last_ms=Time.get_ticks_msec()
 	_retire_native_renderers();_advance_native_card_load()
+	var had_board_probe:=false
 	if is_instance_valid(original_board_bridge):
-		var had_probe=is_instance_valid(original_board_bridge.probe)
+		had_board_probe=is_instance_valid(original_board_bridge.probe)
 		var board_advance_start:int=Time.get_ticks_usec() if native_startup_timing.enabled else 0
 		original_board_bridge.advance(dt)
-		if is_instance_valid(original_board_bridge.probe):native_startup_timing.once("board_probe_ready_observed",str(original_board_bridge.generation),{"created_this_advance":not had_probe,"advance_cpu_ms":(Time.get_ticks_usec()-board_advance_start)/1000.0 if native_startup_timing.enabled else 0.0})
+		if is_instance_valid(original_board_bridge.probe):native_startup_timing.once("board_probe_ready_observed",str(original_board_bridge.generation),{"created_this_advance":not had_board_probe,"advance_cpu_ms":(Time.get_ticks_usec()-board_advance_start)/1000.0 if native_startup_timing.enabled else 0.0})
 	if native_card_loader.has_pending() or not is_instance_valid(original_board_bridge) or not is_instance_valid(original_board_bridge.probe):return
+	if flow.mode=="normal" and flow.visuals.prepared_coin_assets.is_empty():
+		# Let the board build and card render targets settle before preparing the
+		# coin. No coin viewport or animation is created until opening deal.
+		if not had_board_probe:return
+		native_startup_timing.begin("coin_static_prepare_cpu")
+		flow.visuals.prepare_source_coin_assets()
+		native_startup_timing.end("coin_static_prepare_cpu")
+	if not native_scene_warmup_complete:
+		if not native_scene_warmup_pending:
+			# The board and spatial targets render independently of the hidden
+			# canvas. Let their first draw finish before advancing match clocks.
+			native_scene_warmup_pending=true
+			native_startup_timing.begin("scene_first_draw_wall")
+			if is_instance_valid(spatial_scene):spatial_scene.sync_from_game()
+			if is_instance_valid(native_transmission):native_transmission.sync()
+			RenderingServer.frame_post_draw.connect(_finish_scene_warmup,CONNECT_ONE_SHOT)
+		return
+	if native_endgame_hero_warmup==null and EndgameHeroWarmup.enabled():
+		native_endgame_hero_warmup=EndgameHeroWarmup.new()
+	if native_endgame_hero_warmup!=null and not native_endgame_hero_warmup.advance(self):return
 	native_startup_timing.begin("reveal_sync_cpu")
 	native_initial_loading=false
-	if is_instance_valid(spatial_scene):spatial_scene.sync_from_game()
-	if is_instance_valid(native_transmission):native_transmission.sync()
 	world_canvas.visible=true;world_canvas.queue_redraw()
 	if native_banner_pending:
 		native_banner_pending=false;_show_native_turn_banner()
@@ -474,6 +513,11 @@ func _advance_initial_loading(dt:float):
 	native_startup_timing.end("reveal_sync_cpu")
 	native_startup_timing.arm_frame_window("loading_gate_release",self)
 	native_startup_timing.mark("loading_gate_released",{"world_visible":world_canvas.visible,"phase":str(flow.phase) if flow!=null else "","note":"CPU gate only; not proof of displayed frame or mulligan input readiness"})
+
+func _finish_scene_warmup():
+	native_scene_warmup_pending=false
+	native_scene_warmup_complete=true
+	native_startup_timing.end("scene_first_draw_wall")
 
 func _on_card_texture_ready(key: String,texture: Texture2D,owner_renderer: Node):
 	# A retired practice renderer may finish after normal mode has replaced it.
@@ -515,7 +559,6 @@ func _setup_spatial_presentation():
 	spatial_view.size = board_render_target_size if source_projection!=null else render_target_size
 	spatial_view.transparent_bg = true
 	spatial_view.render_target_update_mode = SubViewport.UPDATE_ALWAYS
-	spatial_view.msaa_3d = Viewport.MSAA_4X
 	add_child(spatial_view)
 	spatial_scene = load("res://scripts/classic_spatial.gd").new()
 	spatial_view.add_child(spatial_scene)
@@ -526,7 +569,7 @@ func _setup_spatial_presentation():
 	spatial_post.draw.connect(_draw_post_spatial)
 
 func _load_portraits():
-	portraits.clear();raw_portraits.clear();missing_portrait_indices.clear()
+	masked_portraits.clear();raw_portraits.clear();missing_portrait_indices.clear()
 	# Public original paintings; source and hashes are kept with the package.
 	var ids = ["HERO_08","HERO_01","CS2_179","CS2_189","CS2_120","CS2_029","CS2_023","CS2_024","CS2_179","CS2_189","EX1_015","EX1_556","CS2_124","CS2_182","CS2_120","skele21","CS2_023","HERO_09","HERO_05","CS1h_001","DS1h_292","CS2_034","CS2_102","CS1_112","EX1_396","CS1_129","GAME_005","CS2_236","EX1_561","EX1_531","CS2_125","CS1_113","NEW1_034","CS2_172","CS2_200","CS2_186"]
 	ids.append_array(preload("res://scripts/classic_flow_cards.gd").extra_portrait_ids())
@@ -540,7 +583,6 @@ func _load_portraits():
 				missing_portrait_indices.append(raw_portraits.size())
 				push_warning("Missing original portrait: "+id)
 			raw_portraits.append(cached.raw)
-			portraits.append(cached.cropped)
 			continue
 		var missing:=false
 		var path = "res://assets/original_classic_v13/art/" + id + ".png"
@@ -555,10 +597,9 @@ func _load_portraits():
 			push_warning("Missing original portrait: "+id)
 
 		cell.convert(Image.FORMAT_RGBA8)
-		raw_portraits.append(ImageTexture.create_from_image(cell.duplicate()))
-		preload("res://scripts/portrait_circle_mask.gd").apply(cell)
-		portraits.append(ImageTexture.create_from_image(cell))
-		by_id[id]={"raw":raw_portraits.back(),"cropped":portraits.back(),"missing":missing}
+		var raw := ImageTexture.create_from_image(cell)
+		raw_portraits.append(raw)
+		by_id[id]={"raw":raw,"missing":missing}
 
 func _define_cards():
 	# IDs and values are from HearthSim's archived client CardDefs, build 1.0.0.5834.
@@ -697,7 +738,7 @@ func _add_card(key: String, animate: bool = true, source_deck_count:int=-1, sour
 	if animate and announce_now: play_sound("draw"); _event("draw_depart")
 
 func _process(dt):
-	var profile_started: int=Time.get_ticks_usec() if profile_frame_stages else 0
+	var profile_started: int=Time.get_ticks_usec() if profile_frame_stages or android_match_benchmark!=null else 0
 	var stage_started: int=profile_started
 	if profile_frame_stages:last_frame_stages={}
 	if face_render_mode:
@@ -709,6 +750,7 @@ func _process(dt):
 		if profile_frame_stages:
 			stage_started=_profile_frame_stage("initial_loading",stage_started)
 			last_frame_stages["total_usec"]=Time.get_ticks_usec()-profile_started
+		if android_match_benchmark!=null:android_match_benchmark.game_usec=Time.get_ticks_usec()-profile_started
 		return
 	_sync_native_card_costs()
 	_retire_native_renderers()
@@ -810,6 +852,7 @@ func _process(dt):
 	if profile_frame_stages:
 		stage_started=_profile_frame_stage("redraw_requests",stage_started)
 		last_frame_stages["total_usec"]=Time.get_ticks_usec()-profile_started
+	if android_match_benchmark!=null:android_match_benchmark.game_usec=Time.get_ticks_usec()-profile_started
 
 # Opt-in CPU timings; preserve original _process operation order.
 func _profile_frame_stage(label:String,started:int)->int:
@@ -2626,11 +2669,22 @@ func _arc_ellipse(center, radii, color, width):
 	draw_target.draw_polyline(points, color, width, true)
 
 func _portrait(index, rect, fallback):
-	if index < portraits.size(): draw_target.draw_texture_rect(portraits[index], rect, false)
-	else:
-		_ellipse(rect.get_center(), rect.size * 0.5, fallback.darkened(0.4))
-		_ellipse(rect.get_center() + Vector2(0, -10), rect.size * Vector2(0.22, 0.25), fallback)
-		_ellipse(rect.get_center() + Vector2(0, 32), rect.size * Vector2(0.34, 0.3), fallback.darkened(0.2))
+	# Native cards use the raw portrait and their own shader masks. Only the
+	# compatibility face drawing path needs a separately masked texture.
+	if index >= 0 and index < raw_portraits.size():
+		var raw: Texture2D = raw_portraits[index]
+		var id := raw.get_instance_id()
+		if not masked_portraits.has(id):
+			var image := raw.get_image()
+			if image != null and not image.is_empty():
+				preload("res://scripts/portrait_circle_mask.gd").apply(image)
+				masked_portraits[id] = ImageTexture.create_from_image(image)
+		if masked_portraits.has(id):
+			draw_target.draw_texture_rect(masked_portraits[id], rect, false)
+			return
+	_ellipse(rect.get_center(), rect.size * 0.5, fallback.darkened(0.4))
+	_ellipse(rect.get_center() + Vector2(0, -10), rect.size * Vector2(0.22, 0.25), fallback)
+	_ellipse(rect.get_center() + Vector2(0, 32), rect.size * Vector2(0.34, 0.3), fallback.darkened(0.2))
 
 func _gem(p, radius, color, label, text_size, text_color = Color.WHITE):
 	if classic_ui.has("cost-mana") and label != "?":

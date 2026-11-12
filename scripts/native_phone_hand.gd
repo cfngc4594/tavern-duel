@@ -104,11 +104,12 @@ func hit_card(point:Vector2)->int:
  var origin=camera.project_ray_origin(screen);origin.z=-origin.z
  var direction=camera.project_ray_normal(screen);direction.z=-direction.z
  var best=-1;var nearest=INF
+ var count=layout_count()
  for i in range(game.cards.size()):
   if game.cards[i].get("drawing",false) or game.cards[i].get("returning",false):continue
   # Original Card_Collider_Standin prefab is a child OBB, not baked-face alpha
   # or the moved/expanded preview. Pose comes from GetCardPosition/Rotation/Scale.
-  var pose=source_pose(i,layout_count())
+  var pose=source_pose(i,count)
   var b=source_basis(pose.rotation)
   var transform=Transform3D(Basis(b.x*pose.scale.x,b.y*pose.scale.y,b.z*pose.scale.z),pose.position)*standin_child
   var inverse=transform.affine_inverse()

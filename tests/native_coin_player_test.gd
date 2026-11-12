@@ -1,7 +1,11 @@
 extends SceneTree
 func _init():call_deferred("run")
 func run():
-	var player=load("res://scripts/native_coin_player.gd").new();root.add_child(player);player.setup()
+	var player_script=load("res://scripts/native_coin_player.gd")
+	var children_before:=root.get_child_count()
+	var prepared:Dictionary=player_script.prepare_assets()
+	assert(root.get_child_count()==children_before)
+	var player=player_script.new();root.add_child(player);player.setup(prepared)
 	assert(player.nodes.size()==20);assert(player.clips.size()==7);assert(player.meshes.size()==9)
 	var checked=0
 	for clip_name in player.clips:
@@ -27,5 +31,13 @@ func run():
 	assert(is_equal_approx(float(player.meshes["-7538021581227256626"].material_override.get_shader_parameter("_UnityTimeX")),0.1))
 	player.play_drop(false,false);player.advance(0.5);player.send_birth(false);player.advance(0.1)
 	assert(player.source_spawn_bone().has("m_LocalPosition"))
+	var next_player=player_script.new();root.add_child(next_player);next_player.setup(prepared)
+	assert(next_player.playing.is_empty() and next_player.birth_emitters.is_empty() and next_player.audio_history.is_empty())
+	assert(not next_player.drop_source.runtime_enabled and next_player.drop_source.requests.is_empty())
+	for key in player.meshes:
+		assert(player.meshes[key]!=next_player.meshes[key])
+		assert(player.meshes[key].mesh==next_player.meshes[key].mesh)
+		assert(player.meshes[key].material_override!=next_player.meshes[key].material_override)
+	next_player.queue_free()
 	print("NATIVE_COIN_PASS nodes=",player.nodes.size()," clips=",player.clips.size()," meshes=",player.meshes.size()," source_key_components=",checked," default_hidden=true source_port_enable=explicit material_curves=applied")
 	player.queue_free();await process_frame;quit()

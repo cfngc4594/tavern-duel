@@ -17,6 +17,7 @@ var coin_texture = load("res://assets/original_flow_v20/coin_token.webp")
 var game
 var source_opening:Node
 var source_coin:Node
+var prepared_coin_assets:Dictionary={}
 var source_birth_sent=false
 var source_card_started=false
 var coin_effects: Array = []
@@ -315,6 +316,10 @@ func _clear_source_coin():
 	if is_instance_valid(source_coin):source_coin.set_active(false);source_coin.queue_free()
 	source_coin=null;source_birth_sent=false;source_card_started=false
 
+func prepare_source_coin_assets():
+	if prepared_coin_assets.is_empty():
+		prepared_coin_assets=load("res://scripts/native_coin_player.gd").prepare_assets()
+
 func _advance_source_coin_piece(delta:float):
 	if delta<=0 or not is_instance_valid(source_coin):return
 	source_coin.advance_source(delta,float(game.elapsed))
@@ -329,7 +334,7 @@ func _tick_source_coin(delta:float):
 		return
 	if not is_instance_valid(source_coin):
 		if phase=="deal" and t+delta<0.37:return
-		source_coin=load("res://scripts/native_coin_presentation.gd").new();game.add_child(source_coin);source_coin.setup(game)
+		source_coin=load("res://scripts/native_coin_presentation.gd").new();game.add_child(source_coin);source_coin.setup(game,prepared_coin_assets)
 		source_coin.player.audio_enabled=game.sound_enabled
 		source_coin.begin_source_drop(game.flow.first_side==0)
 		if phase=="deal":delta=maxf(0,t+delta-maxf(t,0.37))

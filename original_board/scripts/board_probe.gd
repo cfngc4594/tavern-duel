@@ -2,6 +2,8 @@ extends Node3D
 ## Auditable source scene and explicitly ported controllers, not the official runtime or pixel equivalence.
 const CameraPolicy=preload("res://scripts/source_board_camera_policy.gd")
 const PHONE_DATA_PATH='res://original_board/assets/phone/scene_phone.json'
+const PHONE_MESH_BAKE_PATH='res://original_board/assets/phone/board_meshes.res'
+const PHONE_MESH_BAKE_VERSION=1
 const PHONE_INTERACTIONS_PATH='res://original_board/assets/phone/interaction_profile.json'
 const CONFIG_PATH='res://original_board/references/minimum_scene_config.json'
 const REFLECTION=Basis(Vector3(1,0,0),Vector3(0,1,0),Vector3(0,0,-1))
@@ -49,7 +51,8 @@ func _ready():
  build_scene()
  if not audit_path.is_empty():write_audit(audit_path)
 func build_scene():
- data=JSON.parse_string(FileAccess.get_file_as_string(PHONE_DATA_PATH));config=JSON.parse_string(FileAccess.get_file_as_string(CONFIG_PATH))
+ var scene_json=FileAccess.get_file_as_string(PHONE_DATA_PATH)
+ data=JSON.parse_string(scene_json);config=JSON.parse_string(FileAccess.get_file_as_string(CONFIG_PATH))
  audit.board_variant={'phone':true,'data_path':PHONE_DATA_PATH,'guid':data.get('guid',''),'selection':'Phone source scene only; layout readiness does not select another board','runtime_state':'Serialized source board; no new X/Y offsets'}
  if data.is_empty() or config.is_empty():audit.errors.append('Missing frozen source scene/config');return
  source_root=Node3D.new();source_root.name='OriginalMOPPhone';add_child(source_root)
@@ -68,7 +71,7 @@ func build_scene():
  _setup_camera()
  _setup_light()
  material_factory=load('res://original_board/scripts/board_materials.gd').new();material_factory.setup(self)
- for key in data.meshes:meshes[key]=_build_mesh(key)
+ _load_board_meshes(scene_json)
  for key in data.materials:materials[key]=material_factory.build(key)
  for row in data.nodes:
   for r in row.renderers:_build_renderer(row,r)
@@ -137,6 +140,35 @@ func _setup_light():
  source_light=DirectionalLight3D.new();source_light.name='OriginalDirectionalLight';source_nodes[l.game_object].add_child(source_light);source_light.set_meta('source_id',l.id)
  source_light.light_color=Color(d.m_Color.r,d.m_Color.g,d.m_Color.b);source_light.light_energy=float(config.lighting.directional_intensity_normal_play_target);source_light.light_cull_mask=_mapped_mask(int(d.m_CullingMask.m_Bits));source_light.shadow_enabled=false
  audit.light={'source_id':l.id,'source_settings':d,'source_transform':config.unity_light_transform,'normal_play_energy':source_light.light_energy,'serialized_energy':d.m_Intensity,'source_ambient':config.lighting.ambient_target_raw_rgba,'shadow_status':'Original shadow settings preserved; shadowmap/URP variant not implemented in unshadowed source-formula routes','shader_global_status':'MainLight direction/color translated; ambient SH projection and UnityLightData/keyword selection explicitly compatible, not recovered exact globals'}
+func _load_board_meshes(scene_json: String) -> void:
+ var baked := {}
+ if ResourceLoader.exists(PHONE_MESH_BAKE_PATH):
+  var pack := ResourceLoader.load(PHONE_MESH_BAKE_PATH)
+  if pack != null and pack.get_meta('bake_version', -1) == PHONE_MESH_BAKE_VERSION and pack.get_meta('scene_sha256', '') == scene_json.sha256_text():
+   var entries: Variant = pack.get_meta('meshes', {})
+   if entries is Dictionary:
+    baked = entries
+ var baked_count := 0
+ for key in data.meshes:
+  var entry: Variant = baked.get(key)
+  if entry is Dictionary and _use_baked_mesh(key, entry):
+   meshes[key] = entry.mesh
+   audit.meshes.append(entry.audit.duplicate(true))
+   baked_count += 1
+  else:
+   meshes[key] = _build_mesh(key)
+ audit.board_variant['baked_meshes'] = baked_count
+
+func _use_baked_mesh(key: String, entry: Dictionary) -> bool:
+ if not entry.get('mesh') is ArrayMesh or not entry.get('audit') is Dictionary:
+  return false
+ var descriptor: Dictionary = data.meshes[key]
+ if entry.audit.get('source_file') != descriptor.file or entry.audit.get('name') != descriptor.name:
+  return false
+ # Exported source files are baked together by the build. Editor previews can
+ # use changed mesh JSON immediately, before another bake is generated.
+ return not OS.has_feature('editor') or entry.get('sha256', '') == FileAccess.get_sha256(descriptor.file)
+
 func _build_mesh(key):
  var descriptor=data.meshes[key];var d=JSON.parse_string(FileAccess.get_file_as_string(descriptor.file));var mesh=ArrayMesh.new()
  var vertices=PackedVector3Array();var normals=PackedVector3Array();var uv=PackedVector2Array();var uv2=PackedVector2Array();var colors=PackedColorArray();var tangents=PackedFloat32Array()

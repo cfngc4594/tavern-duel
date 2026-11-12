@@ -3,17 +3,24 @@ extends Node3D
 ## Shader/particle compatibility is explicitly incomplete; unsupported material
 ## tracks are retained in sampled_properties, never replaced by fake sparkles.
 const DIR="res://assets/native_coin/"
+const Materials=preload("res://scripts/native_coin_materials.gd")
+const DropSource=preload("res://scripts/native_coin_drop_source.gd")
+const TRACK_GROUPS=["m_PositionCurves","m_ScaleCurves","m_RotationCurves","m_FloatCurves"]
+const SOURCE_AUDIO=["the_coin_card.wav","FX_MulliganCoin03_CoinFlip.wav","FX_GameStart21_CoinShimmer.wav","FX_GameStart25_CoinPoof_FULL.wav"]
 # CoinEffect.DoAnim addresses these specific Animation components. A clip may
 # also be listed on other serialized components without being played there.
 const CLIP_OWNERS={"CoinSpawn1_edit":"6286280539688441038","Coin2Card":"-1712065791383071538","MulliganCoinDrop1_Edit":"-7538021581227256626","MulliganCoinDrop2_Edit":"-7538021581227256626","MulliganCoinDropGo2Card":"-7538021581227256626","MulliganCoinDrop1Glow_Edit":"980181346625688782","MulliganCoinDrop2Glow_Edit":"980181346625688782"}
 signal source_event(clip_name: String, event: Dictionary)
 signal particle_requested(source_name: String, playing: bool)
 signal clip_finished(clip_name: String)
-var drop_source=preload("res://scripts/native_coin_drop_source.gd").new()
+var drop_source=DropSource.new()
 var manifest: Dictionary={}
 var nodes: Dictionary={}
 var meshes: Dictionary={}
 var clips: Dictionary={}
+var clip_plans:Dictionary={}
+var audio_streams:Dictionary={}
+var birth_source:Dictionary={}
 var sampled_properties: Dictionary={}
 var playing: Array=[]
 var unmatched_material_tracks:Dictionary={}
@@ -25,15 +32,46 @@ var audio: AudioStreamPlayer
 var loaded=false
 var coin_object_finished=false
 # Production stays hidden until projection and shader render tests are verified.
-var source_materials=preload("res://scripts/native_coin_materials.gd").new()
+var source_materials=Materials.new()
 
-func _json(path: String) -> Dictionary:
+static func _json(path: String) -> Dictionary:
 	return JSON.parse_string(FileAccess.get_file_as_string(path))
 
-func setup() -> void:
+static func prepare_assets() -> Dictionary:
+	# Share only source records and resources. Every play owns its nodes,
+	# animated material uniforms, RNG, audio players and particle instances.
+	var source_manifest:=_json(DIR+"runtime.json")
+	var source_clips:Dictionary={}
+	var plans:Dictionary={}
+	for clip_name in source_manifest.clips:
+		var clip:=_json(DIR+source_manifest.clips[clip_name].file)
+		source_clips[clip_name]=clip;plans[clip_name]=_plan_clip(clip)
+	var source_meshes:Dictionary={}
+	var material_names:Dictionary={}
+	for record in source_manifest.nodes:
+		if not record.has("mesh"):continue
+		if not source_meshes.has(record.mesh):source_meshes[record.mesh]=_mesh(record.mesh)
+		material_names[record.get("materials",[""])[0]]=true
+	var source_birth:=_json(DIR+"particles.json")
+	var source_drop:=_json(DIR+"drop_particles.json")
+	for source in [source_birth,source_drop]:
+		for emitter in source.emitters:material_names[emitter.renderer.refs.get(".m_Materials[0]","")]=true
+	var materials:=Materials.new()
+	materials.prepare_assets(material_names)
+	var streams:Dictionary={}
+	for filename in SOURCE_AUDIO:streams[filename]=AudioStreamWAV.load_from_file(DIR+filename)
+	return {"manifest":source_manifest,"clips":source_clips,"plans":plans,"meshes":source_meshes,
+		"materials":materials,"birth":source_birth,"drop":source_drop,"drop_policy":_json(DropSource.PATH),"audio":streams}
+
+func setup(prepared:Dictionary={}) -> void:
 	if loaded:return
-	manifest=_json(DIR+"runtime.json")
-	drop_source.setup()
+	var assets:=prepare_assets() if prepared.is_empty() else prepared
+	manifest=assets.manifest
+	clips=assets.clips;clip_plans=assets.plans;audio_streams=assets.audio;birth_source=assets.birth
+	source_materials.records=assets.materials.records
+	source_materials.textures=assets.materials.textures.duplicate()
+	source_materials.shaders=assets.materials.shaders.duplicate()
+	drop_source.setup(assets.drop_policy,assets.drop)
 	for record in manifest.nodes:
 		var node=Node3D.new();node.name=record.name;nodes[record.id]=node
 	for record in manifest.nodes:
@@ -42,7 +80,7 @@ func setup() -> void:
 		node.position=_vec(record.position);node.quaternion=_quat(record.rotation);node.scale=_vec(record.scale)
 		node.visible=record.active
 		if record.has("mesh"):
-			var instance=MeshInstance3D.new();instance.name="OriginalMesh";instance.mesh=_mesh(record.mesh)
+			var instance=MeshInstance3D.new();instance.name="OriginalMesh";instance.mesh=assets.meshes[record.mesh]
 			instance.visible=record.get("renderer_enabled",true);instance.set_meta("source_renderer_enabled",instance.visible);node.add_child(instance);meshes[record.id]=instance
 			var material_name:String=record.get("materials",[""])[0]
 			instance.material_override=source_materials.build(material_name)
@@ -50,15 +88,14 @@ func setup() -> void:
 			# and source texture mip sampling still need graphical validation.
 			instance.set_meta("unported_shader_hidden",true);instance.visible=false
 
-	for clip_name in manifest.clips:clips[clip_name]=_json(DIR+manifest.clips[clip_name].file)
-	audio=AudioStreamPlayer.new();audio.bus=&"SFX";audio.stream=AudioStreamWAV.load_from_file(DIR+"the_coin_card.wav");add_child(audio)
+	audio=AudioStreamPlayer.new();audio.bus=&"SFX";audio.stream=audio_streams["the_coin_card.wav"];add_child(audio)
 	drop_source.attach_runtime(self)
 	loaded=true
 
 func _vec(v: Dictionary) -> Vector3:return Vector3(v.x,v.y,v.z)
 func _quat(v: Dictionary) -> Quaternion:return Quaternion(v.x,v.y,v.z,v.w).normalized()
 
-func _mesh(filename: String) -> ArrayMesh:
+static func _mesh(filename: String) -> ArrayMesh:
 	var data=_json(DIR+filename);var arrays=[];arrays.resize(Mesh.ARRAY_MAX)
 	var vertices=PackedVector3Array();var uvs=PackedVector2Array();var normals=PackedVector3Array();var indices=PackedInt32Array()
 	for v in data.vertices:vertices.append(Vector3(v[0],v[1],v[2]))
@@ -223,22 +260,26 @@ func advance(delta: float) -> void:
 		birth_age=next_birth_age
 
 func _sample_with_activation_boundaries(clip_name:String,previous:float,time:float) -> void:
-	var boundaries:Array=[]
-	for track in clips[clip_name].m_FloatCurves:
-		if track.attribute!="m_IsActive":continue
-		for key in track.curve.m_Curve:
-			var at=float(key.time)
-			if at>previous and at<time and not boundaries.has(at):boundaries.append(at)
-	boundaries.sort()
-	for at in boundaries:sample_clip(clip_name,at)
+	for at in clip_plans[clip_name].activation_times:
+		if at>=time:break
+		if at>previous:sample_clip(clip_name,at)
 	sample_clip(clip_name,time)
 
-func clip_duration(clip_name:String) -> float:
+static func _plan_clip(clip:Dictionary) -> Dictionary:
 	var duration=0.0
-	for group in ["m_PositionCurves","m_ScaleCurves","m_RotationCurves","m_FloatCurves"]:
-		for track in clips[clip_name][group]:
-			for key in track.curve.m_Curve:duration=maxf(duration,float(key.time))
-	return duration
+	var activation_times:Array[float]=[]
+	for group in TRACK_GROUPS:
+		for track in clip[group]:
+			var activation:bool=group=="m_FloatCurves" and track.attribute=="m_IsActive"
+			for key in track.curve.m_Curve:
+				var time:=float(key.time)
+				duration=maxf(duration,time)
+				if activation and not activation_times.has(time):activation_times.append(time)
+	activation_times.sort()
+	return {"duration":duration,"activation_times":activation_times}
+
+func clip_duration(clip_name:String) -> float:
+	return clip_plans[clip_name].duration
 
 func bind_source_scene_clock(scene_seconds:float) -> void:
 	# Unity _Time.x is time/20, not the individual clip age. Caller owns this clock.
@@ -258,9 +299,8 @@ func _start_birth_particles() -> void:
 	for emitter in birth_emitters:
 		emitter.source_destroy();emitter.queue_free()
 	birth_emitters.clear();birth_age=0.0
-	var data=_json(DIR+"particles.json")
-	for i in range(data.emitters.size()):
-		var original:Dictionary=data.emitters[i]
+	for i in range(birth_source.emitters.size()):
+		var original:Dictionary=birth_source.emitters[i]
 		var spec=original.duplicate(true);spec.node=nodes[original.node_id];spec.autoplay=true
 		var emitter=load("res://scripts/native_combat_particles.gd").new()
 		emitter.setup(spec,source_materials,self,370100+i)
@@ -273,7 +313,7 @@ func particle_audit() -> Array:
 
 func _play_source_audio(filename:String,source_volume:float) -> void:
 	if not audio_enabled:return
-	var voice=AudioStreamPlayer.new();voice.bus=&"SFX";voice.stream=AudioStreamWAV.load_from_file(DIR+filename)
+	var voice=AudioStreamPlayer.new();voice.bus=&"SFX";voice.stream=audio_streams[filename]
 	voice.volume_db=linear_to_db(source_volume);voice.pitch_scale=1.0;add_child(voice)
 	voice.finished.connect(voice.queue_free);voice.play()
 	audio_history.append({"file":filename,"volume":source_volume,"pitch":1.0})

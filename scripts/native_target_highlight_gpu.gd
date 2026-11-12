@@ -105,6 +105,8 @@ func _can_defer_surface_arrays(mesh: Mesh,surface: int) -> bool:
  return mesh.get_class()=="ArrayMesh" and mesh.get_script()==null and mesh.surface_get_array_len(surface)>0
 
 func _read_surface_arrays(mesh: Mesh,surface: int) -> Array:
+ var snapshots: Array=mesh.get_meta(NativeCardRenderer.HIGHLIGHT_SURFACE_ARRAYS,[])
+ if surface>=0 and surface<snapshots.size():return snapshots[surface]
  return mesh.surface_get_arrays(surface)
 
 func _mesh_revision(mesh: Mesh) -> int:
@@ -206,12 +208,13 @@ func _create_pipeline(id,shape: Dictionary) -> Dictionary:
 func _update_pipeline(pipeline: Dictionary,shape: Dictionary) -> void:
  pipeline["source_shape"]=shape
  var specs: Array=_source_passes(shape)
+ var clipped_triangles:=_clip_triangles(shape.projected,float(shape.render_scale))
  for i in range(10):
   var p: Dictionary=pipeline.passes[i];var spec: Dictionary=specs[i]
   p.viewport.size=spec.size;p.spec=spec
   if spec.type=="constant":
    p.material.set_shader_parameter("constant_value",float(spec.value))
-   p.drawable.mesh=_canvas_mesh(shape.projected,spec.size,float(spec.ortho),float(shape.render_scale))
+   p.drawable.mesh=_canvas_mesh(clipped_triangles,spec.size,float(spec.ortho))
   else:
    p.drawable.size=Vector2(spec.size)
    var main_size: Vector2i=specs[spec.main].size
@@ -247,19 +250,29 @@ func _clip_depth(polygon: Array,bound: float,keep_greater: bool) -> Array:
   previous=current;previous_inside=inside
  return out
 
-func _canvas_mesh(sources: Array,size: Vector2i,ortho: float,render_scale: float) -> ArrayMesh:
- var vertices:=PackedVector2Array()
+func _clip_triangles(sources: Array,render_scale: float) -> PackedVector3Array:
+ # All five constant passes use the same signed depth interval and fan order.
+ var clipped:=PackedVector3Array()
+ var lower: float=-(1.0+render_scale)
+ var upper: float=-(1.0-render_scale)
  for source in sources:
   var pts: PackedVector3Array=source.points
   var indices: PackedInt32Array=source.indices
   var count: int=indices.size() if not indices.is_empty() else pts.size()
   for n in range(0,count-2,3):
    var polygon: Array=[pts[indices[n] if not indices.is_empty() else n],pts[indices[n+1] if not indices.is_empty() else n+1],pts[indices[n+2] if not indices.is_empty() else n+2]]
-   polygon=_clip_depth(polygon,-(1.0+render_scale),true)
-   polygon=_clip_depth(polygon,-(1.0-render_scale),false)
+   polygon=_clip_depth(polygon,lower,true)
+   polygon=_clip_depth(polygon,upper,false)
    for k in range(1,polygon.size()-1):
-    for point in [polygon[0],polygon[k],polygon[k+1]]:
-     vertices.append(Vector2((point.x/ortho+1.0)*0.5*size.x,(1.0-point.y/ortho)*0.5*size.y))
+    clipped.append(polygon[0])
+    clipped.append(polygon[k])
+    clipped.append(polygon[k+1])
+ return clipped
+
+func _canvas_mesh(clipped_triangles: PackedVector3Array,size: Vector2i,ortho: float) -> ArrayMesh:
+ var vertices:=PackedVector2Array()
+ for point in clipped_triangles:
+  vertices.append(Vector2((point.x/ortho+1.0)*0.5*size.x,(1.0-point.y/ortho)*0.5*size.y))
  var mesh:=ArrayMesh.new()
  if vertices.is_empty():return mesh
  var arrays: Array=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=vertices

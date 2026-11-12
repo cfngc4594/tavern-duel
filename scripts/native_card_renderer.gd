@@ -5,12 +5,14 @@ var texture_cache_controller: Node
 # Original hierarchy/geometry/UV and locale font mapping. Godot rasterization is
 # an explicit compatibility implementation, not an original Unity runtime.
 const BASE = 'res://assets/native_cards/'
+const HIGHLIGHT_SURFACE_ARRAYS := &"native_card_highlight_surface_arrays"
 var data: Dictionary
 var meshes = {}
 var materials = {}
 var textures = {}
 var profiles = {}
 var geometry_cache = {}
+var _highlight_snapshot_meshes: Dictionary = {}
 var cards = {}
 var missing_glyphs = []
 var unresolved_frames = []
@@ -58,6 +60,10 @@ func _ready():
 	for d in data.materials: materials[d.key]=d
 	for d in data.textures: textures[d.key]=load(BASE+d.resource+'.png')
 	for d in data.profiles: profiles[d.name]=d
+	if OS.has_feature("macos") and not "--mac-skip-highlight-snapshots" in OS.get_cmdline_user_args():
+		for entry in profiles.get("minion_in_play", {}).get("renderers", []):
+			if entry.enabled and not entry.get("readyHighlight", false):
+				_highlight_snapshot_meshes[entry.meshKey] = true
 	# Modern visual tags are isolated from historical rules and rich text.
 	var visual_path=BASE+'evidence/visual_binding/visual_metadata_37.json'
 	if FileAccess.file_exists(visual_path):visual_metadata=JSON.parse_string(FileAccess.get_file_as_string(visual_path)).get('cards',{})
@@ -103,6 +109,8 @@ func _geometry(d,flipped_surfaces=[]):
 	for i in range(0,d.colors.size(),4):colors.append(Color(d.colors[i]/255.0,d.colors[i+1]/255.0,d.colors[i+2]/255.0,d.colors[i+3]/255.0))
 	if colors.is_empty():
 		colors.resize(ps.size());colors.fill(Color.WHITE) # source channel absent, Unity documented white default
+	var retain_highlight_arrays := _highlight_snapshot_meshes.has(d.key)
+	var highlight_arrays: Array[Array] = []
 	var surface_index=0
 	for sub in d.submeshes:
 		var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=ps;arrays[Mesh.ARRAY_TEX_UV]=uv;arrays[Mesh.ARRAY_INDEX]=PackedInt32Array(sub.indices)
@@ -116,6 +124,17 @@ func _geometry(d,flipped_surfaces=[]):
 			arrays[Mesh.ARRAY_INDEX]=indices
 		surface_index+=1
 		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
+		if retain_highlight_arrays:
+			# Keep only the uploaded positions and winding that masks actually read.
+			# Packed arrays share storage until written, including across surfaces.
+			var source_arrays: Array = []
+			source_arrays.resize(Mesh.ARRAY_MAX)
+			source_arrays[Mesh.ARRAY_VERTEX] = arrays[Mesh.ARRAY_VERTEX]
+			source_arrays[Mesh.ARRAY_INDEX] = arrays[Mesh.ARRAY_INDEX]
+			highlight_arrays.append(source_arrays)
+	if not highlight_arrays.is_empty():
+		mesh.set_meta(HIGHLIGHT_SURFACE_ARRAYS, highlight_arrays)
+		mesh.changed.connect(mesh.remove_meta.bind(HIGHLIGHT_SURFACE_ARRAYS), CONNECT_ONE_SHOT)
 	geometry_cache[cache_key]=mesh;return mesh
 func card_raster_scale() -> float:
 	# Local high-quality RTT tier; source geometry/glyph metrics stay unchanged.

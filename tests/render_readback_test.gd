@@ -26,6 +26,13 @@ class HighlightProbe extends Highlight:
 	func _update_pipeline(_pipeline: Dictionary,_shape: Dictionary) -> void:
 		updates+=1
 
+class HighlightClipProbe extends Highlight:
+	var clip_calls := 0
+
+	func _clip_triangles(sources: Array, render_scale: float) -> PackedVector3Array:
+		clip_calls += 1
+		return super._clip_triangles(sources, render_scale)
+
 class CardRenderer extends Node:
 	signal card_texture_ready(key: String,texture: Texture2D,renderer: Node)
 	var cards: Dictionary={}
@@ -89,6 +96,114 @@ func _test_highlight():
 	assert(probe.reads==5 and probe.updates==4)
 	probe.free()
 
+func _test_card_highlight_snapshots() -> void:
+	var card_renderer := NativeCardRenderer.new()
+	var probe := Highlight.new()
+	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(
+			"res://assets/native_cards/OriginalCards/card_assets.json"))
+	for profile in data.profiles:
+		if profile.name != "minion_in_play": continue
+		for entry in profile.renderers:
+			if entry.enabled and not entry.get("readyHighlight", false):
+				card_renderer._highlight_snapshot_meshes[entry.meshKey] = true
+	var checked := 0
+	var changed_mesh: ArrayMesh
+	for descriptor in data.meshes:
+		if not card_renderer._highlight_snapshot_meshes.has(descriptor.key): continue
+		for flipped in [[], [0]]:
+			var mesh: ArrayMesh = card_renderer._geometry(descriptor, flipped)
+			assert(mesh.has_meta(NativeCardRenderer.HIGHLIGHT_SURFACE_ARRAYS))
+			for surface in mesh.get_surface_count():
+				var actual := probe._read_surface_arrays(mesh, surface)
+				var reference := mesh.surface_get_arrays(surface)
+				assert(var_to_bytes(actual[Mesh.ARRAY_VERTEX]) == var_to_bytes(reference[Mesh.ARRAY_VERTEX]))
+				assert(var_to_bytes(actual[Mesh.ARRAY_INDEX]) == var_to_bytes(reference[Mesh.ARRAY_INDEX]))
+				checked += 1
+			changed_mesh = mesh
+	assert(checked > 0)
+	changed_mesh.clear_surfaces()
+	changed_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, _triangle(8.0))
+	assert(not changed_mesh.has_meta(NativeCardRenderer.HIGHLIGHT_SURFACE_ARRAYS))
+	assert(probe._read_surface_arrays(changed_mesh, 0)[Mesh.ARRAY_VERTEX][0].x == 8.0)
+	probe.free()
+	card_renderer.free()
+
+func _reference_constant_mask(probe: Node, sources: Array, size: Vector2i, ortho: float, render_scale: float) -> ArrayMesh:
+	# Previous pipeline clipped and projected the original triangles separately for each pass.
+	var vertices := PackedVector2Array()
+	for source in sources:
+		var points: PackedVector3Array = source.points
+		var indices: PackedInt32Array = source.indices
+		var count: int = indices.size() if not indices.is_empty() else points.size()
+		for index in range(0, count - 2, 3):
+			var polygon: Array = []
+			for corner in range(3):
+				polygon.append(points[indices[index + corner] if not indices.is_empty() else index + corner])
+			polygon = probe._clip_depth(polygon, -(1.0 + render_scale), true)
+			polygon = probe._clip_depth(polygon, -(1.0 - render_scale), false)
+			for corner in range(1, polygon.size() - 1):
+				for point in [polygon[0], polygon[corner], polygon[corner + 1]]:
+					vertices.append(Vector2((point.x / ortho + 1.0) * 0.5 * size.x, (1.0 - point.y / ortho) * 0.5 * size.y))
+	var mesh := ArrayMesh.new()
+	if not vertices.is_empty():
+		var arrays: Array = []
+		arrays.resize(Mesh.ARRAY_MAX)
+		arrays[Mesh.ARRAY_VERTEX] = vertices
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays, [], {}, Mesh.ARRAY_FLAG_USE_2D_VERTICES)
+	return mesh
+
+func _test_highlight_clip() -> void:
+	var probe := HighlightClipProbe.new()
+	root.add_child(probe)
+	probe.setup(null, null)
+	# The indexed source crosses both bounds, hits both edges exactly, and has
+	# a rejected triangle. The unindexed source includes a dangling vertex.
+	var indexed := {"points": PackedVector3Array([
+		Vector3(-0.8, -0.7, -2.0), Vector3(0.9, -0.4, 0.0), Vector3(0.1, 0.8, -1.0),
+		Vector3(-0.4, -0.1, -1.5), Vector3(0.4, -0.1, -0.5), Vector3(0.0, 0.6, -1.0),
+		Vector3(-0.5, -0.5, -2.0), Vector3(0.5, -0.5, -2.0), Vector3(0.0, 0.5, -2.0),
+	]), "indices": PackedInt32Array([2, 0, 1, 3, 4, 5, 6, 7, 8])}
+	var unindexed := {"points": PackedVector3Array([
+		Vector3(-0.5, -0.7, -0.5), Vector3(0.7, -0.4, -1.8), Vector3(-0.3, 0.7, -0.7),
+		Vector3(0.0, 0.0, -1.0),
+	]), "indices": PackedInt32Array()}
+	var shape := {"projected": [indexed, unindexed], "size": Vector2i(184, 256), "base": 1.4,
+		"render_scale": 0.5, "render_size": 0.7, "clip_size": 0.8}
+	var candidate := probe._create_pipeline("candidate", shape)
+	probe._update_pipeline(candidate, shape)
+	assert(probe.clip_calls == 1)
+	var rendered := DisplayServer.get_name() != "headless"
+	var reference: Dictionary = {}
+	if rendered:
+		reference = probe._create_pipeline("reference", shape)
+		probe._update_pipeline(reference, shape)
+	var constant_passes := 0
+	for index in candidate.passes.size():
+		var pass_state: Dictionary = candidate.passes[index]
+		var spec: Dictionary = pass_state.spec
+		if spec.type != "constant": continue
+		constant_passes += 1
+		var mesh: ArrayMesh = pass_state.drawable.mesh
+		var expected := _reference_constant_mask(probe, shape.projected, spec.size, spec.ortho, shape.render_scale)
+		assert(mesh.get_surface_count() == 1 and expected.get_surface_count() == 1)
+		assert(mesh.surface_get_array_len(0) == 18)
+		assert(var_to_bytes(mesh.surface_get_arrays(0)) == var_to_bytes(expected.surface_get_arrays(0)))
+		if rendered: reference.passes[index].drawable.mesh = expected
+	assert(constant_passes == 5)
+	if rendered:
+		await RenderingServer.frame_post_draw
+		var any_mask_pixels := false
+		for index in candidate.passes.size():
+			var actual: Image = candidate.passes[index].viewport.get_texture().get_image()
+			var expected: Image = reference.passes[index].viewport.get_texture().get_image()
+			assert(actual != null and expected != null and not actual.is_empty() and not expected.is_empty())
+			assert(actual.get_size() == expected.get_size() and actual.get_format() == expected.get_format())
+			assert(actual.get_data() == expected.get_data())
+			if candidate.passes[index].spec.type == "constant":
+				any_mask_pixels = any_mask_pixels or actual.get_used_rect().has_area()
+		assert(any_mask_pixels)
+	probe.free()
+
 func _targets(renderer: CardRenderer) -> Dictionary:
 	var targets: Dictionary={}
 	for role in ["rgb","mask","merged"]:
@@ -136,7 +251,11 @@ func _test_card_cache(audit: bool):
 
 func run():
 	_test_highlight()
+	_test_card_highlight_snapshots()
+	await _test_highlight_clip()
 	_test_card_cache(false)
 	_test_card_cache(true)
+	var sound := root.get_node_or_null("SoundManager")
+	if is_instance_valid(sound):await sound.shutdown_audio()
 	print("RENDER_READBACK_PASS")
 	quit()

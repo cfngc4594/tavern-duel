@@ -156,13 +156,15 @@ func _test_highlight_clip() -> void:
 	var probe := HighlightClipProbe.new()
 	root.add_child(probe)
 	probe.setup(null, null)
-	# The indexed source crosses both bounds, hits both edges exactly, and has
-	# a rejected triangle. The unindexed source includes a dangling vertex.
+	# Cross both planes, touch both edges exactly, and cover fully inside,
+	# below and above triangles. The unindexed source has a dangling vertex.
 	var indexed := {"points": PackedVector3Array([
 		Vector3(-0.8, -0.7, -2.0), Vector3(0.9, -0.4, 0.0), Vector3(0.1, 0.8, -1.0),
 		Vector3(-0.4, -0.1, -1.5), Vector3(0.4, -0.1, -0.5), Vector3(0.0, 0.6, -1.0),
 		Vector3(-0.5, -0.5, -2.0), Vector3(0.5, -0.5, -2.0), Vector3(0.0, 0.5, -2.0),
-	]), "indices": PackedInt32Array([2, 0, 1, 3, 4, 5, 6, 7, 8])}
+		Vector3(-0.6, -0.4, -1.25), Vector3(0.5, -0.6, -0.75), Vector3(0.2, 0.5, -1.0),
+		Vector3(-0.5, -0.5, -0.4), Vector3(0.5, -0.5, 0.0), Vector3(0.0, 0.5, 0.1),
+	]), "indices": PackedInt32Array([2, 0, 1, 3, 4, 5, 6, 7, 8, 11, 10, 9, 12, 13, 14])}
 	var unindexed := {"points": PackedVector3Array([
 		Vector3(-0.5, -0.7, -0.5), Vector3(0.7, -0.4, -1.8), Vector3(-0.3, 0.7, -0.7),
 		Vector3(0.0, 0.0, -1.0),
@@ -186,7 +188,7 @@ func _test_highlight_clip() -> void:
 		var mesh: ArrayMesh = pass_state.drawable.mesh
 		var expected := _reference_constant_mask(probe, shape.projected, spec.size, spec.ortho, shape.render_scale)
 		assert(mesh.get_surface_count() == 1 and expected.get_surface_count() == 1)
-		assert(mesh.surface_get_array_len(0) == 18)
+		assert(mesh.surface_get_array_len(0) == 21)
 		assert(var_to_bytes(mesh.surface_get_arrays(0)) == var_to_bytes(expected.surface_get_arrays(0)))
 		if rendered: reference.passes[index].drawable.mesh = expected
 	assert(constant_passes == 5)

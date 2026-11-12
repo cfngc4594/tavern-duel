@@ -258,9 +258,26 @@ func _clip_triangles(sources: Array,render_scale: float) -> PackedVector3Array:
  for source in sources:
   var pts: PackedVector3Array=source.points
   var indices: PackedInt32Array=source.indices
-  var count: int=indices.size() if not indices.is_empty() else pts.size()
+  var indexed:=not indices.is_empty()
+  var count: int=indices.size() if indexed else pts.size()
   for n in range(0,count-2,3):
-   var polygon: Array=[pts[indices[n] if not indices.is_empty() else n],pts[indices[n+1] if not indices.is_empty() else n+1],pts[indices[n+2] if not indices.is_empty() else n+2]]
+   var first:=pts[indices[n] if indexed else n]
+   var second:=pts[indices[n+1] if indexed else n+1]
+   var third:=pts[indices[n+2] if indexed else n+2]
+   var first_z:=first.z
+   var second_z:=second.z
+   var third_z:=third.z
+   # A triangle inside both inclusive planes keeps its vertices and winding.
+   if (first_z>=lower and second_z>=lower and third_z>=lower
+     and first_z<=upper and second_z<=upper and third_z<=upper):
+    clipped.append(first)
+    clipped.append(second)
+    clipped.append(third)
+    continue
+   if ((first_z<lower and second_z<lower and third_z<lower)
+     or (first_z>upper and second_z>upper and third_z>upper)):
+    continue
+   var polygon: Array=[first,second,third]
    polygon=_clip_depth(polygon,lower,true)
    polygon=_clip_depth(polygon,upper,false)
    for k in range(1,polygon.size()-1):

@@ -1,0 +1,20 @@
+from pathlib import Path
+
+
+project = Path(Dir("../..").abspath)
+build = project / "build" / "native-particles"
+addon = project / "addons" / "tavern_native_particles"
+env = SConscript(str(build / "godot-cpp" / "SConstruct"), {"api_version": "4.7"})
+
+# The script reference evaluates multiply and add separately.
+env.Append(CXXFLAGS=["-ffp-contract=off"])
+if env["platform"] == "android":
+    env.Append(LINKFLAGS=["-Wl,-z,max-page-size=16384", "-Wl,--no-undefined"])
+
+objects = []
+for source in Glob("src/*.cpp"):
+    target = build / (Path(source.name).stem + env["suffix"] + env["SHOBJSUFFIX"])
+    objects.extend(env.SharedObject(str(target), source))
+
+library = env.SharedLibrary(str(addon / ("tavern_native_particles" + env["SHLIBSUFFIX"])), objects)
+Default(library)

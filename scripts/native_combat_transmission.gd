@@ -5,6 +5,7 @@ extends Node
 ## No scripts, input, audio, animations, lights or game rules are duplicated.
 ## Call sync() after ALL production scene animation/particle updates each frame.
 
+const RedrawPolicy = preload("res://scripts/native_transmission_redraw.gd")
 const COMPOSITE = preload("res://shaders/native_combat_transmission_composite.gdshader")
 const PRUNE_ADDITIVE_SETTING := "render_quality/macos_transmission_prune_additive"
 # These exact shaders use premultiplied blending, always write alpha zero,
@@ -54,6 +55,7 @@ var _geometry_nodes:Array=[]
 var _geometry_dirty:=true
 var _geometry_source_id:=0
 var _watched_tree:SceneTree
+var _redraw: RedrawPolicy
 
 static func _prune_identity_additive_enabled() -> bool:
 	if not OS.has_feature("macos") or RenderingServer.get_current_rendering_method() != "gl_compatibility":return false
@@ -63,7 +65,14 @@ static func _prune_identity_additive_enabled() -> bool:
 func _mark_geometry_dirty():
 	_geometry_dirty=true
 
-func setup(view: SubViewport, scene_root: Node = null) -> void:
+static func cache_redraw_enabled() -> bool:
+	var args := OS.get_cmdline_user_args()
+	return OS.has_feature("macos") and DisplayServer.get_name() != "headless" \
+		and RenderingServer.get_current_rendering_method() == "gl_compatibility" \
+		and not args.has("--mac-skip-transmission-redraw-cache") \
+		and (args.has("--mac-transmission-redraw-cache") or bool(ProjectSettings.get_setting("render_quality/macos_transmission_redraw_cache", false)))
+
+func setup(view: SubViewport, scene_root: Node = null, cache_redraw: bool = false) -> void:
 	source_view=view
 	source_root=scene_root if scene_root!=null else view
 	if is_instance_valid(transmission_view): return
@@ -86,6 +95,9 @@ func setup(view: SubViewport, scene_root: Node = null) -> void:
 	camera=Camera3D.new()
 	transmission_view.add_child(camera)
 	camera.current=true
+	if cache_redraw:
+		_redraw = RedrawPolicy.new()
+		_redraw.setup(transmission_view)
 	sync()
 
 func get_texture() -> ViewportTexture:
@@ -97,22 +109,35 @@ func make_composite_material() -> ShaderMaterial:
 	material.set_shader_parameter("transmission_texture",get_texture())
 	return material
 
+func redraw_audit() -> Dictionary:
+	return _redraw.audit() if _redraw != null else {}
+
 func sync() -> void:
 	if benchmark_freeze_sync or not is_instance_valid(source_view) or not is_instance_valid(source_root):return
 	var perf_started: int=Time.get_ticks_usec() if perf_measure_enabled else 0
 	frame_number+=1
 	_material_seen.clear()
+	if _redraw != null:_redraw.begin_sync()
 	identity_additive_skipped = 0
 	for property in ["size","msaa_3d","screen_space_aa","use_debanding","scaling_3d_mode","scaling_3d_scale"]:
 		var value = source_view.get(property)
-		if transmission_view.get(property)!=value:transmission_view.set(property,value)
+		if transmission_view.get(property)!=value:
+			transmission_view.set(property,value)
+			if _redraw != null:_redraw.invalidate(&"viewport")
 	var original_camera:=source_view.get_camera_3d()
 	if original_camera!=null:
 		for property in ["projection","keep_aspect","fov","size","frustum_offset","near","far","h_offset","v_offset","cull_mask"]:
 			var value = original_camera.get(property)
-			if camera.get(property)!=value:camera.set(property,value)
+			if camera.get(property)!=value:
+				camera.set(property,value)
+				if _redraw != null:_redraw.invalidate(&"camera")
 		var camera_pose := original_camera.global_transform
-		if camera.global_transform!=camera_pose:camera.global_transform=camera_pose
+		if camera.global_transform!=camera_pose:
+			camera.global_transform=camera_pose
+			if _redraw != null:_redraw.invalidate(&"camera")
+	elif _redraw != null:_redraw.require_continuous(&"camera")
+	if _redraw != null and (transmission_view.use_debanding or (is_inside_tree() and get_tree().physics_interpolation)):
+		_redraw.require_continuous(&"viewport_animation")
 	var seen: Dictionary={}
 	if is_inside_tree() and _watched_tree==null:
 		_watched_tree=get_tree();_watched_tree.tree_changed.connect(_mark_geometry_dirty)
@@ -125,12 +150,14 @@ func sync() -> void:
 	identity_additive_skipped_total += identity_additive_skipped
 	for key in mirrors.keys():
 		if not seen.has(key):
+			if _redraw != null and mirrors[key].visible:_redraw.invalidate(&"visibility")
 			mirrors[key].queue_free()
 			mirrors.erase(key)
 	for key in material_cache.keys():
 		if not _material_seen.has(key):
 			material_cache.erase(key);_uniform_values.erase(key);_invalidate_base_properties(key)
 
+	if _redraw != null:_redraw.finish_sync()
 	if perf_measure_enabled:
 		perf_samples.append({"frame":Engine.get_process_frames(),"sync":frame_number,"usec":Time.get_ticks_usec()-perf_started,"geometry":mirrors.size(),"materials":material_cache.size(),"shader_records":_source_shader_records.size(),"viewport_size":transmission_view.size,"identity_additive_skipped":identity_additive_skipped})
 		if perf_samples.size()>120:perf_samples.pop_front()
@@ -160,6 +187,7 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary, visible_layers
 		target.name="Transmission_"+str(key)
 		target.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		geometry_root.add_child(target)
+		if _redraw != null:target.visibility_changed.connect(_redraw.invalidate.bind(&"visibility"))
 		mirrors[key]=target
 	# Capture-only geometry can be visible in the scene tree while excluded
 	# from this camera. Resync its mirror when it can contribute again.
@@ -167,34 +195,70 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary, visible_layers
 		if target.visible:target.visible=false
 		return
 	var source_transform := source.global_transform
-	if target.global_transform != source_transform:target.global_transform=source_transform
+	if target.global_transform != source_transform:
+		target.global_transform=source_transform
+		if _redraw != null:_redraw.invalidate(&"geometry")
 	if not target.visible:target.visible=true
 	# These setters forward render-instance updates even for identical values.
-	if target.layers!=source.layers:target.layers=source.layers
-	if target.sorting_offset!=source.sorting_offset:target.sorting_offset=source.sorting_offset
-	if target.sorting_use_aabb_center!=source.sorting_use_aabb_center:target.sorting_use_aabb_center=source.sorting_use_aabb_center
-	if target.custom_aabb!=source.custom_aabb:target.custom_aabb=source.custom_aabb
-	if target.extra_cull_margin!=source.extra_cull_margin:target.extra_cull_margin=source.extra_cull_margin
-	if target.transparency!=source.transparency:target.transparency=source.transparency
-	if target.visibility_range_begin!=source.visibility_range_begin:target.visibility_range_begin=source.visibility_range_begin
-	if target.visibility_range_end!=source.visibility_range_end:target.visibility_range_end=source.visibility_range_end
-	if target.visibility_range_begin_margin!=source.visibility_range_begin_margin:target.visibility_range_begin_margin=source.visibility_range_begin_margin
-	if target.visibility_range_end_margin!=source.visibility_range_end_margin:target.visibility_range_end_margin=source.visibility_range_end_margin
-	if target.visibility_range_fade_mode!=source.visibility_range_fade_mode:target.visibility_range_fade_mode=source.visibility_range_fade_mode
-	if target.ignore_occlusion_culling!=source.ignore_occlusion_culling:target.ignore_occlusion_culling=source.ignore_occlusion_culling
+	if target.layers!=source.layers:
+		target.layers=source.layers
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.sorting_offset!=source.sorting_offset:
+		target.sorting_offset=source.sorting_offset
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.sorting_use_aabb_center!=source.sorting_use_aabb_center:
+		target.sorting_use_aabb_center=source.sorting_use_aabb_center
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.custom_aabb!=source.custom_aabb:
+		target.custom_aabb=source.custom_aabb
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.extra_cull_margin!=source.extra_cull_margin:
+		target.extra_cull_margin=source.extra_cull_margin
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.transparency!=source.transparency:
+		target.transparency=source.transparency
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.visibility_range_begin!=source.visibility_range_begin:
+		target.visibility_range_begin=source.visibility_range_begin
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.visibility_range_end!=source.visibility_range_end:
+		target.visibility_range_end=source.visibility_range_end
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.visibility_range_begin_margin!=source.visibility_range_begin_margin:
+		target.visibility_range_begin_margin=source.visibility_range_begin_margin
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.visibility_range_end_margin!=source.visibility_range_end_margin:
+		target.visibility_range_end_margin=source.visibility_range_end_margin
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.visibility_range_fade_mode!=source.visibility_range_fade_mode:
+		target.visibility_range_fade_mode=source.visibility_range_fade_mode
+		if _redraw != null:_redraw.invalidate(&"geometry")
+	if target.ignore_occlusion_culling!=source.ignore_occlusion_culling:
+		target.ignore_occlusion_culling=source.ignore_occlusion_culling
+		if _redraw != null:_redraw.invalidate(&"geometry")
 	if source is MeshInstance3D:
 		var source_mesh: Mesh = source.mesh
-		if target.mesh != source_mesh: target.mesh = source_mesh
+		if target.mesh != source_mesh:
+			target.mesh = source_mesh
+			if _redraw != null:_redraw.invalidate(&"geometry")
 		if source_mesh != null:
-			for surface in range(source_mesh.get_surface_count()):
+			var surfaces := source_mesh.get_surface_count()
+			if _redraw != null:_redraw.observe_mesh(source_mesh, surfaces)
+			for surface in surfaces:
 				var material := transmission_material(source.get_active_material(surface))
 				if target.get_surface_override_material(surface) != material:
 					target.set_surface_override_material(surface,material)
+					if _redraw != null:_redraw.invalidate(&"geometry")
 			for blend in range(source.get_blend_shape_count()):
 				var weight: float=source.get_blend_shape_value(blend)
-				if target.get_blend_shape_value(blend) != weight:target.set_blend_shape_value(blend,weight)
-		if source.skin!=null:_warn_once("Skinned meshes require a mirrored Skeleton3D: "+str(source.get_path()))
+				if target.get_blend_shape_value(blend) != weight:
+					target.set_blend_shape_value(blend,weight)
+					if _redraw != null:_redraw.invalidate(&"geometry")
+		if source.skin!=null:
+			if _redraw != null:_redraw.require_continuous(&"skinned_mesh")
+			_warn_once("Skinned meshes require a mirrored Skeleton3D: "+str(source.get_path()))
 	elif source is MultiMeshInstance3D:
+		if _redraw != null:_redraw.require_continuous(&"multimesh")
 		var source_multimesh: MultiMesh = source.multimesh
 		if target.multimesh != source_multimesh: target.multimesh = source_multimesh
 		var material := transmission_material(source.material_override)
@@ -202,6 +266,7 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary, visible_layers
 		if source.material_override==null and source.multimesh!=null and source.multimesh.mesh!=null:
 			_warn_once("MultiMesh without material_override requires per-surface variants: "+str(source.get_path()))
 	else:
+		if _redraw != null:_redraw.require_continuous(&"label")
 		# Compatibility Label3D fallback. Native migrated glyphs are MeshInstance3D.
 		for pname in _label_property_names(source):
 			var value = source.get(pname)
@@ -214,7 +279,9 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary, visible_layers
 		if target.outline_modulate != black_outline: target.outline_modulate = black_outline
 		if target.shaded: target.shaded = false
 	var overlay := transmission_material(source.material_overlay) if source.material_overlay!=null else null
-	if target.material_overlay!=overlay:target.material_overlay=overlay
+	if target.material_overlay!=overlay:
+		target.material_overlay=overlay
+		if _redraw != null:_redraw.invalidate(&"geometry")
 
 func _has_identity_override(source: MeshInstance3D) -> bool:
 	# The override applies to the entire mesh. Surface materials keep the
@@ -261,14 +328,18 @@ func transmission_material(source: Material) -> Material:
 		var record: Dictionary=_source_shader_record(source.shader)
 		if target.shader!=record.variant:
 			target.shader=record.variant;_uniform_values.erase(key)
+			if _redraw != null:_redraw.invalidate(&"shader")
 		if not _uniform_values.has(key):_uniform_values[key]={}
 		var previous:Dictionary=_uniform_values[key]
+		if _redraw != null and record.external_inputs:_redraw.require_continuous(&"shader_external")
 		for parameter in record.uniforms:
 			# Null removes an override; skipping it would retain a stale animated
 			# value when the production material resets to the shader default.
 			var value=source.get_shader_parameter(parameter)
+			if _redraw != null:_redraw.observe_value(value)
 			if not previous.has(parameter) or previous[parameter]!=value:
 				target.set_shader_parameter(parameter,value)
+				if _redraw != null:_redraw.invalidate(&"shader_clock" if parameter == "_ShaderTime" or parameter == "_UnityTimeX" else &"uniform")
 				previous[parameter]=value.duplicate(true) if value is Array or value is Dictionary else value
 	elif source is BaseMaterial3D:
 		# Preserve texture/vertex alpha, alpha scissor/hash, depth and culling.
@@ -278,13 +349,16 @@ func transmission_material(source: Material) -> Material:
 			var previous: Dictionary=_base_source_values[key]
 			for property in names:
 				var value=source.get(property)
+				if _redraw != null and value is Texture:_redraw.observe_value(value)
 				if not previous.has(property) or previous[property]!=value:
 					target.set(property,value)
+					if _redraw != null:_redraw.invalidate(&"base_material")
 					# Cache the SOURCE value, before transmission-only overrides below.
 					previous[property]=value.duplicate(true) if value is Array or value is Dictionary else value
 		else:
 			# Script properties can have side effects or dynamic storage semantics.
 			_invalidate_base_properties(key)
+			if _redraw != null:_redraw.require_continuous(&"scripted_material")
 			for property in source.get_property_list():
 				if (int(property.usage)&PROPERTY_USAGE_STORAGE)!=0 and property.name not in ["next_pass","resource_path","resource_name","script"]:
 					target.set(property.name,source.get(property.name))
@@ -298,11 +372,16 @@ func transmission_material(source: Material) -> Material:
 			var tint: Color=source.albedo_color
 			target.albedo_color=Color(0,0,0,tint.a)
 	else:
+		if _redraw != null:_redraw.require_continuous(&"unknown_material")
 		_warn_once("Unsupported transmission material: "+source.get_class())
 	for meta_name in source.get_meta_list():target.set_meta(meta_name,source.get_meta(meta_name))
-	if target.render_priority != source.render_priority: target.render_priority = source.render_priority
+	if target.render_priority != source.render_priority:
+		target.render_priority = source.render_priority
+		if _redraw != null:_redraw.invalidate(&"material_order")
 	var next_pass := transmission_material(source.next_pass) if source.next_pass != null else null
-	if target.next_pass != next_pass: target.next_pass = next_pass
+	if target.next_pass != next_pass:
+		target.next_pass = next_pass
+		if _redraw != null:_redraw.invalidate(&"material_order")
 	return target
 
 # Cache only derived source-shader metadata. Animated uniforms are still copied
@@ -341,6 +420,9 @@ func _base_storage_names(source: BaseMaterial3D) -> Array:
 	return names
 
 func _exit_tree() -> void:
+	if _redraw != null:
+		_redraw.close()
+		_redraw = null
 	for id in _base_property_records.keys():_invalidate_base_properties(id)
 	if is_instance_valid(_watched_tree) and _watched_tree.tree_changed.is_connected(_mark_geometry_dirty):_watched_tree.tree_changed.disconnect(_mark_geometry_dirty)
 	_watched_tree=null;_geometry_nodes.clear();_geometry_dirty=true;_geometry_source_id=0
@@ -376,6 +458,7 @@ func _source_shader_record(source_shader: Shader) -> Dictionary:
 		shader_uniform_cache[code]=_source_uniform_names(source_shader)
 	record.variant=shader_cache[code]
 	record.uniforms=shader_uniform_cache[code]
+	record.external_inputs = _redraw != null and _redraw.has_external_shader_inputs(source_shader)
 	return record
 
 # Cache only the enumerated names, not any label value. Property-list changes

@@ -33,4 +33,6 @@ if [[ "$preflight" != *TAVERN_DUEL_BACKGROUND_READY* ]]; then
 fi
 
 print -r -- 'MACOS_BENCHMARK_MODE background'
-DYLD_INSERT_LIBRARIES="$scratch/window.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}" "$godot" "$@"
+# macOS may strip DYLD_* when this launcher is invoked through /bin/zsh.
+trace_libraries=${TAVERN_DUEL_BENCHMARK_DYLIBS:-${DYLD_INSERT_LIBRARIES:-}}
+DYLD_INSERT_LIBRARIES="$scratch/window.dylib${trace_libraries:+:$trace_libraries}" "$godot" "$@"

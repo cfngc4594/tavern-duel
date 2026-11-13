@@ -4,9 +4,11 @@ extends RefCounted
 
 const OpeningPresentation = preload("res://scripts/native_opening_presentation.gd")
 const SourceProjection = preload("res://scripts/source_board_projection.gd")
+const HandHighlight = preload("res://shaders/native_hand_highlight.gdshader")
 const FLAG := "--mac-opening-deal-warmup"
 const SKIP_FLAG := "--mac-skip-opening-deal-warmup"
 const SETTING := "render_quality/macos_opening_deal_warmup"
+const HAND_SETTING := "render_quality/macos_hand_highlight_warmup"
 const STAGES := ["first_card", "choose_banner"]
 const SAMPLE_AGE := 0.04
 
@@ -16,6 +18,7 @@ var _started_usec := 0
 var _next_stage := 0
 var _finished := false
 var _preview: Node
+var _hand_glow: MeshInstance3D
 var _card: Dictionary = {}
 var _draw_callback := Callable()
 
@@ -44,7 +47,11 @@ func advance(game: Node) -> bool:
 		var projection = SourceProjection.from_game(game)
 		if projection != null:projection.copy_camera(_preview.camera)
 		game.native_startup_timing.mark("opening_deal_shader_warmup_begin", {"first_card":game.flow.opening_hand[0],"size":str(_preview.viewport.size)})
-	if _next_stage == STAGES.size():
+	if _next_stage == STAGES.size() and _hand_enabled():
+		_next_stage += 1
+		_stage_hand_highlight(game)
+		return false
+	if _next_stage >= STAGES.size():
 		cancel()
 		wall_usec = Time.get_ticks_usec() - _started_usec
 		game.native_startup_timing.mark("opening_deal_shader_warmup_end", {"wall_usec":wall_usec,"batches":completed_batches})
@@ -73,11 +80,48 @@ func cancel() -> void:
 	if _draw_callback.is_valid() and RenderingServer.frame_post_draw.is_connected(_draw_callback):
 		RenderingServer.frame_post_draw.disconnect(_draw_callback)
 	_draw_callback = Callable()
+	if is_instance_valid(_hand_glow):
+		_hand_glow.hide()
+		_hand_glow.queue_free()
+		_hand_glow = null
 	_card.clear()
 	if not is_instance_valid(_preview):return
 	_preview.dispose()
 	_preview.queue_free()
 	_preview = null
+
+static func _hand_enabled() -> bool:
+	return bool(ProjectSettings.get_setting(HAND_SETTING, false)) \
+		and not OS.get_cmdline_user_args().has("--mac-skip-hand-highlight-warmup")
+
+func _stage_hand_highlight(game: Node) -> void:
+	# The hand-ready material first appears after the first playable draw.
+	# Submit the same shader to both real board targets while the canvas is hidden.
+	var started := Time.get_ticks_usec()
+	var camera: Camera3D = game.spatial_scene.camera
+	var material := ShaderMaterial.new()
+	material.shader = HandHighlight
+	_hand_glow = MeshInstance3D.new()
+	_hand_glow.name = "HandReadyShaderWarmup"
+	_hand_glow.mesh = QuadMesh.new()
+	_hand_glow.material_override = material
+	_hand_glow.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	game.spatial_scene.add_child(_hand_glow)
+	_hand_glow.global_transform = Transform3D(camera.global_basis,
+		camera.project_position(game.spatial_view.get_visible_rect().size * 0.5, 3.0))
+	game.native_transmission.sync()
+	_draw_callback = _hand_drawn.bind(game, started)
+	RenderingServer.frame_post_draw.connect(_draw_callback, Object.CONNECT_ONE_SHOT | Object.CONNECT_DEFERRED)
+
+func _hand_drawn(game: Node, started: int) -> void:
+	_draw_callback = Callable()
+	if _finished or not is_instance_valid(game) or not is_instance_valid(_hand_glow):return
+	_hand_glow.hide()
+	_hand_glow.queue_free()
+	_hand_glow = null
+	game.native_transmission.sync()
+	completed_batches += 1
+	game.native_startup_timing.mark("hand_highlight_shader_warmup_drawn", {"wall_usec":Time.get_ticks_usec()-started})
 
 func _sample_drawn(game: Node, stage: String, started: int) -> void:
 	_draw_callback = Callable()

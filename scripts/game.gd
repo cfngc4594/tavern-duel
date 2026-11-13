@@ -203,6 +203,8 @@ const MacHistoryWarmup = preload("res://scripts/native_mac_history_warmup.gd")
 var native_mac_history_warmup: MacHistoryWarmup
 const MacHeroThawWarmup = preload("res://scripts/native_mac_hero_thaw_warmup.gd")
 var native_mac_hero_thaw_warmup: MacHeroThawWarmup
+const MacOpeningBattlecryWarmup = preload("res://scripts/native_mac_opening_battlecry_warmup.gd")
+var native_mac_opening_battlecry_warmup: MacOpeningBattlecryWarmup
 const MacResultWarmup = preload("res://scripts/native_mac_result_warmup.gd")
 var native_mac_result_warmup: MacResultWarmup
 var native_banner_pending=false
@@ -374,6 +376,7 @@ func _exit_tree():
 	if native_mac_deal_warmup != null:native_mac_deal_warmup.cancel()
 	if native_mac_history_warmup != null:native_mac_history_warmup.cancel()
 	if native_mac_hero_thaw_warmup != null:native_mac_hero_thaw_warmup.cancel()
+	if native_mac_opening_battlecry_warmup != null:native_mac_opening_battlecry_warmup.cancel()
 	if native_mac_result_warmup != null:native_mac_result_warmup.cancel()
 	if face_render_mode: return
 	native_startup_timing.stop_watching()
@@ -477,6 +480,7 @@ func _fail_native_loading(message:String):
 	if native_mac_deal_warmup != null:native_mac_deal_warmup.cancel()
 	if native_mac_history_warmup != null:native_mac_history_warmup.cancel()
 	if native_mac_hero_thaw_warmup != null:native_mac_hero_thaw_warmup.cancel()
+	if native_mac_opening_battlecry_warmup != null:native_mac_opening_battlecry_warmup.cancel()
 	if native_mac_result_warmup != null:native_mac_result_warmup.cancel()
 	if is_instance_valid(native_turn_banner):native_turn_banner.cancel_shader_warmup()
 	native_banner_pending=false;native_initial_sounds.clear()
@@ -544,6 +548,9 @@ func _advance_initial_loading(dt:float):
 	if native_mac_hero_thaw_warmup == null and MacHeroThawWarmup.enabled():
 		native_mac_hero_thaw_warmup = MacHeroThawWarmup.new()
 	if native_mac_hero_thaw_warmup != null and not native_mac_hero_thaw_warmup.advance(self):return
+	if native_mac_opening_battlecry_warmup == null and MacOpeningBattlecryWarmup.enabled():
+		native_mac_opening_battlecry_warmup = MacOpeningBattlecryWarmup.new()
+	if native_mac_opening_battlecry_warmup != null and not native_mac_opening_battlecry_warmup.advance(self):return
 	if native_mac_result_warmup == null and MacResultWarmup.enabled():
 		native_mac_result_warmup = MacResultWarmup.new()
 	if native_mac_result_warmup != null and not native_mac_result_warmup.advance(self):return
@@ -609,7 +616,7 @@ func _setup_spatial_presentation():
 	spatial_scene.setup(self, Vector2i(int(W), int(H)))
 	var transmission_script = load("res://scripts/native_combat_transmission.gd")
 	native_transmission=transmission_script.new();add_child(native_transmission)
-	native_transmission.setup(spatial_view,spatial_scene,transmission_script.cache_redraw_enabled())
+	native_transmission.setup(spatial_view,spatial_scene,transmission_script.cache_redraw_enabled(),transmission_script.change_sync_enabled())
 	var copy:=BackBufferCopy.new();copy.name="PreSpatialBackgroundCopy";copy.copy_mode=BackBufferCopy.COPY_MODE_VIEWPORT;world_canvas.add_child(copy)
 	spatial_post=Node2D.new();spatial_post.name="PostSpatialCanvas";spatial_post.material=native_transmission.make_composite_material();world_canvas.add_child(spatial_post)
 	spatial_post.draw.connect(_draw_post_spatial)

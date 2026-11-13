@@ -513,6 +513,7 @@ func _finish():
 		finish_payload["transmission"] = {
 			"pruned": game.native_transmission.prune_identity_additive,
 			"skipped_mesh_updates": game.native_transmission.identity_additive_skipped_total,
+			"change_sync": game.native_transmission.change_sync_audit(),
 		}
 	if not scenario.is_empty():
 		finish_payload.merge({"benchmark": "scenario", "scenario": scenario, "scenario_run": scenario_run})

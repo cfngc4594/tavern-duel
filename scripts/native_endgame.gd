@@ -54,7 +54,9 @@ func request(snapshot: Dictionary) -> bool:
  result=snapshot.duplicate(true);activation_count+=1
  state="waiting_source" if not source_ready else "heroes"
  history.append({"event":"terminal_result_accepted","generation":match_generation,"at":clock_seconds,"outcome":result.outcome,"dead_sides":result.dead_sides.duplicate()})
- if source_ready:_activate_heroes()
+ if source_ready:
+  if is_instance_valid(screen):screen.prepare(result,audio)
+  _activate_heroes()
  return true
 
 func _activate_heroes():
@@ -128,6 +130,7 @@ func advance(delta: float):
     history.append({"event":"hero_details_hidden","side":side,"source_scaled_age":effect.age,"wall_time":clock_seconds,"source":"GameEntity.HideOtherElements06005568 WaitForSeconds(.5)"})
  if pending_screen:
   pending_screen=false;_show_result()
+ elif state=="heroes" and is_instance_valid(screen):screen.advance_preparation()
  if is_instance_valid(screen):screen.advance(scaled)
 
 func sync():
@@ -174,9 +177,13 @@ func _show_result():
  source_time_scale=saved_time_scale
  if is_instance_valid(screen):
   state="result"
-  var show_started:=Time.get_ticks_usec() if profile_screen_construction else 0
+  var timing = game.native_startup_timing
+  var measure: bool=profile_screen_construction or (timing!=null and timing.enabled)
+  var show_started:=Time.get_ticks_usec() if measure else 0
   screen.show(result)
-  if profile_screen_construction:screen_show_usec=Time.get_ticks_usec()-show_started
+  if measure:screen_show_usec=Time.get_ticks_usec()-show_started
+  if timing!=null and timing.enabled:
+   timing.mark("result_screen_construction",{"wall_usec":screen_show_usec,"stages":screen.show_stages,"preparation":screen.preparation_audit()})
  else:state="waiting_screen"
  history.append({"event":"all_hero_spells_finished","wall_time":clock_seconds,"scaled_time":scaled_seconds,"restored_scale":source_time_scale})
 

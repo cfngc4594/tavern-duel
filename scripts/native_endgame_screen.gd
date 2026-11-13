@@ -3,8 +3,11 @@ extends Node
 ## Source CIL: 06004CB2/3, 06004D9B/C/E, 06004E56/5B; build 37.0.0.255130.
 const SourceProjection=preload("res://scripts/source_board_projection.gd")
 const Curves=preload("res://scripts/native_summon_curves.gd")
+const Preparation=preload("res://scripts/native_result_preparation.gd")
 const START_POSITION=Vector3(-7.8,8.2,-5.0)
 const PROJECTION_SCALE=0.702
+const VICTORY_ROOT="cab-69c88b234dfa427e02d1fcee9337ae34:-1629742064369035632"
+const DEFEAT_ROOT="cab-33ac7a42de0e5712cf0d622e368df924:-213764320460570505"
 signal source_event(event: String)
 signal closed
 var game: Node
@@ -35,6 +38,8 @@ var binding: Dictionary={}
 var root_key: String=""
 var source_screen: Dictionary={}
 var initial_poses: Dictionary={}
+var preparation: Preparation
+var show_stages: Dictionary={}
 
 func setup(owner_game: Node,source_assets):
  game=owner_game;assets=source_assets
@@ -44,15 +49,29 @@ func setup(owner_game: Node,source_assets):
  cull_adapter=preload("res://scripts/native_damage_splat.gd").new();add_child(cull_adapter)
  scene_binder=preload("res://scripts/native_combat_effects.gd").new();add_child(scene_binder);scene_binder.game=game
  text_renderer=preload("res://scripts/native_endgame_text.gd").new();text_renderer.setup(assets)
+ if not game.headless and Preparation.enabled():preparation=Preparation.new()
+
+func prepare(snapshot: Dictionary,audio: Node):
+ if preparation!=null and phase=="idle":
+  var source_root: String=VICTORY_ROOT if snapshot.get("outcome","")=="win" else DEFEAT_ROOT
+  preparation.begin(assets,snapshot,source_root,binding,audio)
+
+func advance_preparation():
+ if preparation!=null and phase=="idle":preparation.advance()
+
+func preparation_audit() -> Dictionary:
+ return preparation.audit() if preparation!=null else {}
 
 func show(snapshot: Dictionary) -> bool:
  if phase!="idle":return false
  result=snapshot.duplicate(true);screen_kind="victory_screen" if result.get("outcome","")=="win" else "defeat_screen"
- root_key="cab-69c88b234dfa427e02d1fcee9337ae34:-1629742064369035632" if screen_kind=="victory_screen" else "cab-33ac7a42de0e5712cf0d622e368df924:-213764320460570505"
+ root_key=VICTORY_ROOT if screen_kind=="victory_screen" else DEFEAT_ROOT
  phase="showing";age=0.0
  history.append({"event":"show","screen":screen_kind,"outcome":result.get("outcome"),"at":age})
  if not game.headless:
+  var started := Time.get_ticks_usec()
   var result_parent: Node3D=background_effect.begin()
+  started=_record_show_stage("background",started)
   if result_parent==null:result_parent=game.spatial_scene
   container=Node3D.new();container.name="OriginalEndGameScreen";result_parent.add_child(container)
   projection=Node3D.new();container.add_child(projection)
@@ -64,7 +83,10 @@ func show(snapshot: Dictionary) -> bool:
    # TwoScoop source START_POSITION and phone root override are already world
    # placement. Do not subtract the source origin or add a synthetic 10-unit lift.
    projection.basis=SourceProjection.REFLECTION;projection.position=Vector3.ZERO
-  state=assets.instantiate(root_key,projection);state.root.visible=true
+  if preparation!=null:state=preparation.take_prefab(snapshot,projection)
+  if state.is_empty():state=assets.instantiate(root_key,projection)
+  state.root.visible=true
+  started=_record_show_stage("prefab",started)
   _apply_screen_overrides(state)
   for obj in assets.objects.values():
    if obj.get("class_name","")==("VictoryScreen" if screen_kind=="victory_screen" else "DefeatScreen") and obj.refs.get(".m_GameObject")==root_key:source_screen=obj;break
@@ -80,6 +102,8 @@ func show(snapshot: Dictionary) -> bool:
    initial_poses[field]={"position":Curves.vec(tr.get("m_LocalPosition",{})),"scale":Curves.vec(tr.get("m_LocalScale",{})),"rotation_degrees":rotation.get_euler()*180.0/PI,"quaternion":rotation}
   _reset_positions()
   _setup_actor(component)
+  if preparation!=null:preparation.cancel()
+  started=_record_show_stage("actor_and_pose",started)
   # These controller children depend on real account/game rewards. They are not
   # inferred from a local practice outcome and no reward prefabs are instantiated.
   for field in [".m_noGoldRewardText",".m_gamesWonIndicator"]:
@@ -96,9 +120,18 @@ func show(snapshot: Dictionary) -> bool:
    for materials in scope.get("materials",{}).values():
     for material in materials:cull_adapter._compensate_reflected_culling(material)
   _schedule_source_show()
+  started=_record_show_stage("text_particles_and_timeline",started)
   sync();_sample()
+  _record_show_stage("first_sample",started)
+ var action_started := Time.get_ticks_usec()
  source_event.emit("Action")
+ if not game.headless:_record_show_stage("source_action",action_started)
  return true
+
+func _record_show_stage(stage: String, started: int) -> int:
+ var now := Time.get_ticks_usec()
+ show_stages[stage]=now-started
+ return now
 
 func _apply_screen_overrides(scope: Dictionary):
  # TransformOverride.Awake -> UpdateObject. Phone=1, PC=4.
@@ -126,7 +159,8 @@ func _setup_actor(component: Dictionary):
  var bone_key: String=str(component.get("refs",{}).get(".m_heroBone",""))
  var bone: Node3D=state.nodes.get(bone_key)
  if not is_instance_valid(bone):blockers.append("Original hero bone missing");return
- actor=assets.instantiate(str(binding.actor_root),scoop)
+ if preparation!=null:actor=preparation.take_actor(result,scoop)
+ if actor.is_empty():actor=assets.instantiate(str(binding.actor_root),scoop)
  _apply_screen_overrides(actor)
  actor.root.transform=bone.transform;actor.root.visible=true
  var health_key: String=binding.actor_component.refs.get(".m_healthObject","")
@@ -302,12 +336,17 @@ func sync():
  if background_effect!=null:background_effect.sync()
 
 func clear():
+ if preparation!=null:preparation.clear()
+ show_stages.clear()
  if components!=null:components.dispose(age)
  if is_instance_valid(container):container.visible=false;container.queue_free()
  container=null;projection=null;scoop=null;state={};actor={};fields.clear();initial_poses.clear();tweens.clear();particles.clear();history.clear();blockers.clear()
  result.clear();phase="idle";age=0.0;close_age=0.0;components=null
  if text_renderer!=null:text_renderer.clear()
  if background_effect!=null:background_effect.release()
+
+func _exit_tree():
+ if preparation!=null:preparation.clear()
 
 func get_audit() -> Dictionary:
  return {"phase":phase,"age":age,"screen":screen_kind,"source_root":root_key,"outcome":result.get("outcome",""),"source_mesh_renderers":state.get("renderers",{}).size(),"source_actor_renderers":actor.get("renderers",{}).size(),"source_particles":particles.size(),"can_close":can_close(),"source_tweens":tweens.size(),"dynamic_rewards_instantiated":false,"text":text_renderer.get_audit() if text_renderer!=null else {},"background":background_effect.get_audit() if background_effect!=null else {},"history":history.duplicate(true),"blockers":blockers.duplicate(),"projection":("Source phone camera; original TwoScoop world placement and enabled phone TransformOverrides" if SourceProjection.from_game(game)!=null else "Source 15-degree board basis; source origin translated to board centre, 0.702 scene scale")}

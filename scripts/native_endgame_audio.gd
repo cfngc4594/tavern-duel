@@ -35,9 +35,18 @@ func begin(new_scope: String, result: String, _dead_sides: Array = [], _heroes: 
 func screen_show():
 	if _screen_shown: return
 	_screen_shown=true
-	var kind = "victory" if outcome in ["win","victory"] else "defeat"
-	trigger(kind + "_screen_audio")
-	trigger(kind + "_screen_loop")
+	trigger(_screen_route(false))
+	trigger(_screen_route(true))
+
+func prepare_screen_stream(loop: bool) -> bool:
+	# Verify and retain only the immutable stream. Show still owns scheduling.
+	var route: Dictionary = manifest.get("routes", {}).get(_screen_route(loop), {})
+	if route.is_empty() or not is_instance_valid(manager) or _sfx_muted(str(route.get("bus", "SFX"))): return false
+	return _stream(str(route.clip)) != null
+
+func _screen_route(loop: bool) -> String:
+	var kind := "victory" if outcome in ["win", "victory"] else "defeat"
+	return kind + ("_screen_loop" if loop else "_screen_audio")
 
 func screen_close():
 	if not _screen_shown: return
@@ -80,10 +89,13 @@ func _stream(clip_name: String) -> AudioStream:
 	if stream != null: _streams[clip_name] = stream
 	return stream
 
+func _sfx_muted(bus: String) -> bool:
+	return bus == "SFX" and (not manager.sfx_enabled or manager.sfx_volume <= 0)
+
 func _play(route: Dictionary, record: Dictionary):
 	if not is_instance_valid(manager): record.status="manager_unavailable"; return
 	var bus = str(route.get("bus","SFX"))
-	if bus == "SFX" and (not manager.sfx_enabled or manager.sfx_volume <= 0): record.status="muted"; return
+	if _sfx_muted(bus): record.status="muted"; return
 	var stream = _stream(str(route.clip))
 	if stream == null: record.status="source_missing_or_hash_mismatch"; return
 	var player: AudioStreamPlayer

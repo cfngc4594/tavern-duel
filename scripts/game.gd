@@ -216,6 +216,8 @@ var source_projection
 var source_visual_delta:=0.0
 var profile_frame_stages: bool=false
 var last_frame_stages: Dictionary={}
+var profile_minion_play := false
+var minion_play_stages: Dictionary = {}
 var android_match_benchmark: Node
 var source_mana_controller
 var source_mana_proposal_id=-1
@@ -1619,20 +1621,30 @@ func play_card(index: int, target: Vector2, insertion_override: int = -1, battle
 			if not is_instance_valid(native_targeting):show_toast("精灵弓箭手：选择战吼目标 · 右键取消")
 			_event("battlecry_aim_begin");return true
 		if d.get("battlecry", "")=="damage1" and not _valid_character(battlecry_target): return false
+		var play_stage_started := 0
+		if profile_minion_play:
+			minion_play_stages.clear()
+			play_stage_started = Time.get_ticks_usec()
 		pending_battlecry.clear()
 		_spend_mana(d.cost); cards.remove_at(index); hover_card = -1; last_hover = -1
+		if profile_minion_play:play_stage_started = _profile_minion_play_stage("hand_and_mana", play_stage_started)
 		play_sound("card_play"); play_sound("mana")
+		if profile_minion_play:play_stage_started = _profile_minion_play_stage("play_audio", play_stage_started)
 		var u = _new_unit(c.key, 0, target)
 		u.scale = 1.5; allies.insert(insertion, u)
+		if profile_minion_play:play_stage_started = _profile_minion_play_stage("insert_unit", play_stage_started)
 		if source_projection!=null:
 			source_phone_layout.refresh();source_projection=source_phone_layout.context
 			camera_shake.present_source_camera(source_projection);source_phone_layout.reproject();source_phone_layout.update_units()
+		if profile_minion_play:play_stage_started = _profile_minion_play_stage("board_layout", play_stage_started)
 		# This path has just accepted a legal drop on the friendly playfield.
 		# Original DoOptionHighlight selects state8/BlueOverBoard for that condition.
 		c.source_actor_state=8
 		c.source_actor_state_basis="legal_card_over_friendly_playfield"
 		_summon_effect(u, c, battlecry_target)
+		if profile_minion_play:play_stage_started = _profile_minion_play_stage("summon", play_stage_started)
 		_log(d.name, "召唤 · " + str(d.atk) + "/" + str(d.hp), d.color)
+		if profile_minion_play:_profile_minion_play_stage("log", play_stage_started)
 	else:
 		var t={}
 		if rules.needs_target(c.key):
@@ -1648,6 +1660,11 @@ func play_card(index: int, target: Vector2, insertion_override: int = -1, battle
 		_log(d.name,"施放法术",d.color)
 	tutorial_hint = false
 	return true
+
+func _profile_minion_play_stage(label: String, started: int) -> int:
+	var now := Time.get_ticks_usec()
+	minion_play_stages[label] = now - started
+	return now
 
 func _start_battlecry_release():
 	# A provisional presentation actor, not a rule-state summon. The original

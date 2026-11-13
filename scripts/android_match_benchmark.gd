@@ -35,6 +35,9 @@ var rows: Array = []
 var stage_sums := {}
 var phase_spikes := {}
 var profiling := false
+var profile_minion_play := false
+var summon_play_stages: Dictionary = {}
+var hand_before_minion_play: Dictionary = {}
 var profile_fx_effects := false
 var fx_effect_samples := {}
 var output_path := ""
@@ -55,6 +58,8 @@ func setup(host):
 	for arg in args:
 		if arg == "--android-match-profile":
 			profiling = true
+		elif arg == "--android-match-profile-minion-play":
+			profile_minion_play = true
 		elif arg == "--android-match-quit":
 			quit_when_done = true
 		elif arg.begins_with("--android-match-output="):
@@ -390,12 +395,46 @@ func _play_card() -> bool:
 	if best_index < 0:
 		return false
 	var key: String = game.cards[best_index].key
+	var track_play := profile_minion_play and best_action == "minion"
+	var summon_script: Script
+	var previous_profile := false
+	var previous_serial := 0
+	var previous_roots: Array[int] = []
+	if track_play:
+		hand_before_minion_play = {
+			"index": best_index,
+			"cards": game.cards.map(func(card: Dictionary) -> String: return card.key),
+		}
+		previous_roots = _hand_roots()
+		game.minion_play_stages.clear()
+		game.profile_minion_play = true
+		summon_script = game.native_summon.get_script()
+		previous_profile = summon_script.profile_begin
+		previous_serial = game.native_summon.serial
+		summon_script.profile_begin = true
 	var start := Time.get_ticks_usec()
 	game.pointer = best_position
 	if not game.play_card(best_index, best_position, game.allies.size()):
 		result = "play_card_rejected"
-	_mark_action("battlecry_aim" if not game.pending_battlecry.is_empty() else best_action, key, start)
+	var finished := Time.get_ticks_usec() if track_play else 0
+	if track_play:
+		game.profile_minion_play = false
+		summon_script.profile_begin = previous_profile
+		summon_play_stages = game.native_summon.profile_rows.back() if game.native_summon.serial > previous_serial else {}
+		var current_roots := _hand_roots()
+		hand_before_minion_play["clones_created"] = current_roots.filter(func(id: int) -> bool: return id not in previous_roots).size()
+		hand_before_minion_play["clones_retired"] = previous_roots.filter(func(id: int) -> bool: return id not in current_roots).size()
+	_mark_action("battlecry_aim" if not game.pending_battlecry.is_empty() else best_action, key, start, true, finished)
 	return true
+
+func _hand_roots() -> Array[int]:
+	var ids: Array[int] = []
+	if not is_instance_valid(game.spatial_scene) or not is_instance_valid(game.spatial_scene.phone_hand_renderer):
+		return ids
+	for piece: Dictionary in game.spatial_scene.phone_hand_renderer.pieces:
+		if is_instance_valid(piece.get("root")):
+			ids.append(piece.root.get_instance_id())
+	return ids
 
 func _battlecry_target() -> Vector2:
 	for unit in game.enemies:
@@ -435,15 +474,20 @@ func _hero_power() -> bool:
 	_mark_action("hero_power", "CS2_034", start)
 	return true
 
-func _mark_action(name: String, card: String, started: int, mark_phase: bool = true):
+func _mark_action(name: String, card: String, started: int, mark_phase: bool = true, finished: int = 0):
 	action_pause = ACTION_PAUSE
 	if mark_phase:
 		activity = name
 		phase = "player_" + activity
-	emit_record("MATCH_BENCH_EVENT " + JSON.stringify({
+	var event := {
 		"frame": frame + 1, "ticks_usec": started, "action": name, "card": card,
-		"action_usec": Time.get_ticks_usec() - started, "turn": game.turn
-	}))
+		"action_usec": (finished if finished > 0 else Time.get_ticks_usec()) - started, "turn": game.turn
+	}
+	if profile_minion_play and name in ["minion", "battlecry_aim"]:
+		event["play_stages_usec"] = game.minion_play_stages
+		event["summon_begin"] = summon_play_stages
+		event["hand_before_play"] = hand_before_minion_play
+	emit_record("MATCH_BENCH_EVENT " + JSON.stringify(event))
 
 func _finish():
 	get_tree().process_frame.disconnect(_sample_previous_frame)

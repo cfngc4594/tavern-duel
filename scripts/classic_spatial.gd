@@ -99,7 +99,7 @@ func screen_to_world(screen_position: Vector2, lift: float = 0.0) -> Vector3:
 		(logical_size.y * 0.5 - screen_position.y) / PIXELS_PER_UNIT,
 		lift / PIXELS_PER_UNIT)
 
-func sync_from_game() -> void:
+func sync_from_game(summon_profile: Variant = null) -> void:
 	if not is_instance_valid(game) or not _configured:
 		return
 	_sync_projection_camera()
@@ -161,7 +161,10 @@ func sync_from_game() -> void:
 					if reused:previous.signature=signature
 				if not reused:_dispose_piece(id)
 			if not pieces.has(id):
+				var build_started := Time.get_ticks_usec() if summon_profile != null else 0
 				pieces[id] = _make_native_piece(definition, id, signature)
+				if summon_profile != null:
+					summon_profile["board_actor_usec"] = int(summon_profile.get("board_actor_usec", 0)) + Time.get_ticks_usec() - build_started
 			var piece: Dictionary = pieces[id]
 			var root: Node3D = piece.root
 			root.visible = not bool(unit.get("dead",false)) or bool(unit.get("death_pending",false))
@@ -169,7 +172,9 @@ func sync_from_game() -> void:
 	for id in pieces.keys():
 		if not live.has(id):
 			_dispose_piece(id)
+	var hand_started := Time.get_ticks_usec() if summon_profile != null else 0
 	_sync_card_renderers()
+	if summon_profile != null:summon_profile["hand_sync_usec"] = Time.get_ticks_usec() - hand_started
 
 func _sync_phone_unit(piece:Dictionary,unit:Dictionary):
 	var root:Node3D=piece.root

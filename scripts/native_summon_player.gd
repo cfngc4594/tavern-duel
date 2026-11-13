@@ -99,7 +99,7 @@ func begin(unit: Dictionary,source: Dictionary={},route: String="hand",on_settle
 
 func _build_visual(entry: Dictionary,profile_row:Dictionary={}):
 	var profile_stage:int=Time.get_ticks_usec() if profile_begin else 0
-	game.spatial_scene.sync_from_game()
+	game.spatial_scene.sync_from_game(profile_row if profile_begin else null)
 	if profile_begin:profile_row.spatial_sync_usec=Time.get_ticks_usec()-profile_stage
 	var container:=Node3D.new();container.name="OriginalSummon_%d"%entry.serial;game.spatial_scene.add_child(container);entry.container=container
 	var projection:=Node3D.new();projection.name="BoardProjectionCompatibility";container.add_child(projection)

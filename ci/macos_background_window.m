@@ -24,7 +24,7 @@ static void order_background_window(NSWindow *window, SEL action, id sender) {
     }
     window.alphaValue = 0.0;
     window.ignoresMouseEvents = YES;
-    [window orderBack:sender];
+    [window orderFrontRegardless];
 }
 
 static BOOL replace_method(Class cls, SEL selector, IMP replacement) {

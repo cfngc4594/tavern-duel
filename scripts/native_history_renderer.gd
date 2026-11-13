@@ -3,6 +3,7 @@ extends Node3D
 ## the shared source phone camera. No screenshot crops, panel drawing or name matching.
 ## Modern source client 37.0; Godot lighting/rasterization remain compatibility.
 const BASE="res://assets/native_history/"
+const Transmission=preload("res://scripts/native_combat_transmission.gd")
 const SOURCE_REFLECTION=Basis(Vector3.RIGHT,Vector3.UP,-Vector3.BACK)
 # Original CullBack render state. The Unity-to-Godot mirrored root changes
 # triangle handedness, as in native_card_renderer._geometry(flipped_surfaces).
@@ -112,6 +113,7 @@ func _make(event:Dictionary)->Dictionary:
     var mat=_material(record,tx,frame_color)
     if mat==null:root.visible=false
     else:mesh.set_surface_override_material(i,mat)
+   Transmission.register_fixed_source(mesh)
  var size=0.0;var polygon=[]
  if not collider.is_empty():
   var co=collider.data;var pose=root.global_transform.affine_inverse()*collider.node.global_transform

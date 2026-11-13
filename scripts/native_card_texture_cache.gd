@@ -108,7 +108,10 @@ func bake_card(key: String) -> bool:
 		# A failed audit can be retried after fixing its source binding.
 		if title_binds<2:errors.append("Missing source color/alpha title consumers "+key);return false
 		var title: ImageTexture=_snapshot(title_image)
-		for consumer in consumers:consumer.set_shader_parameter("title_rt",title)
+		for consumer in consumers:
+			consumer.set_shader_parameter("title_rt",title)
+			# Existing world-hand clones may share this source material.
+			consumer.emit_changed()
 		state.cached_title=title
 		title_record={"width":title_image.get_width(),"height":title_image.get_height(),"format":title_image.get_format(),"bindings":title_binds}
 		_record_pixel_audit(title_record,title_image,title,"title_cached_audit_readback",key)

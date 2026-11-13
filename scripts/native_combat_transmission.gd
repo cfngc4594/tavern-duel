@@ -8,6 +8,8 @@ extends Node
 const RedrawPolicy = preload("res://scripts/native_transmission_redraw.gd")
 const COMPOSITE = preload("res://shaders/native_combat_transmission_composite.gdshader")
 const PRUNE_ADDITIVE_SETTING := "render_quality/macos_transmission_prune_additive"
+const CHANGE_SYNC_SETTING := "render_quality/macos_transmission_change_sync"
+const FIXED_SHADER_PARAMETERS := &"transmission_fixed_shader_parameters"
 # These exact shaders use premultiplied blending, always write alpha zero,
 # and never write depth. Their transmission variants add zero radiance.
 const IDENTITY_SHADER_FILES := {
@@ -56,6 +58,13 @@ var _geometry_dirty:=true
 var _geometry_source_id:=0
 var _watched_tree:SceneTree
 var _redraw: RedrawPolicy
+var _change_sync := false
+var _fixed_shader_materials: Dictionary = {}
+var _fixed_material_seen: Dictionary = {}
+var _change_sync_hits := 0
+var _change_sync_copies := 0
+var _change_sync_hits_total := 0
+var _change_sync_copies_total := 0
 
 static func _prune_identity_additive_enabled() -> bool:
 	if not OS.has_feature("macos") or RenderingServer.get_current_rendering_method() != "gl_compatibility":return false
@@ -72,7 +81,20 @@ static func cache_redraw_enabled() -> bool:
 		and not args.has("--mac-skip-transmission-redraw-cache") \
 		and (args.has("--mac-transmission-redraw-cache") or bool(ProjectSettings.get_setting("render_quality/macos_transmission_redraw_cache", false)))
 
-func setup(view: SubViewport, scene_root: Node = null, cache_redraw: bool = false) -> void:
+static func change_sync_enabled() -> bool:
+	var args := OS.get_cmdline_user_args()
+	return OS.has_feature("macos") and DisplayServer.get_name() != "headless" \
+		and RenderingServer.get_current_rendering_method() == "gl_compatibility" \
+		and not args.has("--mac-skip-transmission-change-sync") \
+		and (args.has("--mac-transmission-change-sync") or bool(ProjectSettings.get_setting(CHANGE_SYNC_SETTING, false)))
+
+# A producer may register meshes whose bound shader parameters are initialized
+# once. Transform, visibility, geometry and active material bindings stay live.
+# A texture may update its pixels in place because both passes bind the same RID.
+static func register_fixed_source(mesh: MeshInstance3D) -> void:
+	mesh.set_meta(FIXED_SHADER_PARAMETERS, true)
+
+func setup(view: SubViewport, scene_root: Node = null, cache_redraw: bool = false, change_sync: bool = false) -> void:
 	source_view=view
 	source_root=scene_root if scene_root!=null else view
 	if is_instance_valid(transmission_view): return
@@ -98,6 +120,8 @@ func setup(view: SubViewport, scene_root: Node = null, cache_redraw: bool = fals
 	if cache_redraw:
 		_redraw = RedrawPolicy.new()
 		_redraw.setup(transmission_view)
+	# The redraw policy needs to observe the original material values each frame.
+	_change_sync = change_sync and not cache_redraw
 	sync()
 
 func get_texture() -> ViewportTexture:
@@ -112,11 +136,20 @@ func make_composite_material() -> ShaderMaterial:
 func redraw_audit() -> Dictionary:
 	return _redraw.audit() if _redraw != null else {}
 
+func change_sync_audit() -> Dictionary:
+	return {"enabled":_change_sync,"cached_materials":_fixed_shader_materials.size(),
+		"hits":_change_sync_hits,"copies":_change_sync_copies,
+		"hits_total":_change_sync_hits_total,"copies_total":_change_sync_copies_total}
+
 func sync() -> void:
 	if benchmark_freeze_sync or not is_instance_valid(source_view) or not is_instance_valid(source_root):return
 	var perf_started: int=Time.get_ticks_usec() if perf_measure_enabled else 0
 	frame_number+=1
 	_material_seen.clear()
+	if _change_sync:
+		_fixed_material_seen.clear()
+		_change_sync_hits = 0
+		_change_sync_copies = 0
 	if _redraw != null:_redraw.begin_sync()
 	identity_additive_skipped = 0
 	for property in ["size","msaa_3d","screen_space_aa","use_debanding","scaling_3d_mode","scaling_3d_scale"]:
@@ -154,12 +187,15 @@ func sync() -> void:
 			mirrors[key].queue_free()
 			mirrors.erase(key)
 	for key in material_cache.keys():
-		if not _material_seen.has(key):
+		if not _material_seen.has(key) and not _fixed_material_seen.has(key):
+			_forget_fixed_shader_material(key)
 			material_cache.erase(key);_uniform_values.erase(key);_invalidate_base_properties(key)
+	_change_sync_hits_total += _change_sync_hits
+	_change_sync_copies_total += _change_sync_copies
 
 	if _redraw != null:_redraw.finish_sync()
 	if perf_measure_enabled:
-		perf_samples.append({"frame":Engine.get_process_frames(),"sync":frame_number,"usec":Time.get_ticks_usec()-perf_started,"geometry":mirrors.size(),"materials":material_cache.size(),"shader_records":_source_shader_records.size(),"viewport_size":transmission_view.size,"identity_additive_skipped":identity_additive_skipped})
+		perf_samples.append({"frame":Engine.get_process_frames(),"sync":frame_number,"usec":Time.get_ticks_usec()-perf_started,"geometry":mirrors.size(),"materials":material_cache.size(),"shader_records":_source_shader_records.size(),"viewport_size":transmission_view.size,"identity_additive_skipped":identity_additive_skipped,"change_sync_hits":_change_sync_hits,"change_sync_copies":_change_sync_copies})
 		if perf_samples.size()>120:perf_samples.pop_front()
 
 func _collect_geometry(node: Node) -> void:
@@ -243,9 +279,10 @@ func _sync_geometry(source: GeometryInstance3D, seen: Dictionary, visible_layers
 			if _redraw != null:_redraw.invalidate(&"geometry")
 		if source_mesh != null:
 			var surfaces := source_mesh.get_surface_count()
+			var fixed_parameters := _change_sync and source.has_meta(FIXED_SHADER_PARAMETERS)
 			if _redraw != null:_redraw.observe_mesh(source_mesh, surfaces)
 			for surface in surfaces:
-				var material := transmission_material(source.get_active_material(surface))
+				var material := transmission_material(source.get_active_material(surface), fixed_parameters)
 				if target.get_surface_override_material(surface) != material:
 					target.set_surface_override_material(surface,material)
 					if _redraw != null:_redraw.invalidate(&"geometry")
@@ -305,7 +342,7 @@ static func _matches_identity_shader(shader: Shader) -> bool:
 			if code.sha256_text() == IDENTITY_SHADER_FILES[filename]:_identity_shader_codes[code] = true
 	return _identity_shader_codes.has(shader.code)
 
-func transmission_material(source: Material) -> Material:
+func transmission_material(source: Material, fixed_parameters: bool = false) -> Material:
 	if source==null:
 		# Godot's implicit material is opaque, thus T=0 with the same geometry/depth.
 		if _implicit_black_material==null:
@@ -315,7 +352,6 @@ func transmission_material(source: Material) -> Material:
 		return _implicit_black_material
 	var key:=source.get_instance_id()
 	if _material_seen.has(key) and material_cache.has(key):return material_cache[key]
-	_material_seen[key]=true
 	var target: Material=material_cache.get(key)
 	if target==null:
 		# ShaderMaterial's shallow duplicate can share parameter storage while the
@@ -324,11 +360,25 @@ func transmission_material(source: Material) -> Material:
 		target=ShaderMaterial.new() if source is ShaderMaterial else source.duplicate(false)
 		material_cache[key]=target
 	if source is ShaderMaterial:
-		if source.shader==null:return target
+		if source.shader==null:
+			_material_seen[key]=true
+			return target
 		var record: Dictionary=_source_shader_record(source.shader)
+		# Generic users of a shared material must still poll. A fixed hit keeps
+		# the cache alive without marking the material as synchronized this frame.
+		var cache_fixed := fixed_parameters and source.get_script()==null and source.next_pass==null
+		if cache_fixed and target.shader==record.variant and target.next_pass==null \
+				and target.render_priority==source.render_priority and _fixed_shader_materials.has(key):
+			_fixed_material_seen[key]=true
+			_change_sync_hits += 1
+			return target
+		_material_seen[key]=true
 		if target.shader!=record.variant:
 			target.shader=record.variant;_uniform_values.erase(key)
 			if _redraw != null:_redraw.invalidate(&"shader")
+		if cache_fixed:
+			_watch_fixed_shader_material(source, key)
+			_change_sync_copies += 1
 		if not _uniform_values.has(key):_uniform_values[key]={}
 		var previous:Dictionary=_uniform_values[key]
 		if _redraw != null and record.external_inputs:_redraw.require_continuous(&"shader_external")
@@ -342,6 +392,7 @@ func transmission_material(source: Material) -> Material:
 				if _redraw != null:_redraw.invalidate(&"shader_clock" if parameter == "_ShaderTime" or parameter == "_UnityTimeX" else &"uniform")
 				previous[parameter]=value.duplicate(true) if value is Array or value is Dictionary else value
 	elif source is BaseMaterial3D:
+		_material_seen[key]=true
 		# Preserve texture/vertex alpha, alpha scissor/hash, depth and culling.
 		if base_storage_cache_enabled and source.get_script()==null and target.get_script()==null:
 			var names:=_base_storage_names(source)
@@ -372,6 +423,7 @@ func transmission_material(source: Material) -> Material:
 			var tint: Color=source.albedo_color
 			target.albedo_color=Color(0,0,0,tint.a)
 	else:
+		_material_seen[key]=true
 		if _redraw != null:_redraw.require_continuous(&"unknown_material")
 		_warn_once("Unsupported transmission material: "+source.get_class())
 	for meta_name in source.get_meta_list():target.set_meta(meta_name,source.get_meta(meta_name))
@@ -383,6 +435,20 @@ func transmission_material(source: Material) -> Material:
 		target.next_pass = next_pass
 		if _redraw != null:_redraw.invalidate(&"material_order")
 	return target
+
+func _watch_fixed_shader_material(source: ShaderMaterial, key: int) -> void:
+	if _fixed_shader_materials.has(key):return
+	_fixed_shader_materials[key] = weakref(source)
+	source.changed.connect(_forget_fixed_shader_material.bind(key), CONNECT_ONE_SHOT)
+
+func _forget_fixed_shader_material(key: int) -> void:
+	var reference: WeakRef = _fixed_shader_materials.get(key)
+	if reference == null:return
+	_fixed_shader_materials.erase(key)
+	var source: ShaderMaterial = reference.get_ref()
+	var callback := _forget_fixed_shader_material.bind(key)
+	if is_instance_valid(source) and source.changed.is_connected(callback):
+		source.changed.disconnect(callback)
 
 # Cache only derived source-shader metadata. Animated uniforms are still copied
 # on every sync. Resource.changed invalidates the record, including same-object edits.
@@ -428,6 +494,7 @@ func _exit_tree() -> void:
 	_watched_tree=null;_geometry_nodes.clear();_geometry_dirty=true;_geometry_source_id=0
 	for id in _label_property_records.keys():_invalidate_label_properties(id)
 	for id in _source_shader_records.keys():_invalidate_source_shader(id)
+	for id in _fixed_shader_materials.keys():_forget_fixed_shader_material(id)
 
 func _get_source_shader_record(source_shader: Shader) -> Dictionary:
 	var id: int=source_shader.get_instance_id()
@@ -539,5 +606,5 @@ func _warn_once(message: String) -> void:
 		push_warning(message)
 
 func audit() -> Dictionary:
-	return {"geometry_count":mirrors.size(),"material_count":material_cache.size(),"shader_count":shader_cache.size(),"warnings":warnings.duplicate(),"frame":frame_number,"equation":"C + RGB_T * background","copies_game_logic":false,"prune_identity_additive":prune_identity_additive,"identity_additive_skipped":identity_additive_skipped,"identity_additive_skipped_total":identity_additive_skipped_total}
+	return {"geometry_count":mirrors.size(),"material_count":material_cache.size(),"shader_count":shader_cache.size(),"warnings":warnings.duplicate(),"frame":frame_number,"equation":"C + RGB_T * background","copies_game_logic":false,"prune_identity_additive":prune_identity_additive,"identity_additive_skipped":identity_additive_skipped,"identity_additive_skipped_total":identity_additive_skipped_total,"change_sync":change_sync_audit()}
 

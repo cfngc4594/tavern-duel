@@ -2,6 +2,7 @@ extends Node3D
 ## ZoneHand enemy branch + Card_Hidden original mesh and default card-back material.
 ## Hidden ordinary cards only. Revealed/opponent spectator state is not inferred.
 const Hand=preload("res://scripts/native_phone_hand.gd")
+const Transmission=preload("res://scripts/native_combat_transmission.gd")
 var game
 var row:Dictionary
 var raw:Array
@@ -68,6 +69,7 @@ func make_piece()->Dictionary:
   var tex=renderer.textures[md.textures[0].key]
   var material=renderer._world_character_material(md,tex)
   var mi=MeshInstance3D.new();mi.mesh=renderer._geometry(renderer.meshes[mesh_key]);mi.material_override=material;container.add_child(mi);result.meshes.append(mi)
+  Transmission.register_fixed_source(mi)
   if material==null:blockers.append("Unported Card_Hidden material "+material_id);holder.visible=false
  return result
 func enqueue_draw(index:int,deck_count:int,tracker:int,ticket:int=-1):

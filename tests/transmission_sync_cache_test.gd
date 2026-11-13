@@ -58,6 +58,7 @@ func run():
  base_material_values(tx)
  await geometry_lifecycle(tx,view,scene)
  identity_additive_geometry(tx,scene)
+ fixed_shader_parameters(view,scene)
  print("TRANSMISSION_SYNC_CACHE_PASS uniforms/null/texture/next-pass/shader edits, source immutability, hidden reveal and free cleanup")
  tx.queue_free();view.queue_free();quit()
 func geometry_lifecycle(tx,view,scene):
@@ -132,6 +133,51 @@ func identity_additive_geometry(tx,scene):
  assert(tx.mirrors[key].visible and tx.audit().identity_additive_skipped==0 and tx.audit().identity_additive_skipped_total>=3)
  source.free();tx.sync();assert(tx.mirrors.is_empty())
  print("TRANSMISSION_IDENTITY_ADDITIVE_PASS exact whole-mesh override, surface/overlay/next-pass fallback, shader edit invalidation and opt-out")
+func fixed_shader_parameters(view,scene):
+ var source=MeshInstance3D.new();source.mesh=QuadMesh.new();scene.add_child(source)
+ var original=material();original.set_shader_parameter("amount",.6);source.material_override=original
+ var image=Image.create_empty(2,2,false,Image.FORMAT_RGBA8)
+ var texture=ImageTexture.create_from_image(image);original.set_shader_parameter("tex",texture)
+ Transmission.register_fixed_source(source)
+ var baseline=Transmission.new();root.add_child(baseline);baseline.setup(view,scene)
+ var tx=Transmission.new();root.add_child(tx);tx.setup(view,scene,false,true)
+ var key=source.get_instance_id();var material_key=original.get_instance_id()
+ var mirror=tx.mirrors[key];var target=tx.material_cache[material_key]
+ assert(tx.change_sync_audit().copies==1 and target.get_shader_parameter("amount")==.6)
+ tx.sync();assert(tx.change_sync_audit().hits==1 and tx.change_sync_audit().copies==0)
+ assert(target.get_shader_parameter("tex")==texture)
+ image.fill(Color(1,1,1,.5));texture.update(image)
+ source.position=Vector3(3,2,1);source.sorting_offset=2.5;source.layers=2
+ source.mesh=SphereMesh.new()
+ tx.sync();baseline.sync()
+ assert(mirror.mesh==baseline.mirrors[key].mesh and mirror.global_transform==baseline.mirrors[key].global_transform)
+ assert(mirror.sorting_offset==baseline.mirrors[key].sorting_offset and mirror.layers==baseline.mirrors[key].layers)
+ assert(target.get_shader_parameter("tex")==baseline.material_cache[material_key].get_shader_parameter("tex"))
+ original.set_shader_parameter("amount",.2);original.emit_changed()
+ tx.sync();assert(tx.change_sync_audit().copies==1 and target.get_shader_parameter("amount")==.2)
+ original.render_priority=7;tx.sync();assert(target.render_priority==7)
+ var variant=target.shader
+ original.shader.code=CODE.replace("uniform float amount=0.25;","uniform float amount=0.25; uniform float extra=0.1;")
+ original.set_shader_parameter("extra",.73);tx.sync()
+ assert(target.shader!=variant and target.get_shader_parameter("extra")==.73)
+ # A later untagged geometry sharing this material still forces normal polling.
+ var dynamic=MeshInstance3D.new();dynamic.mesh=QuadMesh.new();dynamic.material_override=original;scene.add_child(dynamic)
+ original.set_shader_parameter("amount",.3);tx.sync()
+ assert(target.get_shader_parameter("amount")==.3)
+ dynamic.free()
+ source.material_overlay=material();source.material_overlay.set_shader_parameter("amount",.51)
+ tx.sync();assert(mirror.material_overlay.get_shader_parameter("amount")==.51)
+ source.material_overlay=null;tx.sync();assert(mirror.material_overlay==null)
+ var next=material();next.set_shader_parameter("amount",.7);original.next_pass=next
+ tx.sync();assert(target.next_pass.get_shader_parameter("amount")==.7)
+ var replacement=material();replacement.set_shader_parameter("amount",.1);source.material_override=replacement
+ tx.sync();assert(mirror.get_surface_override_material(0).get_shader_parameter("amount")==.1)
+ assert(not tx.material_cache.has(material_key))
+ source.visible=false;tx.sync();assert(not mirror.visible and tx.change_sync_audit().cached_materials==0)
+ source.visible=true;tx.sync();assert(mirror.visible and tx.change_sync_audit().copies==1)
+ source.free();tx.sync();assert(tx.mirrors.is_empty() and tx.material_cache.is_empty())
+ tx.free();baseline.free()
+ print("TRANSMISSION_FIXED_SHADER_PARAMETERS_PASS repeat sync, transforms, mesh/texture bindings, invalidation, shared dynamic material and visibility")
 func base_material_values(tx):
  var source=StandardMaterial3D.new()
  var texture=GradientTexture1D.new()

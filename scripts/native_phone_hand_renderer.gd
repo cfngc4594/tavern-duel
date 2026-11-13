@@ -3,6 +3,7 @@ extends Node3D
 ## No face bake, screen flattening, 100px/unit conversion, or extra hand pose.
 const Hand=preload("res://scripts/native_phone_hand.gd")
 const HighlightShader=preload("res://shaders/native_hand_highlight.gdshader")
+const Transmission=preload("res://scripts/native_combat_transmission.gd")
 var game
 var selector
 var pieces:Array[Dictionary]=[]
@@ -38,6 +39,8 @@ func make_piece(key:String,kind:String)->Dictionary:
  # The cloned hand geometry is fixed for the lifetime of this piece.
  var vertices:=0
  for renderer_node in actor.renderers.values():
+  # Card cost changes replace the original viewport glyph, not these bindings.
+  Transmission.register_fixed_source(renderer_node)
   var mesh:Mesh=renderer_node.mesh
   for surface in mesh.get_surface_count():vertices+=mesh.surface_get_array_len(surface)
  var piece={"root":card_root,"actor":actor,"key":key,"kind":kind,"highlight":null,"seed":selector.seed_rng.randf(),"mesh_count":actor.renderers.size(),"vertex_count":vertices}

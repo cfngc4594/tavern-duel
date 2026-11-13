@@ -108,3 +108,7 @@
 | `terminal` | 通过正式胜负入口触发两次胜利，分别采集英雄死亡、结算及 `screen.show()` 首次构建。 |
 
 首次触发指本进程完成正式加载后的第一次触发，Android 驱动缓存可能来自之前的进程。无头运行仅用于验证行为和日志格式。用 `python3 ci/analyze_android_match.py <日志>` 查看逐阶段帧间隔、脚本分项和场景校验结果。真机保持物理面板黑屏时，这些帧时间属于应用循环。
+
+## Mac 后台渲染复跑
+
+用 `zsh ci/run_macos_background.zsh --path <已导入的项目目录> --resolution 1440x810 -- --android-match-benchmark --android-match-profile --android-match-quit --android-match-seed=5834`。启动器为 Godot 4.7.1 创建临时后台应用，保持 Compatibility 渲染、窗口尺寸和视口更新，同时让测试窗口透明且不接收输入。终端输出用 `MACOS_BENCHMARK_MODE background` 标记。性能 A/B 的两组均使用同一种启动方式。后台测试记录应用和渲染阶段耗时，屏幕刷新与漏刷用前台显示测试验收。导出和逻辑回归继续用 `--headless`。

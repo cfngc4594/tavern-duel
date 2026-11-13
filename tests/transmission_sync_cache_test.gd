@@ -57,7 +57,6 @@ func run():
  source.free();tx.sync();assert(not tx.mirrors.has(key) and tx.material_cache.is_empty() and tx._uniform_values.is_empty())
  base_material_values(tx)
  await geometry_lifecycle(tx,view,scene)
- identity_additive_geometry(tx,scene)
  fixed_shader_parameters(view,scene)
  print("TRANSMISSION_SYNC_CACHE_PASS uniforms/null/texture/next-pass/shader edits, source immutability, hidden reveal and free cleanup")
  tx.queue_free();view.queue_free();quit()
@@ -103,36 +102,6 @@ func geometry_lifecycle(tx,view,scene):
  root.add_child(tx);tx.sync();assert(tx.mirrors.has(fresh.get_instance_id()),"Re-entering tree must rebuild cleared geometry list")
  fresh.free();tx.sync();assert(tx.mirrors.is_empty())
  print("TRANSMISSION_GEOMETRY_CACHE_PASS add/free/reparent/RTT/ancestor visibility/root replacement/signal lifecycle")
-func identity_additive_geometry(tx,scene):
- var source=MeshInstance3D.new();source.mesh=QuadMesh.new();scene.add_child(source)
- var additive=ShaderMaterial.new();additive.shader=preload("res://shaders/native_combat_r2t_additive.gdshader")
- var key=source.get_instance_id();source.material_override=additive
- tx.prune_identity_additive=true
- tx.sync()
- assert(not tx.mirrors.has(key) and tx.audit().identity_additive_skipped==1)
- assert(source.is_visible_in_tree() and source.material_override==additive)
- var normal=material()
- source.material_overlay=normal;tx.sync();assert(tx.mirrors[key].visible and tx.audit().identity_additive_skipped==0)
- source.material_overlay=null;tx.sync();assert(not tx.mirrors[key].visible)
- additive.next_pass=normal;source.position.x=2.0;tx.sync()
- assert(tx.mirrors[key].visible and tx.mirrors[key].global_transform==source.global_transform)
- additive.next_pass=null
- var arrays=source.mesh.surface_get_arrays(0)
- var mixed=ArrayMesh.new();mixed.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays);mixed.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
- source.mesh=mixed;source.material_override=null
- source.set_surface_override_material(0,additive);source.set_surface_override_material(1,normal)
- tx.sync();assert(tx.mirrors[key].visible and tx.audit().identity_additive_skipped==0)
- source.set_surface_override_material(1,additive);tx.sync();assert(tx.mirrors[key].visible)
- var changed=material(additive.shader.code)
- source.material_override=changed;tx.sync();assert(not tx.mirrors[key].visible)
- changed.shader.code=additive.shader.code.replace("ALPHA = 0.0", "ALPHA = 0.5")
- tx.sync();assert(tx.mirrors[key].visible)
- changed.shader.code=additive.shader.code
- tx.sync();assert(not tx.mirrors[key].visible)
- tx.prune_identity_additive=false;tx.sync()
- assert(tx.mirrors[key].visible and tx.audit().identity_additive_skipped==0 and tx.audit().identity_additive_skipped_total>=3)
- source.free();tx.sync();assert(tx.mirrors.is_empty())
- print("TRANSMISSION_IDENTITY_ADDITIVE_PASS exact whole-mesh override, surface/overlay/next-pass fallback, shader edit invalidation and opt-out")
 func fixed_shader_parameters(view,scene):
  var source=MeshInstance3D.new();source.mesh=QuadMesh.new();scene.add_child(source)
  var original=material();original.set_shader_parameter("amount",.6);source.material_override=original
@@ -140,7 +109,7 @@ func fixed_shader_parameters(view,scene):
  var texture=ImageTexture.create_from_image(image);original.set_shader_parameter("tex",texture)
  Transmission.register_fixed_source(source)
  var baseline=Transmission.new();root.add_child(baseline);baseline.setup(view,scene)
- var tx=Transmission.new();root.add_child(tx);tx.setup(view,scene,false,true)
+ var tx=Transmission.new();root.add_child(tx);tx.setup(view,scene,true)
  var key=source.get_instance_id();var material_key=original.get_instance_id()
  var mirror=tx.mirrors[key];var target=tx.material_cache[material_key]
  assert(tx.change_sync_audit().copies==1 and target.get_shader_parameter("amount")==.6)

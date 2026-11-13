@@ -555,8 +555,6 @@ func _finish():
 	}
 	if is_instance_valid(game.native_transmission):
 		finish_payload["transmission"] = {
-			"pruned": game.native_transmission.prune_identity_additive,
-			"skipped_mesh_updates": game.native_transmission.identity_additive_skipped_total,
 			"change_sync": game.native_transmission.change_sync_audit(),
 		}
 	if not scenario.is_empty():

@@ -618,7 +618,7 @@ func _setup_spatial_presentation():
 	spatial_scene.setup(self, Vector2i(int(W), int(H)))
 	var transmission_script = load("res://scripts/native_combat_transmission.gd")
 	native_transmission=transmission_script.new();add_child(native_transmission)
-	native_transmission.setup(spatial_view,spatial_scene,transmission_script.cache_redraw_enabled(),transmission_script.change_sync_enabled())
+	native_transmission.setup(spatial_view,spatial_scene,transmission_script.change_sync_enabled())
 	var copy:=BackBufferCopy.new();copy.name="PreSpatialBackgroundCopy";copy.copy_mode=BackBufferCopy.COPY_MODE_VIEWPORT;world_canvas.add_child(copy)
 	spatial_post=Node2D.new();spatial_post.name="PostSpatialCanvas";spatial_post.material=native_transmission.make_composite_material();world_canvas.add_child(spatial_post)
 	spatial_post.draw.connect(_draw_post_spatial)

@@ -4,23 +4,15 @@ extends Node3D
 const Hand=preload("res://scripts/native_phone_hand.gd")
 const HighlightShader=preload("res://shaders/native_hand_highlight.gdshader")
 const Transmission=preload("res://scripts/native_combat_transmission.gd")
-const HIGHLIGHT_CACHE_SETTING="render_quality/macos_hand_highlight_cache"
 var game
 var selector
 var pieces:Array[Dictionary]=[]
 var blockers:Array[String]=[]
 var audit:Dictionary={}
 var battlecry_preview:Dictionary={}
-var highlight_cache_enabled:=false
-var _highlight_meshes:Dictionary={}
 func setup(host,highlight_selector):
  game=host;selector=highlight_selector
  basis=Basis(Vector3.RIGHT,Vector3.UP,-Vector3.BACK)
- var args:=OS.get_cmdline_user_args()
- highlight_cache_enabled=OS.has_feature("macos") and DisplayServer.get_name()!="headless" \
-  and RenderingServer.get_current_rendering_method()=="gl_compatibility" \
-  and not args.has("--mac-skip-hand-highlight-cache") \
-  and (args.has("--mac-hand-highlight-cache") or bool(ProjectSettings.get_setting(HIGHLIGHT_CACHE_SETTING,false)))
 func clear():
  for piece in pieces:
   if piece.has("root"):piece.root.queue_free()
@@ -57,25 +49,19 @@ func make_piece(key:String,kind:String)->Dictionary:
   if not spec.get("readyHighlight",false):continue
   var parent=actor.root.get_node_or_null(profile_path(profile,str(spec.nodeId)))
   if parent==null:break
-  var glow=MeshInstance3D.new();glow.name="SourceStaticSelection";glow.mesh=_highlight_mesh(renderer,spec.meshKey)
+  var mesh:ArrayMesh=renderer._geometry(renderer.meshes[spec.meshKey])
+  var arrays=mesh.surface_get_arrays(0)
+  var colors=PackedColorArray()
+  for i in arrays[Mesh.ARRAY_VERTEX].size():
+   var red=arrays[Mesh.ARRAY_COLOR][i].r if arrays[Mesh.ARRAY_COLOR]!=null else 1.0
+   var uvx=arrays[Mesh.ARRAY_TEX_UV2][i].x if arrays[Mesh.ARRAY_TEX_UV2]!=null else arrays[Mesh.ARRAY_TEX_UV][i].x
+   colors.append(Color(red,uvx,0,1))
+  arrays[Mesh.ARRAY_COLOR]=colors
+  var original_mesh=ArrayMesh.new();original_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
+  var glow=MeshInstance3D.new();glow.name="SourceStaticSelection";glow.mesh=original_mesh
   var material=ShaderMaterial.new();material.shader=HighlightShader;glow.material_override=material;parent.add_child(glow)
   piece.highlight=glow;piece.source_plane=spec.nodeId;piece.source_mesh=spec.meshKey;break
  return piece
-
-func _highlight_mesh(renderer: Node,key: String) -> ArrayMesh:
- if highlight_cache_enabled and _highlight_meshes.has(key):return _highlight_meshes[key]
- var mesh:ArrayMesh=renderer._geometry(renderer.meshes[key])
- var arrays:=mesh.surface_get_arrays(0)
- var colors:=PackedColorArray()
- for i in arrays[Mesh.ARRAY_VERTEX].size():
-  var red=arrays[Mesh.ARRAY_COLOR][i].r if arrays[Mesh.ARRAY_COLOR]!=null else 1.0
-  var uvx=arrays[Mesh.ARRAY_TEX_UV2][i].x if arrays[Mesh.ARRAY_TEX_UV2]!=null else arrays[Mesh.ARRAY_TEX_UV][i].x
-  colors.append(Color(red,uvx,0,1))
- arrays[Mesh.ARRAY_COLOR]=colors
- var result:=ArrayMesh.new()
- result.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
- if highlight_cache_enabled:_highlight_meshes[key]=result
- return result
 func sync():
  # One reflection snapshot per synchronous hand update; never retained across frames.
  var highlight_uniforms:Dictionary={}
@@ -135,14 +121,6 @@ func sync_highlight(piece:Dictionary,state:int,shared_uniforms:Variant=null):
  if state==1:
   if glow.visible:glow.visible=false
   return
- var material:ShaderMaterial=glow.material_override
- var shader_time:=fmod(float(game.elapsed)/20.0,65535.0)
- # Each glow owns its material. The imported source selection presets and
- # texture bindings are fixed after loading, while shader time stays live.
- if highlight_cache_enabled and piece.get("bound_highlight_state",-1)==state:
-  material.set_shader_parameter("_ShaderTime",shader_time)
-  if not glow.visible:glow.visible=true
-  return
  var renderer=game.native_card_renderer
  var record=selector.evidence[piece.kind].highlight_state_component
  var key=""
@@ -152,6 +130,7 @@ func sync_highlight(piece:Dictionary,state:int,shared_uniforms:Variant=null):
  if not selector.source_materials.has(key) or not renderer.textures.has(mask):
   if glow.visible:glow.visible=false
   return
+ var material:ShaderMaterial=glow.material_override
  var uniforms:Dictionary={} if shared_uniforms==null else shared_uniforms
  if uniforms.is_empty():
   for uniform in HighlightShader.get_shader_uniform_list():uniforms[uniform.name]=true
@@ -163,6 +142,5 @@ func sync_highlight(piece:Dictionary,state:int,shared_uniforms:Variant=null):
  for t in source.textures:
   if uniforms.has(t.name) and renderer.textures.has(t.key):material.set_shader_parameter(t.name,renderer.textures[t.key])
  material.set_shader_parameter("_MainTex",renderer.textures[mask]);material.set_shader_parameter("_Seed",piece.seed)
- material.set_shader_parameter("_ShaderTime",shader_time)
- if highlight_cache_enabled:piece.bound_highlight_state=state
+ material.set_shader_parameter("_ShaderTime",fmod(float(game.elapsed)/20.0,65535.0))
  if not glow.visible:glow.visible=true

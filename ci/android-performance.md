@@ -2,6 +2,12 @@
 
 后续的法术、粒子和结算优化及整局对照见 [Android 法术与结算性能](android-fx-performance.md)。
 
+## 构建原生粒子扩展
+
+在仓库根目录运行 `zsh native/particles/build.zsh android`，为 ARM64 APK 构建 C++ 粒子扩展。需要 SCons 和 Android SDK/NDK。脚本使用固定版本的 `godot-cpp`，产物放在 `addons/tavern_native_particles/`。在 Apple Silicon Mac 上运行 `zsh native/particles/build.zsh macos` 可构建本机扩展。
+
+构建扩展后再用 Godot 4.7.1 的 `--headless` 模式导入和导出项目。签名完成后可用 `unzip -l` 检查 APK 内的 `lib/arm64-v8a/libtavern_native_particles.so`。现有 GitHub Android 工作流从 `main` 触发，并使用脚本回退路径。
+
 ## 测试条件
 
 - 真机为 V2509A，Android 16，Mali-G1-Ultra MC12。测试包均使用 Godot 4.7.1 ARM64 Release、OpenGL ES Compatibility 和同一个本地签名。原版基于 `cf27e6f`，只加入同一套基准采集钩子。

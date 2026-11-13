@@ -27,6 +27,11 @@ static void order_background_window(NSWindow *window, SEL action, id sender) {
     [window orderFrontRegardless];
 }
 
+static void keep_background_draw_eligible(id delegate, SEL action, NSNotification *notification) {
+    // Godot 4.7.1's callback overwrites the initially true WindowData.is_visible
+    // with the compositor occlusion flag. This benchmark still needs to render.
+}
+
 static BOOL replace_method(Class cls, SEL selector, IMP replacement) {
     if (cls == Nil) return NO;
     Method method = class_getInstanceMethod(cls, selector);
@@ -43,7 +48,9 @@ static void configure_background_window(void) {
             sel_registerName("activateApplication"), (IMP)suppress_activation);
     BOOL window = replace_method(objc_getClass("GodotWindow"),
             @selector(makeKeyAndOrderFront:), (IMP)order_background_window);
-    if (!policy || !activation || !window) {
+    BOOL occlusion = replace_method(objc_getClass("GodotWindowDelegate"),
+            @selector(windowDidChangeOcclusionState:), (IMP)keep_background_draw_eligible);
+    if (!policy || !activation || !window || !occlusion) {
         fputs("Godot background window setup failed.\n", stderr);
         _Exit(78);
     }
